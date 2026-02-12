@@ -1,0 +1,6 @@
+*.DS_Store
+*.env
+*.env.*
+*.code-workspace
+.next
+node_modules
