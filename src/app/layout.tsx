@@ -1,5 +1,14 @@
+/**----------------------------------- */
+// STYLES 
 import "@/styles/globals.css"
 
+// FUNCTIONS
+import clsx from "clsx"
+
+/**-----------------------------------
+ * Root Layout. Wraps the entire site.
+ * 
+ */
 export default function RootLayout({
 	children,
 }: {
@@ -7,7 +16,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body
+				className={clsx(
+					"",
+				)}
+			>
 				{children}
 			</body>
 		</html>
