@@ -3,4 +3,5 @@
 *.env.*
 *.code-workspace
 .next
+next-env.d.ts
 node_modules
