@@ -1,7 +1,12 @@
+# Local Files
 *.DS_Store
+*.code-workspace
+# ENV files
 *.env
 *.env.*
-*.code-workspace
+# Project Files
 .next
 next-env.d.ts
-node_modules
+node_modules/
+# CMS Files
+cms/uploads/* 

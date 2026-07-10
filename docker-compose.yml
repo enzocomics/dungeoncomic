@@ -1,0 +1,145 @@
+## -------------------------------------------------------
+## REQUIRED: CHANGE THE VALUES INSIDE THE QUOTES
+x-cms-email: &cms-email "your_email@address.com"
+x-cms-password: &cms-password "your_password"
+x-cms-secret: &cms-secret "secret_key"
+x-db-password: &db-password "database_password"
+x-timezone: &timezone "America/Vancouver"
+
+## OPTIONAL VALUES TO CHANGE
+x-db-name: &db-name "directus"
+x-db-user: &db-user "directus"
+
+## -------------------------------------------------------
+services:
+  ## -------------------------------------------------------
+  ## DATABASE: POSTGRESQL
+  db:
+    container_name: dcc_db
+    image: postgres:18.4
+    networks:
+      - dcc
+    volumes:
+      - db:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: *db-user
+      POSTGRES_DB: *db-name
+      POSTGRES_PASSWORD: *db-password
+      TZ: *timezone
+      PGTZ: *timezone
+      QUERY_LIMIT_MAX: -1
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=localhost", "--username=directus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+    restart: unless-stopped
+
+  ## -------------------------------------------------------
+  ## CACHE: REDIS
+  cache:
+    container_name: dcc_cache
+    image: redis:8.8.0
+    networks:
+      - dcc
+    volumes:
+      - cache:/data
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+    restart: unless-stopped
+
+  ## -------------------------------------------------------
+  ## CMS: DIRECTUS
+  cms:
+    container_name: dcc_cms
+    image: directus/directus:12.1.1
+    ports:
+      - 8055:8055
+    networks:
+      - dcc
+    volumes:
+      - uploads:/directus/uploads
+      - extensions:/directus/extensions
+    depends_on:
+      cache:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    environment:
+      # Directus - Settings
+      SECRET: *cms-secret
+      TZ: *timezone
+      HEALTHCHECK_ENABLED: true
+      HEALTHCHECK_NAMESPACE: directus:healthcheck
+      HEALTHCHECK_SERVICES: database,redis,storage
+      HEALTHCHECK_CACHE_TTL: 5m
+
+      # Directus - Database
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: *db-name
+      DB_USER: *db-user
+      DB_PASSWORD: *db-password
+
+      # Directus - Cache
+      CACHE_ENABLED: true
+      CACHE_AUTO_PURGE: true
+      CACHE_STORE: redis
+      REDIS: redis://cache:6379
+
+      # Directus - Admin
+      ADMIN_EMAIL: *cms-email
+      ADMIN_PASSWORD: *cms-password
+      PUBLIC_URL: http://localhost:8055
+
+      # Directus - Storage
+      STORAGE_LOCATIONS: local
+      STORAGE_LOCAL_DRIVER: local
+      STORAGE_LOCAL_ROOT: /directus/uploads
+
+      # DIRECTUS - EMAIL
+      EMAIL_VERIFY_SETUP: false
+      # - Directus emails are not technically required for our setup
+      #   since you would only use it to reset your own password
+      # - https://directus.com/docs/configuration/email
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "[ $$(wget -q -O - http://0.0.0.0:8055/server/ping) = 'pong' ]",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+## -------------------------------------------------------
+volumes:
+  cache:
+    name: dcc_cache
+  db:
+    name: dcc_db
+  uploads:
+    name: dcc_uploads
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./cms/uploads
+  extensions:
+    name: dcc_extensions
+
+## -------------------------------------------------------
+networks:
+  dcc:
+    name: dcc
+    driver: bridge
