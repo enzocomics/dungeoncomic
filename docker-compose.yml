@@ -1,12 +1,12 @@
 ## -------------------------------------------------------
-## REQUIRED: CHANGE THE VALUES INSIDE THE QUOTES
-x-cms-email: &cms-email "your_email@address.com"
-x-cms-password: &cms-password "your_password"
-x-cms-secret: &cms-secret "secret_key"
-x-db-password: &db-password "database_password"
-x-timezone: &timezone "America/Vancouver"
-
-## OPTIONAL VALUES TO CHANGE
+## VARIABLES - ENV
+x-cms-email: &cms-email ${CMS_ADMIN_EMAIL}
+x-cms-password: &cms-password ${CMS_ADMIN_PASSWORD}
+x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
+x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
+x-db-password: &db-password ${DATABASE_PASSWORD}
+x-timezone: &timezone ${TIMEZONE}
+## VARIABLES - COMPOSE
 x-db-name: &db-name "directus"
 x-db-user: &db-user "directus"
 
@@ -98,7 +98,7 @@ services:
       # Directus - Admin
       ADMIN_EMAIL: *cms-email
       ADMIN_PASSWORD: *cms-password
-      PUBLIC_URL: http://localhost:8055
+      PUBLIC_URL: *cms-public-url
 
       # Directus - Storage
       STORAGE_LOCATIONS: local
