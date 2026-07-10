@@ -1,7 +1,8 @@
 ## -------------------------------------------------------
 ## VARIABLES - ENV
-x-cms-email: &cms-email ${CMS_ADMIN_EMAIL}
-x-cms-password: &cms-password ${CMS_ADMIN_PASSWORD}
+x-cms-admin-email: &cms-admin-email ${CMS_ADMIN_EMAIL}
+x-cms-admin-password: &cms-admin-password ${CMS_ADMIN_PASSWORD}
+x-cms-admin-token: &cms-admin-token ${CMS_ADMIN_TOKEN}
 x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
 x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
 x-db-password: &db-password ${DATABASE_PASSWORD}
@@ -96,8 +97,9 @@ services:
       REDIS: redis://cache:6379
 
       # Directus - Admin
-      ADMIN_EMAIL: *cms-email
-      ADMIN_PASSWORD: *cms-password
+      ADMIN_EMAIL: *cms-admin-email
+      ADMIN_PASSWORD: *cms-admin-password
+      ADMIN_TOKEN: *cms-admin-token
       PUBLIC_URL: *cms-public-url
 
       # Directus - Storage
