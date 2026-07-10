@@ -1,3 +1,9 @@
+/**----------------------------------- */
+// LIBRARIES
+import { useTranslations } from 'next-intl'
+
+/**----------------------------------- */
 export default function Page() {
-	return <h1 className="text-3xl">hello world</h1>
+	const t = useTranslations("HomePage")
+	return <h1 className="text-3xl">{t("title")}</h1>
 }

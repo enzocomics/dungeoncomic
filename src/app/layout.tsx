@@ -4,12 +4,14 @@ import "@/styles/globals.css"
 
 // FUNCTIONS
 import clsx from "clsx"
+// I18N
+import { NextIntlClientProvider } from "next-intl"
 
 /**-----------------------------------
  * Root Layout. Wraps the entire site.
  * 
  */
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
@@ -21,7 +23,9 @@ export default function RootLayout({
 					"",
 				)}
 			>
-				{children}
+				<NextIntlClientProvider>
+					{children}
+				</NextIntlClientProvider>
 			</body>
 		</html>
 
