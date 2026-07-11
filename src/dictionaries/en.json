@@ -1,5 +1,20 @@
 {
 	"HomePage": {
 		"title": "Hello world!"
+	},
+	"Login": {
+		"title": "Log In"
+	},
+	"Register": {
+		"title": "Register"
+	},
+	"ResetPassword": {
+		"title": "Reset Password"
+	},
+	"Dashboard": {
+		"title": "Dashboard"
+	},
+	"404": {
+		"title": "404 - Page Not Found"
 	}
 }

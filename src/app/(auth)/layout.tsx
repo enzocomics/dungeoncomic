@@ -8,10 +8,10 @@ import clsx from "clsx"
 import { NextIntlClientProvider } from "next-intl"
 
 /**-----------------------------------
- * Root Layout. Wraps the entire site.
+ * ROOT LAYOUT - AUTH
  * 
  */
-export default async function RootLayout({
+export default async function AuthRootLayout({
 	children,
 }: {
 	children: React.ReactNode
@@ -20,7 +20,8 @@ export default async function RootLayout({
 		<html lang="en">
 			<body
 				className={clsx(
-					"",
+					"bg-neutral-700",
+					"text-white"
 				)}
 			>
 				<NextIntlClientProvider>
