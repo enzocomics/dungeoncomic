@@ -1,11 +1,22 @@
+"use server"
 /**----------------------------------- */
-import MainRootLayoutUI from "@/ui/main/root-layout"
 
-/**-----------------------------------
- * ROOT LAYOUT - MAIN SITE 
- */
-export default function MainRootLayout(props: LayoutProps<"/">) {
-	return <MainRootLayoutUI>
-		{props.children}
-	</MainRootLayoutUI>
+import "@/styles/globals.css"
+// FUNCTIONS
+import clsx from "clsx"
+import { NextIntlClientProvider } from "next-intl"
+
+export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
+	return <html lang="en">
+		<body
+			className={clsx(
+				"bg-neutral-700",
+				"text-white"
+			)}
+		>
+			<NextIntlClientProvider>
+				{props.children}
+			</NextIntlClientProvider>
+		</body>
+	</html>
 }

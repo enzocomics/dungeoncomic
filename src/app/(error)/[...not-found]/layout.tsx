@@ -1,11 +1,21 @@
+"use server"
 /**----------------------------------- */
-import ErrorRootLayoutUI from "@/ui/error/root-layout"
+import "@/styles/globals.css"
+// FUNCTIONS
+import clsx from "clsx"
+import { NextIntlClientProvider } from "next-intl"
 
-/**-----------------------------------
- * ROOT LAYOUT - MAIN SITE 
- */
-export default function ErrorRootLayout(props: LayoutProps<"/">) {
-	return <ErrorRootLayoutUI>
-		{props.children}
-	</ErrorRootLayoutUI>
+export default async function ErrorRootLayoutUI(props: LayoutProps<"/[...not-found]">) {
+	return <html lang="en">
+		<body
+			className={clsx(
+				"bg-neutral-700",
+				"text-white"
+			)}
+		>
+			<NextIntlClientProvider>
+				{props.children}
+			</NextIntlClientProvider>
+		</body>
+	</html>
 }

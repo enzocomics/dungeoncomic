@@ -1,11 +1,21 @@
+"use server"
 /**----------------------------------- */
-import AuthRootLayoutUI from "@/ui/auth/root-layout"
+import "@/styles/globals.css"
+// FUNCTIONS
+import clsx from "clsx"
+import { NextIntlClientProvider } from "next-intl"
 
-/**-----------------------------------
- * ROOT LAYOUT - AUTH
- */
-export default function AuthRootLayout(props: LayoutProps<"/">) {
-	return <AuthRootLayoutUI>
-		{props.children}
-	</AuthRootLayoutUI>
+export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
+	return <html lang="en">
+		<body
+			className={clsx(
+				"bg-neutral-700",
+				"text-white"
+			)}
+		>
+			<NextIntlClientProvider>
+				{props.children}
+			</NextIntlClientProvider>
+		</body>
+	</html>
 }
