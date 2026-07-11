@@ -3,7 +3,8 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/styles/*": ["./src/styles/*"],
-			"@/lib/*": ["./src/lib/*"]
+			"@/lib/*": ["./src/lib/*"],
+			"@/auth/*": ["./src/ui/auth/*"]
 		},
 		"target": "ES2017",
 		"lib": ["dom", "dom.iterable", "esnext"],
