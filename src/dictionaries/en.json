@@ -3,7 +3,15 @@
 		"title": "Hello world!"
 	},
 	"Login": {
-		"title": "Log In"
+		"title": "Log In",
+		"email": "Email",
+		"password": "Password",
+		"submit": "Sign In",
+		"errors": {
+			"email-invalid": "Email is invalid",
+			"password-invalid": "Password is invalid",
+			"password-too-short": "Password is too short"
+		}
 	},
 	"Register": {
 		"title": "Register"

@@ -24,7 +24,7 @@ export default function LoginPageUI() {
 
 		// Reuse the validation logic on the client
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: loginSchema })
+			return parseWithZod(formData, { schema: loginSchema(t) })
 		},
 
 		// Validate the form on blur event triggered
@@ -42,7 +42,7 @@ export default function LoginPageUI() {
 			noValidate
 		>
 			<div>
-				<label htmlFor="email">Email</label>
+				<label htmlFor="email">{t("email")}</label>
 				<input
 					id="email"
 					type="email"
@@ -54,7 +54,7 @@ export default function LoginPageUI() {
 				<div>{fields.email.errors}</div>
 			</div>
 			<div>
-				<label htmlFor="password">Password</label>
+				<label htmlFor="password">{t("password")}</label>
 				<input
 					id="password"
 					type="password"
@@ -65,7 +65,7 @@ export default function LoginPageUI() {
 			</div>
 			<button
 				type="submit"
-			>Sign In</button>
+			>{t("submit")}</button>
 		</form>
 	</>
 
