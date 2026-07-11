@@ -8,7 +8,7 @@ import {
 } from "@directus/sdk"
 
 // VARIABLES
-import { adminToken as adminToken, directusURL } from "@/lib/env"
+import { adminToken, directusURL } from "@/lib/env"
 
 // CMS
 import { DirectusSchema } from "@/lib/directus/schema"
