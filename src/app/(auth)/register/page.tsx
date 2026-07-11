@@ -1,13 +1,14 @@
+"use server"
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
+// UI
+import RegisterPageUI from "./_ui"
 
 /**----------------------------------- */
-export default function RegisterPage() {
-	const t = useTranslations("Register")
-	return <h1 className="text-3xl">{t("title")}</h1>
+export default async function RegisterPage() {
+	return <RegisterPageUI />
 }
 /** ------------------------------------------------ **
  * Page Metadata

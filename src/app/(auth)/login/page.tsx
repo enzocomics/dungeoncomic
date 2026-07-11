@@ -1,13 +1,12 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
+import LoginPageUI from "./_ui"
 
 /**----------------------------------- */
 export default function LoginPage() {
-	const t = useTranslations("Login")
-	return <h1 className="text-3xl">{t("title")}</h1>
+	return <LoginPageUI />
 }
 /** ------------------------------------------------ **
  * Page Metadata

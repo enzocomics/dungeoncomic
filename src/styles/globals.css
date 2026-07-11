@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+:root {
+	input {
+		@apply p-1 border-black bg-white text-black;
+	}
+}
