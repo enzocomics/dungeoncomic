@@ -18,21 +18,24 @@ export async function register(prevState: unknown, formData: FormData) {
 
 	// VALIDATION
 	const submission = await parseWithZod(formData, {
-		schema: registerSchema(t, {
-			async isValueUnique(email) {
-				// If it's an email
-				const request = await adminClient.request(
-					readUsers({
-						filter: {
-							email: { _eq: email },
-						},
-						limit: 1,
-					}),
-				)
-				//
-				return request.length > 0 ? false : true
-			},
-		}),
+		// Intent provided by parseWithZod
+		schema: (intent) =>
+			registerSchema(t, intent, {
+				// Check if the email is uniquein Directus
+				async isValueUnique(email) {
+					// If it's an email
+					const request = await adminClient.request(
+						readUsers({
+							filter: {
+								email: { _eq: email },
+							},
+							limit: 1,
+						}),
+					)
+					// Return Boolean
+					return request.length > 0 ? false : true
+				},
+			}),
 		async: true,
 	})
 

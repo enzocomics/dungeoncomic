@@ -26,13 +26,10 @@ export default function RegisterPageUI() {
 
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: registerSchema(t)
+				// intent provided by `parseWithZod`
+				schema: (intent) => registerSchema(t, intent)
 			})
 		},
-
-		// Validate the form on blur event triggered
-		shouldValidate: "onBlur",
-		shouldRevalidate: "onInput",
 	})
 
 	// EXPORT
