@@ -14,7 +14,19 @@
 		}
 	},
 	"Register": {
-		"title": "Register"
+		"title": "Register",
+		"email": "Email",
+		"username": "Username",
+		"password": "Password",
+		"password-confirm": "Confirm Password",
+		"submit": "Sign In",
+		"errors": {
+			"email-invalid": "Email is invalid",
+			"email-used": "Email is already in use",
+			"username-invalid": "Username is invalid",
+			"password-invalid": "Password is invalid",
+			"password-too-short": "Password is too short"
+		}
 	},
 	"ResetPassword": {
 		"title": "Reset Password"
