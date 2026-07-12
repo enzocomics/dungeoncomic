@@ -10,6 +10,7 @@
 		"@conform-to/react": "^1.19.4",
 		"@conform-to/zod": "^1.19.4",
 		"@directus/sdk": "^23.0.0",
+		"@directus/types": "^16.0.0",
 		"@tailwindcss/postcss": "^4.3.2",
 		"clsx": "^2.1.1",
 		"next": "^16.2.10",
