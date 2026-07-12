@@ -27,10 +27,12 @@ export function registerSchema(
 	intent: Intent | null,
 	// Async function to check if data is unique
 	options?: {
-		isValueUnique: (value: string) => Promise<boolean>
+		isEmailUnique: (value: string) => Promise<boolean>
+		isUsernameUnique: (value: string) => Promise<boolean>
 	},
 ) {
 	return z.object({
+		/* validate email ----------------------------------- */
 		email: z
 			.email()
 			// Pipe the schema so it only runs if the email is valid
@@ -50,7 +52,7 @@ export function registerSchema(
 					}
 
 					// This makes Conform fall back to server validation by indicating that the validation is not defined
-					if (typeof options?.isValueUnique !== "function") {
+					if (typeof options?.isEmailUnique !== "function") {
 						ctx.addIssue({
 							code: "custom",
 							message: conformZodMessage.VALIDATION_UNDEFINED,
@@ -60,26 +62,38 @@ export function registerSchema(
 					}
 
 					// If it reaches here, then it must be validating on the server. Return the result as a promise so Zod knows it's async instead
-					return options.isValueUnique(email).then((isUnique) => {
+					return options.isEmailUnique(email).then((isUnique) => {
 						if (!isUnique) {
 							ctx.addIssue({
 								code: "custom",
-								message: t("errors.email-used"),
+								message: t("errors.email-taken"),
 							})
 						}
 					})
 				}),
 				// eo pipe()
 			),
-		/* eo email ----------------------------------- */
 
+		/* validate username ----------------------------------- */
 		username: z
 			.string()
 			// Pipe the schema so it only runs if the email is valid
 			.pipe(
 				z.string().superRefine((username, ctx) => {
+					// Check the submission intent
+					const isValidatingUsername =
+						intent === null ||
+						(intent.type === "validate" && intent.payload.name === "username")
+
+					if (!isValidatingUsername) {
+						ctx.addIssue({
+							code: "custom",
+							message: conformZodMessage.VALIDATION_SKIPPED,
+						})
+						return
+					}
 					// This makes Conform fall back to server validation by indicating that the validation is not defined
-					if (typeof options?.isValueUnique !== "function") {
+					if (typeof options?.isUsernameUnique !== "function") {
 						ctx.addIssue({
 							code: "custom",
 							message: conformZodMessage.VALIDATION_UNDEFINED,
@@ -89,11 +103,11 @@ export function registerSchema(
 					}
 
 					// If it reaches here, then it must be validating on the server. Return the result as a promise so Zod knows it's async instead
-					return options.isValueUnique(username).then((isUnique) => {
+					return options.isUsernameUnique(username).then((isUnique) => {
 						if (!isUnique) {
 							ctx.addIssue({
 								code: "custom",
-								message: t("errors.email-used"),
+								message: t("errors.username-taken"),
 							})
 						}
 					})

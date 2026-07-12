@@ -21,8 +21,8 @@ export async function register(prevState: unknown, formData: FormData) {
 		// Intent provided by parseWithZod
 		schema: (intent) =>
 			registerSchema(t, intent, {
-				// Check if the email is uniquein Directus
-				async isValueUnique(email) {
+				// Check if the email is unique in Directus
+				async isEmailUnique(email) {
 					// If it's an email
 					const request = await adminClient.request(
 						readUsers({
@@ -35,7 +35,22 @@ export async function register(prevState: unknown, formData: FormData) {
 					// Return Boolean
 					return request.length > 0 ? false : true
 				},
+				// Check if the email is unique in Directus
+				async isUsernameUnique(username) {
+					// If it's an username
+					const request = await adminClient.request(
+						readUsers({
+							filter: {
+								username: { _eq: username },
+							},
+							limit: 1,
+						}),
+					)
+					// Return Boolean
+					return request.length > 0 ? false : true
+				},
 			}),
+
 		async: true,
 	})
 
