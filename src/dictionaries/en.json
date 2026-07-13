@@ -26,10 +26,12 @@
 			"password-confirm": "Confirm Password"
 		},
 		"errors": {
+			"input-blank": "This field is required",
 			"email-invalid": "Email is invalid",
 			"email-taken": "Email is already in use",
-			"username-invalid": "Username is invalid",
+			"username-invalid": "Username contains invalid characters",
 			"username-taken": "Username is already in use",
+			"username-length": "Username must be 2-24 characters",
 			"password-invalid": "Password is invalid",
 			"password-too-short": "Password is too short"
 		}

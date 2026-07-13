@@ -1,7 +1,11 @@
+/**----------------------------------- */
+// CONFORM/ZOD LIBRARIES
 import { Intent } from "@conform-to/react"
 import { conformZodMessage } from "@conform-to/zod/v4"
 import { z } from "zod"
 
+/**----------------------------------- */
+// SCHEMA - LOGIN FORM
 export const loginSchema = (
 	// Pass the translations object from next-intl so they can be used for zod validation errors
 	t: (arg: string) => string,
@@ -10,7 +14,9 @@ export const loginSchema = (
 		// The preprocess step is required for zod to perform the required check properly as the value of an empty input is usually an empty string
 		email: z.preprocess(
 			(value) => (value === "" ? undefined : value),
-			z.email(t("errors.email-invalid")),
+			z
+				.string({ error: t("errors.input-blank") })
+				.email({ error: t("errors.email-invalid") }),
 		),
 		password: z.preprocess(
 			(value) => (value === "" ? undefined : value),
@@ -20,6 +26,8 @@ export const loginSchema = (
 		),
 	})
 
+/**----------------------------------- */
+// SCHEMA - USER REGISTRATION FORM
 export function registerSchema(
 	// Pass the translations object from next-intl so they can be used for zod validation errors
 	t: (arg: string) => string,
@@ -34,6 +42,7 @@ export function registerSchema(
 	return z.object({
 		/* validate email ----------------------------------- */
 		email: z
+			.string(t("errors.input-blank"))
 			.email(t("errors.email-invalid"))
 			// Pipe the schema so it only runs if the email is valid
 			.pipe(
@@ -76,8 +85,11 @@ export function registerSchema(
 
 		/* validate username ----------------------------------- */
 		username: z
-			.string()
-			// Pipe the schema so it only runs if the email is valid
+			.string({ error: t("errors.input-blank") })
+			.min(2, { error: t("errors.username-length") })
+			.max(24, { error: t("errors.username-length") })
+			.regex(/^[a-z]+$/, { error: t("errors.username-invalid") })
+			// Pipe the schema so it only runs if the username  is valid
 			.pipe(
 				z.string().superRefine((username, ctx) => {
 					/**
@@ -130,3 +142,38 @@ export function registerSchema(
 		),
 	})
 }
+
+/**----------------------------------- */
+// SCHEMA - RESET PASSWORD FORM
+
+export const resetPasswordRequestSchema = (
+	// Pass the translations object from next-intl so they can be used for zod validation errors
+	t: (arg: string) => string,
+) =>
+	z.object({
+		// The preprocess step is required for zod to perform the required check properly as the value of an empty input is usually an empty string
+		email: z.preprocess(
+			(value) => (value === "" ? undefined : value),
+			z.email(t("errors.email-invalid")),
+		),
+	})
+
+export const resetPasswordSubmitSchema = (
+	// Pass the translations object from next-intl so they can be used for zod validation errors
+	t: (arg: string) => string,
+) =>
+	z.object({
+		// The preprocess step is required for zod to perform the required check properly as the value of an empty input is usually an empty string
+		password: z.preprocess(
+			(value) => (value === "" ? undefined : value),
+			z
+				.string({ error: t("errors.password-invalid") })
+				.min(7, t("errors.password-too-short")),
+		),
+		confirmPassword: z.preprocess(
+			(value) => (value === "" ? undefined : value),
+			z
+				.string({ error: t("errors.password-invalid") })
+				.min(7, t("errors.password-too-short")),
+		),
+	})
