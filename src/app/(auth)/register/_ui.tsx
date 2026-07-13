@@ -72,6 +72,8 @@ export default function RegisterPageUI() {
 					type="password"
 					key={fields.password.key}
 					name={fields.password.name}
+					// Retain the value of the previous submission
+					defaultValue={lastResult?.initialValue?.password as string}
 				/>
 				<div>{fields.password.errors}</div>
 			</div>
@@ -83,6 +85,8 @@ export default function RegisterPageUI() {
 					type="password"
 					key={fields.passwordConfirm.key}
 					name={fields.passwordConfirm.name}
+					// Retain the value of the previous submission
+					defaultValue={lastResult?.initialValue?.passwordConfirm as string}
 				/>
 				<div>{fields.passwordConfirm.errors}</div>
 			</div>
