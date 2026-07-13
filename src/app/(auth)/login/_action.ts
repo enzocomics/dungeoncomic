@@ -12,7 +12,7 @@ import { loginSchema } from "@/lib/zod/schemas"
  */
 export async function login(prevState: unknown, formData: FormData) {
 	// I18N
-	const t = await getTranslations("Login")
+	const t = await getTranslations("auth")
 	// VALIDATION
 	const submission = parseWithZod(formData, { schema: loginSchema(t) })
 

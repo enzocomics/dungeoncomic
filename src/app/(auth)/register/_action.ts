@@ -14,7 +14,7 @@ import { registerSchema } from "@/lib/zod/schemas"
  */
 export async function register(prevState: unknown, formData: FormData) {
 	// I18N
-	const t = await getTranslations("Register")
+	const t = await getTranslations("auth")
 
 	// VALIDATION
 	const submission = await parseWithZod(formData, {
