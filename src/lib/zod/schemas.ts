@@ -34,7 +34,7 @@ export function registerSchema(
 	return z.object({
 		/* validate email ----------------------------------- */
 		email: z
-			.email()
+			.email(t("errors.email-invalid"))
 			// Pipe the schema so it only runs if the email is valid
 			.pipe(
 				z.string().superRefine((email, ctx) => {
@@ -80,11 +80,17 @@ export function registerSchema(
 			// Pipe the schema so it only runs if the email is valid
 			.pipe(
 				z.string().superRefine((username, ctx) => {
-					// Check the submission intent
+					/**
+					 * `intent` is provided by `parseWithZod`. We check the submission intent
+					 * to verify which field is being validated, and then skips it validation step.
+					 * The purpose of this is because the schema usually validates all fields at once.
+					 * Skipping async field is much less expensive (server request/load-wise)
+					 */
 					const isValidatingUsername =
 						intent === null ||
 						(intent.type === "validate" && intent.payload.name === "username")
 
+					// This make Conform to use the previous result instead  by indicating that the validation is skipped
 					if (!isValidatingUsername) {
 						ctx.addIssue({
 							code: "custom",
@@ -124,26 +130,3 @@ export function registerSchema(
 		),
 	})
 }
-
-/*
-export const registerSchema = (
-	// Pass the translations object from next-intl so they can be used for zod validation errors
-	t: (arg: string) => string,
-) =>
-	z.object({
-		// The preprocess step is required for zod to perform the required check properly as the value of an empty input is usually an empty string
-		email: z.preprocess(
-			(value) => (value === "" ? undefined : value),
-			z.email(t("errors.email-invalid")),
-		),
-		username: z.preprocess(
-			(value) => (value === "" ? undefined : value),
-			z.string(t("errors.username-invalid")),
-		),
-		password: z.preprocess(
-			(value) => (value === "" ? undefined : value),
-			z
-				.string({ error: t("errors.password-invalid") })
-				.min(7, t("errors.password-too-short")),
-		),
-	})*/

@@ -18,7 +18,6 @@ export async function register(prevState: unknown, formData: FormData) {
 
 	// VALIDATION
 	const submission = await parseWithZod(formData, {
-		// Intent provided by parseWithZod
 		schema: (intent) =>
 			registerSchema(t, intent, {
 				// Check if the email is unique in Directus
@@ -50,7 +49,6 @@ export async function register(prevState: unknown, formData: FormData) {
 					return request.length > 0 ? false : true
 				},
 			}),
-
 		async: true,
 	})
 
