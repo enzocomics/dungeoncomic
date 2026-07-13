@@ -2,24 +2,29 @@
 	"HomePage": {
 		"title": "Hello world!"
 	},
-	"Login": {
-		"title": "Log In",
-		"email": "Email",
-		"password": "Password",
-		"submit": "Sign In",
-		"errors": {
-			"email-invalid": "Email is invalid",
-			"password-invalid": "Password is invalid",
-			"password-too-short": "Password is too short"
-		}
-	},
-	"Register": {
-		"title": "Register",
-		"email": "Email",
-		"username": "Username",
-		"password": "Password",
-		"password-confirm": "Confirm Password",
-		"submit": "Sign In",
+	"auth": {
+		"pages": {
+			"login": {
+				"title": "Log In",
+				"submit": "Sign In"
+			},
+			"register": {
+				"title": "Register",
+				"submit": "Create Account"
+			},
+			"reset-password": {
+				"title": "Reset Password"
+			},
+			"dashboard": {
+				"title": "Dashboard"
+			}
+		},
+		"fields": {
+			"email": "Email",
+			"username": "Username",
+			"password": "Password",
+			"password-confirm": "Confirm Password"
+		},
 		"errors": {
 			"email-invalid": "Email is invalid",
 			"email-taken": "Email is already in use",
@@ -29,13 +34,7 @@
 			"password-too-short": "Password is too short"
 		}
 	},
-	"ResetPassword": {
-		"title": "Reset Password"
-	},
-	"Dashboard": {
-		"title": "Dashboard"
-	},
-	"404": {
+	"404Page": {
 		"title": "404 - Page Not Found"
 	}
 }

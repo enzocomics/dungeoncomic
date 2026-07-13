@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 
 /**----------------------------------- */
 export default function NotFoundPage() {
-	const t = useTranslations("404")
+	const t = useTranslations("404Page")
 	return <h1 className="text-3xl">{t("title")}</h1>
 }
 /** ------------------------------------------------ **
@@ -15,7 +15,7 @@ export default function NotFoundPage() {
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("404")
+	const t = await getTranslations("404Page")
 	return {
 		title: t("title"),
 	}

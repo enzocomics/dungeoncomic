@@ -6,8 +6,8 @@ import { getTranslations } from "next-intl/server"
 
 /**----------------------------------- */
 export default function ResetPasswordPage() {
-	const t = useTranslations("ResetPassword")
-	return <h1 className="text-3xl">{t("title")}</h1>
+	const t = useTranslations("auth")
+	return <h1 className="text-3xl">{t("pages.reset-password.title")}</h1>
 }
 /** ------------------------------------------------ **
  * Page Metadata
@@ -15,8 +15,8 @@ export default function ResetPasswordPage() {
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("ResetPassword")
+	const t = await getTranslations("auth")
 	return {
-		title: t("title"),
+		title: t("pages.reset-password.title"),
 	}
 }

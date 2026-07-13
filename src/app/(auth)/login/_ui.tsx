@@ -14,7 +14,7 @@ import { login } from "./_action"
  */
 export default function LoginPageUI() {
 	// I18N
-	const t = useTranslations("Login")
+	const t = useTranslations("auth")
 
 	// VALIDATION
 	const [lastResult, action] = useActionState(login, undefined)
@@ -34,7 +34,7 @@ export default function LoginPageUI() {
 
 	// OUTPUT
 	return <>
-		<h1 className="text-3xl">{t("title")}</h1>
+		<h1 className="text-3xl">{t("pages.login.title")}</h1>
 		<form
 			id={form.id}
 			onSubmit={form.onSubmit}
@@ -42,7 +42,7 @@ export default function LoginPageUI() {
 			noValidate
 		>
 			<div>
-				<label htmlFor="email">{t("email")}</label>
+				<label htmlFor="email">{t("fields.email")}</label>
 				<input
 					id="email"
 					type="email"
@@ -54,7 +54,7 @@ export default function LoginPageUI() {
 				<div>{fields.email.errors}</div>
 			</div>
 			<div>
-				<label htmlFor="password">{t("password")}</label>
+				<label htmlFor="password">{t("fields.password")}</label>
 				<input
 					id="password"
 					type="password"
@@ -65,7 +65,7 @@ export default function LoginPageUI() {
 			</div>
 			<button
 				type="submit"
-			>{t("submit")}</button>
+			>{t("pages.login.submit")}</button>
 		</form>
 	</>
 

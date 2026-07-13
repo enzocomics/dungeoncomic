@@ -14,8 +14,8 @@ export default function LoginPage() {
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("Login")
+	const t = await getTranslations("auth")
 	return {
-		title: t("title"),
+		title: t("pages.login.title"),
 	}
 }

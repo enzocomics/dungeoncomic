@@ -6,8 +6,8 @@ import { getTranslations } from "next-intl/server"
 
 /**----------------------------------- */
 export default function DashboardPage() {
-	const t = useTranslations("Dashboard")
-	return <h1 className="text-3xl">{t("title")}</h1>
+	const t = useTranslations("auth")
+	return <h1 className="text-3xl">{t("pages.dashboard.title")}</h1>
 }
 
 /** ------------------------------------------------ **
@@ -16,8 +16,8 @@ export default function DashboardPage() {
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("Dashboard")
+	const t = await getTranslations("auth")
 	return {
-		title: t("title"),
+		title: t("pages.dashboard.title"),
 	}
 }

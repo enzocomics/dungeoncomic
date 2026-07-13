@@ -14,7 +14,7 @@ import { register } from "./_action"
  */
 export default function RegisterPageUI() {
 	// I18N
-	const t = useTranslations("Register")
+	const t = useTranslations("auth")
 
 	// VALIDATION
 	const [lastResult, action] = useActionState(register, null)
@@ -34,7 +34,7 @@ export default function RegisterPageUI() {
 
 	// EXPORT
 	return <>
-		<h1 className="text-3xl">{t("title")}</h1>
+		<h1 className="text-3xl">{t("pages.register.title")}</h1>
 		<form
 			id={form.id}
 			onSubmit={form.onSubmit}
@@ -42,7 +42,7 @@ export default function RegisterPageUI() {
 			noValidate
 		>
 			<div>
-				<label htmlFor="email">{t("email")}</label>
+				<label htmlFor="email">{t("fields.email")}</label>
 				<input
 					id="email"
 					type="email"
@@ -54,7 +54,7 @@ export default function RegisterPageUI() {
 				<div>{fields.email.errors}</div>
 			</div>
 			<div>
-				<label htmlFor="username">{t("username")}</label>
+				<label htmlFor="username">{t("fields.username")}</label>
 				<input
 					id="username"
 					type="username"
@@ -66,7 +66,7 @@ export default function RegisterPageUI() {
 				<div>{fields.username.errors}</div>
 			</div>
 			<div>
-				<label htmlFor="password">{t("password")}</label>
+				<label htmlFor="password">{t("fields.password")}</label>
 				<input
 					id="password"
 					type="password"
@@ -77,7 +77,7 @@ export default function RegisterPageUI() {
 			</div>
 			<button
 				type="submit"
-			>{t("submit")}</button>
+			>{t("pages.register.submit")}</button>
 		</form>
 	</>
 

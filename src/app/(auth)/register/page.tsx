@@ -16,8 +16,8 @@ export default async function RegisterPage() {
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
 export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("Register")
+	const t = await getTranslations("auth")
 	return {
-		title: t("title"),
+		title: t("pages.register.title"),
 	}
 }
