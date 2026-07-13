@@ -137,8 +137,13 @@ export function registerSchema(
 		password: z.preprocess(
 			(value) => (value === "" ? undefined : value),
 			z
-				.string({ error: t("errors.password-invalid") })
+				.string({ error: t("errors.input-blank") })
 				.min(7, t("errors.password-too-short")),
+		),
+
+		passwordConfirm: z.preprocess(
+			(value) => (value === "" ? undefined : value),
+			z.string({ error: t("errors.input-blank") }),
 		),
 	})
 }

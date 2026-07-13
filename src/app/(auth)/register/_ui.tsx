@@ -75,6 +75,17 @@ export default function RegisterPageUI() {
 				/>
 				<div>{fields.password.errors}</div>
 			</div>
+
+			<div>
+				<label htmlFor="passwordConfirm">{t("fields.password-confirm")}</label>
+				<input
+					id="passwordConfirm"
+					type="password"
+					key={fields.passwordConfirm.key}
+					name={fields.passwordConfirm.name}
+				/>
+				<div>{fields.passwordConfirm.errors}</div>
+			</div>
 			<button
 				type="submit"
 			>{t("pages.register.submit")}</button>
