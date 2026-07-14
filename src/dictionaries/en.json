@@ -31,7 +31,10 @@
 			"email-taken": "Email is already in use",
 			"username-invalid": "Username contains invalid characters",
 			"username-taken": "Username is already in use",
-			"username-length": "Username must be 2-24 characters",
+			"username-too-short": "Username must be at least 2 characters",
+			"username-too-long": "Username can only be up to 20 characters long",
+			"username-cannot-start-with": "Username can't start with -_.",
+			"username-cannot-end-with": "Username can't end with -_.",
 			"password-invalid": "Password is invalid",
 			"password-too-short": "Password is too short",
 			"password-mismatch": "Passwords do not match"
