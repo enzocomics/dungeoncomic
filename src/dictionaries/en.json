@@ -37,7 +37,11 @@
 			"username-cannot-end-with": "Username can't end with -_.",
 			"password-invalid": "Password is invalid",
 			"password-too-short": "Password is too short",
-			"password-mismatch": "Passwords do not match"
+			"password-mismatch": "Passwords do not match",
+			"password-minimum-lowercase": "Password must have at least one lowercase letter",
+			"password-minimum-uppercase": "Password must have at least one uppercase letter",
+			"password-minimum-numbers": "Password must have at least one number",
+			"password-minimum-special": "Password must have at least one special character"
 		}
 	},
 	"404Page": {

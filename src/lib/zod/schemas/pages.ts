@@ -70,7 +70,7 @@ export const resetPasswordSubmitSchema = (
 ) =>
 	z
 		.object({
-			password: zCheckPassword(t),
+			password: zCheckPasswordCreation(t),
 			passwordConfirm: zConfirmPassword(t),
 		})
 		// Check if the two password fields match

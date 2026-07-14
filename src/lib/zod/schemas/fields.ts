@@ -40,7 +40,15 @@ export const zCheckPasswordCreation = (
 		(value) => (value === "" ? undefined : value),
 		z
 			.string({ error: t("errors.password-invalid") })
-			.min(7, t("errors.password-too-short")),
+			// password requirements:
+			// - at least 7 characters
+			// - at least 1 lowercase and 1 uppercase letter
+			// - at least 1 number and 1 special character
+			.min(7, t("errors.password-too-short"))
+			.regex(/[a-z]/, t("errors.password-minimum-lowercase"))
+			.regex(/[A-Z]/, t("errors.password-minimum-uppercase"))
+			.regex(/\d/, t("errors.password-minimum-numbers"))
+			.regex(/[^A-Za-z0-9]/, t("errors.password-minimum-special")),
 	)
 
 /**----------------------------------- */
