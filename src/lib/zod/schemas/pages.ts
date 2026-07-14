@@ -5,7 +5,12 @@ import { Intent } from "@conform-to/react"
 
 // ZOD SCHEMAS
 import { zCheckUniqueEmail, zCheckUniqueUsername } from "./async"
-import { zCheckEmail, zCheckPassword, zConfirmPassword } from "./fields"
+import {
+	zCheckEmail,
+	zCheckPassword,
+	zCheckPasswordCreation,
+	zConfirmPassword,
+} from "./fields"
 
 /**----------------------------------- */
 // SCHEMA - LOGIN FORM
@@ -36,7 +41,7 @@ export function registerSchema(
 			.object({
 				email: zCheckUniqueEmail(t, intent, options),
 				username: zCheckUniqueUsername(t, intent, options),
-				password: zCheckPassword(t),
+				password: zCheckPasswordCreation(t),
 				passwordConfirm: zConfirmPassword(t),
 			})
 			// Check if the two password fields match

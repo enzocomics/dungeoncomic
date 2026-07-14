@@ -16,8 +16,21 @@ export const zCheckEmail = (
 	)
 
 /**----------------------------------- */
-// SCHEMA - PASSWORD FORMAT
+// SCHEMA - PASSWORD VALIDATION ON LOGIN
 export const zCheckPassword = (
+	// Pass the translations object from next-intl so they can be used for zod validation errors
+	t: (arg: string) => string,
+) =>
+	// Preprocess: transform data before validation
+	z.preprocess(
+		// if the field is blank, treat it as undefined
+		(value) => (value === "" ? undefined : value),
+		z.string({ error: t("errors.password-invalid") }),
+	)
+
+/**----------------------------------- */
+// SCHEMA - PASSWORD VALIDATION ON CREATION
+export const zCheckPasswordCreation = (
 	// Pass the translations object from next-intl so they can be used for zod validation errors
 	t: (arg: string) => string,
 ) =>
