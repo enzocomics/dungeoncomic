@@ -140,7 +140,8 @@ services:
     build:
       context: .
       args:
-        NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
+        # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container
+        CMS_DOCKER_URL: http://dcc_cms:8055
     environment:
       NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
     ports:

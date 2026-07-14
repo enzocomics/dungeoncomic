@@ -47,8 +47,11 @@ COPY . .
 ENV NODE_ENV=production
 
 # here we are reading the value from the build args and inserting into the environment variables
-ARG NEXT_PUBLIC_CMS_URL
-ENV NEXT_PUBLIC_CMS_URL=$NEXT_PUBLIC_CMS_URL
+ARG CMS_DOCKER_URL
+ENV NEXT_PUBLIC_CMS_URL=$CMS_DOCKER_URL
+
+ARG CMS_ADMIN_TOKEN
+ENV CMS_ADMIN_TOKEN=$CMS_ADMIN_TOKEN
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
