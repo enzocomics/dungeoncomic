@@ -14,7 +14,6 @@ import { requestReset, submitReset } from "./_action"
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
  */
-
 export default function ResetPasswordPageUI() {
 	// TOKEN
 	const resetTokenParam = useSearchParams()
@@ -23,6 +22,9 @@ export default function ResetPasswordPageUI() {
 	return resetToken ? <ResetPasswordForm /> : <RequestResetForm />
 }
 
+/** ------------------------------------------------ **
+ * FORM 1 - REQUEST A RESET LINK
+ */
 function RequestResetForm() {
 	// I18N
 	const t = useTranslations("auth")
@@ -71,6 +73,9 @@ function RequestResetForm() {
 	</>
 }
 
+/** ------------------------------------------------ **
+ * FORM 2 - NEW PASSWORD CREATION
+ */
 function ResetPasswordForm() {
 	// I18N
 	const t = useTranslations("auth")
@@ -90,6 +95,8 @@ function ResetPasswordForm() {
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput",
 	})
+
+	// OUTPUT
 	return <>
 		<h1 className="text-3xl">{t("pages.reset-password.title")}</h1>
 		<form
