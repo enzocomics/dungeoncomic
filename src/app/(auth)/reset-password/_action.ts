@@ -29,4 +29,6 @@ export async function submitReset(prevState: unknown, formData: FormData) {
 	const submission = parseWithZod(formData, {
 		schema: resetPasswordSubmitSchema(t),
 	})
+
+	return submission.reply()
 }

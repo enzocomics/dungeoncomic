@@ -25,7 +25,9 @@
 			"email": "Email",
 			"username": "Username",
 			"password": "Password",
-			"password-confirm": "Confirm Password"
+			"password-confirm": "Confirm Password",
+			"new-password": "New Password",
+			"new-password-confirm": "Confirm New Password"
 		},
 		"errors": {
 			"input-blank": "This field is required",

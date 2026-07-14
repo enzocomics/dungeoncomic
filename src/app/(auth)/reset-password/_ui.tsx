@@ -43,8 +43,6 @@ function RequestResetForm() {
 		shouldRevalidate: "onInput",
 	})
 
-
-
 	// OUTPUT
 	return <>
 		<h1 className="text-3xl">{t("pages.reset-password.title")}</h1>
@@ -69,14 +67,65 @@ function RequestResetForm() {
 			<button
 				type="submit"
 			>{t("pages.reset-password.request")}</button>
-
 		</form>
-
 	</>
 }
 
 function ResetPasswordForm() {
+	// I18N
+	const t = useTranslations("auth")
+
+	// VALIDATION
+	const [lastResult, action] = useActionState(submitReset, undefined)
+	const [form, fields] = useForm({
+		// Sync the result with the last submission
+		lastResult,
+
+		// Reuse the validation logic on the client
+		onValidate({ formData }) {
+			return parseWithZod(formData, { schema: resetPasswordSubmitSchema(t) })
+		},
+
+		// Validate the form on blur event triggered
+		shouldValidate: "onBlur",
+		shouldRevalidate: "onInput",
+	})
 	return <>
-		Reset the password
+		<h1 className="text-3xl">{t("pages.reset-password.title")}</h1>
+		<form
+			id={form.id}
+			onSubmit={form.onSubmit}
+			action={action}
+			noValidate
+		>
+			<div>
+				<label htmlFor="password">{t("fields.new-password")}</label>
+				<input
+					id="password"
+					type="password"
+					key={fields.password.key}
+					name={fields.password.name}
+					// Retain the value of the previous submission
+					defaultValue={lastResult?.initialValue?.password as string}
+				/>
+				<div>{fields.password.errors}</div>
+			</div>
+
+			<div>
+				<label htmlFor="passwordConfirm">{t("fields.new-password-confirm")}</label>
+				<input
+					id="passwordConfirm"
+					type="password"
+					key={fields.passwordConfirm.key}
+					name={fields.passwordConfirm.name}
+					// Retain the value of the previous submission
+					defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+				/>
+				<div>{fields.passwordConfirm.errors}</div>
+			</div>
+			<button
+				type="submit"
+			>{t("pages.reset-password.submit")}</button>
+		</form>
 	</>
 }
