@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useActionState } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { registerSchema } from "@/lib/zod/schemas"
+import { registerSchema } from "@/lib/zod/schemas/pages"
 import { register } from "./_action"
 
 /** ------------------------------------------------ **

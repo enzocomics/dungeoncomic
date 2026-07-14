@@ -7,7 +7,7 @@ import { readUsers } from "@directus/sdk"
 import { adminClient } from "@/lib/directus/clients"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
-import { registerSchema } from "@/lib/zod/schemas"
+import { registerSchema } from "@/lib/zod/schemas/pages"
 
 /** ------------------------------------------------ **
  * REGISTER ACTION

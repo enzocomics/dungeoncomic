@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server"
 // VALIDATION
 import { z } from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { loginSchema } from "@/lib/zod/schemas"
+import { loginSchema } from "@/lib/zod/schemas/pages"
 
 /** ------------------------------------------------ **
  * LOGIN ACTION
