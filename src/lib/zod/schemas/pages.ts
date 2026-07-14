@@ -39,8 +39,8 @@ export function registerSchema(
 	return (
 		z
 			.object({
-				email: zCheckUniqueEmail(t, intent, options),
-				username: zCheckUniqueUsername(t, intent, options),
+				email: zCheckUniqueEmail(t, intent, options), // async
+				username: zCheckUniqueUsername(t, intent, options), // async
 				password: zCheckPasswordCreation(t),
 				passwordConfirm: zConfirmPassword(t),
 			})
