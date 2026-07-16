@@ -19,7 +19,7 @@ export default function ResetPasswordPageUI() {
 	const resetTokenParam = useSearchParams()
 	const resetToken = resetTokenParam.get("token")
 	// OUTPUT
-	return resetToken ? <ResetPasswordForm /> : <RequestResetForm />
+	return resetToken ? <ResetPasswordForm token={resetToken} /> : <RequestResetForm />
 }
 
 /** ------------------------------------------------ **
@@ -76,7 +76,7 @@ function RequestResetForm() {
 /** ------------------------------------------------ **
  * FORM 2 - NEW PASSWORD CREATION
  */
-function ResetPasswordForm() {
+function ResetPasswordForm({ token }: { token: string }) {
 	// I18N
 	const t = useTranslations("auth")
 
@@ -133,6 +133,8 @@ function ResetPasswordForm() {
 			<button
 				type="submit"
 			>{t("pages.reset-password.submit")}</button>
+			{/* Password Reset Token */}
+			<input name="token" type="hidden" value={token} />
 		</form>
 	</>
 }
