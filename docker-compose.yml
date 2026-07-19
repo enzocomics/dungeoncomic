@@ -131,7 +131,7 @@ services:
   ## FRONTEND: NEXT.JS
   frontend:
     container_name: dungeoncomic_frontend
-    image: next.js:16.2.10
+    image: dungeoncomic/next.js:16.2.10
     depends_on:
       cms:
         condition: service_healthy
