@@ -67,7 +67,6 @@ services:
       - dungeoncomic
     volumes:
       - uploads:/directus/uploads
-      - extensions:/directus/extensions
       - ./schema.yaml:/directus/schema.yaml
 
     command: >
@@ -162,8 +161,6 @@ volumes:
       type: none
       o: bind
       device: ./cms/uploads
-  extensions:
-    name: dungeoncomic_extensions
 
 ## -------------------------------------------------------
 networks:
