@@ -1,6 +1,5 @@
 "use server"
 /**----------------------------------- */
-
 import "@/styles/globals.css"
 // FUNCTIONS
 import clsx from "clsx"
@@ -10,8 +9,6 @@ export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en">
 		<body
 			className={clsx(
-				"bg-neutral-700",
-				"text-white"
 			)}
 		>
 			<NextIntlClientProvider>

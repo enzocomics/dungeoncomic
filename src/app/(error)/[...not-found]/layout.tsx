@@ -9,8 +9,6 @@ export default async function ErrorRootLayoutUI(props: LayoutProps<"/[...not-fou
 	return <html lang="en">
 		<body
 			className={clsx(
-				"bg-neutral-700",
-				"text-white"
 			)}
 		>
 			<NextIntlClientProvider>

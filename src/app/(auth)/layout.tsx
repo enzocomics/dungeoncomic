@@ -9,8 +9,6 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en">
 		<body
 			className={clsx(
-				"bg-neutral-700",
-				"text-white"
 			)}
 		>
 			<NextIntlClientProvider>
