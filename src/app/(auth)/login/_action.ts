@@ -3,9 +3,10 @@
 // I18N
 import { getTranslations } from "next-intl/server"
 // VALIDATION
-import { z } from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
+// CMS
+import { publicClient } from "@/lib/directus/clients"
 
 /** ------------------------------------------------ **
  * LOGIN ACTION
@@ -15,14 +16,23 @@ export async function login(prevState: unknown, formData: FormData) {
 	const t = await getTranslations("auth")
 	// VALIDATION
 	const submission = parseWithZod(formData, { schema: loginSchema(t) })
+	// FORM DATA
+	const email = formData.get("email") as string
+	const password = formData.get("password") as string
 
-	// ON SUBMISSION ERROR
-	if (submission.status !== "success") {
-		return submission.reply()
+	// SUBMIT LOGIN TO DIRECTUS
+	try {
+		await publicClient.login({ email, password })
+	} catch (err: any) {
+		// RETURN ERROR IF UNSUCCESFUL
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return submission.reply({
+			formErrors: [reason],
+		})
 	}
 
-	// ON SUBMISSION SUCCESS
-	console.log("logged in")
-	// Return the submission so that the initial values can be used
+	// RETURN REPLY so that its last value may be used
 	return submission.reply()
 }

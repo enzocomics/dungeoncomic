@@ -44,22 +44,24 @@ export default function LoginPageUI() {
 			<div>
 				<label htmlFor="email">{t("fields.email")}</label>
 				<input
-					id="email"
-					type="email"
-					key={fields.email.key}
+					id={fields.email.name}
 					name={fields.email.name}
+					key={fields.email.key}
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.email as string}
+					type="email"
 				/>
 				<div>{fields.email.errors}</div>
 			</div>
 			<div>
 				<label htmlFor="password">{t("fields.password")}</label>
 				<input
-					id="password"
-					type="password"
-					key={fields.password.key}
+					id={fields.password.name}
 					name={fields.password.name}
+					key={fields.password.key}
+					// Retain the value of the previous submission
+					defaultValue={lastResult?.initialValue?.password as string}
+					type="password"
 				/>
 				<div>{fields.password.errors}</div>
 			</div>
