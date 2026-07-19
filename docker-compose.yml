@@ -16,10 +16,10 @@ services:
   ## -------------------------------------------------------
   ## DATABASE: POSTGRESQL
   db:
-    container_name: dcc_db
+    container_name: dungeoncomic_db
     image: postgres:18.4
     networks:
-      - dcc
+      - dungeoncomic
     volumes:
       - db:/var/lib/postgresql
     environment:
@@ -41,10 +41,10 @@ services:
   ## -------------------------------------------------------
   ## CACHE: REDIS
   cache:
-    container_name: dcc_cache
+    container_name: dungeoncomic_cache
     image: redis:8.8.0
     networks:
-      - dcc
+      - dungeoncomic
     volumes:
       - cache:/data
     healthcheck:
@@ -59,12 +59,12 @@ services:
   ## -------------------------------------------------------
   ## CMS: DIRECTUS
   cms:
-    container_name: dcc_cms
+    container_name: dungeoncomic_cms
     image: directus/directus:12.1.1
     ports:
       - 8055:8055
     networks:
-      - dcc
+      - dungeoncomic
     volumes:
       - uploads:/directus/uploads
       - extensions:/directus/extensions
@@ -132,7 +132,7 @@ services:
   ## -------------------------------------------------------
   ## FRONTEND: NEXT.JS
   frontend:
-    container_name: dcc_frontend
+    container_name: dungeoncomic_frontend
     image: next.js:16.2.10
     depends_on:
       cms:
@@ -141,32 +141,32 @@ services:
       context: .
       args:
         # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container
-        CMS_DOCKER_URL: http://dcc_cms:8055
+        CMS_DOCKER_URL: http://dungeoncomic_cms:8055
     environment:
       NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
     ports:
       - 3000:3000
     networks:
-      - dcc
+      - dungeoncomic
 
 ## -------------------------------------------------------
 volumes:
   cache:
-    name: dcc_cache
+    name: dungeoncomic_cache
   db:
-    name: dcc_db
+    name: dungeoncomic_db
   uploads:
-    name: dcc_uploads
+    name: dungeoncomic_uploads
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./cms/uploads
   extensions:
-    name: dcc_extensions
+    name: dungeoncomic_extensions
 
 ## -------------------------------------------------------
 networks:
-  dcc:
-    name: dcc
+  dungeoncomic:
+    name: dungeoncomic
     driver: bridge
