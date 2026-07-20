@@ -7,6 +7,9 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
 // CMS
 import { publicClient } from "@/lib/directus/clients"
+// SESSION
+import { cookies } from "next/headers"
+import { saveUserCookie } from "@/data/cookies"
 
 /** ------------------------------------------------ **
  * LOGIN ACTION
@@ -22,7 +25,13 @@ export async function login(prevState: unknown, formData: FormData) {
 
 	// SUBMIT LOGIN TO DIRECTUS
 	try {
-		await publicClient.login({ email, password })
+		const response = await publicClient.login(
+			{ email, password },
+			{ mode: "json" },
+		)
+		// SAVE THE USER COOKIE
+		const cookieStore = await cookies()
+		saveUserCookie(cookieStore, response)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
@@ -32,7 +41,6 @@ export async function login(prevState: unknown, formData: FormData) {
 			formErrors: [reason],
 		})
 	}
-
 	// RETURN REPLY so that its last value may be used
 	return submission.reply()
 }
