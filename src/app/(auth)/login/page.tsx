@@ -2,10 +2,11 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
-import LoginPageUI from "./_ui"
-import { verifySession } from "@/data/session"
 import { redirect } from "next/navigation"
+import { getTranslations } from "next-intl/server"
+// COMPONENTS
+import { verifySession } from "@/data/session"
+import LoginPageUI from "./_ui"
 
 /**-----------------------------------
  * LOGIN PAGE ROUTE
@@ -13,7 +14,7 @@ import { redirect } from "next/navigation"
 export default async function LoginPage() {
 	const user = await verifySession()
 	// Show the login UI if the user is not logged in
-	if (!user.id) return <LoginPageUI />
+	if (!user) return <LoginPageUI />
 	// Otherwise, redirect them to the dahsboard
 	else redirect("/dashboard")
 }
