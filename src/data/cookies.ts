@@ -11,8 +11,10 @@ import { userCookieName } from "./env"
  * ACTION: Delete User Cookie
  *
  */
-export async function deleteUserCookie() {
-	const cookieStore = await cookies()
+export async function deleteUserCookie(
+	// the CookieStore needs to be passed to ensure it's using the right context (server action)
+	cookieStore: ReadonlyRequestCookies,
+) {
 	cookieStore.delete(userCookieName)
 }
 
