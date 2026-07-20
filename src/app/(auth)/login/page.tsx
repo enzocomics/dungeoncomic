@@ -13,7 +13,7 @@ import { redirect } from "next/navigation"
 export default async function LoginPage() {
 	const user = await verifySession()
 	// Show the login UI if the user is not logged in
-	if (!user) return <LoginPageUI />
+	if (user.status != "success") return <LoginPageUI />
 	// Otherwise, redirect them to the dahsboard
 	else redirect("/dashboard")
 }
