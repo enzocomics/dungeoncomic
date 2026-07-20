@@ -111,6 +111,11 @@ services:
       STORAGE_LOCAL_DRIVER: local
       STORAGE_LOCAL_ROOT: /directus/uploads
 
+      # Directus - Token Security
+      ACCESS_TOKEN_TTL: 14d
+      SESSION_COOKIE_TTL: 14d
+      REFRESH_TOKEN_TTL: 14d
+
       # DIRECTUS - EMAIL
       EMAIL_VERIFY_SETUP: false
       # - Directus emails are not technically required for our setup
