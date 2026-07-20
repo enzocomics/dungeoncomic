@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
 // CMS
-import { publicClient } from "@/lib/directus/clients"
+import { userClient } from "@/lib/directus/clients"
 // SESSION
 import { cookies } from "next/headers"
 import { saveUserCookie } from "@/data/cookies"
@@ -25,7 +25,7 @@ export async function login(prevState: unknown, formData: FormData) {
 
 	// SUBMIT LOGIN TO DIRECTUS
 	try {
-		const response = await publicClient.login(
+		const response = await userClient.login(
 			{ email, password },
 			{ mode: "json" },
 		)
