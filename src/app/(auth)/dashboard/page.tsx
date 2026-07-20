@@ -3,11 +3,11 @@
 import { Metadata } from "next"
 import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
+import DashboardPageUI from "./_ui"
 
 /**----------------------------------- */
 export default function DashboardPage() {
-	const t = useTranslations("auth")
-	return <h1 className="text-3xl">{t("pages.dashboard.title")}</h1>
+	return <DashboardPageUI />
 }
 
 /** ------------------------------------------------ **
