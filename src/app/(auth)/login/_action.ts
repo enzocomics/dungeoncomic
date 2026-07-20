@@ -31,7 +31,7 @@ export async function login(prevState: unknown, formData: FormData) {
 		)
 		// SAVE THE USER COOKIE
 		const cookieStore = await cookies()
-		saveUserCookie(cookieStore, response)
+		await saveUserCookie(cookieStore, response)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

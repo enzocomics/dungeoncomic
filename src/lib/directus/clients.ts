@@ -35,10 +35,10 @@ export const userClient = createDirectus<DirectusSchema>(directusURL)
 					if (value) {
 						// save user cookie
 						const cookieStore = await cookies()
-						saveUserCookie(cookieStore, value)
+						await saveUserCookie(cookieStore, value)
 					} else {
 						// delete cookie
-						deleteUserCookie()
+						await deleteUserCookie()
 					}
 				},
 			},
