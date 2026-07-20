@@ -12,13 +12,14 @@ import { deleteUserCookie, getUserCookie } from "@/data/cookies"
 export async function logout() {
 	const cookieStore = await cookies()
 	const cookie = await getUserCookie()
+	// Only attempt logout if cookie exists
 	if (cookie) {
 		const refresh_token = cookie.refresh_token as string
 		// Log out of Directus
 		await userClient.logout({ refresh_token: refresh_token })
 		// Delete the cookie
 		await deleteUserCookie(cookieStore)
-		// Redirect to homepage
 	}
+	// Redirect to homepage
 	redirect("/")
 }

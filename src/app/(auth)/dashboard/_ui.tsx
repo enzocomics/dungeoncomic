@@ -6,8 +6,8 @@ export default function DashboardPageUI() {
 	const t = useTranslations("auth")
 	return <>
 		<h1 className="text-3xl">{t("pages.dashboard.title")}</h1>
-		<form action={logout}>
-			<button>Logout</button>
-		</form>
+
+		<Link href="/logout">Logout</Link>
+
 	</>
 }
