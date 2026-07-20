@@ -2,13 +2,21 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
-// UI
+// COMPONENTS
+import { verifySession } from "@/data/session"
 import RegisterPageUI from "./_ui"
 
-/**----------------------------------- */
+/**-----------------------------------
+ * REGISTER PAGE ROUTE
+ */
 export default async function RegisterPage() {
-	return <RegisterPageUI />
+	const user = await verifySession()
+	// Show the create account UI if the user is not logged in
+	if (!user) return <RegisterPageUI />
+	// Otherwise, redirect them to the dahsboard
+	else redirect("/dashboard")
 }
 /** ------------------------------------------------ **
  * Page Metadata
