@@ -1,13 +1,22 @@
+"use server"
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { useTranslations } from "next-intl"
+import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
+// COMPONENTS
+import { verifySession } from "@/data/session"
 import DashboardPageUI from "./_ui"
 
-/**----------------------------------- */
-export default function DashboardPage() {
-	return <DashboardPageUI />
+/**-----------------------------------
+ * Dasboard PAGE ROUTE
+ */
+export default async function DashboardPage() {
+	const user = await verifySession()
+	// Show the dashboard if the user is logged in
+	if (user) return <DashboardPageUI />
+	// Otherwise, redirect them to the login
+	else redirect("/login")
 }
 
 /** ------------------------------------------------ **
