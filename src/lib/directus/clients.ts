@@ -32,13 +32,13 @@ export const userClient = createDirectus<DirectusSchema>(directusURL)
 				},
 				// persist the new token object into a cookie
 				set: async (value) => {
+					const cookieStore = await cookies()
 					if (value) {
 						// save user cookie
-						const cookieStore = await cookies()
 						await saveUserCookie(cookieStore, value)
 					} else {
 						// delete cookie
-						await deleteUserCookie()
+						await deleteUserCookie(cookieStore)
 					}
 				},
 			},
