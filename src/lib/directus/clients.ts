@@ -34,11 +34,15 @@ export const userClient = createDirectus<DirectusSchema>(directusURL)
 				set: async (value) => {
 					const cookieStore = await cookies()
 					if (value) {
-						// save user cookie
-						await saveUserCookie(cookieStore, value)
+						// we can't edit cookies in client component, so check if the window does NOT exist
+						if (typeof window === "undefined")
+							// save user cookie
+							await saveUserCookie(cookieStore, value)
 					} else {
-						// delete cookie
-						await deleteUserCookie(cookieStore)
+						// we can't edit cookies in client component, so check if the window does NOT exist
+						if (typeof window === "undefined")
+							// delete cookie
+							await deleteUserCookie(cookieStore)
 					}
 				},
 			},
