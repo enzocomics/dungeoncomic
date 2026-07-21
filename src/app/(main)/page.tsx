@@ -1,13 +1,12 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
+import HomepageUI from "./_ui"
 
 /**----------------------------------- */
 export default function HomePage() {
-	const t = useTranslations("HomePage")
-	return <h1 className="text-3xl">{t("title")}</h1>
+	return <HomepageUI />
 }
 /** ------------------------------------------------ **
  * Page Metadata
