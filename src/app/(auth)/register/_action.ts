@@ -3,8 +3,8 @@
 // I18N
 import { getTranslations } from "next-intl/server"
 // DIRECTUS
-import { readUsers } from "@directus/sdk"
-import { adminClient } from "@/lib/directus/clients"
+import { readUsers, registerUser, updateUser } from "@directus/sdk"
+import { adminClient, publicClient, userClient } from "@/lib/directus/clients"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
@@ -52,13 +52,34 @@ export async function register(prevState: unknown, formData: FormData) {
 		async: true,
 	})
 
-	// ON SUBMISSION ERROR
-	if (submission.status !== "success") {
-		return submission.reply()
+	// SUBMIT TO DIRECTUS
+	try {
+		// Get the form variables
+		const email = formData.get("email") as string
+		const password = formData.get("password") as string
+		const username = formData.get("username") as string
+		// Create the user
+		const response = await publicClient.request(registerUser(email, password))
+		// Get the new user's ID
+		const getUserID = await adminClient.request(
+			readUsers({
+				filter: { email: { _eq: email } },
+				fields: ["id"],
+				limit: 1,
+			}),
+		)
+		// update the user's username
+		await adminClient.request(
+			updateUser(getUserID[0].id, { username: username }),
+		)
+	} catch (err: any) {
+		// return error if unsuccessful
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return submission.reply({
+			formErrors: [reason],
+		})
 	}
-
-	// ON SUBMISSION SUCCESS
-	console.log("registered")
-	// Return the submission so that the initial values can be used
 	return submission.reply()
 }

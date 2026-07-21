@@ -2,6 +2,8 @@
 /**----------------------------------- */
 // I18N
 import { useTranslations } from "next-intl"
+// NEXT.JS
+import { useRouter } from "next/navigation"
 // AUTH + VALIDATION
 import { useActionState } from "react"
 import { useForm } from "@conform-to/react"
@@ -15,7 +17,8 @@ import { register } from "./_action"
 export default function RegisterPageUI() {
 	// I18N
 	const t = useTranslations("auth")
-
+	// NEXTJS
+	const router = useRouter()
 	// VALIDATION
 	const [lastResult, action] = useActionState(register, null)
 
@@ -30,6 +33,9 @@ export default function RegisterPageUI() {
 				schema: (intent) => registerSchema(t, intent)
 			})
 		},
+		onSubmit() {
+			if (lastResult?.status === "success") router.push("/login?status=registration-successful")
+		}
 	})
 
 	// EXPORT
@@ -44,10 +50,10 @@ export default function RegisterPageUI() {
 			<div>
 				<label htmlFor="email">{t("fields.email")}</label>
 				<input
-					id="email"
-					type="email"
-					key={fields.email.key}
+					id={fields.email.name}
 					name={fields.email.name}
+					key={fields.email.key}
+					type="email"
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.email as string}
 				/>
@@ -56,10 +62,10 @@ export default function RegisterPageUI() {
 			<div>
 				<label htmlFor="username">{t("fields.username")}</label>
 				<input
-					id="username"
-					type="username"
-					key={fields.username.key}
+					id={fields.username.name}
 					name={fields.username.name}
+					key={fields.username.key}
+					type="username"
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.username as string}
 				/>
@@ -68,10 +74,10 @@ export default function RegisterPageUI() {
 			<div>
 				<label htmlFor="password">{t("fields.password")}</label>
 				<input
-					id="password"
-					type="password"
-					key={fields.password.key}
+					id={fields.password.name}
 					name={fields.password.name}
+					key={fields.password.key}
+					type="password"
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.password as string}
 				/>
@@ -81,7 +87,7 @@ export default function RegisterPageUI() {
 			<div>
 				<label htmlFor="passwordConfirm">{t("fields.password-confirm")}</label>
 				<input
-					id="passwordConfirm"
+					id={fields.passwordConfirm.name}
 					type="password"
 					key={fields.passwordConfirm.key}
 					name={fields.passwordConfirm.name}
