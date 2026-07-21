@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 // FUNCTIONS
 import clsx from "clsx"
 import { NextIntlClientProvider } from "next-intl"
+import { ToastContainer } from "react-toastify"
 
 export default async function DashboardRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en">
@@ -13,6 +14,7 @@ export default async function DashboardRootLayoutUI(props: LayoutProps<"/">) {
 		>
 			<NextIntlClientProvider>
 				{props.children}
+				<ToastContainer />
 			</NextIntlClientProvider>
 		</body>
 	</html>
