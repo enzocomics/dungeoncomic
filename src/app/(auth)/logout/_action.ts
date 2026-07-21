@@ -21,5 +21,5 @@ export async function logout() {
 		await deleteUserCookie(cookieStore)
 	}
 	// Redirect to homepage
-	redirect("/")
+	redirect("/?status=logged-out")
 }
