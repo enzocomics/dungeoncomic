@@ -14,7 +14,7 @@ import { toastOptions } from "@/lib/toastify/toast"
  */
 export default function HomepageUI() {
 	// I18N
-	const n = useTranslations("Notifications")
+	const n = useTranslations("notifications")
 	const t = useTranslations("HomePage")
 	// Get the url search param
 	const urlStatusParam = useSearchParams()
