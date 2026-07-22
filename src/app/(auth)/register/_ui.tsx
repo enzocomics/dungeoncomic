@@ -5,17 +5,20 @@ import { useTranslations } from "next-intl"
 // NEXT.JS
 import { useRouter } from "next/navigation"
 // AUTH + VALIDATION
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
 import { register } from "./_action"
+// UI
+import { toast } from "react-toastify"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
  */
 export default function RegisterPageUI() {
 	// I18N
+	const n = useTranslations("notifications")
 	const t = useTranslations("auth")
 	// NEXTJS
 	const router = useRouter()
@@ -26,17 +29,23 @@ export default function RegisterPageUI() {
 	const [form, fields] = useForm({
 		// Sync the result with the last submission
 		lastResult,
-
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
 				// intent provided by `parseWithZod`
 				schema: (intent) => registerSchema(t, intent)
 			})
-		},
-		onSubmit() {
-			if (lastResult?.status === "success") router.push("/login?status=registration-successful")
 		}
 	})
+
+	// EFFECT: Run after form submission
+	useEffect(() => {
+		if (lastResult?.status === "success") {
+			// Toast Notification
+			toast(n("account-created"))
+			// Redirect
+			router.push("/login")
+		}
+	}, [lastResult])
 
 	// EXPORT
 	return <>
