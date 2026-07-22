@@ -51,7 +51,8 @@
 	"404Page": {
 		"title": "404 - Page Not Found"
 	},
-	"Notifications": {
+	"notifications": {
+		"account-created": "Account created successfully.",
 		"logged-out": "You have been logged out."
 	}
 }
