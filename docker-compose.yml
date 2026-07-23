@@ -7,6 +7,14 @@ x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
 x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
 x-db-password: &db-password ${DATABASE_PASSWORD}
 x-timezone: &timezone ${TIMEZONE}
+## VARIABLES - EMAIL
+x-cms-smtp-host: &cms-smtp-host ${CMS_SMTP_HOST}
+x-cms-smtp-port: &cms-smtp-port ${CMS_SMTP_PORT}
+x-cms-smtp-user: &cms-smtp-user ${CMS_SMTP_USER}
+x-cms-smtp-password: &cms-smtp-password ${CMS_SMTP_PASSWORD}
+x-cms-smtp-secure: &cms-smtp-secure ${CMS_SMTP_SECURE}
+x-cms-smtp-ignore-tls: &cms-smtp-ignore-tls ${CMS_SMTP_IGNORE_TLS}
+x-cms-smtp-name: &cms-smtp-name ${CMS_SMTP_NAME}
 ## VARIABLES - COMPOSE
 x-db-name: &db-name "directus"
 x-db-user: &db-user "directus"
@@ -117,10 +125,17 @@ services:
       REFRESH_TOKEN_TTL: 14d
 
       # DIRECTUS - EMAIL
-      EMAIL_VERIFY_SETUP: false
-      # - Directus emails are not technically required for our setup
-      #   since you would only use it to reset your own password
       # - https://directus.com/docs/configuration/email
+      EMAIL_VERIFY_SETUP: true
+      EMAIL_TRANSPORT: smtp
+      EMAIL_FROM: *cms-smtp-user
+      EMAIL_SMTP_HOST: *cms-smtp-host
+      EMAIL_SMTP_PORT: *cms-smtp-port
+      EMAIL_SMTP_USER: *cms-smtp-user
+      EMAIL_SMTP_PASSWORD: *cms-smtp-password
+      EMAIL_SMTP_SECURE: *cms-smtp-secure
+      EMAIL_SMTP_IGNORE_TLS: *cms-smtp-ignore-tls
+      EMAIL_SMTP_NAME: *cms-smtp-name
     healthcheck:
       test:
         [
@@ -146,6 +161,7 @@ services:
         # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container
         CMS_DOCKER_URL: http://dungeoncomic_cms:8055
     environment:
+      # NEXT_PUBLIC_CMS_URL is the public-facing website URL
       NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
     ports:
       - 3000:3000

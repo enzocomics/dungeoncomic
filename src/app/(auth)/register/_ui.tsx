@@ -18,7 +18,6 @@ import { toast } from "react-toastify"
  */
 export default function RegisterPageUI() {
 	// I18N
-	const n = useTranslations("notifications")
 	const t = useTranslations("auth")
 	// NEXTJS
 	const router = useRouter()
@@ -40,8 +39,8 @@ export default function RegisterPageUI() {
 	// EFFECT: Run after form submission
 	useEffect(() => {
 		if (lastResult?.status === "success") {
-			// Toast Notification
-			toast(n("account-created"))
+			// TODO: Status message
+			alert(t("pages.register.verify-account"))
 			// Redirect
 			router.push("/login")
 		}
@@ -68,7 +67,7 @@ export default function RegisterPageUI() {
 				/>
 				<div>{fields.email.errors}</div>
 			</div>
-			<div>
+			{/* <div>
 				<label htmlFor="username">{t("fields.username")}</label>
 				<input
 					id={fields.username.name}
@@ -79,7 +78,7 @@ export default function RegisterPageUI() {
 					defaultValue={lastResult?.initialValue?.username as string}
 				/>
 				<div>{fields.username.errors}</div>
-			</div>
+			</div> */}
 			<div>
 				<label htmlFor="password">{t("fields.password")}</label>
 				<input

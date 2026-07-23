@@ -1,11 +1,11 @@
 "use client"
 /**----------------------------------- */
 // NEXT
-import { useSearchParams } from "next/navigation"
+import { redirect, useSearchParams } from "next/navigation"
 // I18N
 import { useTranslations } from "next-intl"
 // AUTH + VALIDATION
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod/schemas/pages"
@@ -44,6 +44,14 @@ function RequestResetForm() {
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput",
 	})
+
+	// ON SUCCESSFUL SUBMIT
+	useEffect(() => {
+		if (lastResult?.status === "success") {
+			// TODO: Status Message Style
+			alert(t("pages.reset-password.request-successful"))
+		}
+	}, [lastResult])
 
 	// OUTPUT
 	return <>
@@ -95,6 +103,16 @@ function ResetPasswordForm({ token }: { token: string }) {
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput",
 	})
+
+	// ON SUCCESSFUL SUBMIT
+	useEffect(() => {
+		if (lastResult?.status === "success") {
+			// TODO: Status Message Style
+			// Redirect?
+			alert(t("pages.reset-password.reset-successful"))
+			redirect("/login")
+		}
+	}, [lastResult])
 
 	// OUTPUT
 	return <>
