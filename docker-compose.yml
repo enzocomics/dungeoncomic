@@ -161,6 +161,7 @@ services:
         # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container
         CMS_DOCKER_URL: http://dungeoncomic_cms:8055
     environment:
+      # NEXT_PUBLIC_CMS_URL is the public-facing website URL
       NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
     ports:
       - 3000:3000
