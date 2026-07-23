@@ -50,6 +50,7 @@ export default function LoginPageUI() {
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.email as string}
 					type="email"
+					autoComplete="current-email"
 				/>
 				<div>{fields.email.errors}</div>
 			</div>
@@ -62,6 +63,7 @@ export default function LoginPageUI() {
 					// Retain the value of the previous submission
 					defaultValue={lastResult?.initialValue?.password as string}
 					type="password"
+					autoComplete="current-password"
 				/>
 				<div>{fields.password.errors}</div>
 			</div>
