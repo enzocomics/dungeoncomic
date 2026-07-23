@@ -15,7 +15,9 @@
 			"reset-password": {
 				"title": "Reset Password",
 				"request": "Send me a Reset Request",
-				"submit": "Reset My Password"
+				"submit": "Reset My Password",
+				"request-successful": "A link to reset your password has been emailed to you.",
+				"reset-successful": "Your password has been reset. You may now log in."
 			},
 			"dashboard": {
 				"title": "Dashboard"
