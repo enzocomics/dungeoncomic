@@ -10,7 +10,8 @@
 			},
 			"register": {
 				"title": "Register",
-				"submit": "Create Account"
+				"submit": "Create Account",
+				"verify-account": "Please click the verification link that has been sent to your email to complete your registration."
 			},
 			"reset-password": {
 				"title": "Reset Password",
@@ -54,7 +55,6 @@
 		"title": "404 - Page Not Found"
 	},
 	"notifications": {
-		"account-created": "Account created successfully.",
 		"logged-out": "You have been logged out."
 	}
 }

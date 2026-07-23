@@ -57,21 +57,21 @@ export async function register(prevState: unknown, formData: FormData) {
 		// Get the form variables
 		const email = formData.get("email") as string
 		const password = formData.get("password") as string
-		const username = formData.get("username") as string
+		// const username = formData.get("username") as string
 		// Create the user
 		const response = await publicClient.request(registerUser(email, password))
 		// Get the new user's ID
-		const getUserID = await adminClient.request(
-			readUsers({
-				filter: { email: { _eq: email } },
-				fields: ["id"],
-				limit: 1,
-			}),
-		)
-		// update the user's username
-		await adminClient.request(
-			updateUser(getUserID[0].id, { username: username }),
-		)
+		// const getUserID = await adminClient.request(
+		// 	readUsers({
+		// 		filter: { email: { _eq: email } },
+		// 		fields: ["id"],
+		// 		limit: 1,
+		// 	}),
+		// )
+		// // update the user's username
+		// await adminClient.request(
+		// 	updateUser(getUserID[0].id, { username: username }),
+		// )
 	} catch (err: any) {
 		// return error if unsuccessful
 		const error = err.errors?.[0]
