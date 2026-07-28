@@ -5,21 +5,24 @@ import "@/styles/globals.css"
 import clsx from "clsx"
 // LIBRARIES
 import { NextIntlClientProvider } from "next-intl"
+import { ThemeProvider } from "next-themes"
 import { ToastContainer } from "react-toastify"
 
 /**-----------------------------------
  * ROOT LAYOUT - MAIN APP
  */
 export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
-	return <html lang="en">
+	return <html lang="en" suppressHydrationWarning>
 		<body
 			className={clsx(
 			)}
 		>
-			<NextIntlClientProvider>
-				{props.children}
-				<ToastContainer />
-			</NextIntlClientProvider>
+			<ThemeProvider>
+				<NextIntlClientProvider>
+					{props.children}
+					<ToastContainer />
+				</NextIntlClientProvider>
+			</ThemeProvider>
 		</body>
 	</html>
 }
