@@ -2,7 +2,33 @@ version: 1
 directus: 12.1.1
 vendor: postgres
 collections:
-  - collection: dungeoncomic
+  - collection: comic_panels
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: 'true'
+      autosave_revision_interval: null
+      collapse: open
+      collection: comic_panels
+      color: null
+      display_template: null
+      group: pages
+      hidden: false
+      icon: image
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: sort
+      status: active
+      translations: null
+      unarchive_value: 'false'
+      versioning: false
+    schema:
+      name: comic_panels
+  - collection: comics
     meta:
       accountability: all
       archive_app_filter: true
@@ -10,7 +36,7 @@ collections:
       archive_value: 'true'
       autosave_revision_interval: null
       collapse: open
-      collection: dungeoncomic
+      collection: comics
       color: null
       display_template: null
       group: null
@@ -20,15 +46,1420 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 1
+      sort_field: null
+      status: active
+      translations: null
+      unarchive_value: 'false'
+      versioning: false
+    schema:
+      name: comics
+  - collection: comments
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: archived
+      archive_value: 'true'
+      autosave_revision_interval: null
+      collapse: open
+      collection: comments
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: mode_comment
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 2
       sort_field: sort
       status: active
       translations: null
       unarchive_value: 'false'
       versioning: false
     schema:
-      name: dungeoncomic
+      name: comments
+  - collection: page_branches
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      autosave_revision_interval: null
+      collapse: open
+      collection: page_branches
+      color: null
+      display_template: null
+      group: pages
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 2
+      sort_field: null
+      status: active
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: page_branches
+  - collection: pages
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: archived
+      archive_value: 'true'
+      autosave_revision_interval: null
+      collapse: open
+      collection: pages
+      color: null
+      display_template: null
+      group: comics
+      hidden: false
+      icon: post_add
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: null
+      status: active
+      translations: null
+      unarchive_value: 'false'
+      versioning: false
+    schema:
+      name: pages
 fields:
+  - collection: comic_panels
+    field: id
+    type: integer
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: meta
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: comic_panels
+      data_type: integer
+      default_value: nextval('comic_panels_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: sort
+    type: integer
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: meta
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: comic_panels
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: user_created
+    type: uuid
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: comic_panels
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comic_panels
+    field: date_created
+    type: timestamp
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: meta
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 5
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: comic_panels
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: user_updated
+    type: uuid
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 6
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: comic_panels
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comic_panels
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: meta
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 7
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: comic_panels
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: page_id
+    type: integer
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: page_id
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: page_id
+      table: comic_panels
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pages
+      foreign_key_column: id
+  - collection: comic_panels
+    field: meta
+    type: alias
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: meta
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comic_panels
+    field: panel_image
+    type: uuid
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: panel_image
+      group: content
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        allowedMimeTypes:
+          - image/jpeg
+          - image/png
+          - image/gif
+          - image/webp
+        crop: false
+        folder: 85babdbe-0064-4263-96a3-ff21ae529dea
+      readonly: false
+      required: true
+      searchable: true
+      sort: 2
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: panel_image
+      table: comic_panels
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: comic_panels
+    field: panel_title
+    type: string
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: panel_title
+      group: content
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: panel_title
+      table: comic_panels
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: panel_description
+    type: text
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: panel_description
+      group: content
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: panel_description
+      table: comic_panels
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comic_panels
+    field: content
+    type: alias
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comic_panels
+    field: header-zbrntt
+    type: alias
+    meta:
+      collection: comic_panels
+      conditions: null
+      display: null
+      display_options: null
+      field: header-zbrntt
+      group: content
+      hidden: false
+      interface: header
+      note: null
+      options:
+        color: '#6644FF'
+        icon: image
+        subtitle: null
+        title: Comic Panel
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: id
+    type: integer
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: meta
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: comics
+      data_type: integer
+      default_value: nextval('comics_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: archived
+    type: boolean
+    meta:
+      collection: comics
+      conditions: null
+      display: boolean
+      display_options:
+        colorOff: transparent
+        colorOn: var(--theme--foreground-subdued)
+        iconOff: unarchive
+        iconOn: archive
+        labelOff: $t:not_archived
+        labelOn: $t:archived
+      field: archived
+      group: meta
+      hidden: true
+      interface: boolean
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - cast-boolean
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: archived
+      table: comics
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: user_created
+    type: uuid
+    meta:
+      collection: comics
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: comics
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comics
+    field: date_created
+    type: timestamp
+    meta:
+      collection: comics
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: meta
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 5
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: comics
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: user_updated
+    type: uuid
+    meta:
+      collection: comics
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 6
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: comics
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comics
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: comics
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: meta
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 7
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: comics
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: title
+    type: string
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: details
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: title
+      table: comics
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: description
+    type: text
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: details
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: comics
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: pages
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: pages
+      group: content
+      hidden: false
+      interface: list-o2m
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: meta
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: meta
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: details
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: details
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: slug
+    type: string
+    meta:
+      collection: comics
+      conditions: null
+      display: raw
+      display_options:
+        prefix: dungeoncomic.com/
+      field: slug
+      group: details
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: slug
+      table: comics
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comics
+    field: content
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: divider-elu7_3
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: divider-elu7_3
+      group: content
+      hidden: false
+      interface: presentation-divider
+      note: null
+      options:
+        color: null
+        icon: text_snippet
+        inlineTitle: true
+        title: Content
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comics
+    field: divider-twiw2g
+    type: alias
+    meta:
+      collection: comics
+      conditions: null
+      display: null
+      display_options: null
+      field: divider-twiw2g
+      group: details
+      hidden: false
+      interface: presentation-divider
+      note: null
+      options:
+        icon: info
+        inlineTitle: true
+        title: Details
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: comments
+    field: id
+    type: integer
+    meta:
+      collection: comments
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: comments
+      data_type: integer
+      default_value: nextval('comments_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comments
+    field: archived
+    type: boolean
+    meta:
+      collection: comments
+      conditions: null
+      display: boolean
+      display_options:
+        colorOff: transparent
+        colorOn: var(--theme--foreground-subdued)
+        iconOff: unarchive
+        iconOn: archive
+        labelOff: $t:not_archived
+        labelOn: $t:archived
+      field: archived
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - cast-boolean
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: archived
+      table: comments
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comments
+    field: sort
+    type: integer
+    meta:
+      collection: comments
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: comments
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comments
+    field: user_created
+    type: uuid
+    meta:
+      collection: comments
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: comments
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comments
+    field: date_created
+    type: timestamp
+    meta:
+      collection: comments
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 5
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: comments
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: comments
+    field: user_updated
+    type: uuid
+    meta:
+      collection: comments
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 6
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: comments
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: comments
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: comments
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 7
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: comments
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: directus_users
     field: username
     type: string
@@ -69,16 +1500,268 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: dungeoncomic
+  - collection: page_branches
     field: id
-    type: bigInteger
+    type: integer
     meta:
-      collection: dungeoncomic
+      collection: page_branches
       conditions: null
       display: null
       display_options: null
       field: id
+      group: meta
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: page_branches
+      data_type: integer
+      default_value: nextval('page_branches_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: page_branches
+    field: pages_id
+    type: integer
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: pages_id
+      group: meta
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: pages_id
+      table: page_branches
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pages
+      foreign_key_column: id
+  - collection: page_branches
+    field: linked_pages_id
+    type: integer
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: linked_pages_id
+      group: meta
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: linked_pages_id
+      table: page_branches
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pages
+      foreign_key_column: id
+  - collection: page_branches
+    field: meta
+    type: alias
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: meta
       group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: page_branches
+    field: content
+    type: alias
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: page_branches
+    field: branch_title
+    type: string
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: branch_title
+      group: content
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: branch_title
+      table: page_branches
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: page_branches
+    field: branch_description
+    type: text
+    meta:
+      collection: page_branches
+      conditions: null
+      display: null
+      display_options: null
+      field: branch_description
+      group: content
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: branch_description
+      table: page_branches
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pages
+    field: id
+    type: integer
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: meta
       hidden: true
       interface: input
       note: null
@@ -94,11 +1777,11 @@ fields:
       width: full
     schema:
       name: id
-      table: dungeoncomic
-      data_type: bigint
-      default_value: nextval('dungeoncomic_id_seq'::regclass)
+      table: pages
+      data_type: integer
+      default_value: nextval('pages_id_seq'::regclass)
       max_length: null
-      numeric_precision: 64
+      numeric_precision: 32
       numeric_scale: 0
       is_nullable: false
       is_unique: true
@@ -109,11 +1792,11 @@ fields:
       has_auto_increment: true
       foreign_key_table: null
       foreign_key_column: null
-  - collection: dungeoncomic
+  - collection: pages
     field: archived
     type: boolean
     meta:
-      collection: dungeoncomic
+      collection: pages
       conditions: null
       display: boolean
       display_options:
@@ -124,8 +1807,8 @@ fields:
         labelOff: $t:not_archived
         labelOn: $t:archived
       field: archived
-      group: null
-      hidden: false
+      group: meta
+      hidden: true
       interface: boolean
       note: null
       options: null
@@ -141,7 +1824,7 @@ fields:
       width: full
     schema:
       name: archived
-      table: dungeoncomic
+      table: pages
       data_type: boolean
       default_value: false
       max_length: null
@@ -156,56 +1839,16 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: dungeoncomic
-    field: sort
-    type: integer
-    meta:
-      collection: dungeoncomic
-      conditions: null
-      display: null
-      display_options: null
-      field: sort
-      group: null
-      hidden: true
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: sort
-      table: dungeoncomic
-      data_type: integer
-      default_value: null
-      max_length: null
-      numeric_precision: 32
-      numeric_scale: 0
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: dungeoncomic
+  - collection: pages
     field: user_created
     type: uuid
     meta:
-      collection: dungeoncomic
+      collection: pages
       conditions: null
       display: user
       display_options: null
       field: user_created
-      group: null
+      group: meta
       hidden: true
       interface: select-dropdown-m2o
       note: null
@@ -223,7 +1866,7 @@ fields:
       width: half
     schema:
       name: user_created
-      table: dungeoncomic
+      table: pages
       data_type: uuid
       default_value: null
       max_length: null
@@ -238,17 +1881,17 @@ fields:
       has_auto_increment: false
       foreign_key_table: directus_users
       foreign_key_column: id
-  - collection: dungeoncomic
+  - collection: pages
     field: date_created
     type: timestamp
     meta:
-      collection: dungeoncomic
+      collection: pages
       conditions: null
       display: datetime
       display_options:
         relative: true
       field: date_created
-      group: null
+      group: meta
       hidden: true
       interface: datetime
       note: null
@@ -265,7 +1908,7 @@ fields:
       width: half
     schema:
       name: date_created
-      table: dungeoncomic
+      table: pages
       data_type: timestamp with time zone
       default_value: null
       max_length: null
@@ -280,16 +1923,16 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-  - collection: dungeoncomic
+  - collection: pages
     field: user_updated
     type: uuid
     meta:
-      collection: dungeoncomic
+      collection: pages
       conditions: null
       display: user
       display_options: null
       field: user_updated
-      group: null
+      group: meta
       hidden: true
       interface: select-dropdown-m2o
       note: null
@@ -307,7 +1950,7 @@ fields:
       width: half
     schema:
       name: user_updated
-      table: dungeoncomic
+      table: pages
       data_type: uuid
       default_value: null
       max_length: null
@@ -322,17 +1965,17 @@ fields:
       has_auto_increment: false
       foreign_key_table: directus_users
       foreign_key_column: id
-  - collection: dungeoncomic
+  - collection: pages
     field: date_updated
     type: timestamp
     meta:
-      collection: dungeoncomic
+      collection: pages
       conditions: null
       display: datetime
       display_options:
         relative: true
       field: date_updated
-      group: null
+      group: meta
       hidden: true
       interface: datetime
       note: null
@@ -349,7 +1992,7 @@ fields:
       width: half
     schema:
       name: date_updated
-      table: dungeoncomic
+      table: pages
       data_type: timestamp with time zone
       default_value: null
       max_length: null
@@ -364,6 +2007,352 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: pages
+    field: comic
+    type: integer
+    meta:
+      collection: pages
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{title}}'
+      field: comic
+      group: details
+      hidden: false
+      interface: select-dropdown-m2o
+      note: Select which comic project this page belongs
+      options:
+        template: '{{title}}'
+      readonly: false
+      required: true
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: comic
+      table: pages
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: comics
+      foreign_key_column: id
+  - collection: pages
+    field: meta
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: meta
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: pages
+    field: details
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: details
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: pages
+    field: title
+    type: string
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: details
+      hidden: false
+      interface: input
+      note: The title of this comic page (optional)
+      options: null
+      readonly: false
+      required: false
+      searchable: false
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: pages
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pages
+    field: comic_pagenum
+    type: integer
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: comic_pagenum
+      group: details
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: true
+      searchable: true
+      sort: 3
+      special: null
+      translations:
+        - language: en-US
+          translation: 'Page #'
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: comic_pagenum
+      table: pages
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pages
+    field: routing
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: routing
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: pages
+    field: content
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: pages
+    field: comic_panels
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: comic_panels
+      group: content
+      hidden: false
+      interface: list-o2m
+      note: >-
+        Multiple comic panels may be created here. Each comic panel consists of
+        a required image and optional title + description.
+      options:
+        enableLink: true
+        fields:
+          - comic_panel.$thumbnail
+        limit: 10
+        sort: null
+        tableSpacing: comfortable
+        template: '{{panel_image.$thumbnail}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: fill
+  - collection: pages
+    field: header-hjls40
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: header-hjls40
+      group: details
+      hidden: false
+      interface: header
+      note: null
+      options:
+        color: '#6644FF'
+        icon: post_add
+        subtitle: '{{comic}}'
+        title: Comic Page
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: pages
+    field: next_pages
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: next_pages
+      group: routing
+      hidden: false
+      interface: list-m2m
+      note: Other pages the current page lead to. Multiple may be selected
+      options:
+        enableLink: true
+        template: '{{linked_pages_id.comic.slug}}/{{linked_pages_id.comic_pagenum}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - m2m
+      translations:
+        - language: en-US
+          translation: Next Page(s)
+      validation: null
+      validation_message: null
+      width: half
+  - collection: pages
+    field: prev_pages
+    type: alias
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: prev_pages
+      group: routing
+      hidden: false
+      interface: list-m2m
+      note: Other pages that lead to the current page
+      options:
+        enableLink: true
+        template: '{{pages_id.comic.slug}}/{{pages_id.comic_pagenum}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - m2m
+      translations:
+        - language: en-US
+          translation: Previous Page(s)
+      validation: null
+      validation_message: null
+      width: half
 systemFields:
   - collection: directus_activity
     field: timestamp
@@ -414,12 +2403,12 @@ systemFields:
     schema:
       is_indexed: true
 relations:
-  - collection: dungeoncomic
+  - collection: comic_panels
     field: user_updated
     related_collection: directus_users
     meta:
       junction_field: null
-      many_collection: dungeoncomic
+      many_collection: comic_panels
       many_field: user_updated
       one_allowed_collections: null
       one_collection: directus_users
@@ -428,19 +2417,19 @@ relations:
       one_field: null
       sort_field: null
     schema:
-      table: dungeoncomic
+      table: comic_panels
       column: user_updated
       foreign_key_table: directus_users
       foreign_key_column: id
-      constraint_name: dungeoncomic_user_updated_foreign
+      constraint_name: comic_panels_user_updated_foreign
       on_update: NO ACTION
       on_delete: NO ACTION
-  - collection: dungeoncomic
+  - collection: comic_panels
     field: user_created
     related_collection: directus_users
     meta:
       junction_field: null
-      many_collection: dungeoncomic
+      many_collection: comic_panels
       many_field: user_created
       one_allowed_collections: null
       one_collection: directus_users
@@ -449,10 +2438,241 @@ relations:
       one_field: null
       sort_field: null
     schema:
-      table: dungeoncomic
+      table: comic_panels
       column: user_created
       foreign_key_table: directus_users
       foreign_key_column: id
-      constraint_name: dungeoncomic_user_created_foreign
+      constraint_name: comic_panels_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: comic_panels
+    field: page_id
+    related_collection: pages
+    meta:
+      junction_field: null
+      many_collection: comic_panels
+      many_field: page_id
+      one_allowed_collections: null
+      one_collection: pages
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: comic_panels
+      sort_field: sort
+    schema:
+      table: comic_panels
+      column: page_id
+      foreign_key_table: pages
+      foreign_key_column: id
+      constraint_name: comic_panels_page_id_foreign
+      on_update: NO ACTION
+      on_delete: CASCADE
+  - collection: comic_panels
+    field: panel_image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: comic_panels
+      many_field: panel_image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: comic_panels
+      column: panel_image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: comic_panels_panel_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: comics
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: comics
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: comics
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: comics_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: comics
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: comics
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: comics
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: comics_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: comments
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: comments
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: comments
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: comments_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: comments
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: comments
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: comments
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: comments_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: page_branches
+    field: linked_pages_id
+    related_collection: pages
+    meta:
+      junction_field: pages_id
+      many_collection: page_branches
+      many_field: linked_pages_id
+      one_allowed_collections: null
+      one_collection: pages
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: prev_pages
+      sort_field: null
+    schema:
+      table: page_branches
+      column: linked_pages_id
+      foreign_key_table: pages
+      foreign_key_column: id
+      constraint_name: page_branches_linked_pages_id_foreign
+      on_update: NO ACTION
+      on_delete: CASCADE
+  - collection: page_branches
+    field: pages_id
+    related_collection: pages
+    meta:
+      junction_field: linked_pages_id
+      many_collection: page_branches
+      many_field: pages_id
+      one_allowed_collections: null
+      one_collection: pages
+      one_collection_field: null
+      one_deselect_action: delete
+      one_field: next_pages
+      sort_field: null
+    schema:
+      table: page_branches
+      column: pages_id
+      foreign_key_table: pages
+      foreign_key_column: id
+      constraint_name: page_branches_pages_id_foreign
+      on_update: NO ACTION
+      on_delete: CASCADE
+  - collection: pages
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pages
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pages
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pages_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pages
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pages
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pages
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pages_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pages
+    field: comic
+    related_collection: comics
+    meta:
+      junction_field: null
+      many_collection: pages
+      many_field: comic
+      one_allowed_collections: null
+      one_collection: comics
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: pages
+      sort_field: null
+    schema:
+      table: pages
+      column: comic
+      foreign_key_table: comics
+      foreign_key_column: id
+      constraint_name: pages_comic_foreign
       on_update: NO ACTION
       on_delete: NO ACTION
