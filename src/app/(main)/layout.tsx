@@ -1,4 +1,5 @@
 "use server"
+import StatusMessage from "@/components/status-message"
 /**----------------------------------- */
 import "@/styles/globals.css"
 // FUNCTIONS
@@ -19,6 +20,7 @@ export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
 		>
 			<ThemeProvider>
 				<NextIntlClientProvider>
+					<StatusMessage />
 					{props.children}
 					<ToastContainer />
 				</NextIntlClientProvider>
