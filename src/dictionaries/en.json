@@ -55,6 +55,7 @@
 		"title": "404 - Page Not Found"
 	},
 	"status-messages": {
+		"account-verified": "Your account has been verified. You may now log in.",
 		"logged-out": "You have been logged out."
 	}
 }
