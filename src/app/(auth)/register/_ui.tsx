@@ -123,8 +123,9 @@ export default function RegisterPageUI() {
 							type="email"
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
+							errors={fields.email.errors}
 						/>
-						<Label htmlFor={fields.email.name} className="font-normal text-red-500">{fields.email.errors}</Label>
+
 					</div>
 					{/* <div>
 				<label htmlFor="username">{t("fields.username")}</label>
@@ -147,8 +148,8 @@ export default function RegisterPageUI() {
 							type="password"
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
+							errors={fields.password.errors}
 						/>
-						<Label htmlFor={fields.password.name} className="font-normal text-red-500">{fields.password.errors}</Label>
 					</div>
 
 					<div>
@@ -160,8 +161,8 @@ export default function RegisterPageUI() {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+							errors={fields.passwordConfirm.errors}
 						/>
-						<Label htmlFor={fields.passwordConfirm.name} className="font-normal text-red-500">{fields.passwordConfirm.errors}</Label>
 					</div>
 					<Button
 						type="submit"

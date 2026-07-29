@@ -91,8 +91,8 @@ function RequestResetForm() {
 							name={fields.email.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
+							errors={fields.email.errors}
 						/>
-						<Label htmlFor={fields.email.name} className="font-normal text-red-500">{fields.email.errors}</Label>
 					</div>
 					<Button
 						type="submit"
@@ -163,8 +163,8 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.password.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
+							errors={fields.password.errors}
 						/>
-						<Label htmlFor={fields.password.name} className="font-normal text-red-500">{fields.password.errors}</Label>
 					</div>
 
 					<div>
@@ -176,8 +176,8 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+							errors={fields.passwordConfirm.errors}
 						/>
-						<Label htmlFor={fields.passwordConfirm.name} className="font-normal text-red-500">{fields.passwordConfirm.errors}</Label>
 					</div>
 					<Button
 						type="submit"

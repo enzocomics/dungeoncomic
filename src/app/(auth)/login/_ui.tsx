@@ -83,8 +83,9 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.email as string}
 							type="email"
 							autoComplete="current-email"
+							errors={fields.email.errors}
 						/>
-						<Label htmlFor={fields.email.name} className="font-normal text-red-500">{fields.email.errors}</Label>
+
 					</div>
 					<div>
 						<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
@@ -96,8 +97,9 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.password as string}
 							type="password"
 							autoComplete="current-password"
+							errors={fields.password.errors}
 						/>
-						<Label htmlFor={fields.password.name} className="font-normal text-red-500">{fields.password.errors}</Label>
+
 					</div>
 					<Button
 						type="submit"
