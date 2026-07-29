@@ -8,11 +8,15 @@ import { useSearchParams } from "next/navigation"
 import { toast } from "react-toastify"
 // CMS
 import { toastOptions } from "@/lib/toastify/toast"
+import { useChangeStatus } from "@/components/status-message"
+import { useGlobalContext } from "./_context"
 
 /**-----------------------------------
  * HOMEPAGE - UI
  */
 export default function HomepageUI() {
+	const { statusMessage, setStatusMessage } = useGlobalContext()
+	const changeStatus = useChangeStatus()
 	// I18N
 	const n = useTranslations("notifications")
 	const t = useTranslations("HomePage")
@@ -29,7 +33,9 @@ export default function HomepageUI() {
 		}
 	}, [urlStatus])
 
+
 	return <>
 		<h1 className="text-3xl">{t("title")}</h1>
+		<button onClick={() => { changeStatus("hello") }}>ChangeStatus</button>
 	</>
 }

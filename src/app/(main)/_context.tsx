@@ -1,5 +1,8 @@
 "use client"
 /** ------------------------------------------------ **/
+// TYPES
+import { StatusMessageType } from "@/components/status-message"
+// LIBRARIES
 import { SetStateAction, PropsWithChildren, createContext, useContext, useState } from "react"
 
 /** ------------------------------------------------ **
@@ -7,17 +10,17 @@ import { SetStateAction, PropsWithChildren, createContext, useContext, useState 
  * - Status Messages
  ** ------------------------------------------------ **/
 // STATE TYPES
-type StatusMessageType = string
+type StatusMessageSchema = { message: string, type: StatusMessageType }
 
 // CONTEXT TYPES
 type ContextType = {
 	// Status Messages
-	statusMessage: StatusMessageType,
-	setStatusMessage: (statusMessage: SetStateAction<StatusMessageType>) => void
+	statusMessage: StatusMessageSchema,
+	setStatusMessage: (statusMessage: SetStateAction<StatusMessageSchema>) => void
 }
 
 // DEFAULT VARIABLES
-const statusMessageDefault = ""
+const statusMessageDefault: StatusMessageSchema = { message: "", type: "info" }
 
 /** ------------------------------------------------ **/
 // CONTEXT
@@ -36,4 +39,14 @@ export default function GlobalContextProvider({ children }: PropsWithChildren<{}
 		{children}
 	</GlobalContext.Provider>
 
+}
+
+/** ------------------------------------------------ **/
+// Function that returns the current context
+export function useGlobalContext() {
+	const context = useContext(GlobalContext)
+
+	// Output only if the context is used within the provider
+	if (!context) throw new Error("useGlobalContext must be used within GlobalContextProvider")
+	return context
 }
