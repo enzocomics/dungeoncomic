@@ -10,6 +10,8 @@ import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
 import { register } from "./_action"
+// UI
+import { useChangeStatus } from "@/components/status-message"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -17,6 +19,8 @@ import { register } from "./_action"
 export default function RegisterPageUI() {
 	// I18N
 	const t = useTranslations("auth")
+	// STATUS MESSAGES
+	const setStatus = useChangeStatus("")
 	// NEXTJS
 	const router = useRouter()
 	// VALIDATION
@@ -37,8 +41,8 @@ export default function RegisterPageUI() {
 	// EFFECT: Run after form submission
 	useEffect(() => {
 		if (lastResult?.status === "success") {
-			// TODO: Status message
-			alert(t("pages.register.verify-account"))
+			// STATUS MESSAGE
+			setStatus(t("pages.register.verify-account"), "success")
 			// Redirect
 			router.push("/login")
 		}

@@ -10,6 +10,8 @@ import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod/schemas/pages"
 import { requestReset, submitReset } from "./_action"
+// UI
+import { useChangeStatus } from "@/components/status-message"
 
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
@@ -28,7 +30,8 @@ export default function ResetPasswordPageUI() {
 function RequestResetForm() {
 	// I18N
 	const t = useTranslations("auth")
-
+	// STATUS MESSAGES
+	const setStatus = useChangeStatus("")
 	// VALIDATION
 	const [lastResult, action] = useActionState(requestReset, undefined)
 	const [form, fields] = useForm({
@@ -48,8 +51,8 @@ function RequestResetForm() {
 	// ON SUCCESSFUL SUBMIT
 	useEffect(() => {
 		if (lastResult?.status === "success") {
-			// TODO: Status Message Style
-			alert(t("pages.reset-password.request-successful"))
+			// STATUS MESSAGE
+			setStatus(t("pages.reset-password.request-successful"), "success")
 		}
 	}, [lastResult])
 
@@ -87,7 +90,8 @@ function RequestResetForm() {
 function ResetPasswordForm({ token }: { token: string }) {
 	// I18N
 	const t = useTranslations("auth")
-
+	// STATUS MESSAGES
+	const setStatus = useChangeStatus("")
 	// VALIDATION
 	const [lastResult, action] = useActionState(submitReset, undefined)
 	const [form, fields] = useForm({
@@ -107,9 +111,8 @@ function ResetPasswordForm({ token }: { token: string }) {
 	// ON SUCCESSFUL SUBMIT
 	useEffect(() => {
 		if (lastResult?.status === "success") {
-			// TODO: Status Message Style
-			// Redirect?
-			alert(t("pages.reset-password.reset-successful"))
+			// STATUS MESSAGE & REDIRECT
+			setStatus(t("pages.reset-password.reset-successful"), "success")
 			redirect("/login")
 		}
 	}, [lastResult])
