@@ -15,16 +15,6 @@ import { useGlobalContext } from "@/app/(main)/_context"
 export default function StatusMessage() {
 	// STATUS MESSAGE CONTEXT
 	const { statusMessage } = useGlobalContext()
-	switch (statusMessage.type) {
-		case "alert":
-			break
-		case "error":
-			break
-		case "info":
-			break
-		case "success":
-			break
-	}
 
 	// OUTPUT
 	// Only display the layout if a message exists
