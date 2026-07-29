@@ -57,6 +57,16 @@ export default function LoginPageUI() {
 		}
 	}, [urlStatus])
 
+	// EFFECT: Display error
+	useEffect(() => {
+		console.log(lastResult?.status)
+		if (lastResult?.status == "error" && form.errors) {
+			const messages = Object.values(form.errors).flat()
+			setStatus("error", `${s("types.error").toUpperCase()}: ${messages[0]}`)
+		}
+	}, [lastResult])
+
+
 
 	// OUTPUT
 	return <>
