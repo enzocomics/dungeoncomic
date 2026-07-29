@@ -18,8 +18,8 @@ export default function HomepageUI() {
 	const s = useTranslations("status-messages")
 	const t = useTranslations("HomePage")
 	// Get the url search param
-	const urlStatusParam = useSearchParams()
-	const urlStatus = urlStatusParam.get("status")
+	const params = useSearchParams()
+	const urlStatus = params.get("status")
 
 	// Display the status notification
 	useEffect(() => {
