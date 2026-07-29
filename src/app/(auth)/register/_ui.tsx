@@ -11,9 +11,10 @@ import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
 import { register, verify } from "./_action"
+// DATA
+import { adminContactEmail } from "@/data/env"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import { adminEmail } from "@/data/env"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -77,7 +78,7 @@ export default function RegisterPageUI() {
 								contact: (chunks) => <a href={
 									// include custom attribute (that's just another translation)
 									s("account-verify-error.mailto", {
-										adminEmail: adminEmail
+										adminEmail: adminContactEmail
 									})
 								}>
 									{chunks}
