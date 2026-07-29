@@ -2,6 +2,9 @@
 	"HomePage": {
 		"title": "Hello world!"
 	},
+	"404Page": {
+		"title": "404 - Page Not Found"
+	},
 	"auth": {
 		"pages": {
 			"login": {
@@ -51,12 +54,18 @@
 			"password-minimum-special": "Password must have at least one special character"
 		}
 	},
-	"404Page": {
-		"title": "404 - Page Not Found"
-	},
 	"status-messages": {
 		"account-verified": "Your account has been verified. You may now log in.",
-		"account-verify-error": "There was an error verifying your account.",
-		"logged-out": "You have been logged out."
+		"account-verify-error": {
+			"message": "We were unable to verify your account. Please try again, or <contact>contact an administrator</contact> for assistance.",
+			"mailto": "mailto:{adminEmail}"
+		},
+		"logged-out": "You have been logged out.",
+		"types": {
+			"alert": "Alert",
+			"error": "Error",
+			"info": "Info",
+			"success": "Success"
+		}
 	}
 }
