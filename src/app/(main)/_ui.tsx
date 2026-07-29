@@ -16,7 +16,7 @@ export default function HomepageUI() {
 	// STATUS MESSAGE
 	const setStatus = useChangeStatus("")
 	// I18N
-	const n = useTranslations("notifications")
+	const s = useTranslations("status-messages")
 	const t = useTranslations("HomePage")
 	// Get the url search param
 	const urlStatusParam = useSearchParams()
@@ -26,7 +26,7 @@ export default function HomepageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "logged-out":
-				setStatus("You have been logged out", "success")
+				setStatus(s("logged-out"), "success")
 				break
 		}
 	}, [urlStatus])

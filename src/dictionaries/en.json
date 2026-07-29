@@ -54,7 +54,7 @@
 	"404Page": {
 		"title": "404 - Page Not Found"
 	},
-	"notifications": {
+	"status-messages": {
 		"logged-out": "You have been logged out."
 	}
 }
