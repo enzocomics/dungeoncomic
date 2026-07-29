@@ -2,18 +2,23 @@
 /**----------------------------------- */
 // I18N
 import { useTranslations } from "next-intl"
+// LIBRARIES
+import { useSearchParams } from "next/navigation"
 // AUTH + VALIDATION
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
 import { login } from "./_action"
+// UI
+import { useChangeStatus } from "@/components/status-message"
 
 /** ------------------------------------------------ **
  * LOGIN FORM
  */
 export default function LoginPageUI() {
 	// I18N
+	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
 
 	// VALIDATION
@@ -31,6 +36,24 @@ export default function LoginPageUI() {
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput",
 	})
+
+	// Get the url search param
+	const params = useSearchParams()
+	const urlStatus = params.get("status")
+	const setStatus = useChangeStatus("")
+
+	// EFFECT: Display the status notification
+	useEffect(() => {
+		switch (urlStatus) {
+			case "verify-success":
+				setStatus("success", s("account-verified"))
+				break
+			case "verify-error":
+				setStatus("error", s("account-verify-error"))
+				break
+		}
+	}, [urlStatus])
+
 
 	// OUTPUT
 	return <>

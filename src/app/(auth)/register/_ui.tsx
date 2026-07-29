@@ -4,20 +4,23 @@
 import { useTranslations } from "next-intl"
 // NEXT.JS
 import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 // AUTH + VALIDATION
 import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
-import { register } from "./_action"
+import { register, verify } from "./_action"
 // UI
 import { useChangeStatus } from "@/components/status-message"
+import { adminEmail } from "@/data/env"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
  */
 export default function RegisterPageUI() {
 	// I18N
+	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
@@ -42,11 +45,53 @@ export default function RegisterPageUI() {
 	useEffect(() => {
 		if (lastResult?.status === "success") {
 			// STATUS MESSAGE
-			setStatus(t("pages.register.verify-account"), "success")
+			setStatus("success", t("pages.register.verify-account"))
 			// Redirect
 			router.push("/login")
 		}
 	}, [lastResult])
+
+	// Get the url search param
+	const params = useSearchParams()
+
+	// EFFECT: Verify user's account via urlParam
+	const urlVerifyToken = params.get("verify")
+	useEffect(() => {
+		const verifyRegistration = async () => {
+			if (urlVerifyToken) {
+				// SERVER ACTION: Send token to CMS
+				const response = await verify(urlVerifyToken)
+				if (response?.status == "success") {
+					// SUCCESS MESSAGE
+					setStatus("success", s("account-verified"))
+				} else {
+					// ERROR MESSAGE
+					setStatus(
+						"error",
+						`${s("types.error").toUpperCase()}: ${response?.reason}`,
+						// Description Message with Rich Text & Link
+						// Reference: `https://next-intl.dev/docs/usage/translations#rich-text`
+						JSON.stringify( // stringify, because we're passing it as a parameter
+							s.rich("account-verify-error.message", {
+								// map custom Rich Text tag to React Components
+								contact: (chunks) => <a href={
+									// include custom attribute (that's just another translation)
+									s("account-verify-error.mailto", {
+										adminEmail: adminEmail
+									})
+								}>
+									{chunks}
+								</a>
+							})
+						)
+					)
+				}
+			}
+		}
+		verifyRegistration()
+	},
+		[] // Run this effect only one time
+	)
 
 	// EXPORT
 	return <>

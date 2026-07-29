@@ -25,7 +25,7 @@ export default function HomepageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "logged-out":
-				setStatus(s("logged-out"), "info")
+				setStatus("info", s("logged-out"))
 				break
 		}
 	}, [urlStatus])

@@ -52,7 +52,7 @@ function RequestResetForm() {
 	useEffect(() => {
 		if (lastResult?.status === "success") {
 			// STATUS MESSAGE
-			setStatus(t("pages.reset-password.request-successful"), "success")
+			setStatus("success", t("pages.reset-password.request-successful"))
 		}
 	}, [lastResult])
 
@@ -112,7 +112,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 	useEffect(() => {
 		if (lastResult?.status === "success") {
 			// STATUS MESSAGE & REDIRECT
-			setStatus(t("pages.reset-password.reset-successful"), "success")
+			setStatus("success", t("pages.reset-password.reset-successful"))
 			redirect("/login")
 		}
 	}, [lastResult])
