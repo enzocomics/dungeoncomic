@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
-// CMS
+// UI
 import { useChangeStatus } from "@/components/status-message"
 import { useGlobalContext } from "./_context"
 
@@ -13,8 +13,8 @@ import { useGlobalContext } from "./_context"
  * HOMEPAGE - UI
  */
 export default function HomepageUI() {
-	const { statusMessage, setStatusMessage } = useGlobalContext()
-	const changeStatus = useChangeStatus()
+	// STATUS MESSAGE
+	const setStatus = useChangeStatus("", "")
 	// I18N
 	const n = useTranslations("notifications")
 	const t = useTranslations("HomePage")
@@ -26,7 +26,7 @@ export default function HomepageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "logged-out":
-
+				setStatus("You have been logged out", "success")
 				break
 		}
 	}, [urlStatus])
@@ -34,6 +34,5 @@ export default function HomepageUI() {
 
 	return <>
 		<h1 className="text-3xl">{t("title")}</h1>
-		<button onClick={() => { changeStatus("hello") }}>ChangeStatus</button>
 	</>
 }
