@@ -12,7 +12,8 @@
 				"submit": "Sign In"
 			},
 			"register": {
-				"title": "Register",
+				"title": "Sign Up",
+				"title-verbose": "Sign Up for an Account",
 				"submit": "Create Account",
 				"verify-account": "Please click the verification link that has been sent to your email to complete your registration."
 			},
