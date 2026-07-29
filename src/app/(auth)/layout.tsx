@@ -8,6 +8,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
 // UI
 import GlobalContextProvider from "../(main)/_context"
+import StatusMessage from "@/components/status-message"
 
 export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning>
@@ -18,6 +19,7 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 			<GlobalContextProvider>
 				<ThemeProvider>
 					<NextIntlClientProvider>
+						<StatusMessage />
 						{props.children}
 					</NextIntlClientProvider>
 				</ThemeProvider>
