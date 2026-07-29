@@ -8,19 +8,26 @@ import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
 // UI
 import GlobalContextProvider from "../(main)/_context"
-import StatusMessage from "@/components/status-message"
+import { AuthLayout } from "@/components/auth-layout"
 
 export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
-	return <html lang="en" suppressHydrationWarning>
+	return <html lang="en" suppressHydrationWarning
+		className={clsx(
+			"h-full",
+			"bg-gray-50 dark:bg-gray-900"
+		)}
+	>
 		<body
 			className={clsx(
+				"h-full"
 			)}
 		>
 			<GlobalContextProvider>
 				<ThemeProvider>
 					<NextIntlClientProvider>
-						<StatusMessage />
-						{props.children}
+						<AuthLayout>
+							{props.children}
+						</AuthLayout>
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>
