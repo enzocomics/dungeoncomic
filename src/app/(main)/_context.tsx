@@ -10,7 +10,7 @@ import { SetStateAction, PropsWithChildren, createContext, useContext, useState 
  * - Status Messages
  ** ------------------------------------------------ **/
 // STATE TYPES
-type StatusMessageSchema = { message: string, type: StatusMessageType }
+type StatusMessageSchema = { type: StatusMessageType, message: string, description: string }
 
 // CONTEXT TYPES
 type ContextType = {
@@ -20,7 +20,7 @@ type ContextType = {
 }
 
 // DEFAULT VARIABLES
-const statusMessageDefault: StatusMessageSchema = { message: "", type: "info" }
+const statusMessageDefault: StatusMessageSchema = { type: "info", message: "", description: "" }
 
 /** ------------------------------------------------ **/
 // CONTEXT

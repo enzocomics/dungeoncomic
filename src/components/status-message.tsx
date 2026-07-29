@@ -26,27 +26,29 @@ export default function StatusMessage() {
 	// OUTPUT
 	// Only display the layout if a message exists
 	if (statusMessage.message !== "")
-		return <div className={clsx(
-			"m-4",
-			"p-4",
-			"rounded-md",
-			"dark:outline",
-			// background-color
-			(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
-			(statusMessage.type == "error" ? "bg-red-50" : ""),
-			(statusMessage.type == "success" ? "bg-green-50" : ""),
-			(statusMessage.type == "info" ? "bg-blue-50" : ""),
-			// dark: background-color
-			(statusMessage.type == "alert" ? "dark:bg-yellow-500/10" : ""),
-			(statusMessage.type == "error" ? "dark:bg-red-500/15" : ""),
-			(statusMessage.type == "success" ? "dark:bg-green-500/10" : ""),
-			(statusMessage.type == "info" ? "dark:bg-blue-500/10" : ""),
-			// dark: outline-color
-			(statusMessage.type == "alert" ? "dark:outline-yellow-500/15" : ""),
-			(statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
-			(statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
-			(statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
-		)}>
+		return <div
+			id={`status-${statusMessage.type}`}
+			className={clsx(
+				"m-4",
+				"p-4",
+				"rounded-md",
+				"dark:outline",
+				// background-color
+				(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
+				(statusMessage.type == "error" ? "bg-red-50" : ""),
+				(statusMessage.type == "success" ? "bg-green-50" : ""),
+				(statusMessage.type == "info" ? "bg-blue-50" : ""),
+				// dark: background-color
+				(statusMessage.type == "alert" ? "dark:bg-yellow-500/10" : ""),
+				(statusMessage.type == "error" ? "dark:bg-red-500/15" : ""),
+				(statusMessage.type == "success" ? "dark:bg-green-500/10" : ""),
+				(statusMessage.type == "info" ? "dark:bg-blue-500/10" : ""),
+				// dark: outline-color
+				(statusMessage.type == "alert" ? "dark:outline-yellow-500/15" : ""),
+				(statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
+				(statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
+				(statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
+			)}>
 			<div className="flex">
 				{/* ICON */}
 				<div className="shrink-0">
@@ -66,26 +68,73 @@ export default function StatusMessage() {
 				{/* TEXT */}
 				<div className={clsx(
 					"ml-3",
-					"flex-1",
-					"md:flex",
-					"md:justify-between"
 				)}>
-					<p className={clsx(
+					<h3 className={clsx(
 						"text-sm",
 						"font-medium",
 						// text-color
-						(statusMessage.type == "alert" ? "text-yellow-700" : ""),
-						(statusMessage.type == "error" ? "text-red-700" : ""),
-						(statusMessage.type == "success" ? "text-green-700" : ""),
-						(statusMessage.type == "info" ? "text-blue-700" : ""),
+						(statusMessage.type == "alert" ? "text-yellow-800" : ""),
+						(statusMessage.type == "error" ? "text-red-800" : ""),
+						(statusMessage.type == "success" ? "text-green-800" : ""),
+						(statusMessage.type == "info" ? "text-blue-800" : ""),
 						// dark: text-color
-						(statusMessage.type == "alert" ? "dark:text-yellow-100/80" : ""),
-						(statusMessage.type == "error" ? "dark:text-red-200/80" : ""),
-						(statusMessage.type == "success" ? "dark:text-green-200/85" : ""),
+						(statusMessage.type == "alert" ? "dark:text-yellow-400" : ""),
+						(statusMessage.type == "error" ? "dark:text-red-200" : ""),
+						(statusMessage.type == "success" ? "dark:text-green-200" : ""),
 						(statusMessage.type == "info" ? "dark:text-blue-300" : ""),
 					)}>
 						{statusMessage.message}
-					</p>
+					</h3>
+					{statusMessage.description &&
+						<div className={clsx(
+							"mt-2",
+							"text-sm",
+							// text-color
+							(statusMessage.type == "alert" ? "text-yellow-700" : ""),
+							(statusMessage.type == "error" ? "text-red-700" : ""),
+							(statusMessage.type == "success" ? "text-green-700" : ""),
+							(statusMessage.type == "info" ? "text-blue-700" : ""),
+							// dark: text-color
+							(statusMessage.type == "alert" ? "dark:text-yellow-100/80" : ""),
+							(statusMessage.type == "error" ? "dark:text-red-200/80" : ""),
+							(statusMessage.type == "success" ? "dark:text-green-200/85" : ""),
+							(statusMessage.type == "info" ? "dark:text-blue-300" : "")
+						)}>
+							{/* <p>{statusMessage.description}</p> */}
+							<p dangerouslySetInnerHTML={{
+								__html: JSON.parse(statusMessage.description).map((
+									part: {
+										type: string
+										props: {
+											children: string[]
+											href: string
+										}
+									}) => {
+									if (typeof part === "string") return part
+									if (part?.type === "a") {
+										const text = Array.isArray(part.props?.children)
+											? part.props.children.join("")
+											: part.props?.children
+										return `<a class="${clsx(
+											"underline",
+											// text-color
+											(statusMessage.type == "alert" ? "text-yellow-800" : ""),
+											(statusMessage.type == "error" ? "text-red-800" : ""),
+											(statusMessage.type == "success" ? "text-green-800" : ""),
+											(statusMessage.type == "info" ? "text-blue-800" : ""),
+											// dark: text-color
+											(statusMessage.type == "alert" ? "dark:text-yellow-400" : ""),
+											(statusMessage.type == "error" ? "dark:text-red-200" : ""),
+											(statusMessage.type == "success" ? "dark:text-green-200" : ""),
+											(statusMessage.type == "info" ? "dark:text-blue-300" : ""),
+										)}" href="${part.props.href}">${text}</a>`
+									}
+									return "";
+								}).join("")
+							}}></p>
+							{/* <p>{JSON.parse(statusMessage.description)}</p> */}
+						</div>
+					}
 				</div>
 				{/* CLOSE BUTTON */}
 				<div className="ml-auto pl-3">
@@ -172,18 +221,24 @@ export default function StatusMessage() {
  * - `useChangeStatus()` returns a plain function (a callback)
  */
 export function useChangeStatus(
-	message: string,
-	type?: StatusMessageType
+	type: StatusMessageType,
+	message?: string,
+	description?: string | React.ReactNode
 ) {
 	// Get the setStatusMessage function from context
 	const { setStatusMessage } = useGlobalContext()
 
 	// Return a plain callback function
 	return (
+		type: StatusMessageType,
 		message = "",
-		type: StatusMessageType = "info"
+		description = ""
 	) => {
-		setStatusMessage({ message: message, type: type })
+		setStatusMessage({
+			message: message,
+			type: type,
+			description: description
+		})
 	}
 
 }
