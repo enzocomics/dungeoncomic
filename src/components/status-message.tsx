@@ -8,7 +8,7 @@ import { CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircl
 import clsx from "clsx"
 // UI
 import { useGlobalContext } from "@/app/(main)/_context"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 
 /**-----------------------------------
