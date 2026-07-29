@@ -7,7 +7,6 @@ import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import { useGlobalContext } from "./_context"
 
 /**-----------------------------------
  * HOMEPAGE - UI
@@ -26,7 +25,7 @@ export default function HomepageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "logged-out":
-				setStatus(s("logged-out"), "success")
+				setStatus(s("logged-out"), "info")
 				break
 		}
 	}, [urlStatus])
