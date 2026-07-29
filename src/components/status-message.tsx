@@ -8,12 +8,18 @@ import { CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircl
 import clsx from "clsx"
 // UI
 import { useGlobalContext } from "@/app/(main)/_context"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+
 
 /**-----------------------------------
  * Status Message UI
  */
 export default function StatusMessage() {
-	// STATUS MESSAGE
+	// NAVIGATION HOOKS
+	const router = useRouter()
+	const pathname = usePathname()
+
+	// STATUS MESSAGE HOOKS
 	const { statusMessage } = useGlobalContext()
 	const setStatus = useChangeStatus("")
 
@@ -86,7 +92,10 @@ export default function StatusMessage() {
 					<div className="-mx-1.5 -my-1.5">
 						<button
 							type="button"
-							onClick={() => setStatus("")}
+							onClick={() => {
+								router.replace(pathname) // Clear the search params from the url
+								setStatus("") // Clear the status message, which hides the message uI
+							}}
 							className={clsx(
 								"inline-flex",
 								"rounded-md",
