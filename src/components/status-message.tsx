@@ -29,7 +29,6 @@ export default function StatusMessage() {
 		return <div
 			id={`status-${statusMessage.type}`}
 			className={clsx(
-				"m-4",
 				"p-4",
 				"rounded-md",
 				"dark:outline",
