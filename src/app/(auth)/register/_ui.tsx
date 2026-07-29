@@ -75,7 +75,7 @@ export default function RegisterPageUI() {
 						JSON.stringify( // stringify, because we're passing it as a parameter
 							s.rich("account-verify-error.message", {
 								// map custom Rich Text tag to React Components
-								contact: (chunks) => <a href={
+								mailtoAdmin: (chunks) => <a href={
 									// include custom attribute (that's just another translation)
 									s("account-verify-error.mailto", {
 										adminEmail: adminContactEmail

@@ -127,7 +127,8 @@ export default function StatusMessage() {
 											(statusMessage.type == "error" ? "dark:text-red-200" : ""),
 											(statusMessage.type == "success" ? "dark:text-green-200" : ""),
 											(statusMessage.type == "info" ? "dark:text-blue-300" : ""),
-										)}" href="${part.props.href}">${text}</a>`
+										)}" 
+										href="${part.props.href}">${text}</a>`
 									}
 									return "";
 								}).join("")
