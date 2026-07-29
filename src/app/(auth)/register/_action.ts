@@ -3,7 +3,12 @@
 // I18N
 import { getTranslations } from "next-intl/server"
 // DIRECTUS
-import { readUsers, registerUser, updateUser } from "@directus/sdk"
+import {
+	readUsers,
+	registerUser,
+	registerUserVerify,
+	updateUser,
+} from "@directus/sdk"
 import { adminClient, publicClient, userClient } from "@/lib/directus/clients"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
@@ -82,4 +87,21 @@ export async function register(prevState: unknown, formData: FormData) {
 		})
 	}
 	return submission.reply()
+}
+
+/** ------------------------------------------------ **
+ * VERIFY REGISTRATION ACTION
+ */
+
+export async function verify(token: string) {
+	try {
+		await adminClient.request(registerUserVerify(token))
+		return { status: "success" }
+	} catch (err: any) {
+		// return error if unsuccessful
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return { status: "error", code: code, reason: reason }
+	}
 }
