@@ -115,7 +115,7 @@ export default function RegisterPageUI() {
 						"space-y-6"
 					)}>
 					<div>
-						<Label htmlFor="email">{t("fields.email")}</Label>
+						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							name={fields.email.name}
@@ -124,7 +124,7 @@ export default function RegisterPageUI() {
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
 						/>
-						<div>{fields.email.errors}</div>
+						<Label htmlFor={fields.email.name} className="font-normal text-red-500">{fields.email.errors}</Label>
 					</div>
 					{/* <div>
 				<label htmlFor="username">{t("fields.username")}</label>
@@ -139,7 +139,7 @@ export default function RegisterPageUI() {
 				<div>{fields.username.errors}</div>
 			</div> */}
 					<div>
-						<Label htmlFor="password">{t("fields.password")}</Label>
+						<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
 						<Input
 							id={fields.password.name}
 							name={fields.password.name}
@@ -148,7 +148,7 @@ export default function RegisterPageUI() {
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
 						/>
-						<div>{fields.password.errors}</div>
+						<Label htmlFor={fields.password.name} className="font-normal text-red-500">{fields.password.errors}</Label>
 					</div>
 
 					<div>
@@ -161,14 +161,13 @@ export default function RegisterPageUI() {
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
 						/>
-						<div>{fields.passwordConfirm.errors}</div>
+						<Label htmlFor={fields.passwordConfirm.name} className="font-normal text-red-500">{fields.passwordConfirm.errors}</Label>
 					</div>
 					<Button
 						type="submit"
 						color="sky"
 						className={clsx(
 							"w-full",
-
 						)}
 					>{t("pages.register.submit")}</Button>
 				</Fieldset>
