@@ -101,6 +101,7 @@ export default function LoginPageUI() {
 					</div>
 					<Button
 						type="submit"
+						color="sky"
 						className={clsx(
 							"w-full",
 
