@@ -48,9 +48,6 @@ export default function LoginPageUI() {
 			case "verify-success":
 				setStatus("success", s("account-verify-success"))
 				break
-			case "verify-error":
-				setStatus("error", s("account-verify-error"))
-				break
 		}
 	}, [urlStatus])
 
