@@ -1,5 +1,7 @@
 "use client"
 /**----------------------------------- */
+// FUNCTIONS
+import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // NEXT.JS
@@ -15,6 +17,10 @@ import { register, verify } from "./_action"
 import { adminContactEmail } from "@/data/env"
 // UI
 import { useChangeStatus } from "@/components/status-message"
+import { AuthBody, AuthHeader } from "@/components/auth-layout"
+import { Fieldset, Label } from "@/components/fieldset"
+import { Button } from "@/components/button"
+import { Input } from "@/components/input"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -96,26 +102,31 @@ export default function RegisterPageUI() {
 
 	// EXPORT
 	return <>
-		<h1 className="text-3xl">{t("pages.register.title")}</h1>
-		<form
-			id={form.id}
-			onSubmit={form.onSubmit}
-			action={action}
-			noValidate
-		>
-			<div>
-				<label htmlFor="email">{t("fields.email")}</label>
-				<input
-					id={fields.email.name}
-					name={fields.email.name}
-					key={fields.email.key}
-					type="email"
-					// Retain the value of the previous submission
-					defaultValue={lastResult?.initialValue?.email as string}
-				/>
-				<div>{fields.email.errors}</div>
-			</div>
-			{/* <div>
+		<AuthHeader>{t("pages.register.title-verbose")}</AuthHeader>
+		<AuthBody>
+			<form
+				id={form.id}
+				onSubmit={form.onSubmit}
+				action={action}
+				noValidate
+			>
+				<Fieldset
+					className={clsx(
+						"space-y-6"
+					)}>
+					<div>
+						<Label htmlFor="email">{t("fields.email")}</Label>
+						<Input
+							id={fields.email.name}
+							name={fields.email.name}
+							key={fields.email.key}
+							type="email"
+							// Retain the value of the previous submission
+							defaultValue={lastResult?.initialValue?.email as string}
+						/>
+						<div>{fields.email.errors}</div>
+					</div>
+					{/* <div>
 				<label htmlFor="username">{t("fields.username")}</label>
 				<input
 					id={fields.username.name}
@@ -127,35 +138,42 @@ export default function RegisterPageUI() {
 				/>
 				<div>{fields.username.errors}</div>
 			</div> */}
-			<div>
-				<label htmlFor="password">{t("fields.password")}</label>
-				<input
-					id={fields.password.name}
-					name={fields.password.name}
-					key={fields.password.key}
-					type="password"
-					// Retain the value of the previous submission
-					defaultValue={lastResult?.initialValue?.password as string}
-				/>
-				<div>{fields.password.errors}</div>
-			</div>
+					<div>
+						<Label htmlFor="password">{t("fields.password")}</Label>
+						<Input
+							id={fields.password.name}
+							name={fields.password.name}
+							key={fields.password.key}
+							type="password"
+							// Retain the value of the previous submission
+							defaultValue={lastResult?.initialValue?.password as string}
+						/>
+						<div>{fields.password.errors}</div>
+					</div>
 
-			<div>
-				<label htmlFor="passwordConfirm">{t("fields.password-confirm")}</label>
-				<input
-					id={fields.passwordConfirm.name}
-					type="password"
-					key={fields.passwordConfirm.key}
-					name={fields.passwordConfirm.name}
-					// Retain the value of the previous submission
-					defaultValue={lastResult?.initialValue?.passwordConfirm as string}
-				/>
-				<div>{fields.passwordConfirm.errors}</div>
-			</div>
-			<button
-				type="submit"
-			>{t("pages.register.submit")}</button>
-		</form>
+					<div>
+						<Label htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
+						<Input
+							id={fields.passwordConfirm.name}
+							type="password"
+							key={fields.passwordConfirm.key}
+							name={fields.passwordConfirm.name}
+							// Retain the value of the previous submission
+							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+						/>
+						<div>{fields.passwordConfirm.errors}</div>
+					</div>
+					<Button
+						type="submit"
+						color="sky"
+						className={clsx(
+							"w-full",
+
+						)}
+					>{t("pages.register.submit")}</Button>
+				</Fieldset>
+			</form>
+		</AuthBody>
 	</>
 
 }
