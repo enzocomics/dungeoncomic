@@ -5,9 +5,7 @@ import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
-import { toast } from "react-toastify"
 // CMS
-import { toastOptions } from "@/lib/toastify/toast"
 import { useChangeStatus } from "@/components/status-message"
 import { useGlobalContext } from "./_context"
 
@@ -28,7 +26,7 @@ export default function HomepageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "logged-out":
-				toast.success(n("logged-out"), toastOptions)
+
 				break
 		}
 	}, [urlStatus])

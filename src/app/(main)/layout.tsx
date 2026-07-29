@@ -6,7 +6,6 @@ import clsx from "clsx"
 // LIBRARIES
 import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
-import { ToastContainer } from "react-toastify"
 // UI
 import GlobalContextProvider from "./_context"
 import StatusMessage from "@/components/status-message"
@@ -25,7 +24,6 @@ export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
 					<NextIntlClientProvider>
 						<StatusMessage />
 						{props.children}
-						<ToastContainer />
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>

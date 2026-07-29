@@ -6,7 +6,6 @@ import clsx from "clsx"
 // LIBRARIES
 import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
-import { ToastContainer } from "react-toastify"
 // UI
 import GlobalContextProvider from "../(main)/_context"
 
@@ -20,7 +19,6 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 				<ThemeProvider>
 					<NextIntlClientProvider>
 						{props.children}
-						<ToastContainer />
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>
