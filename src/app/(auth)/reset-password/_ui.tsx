@@ -18,8 +18,8 @@ import { useChangeStatus } from "@/components/status-message"
  */
 export default function ResetPasswordPageUI() {
 	// TOKEN
-	const resetTokenParam = useSearchParams()
-	const resetToken = resetTokenParam.get("token")
+	const params = useSearchParams()
+	const resetToken = params.get("token")
 	// OUTPUT
 	return resetToken ? <ResetPasswordForm token={resetToken} /> : <RequestResetForm />
 }
