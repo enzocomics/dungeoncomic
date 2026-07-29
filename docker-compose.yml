@@ -5,6 +5,7 @@ x-cms-admin-password: &cms-admin-password ${CMS_ADMIN_PASSWORD}
 x-cms-admin-token: &cms-admin-token ${CMS_ADMIN_TOKEN}
 x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
 x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
+x-site-public-url: &site-public-url ${NEXT_PUBLIC_SITE_URL}
 x-db-password: &db-password ${DATABASE_PASSWORD}
 x-timezone: &timezone ${TIMEZONE}
 ## VARIABLES - EMAIL
@@ -136,6 +137,12 @@ services:
       EMAIL_SMTP_SECURE: *cms-smtp-secure
       EMAIL_SMTP_IGNORE_TLS: *cms-smtp-ignore-tls
       EMAIL_SMTP_NAME: *cms-smtp-name
+
+      # DIRECTUS - URL SECURITY
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: &site-public-url
+      USER_REGISTER_URL_ALLOW_LIST: &site-public-url
+      PASSWORD_RESET_URL_ALLOW_LIST: &site-public-url
     healthcheck:
       test:
         [
