@@ -13,8 +13,9 @@ import { useGlobalContext } from "@/app/(main)/_context"
  * Status Message UI
  */
 export default function StatusMessage() {
-	// STATUS MESSAGE CONTEXT
+	// STATUS MESSAGE
 	const { statusMessage } = useGlobalContext()
+	const setStatus = useChangeStatus("")
 
 	// OUTPUT
 	// Only display the layout if a message exists
@@ -85,6 +86,7 @@ export default function StatusMessage() {
 					<div className="-mx-1.5 -my-1.5">
 						<button
 							type="button"
+							onClick={() => setStatus("")}
 							className={clsx(
 								"inline-flex",
 								"rounded-md",
@@ -162,7 +164,7 @@ export default function StatusMessage() {
  */
 export function useChangeStatus(
 	message: string,
-	type: StatusMessageType
+	type?: StatusMessageType
 ) {
 	// Get the setStatusMessage function from context
 	const { setStatusMessage } = useGlobalContext()

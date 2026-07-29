@@ -14,7 +14,7 @@ import { useGlobalContext } from "./_context"
  */
 export default function HomepageUI() {
 	// STATUS MESSAGE
-	const setStatus = useChangeStatus("", "")
+	const setStatus = useChangeStatus("")
 	// I18N
 	const n = useTranslations("notifications")
 	const t = useTranslations("HomePage")
