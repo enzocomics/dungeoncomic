@@ -27,6 +27,7 @@ export default function StatusMessage() {
 	}
 
 	// OUTPUT
+	// Only display the layout if a message exists
 	if (statusMessage.message !== "")
 		return <div className={clsx(
 			"m-4",
@@ -50,6 +51,7 @@ export default function StatusMessage() {
 			(statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
 		)}>
 			<div className="flex">
+				{/* ICON */}
 				<div className="shrink-0">
 					{statusMessage.type == "alert" &&
 						<ExclamationTriangleIcon aria-hidden="true" className="size-5 text-yellow-400 dark:text-yellow-300" />
@@ -64,6 +66,7 @@ export default function StatusMessage() {
 						<InformationCircleIcon aria-hidden="true" className="size-5 text-blue-400" />
 					}
 				</div>
+				{/* TEXT */}
 				<div className={clsx(
 					"ml-3",
 					"flex-1",
@@ -87,6 +90,7 @@ export default function StatusMessage() {
 						{statusMessage.message}
 					</p>
 				</div>
+				{/* CLOSE BUTTON */}
 				<div className="ml-auto pl-3">
 					<div className="-mx-1.5 -my-1.5">
 						<button
@@ -155,6 +159,7 @@ export default function StatusMessage() {
 				</div>
 			</div>
 		</div >
+	// Return empty layout if no message exists
 	else return false
 }
 
