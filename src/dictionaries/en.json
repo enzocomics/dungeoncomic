@@ -55,7 +55,7 @@
 		}
 	},
 	"status-messages": {
-		"account-verified": "Your account has been verified. You may now log in.",
+		"account-verify-success": "Your account has been verified. You may now log in.",
 		"account-verify-error": {
 			"message": "We were unable to verify your account. Please try again, or <mailtoAdmin>contact an administrator</mailtoAdmin> for assistance.",
 			"mailto": "mailto:{adminEmail}"

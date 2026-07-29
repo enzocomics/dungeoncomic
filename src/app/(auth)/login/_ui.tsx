@@ -46,7 +46,7 @@ export default function LoginPageUI() {
 	useEffect(() => {
 		switch (urlStatus) {
 			case "verify-success":
-				setStatus("success", s("account-verified"))
+				setStatus("success", s("account-verify-success"))
 				break
 			case "verify-error":
 				setStatus("error", s("account-verify-error"))
