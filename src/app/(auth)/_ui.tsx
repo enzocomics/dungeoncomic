@@ -6,6 +6,7 @@ import clsx from "clsx"
 import type React from "react"
 // UI
 import { Logo } from "@/components/logo"
+import Image from "next/image"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -29,18 +30,12 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 			"justify-center",
 		)}>
 			<header className={clsx(
-				"my-8",
-				"md:my-12",
 				"mx-auto",
 				"w-full",
-				"max-w-sm",
+				"max-w-120",
 				"text-sky-500",
 			)}>
-				<Logo className={clsx(
-					"mx-auto",
-					"w-30",
-					"md:w-50"
-				)} />
+				<Image src="/img/header.webp" alt="" width="990" height="260" />
 			</header>
 			{children}
 			<AuthFooter />
