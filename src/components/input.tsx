@@ -25,8 +25,10 @@ type DateType = (typeof dateTypes)[number]
 export const Input = forwardRef(function Input(
 	{
 		className,
+		errors,
 		...props
 	}: {
+		errors?: string | string[]
 		className?: string
 		type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | DateType
 	} & Omit<Headless.InputProps, 'as' | 'className'>,
@@ -79,9 +81,12 @@ export const Input = forwardRef(function Input(
 					// Hide default focus styles
 					'focus:outline-hidden',
 					// Border
-					'border border-zinc-950/10 data-hover:border-zinc-950/20 dark:border-white/10 dark:data-hover:border-white/20',
+					"border-2",
+					!errors &&
+					'border-zinc-950/10 data-hover:border-zinc-950/20 dark:border-white/10 dark:data-hover:border-white/20',
 					// Invalid state
-					'data-invalid:border-red-500 data-invalid:data-hover:border-red-500 dark:data-invalid:border-red-600 dark:data-invalid:data-hover:border-red-600',
+					errors &&
+					'border-red-500 data-hover:border-red-500 dark:border-red-600 dark:data-hover:border-red-600',
 					// Disabled state
 					'data-disabled:border-zinc-950/20 dark:data-disabled:border-white/15 dark:data-disabled:bg-white/2.5 dark:data-hover:data-disabled:border-white/15',
 					// System icons

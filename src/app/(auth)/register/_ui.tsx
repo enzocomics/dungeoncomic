@@ -141,6 +141,7 @@ export default function RegisterPageUI() {
 							type="email"
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
+							errors={fields.email.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -167,6 +168,8 @@ export default function RegisterPageUI() {
 							type="password"
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
+
+							errors={fields.password.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>
@@ -182,6 +185,7 @@ export default function RegisterPageUI() {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+							errors={fields.passwordConfirm.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>

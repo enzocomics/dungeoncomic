@@ -111,7 +111,7 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.email as string}
 							type="email"
 							autoComplete="current-email"
-							// errors={fields.email.errors}
+							errors={fields.email.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -126,6 +126,7 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.password as string}
 							type="password"
 							autoComplete="current-password"
+							errors={fields.password.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>

@@ -95,6 +95,7 @@ function RequestResetForm() {
 							name={fields.email.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
+							errors={fields.email.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -177,6 +178,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.password.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
+							errors={fields.password.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>
@@ -191,6 +193,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+							errors={fields.passwordConfirm.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
