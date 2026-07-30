@@ -58,26 +58,6 @@
 	/* Fonts */
 	--font-copy: var(--font-copy), sans-serif;
 	--font-display: var(--font-display), sans-serif;
-	/* Mode Color Variables*/
-	--base-dark-1: rgb(7 7 7);
-	--base-dark-2: rgb(28 28 28);
-	--base-dark-3: rgb(35 35 35);
-	--base-dark-4: rgb(52 52 52);
-	--base-dark-5: rgb(73 73 73);
-	--base-dark-6: rgb(94 94 94);
-	--base-dark-7: rgb(115 115 115);
-	--base-dark-8: rgb(136 136 136);
-	--base-dark-content: var(--color-white);
-
-	--base-light-1: var(--color-white);
-	--base-light-2: rgb(242 242 242);
-	--base-light-3: rgb(230 230 230);
-	--base-light-4: rgb(218 218 218);
-	--base-light-5: rgb(212 212 212);
-	--base-light-6: rgb(200 200 200);
-	--base-light-7: rgb(188 188 188);
-	--base-light-8: rgb(176 176 176);
-	--base-light-content: var(--base-dark-3);
 
 	/* COLOR VARIABLE DEFINITIONS*/
 
