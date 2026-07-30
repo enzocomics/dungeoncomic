@@ -15,7 +15,7 @@ import { login } from "./_action"
 // UI
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"

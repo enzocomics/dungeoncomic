@@ -14,7 +14,7 @@ import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod
 import { requestReset, submitReset } from "./_action"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"

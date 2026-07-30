@@ -18,7 +18,7 @@ import { adminContactEmail } from "@/data/env"
 // UI
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/app/(auth)/_ui"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"

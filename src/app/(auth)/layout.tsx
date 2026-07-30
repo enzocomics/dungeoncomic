@@ -8,7 +8,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
 // UI
 import GlobalContextProvider from "../(main)/_context"
-import { AuthLayout } from "@/components/auth-layout"
+import { AuthLayout } from "@/app/(auth)/_ui"
 
 export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning

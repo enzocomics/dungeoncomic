@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import type React from "react"
-import { Logo } from "./logo"
+import { Logo } from "../../components/logo"
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
