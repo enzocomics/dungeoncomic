@@ -5,7 +5,6 @@ import clsx from "clsx"
 // LIBRARIES
 import type React from "react"
 // UI
-import { Logo } from "@/components/logo"
 import Image from "next/image"
 
 /**-----------------------------------
@@ -22,18 +21,17 @@ import Image from "next/image"
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
-			"p-2.5",
 			"flex",
-			"min-w-sm",
-			"min-h-full",
 			"flex-col",
 			"justify-center",
+			"p-2.5",
+			"min-w-sm",
+			"min-h-full",
 		)}>
 			<header className={clsx(
 				"mx-auto",
 				"w-full",
 				"max-w-120",
-				"text-sky-500",
 			)}>
 				<Image src="/img/header.webp" alt="" width="990" height="260" />
 			</header>
@@ -54,7 +52,12 @@ export function AuthHeader({ children }: { children: React.ReactNode }) {
 }
 
 export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
-	return <h2 className="text-center text-2xl/12 font-bold tracking-tight text-gray-900 dark:text-white">
+	return <h2 className={clsx(
+		"text-center",
+		"text-2xl/12",
+		"font-bold",
+		"tracking-tight",
+	)}>
 		{children}
 	</h2>
 }
@@ -64,8 +67,7 @@ export function AuthHeaderDescription({ children }: { children?: React.ReactNode
 		"text-center",
 		"text-xs",
 		"text-balance",
-		"text-gray-900/70",
-		"dark:text-white/70"
+		"text-base-content/70",
 	)}>
 		{children}
 	</div>
@@ -74,24 +76,23 @@ export function AuthHeaderDescription({ children }: { children?: React.ReactNode
 export function AuthBody({ children }: { children: React.ReactNode }) {
 	return <>
 		<main className={clsx(
-
 			"mx-auto",
 			"w-full",
 			"max-w-120"
 		)}>
 			<div className={clsx(
-				"bg-white",
+				"bg-base-1",
 				"px-6",
 				"pt-12",
 				"pb-18",
 				"shadow-sm",
 				"sm:rounded",
 				"sm:px-12",
-				"dark:bg-gray-800/50",
+				"dark:bg-base-2",
 				"dark:shadow-none",
 				"dark:outline",
 				"dark:-outline-offset-1",
-				"dark:outline-white/10"
+				"dark:outline-base-5"
 			)}>
 				{children}
 			</div>
