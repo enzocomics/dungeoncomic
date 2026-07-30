@@ -1,7 +1,23 @@
-import clsx from "clsx"
-import type React from "react"
-import { Logo } from "../../components/logo"
 
+/**----------------------------------- */
+// FUNCTIONS
+import clsx from "clsx"
+// LIBRARIES
+import type React from "react"
+// UI
+import { Logo } from "@/components/logo"
+
+/**-----------------------------------
+ * AUTH - UI LAYOUTS
+ * - `AuthLayout()`
+ *   - `AuthHeader()`
+ *     - `AuthHeaderTitle()`
+ *     - `AuthHeaderDescription()`
+ *   - `AuthBody()`
+ *   - `AuthNav()`
+ *   - `AuthFooter()`
+ * 
+ */
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(

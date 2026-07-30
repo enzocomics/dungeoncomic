@@ -10,6 +10,9 @@ import { ThemeProvider } from "next-themes"
 import GlobalContextProvider from "../(main)/_context"
 import { AuthLayout } from "@/app/(auth)/_ui"
 
+/**-----------------------------------
+ * AUTH - ROOT LAYOUT
+ */
 export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
