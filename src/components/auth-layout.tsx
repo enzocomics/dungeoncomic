@@ -5,19 +5,24 @@ import { BuildingLibraryIcon } from "@heroicons/react/24/solid"
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
+			"p-2.5",
 			"flex",
+			"min-w-sm",
 			"min-h-full",
 			"flex-col",
 			"justify-center",
-			"py-8",
-			"sm:px-6",
-			"lg:px-8",
 		)}>
-			<header className="sm:mx-auto sm:w-full sm:max-w-sm">
+			<header className={clsx(
+				"my-4",
+				"mx-auto",
+				"w-full",
+				"max-w-sm"
+			)}>
 				{/* Temporary Logo */}
 				<BuildingLibraryIcon className={clsx(
 					"mx-auto",
-					"size-20",
+					"size-10",
+					"md:size-20",
 					"w-auto",
 					"fill-sky-500"
 				)} />
@@ -59,10 +64,10 @@ export function AuthHeaderDescription({ children }: { children?: React.ReactNode
 export function AuthBody({ children }: { children: React.ReactNode }) {
 	return <>
 		<main className={clsx(
-			"mt-10",
-			"sm:mx-auto",
-			"sm:w-full",
-			"sm:max-w-120"
+
+			"mx-auto",
+			"w-full",
+			"max-w-120"
 		)}>
 			<div className={clsx(
 				"bg-white",
@@ -102,7 +107,8 @@ export function AuthNav({ children }: { children: React.ReactNode }) {
 
 function AuthFooter() {
 	return <footer className={clsx(
-		"mt-10",
+		"my-4",
+		"lg:mt-10",
 		"text-center",
 		"text-xs",
 		"text-gray-500/50",
