@@ -87,7 +87,7 @@ function RequestResetForm() {
 						"space-y-6"
 					)}>
 					<div>
-						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
+						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							type="email"

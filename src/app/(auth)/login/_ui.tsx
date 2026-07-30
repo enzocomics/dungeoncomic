@@ -102,7 +102,7 @@ export default function LoginPageUI() {
 						"space-y-6"
 					)}>
 					<div>
-						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
+						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							name={fields.email.name}
@@ -116,7 +116,7 @@ export default function LoginPageUI() {
 
 					</div>
 					<div>
-						<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
+						<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
 						<Input
 							id={fields.password.name}
 							name={fields.password.name}

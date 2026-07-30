@@ -133,7 +133,7 @@ export default function RegisterPageUI() {
 						"space-y-6"
 					)}>
 					<div>
-						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
+						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							name={fields.email.name}
@@ -158,7 +158,7 @@ export default function RegisterPageUI() {
 				<div>{fields.username.errors}</div>
 			</div> */}
 					<div>
-						<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
+						<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
 						<Input
 							id={fields.password.name}
 							name={fields.password.name}
@@ -171,7 +171,7 @@ export default function RegisterPageUI() {
 					</div>
 
 					<div>
-						<Label htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
+						<Label required htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
 						<Input
 							id={fields.passwordConfirm.name}
 							type="password"
