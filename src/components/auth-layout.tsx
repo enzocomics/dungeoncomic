@@ -68,7 +68,7 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 
 function AuthFooter() {
 	return <div className={clsx(
-		"mt-6",
+		"mt-10",
 		"text-center",
 		"text-xs",
 		"text-gray-500/50",
