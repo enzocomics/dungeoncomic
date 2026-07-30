@@ -72,7 +72,6 @@ export default function LoginPageUI() {
 	return <>
 		<AuthHeader>{t("pages.login.title")}</AuthHeader>
 		<AuthBody>
-			<h1 className="text-3xl"></h1>
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -116,7 +115,6 @@ export default function LoginPageUI() {
 						color="sky"
 						className={clsx(
 							"w-full",
-
 						)}
 					>{t("pages.login.submit")}</Button>
 				</Fieldset>
