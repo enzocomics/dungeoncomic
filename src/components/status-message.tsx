@@ -9,12 +9,17 @@ import clsx from "clsx"
 // UI
 import { useGlobalContext } from "@/app/(main)/_context"
 import { usePathname, useRouter } from "next/navigation"
+import { ComponentPropsWithoutRef } from "react"
 
 
 /**-----------------------------------
  * Status Message UI
  */
-export default function StatusMessage() {
+export default function StatusMessage({
+	className = ""
+}: {
+	className?: string
+} & ComponentPropsWithoutRef<"div">) {
 	// NAVIGATION HOOKS
 	const router = useRouter()
 	const pathname = usePathname()
@@ -47,6 +52,7 @@ export default function StatusMessage() {
 				(statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
 				(statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
 				(statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
+				className
 			)}>
 			<div className="flex">
 				{/* ICON */}

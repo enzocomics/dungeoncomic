@@ -58,7 +58,7 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 				"dark:-outline-offset-1",
 				"dark:outline-white/10"
 			)}>
-				<StatusMessage />
+				<StatusMessage className="mb-6" />
 				{children}
 			</div>
 		</div >
