@@ -9,16 +9,24 @@
 		"pages": {
 			"login": {
 				"title": "Log In",
-				"submit": "Sign In"
+				"description": "",
+				"submit": "Sign In",
+				"reset-password-link": "Reset password",
+				"register-link": "I don't have an account. <a>Sign up</a>"
 			},
 			"register": {
 				"title": "Sign Up",
 				"title-verbose": "Sign Up for an Account",
 				"submit": "Create Account",
-				"verify-account": "Please click the verification link that has been sent to your email to complete your registration."
+				"verify-account": "Please click the verification link that has been sent to your email to complete your registration.",
+				"login-link": "I already have an account. <a>Log in</a>",
+				"acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>."
 			},
 			"reset-password": {
 				"title": "Reset Password",
+				"title-verbose": "Reset Your Password",
+				"request-description": "Enter your email and we'll send you a link to reset your password.",
+				"reset-description": "Enter your new password.",
 				"request": "Send me a Reset Request",
 				"submit": "Reset My Password",
 				"request-successful": "A link to reset your password has been emailed to you.",
@@ -68,5 +76,8 @@
 			"info": "Info",
 			"success": "Success"
 		}
+	},
+	"navigation": {
+		"go-back": "Go back"
 	}
 }
