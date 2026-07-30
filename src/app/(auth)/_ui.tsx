@@ -5,6 +5,8 @@ import clsx from "clsx"
 import type React from "react"
 // UI
 import Image from "next/image"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub } from "@fortawesome/free-brands-svg-icons"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -115,15 +117,32 @@ export function AuthNav({ children }: { children: React.ReactNode }) {
 
 function AuthFooter() {
 	return <footer className={clsx(
+		"flex",
+		"justify-center",
+		"gap-2",
 		"my-4",
 		"lg:mt-10",
-		"text-center",
+
 		"text-xs",
 		"text-current/25",
 		"sm:mx-auto",
 		"sm:w-full",
 		"sm:max-w-120"
 	)}>
-		&copy; {new Date().getFullYear().toString()} Dungeon Construction Co.
+		<span>&copy; {new Date().getFullYear().toString()} Dungeon Construction Co.</span>
+		<a href="https://github.com/enzocomics/dungeoncomic" target="_blank"
+			title="Visit DungeonComic's Github Project Repository"
+			className={clsx(
+				"active:text-primary-500",
+				"transition-all",
+				"duration-300",
+				"lg:hover:transition-none",
+				"lg:hover:text-primary-500",
+				"lg:hover:scale-120",
+
+			)}
+		>
+			<FontAwesomeIcon icon={faGithub} className="size-4" />
+		</a>
 	</footer>
 }
