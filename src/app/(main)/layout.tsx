@@ -4,9 +4,9 @@
 import clsx from "clsx"
 
 /**-----------------------------------
- * DASHBOARD - ROOT LAYOUT
+ * MAIN - ROOT LAYOUT
  */
-export default async function DashboardRootLayoutUI(props: LayoutProps<"/">) {
+export default async function MainRootLayout(props: LayoutProps<"/">) {
 	return <>
 		{props.children}
 	</>

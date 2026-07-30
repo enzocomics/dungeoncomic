@@ -5,7 +5,7 @@ import { Metadata, Viewport } from "next"
 import RootLayoutUI from "./_ui"
 
 /**-----------------------------------
- * AUTH - ROOT LAYOUT
+ * APP - ROOT LAYOUT
  */
 export default async function RootLayout(props: LayoutProps<"/">) {
 	return <RootLayoutUI>
