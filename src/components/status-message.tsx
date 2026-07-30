@@ -35,6 +35,7 @@ export default function StatusMessage({
 	if (statusMessage.message !== "")
 		return <div
 			id={`status-${statusMessage.type}`}
+			aria-live="polite"
 			className={clsx(
 				"p-4",
 				"rounded-md",
