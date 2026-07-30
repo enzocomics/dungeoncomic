@@ -14,8 +14,9 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 			"sm:px-6",
 			"lg:px-8",
 		)}>
-
 			{children}
+
+			<AuthFooter />
 		</main >
 	</>
 }
@@ -63,4 +64,18 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 			</div>
 		</div >
 	</>
+}
+
+function AuthFooter() {
+	return <div className={clsx(
+		"mt-6",
+		"text-center",
+		"text-xs",
+		"text-gray-500/50",
+		"sm:mx-auto",
+		"sm:w-full",
+		"sm:max-w-120"
+	)}>
+		&copy; 2026 Dungeon Construction Co.
+	</div>
 }
