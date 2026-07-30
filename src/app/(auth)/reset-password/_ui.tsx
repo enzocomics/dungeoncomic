@@ -184,9 +184,10 @@ function ResetPasswordForm({ token }: { token: string }) {
 							"w-full",
 						)}
 					>{t("pages.reset-password.submit")}</Button>
-					{/* Password Reset Token */}
-					<input name="token" type="hidden" value={token} />
+
 				</Fieldset>
+				{/* Password Reset Token */}
+				<input name="token" type="hidden" value={token} />
 			</form>
 		</AuthBody>
 	</>
