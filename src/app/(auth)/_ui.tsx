@@ -118,11 +118,11 @@ function AuthFooter() {
 		"lg:mt-10",
 		"text-center",
 		"text-xs",
-		"text-current/40",
+		"text-current/25",
 		"sm:mx-auto",
 		"sm:w-full",
 		"sm:max-w-120"
 	)}>
-		&copy; 2026 Dungeon Construction Co.
+		&copy; {new Date().getFullYear().toString()} Dungeon Construction Co.
 	</footer>
 }
