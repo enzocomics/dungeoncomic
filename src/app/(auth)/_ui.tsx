@@ -56,7 +56,12 @@ export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
 	return <h1 className={clsx(
 		"font-display",
 		"text-center",
-		"text-3xl/12",
+		"text-3xl/16",
+		"mb-4",
+		"border-b",
+		"border-dashed",
+		"border-base-5/20",
+		"dark:border-base-5",
 	)}>
 		{children}
 	</h1>
@@ -122,9 +127,8 @@ function AuthFooter() {
 		"gap-2",
 		"my-4",
 		"lg:mt-10",
-
 		"text-xs",
-		"text-current/25",
+		"text-current/40",
 		"sm:mx-auto",
 		"sm:w-full",
 		"sm:max-w-120"
@@ -139,7 +143,6 @@ function AuthFooter() {
 				"lg:hover:transition-none",
 				"lg:hover:text-primary-500",
 				"lg:hover:scale-120",
-
 			)}
 		>
 			<FontAwesomeIcon icon={faGithub} className="size-4" />
