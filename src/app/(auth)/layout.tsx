@@ -1,6 +1,7 @@
 "use server"
 /**----------------------------------- */
 import "@/styles/globals.css"
+import { copy, display } from "@/styles/fonts"
 // FUNCTIONS
 import clsx from "clsx"
 // LIBRARIES
@@ -17,6 +18,8 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
+			`${copy.variable}`,
+			`${display.variable}`,
 			// Default Colours
 			"text-base-content",
 			"bg-secondary-200",
@@ -26,6 +29,7 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 		<body
 			className={clsx(
 				"h-full",
+				"font-copy",
 			)}
 		>
 			<GlobalContextProvider>

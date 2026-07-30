@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 :root {
-	a {
+	main a {
 		@apply font-semibold underline;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-display;
 	}
 
 	/* DEFAULT ACCENT COLOUR: OLIVE */
@@ -54,7 +63,10 @@
 
 /* BASE THEME VARIABLES */
 @theme {
-	/** ---------------------------------------- **/
+	/** --------------------------------------
+	/* Fonts */
+	--font-copy: var(--font-copy), sans-serif;
+	--font-display: var(--font-display), sans-serif;
 	/* Mode Color Variables*/
 	--base-dark-1: rgb(7 7 7);
 	--base-dark-2: rgb(28 28 28);
