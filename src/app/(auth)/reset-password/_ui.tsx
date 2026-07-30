@@ -13,6 +13,7 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod/schemas/pages"
 import { requestReset, submitReset } from "./_action"
 // UI
+import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
 import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
@@ -76,6 +77,10 @@ function RequestResetForm() {
 					<p>{t("pages.reset-password.request-description")}</p>
 				</AuthHeaderDescription>
 			</AuthHeader>
+
+			{/* STATUS MESSAGES */}
+			<StatusMessage className="mb-6" />
+
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -159,6 +164,10 @@ function ResetPasswordForm({ token }: { token: string }) {
 					<p>{t("pages.reset-password.reset-description")}</p>
 				</AuthHeaderDescription>
 			</AuthHeader>
+
+			{/* STATUS MESSAGES */}
+			<StatusMessage className="mb-6" />
+
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
