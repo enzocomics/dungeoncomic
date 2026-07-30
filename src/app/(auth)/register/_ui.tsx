@@ -111,8 +111,8 @@ export default function RegisterPageUI() {
 				<AuthHeaderDescription>
 					<p dangerouslySetInnerHTML={{
 						__html: t.rich("pages.register.acknowledgement", {
-							a1: (chunks) => `<a class="text-sky-500" href="/terms">${chunks}</a>`,
-							a2: (chunks) => `<a class="text-sky-500" href="/privacy">${chunks}</a>`
+							a1: (chunks) => `<a class="text-primary-500" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-primary-500" href="/privacy">${chunks}</a>`
 						}) as string
 					}}
 					/>
@@ -185,7 +185,7 @@ export default function RegisterPageUI() {
 					</div>
 					<Button
 						type="submit"
-						color="sky"
+						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6",
@@ -197,7 +197,7 @@ export default function RegisterPageUI() {
 			<AuthNav>
 				<p className="grow text-center" dangerouslySetInnerHTML={{
 					__html: t.rich("pages.register.login-link", {
-						a: (chunks) => `<a class="text-sky-500" href="/login">${chunks} &raquo;</a>`
+						a: (chunks) => `<a class="text-primary-500" href="/login">${chunks} &raquo;</a>`
 					}) as string
 				}}
 				/>

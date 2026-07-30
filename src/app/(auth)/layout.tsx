@@ -17,12 +17,15 @@ export default async function AuthRootLayoutUI(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
-			"bg-gray-50 dark:bg-gray-900"
+			// Default Colours
+			"text-base-content",
+			"bg-secondary-200",
+			"dark:bg-secondary-700"
 		)}
 	>
 		<body
 			className={clsx(
-				"h-full"
+				"h-full",
 			)}
 		>
 			<GlobalContextProvider>

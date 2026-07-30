@@ -100,7 +100,7 @@ function RequestResetForm() {
 					</div>
 					<Button
 						type="submit"
-						color="sky"
+						color="primary"
 						className={clsx(
 							"w-full",
 						)}
@@ -108,7 +108,7 @@ function RequestResetForm() {
 				</Fieldset>
 			</form>
 			<AuthNav>
-				<Link className="mx-auto text-sky-500" href="/login">&laquo; {n("go-back")}</Link>
+				<Link className="mx-auto text-primary-500" href="/login">&laquo; {n("go-back")}</Link>
 			</AuthNav>
 		</AuthBody >
 	</>
@@ -194,7 +194,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 					</div>
 					<Button
 						type="submit"
-						color="sky"
+						color="primary"
 						className={clsx(
 							"w-full",
 

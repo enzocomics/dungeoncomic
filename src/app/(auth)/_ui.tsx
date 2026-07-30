@@ -107,8 +107,7 @@ export function AuthNav({ children }: { children: React.ReactNode }) {
 			"justify-between",
 			"content-center",
 			"text-xs",
-			"text-gray-900/70",
-			"dark:text-white/70"
+			"text-current/70",
 		)}>
 			{children}
 		</div>
@@ -121,7 +120,7 @@ function AuthFooter() {
 		"lg:mt-10",
 		"text-center",
 		"text-xs",
-		"text-gray-500/50",
+		"text-current/40",
 		"sm:mx-auto",
 		"sm:w-full",
 		"sm:max-w-120"
