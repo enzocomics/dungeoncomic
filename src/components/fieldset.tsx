@@ -40,12 +40,13 @@ export function Field({ className, ...props }: { className?: string } & Omit<Hea
 			{...props}
 			className={clsx(
 				className,
-				'[&>[data-slot=label]+[data-slot=control]]:mt-3',
-				'[&>[data-slot=label]+[data-slot=description]]:mt-1',
-				'[&>[data-slot=description]+[data-slot=control]]:mt-3',
-				'[&>[data-slot=control]+[data-slot=description]]:mt-3',
-				'[&>[data-slot=control]+[data-slot=error]]:mt-3',
-				'*:data-[slot=label]:font-medium'
+				"group/field",
+				// '[&>[data-slot=label]+[data-slot=control]]:mt-3',
+				// '[&>[data-slot=label]+[data-slot=description]]:mt-1',
+				// '[&>[data-slot=description]+[data-slot=control]]:mt-3',
+				// '[&>[data-slot=control]+[data-slot=description]]:mt-3',
+				// '[&>[data-slot=control]+[data-slot=error]]:mt-3',
+				// '*:data-[slot=label]:font-medium'
 			)}
 		/>
 	)
@@ -88,11 +89,40 @@ export function ErrorMessage({
 	className,
 	...props
 }: { className?: string } & Omit<Headless.DescriptionProps, 'as' | 'className'>) {
-	return (
-		<Headless.Description
-			data-slot="error"
-			{...props}
-			className={clsx(className, 'text-base/6 text-red-600 data-disabled:opacity-50 sm:text-sm/6 dark:text-red-500')}
-		/>
-	)
+	const errors = props.children as string[]
+	return <>
+		{props.children &&
+			<Headless.Description
+				data-slot="error"
+				{...props}
+				className={clsx(className, clsx(
+					"block",
+					"mt-1",
+					"py-2",
+					"px-2.5",
+					"w-full",
+					"rounded-sm",
+					"dark:border",
+					"dark:border-red-500/25",
+					"bg-red-50",
+					"dark:bg-red-500/15",
+					"text-red-800",
+					"dark:text-red-200",
+					"text-xs",
+				))}
+			>
+				{errors.map((error, i) => {
+					return <span className="block" key={i}>
+						{/* Only show bullet point if there's more than one error */}
+						{errors.length > 1 &&
+							<>
+								-&nbsp;
+							</>
+						}
+						{error}
+					</span>
+				})}
+			</Headless.Description>
+		}
+	</>
 }

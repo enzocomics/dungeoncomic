@@ -16,7 +16,7 @@ import { login } from "./_action"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { Fieldset, Label } from "@/components/fieldset"
+import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Link } from "@/components/link"
@@ -101,7 +101,7 @@ export default function LoginPageUI() {
 					className={clsx(
 						"space-y-6"
 					)}>
-					<div>
+					<Field>
 						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
@@ -111,11 +111,12 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.email as string}
 							type="email"
 							autoComplete="current-email"
-							errors={fields.email.errors}
+							// errors={fields.email.errors}
+							aria-required
 						/>
-
-					</div>
-					<div>
+						<ErrorMessage>{fields.email.errors}</ErrorMessage>
+					</Field>
+					<Field>
 						<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
 						<Input
 							id={fields.password.name}
@@ -125,10 +126,10 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.password as string}
 							type="password"
 							autoComplete="current-password"
-							errors={fields.password.errors}
+							aria-required
 						/>
-
-					</div>
+						<ErrorMessage>{fields.password.errors}</ErrorMessage>
+					</Field>
 					<Button
 						type="submit"
 						color="primary"

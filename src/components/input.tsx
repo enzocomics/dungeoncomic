@@ -1,7 +1,6 @@
 import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
-import { Label } from "./fieldset"
 
 export function InputGroup({ children }: React.ComponentPropsWithoutRef<'span'>) {
 	return (
@@ -26,11 +25,9 @@ type DateType = (typeof dateTypes)[number]
 export const Input = forwardRef(function Input(
 	{
 		className,
-		errors,
 		...props
 	}: {
 		className?: string
-		errors?: string[]
 		type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' | DateType
 	} & Omit<Headless.InputProps, 'as' | 'className'>,
 	ref: React.ForwardedRef<HTMLInputElement>
@@ -54,6 +51,7 @@ export const Input = forwardRef(function Input(
 		>
 			<Headless.Input
 				ref={ref}
+				// aria-description={`${props.id}-errors`}
 				{...props}
 				className={clsx([
 					// Date classes
@@ -81,10 +79,9 @@ export const Input = forwardRef(function Input(
 					// Hide default focus styles
 					'focus:outline-hidden',
 					// Border
-					"border",
-					!errors && "border-zinc-950/10 data-hover:border-zinc-950/20 dark:border-white/10 dark:data-hover:border-white/20",
+					'border border-zinc-950/10 data-hover:border-zinc-950/20 dark:border-white/10 dark:data-hover:border-white/20',
 					// Invalid state
-					errors && "border-red-500 data-hover:border-red-500 dark:border-red-600 dark:data-hover:border-red-600",
+					'data-invalid:border-red-500 data-invalid:data-hover:border-red-500 dark:data-invalid:border-red-600 dark:data-invalid:data-hover:border-red-600',
 					// Disabled state
 					'data-disabled:border-zinc-950/20 dark:data-disabled:border-white/15 dark:data-disabled:bg-white/2.5 dark:data-hover:data-disabled:border-white/15',
 					// System icons
@@ -92,38 +89,5 @@ export const Input = forwardRef(function Input(
 				])}
 			/>
 		</span>
-		{/* Display Errors IF they exist */}
-		{errors && errors.length > 0 &&
-			<div
-				className={clsx(
-					"block",
-					"mt-1",
-					"py-2",
-					"px-2.5",
-					"w-full",
-					"rounded-sm",
-					"dark:border",
-					"dark:border-red-500/25",
-					"bg-red-50",
-					"dark:bg-red-500/15",
-					"text-red-800",
-					"dark:text-red-200",
-					"text-xs",
-				)}
-			>
-				{/* List Errors*/}
-				{errors.map((error, i) => {
-					return <p key={i}>
-						{/* Only show bullet point if there's more than one error */}
-						{errors.length > 1 &&
-							<>
-								-&nbsp;
-							</>
-						}
-						{error}
-					</p>
-				})}
-			</div>
-		}
 	</>
 })

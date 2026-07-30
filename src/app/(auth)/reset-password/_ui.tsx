@@ -15,7 +15,7 @@ import { requestReset, submitReset } from "./_action"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
-import { Fieldset, Label } from "@/components/fieldset"
+import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Link } from "@/components/link"
@@ -86,7 +86,7 @@ function RequestResetForm() {
 					className={clsx(
 						"space-y-6"
 					)}>
-					<div>
+					<Field>
 						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
@@ -95,9 +95,10 @@ function RequestResetForm() {
 							name={fields.email.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
-							errors={fields.email.errors}
+							aria-required
 						/>
-					</div>
+						<ErrorMessage>{fields.email.errors}</ErrorMessage>
+					</Field>
 					<Button
 						type="submit"
 						color="primary"
@@ -167,7 +168,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 					className={clsx(
 						"space-y-6"
 					)}>
-					<div>
+					<Field>
 						<Label htmlFor={fields.password.name}>{t("fields.new-password")}</Label>
 						<Input
 							id={fields.password.name}
@@ -176,11 +177,12 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.password.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
-							errors={fields.password.errors}
+							aria-required
 						/>
-					</div>
+						<ErrorMessage>{fields.password.errors}</ErrorMessage>
+					</Field>
 
-					<div>
+					<Field>
 						<Label htmlFor={fields.passwordConfirm.name}>{t("fields.new-password-confirm")}</Label>
 						<Input
 							id={fields.passwordConfirm.name}
@@ -189,9 +191,10 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
-							errors={fields.passwordConfirm.errors}
+							aria-required
 						/>
-					</div>
+						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
+					</Field>
 					<Button
 						type="submit"
 						color="primary"
