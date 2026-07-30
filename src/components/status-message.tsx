@@ -9,7 +9,7 @@ import { faCircleCheck, faCircleInfo, faCircleXmark, faTriangleExclamation, faXm
 // FUNCTIONS
 import clsx from "clsx"
 // UI
-import { useGlobalContext } from "@/app/(main)/_context"
+import { useGlobalContext } from "@/app/_context"
 import { usePathname, useRouter } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
 

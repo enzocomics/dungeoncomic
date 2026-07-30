@@ -1,29 +1,41 @@
-"use server"
 /**----------------------------------- */
 import "@/styles/globals.css"
+import { copy, display } from "@/styles/fonts"
 // FUNCTIONS
 import clsx from "clsx"
 // LIBRARIES
+import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "next-themes"
 // UI
 import GlobalContextProvider from "./_context"
-import StatusMessage from "@/components/status-message"
 
-/**-----------------------------------
- * ROOT LAYOUT - MAIN APP
- */
-export default async function MainRootLayoutUI(props: LayoutProps<"/">) {
-	return <html lang="en" suppressHydrationWarning>
+export default async function RootLayoutUI({
+	children
+}: {
+	children: React.ReactNode | null
+}) {
+	return <html lang="en" suppressHydrationWarning
+		className={clsx(
+			"h-full",
+			`${copy.variable}`,
+			`${display.variable}`,
+			// Default Colours
+			"text-base-content",
+			"bg-secondary-200",
+			"dark:bg-secondary-700"
+		)}
+	>
 		<body
 			className={clsx(
+				"h-full",
+				"font-copy",
 			)}
 		>
 			<GlobalContextProvider>
 				<ThemeProvider>
 					<NextIntlClientProvider>
-						<StatusMessage />
-						{props.children}
+						{children}
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>
