@@ -1,4 +1,3 @@
-
 /**----------------------------------- */
 // FUNCTIONS
 import clsx from "clsx"
@@ -52,14 +51,12 @@ export function AuthHeader({ children }: { children: React.ReactNode }) {
 }
 
 export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
-	return <h2 className={clsx(
+	return <h1 className={clsx(
 		"text-center",
-		"text-2xl/12",
-		"font-bold",
-		"tracking-tight",
+		"text-3xl/12",
 	)}>
 		{children}
-	</h2>
+	</h1>
 }
 
 export function AuthHeaderDescription({ children }: { children?: React.ReactNode }) {
