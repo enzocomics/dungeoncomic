@@ -88,7 +88,7 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 			<div className={clsx(
 				"bg-base-1",
 				"px-6",
-				"pt-12",
+				"pt-10",
 				"pb-18",
 				"shadow-sm",
 				"sm:rounded",
