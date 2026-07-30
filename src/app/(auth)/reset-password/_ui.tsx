@@ -14,10 +14,11 @@ import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod
 import { requestReset, submitReset } from "./_action"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader, AuthLayout } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/components/auth-layout"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
+import { Link } from "@/components/link"
 
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
@@ -28,7 +29,7 @@ export default function ResetPasswordPageUI() {
 	const resetToken = params.get("token")
 	// OUTPUT
 	return <>
-		{resetToken ? <ResetPasswordForm token={resetToken} /> : <RequestResetForm />}
+		{!resetToken ? <RequestResetForm /> : <ResetPasswordForm token={resetToken} />}
 	</>
 }
 
@@ -38,6 +39,7 @@ export default function ResetPasswordPageUI() {
 function RequestResetForm() {
 	// I18N
 	const t = useTranslations("auth")
+	const n = useTranslations("navigation")
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
 	// VALIDATION
@@ -66,10 +68,14 @@ function RequestResetForm() {
 
 	// OUTPUT
 	return <>
-		<AuthHeader>
-			{t("pages.reset-password.title")}
-		</AuthHeader>
+
 		<AuthBody>
+			<AuthHeader>
+				<AuthHeaderTitle>{t("pages.reset-password.title-verbose")}</AuthHeaderTitle>
+				<AuthHeaderDescription>
+					<p>{t("pages.reset-password.request-description")}</p>
+				</AuthHeaderDescription>
+			</AuthHeader>
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -101,7 +107,10 @@ function RequestResetForm() {
 					>{t("pages.reset-password.request")}</Button>
 				</Fieldset>
 			</form>
-		</AuthBody>
+			<AuthNav>
+				<Link className="mx-auto text-sky-500" href="/login">&laquo; {n("go-back")}</Link>
+			</AuthNav>
+		</AuthBody >
 	</>
 }
 
@@ -111,6 +120,7 @@ function RequestResetForm() {
 function ResetPasswordForm({ token }: { token: string }) {
 	// I18N
 	const t = useTranslations("auth")
+	const n = useTranslations("navigation")
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
 	// VALIDATION
@@ -140,8 +150,13 @@ function ResetPasswordForm({ token }: { token: string }) {
 
 	// OUTPUT
 	return <>
-		<AuthHeader>{t("pages.reset-password.title")}</AuthHeader>
 		<AuthBody>
+			<AuthHeader>
+				<AuthHeaderTitle>{t("pages.reset-password.title-verbose")}</AuthHeaderTitle>
+				<AuthHeaderDescription>
+					<p>{t("pages.reset-password.reset-description")}</p>
+				</AuthHeaderDescription>
+			</AuthHeader>
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -182,6 +197,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 						color="sky"
 						className={clsx(
 							"w-full",
+
 						)}
 					>{t("pages.reset-password.submit")}</Button>
 

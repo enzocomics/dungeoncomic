@@ -16,11 +16,13 @@ import { register, verify } from "./_action"
 // DATA
 import { adminContactEmail } from "@/data/env"
 // UI
+import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/components/auth-layout"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
+import { Link } from "@/components/link"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -102,8 +104,25 @@ export default function RegisterPageUI() {
 
 	// EXPORT
 	return <>
-		<AuthHeader>{t("pages.register.title-verbose")}</AuthHeader>
 		<AuthBody>
+			{/* HEADER */}
+			<AuthHeader>
+				<AuthHeaderTitle>{t("pages.register.title-verbose")}</AuthHeaderTitle>
+				<AuthHeaderDescription>
+					<p dangerouslySetInnerHTML={{
+						__html: t.rich("pages.register.acknowledgement", {
+							a1: (chunks) => `<a class="text-sky-500" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-sky-500" href="/privacy">${chunks}</a>`
+						}) as string
+					}}
+					/>
+				</AuthHeaderDescription>
+			</AuthHeader>
+
+			{/* STATUS MESSAGES */}
+			<StatusMessage className="mb-6" />
+
+			{/* FORM */}
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -169,11 +188,21 @@ export default function RegisterPageUI() {
 						color="sky"
 						className={clsx(
 							"w-full",
+							"mt-6",
 						)}
 					>{t("pages.register.submit")}</Button>
 				</Fieldset>
 			</form>
-		</AuthBody>
+			{/* NAVIGATION */}
+			<AuthNav>
+				<p className="grow text-center" dangerouslySetInnerHTML={{
+					__html: t.rich("pages.register.login-link", {
+						a: (chunks) => `<a class="text-sky-500" href="/login">${chunks} &raquo;</a>`
+					}) as string
+				}}
+				/>
+			</AuthNav>
+		</AuthBody >
 	</>
 
 }

@@ -13,11 +13,13 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
 import { login } from "./_action"
 // UI
+import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { AuthBody, AuthHeader } from "@/components/auth-layout"
+import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/components/auth-layout"
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
+import { Link } from "@/components/link"
 
 /** ------------------------------------------------ **
  * LOGIN FORM
@@ -70,8 +72,25 @@ export default function LoginPageUI() {
 
 	// OUTPUT
 	return <>
-		<AuthHeader>{t("pages.login.title")}</AuthHeader>
 		<AuthBody>
+			{/* HEADER */}
+			<AuthHeader>
+				<AuthHeaderTitle>{t("pages.login.title")}</AuthHeaderTitle>
+				<AuthHeaderDescription>
+					<p dangerouslySetInnerHTML={{
+						__html: t.rich("pages.register.acknowledgement", {
+							a1: (chunks) => `<a class="text-sky-500" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-sky-500" href="/privacy">${chunks}</a>`
+						}) as string
+					}}
+					/>
+				</AuthHeaderDescription>
+			</AuthHeader>
+
+			{/* STATUS MESSAGE */}
+			<StatusMessage className="mb-6" />
+
+			{/* FORM */}
 			<form
 				id={form.id}
 				onSubmit={form.onSubmit}
@@ -115,10 +134,30 @@ export default function LoginPageUI() {
 						color="sky"
 						className={clsx(
 							"w-full",
+							"mt-6",
 						)}
 					>{t("pages.login.submit")}</Button>
 				</Fieldset>
 			</form>
+
+			{/* NAVIGATION */}
+			<AuthNav>
+				<Link
+					className={clsx(
+						"text-sky-500",
+					)}
+					href="/reset-password">{t("pages.login.reset-password-link")} &raquo;</Link>
+				<div className={clsx(
+					"text-xs",
+					"text-gray-900/70",
+					"dark:text-white/70"
+				)}
+					dangerouslySetInnerHTML={{
+						__html: t.rich("pages.login.register-link", {
+							a: (chunks) => `<a class="text-sky-500" href="/register">${chunks} &raquo;</a>`
+						}) as string
+					}} />
+			</AuthNav>
 		</AuthBody>
 	</>
 

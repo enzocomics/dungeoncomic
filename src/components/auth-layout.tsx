@@ -1,46 +1,64 @@
 import clsx from "clsx"
-import type React from 'react'
-import StatusMessage from "@/components/status-message"
+import type React from "react"
 import { BuildingLibraryIcon } from "@heroicons/react/24/solid"
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
-		<main className={clsx(
+		<div className={clsx(
 			"flex",
 			"min-h-full",
 			"flex-col",
 			"justify-center",
-			"py-12",
+			"py-8",
 			"sm:px-6",
 			"lg:px-8",
 		)}>
+			<header className="sm:mx-auto sm:w-full sm:max-w-sm">
+				{/* Temporary Logo */}
+				<BuildingLibraryIcon className={clsx(
+					"mx-auto",
+					"size-20",
+					"w-auto",
+					"fill-sky-500"
+				)} />
+			</header>
 			{children}
-
 			<AuthFooter />
-		</main >
+		</div >
 	</>
 }
 
 export function AuthHeader({ children }: { children: React.ReactNode }) {
 	return <>
-		<div className="sm:mx-auto sm:w-full sm:max-w-sm">
-			{/* Temporary Logo */}
-			<BuildingLibraryIcon className={clsx(
-				"mx-auto",
-				"size-20",
-				"w-auto",
-				"fill-sky-500"
-			)} />
-			<h2 className="mt-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
-				{children}
-			</h2>
+		<div className={clsx(
+			"mb-8",
+		)} >
+			{children}
 		</div>
 	</>
 }
 
+export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
+	return <h2 className="text-center text-2xl/12 font-bold tracking-tight text-gray-900 dark:text-white">
+		{children}
+	</h2>
+}
+
+export function AuthHeaderDescription({ children }: { children?: React.ReactNode }) {
+	return <div className={clsx(
+		"text-center",
+		"text-xs",
+		"text-balance",
+		"text-gray-900/70",
+		"dark:text-white/70"
+	)}>
+		{children}
+	</div>
+}
+
 export function AuthBody({ children }: { children: React.ReactNode }) {
 	return <>
-		<div className={clsx(
+		<main className={clsx(
 			"mt-10",
 			"sm:mx-auto",
 			"sm:w-full",
@@ -49,7 +67,8 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 			<div className={clsx(
 				"bg-white",
 				"px-6",
-				"py-12",
+				"pt-12",
+				"pb-18",
 				"shadow-sm",
 				"sm:rounded",
 				"sm:px-12",
@@ -59,15 +78,30 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 				"dark:-outline-offset-1",
 				"dark:outline-white/10"
 			)}>
-				<StatusMessage className="mb-6" />
 				{children}
 			</div>
-		</div >
+		</main >
+	</>
+}
+
+export function AuthNav({ children }: { children: React.ReactNode }) {
+	return <>
+		<div className={clsx(
+			"mt-4",
+			"flex",
+			"justify-between",
+			"content-center",
+			"text-xs",
+			"text-gray-900/70",
+			"dark:text-white/70"
+		)}>
+			{children}
+		</div>
 	</>
 }
 
 function AuthFooter() {
-	return <div className={clsx(
+	return <footer className={clsx(
 		"mt-10",
 		"text-center",
 		"text-xs",
@@ -77,5 +111,5 @@ function AuthFooter() {
 		"sm:max-w-120"
 	)}>
 		&copy; 2026 Dungeon Construction Co.
-	</div>
+	</footer>
 }
