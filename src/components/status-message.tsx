@@ -3,7 +3,9 @@
 // TYPES
 export type StatusMessageType = "alert" | "error" | "success" | "info" | ""
 // LIBRARIES
-import { CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleCheck, faCircleInfo, faCircleXmark, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
+
 // FUNCTIONS
 import clsx from "clsx"
 // UI
@@ -58,16 +60,16 @@ export default function StatusMessage({
 				{/* ICON */}
 				<div className="shrink-0">
 					{statusMessage.type == "alert" &&
-						<ExclamationTriangleIcon aria-hidden="true" className="size-5 text-yellow-400 dark:text-yellow-300" />
+						<FontAwesomeIcon icon={faTriangleExclamation} aria-hidden="true" className="size-5 text-yellow-400 dark:text-yellow-300" />
 					}
 					{statusMessage.type == "error" &&
-						<XCircleIcon aria-hidden="true" className="size-5 text-red-400" />
+						<FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="size-5 text-red-400" />
 					}
 					{statusMessage.type == "success" &&
-						<CheckCircleIcon aria-hidden="true" className="size-5 text-green-400" />
+						<FontAwesomeIcon icon={faCircleCheck} aria-hidden="true" className="size-5 text-green-400" />
 					}
 					{statusMessage.type == "info" &&
-						<InformationCircleIcon aria-hidden="true" className="size-5 text-blue-400" />
+						<FontAwesomeIcon icon={faCircleInfo} aria-hidden="true" className="size-5 text-blue-400" />
 					}
 				</div>
 				{/* TEXT */}
@@ -76,6 +78,7 @@ export default function StatusMessage({
 				)}>
 					<h3 className={clsx(
 						"text-sm",
+						"text-pretty",
 						"font-medium",
 						// text-color
 						(statusMessage.type == "alert" ? "text-yellow-800" : ""),
@@ -94,6 +97,7 @@ export default function StatusMessage({
 						<div className={clsx(
 							"mt-2",
 							"text-sm",
+							"text-balance",
 							// text-color
 							(statusMessage.type == "alert" ? "text-yellow-700" : ""),
 							(statusMessage.type == "error" ? "text-red-700" : ""),
@@ -105,7 +109,6 @@ export default function StatusMessage({
 							(statusMessage.type == "success" ? "dark:text-green-200/85" : ""),
 							(statusMessage.type == "info" ? "dark:text-blue-300" : "")
 						)}>
-							{/* <p>{statusMessage.description}</p> */}
 							<p dangerouslySetInnerHTML={{
 								__html: JSON.parse(statusMessage.description).map((
 									part: {
@@ -153,7 +156,6 @@ export default function StatusMessage({
 							className={clsx(
 								"inline-flex",
 								"rounded-md",
-								"bg-green-50",
 								// bg-color
 								(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
 								(statusMessage.type == "error" ? "bg-red-50" : ""),
@@ -208,7 +210,7 @@ export default function StatusMessage({
 							)}
 						>
 							<span className="sr-only">Dismiss</span>
-							<XMarkIcon aria-hidden="true" className="size-5" />
+							<FontAwesomeIcon icon={faXmark} aria-hidden="true" className="size-5" />
 						</button>
 					</div>
 				</div>
