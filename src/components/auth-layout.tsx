@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import type React from "react"
-import { BuildingLibraryIcon } from "@heroicons/react/24/solid"
+import { Logo } from "./logo"
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
 	return <>
@@ -13,18 +13,17 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 			"justify-center",
 		)}>
 			<header className={clsx(
-				"my-4",
+				"my-8",
+				"md:my-12",
 				"mx-auto",
 				"w-full",
-				"max-w-sm"
+				"max-w-sm",
+				"text-sky-500",
 			)}>
-				{/* Temporary Logo */}
-				<BuildingLibraryIcon className={clsx(
+				<Logo className={clsx(
 					"mx-auto",
-					"size-10",
-					"md:size-20",
-					"w-auto",
-					"fill-sky-500"
+					"w-30",
+					"md:w-50"
 				)} />
 			</header>
 			{children}
