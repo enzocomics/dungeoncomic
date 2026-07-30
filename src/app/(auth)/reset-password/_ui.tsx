@@ -28,9 +28,7 @@ export default function ResetPasswordPageUI() {
 	const resetToken = params.get("token")
 	// OUTPUT
 	return <>
-		<AuthLayout>
-			{resetToken ? <ResetPasswordForm token={resetToken} /> : <RequestResetForm />}
-		</AuthLayout>
+		{resetToken ? <ResetPasswordForm token={resetToken} /> : <RequestResetForm />}
 	</>
 }
 
