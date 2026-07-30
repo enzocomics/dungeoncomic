@@ -22,7 +22,6 @@ import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav }
 import { Fieldset, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
-import { Link } from "@/components/link"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
