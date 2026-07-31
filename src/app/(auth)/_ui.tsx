@@ -136,6 +136,7 @@ function AuthFooter() {
 		<span>&copy; {new Date().getFullYear().toString()} Dungeon Construction Co.</span>
 		<a href="https://github.com/enzocomics/dungeoncomic" target="_blank"
 			title="Visit DungeonComic's Github Project Repository"
+			aria-label="Visit DungeonComic's Github Project Repository"
 			className={clsx(
 				"active:text-primary-500",
 				"transition-all",
