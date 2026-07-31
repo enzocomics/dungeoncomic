@@ -110,8 +110,8 @@ export default function RegisterPageUI() {
 				<AuthHeaderDescription>
 					<p dangerouslySetInnerHTML={{
 						__html: t.rich("pages.register.acknowledgement", {
-							a1: (chunks) => `<a class="text-primary-500" href="/terms">${chunks}</a>`,
-							a2: (chunks) => `<a class="text-primary-500" href="/privacy">${chunks}</a>`
+							a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
 						}) as string
 					}}
 					/>
@@ -204,7 +204,7 @@ export default function RegisterPageUI() {
 			<AuthNav>
 				<p className="grow text-center" dangerouslySetInnerHTML={{
 					__html: t.rich("pages.register.login-link", {
-						a: (chunks) => `<a class="text-primary-500" href="/login">${chunks} &raquo;</a>`
+						a: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/login">${chunks} &raquo;</a>`
 					}) as string
 				}}
 				/>

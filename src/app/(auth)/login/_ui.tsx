@@ -79,8 +79,8 @@ export default function LoginPageUI() {
 				<AuthHeaderDescription>
 					<p dangerouslySetInnerHTML={{
 						__html: t.rich("pages.register.acknowledgement", {
-							a1: (chunks) => `<a class="text-primary-500" href="/terms">${chunks}</a>`,
-							a2: (chunks) => `<a class="text-primary-500" href="/privacy">${chunks}</a>`
+							a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
 						}) as string
 					}}
 					/>
@@ -146,7 +146,8 @@ export default function LoginPageUI() {
 			<AuthNav>
 				<Link
 					className={clsx(
-						"text-primary-500",
+						"text-primary-800",
+						"dark:text-primary-300",
 					)}
 					href="/reset-password">{t("pages.login.reset-password-link")} &raquo;</Link>
 				<div className={clsx(
@@ -154,7 +155,7 @@ export default function LoginPageUI() {
 				)}
 					dangerouslySetInnerHTML={{
 						__html: t.rich("pages.login.register-link", {
-							a: (chunks) => `<a class="text-primary-500" href="/register">${chunks} &raquo;</a>`
+							a: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/register">${chunks} &raquo;</a>`
 						}) as string
 					}} />
 			</AuthNav>

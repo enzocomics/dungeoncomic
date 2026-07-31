@@ -93,11 +93,11 @@ export function AuthBody({ children }: { children: React.ReactNode }) {
 				"shadow-sm",
 				"sm:rounded",
 				"sm:px-12",
-				"dark:bg-base-3",
+				"dark:bg-base-1/40",
 				"dark:shadow-none",
 				"dark:outline",
 				"dark:-outline-offset-1",
-				"dark:outline-base-5/75"
+				"dark:outline-base-5/50"
 			)}>
 				{children}
 			</div>

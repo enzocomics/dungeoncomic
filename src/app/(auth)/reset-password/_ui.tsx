@@ -115,7 +115,7 @@ function RequestResetForm() {
 				</Fieldset>
 			</form>
 			<AuthNav>
-				<Link className="mx-auto text-primary-500" href="/login">&laquo; {n("go-back")}</Link>
+				<Link className="mx-auto text-primary-800 dark:text-primary-300" href="/login">&laquo; {n("go-back")}</Link>
 			</AuthNav>
 		</AuthBody >
 	</>

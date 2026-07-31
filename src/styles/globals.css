@@ -6,17 +6,17 @@
 	}
 
 	/* DEFAULT ACCENT COLOUR: OLIVE */
-	--color-primary-50: var(--color-olive-50);
-	--color-primary-100: var(--color-olive-100);
-	--color-primary-200: var(--color-olive-200);
-	--color-primary-300: var(--color-olive-300);
-	--color-primary-400: var(--color-olive-400);
-	--color-primary-500: var(--color-olive-500);
-	--color-primary-600: var(--color-olive-600);
-	--color-primary-700: var(--color-olive-700);
-	--color-primary-800: var(--color-olive-800);
-	--color-primary-900: var(--color-olive-900);
-	--color-primary-950: var(--color-olive-950);
+	--color-primary-50: var(--color-red-50);
+	--color-primary-100: var(--color-red-100);
+	--color-primary-200: var(--color-red-200);
+	--color-primary-300: var(--color-red-300);
+	--color-primary-400: var(--color-red-400);
+	--color-primary-500: var(--color-red-500);
+	--color-primary-600: var(--color-red-600);
+	--color-primary-700: var(--color-red-700);
+	--color-primary-800: var(--color-red-800);
+	--color-primary-900: var(--color-red-900);
+	--color-primary-950: var(--color-red-950);
 
 	/* DEFAULT SECONDARY COLOUR: OLIVE */
 	--color-secondary-50: var(--color-olive-50);
@@ -61,7 +61,7 @@
 
 	/* COLOR VARIABLE DEFINITIONS*/
 
-	--color-gray-100: #ffffff;
+	--color-gray-100: #fefefe;
 	--color-gray-200: #d7d7d7;
 	--color-gray-300: #cccccc;
 	--color-gray-400: #a7a7a7;

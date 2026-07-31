@@ -58,7 +58,7 @@ const styles = {
 	],
 	colors: {
 		primary: [
-			'text-white [--btn-hover-overlay:var(--color-white)]/10 [--btn-bg:var(--color-primary-500)] [--btn-border:var(--color-primary-600)]/80',
+			'text-white [--btn-hover-overlay:var(--color-white)]/10 [--btn-bg:var(--color-primary-800)] [--btn-border:var(--color-primary-900)]/80',
 			'[--btn-icon:var(--color-white)]/60 data-active:[--btn-icon:var(--color-white)]/80 data-hover:[--btn-icon:var(--color-white)]/80',
 		],
 		'dark/zinc': [
