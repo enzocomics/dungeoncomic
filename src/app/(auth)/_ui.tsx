@@ -34,7 +34,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 				"w-full",
 				"max-w-120",
 			)}>
-				<Image src="/img/header.webp" alt="" width="990" height="260" />
+				<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
 			</header>
 			{children}
 			<AuthFooter />
