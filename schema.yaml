@@ -132,6 +132,32 @@ collections:
       versioning: false
     schema:
       name: pages
+  - collection: settings
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      autosave_revision_interval: null
+      collapse: open
+      collection: settings
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: settings
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: null
+      sort_field: null
+      status: active
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: settings
 fields:
   - collection: comic_panels
     field: id
@@ -1469,7 +1495,7 @@ fields:
       display: null
       display_options: null
       field: username
-      group: null
+      group: profile
       hidden: false
       interface: input
       note: null
@@ -1482,7 +1508,7 @@ fields:
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
       name: username
       table: directus_users
@@ -1500,6 +1526,139 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: directus_users
+    field: project_author
+    type: uuid
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: project_author
+      group: metadata
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: project_author
+      table: directus_users
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: settings
+      foreign_key_column: id
+  - collection: directus_users
+    field: homepage_url
+    type: string
+    meta:
+      collection: directus_users
+      conditions: null
+      display: raw
+      display_options:
+        prefix: null
+      field: homepage_url
+      group: profile
+      hidden: false
+      interface: input
+      note: null
+      options: {}
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: homepage_url
+      table: directus_users
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: directus_users
+    field: metadata
+    type: alias
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: metadata
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: directus_users
+    field: profile
+    type: alias
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: profile
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
   - collection: page_branches
     field: id
     type: integer
@@ -2353,6 +2512,416 @@ fields:
       validation: null
       validation_message: null
       width: half
+  - collection: settings
+    field: id
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: meta
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - uuid
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: user_updated
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: meta
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: settings
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: settings
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: meta
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: settings
+      data_type: timestamp with time zone
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: meta
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: meta
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: settings
+    field: project
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: settings
+    field: project_title
+    type: string
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_title
+      group: project
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_title
+      table: settings
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: project_description
+    type: text
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_description
+      group: project
+      hidden: false
+      interface: input-multiline
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 5
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: project_description
+      table: settings
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: project_url
+    type: string
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_url
+      group: project
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_url
+      table: settings
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: project_thumbnail
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_thumbnail
+      group: project
+      hidden: false
+      interface: file-image
+      note: null
+      options:
+        allowedMimeTypes:
+          - image/jpeg
+          - image/png
+          - image/gif
+          - image/webp
+        folder: 659df6a2-37f1-4c88-a8a6-577098d4675e
+      readonly: false
+      required: false
+      searchable: true
+      sort: 6
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: project_thumbnail
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: settings
+    field: date_established
+    type: date
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: date_established
+      group: project
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_established
+      table: settings
+      data_type: date
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: project_authors
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_authors
+      group: project
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        sort: null
+        template: '{{username}} - {{homepage_url}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
 systemFields:
   - collection: directus_activity
     field: timestamp
@@ -2571,6 +3140,27 @@ relations:
       constraint_name: comments_user_updated_foreign
       on_update: NO ACTION
       on_delete: NO ACTION
+  - collection: directus_users
+    field: project_author
+    related_collection: settings
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: project_author
+      one_allowed_collections: null
+      one_collection: settings
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: project_authors
+      sort_field: null
+    schema:
+      table: directus_users
+      column: project_author
+      foreign_key_table: settings
+      foreign_key_column: id
+      constraint_name: directus_users_project_author_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
   - collection: page_branches
     field: linked_pages_id
     related_collection: pages
@@ -2676,3 +3266,45 @@ relations:
       constraint_name: pages_comic_foreign
       on_update: NO ACTION
       on_delete: NO ACTION
+  - collection: settings
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: settings
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: settings
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: settings_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: settings
+    field: project_thumbnail
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: settings
+      many_field: project_thumbnail
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: settings
+      column: project_thumbnail
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: settings_project_thumbnail_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
