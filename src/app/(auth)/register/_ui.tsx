@@ -19,7 +19,7 @@ import { adminContactEmail } from "@/data/env"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
+import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 
@@ -128,10 +128,7 @@ export default function RegisterPageUI() {
 				action={action}
 				noValidate
 			>
-				<Fieldset
-					className={clsx(
-						"space-y-6"
-					)}>
+				<FieldGroup>
 					<Field>
 						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
@@ -198,7 +195,7 @@ export default function RegisterPageUI() {
 							"mt-6",
 						)}
 					>{t("pages.register.submit")}</Button>
-				</Fieldset>
+				</FieldGroup>
 			</form>
 			{/* NAVIGATION */}
 			<AuthNav>

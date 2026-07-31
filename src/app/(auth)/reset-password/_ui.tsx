@@ -16,7 +16,7 @@ import { requestReset, submitReset } from "./_action"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
+import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Link } from "@/components/link"
@@ -87,10 +87,7 @@ function RequestResetForm() {
 				action={action}
 				noValidate
 			>
-				<Fieldset
-					className={clsx(
-						"space-y-6"
-					)}>
+				<FieldGroup>
 					<Field>
 						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
@@ -110,9 +107,10 @@ function RequestResetForm() {
 						color="primary"
 						className={clsx(
 							"w-full",
+							"mt-6"
 						)}
 					>{t("pages.reset-password.request")}</Button>
-				</Fieldset>
+				</FieldGroup>
 			</form>
 			<AuthNav>
 				<Link className="mx-auto text-primary-800 dark:text-primary-300" href="/login">&laquo; {n("go-back")}</Link>
@@ -174,10 +172,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 				action={action}
 				noValidate
 			>
-				<Fieldset
-					className={clsx(
-						"space-y-6"
-					)}>
+				<FieldGroup>
 					<Field>
 						<Label htmlFor={fields.password.name}>{t("fields.new-password")}</Label>
 						<Input
@@ -212,11 +207,11 @@ function ResetPasswordForm({ token }: { token: string }) {
 						color="primary"
 						className={clsx(
 							"w-full",
-
+							"mt-6",
 						)}
 					>{t("pages.reset-password.submit")}</Button>
 
-				</Fieldset>
+				</FieldGroup>
 				{/* Password Reset Token */}
 				<input name="token" type="hidden" value={token} />
 			</form>

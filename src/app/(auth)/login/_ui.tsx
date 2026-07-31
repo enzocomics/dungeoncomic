@@ -16,7 +16,7 @@ import { login } from "./_action"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { ErrorMessage, Field, Fieldset, Label } from "@/components/fieldset"
+import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Link } from "@/components/link"
@@ -97,10 +97,7 @@ export default function LoginPageUI() {
 				action={action}
 				noValidate
 			>
-				<Fieldset
-					className={clsx(
-						"space-y-6"
-					)}>
+				<FieldGroup>
 					<Field>
 						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
@@ -139,7 +136,7 @@ export default function LoginPageUI() {
 							"mt-6",
 						)}
 					>{t("pages.login.submit")}</Button>
-				</Fieldset>
+				</FieldGroup>
 			</form>
 
 			{/* NAVIGATION */}
