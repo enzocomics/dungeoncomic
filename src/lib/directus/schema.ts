@@ -12,6 +12,7 @@ export interface DirectusSchema {
 	comic_panels: ComicPanelsCollection[]
 	comments: CommentsCollection[]
 	directus_users: DirectusUser
+	settings: SettingsSingleton
 }
 
 export interface ComicsCollection {
@@ -80,5 +81,20 @@ export interface CommentsCollection {
 }
 
 export interface DirectusUser extends User {
-	username: string
+	username: string | null
+	homepage_url: string | null
+}
+
+/** ------------------------------------------------ **/
+// SETTINGS - SINGLETON
+export interface SettingsSingleton {
+	id: UUID
+	user_updated: UUID
+	date_updated: "datetime"
+	date_established: "datetime"
+	project_title: string | null
+	project_url: string | null
+	project_description: string | null
+	project_thumbnail: UUID | null
+	project_authors: UUID[] | DirectusUser | null
 }
