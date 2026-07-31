@@ -1,0 +1,24 @@
+"use server"
+/**----------------------------------- */
+// CMS
+import { adminClient } from "@/lib/directus/clients"
+import { readSingleton } from "@directus/sdk"
+
+/** ------------------------------------------------ **
+ * GET SETTINGS
+ */
+export async function GetSettings() {
+	const request = await adminClient.request(
+		readSingleton("settings", {
+			fields: [
+				"project_title",
+				"date_established",
+				{ project_authors: ["username", "homepage_url"] },
+				"project_url",
+				"project_description",
+				"project_thumbnail",
+			],
+		}),
+	)
+	return request
+}
