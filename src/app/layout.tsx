@@ -1,13 +1,17 @@
 /**----------------------------------- */
+// TYPES
+import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
 import { Metadata, Viewport } from "next"
 // UI
 import RootLayoutUI from "./_ui"
+import { GetSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
  */
 export default async function RootLayout(props: LayoutProps<"/">) {
+
 	return <RootLayoutUI>
 		{props.children}
 	</RootLayoutUI>
@@ -35,20 +39,48 @@ export const viewport: Viewport = {
  * - Homepage/fallback meta tags
  * - Will be overwritten by individual page meta tags
  ** ------------------------------------------------ **/
-// TODO: Hardcode
-const globalSiteThumb = {
-	url: "/apple-touch-icon.png",
-	type: "image/png",
-	width: "200",
-	height: "200",
+
+// Fallback Metadata Vars
+const fallbackTitle = "DungeonConstruction Co."
+const fallbackDescription = "We Build Adventure"
+const fallbackUrl = "https://dungeonconstruction.co"
+const fallbackAuthorName = "EnzoComics"
+const fallbackAuthorUrl = "https://enzocomics.ca"
+const fallbackThumbnail = {
+	url: "/img/og-image.webp",
+	type: "image/webp",
+	width: "1600",
+	height: "630",
 	alt: "Dungeon Construction Co."
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+	// METADATA VARS
+	const settings = await GetSettings()
 	const locale: string = "en-CA"
-	const title = "Dungeon Comic"
-	const description = "We Build Adventure"
-	const url = "https://dungeoncomic.com"
+	const title = settings.project_title || fallbackTitle
+	const description = settings.project_description || fallbackDescription
+	const url = settings.project_url || fallbackUrl
+
+	// AUTHORS w/ DEFAULTS
+	const getAuthors = settings.project_authors
+	const authors = getAuthors && getAuthors.length > 0 ? getAuthors.map((a) => {
+		let name
+		let url
+		if (a) {
+			name = a.name ?? a.username ?? undefined
+			url = a.homepage_url ?? undefined
+			return {
+				name: name,
+				url: url
+			}
+		} else {
+			return null
+		}
+	}
+	) : [{ name: fallbackAuthorName, url: fallbackAuthorUrl }]
+
+	const thumbnail = fallbackThumbnail
 
 	// Build the Metadata Object
 	return {
@@ -61,10 +93,10 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 		title: {
 			default: title,
-			template: `%s - ${title}`
+			template: `%s — ${title}`
 		},
 		description: description,
-		authors: [{ name: "EnzoComics", url: "https://enzocomics.ca" }],
+		authors: authors as Author[],
 		referrer: "origin-when-cross-origin",
 		openGraph: {
 			description: description,
@@ -72,9 +104,9 @@ export async function generateMetadata(): Promise<Metadata> {
 			url: url,
 			locale: locale,
 			type: "website",
-			images: [globalSiteThumb]
+			images: [thumbnail]
 		},
-		manifest: "/manifest.json",
+		// manifest: "/manifest.json",
 		icons: {
 			icon: [
 				{ url: "/favicon.ico" },
