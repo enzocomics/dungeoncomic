@@ -13,7 +13,7 @@ export async function GetSettings() {
 			fields: [
 				"project_title",
 				"date_established",
-				{ project_authors: ["username", "homepage_url"] },
+				{ project_authors: ["name", "username", "homepage_url"] },
 				"project_url",
 				"project_description",
 				"project_thumbnail",

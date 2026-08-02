@@ -13,6 +13,9 @@ export interface DirectusSchema {
 	comments: CommentsCollection[]
 	directus_users: DirectusUser
 	settings: SettingsSingleton
+	// Nested data needs to be typed in the root schema or else it will not be recognized as a relation
+	// - https://github.com/directus/directus/issues/23604
+	project_authors: SettingsNestedAuthors[]
 }
 
 export interface ComicsCollection {
@@ -81,6 +84,7 @@ export interface CommentsCollection {
 }
 
 export interface DirectusUser extends User {
+	name: string | null
 	username: string | null
 	homepage_url: string | null
 }
@@ -96,5 +100,11 @@ export interface SettingsSingleton {
 	project_url: string | null
 	project_description: string | null
 	project_thumbnail: UUID | null
-	project_authors: UUID[] | DirectusUser | null
+	project_authors: SettingsNestedAuthors[] | null
+}
+
+export interface SettingsNestedAuthors {
+	name: string | null
+	username: string | null
+	homepage_url: string | null
 }
