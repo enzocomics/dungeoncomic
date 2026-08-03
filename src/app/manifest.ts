@@ -1,6 +1,13 @@
-import { GetSettings } from "@/lib/directus/get-settings"
+/**----------------------------------- */
+// TYPES
 import type { MetadataRoute } from "next"
+// DATA
+import { directusURL } from "@/data/env"
+import { GetSettings } from "@/lib/directus/get-settings"
 
+/**-----------------------------------
+ * Manifest
+ */
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
 	const fallbackTitle = "DungeonConstruction Co."
 	const fallbackShortTitle = "Dungeon"
@@ -8,19 +15,27 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 
 	const settings = await GetSettings()
 
+	const pwaIcon192 = settings.project_pwa_icon
+		? `${directusURL}/assets/${settings.project_pwa_icon.filename_disk}?width=192&height=192`
+		: "/icon-192.png"
+
+	const pwaIcon512 = settings.project_pwa_icon
+		? `${directusURL}/assets/${settings.project_pwa_icon.filename_disk}?width=512&height=512`
+		: "/icon-512.png"
+
 	return {
 		name: settings.project_title || fallbackTitle,
 		short_name: settings.project_title || fallbackShortTitle,
 		description: settings.project_description || fallbackDescription,
 		icons: [
 			{
-				src: "/icon-192.png",
+				src: pwaIcon192,
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "maskable",
 			},
 			{
-				src: "/icon-512.png",
+				src: pwaIcon512,
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "maskable",
