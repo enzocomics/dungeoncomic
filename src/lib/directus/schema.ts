@@ -19,7 +19,7 @@ export interface DirectusSchema {
 	directus_users: DirectusUser
 	// SETTINGS
 	settings: SettingsSingleton
-			project_authors: NestedSettingsAuthors[]
+			project_authors: NestedUsers[]
 			project_thumbnail: NestedImages
 }
 
@@ -107,7 +107,7 @@ export interface SettingsSingleton {
 	project_url: string | null
 	project_description: string | null
 	project_thumbnail: NestedImages | null
-	project_authors: NestedSettingsAuthors[] | null
+	project_authors: NestedUsers[] | null
 	// Icons
 	project_favicon: UUID | null
 	project_svg_icon: UUID | null
@@ -115,7 +115,9 @@ export interface SettingsSingleton {
 	project_pwa_icon: UUID | null
 }
 
-export interface NestedSettingsAuthors {
+/** ------------------------------------------------ **/
+// NESTED COLLECTIONS
+export interface NestedUsers {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
