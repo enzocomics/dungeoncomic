@@ -7,6 +7,8 @@ import { UUID } from "crypto"
 // MAIN SCHEMA
 // Nested data needs to be typed in the root schema or else it will not be recognized as a relation
 // - https://github.com/directus/directus/issues/23604
+// Nested schemas are denoted by the tabbed properties
+// We'll have to add `prettier-ignore` here to prevent the tabs from getting cleaned up
 // prettier-ignore
 export interface DirectusSchema {
 	comics: ComicsCollection[]
