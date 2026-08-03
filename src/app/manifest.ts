@@ -14,13 +14,13 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 		description: settings.project_description || fallbackDescription,
 		icons: [
 			{
-				src: "/img/favicon-192x192.png",
+				src: "/icon-192.png",
 				sizes: "192x192",
 				type: "image/png",
 				purpose: "maskable",
 			},
 			{
-				src: "/img/favicon-512x512.png",
+				src: "/icon-512.png",
 				sizes: "512x512",
 				type: "image/png",
 				purpose: "maskable",
