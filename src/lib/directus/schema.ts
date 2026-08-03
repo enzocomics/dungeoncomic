@@ -5,6 +5,9 @@ import { UUID } from "crypto"
 
 /** ------------------------------------------------ **/
 // MAIN SCHEMA
+// Nested data needs to be typed in the root schema or else it will not be recognized as a relation
+// - https://github.com/directus/directus/issues/23604
+// prettier-ignore
 export interface DirectusSchema {
 	comics: ComicsCollection[]
 	pages: PagesCollection[]
@@ -12,10 +15,10 @@ export interface DirectusSchema {
 	comic_panels: ComicPanelsCollection[]
 	comments: CommentsCollection[]
 	directus_users: DirectusUser
+	// SETTINGS
 	settings: SettingsSingleton
-	// Nested data needs to be typed in the root schema or else it will not be recognized as a relation
-	// - https://github.com/directus/directus/issues/23604
-	project_authors: SettingsNestedAuthors[]
+			project_authors: SettingsNestedAuthors[]
+			project_thumbnail: NestedImage
 }
 
 export interface ComicsCollection {
@@ -92,19 +95,34 @@ export interface DirectusUser extends User {
 /** ------------------------------------------------ **/
 // SETTINGS - SINGLETON
 export interface SettingsSingleton {
+	// Meta
 	id: UUID
 	user_updated: UUID
 	date_updated: "datetime"
 	date_established: "datetime"
+	// Details
 	project_title: string | null
 	project_url: string | null
 	project_description: string | null
-	project_thumbnail: UUID | null
+	project_thumbnail: NestedImage | null
 	project_authors: SettingsNestedAuthors[] | null
+	// Icons
+	project_favicon: UUID | null
+	project_svg_icon: UUID | null
+	project_apple_icon: UUID | null
+	project_pwa_icon: UUID | null
 }
 
 export interface SettingsNestedAuthors {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
+}
+
+export interface NestedImage {
+	id: UUID
+	filename_disk: string
+	type: string
+	width: number
+	height: number
 }
