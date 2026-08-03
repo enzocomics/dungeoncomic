@@ -76,6 +76,7 @@ services:
       - dungeoncomic
     volumes:
       - uploads:/directus/uploads
+      - templates:/directus/templates
       - ./schema.yaml:/directus/schema.yaml
     command: >
       sh -c "node cli.js bootstrap &&
@@ -190,6 +191,13 @@ volumes:
       type: none
       o: bind
       device: ./cms/uploads
+  templates:
+    name: dungeoncomic_templates
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./cms/templates
 
 ## -------------------------------------------------------
 networks:
