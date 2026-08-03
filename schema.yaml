@@ -1659,6 +1659,46 @@ fields:
       validation: null
       validation_message: null
       width: full
+  - collection: directus_users
+    field: name
+    type: string
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: profile
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: name
+      table: directus_users
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: page_branches
     field: id
     type: integer
@@ -2664,32 +2704,6 @@ fields:
       validation_message: null
       width: full
   - collection: settings
-    field: project
-    type: alias
-    meta:
-      collection: settings
-      conditions: null
-      display: null
-      display_options: null
-      field: project
-      group: null
-      hidden: false
-      interface: group-raw
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 2
-      special:
-        - alias
-        - no-data
-        - group
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-  - collection: settings
     field: project_title
     type: string
     meta:
@@ -2706,7 +2720,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 1
+      sort: 3
       special: null
       translations: null
       validation: null
@@ -2746,7 +2760,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 5
+      sort: 7
       special: null
       translations: null
       validation: null
@@ -2786,7 +2800,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 2
+      sort: 4
       special: null
       translations: null
       validation: null
@@ -2821,7 +2835,7 @@ fields:
       group: project
       hidden: false
       interface: file-image
-      note: null
+      note: 1200x630px — `PNG | JPG | GIF | WEBP`
       options:
         allowedMimeTypes:
           - image/jpeg
@@ -2832,7 +2846,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 6
+      sort: 2
       special:
         - file
       translations: null
@@ -2873,7 +2887,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 3
+      sort: 5
       special: null
       translations: null
       validation: null
@@ -2915,13 +2929,265 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 4
+      sort: 6
       special:
         - o2m
       translations: null
       validation: null
       validation_message: null
       width: half
+  - collection: settings
+    field: project
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project
+      group: null
+      hidden: false
+      interface: group-raw
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: settings
+    field: icons
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: icons
+      group: null
+      hidden: false
+      interface: group-detail
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - alias
+        - no-data
+        - group
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: settings
+    field: project_icon_svg
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_icon_svg
+      group: icons
+      hidden: false
+      interface: file-image
+      note: .SVG only
+      options:
+        allowedMimeTypes:
+          - image/svg+xml
+        crop: false
+        folder: 659df6a2-37f1-4c88-a8a6-577098d4675e
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - file
+      translations:
+        - language: en-US
+          translation: SVG Favicon
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_icon_svg
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: settings
+    field: project_icon_apple
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_icon_apple
+      group: icons
+      hidden: false
+      interface: file-image
+      note: 180x180px — `.PNG` only —  No transparency
+      options:
+        allowedMimeTypes:
+          - image/png
+        crop: false
+        folder: 659df6a2-37f1-4c88-a8a6-577098d4675e
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special:
+        - file
+      translations:
+        - language: en-US
+          translation: Apple Touch Icon
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_icon_apple
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: settings
+    field: project_icon_pwa
+    type: uuid
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_icon_pwa
+      group: icons
+      hidden: false
+      interface: file-image
+      note: 512x512 — `.PNG` only
+      options:
+        allowedMimeTypes:
+          - image/png
+        crop: false
+        folder: 659df6a2-37f1-4c88-a8a6-577098d4675e
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special:
+        - file
+      translations:
+        - language: en-US
+          translation: Android / Progressive Web App (PWA) Icon
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_icon_pwa
+      table: settings
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: settings
+    field: notice-bxl2fo
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: notice-bxl2fo
+      group: icons
+      hidden: false
+      interface: presentation-notice
+      note: null
+      options:
+        color: info
+        text: >-
+          You can [generate the required set of icons
+          here](https://convert.actuallyusefulextensions.com/png-to-favicon).
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: settings
+    field: header-nqle-g
+    type: alias
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: header-nqle-g
+      group: project
+      hidden: false
+      interface: header
+      note: null
+      options:
+        color: '#FFA439'
+        help: null
+        icon: settings
+        subtitle: null
+        title: Project Settings
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - alias
+        - no-data
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
 systemFields:
   - collection: directus_activity
     field: timestamp
@@ -3306,5 +3572,68 @@ relations:
       foreign_key_table: directus_files
       foreign_key_column: id
       constraint_name: settings_project_thumbnail_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: settings
+    field: project_icon_svg
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: settings
+      many_field: project_icon_svg
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: settings
+      column: project_icon_svg
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: settings_project_icon_svg_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: settings
+    field: project_icon_apple
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: settings
+      many_field: project_icon_apple
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: settings
+      column: project_icon_apple
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: settings_project_icon_apple_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: settings
+    field: project_icon_pwa
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: settings
+      many_field: project_icon_pwa
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: settings
+      column: project_icon_pwa
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: settings_project_icon_pwa_foreign
       on_update: NO ACTION
       on_delete: SET NULL
