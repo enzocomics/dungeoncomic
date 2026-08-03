@@ -20,7 +20,6 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 /** ------------------------------------------------ **
  * Global Viewport
  ** ------------------------------------------------ **/
-// TODO: Hardcode
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
@@ -56,7 +55,6 @@ export async function generateMetadata(): Promise<Metadata> {
 		height: "630",
 		alt: "Dungeon Construction Co."
 	}
-	const fallbackFavicon = { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" }
 	const fallbackIcon = { url: "/icon.svg", type: "image/svg+xml" }
 	const fallbackAppleIcon = { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
 
