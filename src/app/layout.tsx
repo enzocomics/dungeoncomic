@@ -5,13 +5,13 @@ import { Author } from "next/dist/lib/metadata/types/metadata-types"
 import { Metadata, Viewport } from "next"
 // UI
 import RootLayoutUI from "./_ui"
+import { directusURL } from "@/data/env"
 import { GetSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
  */
 export default async function RootLayout(props: LayoutProps<"/">) {
-
 	return <RootLayoutUI>
 		{props.children}
 	</RootLayoutUI>
@@ -39,22 +39,27 @@ export const viewport: Viewport = {
  * - Homepage/fallback meta tags
  * - Will be overwritten by individual page meta tags
  ** ------------------------------------------------ **/
-
-// Fallback Metadata Vars
-const fallbackTitle = "DungeonConstruction Co."
-const fallbackDescription = "We Build Adventure"
-const fallbackUrl = "https://dungeonconstruction.co"
-const fallbackAuthorName = "EnzoComics"
-const fallbackAuthorUrl = "https://enzocomics.ca"
-const fallbackThumbnail = {
-	url: "/img/og-image.webp",
-	type: "image/webp",
-	width: "1600",
-	height: "630",
-	alt: "Dungeon Construction Co."
-}
-
 export async function generateMetadata(): Promise<Metadata> {
+
+	// METADATA VARS - FALLBACKS
+	const fallbackTitle = "DungeonConstruction Co."
+	const fallbackDescription = "We Build Adventure"
+	const fallbackUrl = "https://dungeonconstruction.co"
+	const fallbackAuthorName = "EnzoComics"
+	const fallbackAuthorUrl = "https://enzocomics.ca"
+
+	// FALLBACK IMAGES
+	const fallbackThumbnail = {
+		url: "/img/og-image.webp",
+		type: "image/webp",
+		width: "1600",
+		height: "630",
+		alt: "Dungeon Construction Co."
+	}
+	const fallbackFavicon = { url: "/favicon.ico", sizes: "256x256", type: "image/x-icon" }
+	const fallbackIcon = { url: "/icon.svg", type: "image/svg+xml" }
+	const fallbackAppleIcon = { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+
 	// METADATA VARS
 	const settings = await GetSettings()
 	const locale: string = "en-CA"
@@ -80,7 +85,16 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 	) : [{ name: fallbackAuthorName, url: fallbackAuthorUrl }]
 
-	const thumbnail = fallbackThumbnail
+	// IMAGES
+	const thumbnail = settings.project_thumbnail ? {
+		url: `${directusURL}/assets/${settings.project_thumbnail.filename_disk}`,
+		type: settings.project_thumbnail.type,
+		width: settings.project_thumbnail.width,
+		height: settings.project_thumbnail.height,
+	} : fallbackThumbnail
+	const favicon = fallbackFavicon
+	const icon = fallbackIcon
+	const appleIcon = fallbackAppleIcon
 
 	// Build the Metadata Object
 	return {
@@ -105,6 +119,15 @@ export async function generateMetadata(): Promise<Metadata> {
 			locale: locale,
 			type: "website",
 			images: [thumbnail]
+		},
+		icons: {
+			icon: [
+				favicon,
+				icon
+			],
+			apple: [
+				appleIcon
+			]
 		},
 		appleWebApp: {
 			title: title
