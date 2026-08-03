@@ -18,6 +18,9 @@ export async function GetSettings() {
 				"project_description",
 				// "project_thumbnail",
 				{ project_thumbnail: ["filename_disk", "type", "width", "height"] },
+				{ project_svg_icon: ["filename_disk", "type", "width", "height"] },
+				{ project_apple_icon: ["filename_disk", "type", "width", "height"] },
+				{ project_pwa_icon: ["filename_disk", "type", "width", "height"] },
 			],
 		}),
 	)

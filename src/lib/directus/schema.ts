@@ -21,6 +21,9 @@ export interface DirectusSchema {
 	settings: SettingsSingleton
 			project_authors: NestedUsers[]
 			project_thumbnail: NestedImages
+			project_svg_icon: NestedImages
+			project_apple_icon: NestedImages
+			project_pwa_icon: NestedImages
 }
 
 export interface ComicsCollection {
@@ -109,10 +112,9 @@ export interface SettingsSingleton {
 	project_thumbnail: NestedImages | null
 	project_authors: NestedUsers[] | null
 	// Icons
-	project_favicon: UUID | null
-	project_svg_icon: UUID | null
-	project_apple_icon: UUID | null
-	project_pwa_icon: UUID | null
+	project_svg_icon: NestedImages | null
+	project_apple_icon: NestedImages | null
+	project_pwa_icon: NestedImages | null
 }
 
 /** ------------------------------------------------ **/

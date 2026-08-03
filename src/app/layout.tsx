@@ -85,16 +85,27 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 	) : [{ name: fallbackAuthorName, url: fallbackAuthorUrl }]
 
-	// IMAGES
+	// IMAGES & ICONS + FALLBACKS
 	const thumbnail = settings.project_thumbnail ? {
 		url: `${directusURL}/assets/${settings.project_thumbnail.filename_disk}`,
 		type: settings.project_thumbnail.type,
 		width: settings.project_thumbnail.width,
 		height: settings.project_thumbnail.height,
 	} : fallbackThumbnail
-	const favicon = fallbackFavicon
-	const icon = fallbackIcon
-	const appleIcon = fallbackAppleIcon
+
+	const icon = settings.project_svg_icon ? {
+		url: `${directusURL}/assets/${settings.project_svg_icon.filename_disk}`,
+		type: settings.project_svg_icon.type,
+		width: settings.project_svg_icon.width,
+		height: settings.project_svg_icon.height,
+	} : fallbackIcon
+
+	const appleIcon = settings.project_apple_icon ? {
+		url: `${directusURL}/assets/${settings.project_apple_icon.filename_disk}`,
+		type: settings.project_apple_icon.type,
+		width: settings.project_apple_icon.width,
+		height: settings.project_apple_icon.height,
+	} : fallbackAppleIcon
 
 	// Build the Metadata Object
 	return {
@@ -122,8 +133,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 		icons: {
 			icon: [
-				favicon,
-				icon
+				icon,
 			],
 			apple: [
 				appleIcon
