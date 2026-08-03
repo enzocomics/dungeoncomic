@@ -19,8 +19,8 @@ export interface DirectusSchema {
 	directus_users: DirectusUser
 	// SETTINGS
 	settings: SettingsSingleton
-			project_authors: SettingsNestedAuthors[]
-			project_thumbnail: NestedImage
+			project_authors: NestedSettingsAuthors[]
+			project_thumbnail: NestedImages
 }
 
 export interface ComicsCollection {
@@ -106,8 +106,8 @@ export interface SettingsSingleton {
 	project_title: string | null
 	project_url: string | null
 	project_description: string | null
-	project_thumbnail: NestedImage | null
-	project_authors: SettingsNestedAuthors[] | null
+	project_thumbnail: NestedImages | null
+	project_authors: NestedSettingsAuthors[] | null
 	// Icons
 	project_favicon: UUID | null
 	project_svg_icon: UUID | null
@@ -115,13 +115,13 @@ export interface SettingsSingleton {
 	project_pwa_icon: UUID | null
 }
 
-export interface SettingsNestedAuthors {
+export interface NestedSettingsAuthors {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
 }
 
-export interface NestedImage {
+export interface NestedImages {
 	id: UUID
 	filename_disk: string
 	type: string
