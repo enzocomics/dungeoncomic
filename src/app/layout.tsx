@@ -26,12 +26,12 @@ export const viewport: Viewport = {
 	initialScale: 1,
 	minimumScale: 0.5,
 	maximumScale: 6,
+	interactiveWidget: "resizes-visual",
+	colorScheme: "light dark",
 	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: '#eaeaea' },
-		{ media: '(prefers-color-scheme: dark)', color: '#222222' },
+		{ media: "(prefers-color-scheme: light)", color: "#e8e8e3" },
+		{ media: "(prefers-color-scheme: dark)", color: "#1d1d16" },
 	],
-	interactiveWidget: 'resizes-content',
-	// colorScheme: "dark light",
 }
 
 /** ------------------------------------------------ **
@@ -106,23 +106,8 @@ export async function generateMetadata(): Promise<Metadata> {
 			type: "website",
 			images: [thumbnail]
 		},
-		// manifest: "/manifest.json",
-		icons: {
-			icon: [
-				{ url: "/favicon.ico" },
-				{ url: "/favicon-16x16.png", sizes: "16x16" },
-				{ url: "/favicon-32x32.png", sizes: "32x32" },
-			],
-			apple: [
-				{ url: "/apple-touch-icon.png", sizes: "180x180" }
-			],
-			other: [
-				{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#5bbad5" }
-			]
-		},
 		appleWebApp: {
 			title: title
 		}
-
 	}
 }
