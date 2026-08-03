@@ -16,7 +16,8 @@ export async function GetSettings() {
 				{ project_authors: ["name", "username", "homepage_url"] },
 				"project_url",
 				"project_description",
-				"project_thumbnail",
+				// "project_thumbnail",
+				{ project_thumbnail: ["filename_disk", "type", "width", "height"] },
 			],
 		}),
 	)
