@@ -1,6 +1,7 @@
 "use server"
 /**----------------------------------- */
 // LIBRARIES
+import { Suspense } from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
@@ -14,7 +15,9 @@ import RegisterPageUI from "./_ui"
 export default async function RegisterPage() {
 	const user = await verifySession()
 	// Show the create account UI if the user is not logged in
-	if (!user) return <RegisterPageUI />
+	if (!user) return <Suspense>
+		<RegisterPageUI />
+	</Suspense>
 	// Otherwise, redirect them to the dahsboard
 	else redirect("/dashboard")
 }

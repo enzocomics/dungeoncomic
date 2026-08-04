@@ -1,6 +1,7 @@
 "use server"
 /**----------------------------------- */
 // LIBRARIES
+import { Suspense } from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
@@ -14,7 +15,9 @@ import LoginPageUI from "./_ui"
 export default async function LoginPage() {
 	const user = await verifySession()
 	// Show the login UI if the user is not logged in
-	if (!user) return <LoginPageUI />
+	if (!user) return <Suspense>
+		<LoginPageUI />
+	</Suspense>
 	// Otherwise, redirect them to the dashboard
 	else redirect("/dashboard")
 }
