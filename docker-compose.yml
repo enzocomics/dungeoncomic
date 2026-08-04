@@ -141,9 +141,9 @@ services:
 
       # DIRECTUS - URL SECURITY
       CORS_ENABLED: "true"
-      CORS_ORIGIN: &site-public-url
-      USER_REGISTER_URL_ALLOW_LIST: &site-public-url
-      PASSWORD_RESET_URL_ALLOW_LIST: &site-public-url
+      CORS_ORIGIN: *site-public-url
+      USER_REGISTER_URL_ALLOW_LIST: *site-public-url
+      PASSWORD_RESET_URL_ALLOW_LIST: *site-public-url
 
       SERVE_APP: ${CMS_SERVE_APP}
     healthcheck:
