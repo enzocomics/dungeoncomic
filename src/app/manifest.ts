@@ -24,8 +24,8 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 		: "/icon-512.png"
 
 	return {
-		name: settings.project_title || fallbackTitle,
-		short_name: settings.project_title || fallbackShortTitle,
+		name: settings.project_name || fallbackTitle,
+		short_name: settings.project_name || fallbackShortTitle,
 		description: settings.project_description || fallbackDescription,
 		icons: [
 			{
