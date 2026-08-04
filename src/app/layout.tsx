@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
 
 	// METADATA VARS - FALLBACKS
-	const fallbackTitle = "DungeonConstruction Co."
+	const fallbackProjectName = "DungeonConstruction Co."
 	const fallbackDescription = "We Build Adventure"
 	const fallbackUrl = "https://dungeonconstruction.co"
 	const fallbackAuthorName = "EnzoComics"
@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	// METADATA VARS
 	const settings = await GetSettings()
 	const locale: string = "en-CA"
-	const title = settings.project_title || fallbackTitle
+	const projectName = settings.project_name || fallbackProjectName
 	const description = settings.project_description || fallbackDescription
 	const url = settings.project_url || fallbackUrl
 
@@ -115,15 +115,15 @@ export async function generateMetadata(): Promise<Metadata> {
 			},
 		},
 		title: {
-			default: title,
-			template: `%s — ${title}`
+			default: projectName,
+			template: `%s — ${projectName}`
 		},
 		description: description,
 		authors: authors as Author[],
 		referrer: "origin-when-cross-origin",
 		openGraph: {
 			description: description,
-			siteName: title,
+			siteName: projectName,
 			url: url,
 			locale: locale,
 			type: "website",
@@ -138,7 +138,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			]
 		},
 		appleWebApp: {
-			title: title
+			title: projectName
 		}
 	}
 }

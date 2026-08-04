@@ -106,7 +106,7 @@ export interface SettingsSingleton {
 	date_updated: "datetime"
 	date_established: "datetime"
 	// Details
-	project_title: string | null
+	project_name: string | null
 	project_url: string | null
 	project_description: string | null
 	project_thumbnail: NestedImages | null
