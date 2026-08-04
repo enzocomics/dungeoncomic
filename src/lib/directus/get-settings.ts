@@ -11,7 +11,7 @@ export async function GetSettings() {
 	const request = await adminClient.request(
 		readSingleton("settings", {
 			fields: [
-				"project_title",
+				"project_name",
 				"date_established",
 				{ project_authors: ["name", "username", "homepage_url"] },
 				"project_url",
