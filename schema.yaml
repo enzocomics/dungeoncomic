@@ -2704,46 +2704,6 @@ fields:
       validation_message: null
       width: full
   - collection: settings
-    field: project_title
-    type: string
-    meta:
-      collection: settings
-      conditions: null
-      display: null
-      display_options: null
-      field: project_title
-      group: project
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: project_title
-      table: settings
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: settings
     field: project_description
     type: text
     meta:
@@ -2784,46 +2744,6 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: settings
-    field: project_url
-    type: string
-    meta:
-      collection: settings
-      conditions: null
-      display: null
-      display_options: null
-      field: project_url
-      group: project
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 4
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: project_url
-      table: settings
-      data_type: character varying
-      default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: settings
     field: project_thumbnail
     type: uuid
     meta:
@@ -2846,7 +2766,7 @@ fields:
       readonly: false
       required: false
       searchable: true
-      sort: 2
+      sort: 4
       special:
         - file
       translations: null
@@ -3188,6 +3108,86 @@ fields:
       validation: null
       validation_message: null
       width: full
+  - collection: settings
+    field: project_url
+    type: string
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_url
+      group: project
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_url
+      table: settings
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: settings
+    field: project_name
+    type: string
+    meta:
+      collection: settings
+      conditions: null
+      display: null
+      display_options: null
+      field: project_name
+      group: project
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: project_name
+      table: settings
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
 systemFields:
   - collection: directus_activity
     field: timestamp
