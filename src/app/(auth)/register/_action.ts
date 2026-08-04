@@ -13,6 +13,8 @@ import { adminClient, publicClient, userClient } from "@/lib/directus/clients"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
+// DATA
+import { siteURL } from "@/data/env"
 
 /** ------------------------------------------------ **
  * REGISTER ACTION
@@ -64,7 +66,11 @@ export async function register(prevState: unknown, formData: FormData) {
 		const password = formData.get("password") as string
 		// const username = formData.get("username") as string
 		// Create the user
-		const response = await publicClient.request(registerUser(email, password))
+		const response = await publicClient.request(
+			registerUser(email, password, {
+				verification_url: siteURL,
+			}),
+		)
 		// Get the new user's ID
 		// const getUserID = await adminClient.request(
 		// 	readUsers({
