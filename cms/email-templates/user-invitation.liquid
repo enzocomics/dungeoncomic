@@ -1,12 +1,10 @@
-{% layout "base" %} {% block content %}
+{% layout "base.liquid" %} {% block content %}
 
-<h1>Reset your {{projectName}} password</h1>
+<h1>You've been invited to {{ projectName }}</h1>
 
 <p style="padding-bottom: 30px">
-  We have received a request to reset the password for your
-  <i>{{ projectName }}</i> account. If you did not make this change, please
-  contact one of your administrators. Otherwise, to complete the process, click
-  the following link to confirm your email address and enter your new password.
+  You have been invited to join <i>{{ projectName }}</i>. Please click the
+  button below to accept this invitation and join the project:
 </p>
 
 <a
@@ -31,12 +29,10 @@
       >&nbsp;</i
     >
   <![endif]-->
-  <span style="mso-text-raise: 15pt">Reset Your Password</span>
+  <span style="mso-text-raise: 15pt">Join {{ projectName }}</span>
   <!--[if mso]>
     <i style="letter-spacing: 25px; mso-font-width: -100%">&nbsp;</i>
   <![endif]-->
 </a>
-
-<p style="padding-top: 30px">Important: This link will expire in 24 hours.</p>
 
 {% endblock %}

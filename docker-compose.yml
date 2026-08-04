@@ -199,7 +199,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./cms/templates
+      device: ./cms/email-templates
 
 ## -------------------------------------------------------
 networks:
