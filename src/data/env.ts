@@ -1,4 +1,5 @@
 // Environment Variables
+export const siteURL = process.env.NEXT_PUBLIC_SITE_URL!
 export const directusURL = process.env.NEXT_PUBLIC_CMS_URL!
 export const adminToken = process.env.CMS_ADMIN_TOKEN!
 export const adminEmail = process.env.CMS_ADMIN_EMAIL!
