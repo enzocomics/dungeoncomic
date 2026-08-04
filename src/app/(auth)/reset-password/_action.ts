@@ -10,6 +10,7 @@ import {
 	resetPasswordSubmitSchema,
 } from "@/lib/zod/schemas/pages"
 // CMS
+import { siteURL } from "@/data/env"
 import { passwordRequest, passwordReset } from "@directus/sdk"
 import { publicClient } from "@/lib/directus/clients"
 
@@ -24,7 +25,7 @@ export async function requestReset(prevState: unknown, formData: FormData) {
 	try {
 		const email = formData.get("email") as string
 		// Request a password reset email from Directus
-		await publicClient.request(passwordRequest(email))
+		await publicClient.request(passwordRequest(email, siteURL))
 	} catch (err: any) {
 		// return error if unsuccessful
 		const error = err.errors?.[0]
