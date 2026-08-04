@@ -5,7 +5,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // NEXT.JS
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 // AUTH + VALIDATION
 import { useActionState, useEffect } from "react"
@@ -63,7 +63,7 @@ export default function RegisterPageUI() {
 	const params = useSearchParams()
 
 	// EFFECT: Verify user's account via urlParam
-	const urlVerifyToken = params.get("verify")
+	const urlVerifyToken = params.get("token")
 	useEffect(() => {
 		const verifyRegistration = async () => {
 			if (urlVerifyToken) {
@@ -71,7 +71,8 @@ export default function RegisterPageUI() {
 				const response = await verify(urlVerifyToken)
 				if (response?.status == "success") {
 					// SUCCESS MESSAGE
-					setStatus("success", s("account-verified"))
+					setStatus("success", s("account-verify-success"))
+					redirect("/login")
 				} else {
 					// ERROR MESSAGE
 					setStatus(

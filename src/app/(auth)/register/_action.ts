@@ -9,12 +9,12 @@ import {
 	registerUserVerify,
 	updateUser,
 } from "@directus/sdk"
-import { adminClient, publicClient, userClient } from "@/lib/directus/clients"
+import { adminClient, publicClient } from "@/lib/directus/clients"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
 // DATA
-import { siteURL } from "@/data/env"
+import { registerVerifyURL } from "@/data/env"
 
 /** ------------------------------------------------ **
  * REGISTER ACTION
@@ -68,7 +68,7 @@ export async function register(prevState: unknown, formData: FormData) {
 		// Create the user
 		const response = await publicClient.request(
 			registerUser(email, password, {
-				verification_url: siteURL,
+				verification_url: registerVerifyURL,
 			}),
 		)
 		// Get the new user's ID
