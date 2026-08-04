@@ -6,6 +6,8 @@ x-cms-admin-token: &cms-admin-token ${CMS_ADMIN_TOKEN}
 x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
 x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
 x-site-public-url: &site-public-url ${NEXT_PUBLIC_SITE_URL}
+x-site-register-verify-url: &site-register-verify-url ${NEXT_PUBLIC_REGISTER_VERIFY_URL}
+x-site-password-reset-url: &site-password-reset-url ${NEXT_PUBLIC_PASSWORD_RESET_URL}
 x-db-password: &db-password ${DATABASE_PASSWORD}
 x-timezone: &timezone ${TIMEZONE}
 ## VARIABLES - EMAIL
@@ -142,8 +144,8 @@ services:
       # DIRECTUS - URL SECURITY
       CORS_ENABLED: "true"
       CORS_ORIGIN: *site-public-url
-      USER_REGISTER_URL_ALLOW_LIST: *site-public-url
-      PASSWORD_RESET_URL_ALLOW_LIST: *site-public-url
+      USER_REGISTER_URL_ALLOW_LIST: *site-register-verify-url
+      PASSWORD_RESET_URL_ALLOW_LIST: *site-password-reset-url
 
       SERVE_APP: ${CMS_SERVE_APP}
     healthcheck:
