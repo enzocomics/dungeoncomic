@@ -4,7 +4,11 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint",
-		"lint:fix": "eslint --fix"
+		"lint:fix": "eslint --fix",
+		"snapshot-schema": "./scripts/schema-snapshot.sh",
+		"extract-template": "./scripts/template-extract.sh",
+		"apply-template": "./scripts/template-apply.sh",
+		"init": "./scripts/init.sh"
 	},
 	"dependencies": {
 		"@conform-to/react": "^1.19.4",
