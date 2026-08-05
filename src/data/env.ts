@@ -1,6 +1,6 @@
 // Environment Variables
 export const directusURL = process.env.NEXT_PUBLIC_CMS_URL!
-export const siteURL = process.env.NEXT_PUBLIC_SITE_URL!
+// export const siteURL = process.env.NEXT_PUBLIC_SITE_URL!
 export const registerVerifyURL = process.env.NEXT_PUBLIC_REGISTER_VERIFY_URL!
 export const passwordResetURL = process.env.NEXT_PUBLIC_PASSWORD_RESET_URL
 
