@@ -4,6 +4,7 @@ x-cms-admin-email: &cms-admin-email ${CMS_ADMIN_EMAIL}
 x-cms-admin-password: &cms-admin-password ${CMS_ADMIN_PASSWORD}
 x-cms-admin-token: &cms-admin-token ${CMS_ADMIN_TOKEN}
 x-cms-secret: &cms-secret ${CMS_SECRET_KEY}
+x-cms-session-secret: &cms-session-secret ${CMS_SESSION_SECRET}
 x-cms-public-url: &cms-public-url ${NEXT_PUBLIC_CMS_URL}
 x-site-public-url: &site-public-url ${NEXT_PUBLIC_SITE_URL}
 x-site-register-verify-url: &site-register-verify-url ${NEXT_PUBLIC_REGISTER_VERIFY_URL}
@@ -79,11 +80,11 @@ services:
     volumes:
       - uploads:/directus/uploads
       - templates:/directus/templates
-      - ./schema.yaml:/directus/schema.yaml
-    command: >
-      sh -c "node cli.js bootstrap &&
-            node cli.js schema apply --yes /directus/schema.yaml &&
-            pm2-runtime start ecosystem.config.cjs"
+    #   - ./schema.yaml:/directus/schema.yaml
+    # command: >
+    #   sh -c "node cli.js bootstrap &&
+    #         node cli.js schema apply --yes /directus/schema.yaml &&
+    #         pm2-runtime start ecosystem.config.cjs"
     depends_on:
       cache:
         condition: service_healthy
@@ -170,11 +171,17 @@ services:
     build:
       context: .
       args:
-        # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container
-        CMS_DOCKER_URL: http://dungeoncomic_cms:8055
-    environment:
-      # NEXT_PUBLIC_CMS_URL is the public-facing website URL
-      NEXT_PUBLIC_CMS_URL: ${NEXT_PUBLIC_CMS_URL}
+        # CMS_DOCKER_URL is specifically for when the Next.js container needs to talk to the directus container, do not change this
+        CMS_DOCKER_URL: http://host.docker.internal:8055
+        CMS_ADMIN_TOKEN: *cms-admin-token
+        CMS_ADMIN_EMAIL: *cms-admin-email
+        CMS_ADMIN_PASSWORD: *cms-admin-password
+        CMS_SESSION_SECRET: *cms-session-secret
+        NEXT_PUBLIC_REGISTER_VERIFY_URL: *site-register-verify-url
+        NEXT_PUBLIC_PASSWORD_RESET_URL: *site-password-reset-url
+    # environment:
+    # NEXT_PUBLIC_CMS_URL is the public-facing website URL (defaults to http://localhost:8055)
+    # NEXT_PUBLIC_CMS_URL: "http://localhost:8055"
     ports:
       - 3000:3000
     networks:
