@@ -1,0 +1,12 @@
+[
+	{
+		"id": "5ad2a6f5-74a6-4ebc-9864-5e7b451203d2",
+		"name": "Reader",
+		"icon": "supervised_user_circle",
+		"description": null,
+		"parent": null,
+		"children": null,
+		"policies": null,
+		"users": null
+	}
+]

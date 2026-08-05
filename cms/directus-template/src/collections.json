@@ -1,0 +1,194 @@
+[
+  {
+    "collection": "comic_panels",
+    "meta": {
+      "collection": "comic_panels",
+      "icon": "image",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": null,
+      "archive_app_filter": true,
+      "archive_value": "true",
+      "unarchive_value": "false",
+      "sort_field": "sort",
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 1,
+      "group": "pages",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "comic_panels",
+      "comment": null
+    }
+  },
+  {
+    "collection": "comics",
+    "meta": {
+      "collection": "comics",
+      "icon": "fort_awesome",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": "archived",
+      "archive_app_filter": true,
+      "archive_value": "true",
+      "unarchive_value": "false",
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 1,
+      "group": null,
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "comics",
+      "comment": null
+    }
+  },
+  {
+    "collection": "comments",
+    "meta": {
+      "collection": "comments",
+      "icon": "mode_comment",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": "archived",
+      "archive_app_filter": true,
+      "archive_value": "true",
+      "unarchive_value": "false",
+      "sort_field": "sort",
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 2,
+      "group": null,
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "comments",
+      "comment": null
+    }
+  },
+  {
+    "collection": "page_branches",
+    "meta": {
+      "collection": "page_branches",
+      "icon": "import_export",
+      "note": null,
+      "display_template": null,
+      "hidden": true,
+      "singleton": false,
+      "translations": null,
+      "archive_field": null,
+      "archive_app_filter": true,
+      "archive_value": null,
+      "unarchive_value": null,
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 2,
+      "group": "pages",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "page_branches",
+      "comment": null
+    }
+  },
+  {
+    "collection": "pages",
+    "meta": {
+      "collection": "pages",
+      "icon": "post_add",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": "archived",
+      "archive_app_filter": true,
+      "archive_value": "true",
+      "unarchive_value": "false",
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 1,
+      "group": "comics",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "pages",
+      "comment": null
+    }
+  },
+  {
+    "collection": "settings",
+    "meta": {
+      "collection": "settings",
+      "icon": "settings",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": true,
+      "translations": null,
+      "archive_field": null,
+      "archive_app_filter": true,
+      "archive_value": null,
+      "unarchive_value": null,
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": null,
+      "group": null,
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "settings",
+      "comment": null
+    }
+  }
+]

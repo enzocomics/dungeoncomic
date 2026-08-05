@@ -1,0 +1,25 @@
+[
+  {
+    "id": "928c8f7b-6f95-4657-aef0-5b95b30e59e7",
+    "name": "Update Directus Settings",
+    "icon": "bolt",
+    "color": null,
+    "description": null,
+    "status": "active",
+    "trigger": "event",
+    "accountability": "all",
+    "options": {
+      "type": "action",
+      "scope": [
+        "items.update"
+      ],
+      "collections": [
+        "settings"
+      ]
+    },
+    "operation": "f87f7969-0107-4876-bf03-c8195d65275d",
+    "date_created": "2026-08-05T16:33:14.046Z",
+    "user_created": "49d3731a-677b-43f1-a527-2b9f559618cd",
+    "operations": null
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "author": "",
+  "description": "",
+  "directusTemplate": true,
+  "files": [
+    "src"
+  ],
+  "name": "directus-template-dungeon-comic-template",
+  "templateName": "DungeonComic Template",
+  "version": "1.0.0"
+}

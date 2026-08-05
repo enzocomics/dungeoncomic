@@ -1,0 +1,21 @@
+{
+  "allowBrokenRelations": false,
+  "components": {
+    "schema": true,
+    "content": false,
+    "files": false,
+    "flows": true,
+    "dashboards": false,
+    "permissions": true,
+    "settings": true,
+    "extensions": false,
+    "users": false
+  },
+  "excludedCollections": [
+    "directus_files"
+  ],
+  "partial": true,
+  "relationStrategy": "empty",
+  "version": 2,
+  "warnings": []
+}
