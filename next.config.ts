@@ -9,6 +9,7 @@ import type { NextConfig } from "next"
 // NEXT.JS CONFIGURATION
 const nextConfig: NextConfig = {
 	output: "standalone",
+	staticPageGenerationTimeout: 1000,
 }
 
 /**----------------------------------- */
