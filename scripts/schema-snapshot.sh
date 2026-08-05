@@ -1,0 +1,1 @@
+docker exec dungeoncomic_cms ./cli.js schema snapshot ./schema.yaml --format yaml --yes
