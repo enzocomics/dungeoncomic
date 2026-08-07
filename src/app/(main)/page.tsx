@@ -2,12 +2,11 @@
 // LIBRARIES
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import HomepageUI from "./_ui"
 
 /**----------------------------------- */
 export default function HomePage() {
 	return <>
-		<HomepageUI />
+		Hello this is the homepage
 	</>
 }
 /** ------------------------------------------------ **
