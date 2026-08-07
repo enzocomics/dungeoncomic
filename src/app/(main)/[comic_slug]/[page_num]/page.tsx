@@ -1,13 +1,20 @@
+"use server"
 /**----------------------------------- */
 // LIBRARIES
+
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import HomepageUI from "./_ui"
+import ComicPageUI from "./_ui"
+
 
 /**----------------------------------- */
-export default function HomePage() {
+export default async function ComicPage({
+	params
+}: {
+	params: Promise<{ comic_slug: string, page_num: number }>
+}) {
 	return <>
-		<HomepageUI />
+		<ComicPageUI params={await params} />
 	</>
 }
 /** ------------------------------------------------ **
