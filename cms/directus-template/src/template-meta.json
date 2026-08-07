@@ -5,9 +5,9 @@
     "content": false,
     "files": false,
     "flows": true,
-    "dashboards": false,
+    "dashboards": true,
     "permissions": true,
-    "settings": true,
+    "settings": false,
     "extensions": false,
     "users": false
   },

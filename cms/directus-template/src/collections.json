@@ -82,7 +82,7 @@
       "color": null,
       "item_duplication_fields": null,
       "sort": 2,
-      "group": null,
+      "group": "comics",
       "collapse": "open",
       "preview_url": null,
       "versioning": false,
@@ -177,7 +177,7 @@
       "accountability": "all",
       "color": null,
       "item_duplication_fields": null,
-      "sort": null,
+      "sort": 3,
       "group": null,
       "collapse": "open",
       "preview_url": null,
@@ -188,6 +188,38 @@
     "schema": {
       "schema": "public",
       "name": "settings",
+      "comment": null
+    }
+  },
+  {
+    "collection": "tags",
+    "meta": {
+      "collection": "tags",
+      "icon": "tag",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": "archived",
+      "archive_app_filter": true,
+      "archive_value": "true",
+      "unarchive_value": "false",
+      "sort_field": "sort",
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 2,
+      "group": null,
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "tags",
       "comment": null
     }
   }

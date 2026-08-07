@@ -12,7 +12,7 @@ npx directus-template-cli@latest extract -p \
 	--schema \
 	--no-content \
 	--flows \
-	--no-dashboards \
+	--dashboards \
 	--permissions \
 	--no-settings \
 	--no-extensions \

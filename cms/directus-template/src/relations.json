@@ -338,6 +338,84 @@
     }
   },
   {
+    "collection": "directus_users",
+    "field": "comics",
+    "related_collection": "comics",
+    "schema": {
+      "constraint_name": "directus_users_comics_foreign",
+      "table": "directus_users",
+      "column": "comics",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "comics",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "directus_users",
+      "many_field": "comics",
+      "one_collection": "comics",
+      "one_field": "authors",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "tags",
+    "field": "user_updated",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "tags_user_updated_foreign",
+      "table": "tags",
+      "column": "user_updated",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "tags",
+      "many_field": "user_updated",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "tags",
+    "field": "user_created",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "tags_user_created_foreign",
+      "table": "tags",
+      "column": "user_created",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "tags",
+      "many_field": "user_created",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
     "collection": "pages",
     "field": "comic",
     "related_collection": "comics",
@@ -349,7 +427,7 @@
       "foreign_key_table": "comics",
       "foreign_key_column": "id",
       "on_update": "NO ACTION",
-      "on_delete": "NO ACTION"
+      "on_delete": "CASCADE"
     },
     "meta": {
       "many_collection": "pages",
