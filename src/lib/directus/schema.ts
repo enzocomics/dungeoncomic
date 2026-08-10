@@ -12,6 +12,7 @@ import { UUID } from "crypto"
 // prettier-ignore
 export interface DirectusSchema {
 	comics: ComicsCollection[]
+			authors: NestedUsers[]
 	pages: PagesCollection[]
 	page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
@@ -31,6 +32,7 @@ export interface ComicsCollection {
 	title: string
 	slug: string
 	description: string
+	authors: DirectusUser[]
 	// Content
 	pages: number[] | PagesCollection[]
 	// Meta
