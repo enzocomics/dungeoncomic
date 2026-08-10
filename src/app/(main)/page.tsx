@@ -1,13 +1,15 @@
+"use server"
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import HomepagePageUI from "./_ui-page"
 
 /**----------------------------------- */
-export default function HomePage() {
-	return <>
-		Hello this is the homepage
-	</>
+export default async function HomePage({ children }: { children: React.ReactNode }) {
+	return <HomepagePageUI>
+		This is the homepage
+	</HomepagePageUI>
 }
 /** ------------------------------------------------ **
  * Page Metadata

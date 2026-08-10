@@ -3,14 +3,13 @@
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import { ComponentPropsWithoutRef, useEffect } from "react"
+import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 import clsx from "clsx"
-import Image from "next/image"
 import { Link } from "@/components/link"
-import { StackedLayout } from "@/components/stacked-layout"
+
 
 /**-----------------------------------
  * HOMEPAGE - UI
@@ -36,16 +35,8 @@ export default function HomepagePageUI({ children }: { children: React.ReactNode
 
 
 	return <>
-
 		<div>
-			Main Root Layout<br />
-			Navigation:&nbsp;&nbsp;
-			<Link href="/">Project Homepage</Link>&nbsp;&mdash;&nbsp;
-			<Link href="/dungeoncomic">Comic Landing Page</Link>&nbsp;&mdash;&nbsp;
-			<Link href="/dungeoncomic/1">Comic Page 1</Link>
-			<hr />
+			{children}
 		</div>
-		<h1 className="text-3xl">{t("title")}</h1>
-		{children}
 	</>
 }
