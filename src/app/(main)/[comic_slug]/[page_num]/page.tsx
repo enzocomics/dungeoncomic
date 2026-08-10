@@ -1,11 +1,9 @@
 "use server"
 /**----------------------------------- */
 // LIBRARIES
-
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import ComicPageUI from "./_ui"
-
 
 /**----------------------------------- */
 export default async function ComicPage({
