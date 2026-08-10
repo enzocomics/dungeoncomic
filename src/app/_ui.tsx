@@ -6,7 +6,7 @@ import clsx from "clsx"
 // LIBRARIES
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
-import { ThemeProvider } from "next-themes"
+import { ThemeProvider } from "@teispace/next-themes"
 // UI
 import GlobalContextProvider from "./_context"
 
