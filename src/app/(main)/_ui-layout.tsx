@@ -11,7 +11,6 @@ import { Link } from "@/components/link"
  */
 export default async function HomepageUI({ children }: { children: React.ReactNode }) {
 	return <>
-
 		<div className={clsx(
 			""
 		)}>
@@ -27,6 +26,5 @@ export default async function HomepageUI({ children }: { children: React.ReactNo
 			<hr />
 		</div>
 		{children}
-
 	</>
 }
