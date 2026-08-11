@@ -4,6 +4,7 @@
 import clsx from "clsx"
 // UI
 import { Link } from "@/components/link"
+import { Suspense } from "react"
 
 
 /**-----------------------------------
@@ -25,6 +26,8 @@ export default async function HomepageUI({ children }: { children: React.ReactNo
 			<Link href="/dungeoncomic/1">Comic Page 1</Link>
 			<hr />
 		</div>
-		{children}
+		<Suspense>
+			{children}
+		</Suspense>
 	</>
 }
