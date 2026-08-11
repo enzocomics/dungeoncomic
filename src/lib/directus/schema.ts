@@ -1,6 +1,6 @@
 /** ------------------------------------------------ **/
 // TYPES
-import { User } from "@directus/types"
+import { Settings, User } from "@directus/types"
 import { UUID } from "crypto"
 
 /** ------------------------------------------------ **/
@@ -25,6 +25,7 @@ export interface DirectusSchema {
 			project_svg_icon: NestedImages
 			project_apple_icon: NestedImages
 			project_pwa_icon: NestedImages
+	directus_settings: DirectusSettings
 }
 
 export interface ComicsCollection {
@@ -97,6 +98,10 @@ export interface DirectusUser extends User {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
+}
+
+export interface DirectusSettings extends Settings {
+	public_registration: Boolean
 }
 
 /** ------------------------------------------------ **/

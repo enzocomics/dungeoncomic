@@ -20,7 +20,8 @@
 				"submit": "Create Account",
 				"verify-account": "Please click the verification link that has been sent to your email to complete your registration.",
 				"login-link": "I already have an account. <a>Log in</a>",
-				"acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>."
+				"acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>.",
+				"registration-closed": "User registration is currently disabled."
 			},
 			"reset-password": {
 				"title": "Reset Password",

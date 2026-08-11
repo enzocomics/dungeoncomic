@@ -26,7 +26,7 @@ import { Input } from "@/components/input"
 /** ------------------------------------------------ **
  * REGISTER FORM
  */
-export default function RegisterPageUI() {
+export default function RegisterPageUI({ public_registration = false }: { public_registration?: Boolean }) {
 	// I18N
 	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
@@ -48,6 +48,14 @@ export default function RegisterPageUI() {
 			})
 		}
 	})
+	// EFFECT: Run once
+	useEffect(() => {
+		if (!public_registration) {
+			// STATUS MESSAGE
+			setStatus("alert", t("pages.register.registration-closed"))
+
+		}
+	}, [])
 
 	// EFFECT: Run after form submission
 	useEffect(() => {
@@ -108,43 +116,46 @@ export default function RegisterPageUI() {
 			{/* HEADER */}
 			<AuthHeader>
 				<AuthHeaderTitle>{t("pages.register.title-verbose")}</AuthHeaderTitle>
-				<AuthHeaderDescription>
-					<p dangerouslySetInnerHTML={{
-						__html: t.rich("pages.register.acknowledgement", {
-							a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
-							a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
-						}) as string
-					}}
-					/>
-				</AuthHeaderDescription>
+				{public_registration &&
+					<AuthHeaderDescription>
+						<p dangerouslySetInnerHTML={{
+							__html: t.rich("pages.register.acknowledgement", {
+								a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
+								a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
+							}) as string
+						}}
+						/>
+					</AuthHeaderDescription>
+				}
 			</AuthHeader>
 
 			{/* STATUS MESSAGES */}
 			<StatusMessage className="mb-6" />
 
 			{/* FORM */}
-			<form
-				id={form.id}
-				onSubmit={form.onSubmit}
-				action={action}
-				noValidate
-			>
-				<FieldGroup>
-					<Field>
-						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
-						<Input
-							id={fields.email.name}
-							name={fields.email.name}
-							key={fields.email.key}
-							type="email"
-							// Retain the value of the previous submission
-							defaultValue={lastResult?.initialValue?.email as string}
-							errors={fields.email.errors}
-							aria-required
-						/>
-						<ErrorMessage>{fields.email.errors}</ErrorMessage>
-					</Field>
-					{/* <div>
+			{public_registration &&
+				<form
+					id={form.id}
+					onSubmit={form.onSubmit}
+					action={action}
+					noValidate
+				>
+					<FieldGroup>
+						<Field>
+							<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
+							<Input
+								id={fields.email.name}
+								name={fields.email.name}
+								key={fields.email.key}
+								type="email"
+								// Retain the value of the previous submission
+								defaultValue={lastResult?.initialValue?.email as string}
+								errors={fields.email.errors}
+								aria-required
+							/>
+							<ErrorMessage>{fields.email.errors}</ErrorMessage>
+						</Field>
+						{/* <div>
 				<label htmlFor="username">{t("fields.username")}</label>
 				<input
 					id={fields.username.name}
@@ -157,47 +168,48 @@ export default function RegisterPageUI() {
 				<div>{fields.username.errors}</div>
 			</div> */}
 
-					<Field>
-						<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
-						<Input
-							id={fields.password.name}
-							name={fields.password.name}
-							key={fields.password.key}
-							type="password"
-							// Retain the value of the previous submission
-							defaultValue={lastResult?.initialValue?.password as string}
+						<Field>
+							<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
+							<Input
+								id={fields.password.name}
+								name={fields.password.name}
+								key={fields.password.key}
+								type="password"
+								// Retain the value of the previous submission
+								defaultValue={lastResult?.initialValue?.password as string}
 
-							errors={fields.password.errors}
-							aria-required
-						/>
-						<ErrorMessage>{fields.password.errors}</ErrorMessage>
-					</Field>
+								errors={fields.password.errors}
+								aria-required
+							/>
+							<ErrorMessage>{fields.password.errors}</ErrorMessage>
+						</Field>
 
 
-					<Field>
-						<Label required htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
-						<Input
-							id={fields.passwordConfirm.name}
-							type="password"
-							key={fields.passwordConfirm.key}
-							name={fields.passwordConfirm.name}
-							// Retain the value of the previous submission
-							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
-							errors={fields.passwordConfirm.errors}
-							aria-required
-						/>
-						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
-					</Field>
-					<Button
-						type="submit"
-						color="primary"
-						className={clsx(
-							"w-full",
-							"mt-6",
-						)}
-					>{t("pages.register.submit")}</Button>
-				</FieldGroup>
-			</form>
+						<Field>
+							<Label required htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
+							<Input
+								id={fields.passwordConfirm.name}
+								type="password"
+								key={fields.passwordConfirm.key}
+								name={fields.passwordConfirm.name}
+								// Retain the value of the previous submission
+								defaultValue={lastResult?.initialValue?.passwordConfirm as string}
+								errors={fields.passwordConfirm.errors}
+								aria-required
+							/>
+							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
+						</Field>
+						<Button
+							type="submit"
+							color="primary"
+							className={clsx(
+								"w-full",
+								"mt-6",
+							)}
+						>{t("pages.register.submit")}</Button>
+					</FieldGroup>
+				</form>
+			}
 			{/* NAVIGATION */}
 			<AuthNav>
 				<p className="grow text-center" dangerouslySetInnerHTML={{
