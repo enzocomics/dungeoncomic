@@ -742,7 +742,7 @@
       "meta": {
         "collection": "comic_panels",
         "conditions": null,
-        "display": null,
+        "display": "image",
         "display_options": null,
         "field": "panel_image",
         "group": "content",
@@ -3282,7 +3282,12 @@
         "searchable": true,
         "sort": 3,
         "special": null,
-        "translations": null,
+        "translations": [
+          {
+            "language": "en-US",
+            "translation": "Page #"
+          }
+        ],
         "validation": null,
         "validation_message": null,
         "width": "half"

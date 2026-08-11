@@ -484,7 +484,7 @@
           "image/webp"
         ]
       },
-      "display": null,
+      "display": "image",
       "display_options": null,
       "readonly": false,
       "hidden": false,
@@ -2516,7 +2516,12 @@
       "hidden": false,
       "sort": 3,
       "width": "half",
-      "translations": null,
+      "translations": [
+        {
+          "language": "en-US",
+          "translation": "Page #"
+        }
+      ],
       "note": null,
       "conditions": null,
       "required": true,
