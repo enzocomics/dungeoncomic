@@ -15,7 +15,7 @@
     "directus_files"
   ],
   "partial": true,
-  "relationStrategy": "empty",
+  "relationStrategy": "preserve",
   "version": 2,
   "warnings": []
 }

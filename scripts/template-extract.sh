@@ -17,4 +17,5 @@ npx directus-template-cli@latest extract -p \
 	--no-settings \
 	--no-extensions \
 	--no-users \
-	--no-assets
+	--no-assets \
+	--relation-strategy="preserve"
