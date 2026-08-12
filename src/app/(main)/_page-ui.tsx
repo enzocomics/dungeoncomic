@@ -14,7 +14,7 @@ import { Link } from "@/components/link"
 /**-----------------------------------
  * HOMEPAGE - UI
  */
-export default function HomepagePageUI({ children }: { children: React.ReactNode }) {
+export default function HomepagePageUI() {
 	// STATUS MESSAGE
 	const setStatus = useChangeStatus("")
 	// I18N
@@ -35,8 +35,14 @@ export default function HomepagePageUI({ children }: { children: React.ReactNode
 
 
 	return <>
-		<div>
-			{children}
+		<div className={clsx(
+			// Temporary CSS
+			"p-4",
+			"border",
+			"border-blue-700",
+			"border-dashed",
+		)}>
+			This is the homepage
 		</div>
 	</>
 }

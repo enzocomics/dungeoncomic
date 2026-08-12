@@ -3,13 +3,11 @@
 // LIBRARIES
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import HomepagePageUI from "./_ui-page"
+import HomepagePageUI from "./_page-ui"
 
 /**----------------------------------- */
-export default async function HomePage({ children }: { children: React.ReactNode }) {
-	return <HomepagePageUI>
-		This is the homepage
-	</HomepagePageUI>
+export default async function HomePage() {
+	return <HomepagePageUI />
 }
 /** ------------------------------------------------ **
  * Page Metadata

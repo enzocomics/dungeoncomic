@@ -30,6 +30,8 @@ export default async function RootLayoutUI({
 			className={clsx(
 				"h-full",
 				"font-copy",
+				// Temporary CSS
+				"p-8",
 			)}
 		>
 			<GlobalContextProvider>

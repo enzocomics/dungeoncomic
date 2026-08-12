@@ -1,15 +1,15 @@
 "use server"
 /**----------------------------------- */
 // FUNCTIONS
-import HomepageUI from "./_ui-layout"
+import HomepageLayoutUI from "./_layout-ui"
 
 /**-----------------------------------
  * MAIN - ROOT LAYOUT
  */
 export default async function MainRootLayout(props: LayoutProps<"/">) {
 	return <>
-		<HomepageUI>
+		<HomepageLayoutUI>
 			{props.children}
-		</HomepageUI >
+		</HomepageLayoutUI >
 	</>
 }

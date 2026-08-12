@@ -10,24 +10,30 @@ import { Suspense } from "react"
 /**-----------------------------------
  * HOMEPAGE - UI
  */
-export default async function HomepageUI({ children }: { children: React.ReactNode }) {
+export default async function HomepageLayoutUI({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
-			""
+			// Temporary CSS
+			"border",
+			"border-red-600",
+			"border-dashed",
+			"p-4"
 		)}>
 			<h2 className={clsx(
-				"font-bold"
+				// Temporary CSS
+				"text-4xl",
+				"font-bold",
+				"font-display"
 			)}>
-				Main Root Layout
+				Root Layout
 			</h2>
 			Navigation:&nbsp;&nbsp;
 			<Link href="/">Project Homepage</Link>&nbsp;&mdash;&nbsp;
 			<Link href="/dungeoncomic">Comic Landing Page</Link>&nbsp;&mdash;&nbsp;
 			<Link href="/dungeoncomic/1">Comic Page 1</Link>
-			<hr />
+			<Suspense>
+				{children}
+			</Suspense>
 		</div>
-		<Suspense>
-			{children}
-		</Suspense>
 	</>
 }
