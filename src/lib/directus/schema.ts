@@ -27,6 +27,7 @@ export interface DirectusSchema {
 			project_pwa_icon: NestedImages
 	directus_settings: DirectusSettings
 }
+/** ------------------------------------------------ **/
 
 export interface ComicsCollection {
 	// Details
@@ -44,9 +45,10 @@ export interface ComicsCollection {
 	date_updated: "datetime"
 }
 
+/** ------------------------------------------------ **/
 export interface PagesCollection {
 	// Details
-	comic: number | ComicsCollection
+	comic: ComicsCollection
 	comic_pagenum: number
 	title: string | null
 	// Content
@@ -72,9 +74,10 @@ export interface PageBranchesCollection {
 	linked_pages_id: number
 }
 
+/** ------------------------------------------------ **/
 export interface ComicPanelsCollection {
 	// Content
-	panel_image: UUID
+	panel_image: UUID | NestedImages
 	panel_title: string | null
 	panel_description: string | null
 	// Meta
@@ -85,6 +88,8 @@ export interface ComicPanelsCollection {
 	date_updated: "datetime"
 }
 
+/** ------------------------------------------------ **/
+
 export interface CommentsCollection {
 	// Meta
 	id: number
@@ -94,12 +99,20 @@ export interface CommentsCollection {
 	date_updated: "datetime"
 }
 
+/** ------------------------------------------------ **/
 export interface DirectusUser extends User {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
 }
 
+export interface NestedUsers {
+	name: string | null
+	username: string | null
+	homepage_url: string | null
+}
+
+/** ------------------------------------------------ **/
 export interface DirectusSettings extends Settings {
 	public_registration: Boolean
 }
@@ -125,13 +138,6 @@ export interface SettingsSingleton {
 }
 
 /** ------------------------------------------------ **/
-// NESTED COLLECTIONS
-export interface NestedUsers {
-	name: string | null
-	username: string | null
-	homepage_url: string | null
-}
-
 export interface NestedImages {
 	id: UUID
 	filename_disk: string
