@@ -1,14 +1,16 @@
 "use client"
+/**----------------------------------- */
+// FUNCTIONS
 import clsx from "clsx"
 /**----------------------------------- */
-import { use } from "react"
-
 export default function ComicPageUI({
-	params
+	params,
+	page
 }: {
 	params: { comic_slug: string, page_num: number }
+	page: object
 }) {
-	// const { comic_slug, page_num } = use(params)
+	// Get Pages
 	return <>
 		<div className={clsx(
 			"p-4",
