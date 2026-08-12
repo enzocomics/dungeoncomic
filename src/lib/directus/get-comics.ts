@@ -28,3 +28,33 @@ export async function getComic(slug: string) {
 	)
 	return request[0]
 }
+
+export async function getComicPage(comic_slug: string, num: number) {
+	const request = await publicClient.request(
+		readItems("pages", {
+			filter: {
+				comic: {
+					slug: {
+						_eq: comic_slug,
+					},
+				},
+				comic_pagenum: {
+					_eq: num,
+				},
+			},
+			limit: 1,
+			fields: [
+				// Details
+				"title",
+				{
+					comic_panels: [
+						{ panel_image: ["filename_disk", "type", "width", "height"] },
+						"panel_title",
+						"panel_description",
+					],
+				},
+			],
+		}),
+	)
+	return request[0]
+}
