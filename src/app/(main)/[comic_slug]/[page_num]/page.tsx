@@ -2,10 +2,11 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
-import ComicPageUI from "./_ui"
-import { getComicPage } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
+// DATA
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
+// UI
+import ComicPageUI from "./_ui"
 
 /**----------------------------------- */
 export default async function ComicPage({
@@ -16,7 +17,7 @@ export default async function ComicPage({
 	const { comic_slug, page_num } = await params
 	// Get the page details
 	const page = await getComicPage(comic_slug, page_num)
-
+	console.log(page)
 	// 404 if it does not exist
 	if (!page) notFound()
 	else
@@ -29,9 +30,19 @@ export default async function ComicPage({
  * - Will override the global site metadata
  * - Can use the same page parameters
  ** ------------------------------------------------ **/
-export async function generateMetadata(): Promise<Metadata> {
-	const t = await getTranslations("HomePage")
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ comic_slug: string, page_num: number }>
+}): Promise<Metadata> {
+	// Get the comic slug parameter
+	const { comic_slug, page_num } = await params
+	// Get the comic data from the CMS
+	const comic = await getComic(comic_slug)
+	const comicPage = await getComicPage(comic_slug, page_num)
+	// Generate Metadata
 	return {
-		title: t("title"),
+		title: comicPage.title || `Page ${page_num}`,
+		description: comicPage.description || `Page ${page_num} of the adventure series "${comic.title}"`
 	}
 }
