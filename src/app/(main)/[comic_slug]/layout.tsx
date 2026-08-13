@@ -1,9 +1,10 @@
 "use server"
-import { getComic } from "@/lib/directus/get-comics"
 /**----------------------------------- */
-// FUNCTIONS
-import clsx from "clsx"
+// LIBRARIES
 import { notFound } from "next/navigation"
+// DATA
+import { getComic } from "@/lib/directus/get-comics"
+// UI
 import ComicLayoutUI from "./_layout-ui"
 
 /**-----------------------------------
