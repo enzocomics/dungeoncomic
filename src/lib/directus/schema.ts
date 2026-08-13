@@ -12,7 +12,7 @@ import { UUID } from "crypto"
 // prettier-ignore
 export interface DirectusSchema {
 	comics: ComicsCollection[]
-			authors: NestedUsers[]
+			authors: DirectusUser[]
 	pages: PagesCollection[]
 	page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
@@ -20,11 +20,11 @@ export interface DirectusSchema {
 	directus_users: DirectusUser
 	// SETTINGS
 	settings: SettingsSingleton
-			project_authors: NestedUsers[]
-			project_thumbnail: NestedImages
-			project_svg_icon: NestedImages
-			project_apple_icon: NestedImages
-			project_pwa_icon: NestedImages
+			project_authors: DirectusUser[]
+			project_thumbnail: ImageCollection
+			project_svg_icon: ImageCollection
+			project_apple_icon: ImageCollection
+			project_pwa_icon: ImageCollection
 	directus_settings: DirectusSettings
 }
 /** ------------------------------------------------ **/
@@ -78,7 +78,7 @@ export interface PageBranchesCollection {
 /** ------------------------------------------------ **/
 export interface ComicPanelsCollection {
 	// Content
-	panel_image: UUID | NestedImages
+	panel_image: UUID | ImageCollection
 	panel_title: string | null
 	panel_description: string | null
 	// Meta
@@ -107,12 +107,6 @@ export interface DirectusUser extends User {
 	homepage_url: string | null
 }
 
-export interface NestedUsers {
-	name: string | null
-	username: string | null
-	homepage_url: string | null
-}
-
 /** ------------------------------------------------ **/
 export interface DirectusSettings extends Settings {
 	public_registration: Boolean
@@ -130,16 +124,16 @@ export interface SettingsSingleton {
 	project_name: string | null
 	project_url: string | null
 	project_description: string | null
-	project_thumbnail: NestedImages | null
-	project_authors: NestedUsers[] | null
+	project_thumbnail: ImageCollection | null
+	project_authors: DirectusUser[] | null
 	// Icons
-	project_svg_icon: NestedImages | null
-	project_apple_icon: NestedImages | null
-	project_pwa_icon: NestedImages | null
+	project_svg_icon: ImageCollection | null
+	project_apple_icon: ImageCollection | null
+	project_pwa_icon: ImageCollection | null
 }
 
 /** ------------------------------------------------ **/
-export interface NestedImages {
+export interface ImageCollection {
 	id: UUID
 	filename_disk: string
 	type: string
