@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
 
 	// METADATA VARS - FALLBACKS
-	const fallbackProjectName = "DungeonConstruction Co."
+	const fallbackProjectName = "Dungeon Construction Co."
 	const fallbackDescription = "We Build Adventure"
 	const fallbackUrl = "https://dungeonconstruction.co"
 	const fallbackAuthorName = "EnzoComics"
@@ -128,6 +128,13 @@ export async function generateMetadata(): Promise<Metadata> {
 			locale: locale,
 			type: "website",
 			images: [thumbnail]
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: projectName,
+			description: description,
+			creator: `${authors!.map(a => a!["name"]).join(", ")}`,
+			images: [thumbnail.url]
 		},
 		icons: {
 			icon: [
