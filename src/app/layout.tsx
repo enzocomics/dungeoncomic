@@ -116,7 +116,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 		title: {
 			default: projectName,
-			template: `%s — ${projectName}`
+			template: `%s ∙ ${projectName}`
 		},
 		description: description,
 		authors: authors as Author[],
