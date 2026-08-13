@@ -46,6 +46,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 			fields: [
 				// Details
 				"title",
+				"description",
 				{
 					comic_panels: [
 						{ panel_image: ["filename_disk", "type", "width", "height"] },
