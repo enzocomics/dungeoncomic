@@ -67,19 +67,22 @@ export async function generateMetadata({
 	})
 
 	// IMAGE & ICONS + FALLBACKS
-
+	// VARS
+	const projectName = settings.project_name || "Dungeon Construction Co."
+	const title = comic.title
+	const description = comic.description || `An adventure series by ${authors!.map(a => a!["name"]).join(", ")}`
 
 	// Build the Metadata Object
 	return {
 		title: {
-			template: `%s ∙ ${comic.title}`,
-			default: comic.title,
+			template: `%s ∙ title`,
+			default: title,
 		},
-		description: comic.description || `An adventure series by ${authors!.map(a => a!["name"]).join(", ")}`,
+		description: description,
 		authors: authors as Author[],
 		openGraph: {
-			description: "",
-			siteName: "",
+			description: description,
+			siteName: projectName,
 			url: url,
 			locale: "",
 			type: "website",
