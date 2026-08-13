@@ -17,7 +17,6 @@ export default async function ComicPage({
 	const { comic_slug, page_num } = await params
 	// Get the page details
 	const page = await getComicPage(comic_slug, page_num)
-	console.log(page)
 	// 404 if it does not exist
 	if (!page) notFound()
 	else
@@ -41,8 +40,11 @@ export async function generateMetadata({
 	const comic = await getComic(comic_slug)
 	const comicPage = await getComicPage(comic_slug, page_num)
 	// Generate Metadata
-	return {
-		title: comicPage.title || `Page ${page_num}`,
-		description: comicPage.description || `Page ${page_num} of the adventure series "${comic.title}"`
-	}
+	if (comic && comicPage)
+		return {
+			title: comicPage.title || `Page ${page_num}`,
+			description: comicPage.description || `Page ${page_num} of the adventure series "${comic.title}"`
+		}
+	else
+		return {}
 }
