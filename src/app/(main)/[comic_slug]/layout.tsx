@@ -1,5 +1,7 @@
 "use server"
 /**----------------------------------- */
+// TYPES
+import { Metadata } from "next"
 // LIBRARIES
 import { notFound } from "next/navigation"
 // DATA
@@ -28,4 +30,27 @@ export default async function ComicLayout({
 		return <ComicLayoutUI comic_slug={comic_slug}>
 			{children}
 		</ComicLayoutUI>
+}
+
+/** ------------------------------------------------ **
+ * Page Metadata
+ * - Will override the global site metadata
+ * - Can use the same page parameters
+ ** ------------------------------------------------ **/
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ comic_slug: string }>
+}): Promise<Metadata> {
+	// Get the comic slug parameter
+	const { comic_slug } = await params
+	// Get the comic collection from the CMS
+	const comic = await getComic(comic_slug)
+	return {
+		title: {
+			template: `%s ∙ ${comic.title}`,
+			default: comic.title,
+		},
+		description: comic.description
+	}
 }
