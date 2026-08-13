@@ -51,6 +51,7 @@ export interface PagesCollection {
 	comic: ComicsCollection
 	comic_pagenum: number
 	title: string | null
+	description: string | null
 	// Content
 	comic_panels: number[] | ComicPanelsCollection[]
 	// Routing
