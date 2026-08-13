@@ -2,12 +2,14 @@
 /**----------------------------------- */
 // TYPES
 import { Metadata } from "next"
+import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
 import { notFound } from "next/navigation"
 // DATA
 import { getComic } from "@/lib/directus/get-comics"
 // UI
 import ComicLayoutUI from "./_layout-ui"
+import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * COMIC ROUTE LAYOUT
@@ -42,15 +44,46 @@ export async function generateMetadata({
 }: {
 	params: Promise<{ comic_slug: string }>
 }): Promise<Metadata> {
-	// Get the comic slug parameter
+	// METADATA VARS
 	const { comic_slug } = await params
-	// Get the comic collection from the CMS
 	const comic = await getComic(comic_slug)
+	const settings = await getSettings()
+	const url = `${settings.project_url}/${comic_slug}`
+
+	// AUTHORS w/ DEFAULTS
+	const authors = comic.authors && comic.authors.map((a) => {
+		let name
+		let url
+		if (a) {
+			name = a.name ?? a.username ?? a.email
+			url = a.homepage_url ?? undefined
+			return {
+				name: name,
+				url: url
+			}
+		} else {
+			return null
+		}
+	})
+
+	// IMAGE & ICONS + FALLBACKS
+
+
+	// Build the Metadata Object
 	return {
 		title: {
 			template: `%s ∙ ${comic.title}`,
 			default: comic.title,
 		},
-		description: comic.description
+		description: comic.description || `An adventure series by ${authors!.map(a => a!["name"]).join(", ")}`,
+		authors: authors as Author[],
+		openGraph: {
+			description: "",
+			siteName: "",
+			url: url,
+			locale: "",
+			type: "website",
+			images: []
+		},
 	}
 }
