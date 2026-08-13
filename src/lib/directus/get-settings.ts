@@ -7,7 +7,7 @@ import { readSingleton } from "@directus/sdk"
 /** ------------------------------------------------ **
  * GET SETTINGS
  */
-export async function GetSettings() {
+export async function getSettings() {
 	const request = await adminClient.request(
 		readSingleton("settings", {
 			fields: [

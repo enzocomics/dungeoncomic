@@ -3,7 +3,7 @@
 import type { MetadataRoute } from "next"
 // DATA
 import { directusURL } from "@/data/env"
-import { GetSettings } from "@/lib/directus/get-settings"
+import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * Manifest
@@ -13,7 +13,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 	const fallbackShortTitle = "Dungeon"
 	const fallbackDescription = "We Build Adventure"
 
-	const settings = await GetSettings()
+	const settings = await getSettings()
 
 	const pwaIcon192 = settings.project_pwa_icon
 		? `${directusURL}/assets/${settings.project_pwa_icon.filename_disk}?width=192&height=192`

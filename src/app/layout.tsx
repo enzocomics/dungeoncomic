@@ -6,7 +6,7 @@ import { Metadata, Viewport } from "next"
 // UI
 import RootLayoutUI from "./_ui"
 import { directusURL } from "@/data/env"
-import { GetSettings } from "@/lib/directus/get-settings"
+import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
@@ -59,7 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	const fallbackAppleIcon = { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
 
 	// METADATA VARS
-	const settings = await GetSettings()
+	const settings = await getSettings()
 	const locale: string = "en-CA"
 	const projectName = settings.project_name || fallbackProjectName
 	const description = settings.project_description || fallbackDescription
