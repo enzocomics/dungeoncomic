@@ -65,12 +65,12 @@ export async function generateMetadata({
 			return null
 		}
 	})
-
+	const authorsStr = authors!.map(a => a!["name"]).join(", ")
 	// IMAGE & ICONS + FALLBACKS
 	// VARS
 	const projectName = settings.project_name || "Dungeon Construction Co."
 	const title = comic.title
-	const description = comic.description || `An adventure series by ${authors!.map(a => a!["name"]).join(", ")}`
+	const description = comic.description || `An adventure series by ${authorsStr}`
 
 	// Build the Metadata Object
 	return {
@@ -88,5 +88,15 @@ export async function generateMetadata({
 			type: "website",
 			images: []
 		},
+		twitter: {
+			card: "summary_large_image",
+			title: title,
+			description: description,
+			creator: authorsStr,
+			images: []
+		},
+		icons: {
+			icon: []
+		}
 	}
 }
