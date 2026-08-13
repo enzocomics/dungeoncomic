@@ -18,7 +18,7 @@ export async function getComic(slug: string) {
 				// Details
 				"title",
 				"description",
-				{ authors: ["name", "username", "homepage_url"] },
+				{ authors: ["name", "username", "homepage_url", "email"] },
 				// Appearance
 				// Content
 				// Meta
