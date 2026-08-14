@@ -13,6 +13,7 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 # This looks for "id":" followed by any characters until the next double quote
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
+##------------------------------------------------------##
 # Set up the default variables for the project settings
 project_name="Dungeon Construction Co."
 project_url=$NEXT_PUBLIC_SITE_URL
@@ -23,6 +24,20 @@ PROJECT_SETTINGS_PAYLOAD=$(jq -n \
 --arg project_url "$project_url" \
 '{project_name: $project_name, project_url: $project_url }')
 
+# Update our project `settings` collection 
+curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$PROJECT_SETTINGS_PAYLOAD"
+
+
+##------------------------------------------------------##
+# Set up the default variables for the default comic
+title="My Dungeon Comic"
+slug="mydungeon"
+description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
+
+##------------------------------------------------------##
 # Set up the default variables for DIRECTUS settings
 project_color="#7c7c67"
 project_logo=$LOGO_UUID
@@ -38,11 +53,6 @@ DIRECTUS_SETTINGS_PAYLOAD=$(jq -n \
 --arg public_registration_role "$public_registration_role" \
 '{project_name: $project_name, project_url: $project_url, project_logo: $project_logo, public_registration: $public_registration, public_registration_role: $public_registration_role }')
 
-# Update our project `settings` collection 
-curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
-  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "$PROJECT_SETTINGS_PAYLOAD"
 
 # Update default `directus_settings` collection 
 curl -X PATCH "$NEXT_PUBLIC_CMS_URL/settings" \
