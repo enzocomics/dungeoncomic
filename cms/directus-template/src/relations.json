@@ -416,6 +416,32 @@
     }
   },
   {
+    "collection": "comic_panels",
+    "field": "panel_image",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "comic_panels_panel_image_foreign",
+      "table": "comic_panels",
+      "column": "panel_image",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "comic_panels",
+      "many_field": "panel_image",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
     "collection": "pages",
     "field": "comic",
     "related_collection": "comics",
@@ -442,23 +468,23 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "panel_image",
-    "related_collection": "directus_files",
+    "collection": "settings",
+    "field": "fontpage_comic",
+    "related_collection": "comics",
     "schema": {
-      "constraint_name": "comic_panels_panel_image_foreign",
-      "table": "comic_panels",
-      "column": "panel_image",
+      "constraint_name": "settings_fontpage_comic_foreign",
+      "table": "settings",
+      "column": "fontpage_comic",
       "foreign_key_schema": "public",
-      "foreign_key_table": "directus_files",
+      "foreign_key_table": "comics",
       "foreign_key_column": "id",
       "on_update": "NO ACTION",
       "on_delete": "SET NULL"
     },
     "meta": {
-      "many_collection": "comic_panels",
-      "many_field": "panel_image",
-      "one_collection": "directus_files",
+      "many_collection": "settings",
+      "many_field": "fontpage_comic",
+      "one_collection": "comics",
       "one_field": null,
       "one_collection_field": null,
       "one_allowed_collections": null,
