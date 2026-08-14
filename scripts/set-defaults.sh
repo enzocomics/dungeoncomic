@@ -49,9 +49,10 @@ DIRECTUS_SETTINGS_PAYLOAD=$(jq -n \
 --arg project_name "$project_name" \
 --arg project_url "$project_url" \
 --arg project_logo "$project_logo" \
+--arg project_color "$project_color" \
 --arg public_registration "$public_registration" \
 --arg public_registration_role "$public_registration_role" \
-'{project_name: $project_name, project_url: $project_url, project_logo: $project_logo, public_registration: $public_registration, public_registration_role: $public_registration_role }')
+'{project_name: $project_name, project_url: $project_url, project_logo: $project_logo, project_color: $project_color, public_registration: $public_registration, public_registration_role: $public_registration_role }')
 
 
 # Update default `directus_settings` collection 
