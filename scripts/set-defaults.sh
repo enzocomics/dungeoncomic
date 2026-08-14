@@ -13,12 +13,30 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 # This looks for "id":" followed by any characters until the next double quote
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
+# Set up the default variables for the project settings
+project_name="Dungeon Construction Co."
+project_url=$NEXT_PUBLIC_SITE_URL
+
 # Set up the payload for the PROJECT settings
-PROJECT_SETTINGS_PAYLOAD="{\"project_name\": \"Dungeon Construction Co.\", \"project_url\": \"$NEXT_PUBLIC_SITE_URL\"}"
+PROJECT_SETTINGS_PAYLOAD=$(jq -n \
+--arg project_name "$project_name" \
+--arg project_url "$project_url" \
+'{project_name: $project_name, project_url: $project_url }')
+
+# Set up the default variables for DIRECTUS settings
+project_color="#7c7c67"
+project_logo=$LOGO_UUID
+public_registration=true
+public_registration_role="5ad2a6f5-74a6-4ebc-9864-5e7b451203d2" #TODO: this should not be hardcoded
 
 # Set up the payload for DIRECTUS settings
-# TODO: public registration role should not be hardcoded
-DIRECTUS_SETTINGS_PAYLOAD="{\"project_name\": \"Dungeon Construction Co.\", \"project_url\": \"$NEXT_PUBLIC_SITE_URL\", \"project_color\": \"#7c7c67\", \"project_logo\": \"$LOGO_UUID\", \"public_registration\": \"true\", \"public_registration_role\": \"5ad2a6f5-74a6-4ebc-9864-5e7b451203d2\" }"
+DIRECTUS_SETTINGS_PAYLOAD=$(jq -n \
+--arg project_name "$project_name" \
+--arg project_url "$project_url" \
+--arg project_logo "$project_logo" \
+--arg public_registration "$public_registration" \
+--arg public_registration_role "$public_registration_role" \
+'{project_name: $project_name, project_url: $project_url, project_logo: $project_logo, public_registration: $public_registration, public_registration_role: $public_registration_role }')
 
 # Update our project `settings` collection 
 curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
