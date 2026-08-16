@@ -25,6 +25,7 @@ export interface DirectusSchema {
 			project_svg_icon: ImageCollection
 			project_apple_icon: ImageCollection
 			project_pwa_icon: ImageCollection
+			frontpage_comic: ComicsCollection
 	directus_settings: DirectusSettings
 }
 /** ------------------------------------------------ **/
@@ -90,7 +91,6 @@ export interface ComicPanelsCollection {
 }
 
 /** ------------------------------------------------ **/
-
 export interface CommentsCollection {
 	// Meta
 	id: number
@@ -113,7 +113,6 @@ export interface DirectusSettings extends Settings {
 }
 
 /** ------------------------------------------------ **/
-// SETTINGS - SINGLETON
 export interface SettingsSingleton {
 	// Meta
 	id: UUID
@@ -126,6 +125,7 @@ export interface SettingsSingleton {
 	project_description: string | null
 	project_thumbnail: ImageCollection | null
 	project_authors: DirectusUser[] | null
+	frontpage_comic: ComicsCollection | null
 	// Icons
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null
