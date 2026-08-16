@@ -21,6 +21,14 @@ export async function getSettings() {
 				{ project_svg_icon: ["filename_disk", "type", "width", "height"] },
 				{ project_apple_icon: ["filename_disk", "type", "width", "height"] },
 				{ project_pwa_icon: ["filename_disk", "type", "width", "height"] },
+				{
+					frontpage_comic: [
+						"title",
+						"slug",
+						"description",
+						{ authors: ["name", "username"] },
+					],
+				},
 			],
 		}),
 	)
