@@ -2,15 +2,14 @@
 /**----------------------------------- */
 // FUNCTIONS
 import clsx from "clsx"
-// UI
-import { Link } from "@/components/link"
+// LIBRARIES
 import { Suspense } from "react"
-
+import { Link } from "@/components/link"
 
 /**-----------------------------------
  * HOMEPAGE - UI
  */
-export default async function HomepageLayoutUI({ children }: { children: React.ReactNode }) {
+export async function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
 			// Temporary CSS
@@ -37,3 +36,9 @@ export default async function HomepageLayoutUI({ children }: { children: React.R
 		</div>
 	</>
 }
+
+export async function FrontpageWithComicLayoutUI() {
+
+}
+
+
