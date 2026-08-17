@@ -2618,14 +2618,14 @@
     },
     {
       "collection": "pages",
-      "field": "meta",
+      "field": "details",
       "type": "alias",
       "meta": {
         "collection": "pages",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "meta",
+        "field": "details",
         "group": null,
         "hidden": false,
         "interface": "group-raw",
@@ -2634,37 +2634,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "routing",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "routing",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
+        "sort": 1,
         "special": [
           "alias",
           "no-data",
@@ -2708,14 +2678,14 @@
     },
     {
       "collection": "pages",
-      "field": "details",
+      "field": "routing",
       "type": "alias",
       "meta": {
         "collection": "pages",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "details",
+        "field": "routing",
         "group": null,
         "hidden": false,
         "interface": "group-raw",
@@ -2724,7 +2694,37 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 1,
+        "sort": 3,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "meta",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
         "special": [
           "alias",
           "no-data",
@@ -3168,6 +3168,50 @@
     },
     {
       "collection": "pages",
+      "field": "description",
+      "type": "text",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "description",
+        "group": "details",
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "description",
+        "table": "pages",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "pages",
       "field": "header-hjls40",
       "type": "alias",
       "meta": {
@@ -3307,50 +3351,6 @@
         "validation": null,
         "validation_message": null,
         "width": "fill"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "description",
-      "type": "text",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "description",
-        "group": "details",
-        "hidden": false,
-        "interface": "input-multiline",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 5,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "description",
-        "table": "pages",
-        "data_type": "text",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
       }
     },
     {
@@ -3817,37 +3817,6 @@
     },
     {
       "collection": "settings",
-      "field": "project_authors",
-      "type": "alias",
-      "meta": {
-        "collection": "settings",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "project_authors",
-        "group": "project",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "sort": null,
-          "template": "{{username}} - {{homepage_url}}"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 6,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      }
-    },
-    {
-      "collection": "settings",
       "field": "header-nqle-g",
       "type": "alias",
       "meta": {
@@ -3879,6 +3848,37 @@
         "validation": null,
         "validation_message": null,
         "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_authors",
+      "type": "alias",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "project_authors",
+        "group": "project",
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "sort": null,
+          "template": "{{username}} - {{homepage_url}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
       }
     },
     {
@@ -4086,21 +4086,20 @@
     },
     {
       "collection": "settings",
-      "field": "fontpage_comic",
+      "field": "frontpage_comic",
       "type": "integer",
       "meta": {
         "collection": "settings",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "fontpage_comic",
+        "field": "frontpage_comic",
         "group": "project",
         "hidden": false,
         "interface": "select-dropdown-m2o",
         "note": "Choose to have the comic live at the root of your domain (`yourwebsite.com`) instead of in a subfolder (`yourwebsite.com/yourcomic`). This is useful if you plan to only have one comic on the website. Having multiple comics will disable this setting.",
         "options": {
-          "enableLink": true,
-          "template": "{{title}}"
+          "enableLink": true
         },
         "readonly": false,
         "required": false,
@@ -4115,7 +4114,7 @@
         "width": "full"
       },
       "schema": {
-        "name": "fontpage_comic",
+        "name": "frontpage_comic",
         "table": "settings",
         "data_type": "integer",
         "default_value": null,
@@ -4956,12 +4955,12 @@
     },
     {
       "collection": "settings",
-      "field": "fontpage_comic",
+      "field": "frontpage_comic",
       "related_collection": "comics",
       "meta": {
         "junction_field": null,
         "many_collection": "settings",
-        "many_field": "fontpage_comic",
+        "many_field": "frontpage_comic",
         "one_allowed_collections": null,
         "one_collection": "comics",
         "one_collection_field": null,
@@ -4971,10 +4970,10 @@
       },
       "schema": {
         "table": "settings",
-        "column": "fontpage_comic",
+        "column": "frontpage_comic",
         "foreign_key_table": "comics",
         "foreign_key_column": "id",
-        "constraint_name": "settings_fontpage_comic_foreign",
+        "constraint_name": "settings_frontpage_comic_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }

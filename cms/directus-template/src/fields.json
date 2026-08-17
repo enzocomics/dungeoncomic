@@ -3142,10 +3142,10 @@
   },
   {
     "collection": "settings",
-    "field": "fontpage_comic",
+    "field": "frontpage_comic",
     "type": "integer",
     "schema": {
-      "name": "fontpage_comic",
+      "name": "frontpage_comic",
       "table": "settings",
       "data_type": "integer",
       "default_value": null,
@@ -3166,14 +3166,13 @@
     },
     "meta": {
       "collection": "settings",
-      "field": "fontpage_comic",
+      "field": "frontpage_comic",
       "special": [
         "m2o"
       ],
       "interface": "select-dropdown-m2o",
       "options": {
-        "enableLink": true,
-        "template": "{{title}}"
+        "enableLink": true
       },
       "display": null,
       "display_options": null,
@@ -4016,6 +4015,41 @@
   },
   {
     "collection": "pages",
+    "field": "header-hjls40",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "header-hjls40",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Comic Page",
+        "color": "#6644FF",
+        "icon": "post_add",
+        "subtitle": "{{comic}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "details",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
     "field": "next_pages",
     "type": "alias",
     "schema": null,
@@ -4252,41 +4286,6 @@
       "conditions": null,
       "required": false,
       "group": "project",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "header-hjls40",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "header-hjls40",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "header",
-      "options": {
-        "title": "Comic Page",
-        "color": "#6644FF",
-        "icon": "post_add",
-        "subtitle": "{{comic}}"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "details",
       "validation": null,
       "validation_message": null,
       "searchable": true
