@@ -4,7 +4,7 @@
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { FrontpageLayoutUI, FrontpageWithComicLayoutUI } from "./_layout-ui"
+import FrontpageLayoutUI from "./_layout-ui"
 import ComicLayoutUI from "./(comic-route)/[comic_slug]/_layout-ui"
 import { notFound } from "next/navigation"
 

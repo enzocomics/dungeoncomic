@@ -9,7 +9,7 @@ import { Link } from "@/components/link"
 /**-----------------------------------
  * HOMEPAGE - UI
  */
-export async function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
+export default async function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
 			// Temporary CSS
@@ -35,10 +35,6 @@ export async function FrontpageLayoutUI({ children }: { children: React.ReactNod
 			</Suspense>
 		</div>
 	</>
-}
-
-export async function FrontpageWithComicLayoutUI() {
-
 }
 
 
