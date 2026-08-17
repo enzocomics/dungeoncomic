@@ -34,8 +34,6 @@ export default async function Layout({
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else {
 		return <FrontpageLayoutUI>
-			A frontpage comic has not been selected. Display the homepage only.<br />
-			This is the hompage LAYOUT.<br />
 			{children}
 		</FrontpageLayoutUI>
 	}
