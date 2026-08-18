@@ -19,13 +19,12 @@ import { ComicLandingPageUI, HomepagePageUI } from "./_page-ui"
 export default async function Homepage() {
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
-	const comic = settings.frontpage_comic
+	const frontpage_comic = settings.frontpage_comic
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (comic) {
+	if (frontpage_comic)
 		return <ComicLandingPageUI />
-	}
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
-	else {
+	else
 		return <HomepagePageUI />
-	}
+
 }
