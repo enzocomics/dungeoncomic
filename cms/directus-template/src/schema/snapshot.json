@@ -1574,13 +1574,11 @@
         "note": null,
         "options": {
           "allowedMimeTypes": [
-            "image/jpeg",
             "image/png",
             "image/gif",
             "image/webp",
             "image/svg+xml"
-          ],
-          "folder": null
+          ]
         },
         "readonly": false,
         "required": false,
@@ -1609,8 +1607,8 @@
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
       }
     },
     {
@@ -1633,8 +1631,7 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ],
-          "folder": null
+          ]
         },
         "readonly": false,
         "required": false,
@@ -1663,8 +1660,8 @@
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
       }
     },
     {
@@ -1687,8 +1684,7 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ],
-          "folder": null
+          ]
         },
         "readonly": false,
         "required": false,
@@ -1717,8 +1713,8 @@
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
       }
     },
     {
@@ -3686,60 +3682,6 @@
     },
     {
       "collection": "settings",
-      "field": "project_thumbnail",
-      "type": "uuid",
-      "meta": {
-        "collection": "settings",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "project_thumbnail",
-        "group": "project",
-        "hidden": false,
-        "interface": "file-image",
-        "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
-        "options": {
-          "allowedMimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "folder": "659df6a2-37f1-4c88-a8a6-577098d4675e"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "file"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "project_thumbnail",
-        "table": "settings",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "settings",
       "field": "date_established",
       "type": "date",
       "meta": {
@@ -3756,7 +3698,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 4,
         "special": null,
         "translations": null,
         "validation": null,
@@ -3974,7 +3916,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 6,
+        "sort": 5,
         "special": [
           "o2m"
         ],
@@ -4110,6 +4052,59 @@
       },
       "schema": {
         "name": "project_icon_pwa",
+        "table": "settings",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_thumbnail",
+      "type": "uuid",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "project_thumbnail",
+        "group": "project",
+        "hidden": false,
+        "interface": "file-image",
+        "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
+        "options": {
+          "allowedMimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/gif",
+            "image/webp"
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "project_thumbnail",
         "table": "settings",
         "data_type": "uuid",
         "default_value": null,
@@ -4699,6 +4694,81 @@
       }
     },
     {
+      "collection": "comics",
+      "field": "logo",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "comics",
+        "many_field": "logo",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "comics",
+        "column": "logo",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "comics_logo_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "thumbnail",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "comics",
+        "many_field": "thumbnail",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "comics",
+        "column": "thumbnail",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "comics_thumbnail_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "banner",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "comics",
+        "many_field": "banner",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "comics",
+        "column": "banner",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "comics_banner_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
       "collection": "comments",
       "field": "user_created",
       "related_collection": "directus_users",
@@ -5044,6 +5114,31 @@
         "foreign_key_table": "directus_files",
         "foreign_key_column": "id",
         "constraint_name": "settings_project_icon_pwa_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_thumbnail",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "settings",
+        "many_field": "project_thumbnail",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "settings",
+        "column": "project_thumbnail",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "settings_project_thumbnail_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }
