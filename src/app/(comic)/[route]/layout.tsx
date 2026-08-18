@@ -24,17 +24,17 @@ export default async function RouteLayout({
 	const frontpage_comic = settings.frontpage_comic
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` EXISTS 
+	// LAYOUT MODE 1 - FRONTPAGE COMIC
 	// - We are displaying the comic layout in the root already
 	if (frontpage_comic)
 		return { children }
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` DOES NOT EXIST
+	// LAYOUT MODE 2 - HOMEPAGE
 	// - Display comic layout UI
-	if (!frontpage_comic) {
+	if (!frontpage_comic)
 		return <ComicLayoutUI>
 			{children}
 		</ComicLayoutUI>
-	}
+
 }
