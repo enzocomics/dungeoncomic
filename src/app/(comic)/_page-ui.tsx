@@ -1,5 +1,6 @@
 "use client"
 /**----------------------------------- */
+import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
@@ -7,8 +8,6 @@ import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import clsx from "clsx"
-import { Link } from "@/components/link"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -60,6 +59,38 @@ export function ComicLandingPageUI() {
 			"border-yellow-500",
 		)}>
 			Comic Landing Page
+		</div>
+	</>
+}
+
+/**-----------------------------------
+ * Comic Page UI
+ * ---
+ */
+export default function ComicPageUI({
+	params,
+	// page
+}: {
+	params: { comic_slug: string, page_num: number }
+	// page: object
+}) {
+	// Get Pages
+	return <>
+		<div className={clsx(
+			"p-4",
+			"border",
+			"border-dashed",
+			"border-pink-300",
+		)}>
+			<h4 className={clsx(
+				"font-bold"
+			)}>
+				Comic Single Page
+			</h4>
+			get the params in page: <br />
+			`comic_slug`: {params.comic_slug} <br />
+			`page_num`: {params.page_num} <br />
+			Comic Page
 		</div>
 	</>
 }
