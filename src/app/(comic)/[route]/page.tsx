@@ -4,7 +4,7 @@
 import { notFound } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-import { getComicPage } from "@/lib/directus/get-comics"
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_page-ui"
 
@@ -43,6 +43,11 @@ export default async function RoutePage({
 	// IF `frontpage_comic` DOESN'T EXIST
 	// - Display the comic landing page UI
 	else if (!frontpage_comic) {
+		// Fetch the comic by route param
+		const comic = await getComic(route)
+		// Throw 404 if it doesn't exist
+		if (!comic) notFound()
+		// Otherwise, render it
 		return <ComicLandingPageUI />
 	}
 
