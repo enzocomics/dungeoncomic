@@ -25,9 +25,9 @@ export default async function RouteLayout({
 
 	/**----------------------------------- */
 	// LAYOUT MODE 1 - FRONTPAGE COMIC
-	// - We are displaying the comic layout in the root already
+	// - No additional UI. We are displaying the comic layout in the root already
 	if (frontpage_comic)
-		return { children }
+		return children
 
 	/**----------------------------------- */
 	// LAYOUT MODE 2 - HOMEPAGE
