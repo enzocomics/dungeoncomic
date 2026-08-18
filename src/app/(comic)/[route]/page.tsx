@@ -21,13 +21,15 @@ export default async function ComicPage({
 	const frontpage_comic = settings.frontpage_comic
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS NOT A NUMBER
+	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS A STRING/NOT A NUMBER
+	// - Throw a 404
 	if (frontpage_comic && isNaN(parseInt(route))) {
 		notFound()
 	}
 
 	/**----------------------------------- */
 	// IF `frontpage_COMIC` EXISTS AND THE ROUTE IS A NUMBER
+	// - It's detecting a page number. Display the comic single page UI
 	else if (frontpage_comic && !isNaN(parseInt(route))) {
 		// Get the page details
 		const page = await getComicPage(frontpage_comic.slug, parseInt(route))
@@ -39,6 +41,7 @@ export default async function ComicPage({
 
 	/**----------------------------------- */
 	// IF `frontpage_comic` DOESN'T EXIST
+	// - Display the comic landing page UI
 	else if (!frontpage_comic) {
 		return <ComicLandingPageUI />
 	}
