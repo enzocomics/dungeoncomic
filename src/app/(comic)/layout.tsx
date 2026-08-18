@@ -14,7 +14,7 @@ import { ComicLayoutUI, FrontpageLayoutUI } from "./_layout-ui"
  * - Subpages would be accessible at i.e. `dungeoncomic.com/comicslug/1`
  * 
  */
-export default async function Layout({
+export default async function HomepageLayout({
 	children
 }: {
 	children: React.ReactNode
@@ -23,6 +23,7 @@ export default async function Layout({
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
 
+	/**----------------------------------- */
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic)
 		return <FrontpageLayoutUI>
@@ -31,6 +32,7 @@ export default async function Layout({
 			</ComicLayoutUI>
 		</FrontpageLayoutUI>
 
+	/**----------------------------------- */
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>

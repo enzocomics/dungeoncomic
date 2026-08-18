@@ -9,7 +9,7 @@ import { getComicPage } from "@/lib/directus/get-comics"
 import ComicPageUI, { ComicLandingPageUI } from "../_page-ui"
 
 /**----------------------------------- */
-export default async function ComicPage({
+export default async function RoutePage({
 	params
 }: {
 	params: Promise<{ route: string }>
