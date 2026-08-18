@@ -21,20 +21,20 @@ export default async function Layout({
 }) {
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
-	const comic = settings.frontpage_comic
+	const frontpage_comic = settings.frontpage_comic
 
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (comic) {
+	if (frontpage_comic)
 		return <FrontpageLayoutUI>
 			<ComicLayoutUI>
 				{children}
 			</ComicLayoutUI>
 		</FrontpageLayoutUI>
-	}
+
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
-	else {
+	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>
 			{children}
 		</FrontpageLayoutUI>
-	}
+
 }
