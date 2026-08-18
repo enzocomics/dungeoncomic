@@ -6,7 +6,7 @@ import { notFound } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComicPage } from "@/lib/directus/get-comics"
 // UI
-import ComicPageUI from "../_page-ui"
+import ComicPageUI, { ComicLandingPageUI } from "../_page-ui"
 
 /**----------------------------------- */
 export default async function ComicPage({
@@ -40,9 +40,7 @@ export default async function ComicPage({
 	/**----------------------------------- */
 	// IF `frontpage_comic` DOESN'T EXIST
 	else if (!frontpage_comic) {
-		return <>
-			nope
-		</>
+		return <ComicLandingPageUI />
 	}
 
 }

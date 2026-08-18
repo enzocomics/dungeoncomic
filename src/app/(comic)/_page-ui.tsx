@@ -58,7 +58,7 @@ export function ComicLandingPageUI() {
 			"border-dashed",
 			"border-yellow-500",
 		)}>
-			Comic Landing Page
+			This is the Comic Landing Page
 		</div>
 	</>
 }
