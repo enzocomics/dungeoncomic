@@ -442,6 +442,58 @@
     }
   },
   {
+    "collection": "settings",
+    "field": "frontpage_comic",
+    "related_collection": "comics",
+    "schema": {
+      "constraint_name": "settings_frontpage_comic_foreign",
+      "table": "settings",
+      "column": "frontpage_comic",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "comics",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "settings",
+      "many_field": "frontpage_comic",
+      "one_collection": "comics",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "project_icon_svg",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "settings_project_icon_svg_foreign",
+      "table": "settings",
+      "column": "project_icon_svg",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "settings",
+      "many_field": "project_icon_svg",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
     "collection": "pages",
     "field": "comic",
     "related_collection": "comics",
@@ -469,22 +521,48 @@
   },
   {
     "collection": "settings",
-    "field": "frontpage_comic",
-    "related_collection": "comics",
+    "field": "project_icon_apple",
+    "related_collection": "directus_files",
     "schema": {
-      "constraint_name": "settings_frontpage_comic_foreign",
+      "constraint_name": "settings_project_icon_apple_foreign",
       "table": "settings",
-      "column": "frontpage_comic",
+      "column": "project_icon_apple",
       "foreign_key_schema": "public",
-      "foreign_key_table": "comics",
+      "foreign_key_table": "directus_files",
       "foreign_key_column": "id",
       "on_update": "NO ACTION",
       "on_delete": "SET NULL"
     },
     "meta": {
       "many_collection": "settings",
-      "many_field": "frontpage_comic",
-      "one_collection": "comics",
+      "many_field": "project_icon_apple",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "project_icon_pwa",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "settings_project_icon_pwa_foreign",
+      "table": "settings",
+      "column": "project_icon_pwa",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "settings",
+      "many_field": "project_icon_pwa",
+      "one_collection": "directus_files",
       "one_field": null,
       "one_collection_field": null,
       "one_allowed_collections": null,
