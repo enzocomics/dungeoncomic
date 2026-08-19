@@ -1578,7 +1578,8 @@
             "image/gif",
             "image/webp",
             "image/svg+xml"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -1631,7 +1632,8 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -1684,7 +1686,8 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -3366,7 +3369,8 @@
         "options": {
           "allowedMimeTypes": [
             "image/svg+xml"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -4031,7 +4035,8 @@
         "options": {
           "allowedMimeTypes": [
             "image/png"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -4089,7 +4094,8 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
