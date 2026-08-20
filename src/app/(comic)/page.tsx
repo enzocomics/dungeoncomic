@@ -11,6 +11,8 @@ import { comicMetadata } from "./_metadata"
 /**-----------------------------------
  * HOMEPAGE PAGE
  * ---
+ * - Conditionally render Homepage Page UI or Comic Landing Page UI, based on the layout mode
+ * ---
  * **Layout Mode 1 (Default)**
  * - Only available when there is only one comic
  * - Display comic at the root 
