@@ -71,6 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		let name
 		let url
 		if (a) {
+			// Start with the name. Fallback to username. Otherwise, don't show
 			name = a.name ?? a.username ?? undefined
 			url = a.homepage_url ?? undefined
 			return {
