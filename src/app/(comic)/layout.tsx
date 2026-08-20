@@ -1,4 +1,7 @@
+/**----------------------------------- */
+// DATA
 import { getSettings } from "@/lib/directus/get-settings"
+// UI
 import { ComicLayoutUI, FrontpageLayoutUI } from "./_layout-ui"
 
 /**-----------------------------------
@@ -38,5 +41,4 @@ export default async function HomepageLayout({
 		return <FrontpageLayoutUI>
 			{children}
 		</FrontpageLayoutUI>
-
 }
