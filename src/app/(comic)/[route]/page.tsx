@@ -1,5 +1,7 @@
 "use server"
 /**----------------------------------- */
+// TYPES
+import { Metadata } from "next"
 // LIBRARIES
 import { notFound } from "next/navigation"
 // DATA
@@ -7,7 +9,6 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
-import { Metadata } from "next"
 import { comicPageMetadata } from "../_metadata"
 
 /**----------------------------------- */
