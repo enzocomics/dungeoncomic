@@ -9,7 +9,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
-import { comicPageMetadata } from "../_metadata"
+import { comicMetadata, comicPageMetadata } from "../_metadata"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -100,8 +100,8 @@ export async function generateMetadata({
 
 	/**----------------------------------- */
 	// IF `frontpage_comic` DOESN'T EXIST
-	// - Don't return anything. All the metadata is already defined in the root layout
+	// - This is the comic landing page. Return the comic landing page metadata
 	else if (!frontpage_comic)
-		return {}
+		return await comicMetadata(route)
 
 }
