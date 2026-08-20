@@ -7,6 +7,9 @@ import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui-layout"
 /**-----------------------------------
  * HOMEPAGE LAYOUT
  * ---
+ * - Conditionally render the comic layout UI or not, based on the layout mode
+ * 
+ * ---
  * **Layout Mode 1 (Default)**
  * - Only available when there is only one comic
  * - Display comic at the root 
