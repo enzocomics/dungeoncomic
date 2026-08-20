@@ -1,8 +1,35 @@
-import { getSettings } from "@/lib/directus/get-settings";
-import ComicPageUI from "../../_ui-page";
-import { notFound } from "next/navigation";
-import { getComicPage } from "@/lib/directus/get-comics";
+"use server"
+/**----------------------------------- */
+// TYPES
+import { Metadata } from "next"
+// LIBRARIES
+import { notFound } from "next/navigation"
+// DATA
+import { getSettings } from "@/lib/directus/get-settings"
+import { getComicPage } from "@/lib/directus/get-comics"
+// UI
+import ComicPageUI from "../../_ui-page"
+import { comicPageMetadata } from "../../_metadata"
 
+/**-----------------------------------
+ * COMIC SINGLE SUBPAGE
+ * ---
+ * - Checks if the dynamic route params are valid based on the layout mode selected
+ * - Renders UI or throws a 404 based on the layout mode selected
+ * - Generates comic single page metadata or not based on the layout mode selected
+ * 
+ * ---
+ * **Layout Mode 1 (Default)**
+ * - Only available when there is only one comic
+ * - Display comic at the root 
+ * - Subpages would be accessible at i.e. `dungeoncomic.com/1`
+ * - THIS ROUTE IS 404
+ * 
+ * **Layout Mode 2**
+ * - All comics live in their subfolder `dungeoncomic.com/comicslug`
+ * - Subpages would be accessible at i.e. `dungeoncomic.com/comicslug/1`
+ * 
+ */
 export default async function ComicPagenumPage({
 	params
 }: {
@@ -29,4 +56,34 @@ export default async function ComicPagenumPage({
 	if (!comicPage) notFound()
 	// Render
 	return <ComicPageUI params={{ comic_slug: route, page_num: pagenum }} />
+}
+
+/**-----------------------------------
+ * Generate Metadata
+ * ---
+ **/
+
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ route: string, pagenum: number }>
+}): Promise<Metadata | undefined> {
+	// GET THE ROUTE PARAMS
+	const { route, pagenum } = await params
+	// CHECK IF `frontpage_comic` HAS BEEN SET
+	const settings = await getSettings()
+	const frontpage_comic = settings.frontpage_comic
+
+	/**----------------------------------- */
+	// IF `pagenum` IS A STRING/NOT A NUMBER
+	// - Return nothing (page is 404)
+	if (isNaN(pagenum))
+		return {}
+
+	/**----------------------------------- */
+	// IF `route` IS A STRING AND `pagenum` IS A NUMBER
+	// - Load the comic PAGE metadata
+	if (isNaN(parseInt(route)) && !isNaN(pagenum))
+		return await comicPageMetadata(route, pagenum)
+
 }
