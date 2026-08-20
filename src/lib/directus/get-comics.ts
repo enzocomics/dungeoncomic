@@ -20,6 +20,10 @@ export async function getComic(slug: string) {
 				"description",
 				{ authors: ["name", "username", "homepage_url", "email"] },
 				// Appearance
+				{ logo: ["filename_disk", "type", "width", "height"] },
+				{ thumbnail: ["filename_disk", "type", "width", "height"] },
+				{ banner: ["filename_disk", "type", "width", "height"] },
+				"accent_color",
 				// Content
 				// Meta
 				"id",
