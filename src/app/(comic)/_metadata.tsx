@@ -7,11 +7,9 @@ import { Author } from "next/dist/lib/metadata/types/metadata-types"
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
 
-export async function comicMetadata({
-	comic_slug
-}: {
+export async function comicMetadata(
 	comic_slug: string
-}) {
+) {
 	// FETCH COMIC VARS
 	const comic = await getComic(comic_slug)
 	const settings = await getSettings()
