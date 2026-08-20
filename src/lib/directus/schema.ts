@@ -102,6 +102,7 @@ export interface CommentsCollection {
 
 /** ------------------------------------------------ **/
 export interface DirectusUser extends User {
+	email: string
 	name: string | null
 	username: string | null
 	homepage_url: string | null
