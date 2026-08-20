@@ -4,6 +4,10 @@ import { ComicLayoutUI } from "../_ui-layout"
 /**-----------------------------------
  * ROUTE LAYOUT
  * ---
+ * - Conditionally renders comic layout UI or not, based on the layout mode
+ * - When a comic frontpage is selected, the comic layout UI is loaded on the root instead of this file
+ * ---
+ * 
  * **Layout Mode 1 (Default)**
  * - Only available when there is only one comic
  * - Display comic at the root 
