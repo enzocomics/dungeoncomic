@@ -35,9 +35,15 @@ export interface ComicsCollection {
 	title: string
 	slug: string
 	description: string
-	authors: DirectusUser[]
+	authors: DirectusUser[] | null
 	// Content
+	variables: JSON | null
 	pages: number[] | PagesCollection[]
+	// Appearance
+	logo: ImageCollection | null
+	thumbnail: ImageCollection | null
+	banner: ImageCollection | null
+	accent_color: string | null
 	// Meta
 	id: number
 	user_created: UUID
