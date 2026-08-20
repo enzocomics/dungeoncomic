@@ -11,7 +11,23 @@ import { getComic, getComicPage } from "@/lib/directus/get-comics"
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
 import { comicPageMetadata } from "../_metadata"
 
-/**----------------------------------- */
+/**-----------------------------------
+ * COMIC ROUTE **OR** SUBPAGE
+ * ---
+ * - Conditionally renders comic landing page UI or comic single page UI based on the layout
+ * - Conditionally generates comic landing page metadata or comic single page metadata based on the layout
+ * 
+ * ---
+ * **Layout Mode 1 (Default)**
+ * - Only available when there is only one comic
+ * - Display comic at the root 
+ * - Subpages would be accessible at i.e. `dungeoncomic.com/1`
+ * 
+ * **Layout Mode 2**
+ * - All comics live in their subfolder `dungeoncomic.com/comicslug`
+ * - Subpages would be accessible at i.e. `dungeoncomic.com/comicslug/1`
+ * 
+ */
 export default async function RoutePage({
 	params
 }: {
