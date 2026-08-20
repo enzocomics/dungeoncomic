@@ -7,6 +7,8 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
+import { Metadata } from "next"
+import { comicPageMetadata } from "../_metadata"
 
 /**----------------------------------- */
 export default async function RoutePage({
@@ -50,5 +52,39 @@ export default async function RoutePage({
 		// Otherwise, render it
 		return <ComicLandingPageUI />
 	}
+}
+
+/**-----------------------------------
+ * Generate Metadata
+ * ---
+ **/
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ route: string }>
+}): Promise<Metadata | undefined> {
+	// GET THE ROUTE PARAMS
+	const { route } = await params
+	// CHECK IF `frontpage_comic` HAS BEEN SET
+	const settings = await getSettings()
+	const frontpage_comic = settings.frontpage_comic
+
+	/**----------------------------------- */
+	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS A STRING/NOT A NUMBER
+	// - Return nothing (page is 404)
+	if (frontpage_comic && isNaN(parseInt(route)))
+		return {}
+
+	/**----------------------------------- */
+	// IF `frontpage_COMIC` EXISTS AND THE ROUTE IS A NUMBER
+	// - Load the comic metadata
+	if (frontpage_comic && !isNaN(parseInt(route)))
+		return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
+
+	/**----------------------------------- */
+	// IF `frontpage_comic` DOESN'T EXIST
+	// - Don't return anything. All the metadata is already defined in the root layout
+	else if (!frontpage_comic)
+		return {}
 
 }
