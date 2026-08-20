@@ -2,7 +2,7 @@
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { ComicLayoutUI, FrontpageLayoutUI } from "./_layout-ui"
+import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui-layout"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT

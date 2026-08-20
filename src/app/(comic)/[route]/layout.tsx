@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings"
-import { ComicLayoutUI } from "../_layout-ui"
+import { ComicLayoutUI } from "../_ui-layout"
 
 /**-----------------------------------
  * ROUTE LAYOUT

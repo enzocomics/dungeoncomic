@@ -6,7 +6,7 @@ import { notFound } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
-import ComicPageUI, { ComicLandingPageUI } from "../_page-ui"
+import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
 
 /**----------------------------------- */
 export default async function RoutePage({

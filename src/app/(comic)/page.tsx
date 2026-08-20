@@ -5,7 +5,7 @@ import { Metadata } from "next"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { ComicLandingPageUI, HomepagePageUI } from "./_page-ui"
+import { ComicLandingPageUI, HomepagePageUI } from "./_ui-page"
 import { comicMetadata } from "./_metadata"
 
 /**-----------------------------------

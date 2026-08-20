@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings";
-import ComicPageUI from "../../_page-ui";
+import ComicPageUI from "../../_ui-page";
 import { notFound } from "next/navigation";
 import { getComicPage } from "@/lib/directus/get-comics";
 
