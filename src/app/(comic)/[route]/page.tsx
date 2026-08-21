@@ -67,7 +67,7 @@ export default async function RoutePage({
 		// Throw 404 if it doesn't exist
 		if (!comic) notFound()
 		// Otherwise, render it
-		return <ComicLandingPageUI />
+		return <ComicLandingPageUI comic={comic} />
 	}
 }
 

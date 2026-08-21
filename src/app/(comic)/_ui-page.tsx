@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
+// DATA
+import { getComic } from "@/lib/directus/get-comics"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 
@@ -50,7 +52,11 @@ export function HomepagePageUI() {
  * Comic Landing Page UI
  * ---
  */
-export function ComicLandingPageUI() {
+export function ComicLandingPageUI({
+	comic
+}: {
+	comic: Awaited<ReturnType<typeof getComic>>
+}) {
 	return <>
 		<div className={clsx(
 			"p-4",

@@ -7,6 +7,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicLandingPageUI, HomepagePageUI } from "./_ui-page"
 import { comicMetadata } from "./_metadata"
+import { getComic } from "@/lib/directus/get-comics"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -28,11 +29,16 @@ export default async function Homepage() {
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (frontpage_comic)
-		return <ComicLandingPageUI />
+	if (frontpage_comic) {
+		// FETCH COMIC DATA
+		const comic = await getComic(frontpage_comic.slug)
+		// PASS TO UI
+		return <ComicLandingPageUI comic={comic} />
+	}
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
-	else
+	else {
 		return <HomepagePageUI />
+	}
 
 }
 
