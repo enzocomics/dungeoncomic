@@ -1,10 +1,51 @@
-import clsx from "clsx"
-
+"use client"
+/**----------------------------------- */
+// LIBRARIES
 import { Suspense } from "react"
 import { Link } from "@/components/link"
+// FUNCTIONS
+import clsx from "clsx"
+// DATA
 import { getComic } from "@/lib/directus/get-comics"
 
-export async function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
+/**-----------------------------------
+ * COMIC FRONTPAGE LAYOUT
+ * ---
+ * - Default homepage
+ */
+export function ComicLayoutUI({
+	children,
+	comic
+}: {
+	children: React.ReactNode
+	comic: Awaited<ReturnType<typeof getComic>>
+}) {
+	return <div className={clsx(
+		// Temporary CSS
+		"p-4",
+		"border",
+		"border-orange-500",
+		"border-dashed",
+	)}>
+		<h3 className={clsx(
+			// Temporary CSS
+			"font-display",
+			"text-2xl",
+		)}>Comic Layout UI</h3>
+		<strong>Comic Title</strong>: {comic.title} <br />
+		<strong>Comic Description</strong>: {comic.description} <br />
+		<br />
+		{children}
+	</div>
+}
+
+/**-----------------------------------
+ * FRONTPAGE LAYOUT
+ * ---
+ * - 
+ * 
+ */
+export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 	return <>
 		<div className={clsx(
 			// Temporary CSS
@@ -30,28 +71,4 @@ export async function FrontpageLayoutUI({ children }: { children: React.ReactNod
 			</Suspense>
 		</div>
 	</>
-}
-
-export async function ComicLayoutUI({
-	children,
-	comic
-}: {
-	children: React.ReactNode
-	comic: Awaited<ReturnType<typeof getComic>>
-}) {
-	return <div className={clsx(
-		// Temporary CSS
-		"p-4",
-		"border",
-		"border-orange-500",
-		"border-dashed",
-	)}>
-		<h3 className={clsx(
-			// Temporary CSS
-			"font-display",
-			"text-2xl",
-		)}>Comic Layout</h3>
-		<strong>get the `comic` in layout</strong>: {comic.title} <br />
-		{children}
-	</div>
 }
