@@ -8,15 +8,15 @@ import { notFound } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComicPage } from "@/lib/directus/get-comics"
 // UI
+import { comicPageMetadata, notFoundMetadata } from "../../_metadata"
 import ComicPageUI from "../../_ui-page"
-import { comicPageMetadata } from "../../_metadata"
 
 /**-----------------------------------
  * COMIC SINGLE SUBPAGE
  * ---
  * - Checks if the dynamic route params are valid based on the layout mode selected
  * - Renders UI or throws a 404 based on the layout mode selected
- * - Generates comic single page metadata or not based on the layout mode selected
+ * - Generates comic single page metadata or based on the layout mode selected
  * 
  * ---
  * **Layout Mode 1 (Default)**
@@ -70,20 +70,13 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
 	// GET THE ROUTE PARAMS
 	const { route, pagenum } = await params
-	// CHECK IF `frontpage_comic` HAS BEEN SET
-	const settings = await getSettings()
-	const frontpage_comic = settings.frontpage_comic
+	// CHECK IF THE PAGE EXISTS
+	const comicPage = await getComicPage(route, pagenum)
 
 	/**----------------------------------- */
-	// IF `pagenum` IS A STRING/NOT A NUMBER
-	// - Return nothing (page is 404)
-	if (isNaN(pagenum))
-		return {}
-
-	/**----------------------------------- */
-	// IF `route` IS A STRING AND `pagenum` IS A NUMBER
-	// - Load the comic PAGE metadata
-	if (isNaN(parseInt(route)) && !isNaN(pagenum))
+	// RETURN PAGE METADATA IF IT EXISTS
+	if (comicPage)
 		return await comicPageMetadata(route, pagenum)
-
+	else
+		return await notFoundMetadata()
 }
