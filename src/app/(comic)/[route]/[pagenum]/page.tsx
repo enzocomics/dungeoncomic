@@ -70,13 +70,18 @@ export async function generateMetadata({
 }): Promise<Metadata | undefined> {
 	// GET THE ROUTE PARAMS
 	const { route, pagenum } = await params
-	// CHECK IF THE PAGE EXISTS
-	const comicPage = await getComicPage(route, pagenum)
+	// CHECK IF PAGENUM IS A NUMBER
+	let comicPage
 
 	/**----------------------------------- */
 	// RETURN PAGE METADATA IF IT EXISTS
-	if (comicPage)
-		return await comicPageMetadata(route, pagenum)
-	else
-		return await notFoundMetadata()
+	if (!isNaN(pagenum)) {
+		comicPage = await getComicPage(route, pagenum)
+		if (comicPage) return await comicPageMetadata(route, pagenum)
+	}
+
+	/**----------------------------------- */
+	// THROW 404 
+	return await notFoundMetadata()
+
 }
