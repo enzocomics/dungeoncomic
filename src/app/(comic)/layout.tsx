@@ -3,6 +3,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui-layout"
+import { getComic } from "@/lib/directus/get-comics"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -31,12 +32,14 @@ export default async function HomepageLayout({
 
 	/**----------------------------------- */
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (frontpage_comic)
+	if (frontpage_comic) {
+		const comic = await getComic(frontpage_comic.slug)
 		return <FrontpageLayoutUI>
-			<ComicLayoutUI>
+			<ComicLayoutUI comic={comic}>
 				{children}
 			</ComicLayoutUI>
 		</FrontpageLayoutUI>
+	}
 
 	/**----------------------------------- */
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE

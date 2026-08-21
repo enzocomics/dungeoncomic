@@ -2,6 +2,7 @@ import clsx from "clsx"
 
 import { Suspense } from "react"
 import { Link } from "@/components/link"
+import { getComic } from "@/lib/directus/get-comics"
 
 export async function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 	return <>
@@ -33,10 +34,10 @@ export async function FrontpageLayoutUI({ children }: { children: React.ReactNod
 
 export async function ComicLayoutUI({
 	children,
-	comic_slug
+	comic
 }: {
 	children: React.ReactNode
-	comic_slug?: string
+	comic: Awaited<ReturnType<typeof getComic>>
 }) {
 	return <div className={clsx(
 		// Temporary CSS
@@ -50,7 +51,7 @@ export async function ComicLayoutUI({
 			"font-display",
 			"text-2xl",
 		)}>Comic Layout</h3>
-		<strong>get the `comic_slug` in layout</strong>: {comic_slug} <br />
+		<strong>get the `comic` in layout</strong>: {comic.title} <br />
 		{children}
 	</div>
 }

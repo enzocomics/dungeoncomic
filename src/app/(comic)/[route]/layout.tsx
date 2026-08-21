@@ -1,5 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { ComicLayoutUI } from "../_ui-layout"
+import { getComic } from "@/lib/directus/get-comics"
+import { notFound } from "next/navigation"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -19,10 +21,13 @@ import { ComicLayoutUI } from "../_ui-layout"
  * 
  */
 export default async function RouteLayout({
-	children
+	children,
+	params
 }: {
 	children: React.ReactNode
+	params: Promise<{ route: string }>
 }) {
+	const { route } = await params
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
@@ -36,9 +41,16 @@ export default async function RouteLayout({
 	/**----------------------------------- */
 	// LAYOUT MODE 2 - HOMEPAGE
 	// - Display comic layout UI
-	if (!frontpage_comic)
-		return <ComicLayoutUI>
+	if (!frontpage_comic) {
+		// FETCH COMIC BY ROUTE
+		const comic = await getComic(route)
+
+		// THROW 404 IF IT DOESN"T EXIST
+		if (!comic) notFound()
+
+		// RENDER
+		return <ComicLayoutUI comic={comic}>
 			{children}
 		</ComicLayoutUI>
-
+	}
 }
