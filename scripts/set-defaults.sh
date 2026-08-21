@@ -13,29 +13,52 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 # This looks for "id":" followed by any characters until the next double quote
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
+# Retrieve the UUID of the initial admin user
+ADMINRESPONSE=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_eq]=Administrator" \
+	-H "Authorization: Bearer $CMS_ADMIN_TOKEN")
+ADMIN_UUID=$(echo "$ADMINRESPONSE" | jq -r '.data[0].id')
+
+##------------------------------------------------------##
+# Set up the default variables for the default comic
+title="My Dungeon Comic"
+slug="mydungeoncomic"
+description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
+authors=$ADMIN_UUID
+
+# Set up the payload for the DEFAULT COMIC settings
+DEFAULT_COMIC_PAYLOAD=$(jq -n \
+--arg title "$title" \
+--arg slug "$slug" \
+--arg description "$description" \
+--arg authors "$authors" \
+'{title: $title, slug: $slug, description: $description, authors: [$authors] }')
+
+# Update our DEFAULT `comic` collection 
+COMICRESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/items/comics" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$DEFAULT_COMIC_PAYLOAD")
+# Get the Comic ID: we will set it as the frontpage_comic in the project settings
+COMIC_ID=$(echo "$COMICRESPONSE" | jq -r '.data.id')
+
 ##------------------------------------------------------##
 # Set up the default variables for the project settings
 project_name="Dungeon Construction Co."
 project_url=$NEXT_PUBLIC_SITE_URL
+frontpage_comic=$COMIC_ID
 
 # Set up the payload for the PROJECT settings
 PROJECT_SETTINGS_PAYLOAD=$(jq -n \
 --arg project_name "$project_name" \
 --arg project_url "$project_url" \
-'{project_name: $project_name, project_url: $project_url }')
+--arg frontpage_comic "$frontpage_comic" \
+'{project_name: $project_name, project_url: $project_url, frontpage_comic: $frontpage_comic}')
 
 # Update our project `settings` collection 
 curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
   -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d "$PROJECT_SETTINGS_PAYLOAD"
-
-
-##------------------------------------------------------##
-# Set up the default variables for the default comic
-title="My Dungeon Comic"
-slug="mydungeon"
-description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
 
 ##------------------------------------------------------##
 # Set up the default variables for DIRECTUS settings
