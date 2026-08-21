@@ -2575,6 +2575,62 @@
     }
   },
   {
+    "collection": "pages",
+    "field": "thumbnail",
+    "type": "uuid",
+    "schema": {
+      "name": "thumbnail",
+      "table": "pages",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "pages",
+      "field": "thumbnail",
+      "special": [
+        "file"
+      ],
+      "interface": "file-image",
+      "options": {
+        "crop": false,
+        "allowedMimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp"
+        ]
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "details",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "settings",
     "field": "id",
     "type": "uuid",
@@ -3753,13 +3809,13 @@
     }
   },
   {
-    "collection": "pages",
-    "field": "details",
+    "collection": "directus_users",
+    "field": "profile",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "pages",
-      "field": "details",
+      "collection": "directus_users",
+      "field": "profile",
       "special": [
         "alias",
         "no-data",
@@ -3772,37 +3828,6 @@
       "readonly": false,
       "hidden": false,
       "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "content",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
@@ -3865,37 +3890,6 @@
       "readonly": false,
       "hidden": false,
       "sort": 4,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "directus_users",
-    "field": "profile",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "directus_users",
-      "field": "profile",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4042,23 +4036,19 @@
   },
   {
     "collection": "pages",
-    "field": "header-hjls40",
+    "field": "details",
     "type": "alias",
     "schema": null,
     "meta": {
       "collection": "pages",
-      "field": "header-hjls40",
+      "field": "details",
       "special": [
         "alias",
-        "no-data"
+        "no-data",
+        "group"
       ],
-      "interface": "header",
-      "options": {
-        "title": "Comic Page",
-        "color": "#6644FF",
-        "icon": "post_add",
-        "subtitle": "{{comic}}"
-      },
+      "interface": "group-raw",
+      "options": null,
       "display": null,
       "display_options": null,
       "readonly": false,
@@ -4069,7 +4059,38 @@
       "note": null,
       "conditions": null,
       "required": false,
-      "group": "details",
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -4314,6 +4335,41 @@
       "conditions": null,
       "required": false,
       "group": "project",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "header-hjls40",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "header-hjls40",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Comic Page",
+        "color": "#6644FF",
+        "icon": "post_add",
+        "subtitle": "{{comic}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "details",
       "validation": null,
       "validation_message": null,
       "searchable": true
