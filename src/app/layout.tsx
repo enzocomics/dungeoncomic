@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	// METADATA VARS
 	const settings = await getSettings()
-	const locale: string = "en-CA"
+	const locale: string = "en-CA" // TODO: I18N
 	const projectName = settings.project_name || fallbackProjectName
 	const description = settings.project_description || fallbackDescription
 	const url = settings.project_url || fallbackUrl
