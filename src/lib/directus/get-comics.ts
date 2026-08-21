@@ -51,6 +51,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 				// Details
 				"title",
 				"description",
+				{ thumbnail: ["filename_disk", "type", "width", "height"] },
 				{
 					comic_panels: [
 						{ panel_image: ["filename_disk", "type", "width", "height"] },
