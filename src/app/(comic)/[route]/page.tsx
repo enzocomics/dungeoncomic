@@ -9,7 +9,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
-import { comicMetadata, comicPageMetadata } from "../_metadata"
+import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_metadata"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -86,22 +86,25 @@ export async function generateMetadata({
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
 
-	/**----------------------------------- */
-	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS A STRING/NOT A NUMBER
-	// - Return nothing (page is 404)
-	if (frontpage_comic && isNaN(parseInt(route)))
-		return {}
+	const comic = await getComic(frontpage_comic?.slug || route)
+	const frontpageComicPage = frontpage_comic && !isNaN(parseInt(route))
+		? await getComicPage(frontpage_comic.slug, parseInt(route))
+		: null
 
 	/**----------------------------------- */
-	// IF `frontpage_COMIC` EXISTS AND THE ROUTE IS A NUMBER
-	// - Load the comic metadata
-	if (frontpage_comic && !isNaN(parseInt(route)))
+	// IF `frontpage_comic` + comic + comic page all exist: return comic page metadata
+	if (frontpage_comic && comic && frontpageComicPage) {
 		return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
+	}
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` DOESN'T EXIST
-	// - This is the comic landing page. Return the comic landing page metadata
-	else if (!frontpage_comic)
+	// IF `frontpage_comic` DOESN'T EXIST, but the page does: return comic landing metadata
+	else if (!frontpage_comic && comic) {
 		return await comicMetadata(route)
+	}
+
+	/**----------------------------------- */
+	// ELSE - 404
+	return await notFoundMetadata()
 
 }
