@@ -62,6 +62,22 @@ export async function getComicPage(comic_slug: string, num: number) {
 						"panel_description",
 					],
 				},
+				{
+					next_pages: [
+						"branch_title",
+						"branch_description",
+						{ pages_id: ["comic", "comic_pagenum"] },
+						{ linked_pages_id: ["comic", "comic_pagenum"] },
+					],
+				},
+				{
+					prev_pages: [
+						"branch_title",
+						"branch_description",
+						{ pages_id: ["comic", "comic_pagenum"] },
+						{ linked_pages_id: ["comic", "comic_pagenum"] },
+					],
+				},
 			],
 		}),
 	)
