@@ -12,6 +12,7 @@ import { directusURL } from "@/data/env"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import { useChangeStatus } from "@/components/status-message"
+import { Link } from "@/components/link"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -81,7 +82,7 @@ export default function ComicPageUI({
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	// Get Pages
-	console.log(page)
+	console.log(page.next_pages)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -97,6 +98,11 @@ export default function ComicPageUI({
 				{page.title}
 			</h4>
 			{/* <p>{page.description}</p> */}
+			{
+				/**------------------------------
+				 *	DISPLAY THE COMIC PANELS
+				 */
+			}
 			{page.comic_panels ? page.comic_panels.map((p, index) =>
 				<div key={index}>
 					{p.panel_image &&
@@ -111,6 +117,60 @@ export default function ComicPageUI({
 					<p>{p.panel_description}</p>
 				</div>
 			) : null}
+
+			{
+				/**------------------------------
+				 *	PREV NAVIGATION
+				 */
+			}
+			{page.prev_pages && page.prev_pages.length > 0 &&
+				<>
+					<hr className={clsx("my-8")} />
+					<h4 className={clsx(
+						"text-3xl",
+						"font-bold",
+						"font-display",
+					)}>
+						PREV NAV
+					</h4>
+					<ul>
+						{page.prev_pages.map((n, index) =>
+							<li key={index}>
+								<Link href={`${n.pages_id.comic_pagenum}`}>
+									<strong>&laquo; Go Back</strong>
+								</Link>
+							</li>
+						)}
+					</ul>
+				</>
+			}
+			{
+				/**------------------------------
+				 *	NEXT NAVIGATION
+				 */
+			}
+			{page.next_pages && page.next_pages.length > 0 &&
+				<>
+					<hr className={clsx("my-8")} />
+					<h4 className={clsx(
+						"text-3xl",
+						"font-bold",
+						"font-display",
+					)}>
+						NEXT NAV
+					</h4>
+					<ul>
+						{page.next_pages.map((n, index) =>
+							<li key={index}>
+								<Link href={`${n.linked_pages_id.comic_pagenum}`}>
+									<strong>{n.branch_title} &raquo;</strong>
+									<p>{n.branch_description}</p>
+								</Link>
+							</li>
+						)}
+					</ul>
+				</>
+			}
 		</div>
 	</>
 }
