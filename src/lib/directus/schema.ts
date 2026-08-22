@@ -88,7 +88,7 @@ export interface PageBranchesCollection {
 /** ------------------------------------------------ **/
 export interface ComicPanelsCollection {
 	// Content
-	panel_image: UUID | ImageCollection
+	panel_image: ImageCollection
 	panel_title: string | null
 	panel_description: string | null
 	// Meta
