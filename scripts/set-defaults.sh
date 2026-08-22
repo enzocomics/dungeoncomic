@@ -83,3 +83,25 @@ curl -X PATCH "$NEXT_PUBLIC_CMS_URL/settings" \
   -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d "$DIRECTUS_SETTINGS_PAYLOAD"
+
+
+##------------------------------------------------------##
+# Apply our extracted Directus Presets to the current Admin User
+PRESETS="$(<./cms/directus-template/src/presets.json)"
+
+# Change the user UUID to the current admin user
+DIRECTUS_PRESETS_PAYLOAD=$(echo $PRESETS |jq --arg admin_uuid "$ADMIN_UUID" 'walk(
+  if type == "object" and has("user")
+  then .user = $admin_uuid
+  else .
+  end
+)' )
+
+# Update default `directus_presets` collection 
+curl -X POST "$NEXT_PUBLIC_CMS_URL/presets" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$DIRECTUS_PRESETS_PAYLOAD"
+
+
+echo "\`directus_presets\` have been applied successfully."
