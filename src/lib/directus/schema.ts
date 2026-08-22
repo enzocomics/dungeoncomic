@@ -149,4 +149,5 @@ export interface ImageCollection {
 	type: string
 	width: number
 	height: number
+	description: string
 }
