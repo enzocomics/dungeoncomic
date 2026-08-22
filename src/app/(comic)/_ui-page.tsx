@@ -5,8 +5,10 @@ import clsx from "clsx"
 import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 // DATA
+import { directusURL } from "@/data/env"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import { useChangeStatus } from "@/components/status-message"
@@ -74,13 +76,12 @@ export function ComicLandingPageUI({
  * ---
  */
 export default function ComicPageUI({
-	// params,
 	page
 }: {
-	// params: { comic_slug: string, page_num: number }
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	// Get Pages
+	console.log(page)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -89,14 +90,27 @@ export default function ComicPageUI({
 			"border-pink-300",
 		)}>
 			<h4 className={clsx(
-				"font-bold"
+				"text-3xl",
+				"font-bold",
+				"font-display",
 			)}>
-				Comic Single Page
+				{page.title}
 			</h4>
-			get the params in page: <br />
-			{/* `comic_slug`: {params.comic_slug} <br />
-			`page_num`: {params.page_num} <br /> */}
-			Comic Page
+			{/* <p>{page.description}</p> */}
+			{page.comic_panels ? page.comic_panels.map((p, index) =>
+				<div key={index}>
+					{p.panel_image &&
+						<p><Image
+							src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
+							width={`${p.panel_image.width}`}
+							height={`${p.panel_image.height}`}
+							alt=""
+						/></p>
+					}
+					{/* <p>{p.panel_title}</p> */}
+					<p>{p.panel_description}</p>
+				</div>
+			) : null}
 		</div>
 	</>
 }
