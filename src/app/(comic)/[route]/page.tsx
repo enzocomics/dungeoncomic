@@ -3,7 +3,7 @@
 // TYPES
 import { Metadata } from "next"
 // LIBRARIES
-import { notFound } from "next/navigation"
+import { notFound, redirect, RedirectType } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
@@ -68,7 +68,23 @@ export default async function RoutePage({
 		// Throw 404 if it doesn't exist
 		if (!comic) notFound()
 		// Otherwise, render it
-		return <ComicLandingPageUI comic={comic} />
+		// CHECK `landing_page` SETTING
+		const landing_page = comic.landing_page
+		const page_count = comic.pages_count
+		switch (landing_page) {
+			// SHOW LANDING PAGE UI
+			case "cover-page":
+				return <ComicLandingPageUI comic={comic} />
+			// REDIRECT TO FIRST PAGE
+			case "first-page":
+				redirect(`${route}/1`, RedirectType.replace)
+			// REDIRECT TO LAST PAGE
+			case "last-page":
+				redirect(`${route}/${page_count}`, RedirectType.replace)
+			// REDIRECT TO A SPECIFIC PAGE
+			default:
+				redirect(`${route}/${landing_page}`, RedirectType.replace)
+		}
 	}
 }
 
