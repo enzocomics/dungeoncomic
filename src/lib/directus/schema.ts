@@ -44,6 +44,8 @@ export interface ComicsCollection {
 	thumbnail: ImageCollection | null
 	banner: ImageCollection | null
 	accent_color: string | null
+	// Settings
+	landing_page: "cover-page" | "first-page" | "last-page" | number
 	// Meta
 	id: number
 	user_created: UUID

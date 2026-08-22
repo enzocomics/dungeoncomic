@@ -25,6 +25,8 @@ export async function getComic(slug: string) {
 				{ banner: ["filename_disk", "type", "width", "height"] },
 				"accent_color",
 				// Content
+				// Settings
+				"landing_page",
 				// Meta
 				"id",
 			],
