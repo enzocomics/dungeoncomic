@@ -63,10 +63,10 @@ export interface PagesCollection {
 	description: string | null
 	thumbnail: ImageCollection | null
 	// Content
-	comic_panels: number[] | ComicPanelsCollection[]
+	comic_panels: ComicPanelsCollection[]
 	// Routing
-	prev_pages: number[] | PagesCollection[]
-	next_pages: number[] | PagesCollection[]
+	prev_pages: PageBranchesCollection[]
+	next_pages: PageBranchesCollection[]
 	// Meta
 	id: number
 	user_created: UUID
@@ -81,8 +81,8 @@ export interface PageBranchesCollection {
 	branch_description: string | null
 	// Meta
 	id: number
-	pages_id: number
-	linked_pages_id: number
+	pages_id: PagesCollection
+	linked_pages_id: PagesCollection
 }
 
 /** ------------------------------------------------ **/
