@@ -147,6 +147,9 @@ export async function comicPageMetadata(
 	const description = comicPage.description || `Page ${pagenum} of ${comicTitle}, a comic adventure series${authorsStr ? " by " + authorsStr : ""}`
 
 	// THUMBNAIL
+	// - Shows the image from the first panel, if it exists
+	// - Falls back to the comic PAGE thumbnail, if it has been defined
+	// - Otherwise, fall back to the project thumbnail, and finally, DCC's thumbnail
 	const comicThumbnail = comic.thumbnail ? {
 		url: `${directusURL}/assets/${comic.thumbnail.filename_disk}`,
 		type: comic.thumbnail.type,
@@ -154,12 +157,19 @@ export async function comicPageMetadata(
 		height: comic.thumbnail.height,
 	} : projectThumbnail || fallbackThumbnail
 
-	const thumbnail = comicPage.thumbnail ? {
+	const pageThumbnail = comicPage.thumbnail ? {
 		url: `${directusURL}/assets/${comicPage.thumbnail.filename_disk}`,
 		type: comicPage.thumbnail.type,
 		width: comicPage.thumbnail.width,
 		height: comicPage.thumbnail.height,
 	} : comicThumbnail
+
+	const thumbnail = comicPage.comic_panels && comicPage.comic_panels[0].panel_image ? {
+		url: `${directusURL}/assets/${comicPage.comic_panels[0].panel_image.filename_disk}`,
+		type: comicPage.comic_panels[0].panel_image.type,
+		width: comicPage.comic_panels[0].panel_image.width,
+		height: comicPage.comic_panels[0].panel_image.height,
+	} : pageThumbnail
 
 	// METADATA OBJECT
 	return {
