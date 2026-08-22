@@ -164,7 +164,7 @@ export async function comicPageMetadata(
 		height: comicPage.thumbnail.height,
 	} : comicThumbnail
 
-	const thumbnail = comicPage.comic_panels && comicPage.comic_panels[0].panel_image ? {
+	const thumbnail = comicPage.comic_panels && comicPage.comic_panels.length > 0 && comicPage.comic_panels[0].panel_image ? {
 		url: `${directusURL}/assets/${comicPage.comic_panels[0].panel_image.filename_disk}`,
 		type: comicPage.comic_panels[0].panel_image.type,
 		width: comicPage.comic_panels[0].panel_image.width,
