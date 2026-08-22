@@ -790,36 +790,6 @@
     },
     {
       "collection": "comics",
-      "field": "meta",
-      "type": "alias",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "meta",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comics",
       "field": "details",
       "type": "alias",
       "meta": {
@@ -840,6 +810,39 @@
         "required": false,
         "searchable": true,
         "sort": 1,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "appearance",
+      "type": "alias",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "appearance",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": {
+          "headerColor": "#7C7C67",
+          "headerIcon": "palette"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
         "special": [
           "alias",
           "no-data",
@@ -886,26 +889,23 @@
     },
     {
       "collection": "comics",
-      "field": "appearance",
+      "field": "meta",
       "type": "alias",
       "meta": {
         "collection": "comics",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "appearance",
+        "field": "meta",
         "group": null,
         "hidden": false,
-        "interface": "group-detail",
+        "interface": "group-raw",
         "note": null,
-        "options": {
-          "headerColor": "#7C7C67",
-          "headerIcon": "palette"
-        },
+        "options": null,
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 5,
         "special": [
           "alias",
           "no-data",
@@ -1718,6 +1718,96 @@
         "has_auto_increment": false,
         "foreign_key_table": "directus_files",
         "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "settings",
+      "type": "alias",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "settings",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "landing_page",
+      "type": "string",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "landing_page",
+        "group": "settings",
+        "hidden": false,
+        "interface": "select-radio",
+        "note": null,
+        "options": {
+          "allowOther": true,
+          "choices": [
+            {
+              "text": "Show Cover Page",
+              "value": "cover-page"
+            },
+            {
+              "text": "Show First Page",
+              "value": "first-page"
+            },
+            {
+              "text": "Show Last Page",
+              "value": "last-page"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "landing_page",
+        "table": "comics",
+        "data_type": "character varying",
+        "default_value": "first-page",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {
@@ -2617,66 +2707,6 @@
     },
     {
       "collection": "pages",
-      "field": "details",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "details",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "content",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "content",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
       "field": "routing",
       "type": "alias",
       "meta": {
@@ -2724,6 +2754,66 @@
         "required": false,
         "searchable": true,
         "sort": 4,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "details",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "details",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "content",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "content",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
         "special": [
           "alias",
           "no-data",
@@ -3211,6 +3301,60 @@
     },
     {
       "collection": "pages",
+      "field": "thumbnail",
+      "type": "uuid",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "thumbnail",
+        "group": "details",
+        "hidden": false,
+        "interface": "file-image",
+        "note": null,
+        "options": {
+          "allowedMimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/gif",
+            "image/webp"
+          ],
+          "crop": false
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "thumbnail",
+        "table": "pages",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "pages",
       "field": "header-hjls40",
       "type": "alias",
       "meta": {
@@ -3350,116 +3494,6 @@
         "validation": null,
         "validation_message": null,
         "width": "fill"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "thumbnail",
-      "type": "uuid",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "thumbnail",
-        "group": "details",
-        "hidden": false,
-        "interface": "file-image",
-        "note": null,
-        "options": {
-          "allowedMimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "crop": false
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 6,
-        "special": [
-          "file"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "thumbnail",
-        "table": "pages",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_files",
-        "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "settings",
-      "field": "project_icon_svg",
-      "type": "uuid",
-      "meta": {
-        "collection": "settings",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "project_icon_svg",
-        "group": "icons",
-        "hidden": false,
-        "interface": "file-image",
-        "note": ".SVG only",
-        "options": {
-          "allowedMimeTypes": [
-            "image/svg+xml"
-          ],
-          "crop": false
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "file"
-        ],
-        "translations": [
-          {
-            "language": "en-US",
-            "translation": "SVG Favicon"
-          }
-        ],
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "project_icon_svg",
-        "table": "settings",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_files",
-        "foreign_key_column": "id"
       }
     },
     {
@@ -3920,6 +3954,60 @@
     },
     {
       "collection": "settings",
+      "field": "project_thumbnail",
+      "type": "uuid",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "project_thumbnail",
+        "group": "project",
+        "hidden": false,
+        "interface": "file-image",
+        "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
+        "options": {
+          "allowedMimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/gif",
+            "image/webp"
+          ],
+          "crop": false
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "project_thumbnail",
+        "table": "settings",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "settings",
       "field": "header-nqle-g",
       "type": "alias",
       "meta": {
@@ -3986,34 +4074,58 @@
     },
     {
       "collection": "settings",
-      "field": "notice-bxl2fo",
-      "type": "alias",
+      "field": "project_icon_svg",
+      "type": "uuid",
       "meta": {
         "collection": "settings",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "notice-bxl2fo",
+        "field": "project_icon_svg",
         "group": "icons",
         "hidden": false,
-        "interface": "presentation-notice",
-        "note": null,
+        "interface": "file-image",
+        "note": ".SVG only",
         "options": {
-          "color": "info",
-          "text": "You can [generate the required set of icons here](https://convert.actuallyusefulextensions.com/png-to-favicon)."
+          "allowedMimeTypes": [
+            "image/svg+xml"
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 1,
+        "sort": 2,
         "special": [
-          "alias",
-          "no-data"
+          "file"
         ],
-        "translations": null,
+        "translations": [
+          {
+            "language": "en-US",
+            "translation": "SVG Favicon"
+          }
+        ],
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
+      },
+      "schema": {
+        "name": "project_icon_svg",
+        "table": "settings",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
       }
     },
     {
@@ -4130,56 +4242,34 @@
     },
     {
       "collection": "settings",
-      "field": "project_thumbnail",
-      "type": "uuid",
+      "field": "notice-bxl2fo",
+      "type": "alias",
       "meta": {
         "collection": "settings",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "project_thumbnail",
-        "group": "project",
+        "field": "notice-bxl2fo",
+        "group": "icons",
         "hidden": false,
-        "interface": "file-image",
-        "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
+        "interface": "presentation-notice",
+        "note": null,
         "options": {
-          "allowedMimeTypes": [
-            "image/jpeg",
-            "image/png",
-            "image/gif",
-            "image/webp"
-          ],
-          "crop": false
+          "color": "info",
+          "text": "You can [generate the required set of icons here](https://convert.actuallyusefulextensions.com/png-to-favicon)."
         },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 6,
+        "sort": 1,
         "special": [
-          "file"
+          "alias",
+          "no-data"
         ],
         "translations": null,
         "validation": null,
         "validation_message": null,
         "width": "full"
-      },
-      "schema": {
-        "name": "project_thumbnail",
-        "table": "settings",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_files",
-        "foreign_key_column": "id"
       }
     },
     {
