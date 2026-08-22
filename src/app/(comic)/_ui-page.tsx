@@ -81,8 +81,6 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
-	// Get Pages
-	console.log(page.next_pages)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -110,7 +108,8 @@ export default function ComicPageUI({
 							src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
 							width={`${p.panel_image.width}`}
 							height={`${p.panel_image.height}`}
-							alt=""
+							alt={`${p.panel_image.description}`}
+							loading="eager"
 						/></p>
 					}
 					{/* <p>{p.panel_title}</p> */}
