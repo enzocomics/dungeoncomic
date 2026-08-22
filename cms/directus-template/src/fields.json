@@ -371,7 +371,7 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 3,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
@@ -431,7 +431,7 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 4,
+      "sort": 3,
       "width": "full",
       "translations": null,
       "note": null,
@@ -482,17 +482,19 @@
           "image/webp"
         ]
       },
-      "display": null,
-      "display_options": null,
+      "display": "related-values",
+      "display_options": {
+        "template": "{{$thumbnail}}"
+      },
       "readonly": false,
       "hidden": false,
-      "sort": 8,
+      "sort": 4,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": null,
+      "group": "content",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -880,7 +882,7 @@
       "readonly": false,
       "hidden": false,
       "sort": 4,
-      "width": "full",
+      "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
@@ -1199,7 +1201,7 @@
         ],
         "crop": false
       },
-      "display": null,
+      "display": "image",
       "display_options": null,
       "readonly": false,
       "hidden": false,
@@ -1322,12 +1324,12 @@
       "readonly": false,
       "hidden": false,
       "sort": 1,
-      "width": "full",
+      "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": "settings",
+      "group": "options",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -1761,7 +1763,7 @@
       "readonly": false,
       "hidden": true,
       "sort": 1,
-      "width": "full",
+      "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
@@ -1900,13 +1902,13 @@
       "display_options": null,
       "readonly": false,
       "hidden": true,
-      "sort": 4,
-      "width": "full",
+      "sort": 2,
+      "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": null,
+      "group": "metadata",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -2481,7 +2483,7 @@
       },
       "readonly": false,
       "hidden": false,
-      "sort": 2,
+      "sort": 1,
       "width": "half",
       "translations": null,
       "note": "Select which comic project this page belongs",
@@ -2527,10 +2529,10 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 4,
+      "sort": 3,
       "width": "full",
       "translations": null,
-      "note": "The title of this comic page (optional)",
+      "note": "(Optional) The title of this comic page.",
       "conditions": null,
       "required": false,
       "group": "details",
@@ -2573,7 +2575,7 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 3,
+      "sort": 2,
       "width": "half",
       "translations": [
         {
@@ -2625,9 +2627,9 @@
       "readonly": false,
       "hidden": false,
       "sort": 5,
-      "width": "full",
+      "width": "half",
       "translations": null,
-      "note": null,
+      "note": "(Optional) A short, 1-2 sentence summary about this page that shows up on the summary when its link is shared.",
       "conditions": null,
       "required": false,
       "group": "details",
@@ -2680,10 +2682,10 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 6,
-      "width": "full",
+      "sort": 4,
+      "width": "half",
       "translations": null,
-      "note": null,
+      "note": "(Optional) The thumbnail image that appears when a link to this page is shared. By default, the first comic panel image is shown (if it exists). Otherwise, this will override it.",
       "conditions": null,
       "required": false,
       "group": "details",
@@ -3652,132 +3654,6 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "content",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comic_panels",
-      "field": "content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comic_panels",
-    "field": "meta",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comic_panels",
-      "field": "meta",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comic_panels",
-    "field": "header-zbrntt",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comic_panels",
-      "field": "header-zbrntt",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "header",
-      "options": {
-        "title": "Comic Panel",
-        "icon": "image",
-        "color": "#6644FF",
-        "subtitle": null
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "content",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "authors",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "authors",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 5,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "details",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "comics",
     "field": "pages",
     "type": "alias",
@@ -3871,6 +3747,68 @@
     }
   },
   {
+    "collection": "comic_panels",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "meta",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "meta",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "pages",
     "field": "routing",
     "type": "alias",
@@ -3883,13 +3821,16 @@
         "no-data",
         "group"
       ],
-      "interface": "group-raw",
-      "options": null,
+      "interface": "group-detail",
+      "options": {
+        "headerIcon": "menu_open",
+        "headerColor": "#7C7C67"
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 3,
+      "sort": 5,
       "width": "full",
       "translations": null,
       "note": null,
@@ -3920,69 +3861,7 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 4,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "details",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "details",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "content",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
+      "sort": 6,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4016,13 +3895,48 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
       "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "header-zbrntt",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "header-zbrntt",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Comic Panel",
+        "icon": "image",
+        "color": "#6644FF",
+        "subtitle": null
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "content",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -4050,7 +3964,108 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
+      "sort": 3,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "details",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "details",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": {
+        "headerColor": "#7C7C67",
+        "headerIcon": "info"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
       "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "authors",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "authors",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "template": "{{username}} ({{email}})"
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{username}} ({{email}})"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "details",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": {
+        "headerColor": "#7C7C67",
+        "headerIcon": "content_copy"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 3,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4084,37 +4099,6 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "meta",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "meta",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
       "sort": 5,
       "width": "full",
       "translations": null,
@@ -4128,35 +4112,31 @@
     }
   },
   {
-    "collection": "pages",
-    "field": "header-hjls40",
+    "collection": "comic_panels",
+    "field": "meta",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "pages",
-      "field": "header-hjls40",
+      "collection": "comic_panels",
+      "field": "meta",
       "special": [
         "alias",
-        "no-data"
+        "no-data",
+        "group"
       ],
-      "interface": "header",
-      "options": {
-        "title": "Comic Page",
-        "color": "#6644FF",
-        "icon": "post_add",
-        "subtitle": "{{comic}}"
-      },
+      "interface": "group-raw",
+      "options": null,
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": "details",
+      "group": null,
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -4231,44 +4211,6 @@
       "conditions": null,
       "required": false,
       "group": "routing",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "comic_panels",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "comic_panels",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "template": "{{panel_image.$thumbnail}}",
-        "fields": [
-          "comic_panel.$thumbnail"
-        ],
-        "tableSpacing": "comfortable",
-        "limit": 10,
-        "sort": null,
-        "enableLink": true
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "fill",
-      "translations": null,
-      "note": "Multiple comic panels may be created here. Each comic panel consists of a required image and optional title + description.",
-      "conditions": null,
-      "required": false,
-      "group": "content",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -4470,37 +4412,6 @@
   },
   {
     "collection": "directus_users",
-    "field": "profile",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "directus_users",
-      "field": "profile",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "directus_users",
     "field": "metadata",
     "type": "alias",
     "schema": null,
@@ -4531,13 +4442,86 @@
     }
   },
   {
-    "collection": "comics",
-    "field": "settings",
+    "collection": "pages",
+    "field": "comic_panels",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comics",
-      "field": "settings",
+      "collection": "pages",
+      "field": "comic_panels",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "template": "{{panel_image.$thumbnail}}",
+        "fields": [
+          "comic_panel.$thumbnail"
+        ],
+        "tableSpacing": "comfortable",
+        "limit": 10,
+        "sort": null,
+        "enableLink": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "fill",
+      "translations": null,
+      "note": "Multiple comic panels may be created here. Each comic panel consists of a required image and optional title + description.",
+      "conditions": null,
+      "required": false,
+      "group": "content",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "header-hjls40",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "header-hjls40",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "COMIC PAGE",
+        "color": "#7C7C67",
+        "icon": "post_add",
+        "subtitle": "{{comic}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "directus_users",
+    "field": "profile",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "directus_users",
+      "field": "profile",
       "special": [
         "alias",
         "no-data",
@@ -4549,7 +4533,73 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "options",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "options",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
       "sort": 4,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "header-eshpcn",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "header-eshpcn",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Comic",
+        "color": "#7C7C67",
+        "icon": "account_box",
+        "subtitle": "{{title}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
       "width": "full",
       "translations": null,
       "note": null,
