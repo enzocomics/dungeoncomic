@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { ComicLandingPageUI, HomepagePageUI } from "./_ui-page"
 import { comicMetadata } from "./_metadata"
 import { getComic } from "@/lib/directus/get-comics"
+import { redirect, RedirectType } from "next/navigation"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -32,8 +33,23 @@ export default async function Homepage() {
 	if (frontpage_comic) {
 		// FETCH COMIC DATA
 		const comic = await getComic(frontpage_comic.slug)
-		// PASS TO UI
-		return <ComicLandingPageUI comic={comic} />
+		// CHECK `landing_page` SETTING
+		const landing_page = comic.landing_page
+		const page_count = comic.pages_count
+		switch (landing_page) {
+			// SHOW LANDING PAGE UI
+			case "cover-page":
+				return <ComicLandingPageUI comic={comic} />
+			// REDIRECT TO FIRST PAGE
+			case "first-page":
+				redirect(`1`, RedirectType.replace)
+			// REDIRECT TO LAST PAGE
+			case "last-page":
+				redirect(`${page_count}`, RedirectType.replace)
+			// REDIRECT TO A SPECIFIC PAGE
+			default:
+				redirect(`${landing_page}`, RedirectType.replace)
+		}
 	}
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else {
