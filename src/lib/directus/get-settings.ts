@@ -17,10 +17,42 @@ export async function getSettings() {
 				"project_url",
 				"project_description",
 				// "project_thumbnail",
-				{ project_thumbnail: ["filename_disk", "type", "width", "height"] },
-				{ project_svg_icon: ["filename_disk", "type", "width", "height"] },
-				{ project_apple_icon: ["filename_disk", "type", "width", "height"] },
-				{ project_pwa_icon: ["filename_disk", "type", "width", "height"] },
+				{
+					project_thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					project_svg_icon: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					project_apple_icon: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					project_pwa_icon: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
 				{
 					frontpage_comic: [
 						"title",

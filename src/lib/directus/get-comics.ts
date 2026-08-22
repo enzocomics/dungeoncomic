@@ -20,9 +20,17 @@ export async function getComic(slug: string) {
 				"description",
 				{ authors: ["name", "username", "homepage_url", "email"] },
 				// Appearance
-				{ logo: ["filename_disk", "type", "width", "height"] },
-				{ thumbnail: ["filename_disk", "type", "width", "height"] },
-				{ banner: ["filename_disk", "type", "width", "height"] },
+				{ logo: ["filename_disk", "type", "width", "height", "description"] },
+				{
+					thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{ banner: ["filename_disk", "type", "width", "height", "description"] },
 				"accent_color",
 				// Content
 				// Settings
@@ -54,10 +62,26 @@ export async function getComicPage(comic_slug: string, num: number) {
 				// Details
 				"title",
 				"description",
-				{ thumbnail: ["filename_disk", "type", "width", "height"] },
+				{
+					thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
 				{
 					comic_panels: [
-						{ panel_image: ["filename_disk", "type", "width", "height"] },
+						{
+							panel_image: [
+								"filename_disk",
+								"type",
+								"width",
+								"height",
+								"description",
+							],
+						},
 						"panel_title",
 						"panel_description",
 					],
