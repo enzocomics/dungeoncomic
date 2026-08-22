@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 // DATA
-import { getComic } from "@/lib/directus/get-comics"
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 
@@ -74,11 +74,11 @@ export function ComicLandingPageUI({
  * ---
  */
 export default function ComicPageUI({
-	params,
-	// page
+	// params,
+	page
 }: {
-	params: { comic_slug: string, page_num: number }
-	// page: object
+	// params: { comic_slug: string, page_num: number }
+	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	// Get Pages
 	return <>
@@ -94,8 +94,8 @@ export default function ComicPageUI({
 				Comic Single Page
 			</h4>
 			get the params in page: <br />
-			`comic_slug`: {params.comic_slug} <br />
-			`page_num`: {params.page_num} <br />
+			{/* `comic_slug`: {params.comic_slug} <br />
+			`page_num`: {params.page_num} <br /> */}
 			Comic Page
 		</div>
 	</>

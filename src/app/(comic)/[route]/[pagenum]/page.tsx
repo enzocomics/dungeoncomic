@@ -55,7 +55,7 @@ export default async function ComicPagenumPage({
 	// 404 if it doesn't exist
 	if (!comicPage) notFound()
 	// Render
-	return <ComicPageUI params={{ comic_slug: route, page_num: pagenum }} />
+	return <ComicPageUI page={comicPage} />
 }
 
 /**-----------------------------------

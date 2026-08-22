@@ -54,8 +54,9 @@ export default async function RoutePage({
 		const page = await getComicPage(frontpage_comic.slug, parseInt(route))
 		// 404 if it does not exist
 		if (!page) notFound()
-		// RETURN THE COMIC ROUTE WITH PAGE NUMBER
-		return <ComicPageUI params={{ comic_slug: frontpage_comic.slug, page_num: parseInt(route) }} />
+		// RETURN THE COMIC PAGE UI
+		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
+		return <ComicPageUI page={comicPage} />
 	}
 
 	/**----------------------------------- */
