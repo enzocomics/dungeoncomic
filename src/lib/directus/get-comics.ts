@@ -90,16 +90,16 @@ export async function getComicPage(comic_slug: string, num: number) {
 					next_pages: [
 						"branch_title",
 						"branch_description",
-						{ pages_id: ["comic", "comic_pagenum"] },
-						{ linked_pages_id: ["comic", "comic_pagenum"] },
+						{ pages_id: ["title", "comic", "comic_pagenum"] },
+						{ linked_pages_id: ["title", "comic", "comic_pagenum"] },
 					],
 				},
 				{
 					prev_pages: [
 						"branch_title",
 						"branch_description",
-						{ pages_id: ["comic", "comic_pagenum"] },
-						{ linked_pages_id: ["comic", "comic_pagenum"] },
+						{ pages_id: ["title", "comic", "comic_pagenum"] },
+						{ linked_pages_id: ["title", "comic", "comic_pagenum"] },
 					],
 				},
 				// Meta
