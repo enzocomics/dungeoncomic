@@ -94,6 +94,7 @@ export default function ComicPageUI({
 				"font-bold",
 				"font-display",
 			)}>
+				Page UI
 				{page.title}
 			</h4>
 			{/* <p>{page.description}</p> */}
