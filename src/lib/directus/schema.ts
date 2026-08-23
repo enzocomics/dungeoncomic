@@ -115,6 +115,7 @@ export interface DirectusUser extends User {
 	name: string | null
 	username: string | null
 	homepage_url: string | null
+	avatar: ImageCollection
 }
 
 /** ------------------------------------------------ **/
