@@ -16,7 +16,7 @@ export interface DirectusSchema {
 	pages: PagesCollection[]
 	page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
-	comments: CommentsCollection[]
+	user_comments: CommentsCollection[]
 	directus_users: DirectusUser
 	// SETTINGS
 	settings: SettingsSingleton
