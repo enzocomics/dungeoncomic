@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
 import Image from "next/image"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 // DATA
 import { directusURL } from "@/data/env"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
@@ -81,6 +81,7 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
+	const router = useRouter()
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -119,7 +120,10 @@ export default function ComicPageUI({
 
 			{
 				/**------------------------------
-				 *	PREV NAVIGATION
+				 * PREV NAVIGATION
+				 * - Instead of linking directly to the previous page,
+				 *   we are going back 1 step in browser history
+				 * - This is because pages can have multiple `prev_pages`
 				 */
 			}
 			{page.prev_pages && page.prev_pages.length > 0 &&
@@ -132,7 +136,9 @@ export default function ComicPageUI({
 					)}>
 						PREV NAV
 					</h4>
-					<ul>
+
+					<button onClick={() => router.back()} >Previous Page</button>
+					{/* <ul>
 						{page.prev_pages.map((n, index) =>
 							<li key={index}>
 								<Link href={`${n.pages_id.comic_pagenum}`}>
@@ -140,7 +146,7 @@ export default function ComicPageUI({
 								</Link>
 							</li>
 						)}
-					</ul>
+					</ul> */}
 				</>
 			}
 			{
