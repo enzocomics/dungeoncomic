@@ -1,57 +1,5 @@
 [
   {
-    "collection": "comments",
-    "field": "user_created",
-    "related_collection": "directus_users",
-    "schema": {
-      "constraint_name": "comments_user_created_foreign",
-      "table": "comments",
-      "column": "user_created",
-      "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
-      "foreign_key_column": "id",
-      "on_update": "NO ACTION",
-      "on_delete": "NO ACTION"
-    },
-    "meta": {
-      "many_collection": "comments",
-      "many_field": "user_created",
-      "one_collection": "directus_users",
-      "one_field": null,
-      "one_collection_field": null,
-      "one_allowed_collections": null,
-      "junction_field": null,
-      "sort_field": null,
-      "one_deselect_action": "nullify"
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "user_updated",
-    "related_collection": "directus_users",
-    "schema": {
-      "constraint_name": "comments_user_updated_foreign",
-      "table": "comments",
-      "column": "user_updated",
-      "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
-      "foreign_key_column": "id",
-      "on_update": "NO ACTION",
-      "on_delete": "NO ACTION"
-    },
-    "meta": {
-      "many_collection": "comments",
-      "many_field": "user_updated",
-      "one_collection": "directus_users",
-      "one_field": null,
-      "one_collection_field": null,
-      "one_allowed_collections": null,
-      "junction_field": null,
-      "sort_field": null,
-      "one_deselect_action": "nullify"
-    }
-  },
-  {
     "collection": "comics",
     "field": "user_updated",
     "related_collection": "directus_users",
@@ -694,6 +642,136 @@
       "many_field": "comic",
       "one_collection": "comics",
       "one_field": "pages",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "user_updated",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "user_suggestions_user_updated_foreign",
+      "table": "user_suggestions",
+      "column": "user_updated",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "user_suggestions",
+      "many_field": "user_updated",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "user_updated",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "user_comments_user_updated_foreign",
+      "table": "user_comments",
+      "column": "user_updated",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "user_comments",
+      "many_field": "user_updated",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "user_created",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "user_comments_user_created_foreign",
+      "table": "user_comments",
+      "column": "user_created",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "user_comments",
+      "many_field": "user_created",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "pages",
+    "related_collection": "pages",
+    "schema": {
+      "constraint_name": "user_suggestions_pages_foreign",
+      "table": "user_suggestions",
+      "column": "pages",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "user_suggestions",
+      "many_field": "pages",
+      "one_collection": "pages",
+      "one_field": "user_suggestions",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "pages",
+    "related_collection": "pages",
+    "schema": {
+      "constraint_name": "user_comments_pages_foreign",
+      "table": "user_comments",
+      "column": "pages",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "user_comments",
+      "many_field": "pages",
+      "one_collection": "pages",
+      "one_field": "user_comments",
       "one_collection_field": null,
       "one_allowed_collections": null,
       "junction_field": null,

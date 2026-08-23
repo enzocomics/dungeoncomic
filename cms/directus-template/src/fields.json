@@ -1336,66 +1336,22 @@
     }
   },
   {
-    "collection": "comments",
-    "field": "id",
-    "type": "integer",
+    "collection": "comics",
+    "field": "comic_options",
+    "type": "json",
     "schema": {
-      "name": "id",
-      "table": "comments",
-      "data_type": "integer",
-      "default_value": "nextval('comments_id_seq'::regclass)",
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": 32,
-      "numeric_scale": 0,
-      "is_generated": false,
-      "is_nullable": false,
-      "is_unique": true,
-      "is_indexed": false,
-      "is_primary_key": true,
-      "has_auto_increment": true,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "id",
-      "special": null,
-      "interface": "input",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": true,
-      "hidden": true,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "archived",
-    "type": "boolean",
-    "schema": {
-      "name": "archived",
-      "table": "comments",
-      "data_type": "boolean",
-      "default_value": false,
+      "name": "comic_options",
+      "table": "comics",
+      "data_type": "json",
+      "default_value": [
+        "allow-comments"
+      ],
       "generation_expression": null,
       "max_length": null,
       "numeric_precision": null,
       "numeric_scale": null,
       "is_generated": false,
-      "is_nullable": false,
+      "is_nullable": true,
       "is_unique": false,
       "is_indexed": false,
       "is_primary_key": false,
@@ -1406,277 +1362,39 @@
       "comment": null
     },
     "meta": {
-      "collection": "comments",
-      "field": "archived",
+      "collection": "comics",
+      "field": "comic_options",
       "special": [
-        "cast-boolean"
+        "cast-json"
       ],
-      "interface": "boolean",
-      "options": null,
-      "display": "boolean",
-      "display_options": {
-        "iconOn": "archive",
-        "colorOn": "var(--theme--foreground-subdued)",
-        "labelOn": "$t:archived",
-        "iconOff": "unarchive",
-        "colorOff": "transparent",
-        "labelOff": "$t:not_archived"
+      "interface": "select-multiple-checkbox",
+      "options": {
+        "choices": [
+          {
+            "text": "Allow Comments",
+            "value": "allow-comments"
+          },
+          {
+            "text": "Allow Suggestions",
+            "value": "allow-suggestions"
+          },
+          {
+            "text": "Allow Page Likes",
+            "value": "allow-page-likes"
+          }
+        ]
       },
+      "display": null,
+      "display_options": null,
       "readonly": false,
       "hidden": false,
       "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "sort",
-    "type": "integer",
-    "schema": {
-      "name": "sort",
-      "table": "comments",
-      "data_type": "integer",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": 32,
-      "numeric_scale": 0,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "sort",
-      "special": null,
-      "interface": "input",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": true,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "user_created",
-    "type": "uuid",
-    "schema": {
-      "name": "user_created",
-      "table": "comments",
-      "data_type": "uuid",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
-      "foreign_key_column": "id",
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "user_created",
-      "special": [
-        "user-created"
-      ],
-      "interface": "select-dropdown-m2o",
-      "options": {
-        "template": "{{avatar}} {{first_name}} {{last_name}}"
-      },
-      "display": "user",
-      "display_options": null,
-      "readonly": true,
-      "hidden": true,
-      "sort": 4,
       "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "date_created",
-    "type": "timestamp",
-    "schema": {
-      "name": "date_created",
-      "table": "comments",
-      "data_type": "timestamp with time zone",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "date_created",
-      "special": [
-        "date-created"
-      ],
-      "interface": "datetime",
-      "options": null,
-      "display": "datetime",
-      "display_options": {
-        "relative": true
-      },
-      "readonly": true,
-      "hidden": true,
-      "sort": 5,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "user_updated",
-    "type": "uuid",
-    "schema": {
-      "name": "user_updated",
-      "table": "comments",
-      "data_type": "uuid",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
-      "foreign_key_column": "id",
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
-      "interface": "select-dropdown-m2o",
-      "options": {
-        "template": "{{avatar}} {{first_name}} {{last_name}}"
-      },
-      "display": "user",
-      "display_options": null,
-      "readonly": true,
-      "hidden": true,
-      "sort": 6,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
-    "field": "date_updated",
-    "type": "timestamp",
-    "schema": {
-      "name": "date_updated",
-      "table": "comments",
-      "data_type": "timestamp with time zone",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "comments",
-      "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
-      "interface": "datetime",
-      "options": null,
-      "display": "datetime",
-      "display_options": {
-        "relative": true
-      },
-      "readonly": true,
-      "hidden": true,
-      "sort": 7,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
+      "group": "options",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -2695,6 +2413,184 @@
     }
   },
   {
+    "collection": "pages",
+    "field": "plot_suggestions",
+    "type": "json",
+    "schema": {
+      "name": "plot_suggestions",
+      "table": "pages",
+      "data_type": "json",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "pages",
+      "field": "plot_suggestions",
+      "special": [
+        "cast-json"
+      ],
+      "interface": "list",
+      "options": {
+        "fields": [
+          {
+            "field": "title",
+            "name": "title",
+            "type": "string",
+            "meta": {
+              "field": "title",
+              "type": "string",
+              "interface": "input",
+              "required": true,
+              "width": "half"
+            }
+          },
+          {
+            "field": "votes",
+            "name": "votes",
+            "type": "integer",
+            "meta": {
+              "field": "votes",
+              "width": "half",
+              "type": "integer",
+              "interface": "input",
+              "required": false,
+              "options": {
+                "placeholder": "0",
+                "minValue": 0,
+                "alwaysShowValue": true,
+                "stepInterval": 1
+              }
+            }
+          }
+        ],
+        "template": "{{ title }} | Votes: {{ votes }}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": "(Optional) Author-defined suggestions that are displayed to readers as a poll that they may vote on.",
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "allow_user_suggestions",
+    "type": "boolean",
+    "schema": {
+      "name": "allow_user_suggestions",
+      "table": "pages",
+      "data_type": "boolean",
+      "default_value": true,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "pages",
+      "field": "allow_user_suggestions",
+      "special": [
+        "cast-boolean"
+      ],
+      "interface": "boolean",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 4,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "allow_user_comments",
+    "type": "boolean",
+    "schema": {
+      "name": "allow_user_comments",
+      "table": "pages",
+      "data_type": "boolean",
+      "default_value": true,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "pages",
+      "field": "allow_user_comments",
+      "special": [
+        "cast-boolean"
+      ],
+      "interface": "boolean",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 7,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "settings",
     "field": "id",
     "type": "uuid",
@@ -3654,6 +3550,670 @@
     }
   },
   {
+    "collection": "user_comments",
+    "field": "id",
+    "type": "integer",
+    "schema": {
+      "name": "id",
+      "table": "user_comments",
+      "data_type": "integer",
+      "default_value": "nextval('user_comments_id_seq'::regclass)",
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": true,
+      "is_indexed": false,
+      "is_primary_key": true,
+      "has_auto_increment": true,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "id",
+      "special": null,
+      "interface": "input",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "user_created",
+    "type": "uuid",
+    "schema": {
+      "name": "user_created",
+      "table": "user_comments",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "user_created",
+      "special": [
+        "user-created"
+      ],
+      "interface": "select-dropdown-m2o",
+      "options": {
+        "template": "{{avatar}} {{first_name}} {{last_name}}"
+      },
+      "display": "user",
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 2,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "date_created",
+    "type": "timestamp",
+    "schema": {
+      "name": "date_created",
+      "table": "user_comments",
+      "data_type": "timestamp with time zone",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "date_created",
+      "special": [
+        "date-created"
+      ],
+      "interface": "datetime",
+      "options": null,
+      "display": "datetime",
+      "display_options": {
+        "relative": true
+      },
+      "readonly": true,
+      "hidden": true,
+      "sort": 3,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "user_updated",
+    "type": "uuid",
+    "schema": {
+      "name": "user_updated",
+      "table": "user_comments",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "user_updated",
+      "special": [
+        "user-updated"
+      ],
+      "interface": "select-dropdown-m2o",
+      "options": {
+        "template": "{{avatar}} {{first_name}} {{last_name}}"
+      },
+      "display": "user",
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 4,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "date_updated",
+    "type": "timestamp",
+    "schema": {
+      "name": "date_updated",
+      "table": "user_comments",
+      "data_type": "timestamp with time zone",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "date_updated",
+      "special": [
+        "date-updated"
+      ],
+      "interface": "datetime",
+      "options": null,
+      "display": "datetime",
+      "display_options": {
+        "relative": true
+      },
+      "readonly": true,
+      "hidden": true,
+      "sort": 5,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_comments",
+    "field": "pages",
+    "type": "integer",
+    "schema": {
+      "name": "pages",
+      "table": "user_comments",
+      "data_type": "integer",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_comments",
+      "field": "pages",
+      "special": null,
+      "interface": "select-dropdown-m2o",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": true,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "id",
+    "type": "integer",
+    "schema": {
+      "name": "id",
+      "table": "user_suggestions",
+      "data_type": "integer",
+      "default_value": "nextval('user_suggestions_id_seq'::regclass)",
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": true,
+      "is_indexed": false,
+      "is_primary_key": true,
+      "has_auto_increment": true,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_suggestions",
+      "field": "id",
+      "special": null,
+      "interface": "input",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "date_created",
+    "type": "timestamp",
+    "schema": {
+      "name": "date_created",
+      "table": "user_suggestions",
+      "data_type": "timestamp with time zone",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_suggestions",
+      "field": "date_created",
+      "special": [
+        "date-created"
+      ],
+      "interface": "datetime",
+      "options": null,
+      "display": "datetime",
+      "display_options": {
+        "relative": true
+      },
+      "readonly": true,
+      "hidden": true,
+      "sort": 2,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "user_updated",
+    "type": "uuid",
+    "schema": {
+      "name": "user_updated",
+      "table": "user_suggestions",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_suggestions",
+      "field": "user_updated",
+      "special": [
+        "user-updated"
+      ],
+      "interface": "select-dropdown-m2o",
+      "options": {
+        "template": "{{avatar}} {{first_name}} {{last_name}}"
+      },
+      "display": "user",
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 3,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "date_updated",
+    "type": "timestamp",
+    "schema": {
+      "name": "date_updated",
+      "table": "user_suggestions",
+      "data_type": "timestamp with time zone",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_suggestions",
+      "field": "date_updated",
+      "special": [
+        "date-updated"
+      ],
+      "interface": "datetime",
+      "options": null,
+      "display": "datetime",
+      "display_options": {
+        "relative": true
+      },
+      "readonly": true,
+      "hidden": true,
+      "sort": 4,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "user_suggestions",
+    "field": "pages",
+    "type": "integer",
+    "schema": {
+      "name": "pages",
+      "table": "user_suggestions",
+      "data_type": "integer",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "user_suggestions",
+      "field": "pages",
+      "special": null,
+      "interface": "select-dropdown-m2o",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": true,
+      "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "meta",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "meta",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "header-zbrntt",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "header-zbrntt",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Comic Panel",
+        "icon": "image",
+        "color": "#6644FF",
+        "subtitle": null
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "content",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "authors",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "authors",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "template": "{{username}} ({{email}})"
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{username}} ({{email}})"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "details",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "comics",
     "field": "pages",
     "type": "alias",
@@ -3747,25 +4307,28 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "content",
+    "collection": "comics",
+    "field": "appearance",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comic_panels",
-      "field": "content",
+      "collection": "comics",
+      "field": "appearance",
       "special": [
         "alias",
         "no-data",
         "group"
       ],
-      "interface": "group-raw",
-      "options": null,
+      "interface": "group-detail",
+      "options": {
+        "headerIcon": "palette",
+        "headerColor": "#7C7C67"
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 3,
       "width": "full",
       "translations": null,
       "note": null,
@@ -3779,58 +4342,24 @@
   },
   {
     "collection": "comics",
-    "field": "meta",
+    "field": "options",
     "type": "alias",
     "schema": null,
     "meta": {
       "collection": "comics",
-      "field": "meta",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 6,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "routing",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "routing",
+      "field": "options",
       "special": [
         "alias",
         "no-data",
         "group"
       ],
       "interface": "group-detail",
-      "options": {
-        "headerIcon": "menu_open",
-        "headerColor": "#7C7C67"
-      },
+      "options": null,
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 5,
+      "sort": 4,
       "width": "full",
       "translations": null,
       "note": null,
@@ -3843,25 +4372,29 @@
     }
   },
   {
-    "collection": "pages",
-    "field": "meta",
+    "collection": "comics",
+    "field": "header-eshpcn",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "pages",
-      "field": "meta",
+      "collection": "comics",
+      "field": "header-eshpcn",
       "special": [
         "alias",
-        "no-data",
-        "group"
+        "no-data"
       ],
-      "interface": "group-raw",
-      "options": null,
+      "interface": "header",
+      "options": {
+        "title": "Comic",
+        "color": "#7C7C67",
+        "icon": "account_box",
+        "subtitle": "{{title}}"
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 6,
+      "sort": 1,
       "width": "full",
       "translations": null,
       "note": null,
@@ -3908,176 +4441,6 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "header-zbrntt",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comic_panels",
-      "field": "header-zbrntt",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "header",
-      "options": {
-        "title": "Comic Panel",
-        "icon": "image",
-        "color": "#6644FF",
-        "subtitle": null
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "content",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "appearance",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "appearance",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": {
-        "headerIcon": "palette",
-        "headerColor": "#7C7C67"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "details",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "details",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": {
-        "headerColor": "#7C7C67",
-        "headerIcon": "info"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "authors",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "authors",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "template": "{{username}} ({{email}})"
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{username}} ({{email}})"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 5,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "details",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "pages",
-    "field": "content",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "pages",
-      "field": "content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": {
-        "headerColor": "#7C7C67",
-        "headerIcon": "content_copy"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "comics",
     "field": "content",
     "type": "alias",
@@ -4112,12 +4475,12 @@
     }
   },
   {
-    "collection": "comic_panels",
+    "collection": "comics",
     "field": "meta",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comic_panels",
+      "collection": "comics",
       "field": "meta",
       "special": [
         "alias",
@@ -4130,7 +4493,7 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 2,
+      "sort": 6,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4411,13 +4774,47 @@
     }
   },
   {
-    "collection": "directus_users",
-    "field": "metadata",
+    "collection": "pages",
+    "field": "routing",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "directus_users",
-      "field": "metadata",
+      "collection": "pages",
+      "field": "routing",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": {
+        "headerIcon": "menu_open",
+        "headerColor": "#7C7C67"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "meta",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "meta",
       "special": [
         "alias",
         "no-data",
@@ -4429,7 +4826,76 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 2,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "header-hjls40",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "header-hjls40",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "COMIC PAGE",
+        "color": "#7C7C67",
+        "icon": "post_add",
+        "subtitle": "{{comic}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": {
+        "headerColor": "#7C7C67",
+        "headerIcon": "content_copy"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 3,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4481,28 +4947,58 @@
   },
   {
     "collection": "pages",
-    "field": "header-hjls40",
+    "field": "details",
     "type": "alias",
     "schema": null,
     "meta": {
       "collection": "pages",
-      "field": "header-hjls40",
+      "field": "details",
       "special": [
         "alias",
-        "no-data"
+        "no-data",
+        "group"
       ],
-      "interface": "header",
+      "interface": "group-detail",
       "options": {
-        "title": "COMIC PAGE",
-        "color": "#7C7C67",
-        "icon": "post_add",
-        "subtitle": "{{comic}}"
+        "headerColor": "#7C7C67",
+        "headerIcon": "info"
       },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "directus_users",
+    "field": "metadata",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "directus_users",
+      "field": "metadata",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4546,13 +5042,136 @@
     }
   },
   {
-    "collection": "comics",
-    "field": "options",
+    "collection": "pages",
+    "field": "user_suggestions",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comics",
-      "field": "options",
+      "collection": "pages",
+      "field": "user_suggestions",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "divider-9n_nw5",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "divider-9n_nw5",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": {
+        "title": null,
+        "inlineTitle": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "user_comments",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "user_comments",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "enableLink": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 8,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "divider-z5xybj",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "divider-z5xybj",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "feedback",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "pages",
+    "field": "feedback",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "pages",
+      "field": "feedback",
       "special": [
         "alias",
         "no-data",
@@ -4577,35 +5196,32 @@
     }
   },
   {
-    "collection": "comics",
-    "field": "header-eshpcn",
+    "collection": "pages",
+    "field": "notice-txmjym",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comics",
-      "field": "header-eshpcn",
+      "collection": "pages",
+      "field": "notice-txmjym",
       "special": [
         "alias",
         "no-data"
       ],
-      "interface": "header",
+      "interface": "presentation-notice",
       "options": {
-        "title": "Comic",
-        "color": "#7C7C67",
-        "icon": "account_box",
-        "subtitle": "{{title}}"
+        "text": "User feedback is closed automatically once a `next_page` is defined"
       },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 3,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": null,
+      "group": "feedback",
       "validation": null,
       "validation_message": null,
       "searchable": true
