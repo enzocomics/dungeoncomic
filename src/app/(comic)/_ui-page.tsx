@@ -90,13 +90,14 @@ export default function ComicPageUI({
 			"border-pink-300",
 			"flex",
 			"flex-col",
-			"gap-4",
+			"gap-2",
 		)}>
 			{page.title &&
 				<h4 className={clsx(
 					"text-3xl",
 					"font-bold",
 					"font-display",
+					"text-center"
 				)}>
 					{page.title ? page.title : ""}
 				</h4>
@@ -119,11 +120,17 @@ export default function ComicPageUI({
 						/></p>
 					}
 					{/* <p>{p.panel_title}</p> */}
-					<p>{p.panel_description}</p>
+					<div className={clsx(
+						"mt-4",
+						"prose"
+					)}>
+						{p.panel_description}
+					</div>
 				</div>
 			) : null}
 
 			<section className={clsx(
+				"mt-8",
 				"flex",
 				"flex-row",
 				"gap-1",
@@ -151,14 +158,20 @@ export default function ComicPageUI({
 								"text-xs"
 							)}>
 								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
-								<ul>
+								<ul className={clsx(
+									"flex",
+									"flex-col",
+									"gap-2",
+								)}>
 									{page.prev_pages.map((n, index) =>
 										<li key={index}>
-											<Link href={`${n.pages_id.comic_pagenum}`}>
-												<strong>&laquo; Go back to page {n.pages_id.comic_pagenum}</strong>
-												<span> ∙ </span>
-												<span>Branch title: </span>
-												<span>{n.branch_title}</span>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={`${n.pages_id.comic_pagenum}`}>
+												<strong>&laquo; Return to page {n.pages_id.comic_pagenum}<br /></strong>
+												<span>{n.pages_id.title}</span>
 											</Link>
 										</li>
 									)}
@@ -181,19 +194,24 @@ export default function ComicPageUI({
 								Next Page(s)
 							</h4>
 							<ul className={clsx(
+								"flex",
+								"flex-col",
+								"gap-2",
 								"p-2",
 								"bg-amber-100",
 								"text-xs"
 							)}>
 								{page.next_pages.map((n, index) =>
-									<li key={index}>
-										<Link href={`${n.linked_pages_id.comic_pagenum}`}>
-											<strong>Go forward to page {n.linked_pages_id.comic_pagenum} </strong>
-											<span> ∙ </span>
-											<span>Branch title: </span>
-											<em>{n.branch_title} </em>
-											<span>&raquo;</span>
-											<p>{n.branch_description}</p>
+									<li key={index} className={clsx(
+									)}>
+										<Link className={clsx(
+											"block",
+											"p-2",
+											"hover:bg-black/10",
+										)} href={`${n.linked_pages_id.comic_pagenum}`}>
+											<strong>Proceed to page {n.linked_pages_id.comic_pagenum} &raquo;</strong><br />
+											<span>{n.branch_title} </span><br />
+											<em>{n.branch_description}</em>
 										</Link>
 									</li>
 								)}
