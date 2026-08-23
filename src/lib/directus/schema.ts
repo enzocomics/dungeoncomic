@@ -48,9 +48,9 @@ export interface ComicsCollection {
 	landing_page: "cover-page" | "first-page" | "last-page" | number
 	// Meta
 	id: number
-	user_created: UUID
+	user_created: DirectusUser
 	date_created: "datetime"
-	user_updated: UUID
+	user_updated: DirectusUser
 	date_updated: "datetime"
 }
 
@@ -69,9 +69,9 @@ export interface PagesCollection {
 	next_pages: PageBranchesCollection[]
 	// Meta
 	id: number
-	user_created: UUID
+	user_created: DirectusUser
 	date_created: "datetime"
-	user_updated: UUID
+	user_updated: DirectusUser
 	date_updated: "datetime"
 }
 
@@ -93,9 +93,9 @@ export interface ComicPanelsCollection {
 	panel_description: string | null
 	// Meta
 	id: number
-	user_created: UUID
+	user_created: DirectusUser
 	date_created: "datetime"
-	user_updated: UUID
+	user_updated: DirectusUser
 	date_updated: "datetime"
 }
 
@@ -103,9 +103,9 @@ export interface ComicPanelsCollection {
 export interface CommentsCollection {
 	// Meta
 	id: number
-	user_created: UUID
+	user_created: DirectusUser
 	date_created: "datetime"
-	user_updated: UUID
+	user_updated: DirectusUser
 	date_updated: "datetime"
 }
 
@@ -126,7 +126,7 @@ export interface DirectusSettings extends Settings {
 export interface SettingsSingleton {
 	// Meta
 	id: UUID
-	user_updated: UUID
+	user_updated: DirectusUser
 	date_updated: "datetime"
 	date_established: "datetime"
 	// Details
