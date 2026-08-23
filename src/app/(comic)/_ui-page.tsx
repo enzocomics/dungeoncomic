@@ -88,15 +88,19 @@ export default function ComicPageUI({
 			"border",
 			"border-dashed",
 			"border-pink-300",
+			"flex",
+			"flex-col",
+			"gap-4",
 		)}>
-			<h4 className={clsx(
-				"text-3xl",
-				"font-bold",
-				"font-display",
-			)}>
-				Page UI
-				{page.title}
-			</h4>
+			{page.title &&
+				<h4 className={clsx(
+					"text-3xl",
+					"font-bold",
+					"font-display",
+				)}>
+					{page.title ? page.title : ""}
+				</h4>
+			}
 			{/* <p>{page.description}</p> */}
 			{
 				/**------------------------------
@@ -119,64 +123,105 @@ export default function ComicPageUI({
 				</div>
 			) : null}
 
+			<section className={clsx(
+				"flex",
+				"flex-row",
+				"gap-1",
+				"w-full"
+			)}>
+				{
+					/**------------------------------
+					 * PREV NAVIGATION
+					 * - Instead of linking directly to the previous page,
+					 *   we are going back 1 step in browser history
+					 * - This is because pages can have multiple `prev_pages`
+					 */
+				}
+				<div className={clsx("grow", "w-1/2")}>
+					{page.prev_pages && page.prev_pages.length > 0 &&
+						<>
+							<h4 className={clsx(
+								"font-semibold",
+							)}>
+								Previous Page(s)
+							</h4>
+							<div className={clsx(
+								"p-2",
+								"bg-amber-100",
+								"text-xs"
+							)}>
+								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
+								<ul>
+									{page.prev_pages.map((n, index) =>
+										<li key={index}>
+											<Link href={`${n.pages_id.comic_pagenum}`}>
+												<strong>&laquo; Go back to page {n.pages_id.comic_pagenum}</strong>
+												<span> ∙ </span>
+												<span>Branch title: </span>
+												<span>{n.branch_title}</span>
+											</Link>
+										</li>
+									)}
+								</ul>
+							</div>
+						</>
+					}
+				</div>
+				{
+					/**------------------------------
+					 *	NEXT NAVIGATION
+					 */
+				}
+				<div className={clsx("grow", "w-1/2")}>
+					{page.next_pages && page.next_pages.length > 0 &&
+						<>
+							<h4 className={clsx(
+								"font-semibold",
+							)}>
+								Next Page(s)
+							</h4>
+							<ul className={clsx(
+								"p-2",
+								"bg-amber-100",
+								"text-xs"
+							)}>
+								{page.next_pages.map((n, index) =>
+									<li key={index}>
+										<Link href={`${n.linked_pages_id.comic_pagenum}`}>
+											<strong>Go forward to page {n.linked_pages_id.comic_pagenum} </strong>
+											<span> ∙ </span>
+											<span>Branch title: </span>
+											<em>{n.branch_title} </em>
+											<span>&raquo;</span>
+											<p>{n.branch_description}</p>
+										</Link>
+									</li>
+								)}
+							</ul>
+						</>
+					}
+				</div>
+			</section>
 			{
 				/**------------------------------
-				 * PREV NAVIGATION
-				 * - Instead of linking directly to the previous page,
-				 *   we are going back 1 step in browser history
-				 * - This is because pages can have multiple `prev_pages`
+				 *	Page Meta
 				 */
 			}
-			{page.prev_pages && page.prev_pages.length > 0 &&
-				<>
-					<hr className={clsx("my-8")} />
-					<h4 className={clsx(
-						"text-3xl",
-						"font-bold",
-						"font-display",
-					)}>
-						PREV NAV
-					</h4>
-
-					<button onClick={() => router.back()} >Previous Page</button>
-					{/* <ul>
-						{page.prev_pages.map((n, index) =>
-							<li key={index}>
-								<Link href={`${n.pages_id.comic_pagenum}`}>
-									<strong>&laquo; Go Back</strong>
-								</Link>
-							</li>
-						)}
-					</ul> */}
-				</>
-			}
-			{
-				/**------------------------------
-				 *	NEXT NAVIGATION
-				 */
-			}
-			{page.next_pages && page.next_pages.length > 0 &&
-				<>
-					<hr className={clsx("my-8")} />
-					<h4 className={clsx(
-						"text-3xl",
-						"font-bold",
-						"font-display",
-					)}>
-						NEXT NAV
-					</h4>
-					<ul>
-						{page.next_pages.map((n, index) =>
-							<li key={index}>
-								<Link href={`${n.linked_pages_id.comic_pagenum}`}>
-									<strong>{n.branch_title} &raquo;</strong>
-									<p>{n.branch_description}</p>
-								</Link>
-							</li>
-						)}
-					</ul>
-				</>
-			}
-		</div>
+			<section>
+				<h4 className={clsx(
+					"font-semibold"
+				)}>Page Metadata</h4>
+				<ul className={clsx(
+					"p-2",
+					"bg-amber-100",
+					"text-xs"
+				)}>
+					<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
+					{page.user_updated &&
+						<li><strong>Last updated by</strong> @{page.user_updated.username} on {page.date_updated}</li>
+					}
+				</ul>
+			</section>
+		</div >
 	</>
 }
