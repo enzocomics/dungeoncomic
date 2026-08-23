@@ -102,6 +102,11 @@ export async function getComicPage(comic_slug: string, num: number) {
 						{ linked_pages_id: ["comic", "comic_pagenum"] },
 					],
 				},
+				// Meta
+				{ user_created: ["email", "name", "username", "avatar"] },
+				{ user_updated: ["email", "name", "username", "avatar"] },
+				"date_created",
+				"date_updated",
 			],
 		}),
 	)
