@@ -82,6 +82,7 @@ export default function ComicPageUI({
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	const router = useRouter()
+	console.log(page.plot_suggestions)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -128,68 +129,67 @@ export default function ComicPageUI({
 					</div>
 				</div>
 			) : null}
+			{
+				/**------------------------------
+				 * FEEDBACK
+				 * -
+				 */
+			}
+			{page.plot_prompt &&
+				<div className={clsx(
+					"bg-pink-100",
+					"p-4",
+					"mt-8",
+				)}>
+					<h4 className={
+						clsx(
+							"text-2xl",
+							"font-semibold",
+							"text-center",
+							"mb-2"
+						)
+					}>
+						{page.plot_prompt}
+					</h4>
+					<ul className={clsx(
 
+					)}>
+						{page.plot_suggestions.map((s, index) => (
+							<li key={index} className={clsx(
+								"text-center"
+							)}>
+								{s.title} - {s.votes || 0}
+							</li>
+						))}
+					</ul>
+				</div>
+			}
+			{
+				/**------------------------------
+				 * NAVIGATION BLOCK
+				 * -
+				 */
+			}
 			<section className={clsx(
 				"mt-8",
-				"flex",
-				"flex-row",
+
 				"gap-1",
 				"w-full"
 			)}>
 				{
 					/**------------------------------
-					 * PREV NAVIGATION
-					 * - Instead of linking directly to the previous page,
-					 *   we are going back 1 step in browser history
-					 * - This is because pages can have multiple `prev_pages`
-					 */
-				}
-				<div className={clsx("grow", "w-1/2")}>
-					{page.prev_pages && page.prev_pages.length > 0 &&
-						<>
-							<h4 className={clsx(
-								"font-semibold",
-							)}>
-								Previous Page(s)
-							</h4>
-							<div className={clsx(
-								"p-2",
-								"bg-amber-100",
-								"text-xs"
-							)}>
-								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
-								<ul className={clsx(
-									"flex",
-									"flex-col",
-									"gap-2",
-								)}>
-									{page.prev_pages.map((n, index) =>
-										<li key={index}>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={`${n.pages_id.comic_pagenum}`}>
-												<strong>&laquo; Return to page {n.pages_id.comic_pagenum}<br /></strong>
-												<span>{n.pages_id.title}</span>
-											</Link>
-										</li>
-									)}
-								</ul>
-							</div>
-						</>
-					}
-				</div>
-				{
-					/**------------------------------
 					 *	NEXT NAVIGATION
 					 */
 				}
-				<div className={clsx("grow", "w-1/2")}>
+				<div className={clsx(
+					"mx-auto",
+					"w-2/3"
+				)}>
 					{page.next_pages && page.next_pages.length > 0 &&
 						<>
 							<h4 className={clsx(
 								"font-semibold",
+								"text-center"
 							)}>
 								Next Page(s)
 							</h4>
@@ -209,9 +209,10 @@ export default function ComicPageUI({
 											"p-2",
 											"hover:bg-black/10",
 										)} href={`${n.linked_pages_id.comic_pagenum}`}>
-											<strong>Proceed to page {n.linked_pages_id.comic_pagenum} &raquo;</strong><br />
-											<span>{n.branch_title} </span><br />
-											<em>{n.branch_description}</em>
+											<strong>{n.linked_pages_id.title} &raquo;</strong><br />
+											{n.linked_pages_id.subtitle &&
+												<p>{n.linked_pages_id.subtitle}</p>
+											}
 										</Link>
 									</li>
 								)}
@@ -219,7 +220,63 @@ export default function ComicPageUI({
 						</>
 					}
 				</div>
+
+				{
+					/**------------------------------
+					 * PREV NAVIGATION
+					 * - Instead of linking directly to the previous page,
+					 *   we are going back 1 step in browser history
+					 * - This is because pages can have multiple `prev_pages`
+					 */
+				}
+				<div className={clsx(
+					"basis-full",
+				)}>
+					{page.prev_pages && page.prev_pages.length > 0 &&
+						<>
+							<h4 className={clsx(
+								"font-semibold",
+							)}>
+								Previous Page(s)
+							</h4>
+							<div className={clsx(
+								"p-2",
+								"bg-amber-100",
+								"text-xs"
+							)}>
+								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
+								<ul className={clsx(
+									"flex",
+									"flex-col",
+									"gap-2",
+								)}>
+									<li>
+										<Link className={clsx(
+											"block",
+											"p-2",
+											"hover:bg-black/10",
+										)} href="/1">Start Over</Link>
+									</li>
+									{page.prev_pages.map((n, index) =>
+										<li key={index}>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={`${n.pages_id.comic_pagenum}`}>
+												{/* <strong>&laquo; Return to page {n.pages_id.comic_pagenum}<br /></strong> */}
+												<strong>&laquo; {n.pages_id.title}</strong>
+											</Link>
+										</li>
+									)}
+								</ul>
+							</div>
+						</>
+					}
+				</div>
+
 			</section>
+
 			{
 				/**------------------------------
 				 *	Page Meta
@@ -240,6 +297,6 @@ export default function ComicPageUI({
 					}
 				</ul>
 			</section>
-		</div >
+		</div>
 	</>
 }
