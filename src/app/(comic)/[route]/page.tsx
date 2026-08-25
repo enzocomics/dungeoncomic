@@ -54,9 +54,12 @@ export default async function RoutePage({
 		const page = await getComicPage(frontpage_comic.slug, parseInt(route))
 		// 404 if it does not exist
 		if (!page) notFound()
-		// RETURN THE COMIC PAGE UI
+		// RETURN THE COMIC PAGE UI (IF it is published)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
-		return <ComicPageUI page={comicPage} />
+		if (!comicPage || comicPage && comicPage.status !== "published")
+			notFound()
+		else
+			return <ComicPageUI page={comicPage} />
 	}
 
 	/**----------------------------------- */

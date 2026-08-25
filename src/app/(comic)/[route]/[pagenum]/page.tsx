@@ -50,12 +50,12 @@ export default async function ComicPagenumPage({
 	// LAYOUT MODE 2
 	// Throw 404 if the pagenum param is not a number
 	if (isNaN(pagenum)) notFound()
-	// Get the comic page
+	// Get the comic page IF it is published
 	const comicPage = await getComicPage(route, pagenum)
-	// 404 if it doesn't exist
-	if (!comicPage) notFound()
-	// Render
-	return <ComicPageUI page={comicPage} />
+	if (!comicPage || comicPage && comicPage.status !== "published")
+		notFound()
+	else
+		return <ComicPageUI page={comicPage} />
 }
 
 /**-----------------------------------
