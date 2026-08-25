@@ -753,7 +753,8 @@
             "image/png",
             "image/gif",
             "image/webp"
-          ]
+          ],
+          "crop": false
         },
         "readonly": false,
         "required": false,
@@ -2227,36 +2228,6 @@
     },
     {
       "collection": "page_branches",
-      "field": "content",
-      "type": "alias",
-      "meta": {
-        "collection": "page_branches",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "content",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "page_branches",
       "field": "meta",
       "type": "alias",
       "meta": {
@@ -2415,94 +2386,6 @@
         "has_auto_increment": false,
         "foreign_key_table": "pages",
         "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "page_branches",
-      "field": "branch_title",
-      "type": "string",
-      "meta": {
-        "collection": "page_branches",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "branch_title",
-        "group": "content",
-        "hidden": false,
-        "interface": "input",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "branch_title",
-        "table": "page_branches",
-        "data_type": "character varying",
-        "default_value": null,
-        "max_length": 255,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "page_branches",
-      "field": "branch_description",
-      "type": "text",
-      "meta": {
-        "collection": "page_branches",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "branch_description",
-        "group": "content",
-        "hidden": false,
-        "interface": "input-multiline",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "branch_description",
-        "table": "page_branches",
-        "data_type": "text",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
       }
     },
     {
@@ -3018,27 +2901,27 @@
         "group": "details",
         "hidden": false,
         "interface": "input",
-        "note": "(Optional) The title of this comic page.",
+        "note": "The title of this page.",
         "options": null,
         "readonly": false,
-        "required": false,
+        "required": true,
         "searchable": false,
         "sort": 3,
         "special": null,
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "title",
         "table": "pages",
         "data_type": "character varying",
-        "default_value": null,
+        "default_value": "Next",
         "max_length": 255,
         "numeric_precision": null,
         "numeric_scale": null,
-        "is_nullable": true,
+        "is_nullable": false,
         "is_unique": false,
         "is_indexed": false,
         "is_primary_key": false,
@@ -3116,7 +2999,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 6,
         "special": null,
         "translations": null,
         "validation": null,
@@ -3168,7 +3051,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 5,
         "special": [
           "file"
         ],
@@ -3387,14 +3270,14 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 1,
+        "sort": 2,
         "special": [
           "cast-json"
         ],
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "plot_suggestions",
@@ -3433,7 +3316,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 5,
         "special": [
           "cast-boolean"
         ],
@@ -3481,7 +3364,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 4,
         "special": [
           "alias",
           "no-data"
@@ -3510,7 +3393,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 7,
+        "sort": 8,
         "special": [
           "cast-boolean"
         ],
@@ -3556,7 +3439,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 6,
         "special": [
           "o2m"
         ],
@@ -3584,7 +3467,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 3,
         "special": [
           "alias",
           "no-data"
@@ -3615,7 +3498,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 8,
+        "sort": 9,
         "special": [
           "o2m"
         ],
@@ -3646,7 +3529,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 6,
+        "sort": 7,
         "special": [
           "alias",
           "no-data"
@@ -3655,6 +3538,94 @@
         "validation": null,
         "validation_message": null,
         "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "plot_prompt",
+      "type": "string",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "plot_prompt",
+        "group": "feedback",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "plot_prompt",
+        "table": "pages",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "subtitle",
+      "type": "string",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "subtitle",
+        "group": "details",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "subtitle",
+        "table": "pages",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {
