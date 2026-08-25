@@ -59,11 +59,19 @@ export interface PagesCollection {
 	// Details
 	comic: ComicsCollection
 	comic_pagenum: number
-	title: string | null
+	title: string
+	subtitle: string | null
 	description: string | null
 	thumbnail: ImageCollection | null
 	// Content
 	comic_panels: ComicPanelsCollection[]
+	// Feedback
+	plot_prompt: string | null
+	plot_suggestions: { title: string; votes?: number }[]
+	allow_user_suggestions: Boolean
+	user_suggestions: []
+	allow_user_comments: Boolean
+	user_comments: []
 	// Routing
 	prev_pages: PageBranchesCollection[]
 	next_pages: PageBranchesCollection[]
@@ -76,9 +84,6 @@ export interface PagesCollection {
 }
 
 export interface PageBranchesCollection {
-	// Content
-	branch_title: string | null
-	branch_description: string | null
 	// Meta
 	id: number
 	pages_id: PagesCollection
