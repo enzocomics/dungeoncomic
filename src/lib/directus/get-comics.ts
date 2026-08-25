@@ -61,6 +61,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 			fields: [
 				// Details
 				"title",
+				"subtitle",
 				"description",
 				{
 					thumbnail: [
@@ -71,6 +72,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 						"description",
 					],
 				},
+				// Content
 				{
 					comic_panels: [
 						{
@@ -86,20 +88,24 @@ export async function getComicPage(comic_slug: string, num: number) {
 						"panel_description",
 					],
 				},
+				// Feedback
+				"plot_prompt",
+				"plot_suggestions",
+				// Navigation
 				{
 					next_pages: [
-						"branch_title",
-						"branch_description",
-						{ pages_id: ["title", "comic", "comic_pagenum"] },
-						{ linked_pages_id: ["title", "comic", "comic_pagenum"] },
+						{ pages_id: ["title", "subtitle", "comic", "comic_pagenum"] },
+						{
+							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
+						},
 					],
 				},
 				{
 					prev_pages: [
-						"branch_title",
-						"branch_description",
-						{ pages_id: ["title", "comic", "comic_pagenum"] },
-						{ linked_pages_id: ["title", "comic", "comic_pagenum"] },
+						{ pages_id: ["title", "subtitle", "comic", "comic_pagenum"] },
+						{
+							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
+						},
 					],
 				},
 				// Meta
