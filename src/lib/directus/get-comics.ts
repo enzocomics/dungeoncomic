@@ -60,6 +60,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 			limit: 1,
 			fields: [
 				// Details
+				"status",
 				"title",
 				"subtitle",
 				"description",
