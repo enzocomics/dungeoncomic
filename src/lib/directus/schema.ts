@@ -59,6 +59,7 @@ export interface PagesCollection {
 	// Details
 	comic: ComicsCollection
 	comic_pagenum: number
+	status: "published" | "scheduled" | "draft" | "private"
 	title: string
 	subtitle: string | null
 	description: string | null
