@@ -41,22 +41,22 @@ export function ComicLayoutUI({
 			"font-display",
 			"text-2xl",
 		)}>Comic Layout UI</h3> */}
-		{comic.logo &&
+		{/* {comic.logo &&
 			<Image
 				src={`${directusURL}/assets/${comic.logo.filename_disk}`}
 				width={comic.logo.width || 100}
 				height={comic.logo.height || 100}
 				alt={comic.logo.description || comic.title}
 			/>
-		}
-		{!comic.logo &&
-			<h2 className={clsx(
-				"my-4",
-				"font-display",
-				"font-bold",
-				"text-3xl"
-			)}>{comic.title}</h2>
-		}
+		} */}
+		{/* {!comic.logo && */}
+		<h2 className={clsx(
+			"my-4",
+			"font-display",
+			"font-bold",
+			"text-3xl"
+		)}>{comic.title}</h2>
+		{/* } */}
 		{/* <strong>Comic Description</strong>: {comic.description} <br /> */}
 		<div className={clsx(
 			"bg-base-1",

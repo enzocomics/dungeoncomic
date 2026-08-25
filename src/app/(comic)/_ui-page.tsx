@@ -172,8 +172,9 @@ export default function ComicPageUI({
 			}
 			<section className={clsx(
 				"mt-8",
-
-				"gap-1",
+				"flex",
+				"flex-col",
+				"gap-8",
 				"w-full"
 			)}>
 				{
@@ -183,16 +184,11 @@ export default function ComicPageUI({
 				}
 				<div className={clsx(
 					"mx-auto",
-					"w-2/3"
+					"w-2/3",
+
 				)}>
 					{page.next_pages && page.next_pages.length > 0 &&
 						<>
-							<h4 className={clsx(
-								"font-semibold",
-								"text-center"
-							)}>
-								Next Page(s)
-							</h4>
 							<ul className={clsx(
 								"flex",
 								"flex-col",
@@ -234,14 +230,9 @@ export default function ComicPageUI({
 				)}>
 					{page.prev_pages && page.prev_pages.length > 0 &&
 						<>
-							<h4 className={clsx(
-								"font-semibold",
-							)}>
-								Previous Page(s)
-							</h4>
 							<div className={clsx(
 								"p-2",
-								"bg-amber-100",
+								"bg-orange-100",
 								"text-xs"
 							)}>
 								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
