@@ -9,7 +9,7 @@ import clsx from "clsx"
 import { getComic } from "@/lib/directus/get-comics"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
-
+import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
 /**-----------------------------------
  * COMIC FRONTPAGE LAYOUT
  * ---
@@ -22,6 +22,10 @@ export function ComicLayoutUI({
 	children: React.ReactNode
 	comic: Awaited<ReturnType<typeof getComic>>
 }) {
+	// FETCH COMIC APPEARANCE VARS
+	const displayFontSlug = displayFonts[comic.display_font.toString()].slug
+	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
+
 	return <div className={clsx(
 		// Temporary CSS
 		"border",
@@ -32,10 +36,13 @@ export function ComicLayoutUI({
 		"px-8",
 		"font-copy"
 	)}
+		// COMIC APPEARANCE
 		style={{
+			// Accent Color
 			backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
-			"--font-copy": "var(--font-atkinson-hyperlegible)",
-			"--font-display": "var(--font-atkinson-hyperlegible)"
+			// Fonts
+			"--font-copy": `var(--font-${copyFontSlug})`,
+			"--font-display": `var(--font-${displayFontSlug})`
 		} as React.CSSProperties}
 	>
 		{/* <h3 className={clsx(
@@ -55,7 +62,7 @@ export function ComicLayoutUI({
 		<h2 className={clsx(
 			"my-4",
 			"font-bold",
-			"text-3xl"
+			"text-1xl"
 		)}>{comic.title}</h2>
 		{/* } */}
 		{/* <strong>Comic Description</strong>: {comic.description} <br /> */}

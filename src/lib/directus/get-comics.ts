@@ -41,6 +41,8 @@ export async function getComic(slug: string) {
 				},
 				{ banner: ["filename_disk", "type", "width", "height", "description"] },
 				"accent_color",
+				"display_font",
+				"copy_font",
 				// Content
 				// Settings
 				"landing_page",
