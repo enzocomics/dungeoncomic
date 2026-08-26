@@ -82,7 +82,8 @@ export default function ComicPageUI({
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	const router = useRouter()
-	console.log(page.plot_suggestions)
+	// console.log(page.plot_suggestions)
+	// console.log(page.user_created.id)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -92,6 +93,7 @@ export default function ComicPageUI({
 			"flex",
 			"flex-col",
 			"gap-2",
+			"bg-base-1"
 		)}>
 			{page.title &&
 				<h4 className={clsx(
@@ -154,14 +156,22 @@ export default function ComicPageUI({
 					<ul className={clsx(
 
 					)}>
-						{page.plot_suggestions.map((s, index) => (
+						{/* AUTHOR SUGGESTIONS */}
+						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
 							<li key={index} className={clsx(
 								"text-center"
 							)}>
-								{s.title} - {s.votes || 0}
+								<strong>{s.votes || 0}</strong> | {s.title} &nbsp;
+								{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+								{page.user_created.id !== s.user_created.id &&
+									<em>&mdash; @{s.user_created.username}</em>
+								}
 							</li>
-						))}
+						)) : null}
 					</ul>
+					<div>
+						User Suggestion Form Here
+					</div>
 				</div>
 			}
 			{
@@ -288,6 +298,21 @@ export default function ComicPageUI({
 					}
 				</ul>
 			</section>
+
 		</div>
+
+
+		<section className={clsx(
+			"mt-8"
+		)}>
+			<h4 className={clsx(
+				"text-xl"
+			)}>Comments</h4>
+			<div className={clsx(
+				"bg-base-1"
+			)}>
+				Comments here
+			</div>
+		</section>
 	</>
 }

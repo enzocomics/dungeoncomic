@@ -59,7 +59,7 @@ export function ComicLayoutUI({
 		{/* } */}
 		{/* <strong>Comic Description</strong>: {comic.description} <br /> */}
 		<div className={clsx(
-			"bg-base-1",
+			// "bg-base-1",
 			"mx-auto"
 		)}>
 			{children}
