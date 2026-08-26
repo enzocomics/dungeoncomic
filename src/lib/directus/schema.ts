@@ -2,6 +2,7 @@
 // TYPES
 import { Settings, User } from "@directus/types"
 import { UUID } from "crypto"
+import { copyFonts, displayFonts } from "@/styles/fonts"
 
 /** ------------------------------------------------ **/
 // MAIN SCHEMA
@@ -45,6 +46,8 @@ export interface ComicsCollection {
 	thumbnail: ImageCollection | null
 	banner: ImageCollection | null
 	accent_color: string | null
+	display_font: typeof displayFonts // fetch from styles/fonts
+	copy_font: typeof copyFonts // fetch from styles/fonts
 	// Settings
 	landing_page: "cover-page" | "first-page" | "last-page" | number
 	// Meta
@@ -70,8 +73,8 @@ export interface PagesCollection {
 	// Feedback
 	plot_prompt: string | null
 	plot_suggestions: PlotSuggestionsCollection[]
-	allow_user_suggestions: Boolean
-	allow_user_comments: Boolean
+	allow_user_suggestions: boolean
+	allow_user_comments: boolean
 	user_comments: []
 	// Routing
 	prev_pages: PageBranchesCollection[]
@@ -137,7 +140,7 @@ export interface DirectusUser extends User {
 
 /** ------------------------------------------------ **/
 export interface DirectusSettings extends Settings {
-	public_registration: Boolean
+	public_registration: boolean
 }
 
 /** ------------------------------------------------ **/

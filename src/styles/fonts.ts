@@ -20,40 +20,6 @@ import {
 
 /** ------------------------------------------------ **/
 
-const copyFonts = [
-	// sans serif
-	"Inter",
-	// serif
-	"Lora",
-	// comic sans
-	"Comic_Neue",
-	// accessible
-	// "Atkinson_Hyperlegible",
-	"Lexend",
-]
-
-const displayFonts = [
-	// same as copy
-	"Inter",
-	"Lexend",
-	"Lora",
-	"Comic_Neue",
-	// sans serif
-	"Montserrat",
-	"Bebas_Neue",
-	// theme-specific
-	// "Chicle", // Fun
-	"Great_Vibes", // Calligraphic
-	"Uncial_Antiqua", // Medieval
-	"Sancreek", // Western
-	"Caesar_Dressing", // Greek
-	"Press_Start_2P", // Video game
-	"Manufacturing_Consent", // Blackletter
-	// accessible
-	// "Atkinson_Hyperlegible",
-	"Lexend",
-]
-
 export const atkinsonHyperlegible = Atkinson_Hyperlegible({
 	subsets: ["latin", "latin-ext"],
 	weight: ["400", "700"],
@@ -189,129 +155,121 @@ export const uncialAntiqua = Uncial_Antiqua({
 	fallback: ["serif"],
 })
 
-export const fonts = [
-	{
+export const fonts = {
+	Atkinson_Hyperlegible: {
 		name: "Atkinson Hyperlegible",
-		key: "Atkinson_Hyperlegible",
+		slug: "atkinson-hyperlegible",
 		font: atkinsonHyperlegible,
 		copy: true,
 		display: true,
 	},
-	{
+	Bebas_Neue: {
 		name: "Bebas Neue",
-		key: "Bebas_Neue",
+		slug: "bebas-neue",
 		font: bebasNeue,
 		copy: false,
 		display: true,
 	},
-	{
+	Chicle: {
 		name: "Chicle",
-		key: "Chicle",
+		slug: "chicle",
 		font: chicle,
 		copy: false,
 		display: true,
 	},
-	{
+	Caesar_Dressing: {
 		name: "Caesar Dressing",
-		key: "Caesar_Dressing",
+		slug: "caesar-dressing",
 		font: caesarDressing,
 		copy: false,
 		display: true,
 	},
-	{
+	Comic_Neue: {
 		name: "Comic Neue",
-		key: "Comic_Neue",
+		slug: "comic-neue",
 		font: comicNeue,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Germania_One: {
 		name: "Germania One",
-		key: "Germania_One",
+		slug: "germania-one",
 		font: germaniaOne,
 		copy: false,
 		display: true,
 	},
-	{
+	Great_Vibes: {
 		name: "Great Vibes",
-		key: "Great_Vibes",
+		slug: "great-vibes",
 		font: greatVibes,
 		copy: false,
 		display: true,
 	},
-	{
+	Inter: {
 		name: "Inter",
-		key: "Inter",
+		slug: "inter",
 		font: inter,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Lexend: {
 		name: "Lexend",
-		key: "Lexend",
+		slug: "lexend",
 		font: lexend,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Lora: {
 		name: "Lora",
-		key: "Lora",
+		slug: "lora",
 		font: lora,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Manufacturing_Consent: {
 		name: "Manufacturing Consent",
-		key: "Manufacturing_Consent",
+		slug: "manufacturing-consent",
 		font: manufacturingConsent,
 		copy: false,
 		display: true,
 	},
-	{
+	Montserrat: {
 		name: "Montserrat",
-		key: "Montserrat",
+		slug: "montserrat",
 		font: montserrat,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Press_Start_2P: {
 		name: "Press Start 2P",
-		key: "Press_Start_2P",
+		slug: "press-start-2p",
 		font: pressStart2P,
-		copy: false,
+		copy: true,
 		display: true,
 	},
-	{
+	Sancreek: {
 		name: "Sancreek",
-		key: "Sancreek",
+		slug: "sancreek",
 		font: sancreek,
 		copy: false,
 		display: true,
 	},
-	{
+	Uncial_Antiqua: {
 		name: "Uncial Antiqua",
-		key: "Uncial_Antiqua",
+		slug: "uncial-antiqua",
 		font: uncialAntiqua,
 		copy: false,
 		display: true,
 	},
-]
+}
+
 /** ------------------------------------------------ **
- * Webfont Variables
+ * Make lists of the copy fonts and display fonts
  ** ------------------------------------------------ **/
+export const copyFonts = Object.fromEntries(
+	Object.entries(fonts).filter(([key, font]) => font.copy === true),
+)
 
-// const display: NextFontWithVariable = Germania_One({
-// 	weight: "400",
-// 	style: "normal",
-// 	display: "swap",
-// 	variable: "--font-display",
-// })
-
-// const copy: NextFontWithVariable = Inter({
-// 	style: ["normal"],
-// 	subsets: ["latin", "latin-ext"],
-// 	display: "swap",
-// 	variable: "--font-copy",
-// })
-
-// export { copy, display }
+export const displayFonts = Object.fromEntries(
+	Object.entries(fonts).filter(([key, font]) => font.display === true),
+)
