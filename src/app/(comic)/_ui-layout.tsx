@@ -30,11 +30,13 @@ export function ComicLayoutUI({
 		// Appearance
 		"h-full",
 		"px-8",
+		"font-copy"
 	)}
 		style={{
 			backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
-
-		}}
+			"--font-copy": "var(--font-atkinson-hyperlegible)",
+			"--font-display": "var(--font-atkinson-hyperlegible)"
+		} as React.CSSProperties}
 	>
 		{/* <h3 className={clsx(
 			// Temporary CSS
@@ -52,7 +54,6 @@ export function ComicLayoutUI({
 		{/* {!comic.logo && */}
 		<h2 className={clsx(
 			"my-4",
-			"font-display",
 			"font-bold",
 			"text-3xl"
 		)}>{comic.title}</h2>
