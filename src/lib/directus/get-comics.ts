@@ -18,7 +18,16 @@ export async function getComic(slug: string) {
 				// Details
 				"title",
 				"description",
-				{ authors: ["name", "username", "homepage_url", "email"] },
+				{
+					authors: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
 				// Appearance
 				{ logo: ["filename_disk", "type", "width", "height", "description"] },
 				{
@@ -91,7 +100,45 @@ export async function getComicPage(comic_slug: string, num: number) {
 				},
 				// Feedback
 				"plot_prompt",
-				"plot_suggestions",
+				{
+					plot_suggestions: [
+						"title",
+						"slug",
+						{
+							users_voted: [
+								"id",
+								"email",
+								"name",
+								"username",
+								"avatar",
+								"homepage_url",
+							],
+						},
+						"votes",
+						{
+							user_created: [
+								"id",
+								"email",
+								"name",
+								"username",
+								"avatar",
+								"homepage_url",
+							],
+						},
+						"date_created",
+						{
+							user_updated: [
+								"id",
+								"email",
+								"name",
+								"username",
+								"avatar",
+								"homepage_url",
+							],
+						},
+						"date_updated",
+					],
+				},
 				// Navigation
 				{
 					next_pages: [
@@ -110,8 +157,26 @@ export async function getComicPage(comic_slug: string, num: number) {
 					],
 				},
 				// Meta
-				{ user_created: ["email", "name", "username", "avatar"] },
-				{ user_updated: ["email", "name", "username", "avatar"] },
+				{
+					user_created: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				{
+					user_updated: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
 				"date_created",
 				"date_updated",
 			],
