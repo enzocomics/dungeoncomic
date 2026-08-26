@@ -58,8 +58,8 @@
 @theme {
 	/** --------------------------------------
 	/* Fonts */
-	--font-copy: var(--font-atkinson-hyperlegible), sans-serif;
-	--font-display: var(--font-atkinson-hyperlegible), sans-serif;
+	--font-copy: var(--font-lora);
+	--font-display: var(--font-germania-one);
 
 	/* COLOR VARIABLE DEFINITIONS*/
 
