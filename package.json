@@ -11,8 +11,8 @@
 		"init": "./scripts/init.sh"
 	},
 	"dependencies": {
-		"@conform-to/react": "^1.19.4",
-		"@conform-to/zod": "^1.19.4",
+		"@conform-to/react": "^1.21.1",
+		"@conform-to/zod": "^1.21.1",
 		"@directus/sdk": "^25.0.1",
 		"@directus/types": "^16.2.0",
 		"@fortawesome/fontawesome-svg-core": "^7.3.1",
@@ -24,7 +24,7 @@
 		"@tailwindcss/postcss": "^4.3.3",
 		"@teispace/next-themes": "^3.0.0",
 		"clsx": "^2.1.1",
-		"jose": "^6.2.3",
+		"jose": "^6.2.10",
 		"motion": "^12.43.0",
 		"next": "^16.3.3",
 		"next-intl": "^4.13.2",
