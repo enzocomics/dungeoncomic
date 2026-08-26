@@ -75,14 +75,14 @@
         "collection": "page_branches",
         "color": null,
         "display_template": null,
-        "group": "pages",
+        "group": "comic_panels",
         "hidden": true,
         "icon": "import_export",
         "item_duplication_fields": null,
         "note": null,
         "preview_url": null,
         "singleton": false,
-        "sort": 2,
+        "sort": 1,
         "sort_field": null,
         "status": "active",
         "translations": null,
@@ -121,6 +121,36 @@
       },
       "schema": {
         "name": "pages"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": null,
+        "archive_value": null,
+        "autosave_revision_interval": null,
+        "collapse": "open",
+        "collection": "plot_suggestions",
+        "color": null,
+        "display_template": null,
+        "group": "pages",
+        "hidden": false,
+        "icon": null,
+        "item_duplication_fields": null,
+        "note": null,
+        "preview_url": null,
+        "singleton": false,
+        "sort": 2,
+        "sort_field": "sort",
+        "status": "active",
+        "translations": null,
+        "unarchive_value": null,
+        "versioning": false
+      },
+      "schema": {
+        "name": "plot_suggestions"
       }
     },
     {
@@ -181,66 +211,6 @@
       },
       "schema": {
         "name": "tags"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "meta": {
-        "accountability": "all",
-        "archive_app_filter": true,
-        "archive_field": null,
-        "archive_value": null,
-        "autosave_revision_interval": null,
-        "collapse": "open",
-        "collection": "user_comments",
-        "color": null,
-        "display_template": null,
-        "group": "pages",
-        "hidden": false,
-        "icon": "comment",
-        "item_duplication_fields": null,
-        "note": null,
-        "preview_url": null,
-        "singleton": false,
-        "sort": 4,
-        "sort_field": null,
-        "status": "active",
-        "translations": null,
-        "unarchive_value": null,
-        "versioning": false
-      },
-      "schema": {
-        "name": "user_comments"
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "meta": {
-        "accountability": "all",
-        "archive_app_filter": true,
-        "archive_field": null,
-        "archive_value": null,
-        "autosave_revision_interval": null,
-        "collapse": "open",
-        "collection": "user_suggestions",
-        "color": null,
-        "display_template": null,
-        "group": "pages",
-        "hidden": false,
-        "icon": "mode_comment",
-        "item_duplication_fields": null,
-        "note": null,
-        "preview_url": null,
-        "singleton": false,
-        "sort": 3,
-        "sort_field": null,
-        "status": "active",
-        "translations": null,
-        "unarchive_value": null,
-        "versioning": false
-      },
-      "schema": {
-        "name": "user_suggestions"
       }
     }
   ],
@@ -640,14 +610,14 @@
         "display_options": null,
         "field": "panel_title",
         "group": "content",
-        "hidden": false,
+        "hidden": true,
         "interface": "input",
         "note": null,
         "options": null,
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 4,
         "special": null,
         "translations": null,
         "validation": null,
@@ -759,7 +729,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 2,
         "special": [
           "file"
         ],
@@ -2227,6 +2197,50 @@
       }
     },
     {
+      "collection": "directus_users",
+      "field": "pages_voted_on",
+      "type": "integer",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "pages_voted_on",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "pages_voted_on",
+        "table": "directus_users",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "plot_suggestions",
+        "foreign_key_column": "id"
+      }
+    },
+    {
       "collection": "page_branches",
       "field": "meta",
       "type": "alias",
@@ -2906,7 +2920,7 @@
         "readonly": false,
         "required": true,
         "searchable": false,
-        "sort": 3,
+        "sort": 4,
         "special": null,
         "translations": null,
         "validation": null,
@@ -2999,7 +3013,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 6,
+        "sort": 7,
         "special": null,
         "translations": null,
         "validation": null,
@@ -3051,7 +3065,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 6,
         "special": [
           "file"
         ],
@@ -3220,86 +3234,6 @@
     },
     {
       "collection": "pages",
-      "field": "plot_suggestions",
-      "type": "json",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "plot_suggestions",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "list",
-        "note": "(Optional) Author-defined suggestions that are displayed to readers as a poll that they may vote on.",
-        "options": {
-          "fields": [
-            {
-              "field": "title",
-              "meta": {
-                "field": "title",
-                "interface": "input",
-                "required": true,
-                "type": "string",
-                "width": "half"
-              },
-              "name": "title",
-              "type": "string"
-            },
-            {
-              "field": "votes",
-              "meta": {
-                "field": "votes",
-                "interface": "input",
-                "options": {
-                  "alwaysShowValue": true,
-                  "minValue": 0,
-                  "placeholder": "0",
-                  "stepInterval": 1
-                },
-                "required": false,
-                "type": "integer",
-                "width": "half"
-              },
-              "name": "votes",
-              "type": "integer"
-            }
-          ],
-          "template": "{{ title }} | Votes: {{ votes }}"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "cast-json"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "plot_suggestions",
-        "table": "pages",
-        "data_type": "json",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "pages",
       "field": "allow_user_suggestions",
       "type": "boolean",
       "meta": {
@@ -3316,7 +3250,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 2,
         "special": [
           "cast-boolean"
         ],
@@ -3346,37 +3280,6 @@
     },
     {
       "collection": "pages",
-      "field": "notice-txmjym",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "notice-txmjym",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "presentation-notice",
-        "note": null,
-        "options": {
-          "text": "User feedback is closed automatically once a `next_page` is defined"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "alias",
-          "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
       "field": "allow_user_comments",
       "type": "boolean",
       "meta": {
@@ -3393,7 +3296,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 8,
+        "sort": 5,
         "special": [
           "cast-boolean"
         ],
@@ -3423,34 +3326,6 @@
     },
     {
       "collection": "pages",
-      "field": "user_suggestions",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "user_suggestions",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 6,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      }
-    },
-    {
-      "collection": "pages",
       "field": "divider-z5xybj",
       "type": "alias",
       "meta": {
@@ -3467,69 +3342,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "user_comments",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "user_comments",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "enableLink": true
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 9,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "divider-9n_nw5",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "divider-9n_nw5",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "presentation-divider",
-        "note": null,
-        "options": {
-          "inlineTitle": true,
-          "title": null
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 7,
+        "sort": 4,
         "special": [
           "alias",
           "no-data"
@@ -3602,7 +3415,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 5,
         "special": null,
         "translations": null,
         "validation": null,
@@ -3617,6 +3430,651 @@
         "max_length": 255,
         "numeric_precision": null,
         "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "status",
+        "group": "details",
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": {
+          "choices": [
+            {
+              "text": "Published",
+              "value": "published"
+            },
+            {
+              "text": "Scheduled",
+              "value": "scheduled"
+            },
+            {
+              "text": "Draft",
+              "value": "draft"
+            },
+            {
+              "text": "Private",
+              "value": "private"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "status",
+        "table": "pages",
+        "data_type": "character varying",
+        "default_value": "draft",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "plot_suggestions",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "plot_suggestions",
+        "group": "feedback",
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "sort": "sort",
+          "template": "{{title}} ({{votes}}) -- @{{user_created.username}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": "meta",
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "id",
+        "table": "plot_suggestions",
+        "data_type": "integer",
+        "default_value": "nextval('plot_suggestions_id_seq'::regclass)",
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_indexed": false,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": true,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort",
+        "group": "meta",
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort",
+        "table": "plot_suggestions",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "user_created",
+      "type": "uuid",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_created",
+        "group": "meta",
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": [
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_created",
+        "table": "plot_suggestions",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_created",
+        "group": "meta",
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": [
+          "date-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_created",
+        "table": "plot_suggestions",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "user_updated",
+      "type": "uuid",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_updated",
+        "group": "meta",
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "user-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_updated",
+        "table": "plot_suggestions",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_updated",
+        "group": "meta",
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 7,
+        "special": [
+          "date-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_updated",
+        "table": "plot_suggestions",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "page",
+      "type": "integer",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "page",
+        "group": "meta",
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "page",
+        "table": "plot_suggestions",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "pages",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "meta",
+      "type": "alias",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "details",
+      "type": "alias",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "details",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "title",
+      "type": "string",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "title",
+        "group": "details",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": true,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "title",
+        "table": "plot_suggestions",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "slug",
+      "type": "string",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "slug",
+        "group": "details",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "slug": true
+        },
+        "readonly": false,
+        "required": true,
+        "searchable": true,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "slug",
+        "table": "plot_suggestions",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "users_voted",
+      "type": "alias",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "users_voted",
+        "group": "details",
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "enableCreate": false,
+          "enableLink": true
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "votes",
+      "type": "integer",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "votes",
+        "group": "details",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "min": 0
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "votes",
+        "table": "plot_suggestions",
+        "data_type": "integer",
+        "default_value": 0,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
         "is_nullable": true,
         "is_unique": false,
         "is_indexed": false,
@@ -4736,518 +5194,6 @@
         "foreign_key_table": null,
         "foreign_key_column": null
       }
-    },
-    {
-      "collection": "user_comments",
-      "field": "id",
-      "type": "integer",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "id",
-        "group": null,
-        "hidden": true,
-        "interface": "input",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "id",
-        "table": "user_comments",
-        "data_type": "integer",
-        "default_value": "nextval('user_comments_id_seq'::regclass)",
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": false,
-        "is_unique": true,
-        "is_indexed": false,
-        "is_primary_key": true,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": true,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "user_created",
-      "type": "uuid",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": "user",
-        "display_options": null,
-        "field": "user_created",
-        "group": null,
-        "hidden": true,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": {
-          "template": "{{avatar}} {{first_name}} {{last_name}}"
-        },
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "user-created"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "user_created",
-        "table": "user_comments",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "date_created",
-      "type": "timestamp",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": "datetime",
-        "display_options": {
-          "relative": true
-        },
-        "field": "date_created",
-        "group": null,
-        "hidden": true,
-        "interface": "datetime",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "date-created"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "date_created",
-        "table": "user_comments",
-        "data_type": "timestamp with time zone",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "user_updated",
-      "type": "uuid",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": "user",
-        "display_options": null,
-        "field": "user_updated",
-        "group": null,
-        "hidden": true,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": {
-          "template": "{{avatar}} {{first_name}} {{last_name}}"
-        },
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "user-updated"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "user_updated",
-        "table": "user_comments",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "date_updated",
-      "type": "timestamp",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": "datetime",
-        "display_options": {
-          "relative": true
-        },
-        "field": "date_updated",
-        "group": null,
-        "hidden": true,
-        "interface": "datetime",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 5,
-        "special": [
-          "date-updated"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "date_updated",
-        "table": "user_comments",
-        "data_type": "timestamp with time zone",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "pages",
-      "type": "integer",
-      "meta": {
-        "collection": "user_comments",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "pages",
-        "group": null,
-        "hidden": true,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 6,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "pages",
-        "table": "user_comments",
-        "data_type": "integer",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "pages",
-        "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "id",
-      "type": "integer",
-      "meta": {
-        "collection": "user_suggestions",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "id",
-        "group": null,
-        "hidden": true,
-        "interface": "input",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "id",
-        "table": "user_suggestions",
-        "data_type": "integer",
-        "default_value": "nextval('user_suggestions_id_seq'::regclass)",
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": false,
-        "is_unique": true,
-        "is_indexed": false,
-        "is_primary_key": true,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": true,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "date_created",
-      "type": "timestamp",
-      "meta": {
-        "collection": "user_suggestions",
-        "conditions": null,
-        "display": "datetime",
-        "display_options": {
-          "relative": true
-        },
-        "field": "date_created",
-        "group": null,
-        "hidden": true,
-        "interface": "datetime",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "date-created"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "date_created",
-        "table": "user_suggestions",
-        "data_type": "timestamp with time zone",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "user_updated",
-      "type": "uuid",
-      "meta": {
-        "collection": "user_suggestions",
-        "conditions": null,
-        "display": "user",
-        "display_options": null,
-        "field": "user_updated",
-        "group": null,
-        "hidden": true,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": {
-          "template": "{{avatar}} {{first_name}} {{last_name}}"
-        },
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "user-updated"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "user_updated",
-        "table": "user_suggestions",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "date_updated",
-      "type": "timestamp",
-      "meta": {
-        "collection": "user_suggestions",
-        "conditions": null,
-        "display": "datetime",
-        "display_options": {
-          "relative": true
-        },
-        "field": "date_updated",
-        "group": null,
-        "hidden": true,
-        "interface": "datetime",
-        "note": null,
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "date-updated"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "date_updated",
-        "table": "user_suggestions",
-        "data_type": "timestamp with time zone",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "pages",
-      "type": "integer",
-      "meta": {
-        "collection": "user_suggestions",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "pages",
-        "group": null,
-        "hidden": true,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 5,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "pages",
-        "table": "user_suggestions",
-        "data_type": "integer",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "pages",
-        "foreign_key_column": "id"
-      }
     }
   ],
   "systemFields": [
@@ -5613,6 +5559,31 @@
       }
     },
     {
+      "collection": "directus_users",
+      "field": "pages_voted_on",
+      "related_collection": "plot_suggestions",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "directus_users",
+        "many_field": "pages_voted_on",
+        "one_allowed_collections": null,
+        "one_collection": "plot_suggestions",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": "users_voted",
+        "sort_field": null
+      },
+      "schema": {
+        "table": "directus_users",
+        "column": "pages_voted_on",
+        "foreign_key_table": "plot_suggestions",
+        "foreign_key_column": "id",
+        "constraint_name": "directus_users_pages_voted_on_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
       "collection": "page_branches",
       "field": "linked_pages_id",
       "related_collection": "pages",
@@ -5758,6 +5729,81 @@
         "foreign_key_table": "comics",
         "foreign_key_column": "id",
         "constraint_name": "pages_comic_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "user_updated",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "plot_suggestions",
+        "many_field": "user_updated",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "plot_suggestions",
+        "column": "user_updated",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "plot_suggestions_user_updated_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "user_created",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "plot_suggestions",
+        "many_field": "user_created",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "plot_suggestions",
+        "column": "user_created",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "plot_suggestions_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "page",
+      "related_collection": "pages",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "plot_suggestions",
+        "many_field": "page",
+        "one_allowed_collections": null,
+        "one_collection": "pages",
+        "one_collection_field": null,
+        "one_deselect_action": "delete",
+        "one_field": "plot_suggestions",
+        "sort_field": null
+      },
+      "schema": {
+        "table": "plot_suggestions",
+        "column": "page",
+        "foreign_key_table": "pages",
+        "foreign_key_column": "id",
+        "constraint_name": "plot_suggestions_page_foreign",
         "on_update": "NO ACTION",
         "on_delete": "CASCADE"
       }
@@ -5960,131 +6006,6 @@
         "constraint_name": "tags_user_created_foreign",
         "on_update": "NO ACTION",
         "on_delete": "NO ACTION"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "user_updated",
-      "related_collection": "directus_users",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "user_comments",
-        "many_field": "user_updated",
-        "one_allowed_collections": null,
-        "one_collection": "directus_users",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": null
-      },
-      "schema": {
-        "table": "user_comments",
-        "column": "user_updated",
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id",
-        "constraint_name": "user_comments_user_updated_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "NO ACTION"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "user_created",
-      "related_collection": "directus_users",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "user_comments",
-        "many_field": "user_created",
-        "one_allowed_collections": null,
-        "one_collection": "directus_users",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": null
-      },
-      "schema": {
-        "table": "user_comments",
-        "column": "user_created",
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id",
-        "constraint_name": "user_comments_user_created_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "NO ACTION"
-      }
-    },
-    {
-      "collection": "user_comments",
-      "field": "pages",
-      "related_collection": "pages",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "user_comments",
-        "many_field": "pages",
-        "one_allowed_collections": null,
-        "one_collection": "pages",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": "user_comments",
-        "sort_field": null
-      },
-      "schema": {
-        "table": "user_comments",
-        "column": "pages",
-        "foreign_key_table": "pages",
-        "foreign_key_column": "id",
-        "constraint_name": "user_comments_pages_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "user_updated",
-      "related_collection": "directus_users",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "user_suggestions",
-        "many_field": "user_updated",
-        "one_allowed_collections": null,
-        "one_collection": "directus_users",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": null
-      },
-      "schema": {
-        "table": "user_suggestions",
-        "column": "user_updated",
-        "foreign_key_table": "directus_users",
-        "foreign_key_column": "id",
-        "constraint_name": "user_suggestions_user_updated_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "NO ACTION"
-      }
-    },
-    {
-      "collection": "user_suggestions",
-      "field": "pages",
-      "related_collection": "pages",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "user_suggestions",
-        "many_field": "pages",
-        "one_allowed_collections": null,
-        "one_collection": "pages",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": "user_suggestions",
-        "sort_field": null
-      },
-      "schema": {
-        "table": "user_suggestions",
-        "column": "pages",
-        "foreign_key_table": "pages",
-        "foreign_key_column": "id",
-        "constraint_name": "user_suggestions_pages_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
       }
     }
   ]
