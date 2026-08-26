@@ -60,6 +60,7 @@ export const atkinsonHyperlegible = Atkinson_Hyperlegible({
 	style: ["normal", "italic"],
 	display: "swap",
 	variable: "--font-atkinson-hyperlegible",
+	fallback: ["sans-serif"],
 })
 
 export const bebasNeue = Bebas_Neue({
@@ -68,6 +69,7 @@ export const bebasNeue = Bebas_Neue({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-bebas-neue",
+	fallback: ["sans-serif"],
 })
 
 export const chicle = Chicle({
@@ -76,6 +78,7 @@ export const chicle = Chicle({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-chicle",
+	fallback: ["fantasy"],
 })
 
 export const caesarDressing = Caesar_Dressing({
@@ -84,6 +87,7 @@ export const caesarDressing = Caesar_Dressing({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-caesar-dressing",
+	fallback: ["fantasy"],
 })
 
 export const comicNeue = Comic_Neue({
@@ -92,6 +96,7 @@ export const comicNeue = Comic_Neue({
 	style: ["normal", "italic"],
 	display: "swap",
 	variable: "--font-comic-neue",
+	fallback: ["sans-serif"],
 })
 
 export const germaniaOne = Germania_One({
@@ -100,6 +105,7 @@ export const germaniaOne = Germania_One({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-germania-one",
+	fallback: ["fantasy"],
 })
 
 export const greatVibes = Great_Vibes({
@@ -108,6 +114,7 @@ export const greatVibes = Great_Vibes({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-great-vibes",
+	fallback: ["cursive"],
 })
 
 export const inter = Inter({
@@ -116,6 +123,7 @@ export const inter = Inter({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-inter",
+	fallback: ["sans-serif"],
 })
 
 export const lexend = Lexend({
@@ -124,6 +132,7 @@ export const lexend = Lexend({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-lexend",
+	fallback: ["sans-serif"],
 })
 
 export const lora = Lora({
@@ -132,6 +141,7 @@ export const lora = Lora({
 	style: ["normal", "italic"],
 	display: "swap",
 	variable: "--font-lora",
+	fallback: ["serif"],
 })
 
 export const manufacturingConsent = Manufacturing_Consent({
@@ -140,6 +150,7 @@ export const manufacturingConsent = Manufacturing_Consent({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-manufacturing-consent",
+	fallback: ["cursive"],
 })
 
 export const montserrat = Montserrat({
@@ -148,6 +159,7 @@ export const montserrat = Montserrat({
 	style: ["normal", "italic"],
 	display: "swap",
 	variable: "--font-montserrat",
+	fallback: ["sans-serif"],
 })
 
 export const pressStart2P = Press_Start_2P({
@@ -156,6 +168,7 @@ export const pressStart2P = Press_Start_2P({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-press-start-2p",
+	fallback: ["sans-serif"],
 })
 
 export const sancreek = Sancreek({
@@ -164,6 +177,7 @@ export const sancreek = Sancreek({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-sancreek",
+	fallback: ["serif"],
 })
 
 export const uncialAntiqua = Uncial_Antiqua({
@@ -172,6 +186,7 @@ export const uncialAntiqua = Uncial_Antiqua({
 	style: ["normal"],
 	display: "swap",
 	variable: "--font-uncial-antiqua",
+	fallback: ["serif"],
 })
 
 export const fonts = [
@@ -181,7 +196,6 @@ export const fonts = [
 		font: atkinsonHyperlegible,
 		copy: true,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Bebas Neue",
@@ -189,7 +203,6 @@ export const fonts = [
 		font: bebasNeue,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Chicle",
@@ -197,7 +210,6 @@ export const fonts = [
 		font: chicle,
 		copy: false,
 		display: true,
-		fontFamily: "fantasy",
 	},
 	{
 		name: "Caesar Dressing",
@@ -205,7 +217,6 @@ export const fonts = [
 		font: caesarDressing,
 		copy: false,
 		display: true,
-		fontFamily: "fantasy",
 	},
 	{
 		name: "Comic Neue",
@@ -213,7 +224,6 @@ export const fonts = [
 		font: comicNeue,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Germania One",
@@ -221,7 +231,6 @@ export const fonts = [
 		font: germaniaOne,
 		copy: false,
 		display: true,
-		fontFamily: "fantasy",
 	},
 	{
 		name: "Great Vibes",
@@ -229,7 +238,6 @@ export const fonts = [
 		font: greatVibes,
 		copy: false,
 		display: true,
-		fontFamily: "cursive",
 	},
 	{
 		name: "Inter",
@@ -237,7 +245,6 @@ export const fonts = [
 		font: inter,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Lexend",
@@ -245,7 +252,6 @@ export const fonts = [
 		font: lexend,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Lora",
@@ -253,7 +259,6 @@ export const fonts = [
 		font: lora,
 		copy: false,
 		display: true,
-		fontFamily: "serif",
 	},
 	{
 		name: "Manufacturing Consent",
@@ -261,7 +266,6 @@ export const fonts = [
 		font: manufacturingConsent,
 		copy: false,
 		display: true,
-		fontFamily: "cursive",
 	},
 	{
 		name: "Montserrat",
@@ -269,7 +273,6 @@ export const fonts = [
 		font: montserrat,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Press Start 2P",
@@ -277,7 +280,6 @@ export const fonts = [
 		font: pressStart2P,
 		copy: false,
 		display: true,
-		fontFamily: "sans-serif",
 	},
 	{
 		name: "Sancreek",
@@ -285,7 +287,6 @@ export const fonts = [
 		font: sancreek,
 		copy: false,
 		display: true,
-		fontFamily: "serif",
 	},
 	{
 		name: "Uncial Antiqua",
@@ -293,7 +294,6 @@ export const fonts = [
 		font: uncialAntiqua,
 		copy: false,
 		display: true,
-		fontFamily: "serif",
 	},
 ]
 /** ------------------------------------------------ **
