@@ -14,6 +14,7 @@ export interface DirectusSchema {
 	comics: ComicsCollection[]
 			authors: DirectusUser[]
 	pages: PagesCollection[]
+			plot_suggestions: PlotSuggestionsCollection[]
 	page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
 	user_comments: CommentsCollection[]
@@ -68,9 +69,8 @@ export interface PagesCollection {
 	comic_panels: ComicPanelsCollection[]
 	// Feedback
 	plot_prompt: string | null
-	plot_suggestions: { title: string; votes?: number }[]
+	plot_suggestions: PlotSuggestionsCollection[]
 	allow_user_suggestions: Boolean
-	user_suggestions: []
 	allow_user_comments: Boolean
 	user_comments: []
 	// Routing
@@ -78,6 +78,17 @@ export interface PagesCollection {
 	next_pages: PageBranchesCollection[]
 	// Meta
 	id: number
+	user_created: DirectusUser
+	date_created: "datetime"
+	user_updated: DirectusUser
+	date_updated: "datetime"
+}
+
+export interface PlotSuggestionsCollection {
+	title: string
+	slug: string
+	users_voted: DirectusUser[]
+	votes: number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
