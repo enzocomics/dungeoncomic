@@ -1,6 +1,6 @@
 /**----------------------------------- */
 import "@/styles/globals.css"
-import { copy, display } from "@/styles/fonts"
+import { fonts } from "@/styles/fonts"
 // FUNCTIONS
 import clsx from "clsx"
 // LIBRARIES
@@ -18,8 +18,9 @@ export default async function RootLayoutUI({
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
-			`${copy.variable}`,
-			`${display.variable}`,
+			Object.values(fonts).map((f) => f.font.variable),
+			// `${copy.variable}`,
+			// `${display.variable}`,
 			// Default Colours
 			"text-base-content",
 			"bg-secondary-200",
