@@ -1696,7 +1696,7 @@
         "group": "appearance",
         "hidden": false,
         "interface": "file-image",
-        "note": null,
+        "note": "OpenGraph Image",
         "options": {
           "allowedMimeTypes": [
             "image/jpeg",
@@ -1750,7 +1750,7 @@
         "group": "appearance",
         "hidden": false,
         "interface": "file-image",
-        "note": null,
+        "note": "Image that shows up at the top of the comic",
         "options": {
           "allowedMimeTypes": [
             "image/jpeg",
@@ -1830,7 +1830,7 @@
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "half"
+        "width": "full"
       },
       "schema": {
         "name": "landing_page",
@@ -1853,40 +1853,25 @@
     },
     {
       "collection": "comics",
-      "field": "comic_options",
-      "type": "json",
+      "field": "allow_comments",
+      "type": "boolean",
       "meta": {
         "collection": "comics",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "comic_options",
+        "field": "allow_comments",
         "group": "options",
         "hidden": false,
-        "interface": "select-multiple-checkbox",
+        "interface": "boolean",
         "note": null,
-        "options": {
-          "choices": [
-            {
-              "text": "Allow Comments",
-              "value": "allow-comments"
-            },
-            {
-              "text": "Allow Suggestions",
-              "value": "allow-suggestions"
-            },
-            {
-              "text": "Allow Page Likes",
-              "value": "allow-page-likes"
-            }
-          ]
-        },
+        "options": null,
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 3,
         "special": [
-          "cast-json"
+          "cast-boolean"
         ],
         "translations": null,
         "validation": null,
@@ -1894,16 +1879,238 @@
         "width": "half"
       },
       "schema": {
-        "name": "comic_options",
+        "name": "allow_comments",
         "table": "comics",
-        "data_type": "json",
-        "default_value": [
-          "allow-comments"
-        ],
+        "data_type": "boolean",
+        "default_value": true,
         "max_length": null,
         "numeric_precision": null,
         "numeric_scale": null,
         "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "allow_user_suggestions",
+      "type": "boolean",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "allow_user_suggestions",
+        "group": "options",
+        "hidden": false,
+        "interface": "boolean",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "allow_user_suggestions",
+        "table": "comics",
+        "data_type": "boolean",
+        "default_value": false,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "copy_font",
+      "type": "string",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "copy_font",
+        "group": "appearance",
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": {
+          "choices": [
+            {
+              "text": "Atkinson Hyperlegible",
+              "value": "Atkinson_Hyperlegible"
+            },
+            {
+              "text": "Comic Neue",
+              "value": "Comic_Neue"
+            },
+            {
+              "text": "Inter",
+              "value": "Inter"
+            },
+            {
+              "text": "Lexend",
+              "value": "Lexend"
+            },
+            {
+              "text": "Montserrat",
+              "value": "Montserrat"
+            },
+            {
+              "text": "Press Start 2P",
+              "value": "Press_Start_2P"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "copy_font",
+        "table": "comics",
+        "data_type": "character varying",
+        "default_value": "Atkinson_Hyperlegible",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "display_font",
+      "type": "string",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "display_font",
+        "group": "appearance",
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": {
+          "choices": [
+            {
+              "text": "Atkinson Hyperlegible",
+              "value": "Atkinson_Hyperlegible"
+            },
+            {
+              "text": "Bebas Neue",
+              "value": "Bebas_Neue"
+            },
+            {
+              "text": "Chicle",
+              "value": "Chicle"
+            },
+            {
+              "text": "Caesar Dressing",
+              "value": "Caesar_Dressing"
+            },
+            {
+              "text": "Comic Neue",
+              "value": "Comic_Neue"
+            },
+            {
+              "text": "Germania One",
+              "value": "Germania_One"
+            },
+            {
+              "text": "Great Vibes",
+              "value": "Great_Vibes"
+            },
+            {
+              "text": "Inter",
+              "value": "Inter"
+            },
+            {
+              "text": "Lexend",
+              "value": "Lexend"
+            },
+            {
+              "text": "Lora",
+              "value": "Lora"
+            },
+            {
+              "text": "Manufacturing Consent",
+              "value": "Manufacturing_Consent"
+            },
+            {
+              "text": "Montserrat",
+              "value": "Montserrat"
+            },
+            {
+              "text": "Press Start 2P",
+              "value": "Press_Start_2P"
+            },
+            {
+              "text": "Sancreek",
+              "value": "Sancreek"
+            },
+            {
+              "text": "Uncial_Antiqua",
+              "value": "Uncial_Antiqua"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "display_font",
+        "table": "comics",
+        "data_type": "character varying",
+        "default_value": "Atkinson_Hyperlegible",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
         "is_unique": false,
         "is_indexed": false,
         "is_primary_key": false,
