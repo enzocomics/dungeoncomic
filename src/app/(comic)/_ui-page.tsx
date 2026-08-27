@@ -81,9 +81,6 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
-	const router = useRouter()
-	// console.log(page.plot_suggestions)
-	// console.log(page.user_created.id)
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -98,7 +95,7 @@ export default function ComicPageUI({
 			{page.title &&
 				<h4 className={clsx(
 					"text-3xl",
-					"font-bold",
+					"font-semibold",
 					"font-display",
 					"text-center"
 				)}>
@@ -259,7 +256,7 @@ export default function ComicPageUI({
 											"block",
 											"p-2",
 											"hover:bg-black/10",
-										)} href="/1">Start Over</Link>
+										)} href="./">&laquo; Go to Start</Link>
 									</li>
 									{page.prev_pages.map((n, index) =>
 										<li key={index}>
