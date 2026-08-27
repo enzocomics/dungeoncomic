@@ -1,5 +1,4 @@
 /** ------------------------------------------------ **/
-import { NextFontWithVariable } from "next/dist/compiled/@next/font"
 import {
 	Atkinson_Hyperlegible,
 	Bebas_Neue,
