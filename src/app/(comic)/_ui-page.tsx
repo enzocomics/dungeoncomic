@@ -140,6 +140,7 @@ export default function ComicPageUI({
 			{page.plot_prompt &&
 				<div className={clsx(
 					"bg-pink-100",
+					"dark:bg-pink-800",
 					"p-4",
 					"mt-8",
 				)}>
@@ -205,6 +206,7 @@ export default function ComicPageUI({
 								"gap-2",
 								"p-2",
 								"bg-amber-100",
+								"dark:bg-amber-900",
 								"text-xs"
 							)}>
 								{page.next_pages.map((n, index) =>
@@ -243,6 +245,7 @@ export default function ComicPageUI({
 							<div className={clsx(
 								"p-2",
 								"bg-orange-100",
+								"dark:bg-orange-900",
 								"text-xs"
 							)}>
 								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
@@ -290,6 +293,7 @@ export default function ComicPageUI({
 				<ul className={clsx(
 					"p-2",
 					"bg-amber-100",
+					"dark:bg-amber-900",
 					"text-xs"
 				)}>
 					<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
