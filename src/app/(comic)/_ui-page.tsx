@@ -81,6 +81,7 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
+	const router = useRouter()
 	// Get a list of all the comic panel variables
 	// Check if they all exist in the url search params
 	// IF they do, then change the UI to the "submitted" version
@@ -88,10 +89,10 @@ export default function ComicPageUI({
 	// Check if any variables exist at all
 	const varsExist = page.comic_panels ? (page.comic_panels.flatMap(p => p.variables && p.variables.length > 0)).some(Boolean) : false
 	// Get a list of all the comic panel variables
-	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : null
+	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : []
 	) : null
 	// Check the url search params if _every_ variable has been submitted 
-	const varsSubmitted = varParams ? varParams.every((param) => param ? searchParams.has(param) : false) : false
+	const varsSubmitted = varParams && varParams.length > 0 ? varParams.every((param) => param ? searchParams.has(param) : false) : false
 
 	// Render
 	return <>
@@ -106,16 +107,14 @@ export default function ComicPageUI({
 			"bg-base-1",
 			"text-center"
 		)}>
-			{page.title &&
-				<h4 className={clsx(
-					"text-3xl",
-					"font-semibold",
-					"font-display",
-					"text-center"
-				)}>
-					{varsSubmitted ? page.variables_submit_button_text : page.title}
-				</h4>
-			}
+			<h4 className={clsx(
+				"text-3xl",
+				"font-semibold",
+				"font-display",
+				"text-center"
+			)}>
+				{varsExist && varsSubmitted ? page.variables_submit_button_text : page.title}
+			</h4>
 			{/* <p>{page.description}</p> */}
 			{
 				/**------------------------------
@@ -125,55 +124,61 @@ export default function ComicPageUI({
 				 */
 			}
 			<VariablesForm varsExist={varsExist}>
-				{!varsSubmitted && page.comic_panels ? page.comic_panels.map((p, index) => {
-					return <div key={index}>
-						{p.panel_image &&
-							<p><Image
-								className={clsx(
-									"mx-auto"
-								)}
-								src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
-								width={`${p.panel_image.width}`}
-								height={`${p.panel_image.height}`}
-								alt={`${p.panel_image.description}`}
-								loading="eager"
-							/></p>
-						}
-						{/* <p>{p.panel_title}</p> */}
-						<div className={clsx(
-							"mt-4",
-							"prose"
-						)}>
-							{p.panel_description}
-						</div>
-						{/* VARIABLES */}
-						{p.variables && p.variables.length > 0 ?
-							<section className={clsx(
-								"bg-teal-100",
-								"dark:bg-teal-700",
-								"p-2",
-								"w-2/3",
-								"mx-auto",
-								"mt-8",
+				{page.comic_panels ? page.comic_panels.map((p, index) => {
+					// Conditionally render comic panels before OR after variables are submitted based on page option
+					if (
+						(!varsSubmitted && !p.place_after_variables_submitted) ||
+						(varsSubmitted && p.place_after_variables_submitted)
+					)
+						// Render
+						return <div key={index}>
+							{p.panel_image &&
+								<p><Image
+									className={clsx(
+										"mx-auto"
+									)}
+									src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
+									width={`${p.panel_image.width}`}
+									height={`${p.panel_image.height}`}
+									alt={`${p.panel_image.description}`}
+									loading="eager"
+								/></p>
+							}
+							{/* <p>{p.panel_title}</p> */}
+							<div className={clsx(
+								"mt-4",
+								"prose"
 							)}>
-								<section>
-									{p.variables.map((v, index) => {
-										return <div key={index}>
-											<p className={clsx(
-												"text-center"
-											)}><label>{v.prompt || v.name}</label></p>
-											<p>&gt; <input className={clsx(
-												"p-2",
-												"bg-white",
-												"text-black",
-												"w-9/10",
-											)} type="text" name={v.slug} defaultValue={v.default_value}></input></p>
-										</div>
-									})}
+								{p.panel_description}
+							</div>
+							{/* VARIABLES */}
+							{p.variables && p.variables.length > 0 ?
+								<section className={clsx(
+									"bg-teal-100",
+									"dark:bg-teal-700",
+									"p-2",
+									"w-2/3",
+									"mx-auto",
+									"mt-8",
+								)}>
+									<section>
+										{p.variables.map((v, index) => {
+											return <div key={index}>
+												<p className={clsx(
+													"text-center"
+												)}><label>{v.prompt || v.name}</label></p>
+												<p>&gt; <input className={clsx(
+													"p-2",
+													"bg-white",
+													"text-black",
+													"w-9/10",
+												)} type="text" name={v.slug} defaultValue={v.default_value} required></input></p>
+											</div>
+										})}
+									</section>
 								</section>
-							</section>
-							: null}
-					</div>
+								: null}
+						</div>
 				}) : null}
 
 				{
@@ -200,7 +205,8 @@ export default function ComicPageUI({
 							"block",
 							"p-2",
 							"hover:bg-black/10",
-						)}>{`${page.variables_submit_button_text} »` || "Next. »"}</button>
+							"cursor-pointer"
+						)}>{`${page.variables_submit_button_text || "Next Page"} »`}</button>
 					</div>
 				}
 			</VariablesForm>
@@ -318,7 +324,8 @@ export default function ComicPageUI({
 				<div className={clsx(
 					"basis-full",
 				)}>
-					{page.prev_pages && page.prev_pages.length > 0 &&
+					{
+						(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
 						<>
 							<div className={clsx(
 								"p-2",
@@ -326,12 +333,39 @@ export default function ComicPageUI({
 								"dark:bg-orange-900",
 								"text-xs"
 							)}>
-								{/* <button onClick={() => router.back()} >&laquo; Previous Page</button> */}
 								<ul className={clsx(
 									"flex",
 									"flex-col",
 									"gap-2",
 								)}>
+									{/* 
+										Back button: Go back 1 step in user's browser history
+										- TODO: Check if previous page in browser history is actually the previous page in the comic
+									*/}
+									<li>
+										<button className={clsx(
+											"w-full",
+											"block",
+											"p-2",
+											"hover:bg-black/10",
+											"cursor-pointer"
+										)} onClick={() => router.back()} >&laquo; Go Back</button>
+									</li>
+
+									{/* 
+										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
+									*/}
+									{page.prev_pages && page.prev_pages.length > 1 && page.prev_pages.map((n, index) =>
+										<li key={index}>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={`${n.pages_id.comic_pagenum}`}>
+												<strong>&laquo; {n.pages_id.title}</strong>
+											</Link>
+										</li>
+									)}
 									<li>
 										<Link className={clsx(
 											"block",
@@ -339,18 +373,6 @@ export default function ComicPageUI({
 											"hover:bg-black/10",
 										)} href="./">&laquo; Go to Start</Link>
 									</li>
-									{page.prev_pages.map((n, index) =>
-										<li key={index}>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={`${n.pages_id.comic_pagenum}`}>
-												{/* <strong>&laquo; Return to page {n.pages_id.comic_pagenum}<br /></strong> */}
-												<strong>&laquo; {n.pages_id.title}</strong>
-											</Link>
-										</li>
-									)}
 								</ul>
 							</div>
 						</>
