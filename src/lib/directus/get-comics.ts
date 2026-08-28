@@ -87,6 +87,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 				// Content
 				{
 					comic_panels: [
+						// Content
 						{
 							panel_image: [
 								"filename_disk",
@@ -98,8 +99,20 @@ export async function getComicPage(comic_slug: string, num: number) {
 						},
 						"panel_title",
 						"panel_description",
+						// User Input
+						{
+							variables: [
+								"name",
+								"slug",
+								"default_value",
+								"description",
+								"prompt",
+							],
+						},
 					],
 				},
+				"variables_new_title",
+				"variables_submit_button_text",
 				// Feedback
 				"plot_prompt",
 				{
