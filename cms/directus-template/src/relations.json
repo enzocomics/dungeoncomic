@@ -156,32 +156,6 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "page_id",
-    "related_collection": "pages",
-    "schema": {
-      "constraint_name": "comic_panels_page_id_foreign",
-      "table": "comic_panels",
-      "column": "page_id",
-      "foreign_key_schema": "public",
-      "foreign_key_table": "pages",
-      "foreign_key_column": "id",
-      "on_update": "NO ACTION",
-      "on_delete": "CASCADE"
-    },
-    "meta": {
-      "many_collection": "comic_panels",
-      "many_field": "page_id",
-      "one_collection": "pages",
-      "one_field": "comic_panels",
-      "one_collection_field": null,
-      "one_allowed_collections": null,
-      "junction_field": null,
-      "sort_field": "sort",
-      "one_deselect_action": "nullify"
-    }
-  },
-  {
     "collection": "page_branches",
     "field": "linked_pages_id",
     "related_collection": "pages",
@@ -751,6 +725,110 @@
       "junction_field": null,
       "sort_field": null,
       "one_deselect_action": "delete"
+    }
+  },
+  {
+    "collection": "variables",
+    "field": "user_updated",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "variables_user_updated_foreign",
+      "table": "variables",
+      "column": "user_updated",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "variables",
+      "many_field": "user_updated",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "variables",
+    "field": "user_created",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "variables_user_created_foreign",
+      "table": "variables",
+      "column": "user_created",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "variables",
+      "many_field": "user_created",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "variables",
+    "field": "panel_id",
+    "related_collection": "comic_panels",
+    "schema": {
+      "constraint_name": "variables_panel_id_foreign",
+      "table": "variables",
+      "column": "panel_id",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "comic_panels",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "variables",
+      "many_field": "panel_id",
+      "one_collection": "comic_panels",
+      "one_field": "variables",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "page_id",
+    "related_collection": "pages",
+    "schema": {
+      "constraint_name": "comic_panels_page_id_foreign",
+      "table": "comic_panels",
+      "column": "page_id",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "CASCADE"
+    },
+    "meta": {
+      "many_collection": "comic_panels",
+      "many_field": "page_id",
+      "one_collection": "pages",
+      "one_field": "comic_panels",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": "sort",
+      "one_deselect_action": "nullify"
     }
   }
 ]
