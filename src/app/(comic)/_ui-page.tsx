@@ -101,6 +101,8 @@ export default function ComicPageUI({
 	// State for the user variables
 	const [userVars, setUserVars] = useState<Record<string, string> | null>(null)
 
+	// GUESTS: LOAD VARIABLES FROM LOCALSTORAGE
+	// TODO: Figure out if we can fix the content flash. Perhaps switch to cookies?
 	// UseEffect: Runs once on pageload & on variable form submit
 	useEffect(() => {
 		if (varsSubmitted)
@@ -201,7 +203,7 @@ export default function ComicPageUI({
 													"bg-white",
 													"text-black",
 													"w-9/10",
-												)} type="text" name={v.slug} defaultValue={v.default_value} required></input></p>
+												)} type="text" name={v.slug} defaultValue={userVars && userVars[v.slug] ? userVars[v.slug] : v.default_value} required></input></p>
 											</div>
 										})}
 									</section>
@@ -449,7 +451,10 @@ export default function ComicPageUI({
 		</section>
 	</>
 }
-
+/**-----------------------------------
+ * Conditionally Render the Form depending on if variables exist
+ * ---
+ */
 function VariablesForm({
 	varsExist,
 	children
@@ -469,6 +474,10 @@ function VariablesForm({
 }
 
 
+/**-----------------------------------
+ * Replaces Comic Variables in a string with the User Variables,
+ * ---
+ */
 export function replaceComicVariables(
 	content: string | null,
 	variables: Awaited<ReturnType<typeof getComicVariables>>,
@@ -485,11 +494,12 @@ export function replaceComicVariables(
 			(fullMatch, slug: string) => {
 				const variable = variablesBySlug.get(slug)
 
+				// Fallback to default value
 				const value = userVariables?.[slug] ?? variable?.default_value
 
 				// Keep unknown tags unchanged, or return "" if preferred
 				return value !== undefined
-					? `<strong>${value}</strong>`
+					? `<strong>${value}</strong>` // TODO: markdown? classname? so we can target and style as needed
 					: fullMatch
 			},
 		)
