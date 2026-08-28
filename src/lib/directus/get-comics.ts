@@ -109,6 +109,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 								"prompt",
 							],
 						},
+						"place_after_variables_submitted",
 					],
 				},
 				"variables_submit_button_text",
