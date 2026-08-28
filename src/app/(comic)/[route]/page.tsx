@@ -10,6 +10,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_metadata"
+import { getUserVarsCookie } from "../_action"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -54,13 +55,22 @@ export default async function RoutePage({
 		const page = await getComicPage(frontpage_comic.slug, parseInt(route))
 		// 404 if it does not exist
 		if (!page) notFound()
-		// RETURN THE COMIC PAGE UI (IF it is published)
+
+		// Get the User Variable Cookie
+		const comic = await getComic(frontpage_comic.slug)
+		const userVarsCookie = await getUserVarsCookie(comic)
+		// Get the comic page & variables
 		const variables = await getComicVariables(frontpage_comic.slug)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
+
 		if (!comicPage || comicPage && comicPage.status !== "published")
 			notFound()
 		else
-			return <ComicPageUI page={comicPage} variables={variables} />
+			return <ComicPageUI
+				page={comicPage}
+				variables={variables}
+				userVarsCookie={userVarsCookie}
+			/>
 	}
 
 	/**----------------------------------- */

@@ -6,10 +6,11 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { comicPageMetadata, notFoundMetadata } from "../../_metadata"
 import ComicPageUI from "../../_ui-page"
+import { getUserVarsCookie } from "../../_action"
 
 /**-----------------------------------
  * COMIC SINGLE SUBPAGE
@@ -50,13 +51,21 @@ export default async function ComicPagenumPage({
 	// LAYOUT MODE 2
 	// Throw 404 if the pagenum param is not a number
 	if (isNaN(pagenum)) notFound()
+
+	// Get the User Variable Cookie
+	const comic = await getComic(route)
+	const userVarsCookie = await getUserVarsCookie(comic)
 	// Get the comic page IF it is published
 	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
 	if (!comicPage || comicPage && comicPage.status !== "published")
 		notFound()
 	else
-		return <ComicPageUI page={comicPage} variables={variables} />
+		return <ComicPageUI
+			page={comicPage}
+			variables={variables}
+			userVarsCookie={userVarsCookie}
+		/>
 }
 
 /**-----------------------------------

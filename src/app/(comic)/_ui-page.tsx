@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
-import { useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 // DATA
 import { directusURL } from "@/data/env"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
@@ -15,6 +15,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
+import { getUserVarsCookie, saveUserVarsCookie } from "./_action"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -80,48 +81,48 @@ export function ComicLandingPageUI({
  */
 export default function ComicPageUI({
 	page,
-	variables
+	variables,
+	userVarsCookie
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVarsCookie?: string
 }) {
-
+	const pathname = usePathname()
 	const router = useRouter()
+	const searchParams = useSearchParams()
+
 	// Get a list of all the comic panel variables
 	// Check if they all exist in the url search params
 	// IF they do, then change the UI to the "submitted" version
-	const searchParams = useSearchParams()
-	// Check if any variables exist at all
+
+	// Check if any variables have been defined in the comic project
 	const varsExist = page.comic_panels ? (page.comic_panels.flatMap(p => p.variables && p.variables.length > 0)).some(Boolean) : false
-	// Get a list of all the comic panel variables
+
+	// Get a list of all the variables for this specific page's comic panels
 	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : []
 	) : null
+
 	// Check the url search params if _every_ variable has been submitted 
 	const varsSubmitted = varParams && varParams.length > 0 ? varParams.every((param) => param ? searchParams.has(param) : false) : false
 
-	// State for the user variables
-	const [userVars, setUserVars] = useState<Record<string, string> | null>(null)
+	// Get a list of all the variables the reader has submitted to this page
+	const submittedUserVars: { [k: string]: string | null; } = varParams ? Object.fromEntries(
+		varParams.map((key) => [key, searchParams.get(key)])
+	) : {}
 
-	// GUESTS: LOAD VARIABLES FROM LOCALSTORAGE
-	// TODO: Figure out if we can fix the content flash. Perhaps switch to cookies?
-	// UseEffect: Runs once on pageload & on variable form submit
+	// Get the variables that are currently saved in cookies
+	const userVariables: Record<string, string> | undefined = userVarsCookie ? JSON.parse(userVarsCookie) : undefined
+
+	// Check if variables have been submitted to this page and save them to cookie
 	useEffect(() => {
-		if (varsSubmitted)
-			// GUESTS: Save the submitted formdata to localstorage
-			for (const [key, value] of searchParams.entries())
-				localStorage.setItem(`${page.comic.slug}-${key}`, value)
-
-		// Set the variables on submit, on a regular page load, OR if no vars exist
-		if (varsSubmitted || !varsSubmitted || !userVars)
-			setUserVars(Object.fromEntries(
-				// Iterate through comic variable list  as reference for fetching user variables
-				variables.map((v) => [
-					v.slug,
-					localStorage.getItem(`${page.comic.slug}-${v.slug}`)
-				])) as Record<string, string>)
-
-	}, [varsSubmitted])
-
+		const saveUserVariables = async () => {
+			// Save Variables if they have been submitted
+			varsSubmitted ?? await saveUserVarsCookie(submittedUserVars)
+		}
+		saveUserVariables()
+		// Run every time client navigates (url change or searchparams change)
+	}, [pathname, searchParams.toString()])
 
 	// Render
 	return <>
@@ -145,7 +146,7 @@ export default function ComicPageUI({
 				{replaceComicVariables(
 					(varsExist && varsSubmitted ? page.variables_submit_button_text : page.title),
 					variables,
-					userVars
+					userVariables
 				)
 				}
 			</h4>
@@ -184,7 +185,7 @@ export default function ComicPageUI({
 								"prose"
 							)}
 								// TODO: You better freakin' sanitize this
-								dangerouslySetInnerHTML={{ __html: replaceComicVariables(p.panel_description, variables, userVars, true) }}
+								dangerouslySetInnerHTML={{ __html: replaceComicVariables(p.panel_description, variables, userVariables, true) }}
 							>
 								{/* {replaceComicVariables(p.panel_description, variables)} */}
 							</div>
@@ -200,6 +201,7 @@ export default function ComicPageUI({
 								)}>
 									<section>
 										{p.variables.map((v, index) => {
+											// console.log(loadedVars[v.slug])
 											return <div key={index}>
 												<p className={clsx(
 													"text-center"
@@ -209,7 +211,10 @@ export default function ComicPageUI({
 													"bg-white",
 													"text-black",
 													"w-9/10",
-												)} type="text" name={v.slug} defaultValue={userVars && userVars[v.slug] ? userVars[v.slug] : v.default_value} required></input></p>
+												)} type="text" name={v.slug} defaultValue={
+													userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
+
+												} required></input></p>
 											</div>
 										})}
 									</section>
@@ -341,7 +346,7 @@ export default function ComicPageUI({
 													replaceComicVariables(
 														n.linked_pages_id.title,
 														variables,
-														userVars
+														userVariables
 													)
 												} &raquo;</strong><br />
 												{n.linked_pages_id.subtitle &&
@@ -349,7 +354,7 @@ export default function ComicPageUI({
 														replaceComicVariables(
 															n.linked_pages_id.subtitle,
 															variables,
-															userVars
+															userVariables
 														)
 													}</p>
 												}
@@ -505,19 +510,19 @@ function VariablesForm({
 
 
 /**-----------------------------------
- * Replaces Comic Variables in a string with the User Variables,
+ * Replaces Comic Variables in a string with the User Variables
  * ---
  */
 export function replaceComicVariables(
 	content: string | null,
 	variables: Awaited<ReturnType<typeof getComicVariables>>,
-	userVariables?: Record<string, string> | null,
+	userVariables?: Record<string, string> | undefined,
 	html?: boolean
 ) {
 	// Remap the variables array so the slug is the key and the variable object is the value, so we can retrieve a variable by its slug
 	const variablesBySlug = new Map(variables.map((v) => [v.slug, v]))
 
-	// Search through the content string for [var:some-slug]
+	// Search through the conte t string for every instance of `[var:some-slug]`
 	return content
 		? content.replace(
 			/\[var:([a-zA-Z0-9_-]+)\]/g,
@@ -526,7 +531,7 @@ export function replaceComicVariables(
 				const variable = variablesBySlug.get(slug)
 
 				// Fallback to default value
-				const value = userVariables?.[slug] ?? variable?.default_value
+				const value = (userVariables && userVariables[slug]) ?? variable?.default_value
 
 				// Keep unknown tags unchanged, or return "" if preferred
 				return value !== undefined
