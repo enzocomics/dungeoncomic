@@ -72,7 +72,6 @@ export interface PagesCollection {
 	// Content
 	comic_panels: ComicPanelsCollection[]
 	// Variables Details
-	variables_new_title: string | null
 	variables_submit_button_text: string | null
 	// Feedback
 	plot_prompt: string | null

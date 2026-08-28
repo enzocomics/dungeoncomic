@@ -111,7 +111,6 @@ export async function getComicPage(comic_slug: string, num: number) {
 						},
 					],
 				},
-				"variables_new_title",
 				"variables_submit_button_text",
 				// Feedback
 				"plot_prompt",
