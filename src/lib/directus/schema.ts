@@ -16,8 +16,9 @@ export interface DirectusSchema {
 			authors: DirectusUser[]
 	pages: PagesCollection[]
 			plot_suggestions: PlotSuggestionsCollection[]
-	page_branches: PageBranchesCollection[]
+			page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
+			variables: VariablesCollection[]
 	user_comments: CommentsCollection[]
 	directus_users: DirectusUser
 	// SETTINGS
@@ -70,6 +71,9 @@ export interface PagesCollection {
 	thumbnail: ImageCollection | null
 	// Content
 	comic_panels: ComicPanelsCollection[]
+	// Variables Details
+	variables_new_title: string | null
+	variables_submit_button_text: string | null
 	// Feedback
 	plot_prompt: string | null
 	plot_suggestions: PlotSuggestionsCollection[]
@@ -111,12 +115,23 @@ export interface ComicPanelsCollection {
 	panel_image: ImageCollection
 	panel_title: string | null
 	panel_description: string | null
+	// User Input
+	variables: VariablesCollection[]
 	// Meta
 	id: number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
 	date_updated: "datetime"
+}
+
+export interface VariablesCollection {
+	// Content
+	name: string
+	slug: string
+	default_value: string
+	description: string | null
+	prompt: string | null
 }
 
 /** ------------------------------------------------ **/
