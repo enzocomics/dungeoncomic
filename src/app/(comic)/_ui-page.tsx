@@ -110,8 +110,8 @@ export default function ComicPageUI({
 			for (const [key, value] of searchParams.entries())
 				localStorage.setItem(`${page.comic.slug}-${key}`, value)
 
-		// Set the variables on submit, OR if no vars exist
-		if (varsSubmitted || !userVars)
+		// Set the variables on submit, on a regular page load, OR if no vars exist
+		if (varsSubmitted || !varsSubmitted || !userVars)
 			setUserVars(Object.fromEntries(
 				// Iterate through comic variable list  as reference for fetching user variables
 				variables.map((v) => [
