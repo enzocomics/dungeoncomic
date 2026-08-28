@@ -84,14 +84,14 @@ export default function ComicPageUI({
 	// Get a list of all the comic panel variables
 	// Check if they all exist in the url search params
 	// IF they do, then change the UI to the "submitted" version
-
 	const searchParams = useSearchParams()
+	// Check if any variables exist at all
+	const varsExist = page.comic_panels ? (page.comic_panels.flatMap(p => p.variables && p.variables.length > 0)).some(Boolean) : false
 	// Get a list of all the comic panel variables
 	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : null
 	) : null
-
 	// Check the url search params if _every_ variable has been submitted 
-	const varsSubmitted = varParams?.every((param) => param ? searchParams.has(param) : false)
+	const varsSubmitted = varParams ? varParams.every((param) => param ? searchParams.has(param) : false) : false
 
 	// Render
 	return <>
@@ -113,75 +113,97 @@ export default function ComicPageUI({
 					"font-display",
 					"text-center"
 				)}>
-					{page.title ? page.title : ""}
+					{varsSubmitted ? page.variables_submit_button_text : page.title}
 				</h4>
 			}
 			{/* <p>{page.description}</p> */}
 			{
 				/**------------------------------
 				 *	DISPLAY THE COMIC PANELS
+				 * ---
+				 * - Do not show if variables have been submitted correctly
 				 */
 			}
-			{page.comic_panels ? page.comic_panels.map((p, index) => {
-				return <div key={index}>
-					{p.panel_image &&
-						<p><Image
-							className={clsx(
-								"mx-auto"
-							)}
-							src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
-							width={`${p.panel_image.width}`}
-							height={`${p.panel_image.height}`}
-							alt={`${p.panel_image.description}`}
-							loading="eager"
-						/></p>
-					}
-					{/* <p>{p.panel_title}</p> */}
-					<div className={clsx(
-						"mt-4",
-						"prose"
-					)}>
-						{p.panel_description}
-					</div>
-					{/* VARIABLES */}
-					{p.variables && p.variables.length > 0 ?
-						<form action="" className={clsx(
-							"bg-teal-100",
-							"dark:bg-teal-700",
-							"p-2",
-							"w-2/3",
-							"mx-auto",
-							"mt-8",
+			<VariablesForm varsExist={varsExist}>
+				{!varsSubmitted && page.comic_panels ? page.comic_panels.map((p, index) => {
+					return <div key={index}>
+						{p.panel_image &&
+							<p><Image
+								className={clsx(
+									"mx-auto"
+								)}
+								src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
+								width={`${p.panel_image.width}`}
+								height={`${p.panel_image.height}`}
+								alt={`${p.panel_image.description}`}
+								loading="eager"
+							/></p>
+						}
+						{/* <p>{p.panel_title}</p> */}
+						<div className={clsx(
+							"mt-4",
+							"prose"
 						)}>
-							<section>
-								{p.variables.map((v, index) => {
-									return <div key={index}>
-										<p className={clsx(
-											"text-center"
-										)}><label>{v.prompt || v.name}</label></p>
-										<p>&gt; <input className={clsx(
-											"p-2",
-											"bg-white",
-											"text-black",
-											"w-9/10",
-										)} type="text" name={v.slug} defaultValue={v.default_value}></input></p>
-									</div>
-								})}
+							{p.panel_description}
+						</div>
+						{/* VARIABLES */}
+						{p.variables && p.variables.length > 0 ?
+							<section className={clsx(
+								"bg-teal-100",
+								"dark:bg-teal-700",
+								"p-2",
+								"w-2/3",
+								"mx-auto",
+								"mt-8",
+							)}>
+								<section>
+									{p.variables.map((v, index) => {
+										return <div key={index}>
+											<p className={clsx(
+												"text-center"
+											)}><label>{v.prompt || v.name}</label></p>
+											<p>&gt; <input className={clsx(
+												"p-2",
+												"bg-white",
+												"text-black",
+												"w-9/10",
+											)} type="text" name={v.slug} defaultValue={v.default_value}></input></p>
+										</div>
+									})}
+								</section>
 							</section>
-							<section>
-								<button className={clsx(
-									"w-full",
-									"bg-red-500",
-									"text-white",
-									"p-2",
-									"mt-2",
-									"rounded"
-								)}>{page.variables_submit_button_text || "Submit"}</button>
-							</section>
-						</form>
-						: null}
-				</div>
-			}) : null}
+							: null}
+					</div>
+				}) : null}
+
+				{
+					/**------------------------------
+					 * SUBMIT BUTTON
+					 * ---
+					 * - Show ONLY if variables exist BUT they haven't been submitted
+					 */
+				}
+				{(varsExist && !varsSubmitted) &&
+					<div className={clsx(
+						"flex",
+						"flex-col",
+						"w-2/3",
+						"mx-auto",
+						"mt-8",
+						"gap-2",
+						"p-2",
+						"bg-amber-100",
+						"dark:bg-amber-900",
+						"text-xs"
+					)}>
+						<button className={clsx(
+							"block",
+							"p-2",
+							"hover:bg-black/10",
+						)}>{`${page.variables_submit_button_text} »` || "Next. »"}</button>
+					</div>
+				}
+			</VariablesForm>
 			{
 				/**------------------------------
 				 * FEEDBACK
@@ -242,43 +264,48 @@ export default function ComicPageUI({
 				{
 					/**------------------------------
 					 *	NEXT NAVIGATION
+					 * ---
+					 * - Display IF variables don't exist at all,
+					 * - OR if variables exist AND they've been submitted
 					 */
 				}
-				<div className={clsx(
-					"mx-auto",
-					"w-2/3",
+				{(!varsExist || (varsExist && varsSubmitted)) &&
+					<div className={clsx(
+						"mx-auto",
+						"w-2/3",
 
-				)}>
-					{page.next_pages && page.next_pages.length > 0 &&
-						<>
-							<ul className={clsx(
-								"flex",
-								"flex-col",
-								"gap-2",
-								"p-2",
-								"bg-amber-100",
-								"dark:bg-amber-900",
-								"text-xs"
-							)}>
-								{page.next_pages.map((n, index) =>
-									<li key={index} className={clsx(
-									)}>
-										<Link className={clsx(
-											"block",
-											"p-2",
-											"hover:bg-black/10",
-										)} href={`${n.linked_pages_id.comic_pagenum}`}>
-											<strong>{n.linked_pages_id.title} &raquo;</strong><br />
-											{n.linked_pages_id.subtitle &&
-												<p>{n.linked_pages_id.subtitle}</p>
-											}
-										</Link>
-									</li>
-								)}
-							</ul>
-						</>
-					}
-				</div>
+					)}>
+						{page.next_pages && page.next_pages.length > 0 &&
+							<>
+								<ul className={clsx(
+									"flex",
+									"flex-col",
+									"gap-2",
+									"p-2",
+									"bg-amber-100",
+									"dark:bg-amber-900",
+									"text-xs"
+								)}>
+									{page.next_pages.map((n, index) =>
+										<li key={index} className={clsx(
+										)}>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={`${n.linked_pages_id.comic_pagenum}`}>
+												<strong>{n.linked_pages_id.title} &raquo;</strong><br />
+												{n.linked_pages_id.subtitle &&
+													<p>{n.linked_pages_id.subtitle}</p>
+												}
+											</Link>
+										</li>
+									)}
+								</ul>
+							</>
+						}
+					</div>
+				}
 
 				{
 					/**------------------------------
@@ -370,4 +397,22 @@ export default function ComicPageUI({
 			</div>
 		</section>
 	</>
+}
+
+function VariablesForm({
+	varsExist,
+	children
+}: {
+	varsExist: Boolean
+	children: React.ReactNode
+}) {
+	// Render Form tags if vars exist
+	if (varsExist)
+		return <form>
+			{children}
+		</form>
+	// Otherwise, render nothing
+	else if (!varsExist)
+		return children
+
 }
