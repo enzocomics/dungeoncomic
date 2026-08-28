@@ -55,6 +55,9 @@ export async function getComic(slug: string) {
 	return request[0]
 }
 
+/** ------------------------------------------------ **
+ * GET SINGLE COMIC PAGE
+ */
 export async function getComicPage(comic_slug: string, num: number) {
 	const request = await publicClient.request(
 		readItems("pages", {
@@ -172,6 +175,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 					],
 				},
 				// Meta
+				{ comic: ["slug"] },
 				{
 					user_created: [
 						"id",
@@ -198,4 +202,41 @@ export async function getComicPage(comic_slug: string, num: number) {
 		}),
 	)
 	return request[0]
+}
+
+/** ------------------------------------------------ **
+ * GET COMIC VARIABLES
+ */
+
+export async function getComicVariables(slug: string) {
+	const request = await publicClient.request(
+		readItems("variables", {
+			// TODO: We should probably eventually put a limit on this
+			limit: -1,
+			fields: [
+				"name",
+				"slug",
+				"default_value",
+				// This is required if we want to apply a deep filter
+				{
+					panel_id: [{ page_id: [{ comic: ["slug"] }] }],
+				},
+			],
+			// Deep filter that goes through each relation to find the value we want to compare to (in this case, the parent comic's slug)
+			deep: {
+				panel_id: {
+					page_id: {
+						comic: {
+							_filter: {
+								slug: {
+									_eq: slug,
+								},
+							},
+						},
+					},
+				},
+			},
+		}),
+	)
+	return request
 }
