@@ -9,7 +9,7 @@ import { cookies } from "next/headers"
  * ---
  */
 
-export async function saveUserVarsCookie(vars: { [k: string]: string | null }) {
+export async function saveUserVarsCookie(vars: Record<string, string | null>) {
 	const cookieStore = await cookies()
 
 	try {

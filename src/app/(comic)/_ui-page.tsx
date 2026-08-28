@@ -107,7 +107,7 @@ export default function ComicPageUI({
 	const varsSubmitted = varParams && varParams.length > 0 ? varParams.every((param) => param ? searchParams.has(param) : false) : false
 
 	// Get a list of all the variables the reader has submitted to this page
-	const submittedUserVars: { [k: string]: string | null; } = varParams ? Object.fromEntries(
+	const submittedUserVars: Record<string, string | null> = varParams ? Object.fromEntries(
 		varParams.map((key) => [key, searchParams.get(key)])
 	) : {}
 
