@@ -142,7 +142,12 @@ export default function ComicPageUI({
 				"font-display",
 				"text-center"
 			)}>
-				{varsExist && varsSubmitted ? page.variables_submit_button_text : page.title}
+				{replaceComicVariables(
+					(varsExist && varsSubmitted ? page.variables_submit_button_text : page.title),
+					variables,
+					userVars
+				)
+				}
 			</h4>
 			{/* <p>{page.description}</p> */}
 			{
@@ -179,7 +184,7 @@ export default function ComicPageUI({
 								"prose"
 							)}
 								// TODO: You better freakin' sanitize this
-								dangerouslySetInnerHTML={{ __html: replaceComicVariables(p.panel_description, variables, userVars) }}
+								dangerouslySetInnerHTML={{ __html: replaceComicVariables(p.panel_description, variables, userVars, true) }}
 							>
 								{/* {replaceComicVariables(p.panel_description, variables)} */}
 							</div>
@@ -332,9 +337,21 @@ export default function ComicPageUI({
 												"p-2",
 												"hover:bg-black/10",
 											)} href={`${n.linked_pages_id.comic_pagenum}`}>
-												<strong>{n.linked_pages_id.title} &raquo;</strong><br />
+												<strong>{
+													replaceComicVariables(
+														n.linked_pages_id.title,
+														variables,
+														userVars
+													)
+												} &raquo;</strong><br />
 												{n.linked_pages_id.subtitle &&
-													<p>{n.linked_pages_id.subtitle}</p>
+													<p>{
+														replaceComicVariables(
+															n.linked_pages_id.subtitle,
+															variables,
+															userVars
+														)
+													}</p>
 												}
 											</Link>
 										</li>
@@ -495,6 +512,7 @@ export function replaceComicVariables(
 	content: string | null,
 	variables: Awaited<ReturnType<typeof getComicVariables>>,
 	userVariables?: Record<string, string> | null,
+	html?: boolean
 ) {
 	// Remap the variables array so the slug is the key and the variable object is the value, so we can retrieve a variable by its slug
 	const variablesBySlug = new Map(variables.map((v) => [v.slug, v]))
@@ -512,7 +530,7 @@ export function replaceComicVariables(
 
 				// Keep unknown tags unchanged, or return "" if preferred
 				return value !== undefined
-					? `<strong>${value}</strong>` // TODO: markdown? classname? so we can target and style as needed
+					? (html ? `<strong>${value}</strong>` : value) // TODO: markdown? classname? so we can target and style as needed
 					: fullMatch
 			},
 		)
