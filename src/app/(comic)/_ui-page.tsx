@@ -14,6 +14,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
+import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -380,23 +381,35 @@ export default function ComicPageUI({
 											"p-2",
 											"hover:bg-black/10",
 											"cursor-pointer"
-										)} onClick={() => router.back()} >&laquo; Go Back</button>
+										)} onClick={() => router.back()} >
+											<span>&laquo; Go Back</span>
+										</button>
 									</li>
 
 									{/* 
 										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
 									*/}
-									{page.prev_pages && page.prev_pages.length > 1 && page.prev_pages.map((n, index) =>
-										<li key={index}>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={`${n.pages_id.comic_pagenum}`}>
-												<strong>&laquo; {n.pages_id.title}</strong>
-											</Link>
-										</li>
-									)}
+
+									{page.prev_pages && page.prev_pages.length > 1 &&
+										<Dropdown>
+											<DropdownButton outline>
+												Go Back a different way
+											</DropdownButton>
+											<DropdownMenu>
+												{page.prev_pages.map((n, index) =>
+													<DropdownItem key={index} href={`${n.pages_id.comic_pagenum}`}>
+														{/* <Link className={clsx(
+															"block",
+															"p-2",
+															"hover:bg-black/10",
+														)} href={`${n.pages_id.comic_pagenum}`}> */}
+														<strong>&laquo; {n.pages_id.title}</strong>
+														{/* </Link> */}
+													</DropdownItem>
+												)}
+											</DropdownMenu>
+										</Dropdown>
+									}
 									<li>
 										<Link className={clsx(
 											"block",
