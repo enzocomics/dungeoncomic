@@ -6,7 +6,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-import { getComicPage } from "@/lib/directus/get-comics"
+import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { comicPageMetadata, notFoundMetadata } from "../../_metadata"
 import ComicPageUI from "../../_ui-page"
@@ -51,11 +51,12 @@ export default async function ComicPagenumPage({
 	// Throw 404 if the pagenum param is not a number
 	if (isNaN(pagenum)) notFound()
 	// Get the comic page IF it is published
+	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
 	if (!comicPage || comicPage && comicPage.status !== "published")
 		notFound()
 	else
-		return <ComicPageUI page={comicPage} />
+		return <ComicPageUI page={comicPage} variables={variables} />
 }
 
 /**-----------------------------------

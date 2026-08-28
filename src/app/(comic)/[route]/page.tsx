@@ -6,7 +6,7 @@ import { Metadata } from "next"
 import { notFound, redirect, RedirectType } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_metadata"
@@ -55,11 +55,12 @@ export default async function RoutePage({
 		// 404 if it does not exist
 		if (!page) notFound()
 		// RETURN THE COMIC PAGE UI (IF it is published)
+		const variables = await getComicVariables(frontpage_comic.slug)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
 		if (!comicPage || comicPage && comicPage.status !== "published")
 			notFound()
 		else
-			return <ComicPageUI page={comicPage} />
+			return <ComicPageUI page={comicPage} variables={variables} />
 	}
 
 	/**----------------------------------- */
