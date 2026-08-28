@@ -116,6 +116,7 @@ export interface ComicPanelsCollection {
 	panel_description: string | null
 	// User Input
 	variables: VariablesCollection[]
+	place_after_variables_submitted: boolean
 	// Meta
 	id: number
 	user_created: DirectusUser
