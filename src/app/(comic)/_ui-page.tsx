@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl"
 // LIBRARIES
 import { useEffect } from "react"
 import Image from "next/image"
+import Form from "next/form"
 import { useRouter, useSearchParams } from "next/navigation"
 // DATA
 import { directusURL } from "@/data/env"
@@ -430,9 +431,9 @@ function VariablesForm({
 }) {
 	// Render Form tags if vars exist
 	if (varsExist)
-		return <form>
+		return <Form action="">
 			{children}
-		</form>
+		</Form>
 	// Otherwise, render nothing
 	else if (!varsExist)
 		return children
