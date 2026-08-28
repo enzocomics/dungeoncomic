@@ -119,6 +119,7 @@ export interface ComicPanelsCollection {
 	place_after_variables_submitted: boolean
 	// Meta
 	id: number
+	page_id: PagesCollection
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
@@ -132,6 +133,8 @@ export interface VariablesCollection {
 	default_value: string
 	description: string | null
 	prompt: string | null
+	// Meta
+	panel_id: ComicPanelsCollection
 }
 
 /** ------------------------------------------------ **/
