@@ -81,6 +81,19 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
+	// Get a list of all the comic panel variables
+	// Check if they all exist in the url search params
+	// IF they do, then change the UI to the "submitted" version
+
+	const searchParams = useSearchParams()
+	// Get a list of all the comic panel variables
+	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : null
+	) : null
+
+	// Check the url search params if _every_ variable has been submitted 
+	const varsSubmitted = varParams?.every((param) => param ? searchParams.has(param) : false)
+
+	// Render
 	return <>
 		<div className={clsx(
 			"p-4",
@@ -90,7 +103,8 @@ export default function ComicPageUI({
 			"flex",
 			"flex-col",
 			"gap-2",
-			"bg-base-1"
+			"bg-base-1",
+			"text-center"
 		)}>
 			{page.title &&
 				<h4 className={clsx(
@@ -108,10 +122,13 @@ export default function ComicPageUI({
 				 *	DISPLAY THE COMIC PANELS
 				 */
 			}
-			{page.comic_panels ? page.comic_panels.map((p, index) =>
-				<div key={index}>
+			{page.comic_panels ? page.comic_panels.map((p, index) => {
+				return <div key={index}>
 					{p.panel_image &&
 						<p><Image
+							className={clsx(
+								"mx-auto"
+							)}
 							src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
 							width={`${p.panel_image.width}`}
 							height={`${p.panel_image.height}`}
@@ -126,8 +143,45 @@ export default function ComicPageUI({
 					)}>
 						{p.panel_description}
 					</div>
+					{/* VARIABLES */}
+					{p.variables && p.variables.length > 0 ?
+						<form action="" className={clsx(
+							"bg-teal-100",
+							"dark:bg-teal-700",
+							"p-2",
+							"w-2/3",
+							"mx-auto",
+							"mt-8",
+						)}>
+							<section>
+								{p.variables.map((v, index) => {
+									return <div key={index}>
+										<p className={clsx(
+											"text-center"
+										)}><label>{v.prompt || v.name}</label></p>
+										<p>&gt; <input className={clsx(
+											"p-2",
+											"bg-white",
+											"text-black",
+											"w-9/10",
+										)} type="text" name={v.slug} defaultValue={v.default_value}></input></p>
+									</div>
+								})}
+							</section>
+							<section>
+								<button className={clsx(
+									"w-full",
+									"bg-red-500",
+									"text-white",
+									"p-2",
+									"mt-2",
+									"rounded"
+								)}>{page.variables_submit_button_text || "Submit"}</button>
+							</section>
+						</form>
+						: null}
 				</div>
-			) : null}
+			}) : null}
 			{
 				/**------------------------------
 				 * FEEDBACK
