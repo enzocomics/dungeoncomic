@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings"
-import { ComicLayoutUI } from "../_ui-layout"
+import { ComicLayoutUI } from "../_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
 
