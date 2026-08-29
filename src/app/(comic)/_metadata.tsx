@@ -7,8 +7,10 @@ import { Author } from "next/dist/lib/metadata/types/metadata-types"
 import { getTranslations } from "next-intl/server"
 // DATA
 import { directusURL } from "@/data/env"
-import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
+import replaceComicVariables from "./functions/replace-comic-vars"
+import { getUserVarsCookie } from "./_action"
 
 
 
@@ -80,7 +82,8 @@ export async function comicMetadata(
 
 	// VARS
 	const title = comic.title
-	const description = comic.description || `A comic adventure series${authorsStr ? " by " + authorsStr : ""}`
+	const description = comic.description ||
+		`A comic adventure series${authorsStr ? " by " + authorsStr : ""}`
 
 	// METADATA OBJECT
 	return {
@@ -118,6 +121,8 @@ export async function comicPageMetadata(
 	const locale: string = "en-CA" // TODO: I18N
 	// FETCH COMIC VARS
 	const comic = await getComic(comic_slug)
+	const variables = await getComicVariables(comic_slug)
+	const userVariables = await getUserVarsCookie({ comic: comic })
 	const comicPage = await getComicPage(comic_slug, pagenum)
 	const url = `${settings.project_url}/${comic_slug}/${pagenum}`
 
@@ -143,8 +148,16 @@ export async function comicPageMetadata(
 
 	// VARS
 	const comicTitle = comic.title
-	const pageTitle = comicPage.title || `Page ${pagenum}`
-	const description = comicPage.description || `Page ${pagenum} of ${comicTitle}, a comic adventure series${authorsStr ? " by " + authorsStr : ""}`
+	const pageTitle = replaceComicVariables({
+		content: comicPage.title,
+		variables: variables,
+		userVariables: userVariables
+	}) || `Page ${pagenum}`
+	const description = replaceComicVariables({
+		content: comicPage.description,
+		variables: variables,
+		userVariables: userVariables
+	}) || `Page ${pagenum} of ${comicTitle}, a comic adventure series${authorsStr ? " by " + authorsStr : ""}`
 
 	// THUMBNAIL
 	// - Shows the image from the first panel, if it exists
