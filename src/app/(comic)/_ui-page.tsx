@@ -16,7 +16,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { saveUserVarsCookie } from "./_action"
-import replaceComicVariables from "./functions/replace-comic-vars"
+import replaceComicVariables from "./_functions/replace-comic-vars"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
