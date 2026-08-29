@@ -28,6 +28,14 @@ export async function saveUserVarsCookie({
 	const cookieStore = await cookies()
 	const settings = await getSettings()
 	const title = page.comic.title
+	const comic = await getComic(page.comic.slug)
+
+	// Retrieve existing vars if they exist
+	const oldVars = await getUserVarsCookie({ comic: comic })
+	console.log(vars, oldVars)
+
+	// Combine the variables. Object.assign will overwrite any existing keys with the newer inputs from `vars`
+	const updatedVars = oldVars ? Object.assign({}, oldVars, vars) : vars
 
 	// Build meaningful cookie name string
 	// Outputs as: appname_comicname_uservars
@@ -41,6 +49,9 @@ export async function saveUserVarsCookie({
 
 	// Encrypt vars
 	const encryptedVars = await encrypt(vars)
+
+	// Uncomment this to unencrypt and test input
+	// const encryptedVars = JSON.stringify(updatedVars)
 
 	// Store cookie
 	try {
@@ -100,6 +111,9 @@ export async function getUserVarsCookie({
 			const decryptedVars = vars
 				? ((await decrypt(vars)) as Record<string, string | null>)
 				: null
+
+			// Uncomment this to unencrypt and test input
+			// const decryptedVars = vars ? JSON.parse(vars) : null
 
 			return decryptedVars
 		}
