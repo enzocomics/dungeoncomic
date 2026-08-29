@@ -125,6 +125,7 @@ export default function ComicPageUI({
 		setCanGoBack(hasHistory && previousPageIsSameSite)
 	}, [pathname, searchParams.toString()])
 
+
 	/**----------------------------------- */
 	// HELPER FUNCTIONS
 	function getComicPageVars(
@@ -148,6 +149,7 @@ export default function ComicPageUI({
 		const params = new URLSearchParams(
 			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
 				slug,
+				// Fallback to default value if undefined
 				userVars && userVars[slug] !== "undefined" ? userVars[slug] : default_value
 			])
 		)
@@ -156,13 +158,6 @@ export default function ComicPageUI({
 		return params.size == 0 ? `` : `?${params.toString()}`
 	}
 
-	// console.log("result:", makeComicVarsUrl({
-	// 	comicVars: getComicPageVars(page.prev_pages![0].pages_id.comic_panels as typeof page.comic_panels),
-	// 	userVars: userVariables
-	// }))
-	// console.log(`page.prev_pages![0].pages_id.comic_panels`)
-
-	// console.log(getComicPageVars(page.prev_pages![0].pages_id.comic_panels as typeof page.comic_panels))
 	/**----------------------------------- */
 	// Render
 	return <>
@@ -251,7 +246,6 @@ export default function ComicPageUI({
 								)}>
 									<section>
 										{p.variables.map((v, index) => {
-											// console.log(loadedVars[v.slug])
 											return <div key={index}>
 												<p className={clsx(
 													"text-center"
