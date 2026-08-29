@@ -151,7 +151,7 @@ export default function ComicPageUI({
 				{replaceComicVariables({
 					content: (
 						varsExist && varsSubmitted ?
-							page.variables_submit_button_text || page.title :
+							page.variables_submit_button_text || "Next »" : // TODO: hardcoded
 							page.title
 					),
 					variables: variables,
