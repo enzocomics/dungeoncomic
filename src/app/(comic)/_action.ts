@@ -42,8 +42,6 @@ export async function saveUserVarsCookie({
 	// Encrypt vars
 	const encryptedVars = await encrypt(vars)
 
-	// Time
-
 	// Store cookie
 	try {
 		cookieStore.set({
@@ -51,7 +49,7 @@ export async function saveUserVarsCookie({
 			value: encryptedVars,
 			httpOnly: true,
 			sameSite: "strict",
-			expires: 90 * 24 * 60 * 60, // +3 months
+			maxAge: 60 * 60 * 24 * 30 * 3, // 3 months
 		})
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
