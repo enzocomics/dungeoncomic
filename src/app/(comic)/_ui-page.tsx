@@ -86,7 +86,7 @@ export default function ComicPageUI({
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
-	userVarsCookie?: string
+	userVarsCookie?: Record<string, string>
 }) {
 	const pathname = usePathname()
 	const router = useRouter()
@@ -112,7 +112,7 @@ export default function ComicPageUI({
 	) : {}
 
 	// Get the variables that are currently saved in cookies
-	const userVariables: Record<string, string> | undefined = userVarsCookie ? JSON.parse(userVarsCookie) : undefined
+	const userVariables: Record<string, string> | undefined = userVarsCookie
 
 	// Check if variables have been submitted to this page and save them to cookie
 	useEffect(() => {
