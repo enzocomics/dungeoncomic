@@ -1,16 +1,19 @@
 "use server"
-
+/**----------------------------------- */
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
-import { PagesCollection } from "@/lib/directus/schema"
 import slugify from "@/lib/slugify"
 import { cookies } from "next/headers"
 
-/** ------------------------------------------------ **
- * SAVE USER VARIABLES COOKIE
- * ---
+/** ----------------------------------------------------------------- */
+/**
+ * Save the reader's customized comic variables to a cookie
+ *
+ * @param params
+ * @param params.vars - the variables to be saved
+ * @param params.page - the Directus PageCollection item object
+ *
  */
-
 export async function saveUserVarsCookie({
 	vars,
 	page,
@@ -49,9 +52,14 @@ export async function saveUserVarsCookie({
 	return "success"
 }
 
-/** ------------------------------------------------ **
- * RETRIEVE USER VARIABLES COOKIE
- * ---
+/** ----------------------------------------------------------------- */
+/**
+ * Fetch the reader's customized comic variables from a cookie
+ *
+ * @param params
+ * @param params.comic - the Directus Comic collection item object
+ * @returns The cookie object
+ *
  */
 export async function getUserVarsCookie({
 	comic,
