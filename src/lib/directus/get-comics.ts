@@ -168,7 +168,42 @@ export async function getComicPage(comic_slug: string, num: number) {
 				},
 				{
 					prev_pages: [
-						{ pages_id: ["title", "subtitle", "comic", "comic_pagenum"] },
+						{
+							pages_id: [
+								"title",
+								"subtitle",
+								"comic",
+								"comic_pagenum",
+								{
+									comic_panels: [
+										// Content
+										{
+											panel_image: [
+												"filename_disk",
+												"type",
+												"width",
+												"height",
+												"description",
+											],
+										},
+										"panel_title",
+										"panel_description",
+										// User Input
+										{
+											variables: [
+												"name",
+												"slug",
+												"default_value",
+												"description",
+												"prompt",
+											],
+										},
+										"place_after_variables_submitted",
+									],
+								},
+								"variables_submit_button_text",
+							],
+						},
 						{
 							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
 						},

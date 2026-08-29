@@ -39,7 +39,6 @@ export function ComicLandingPageUI({
 		</div>
 	</>
 }
-
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -53,10 +52,12 @@ export default function ComicPageUI({
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVarsCookie?: Record<string, string>
 }) {
+	// VARIABLES
 	const pathname = usePathname()
 	const router = useRouter()
 	const searchParams = useSearchParams()
 
+	/**----------------------------------- */
 	// Get a list of all the comic panel variables
 	// Check if they all exist in the url search params
 	// IF they do, then change the UI to the "submitted" version
@@ -64,8 +65,10 @@ export default function ComicPageUI({
 	// Check if any variables have been defined in the comic project
 	const varsExist = page.comic_panels ? (page.comic_panels.flatMap(p => p.variables && p.variables.length > 0)).some(Boolean) : false
 
-	// Get a list of all the variables for this specific page's comic panels
-	const varParams = page.comic_panels ? page.comic_panels.flatMap(p => p.variables && p.variables.length > 0 ? p.variables.map(v => v.slug) : []
+	// Get a flat map of all the variables for this specific page's comic panels
+	const varParams = page.comic_panels ? page.comic_panels.flatMap(p =>
+		p.variables && p.variables.length > 0 ?
+			p.variables.map(v => v.slug) : []
 	) : null
 
 	// Check the url search params if _every_ variable has been submitted 
@@ -79,9 +82,9 @@ export default function ComicPageUI({
 	// Get the variables that are currently saved in cookies
 	const userVariables: Record<string, string> | undefined = userVarsCookie
 
+	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
 	const [canGoBack, setCanGoBack] = useState(false)
-
 	// Run every time client navigates (url change or searchparams change)
 	useEffect(() => {
 		// Check if variables have been submitted to this page and save them to cookie
@@ -101,6 +104,7 @@ export default function ComicPageUI({
 		// DEBUG
 		// console.log("document.referrer:", document.referrer || "none")
 		// If we came from another page
+		// NOTE: THIS DOES NOT WORK IN PRIVATE BROWSERS
 		if (document.referrer)
 			try {
 				// Check if the other page is from the same host
@@ -121,6 +125,45 @@ export default function ComicPageUI({
 		setCanGoBack(hasHistory && previousPageIsSameSite)
 	}, [pathname, searchParams.toString()])
 
+	/**----------------------------------- */
+	// HELPER FUNCTIONS
+	function getComicPageVars(
+		comic_panels:
+			typeof page.comic_panels
+	) {
+		return comic_panels ? comic_panels.flatMap(p =>
+			p.variables && p.variables.length > 0 ?
+				p.variables : []
+		) : null
+	}
+
+	function makeComicVarsUrl({
+		comicVars,
+		userVars
+	}: {
+		comicVars: any
+		userVars?: any
+	}) {
+		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
+		const params = new URLSearchParams(
+			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
+				slug,
+				userVars && userVars[slug] !== "undefined" ? userVars[slug] : default_value
+			])
+		)
+
+		// Return it as a string
+		return params.size == 0 ? `` : `?${params.toString()}`
+	}
+
+	// console.log("result:", makeComicVarsUrl({
+	// 	comicVars: getComicPageVars(page.prev_pages![0].pages_id.comic_panels as typeof page.comic_panels),
+	// 	userVars: userVariables
+	// }))
+	// console.log(`page.prev_pages![0].pages_id.comic_panels`)
+
+	// console.log(getComicPageVars(page.prev_pages![0].pages_id.comic_panels as typeof page.comic_panels))
+	/**----------------------------------- */
 	// Render
 	return <>
 		<div className={clsx(
@@ -401,7 +444,7 @@ export default function ComicPageUI({
 								)}>
 									{/* 
 										Back button: Go back 1 step in user's browser history
-										- `canGoBack:` Checks if previous page in browser history is actually the previous page in the comic
+										- IF previous page in browser history is from the same host
 									*/}
 									{canGoBack &&
 										<li>
@@ -412,13 +455,15 @@ export default function ComicPageUI({
 												"hover:bg-black/10",
 												"cursor-pointer"
 											)} onClick={() => router.back()} >
-												<span>&laquo; Go Back</span>
+												<span>&laquo; Go Back (History)</span>
 											</button>
 										</li>
 									}
 									{/* 
-										Back button: Go back 1 step in user's browser history
-										- `!canGoBack && varsSubmitted:` If we can't go back, still check if this page is the "submitted" version of a page, and have a back button that returns it to the "pre-submitted" form page
+										Back button:
+										- If there is no previous page from the same hostname in history, and:
+										- If THIS PAGE has submitted variables:
+											- GO BACK to the "pre-submitted" version of THIS PAGE
 									*/}
 									{(!canGoBack && varsSubmitted) &&
 										<li>
@@ -426,41 +471,59 @@ export default function ComicPageUI({
 												"block",
 												"p-2",
 												"hover:bg-black/10",
-											)} href={pathname}>&laquo; Go Back</Link>
+											)} href={pathname}>&laquo; Go Back (Variable Form Page)</Link>
 										</li>
 									}
-
 									{/* 
-										Back button: If only one previous page exists, back button
+										Back button: 
+										- If there is no previous page from the same hostname in history,
+										- If there are no variables being submitted on THIS page,
+										- If the previous page has variable:
+										  - If user variables already exist, rebuild the previous page url with the userVars
+											- If user variables do not exist, build the previouspage url with the default vars
 									*/}
-									{(!canGoBack && page.prev_pages && page.prev_pages.length == 1) &&
+									{(
+										!canGoBack && !varsSubmitted &&
+										page.prev_pages && page.prev_pages.length == 1
+									) &&
 										<li>
 											<Link className={clsx(
 												"block",
 												"p-2",
 												"hover:bg-black/10",
-											)} href={`${page.prev_pages[0].pages_id.comic_pagenum}`}>&laquo; Go Back</Link>
-										</li>
+											)} href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
+												comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
+												userVars: userVariables
+											})}
+											>&laquo; Go Back (Single Previous Page)</Link>
 
+										</li>
 									}
+									{/* <li>{getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels)}</li> */}
 									{/* 
 										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
 									*/}
 
-									{page.prev_pages && page.prev_pages.length > 1 &&
+									{
+										page.prev_pages && page.prev_pages.length > 1 &&
 										<Dropdown>
 											<DropdownButton outline>
-												Go Back a different way
+												Go Back (All Choices) &#8595;
 											</DropdownButton>
 											<DropdownMenu>
 												{page.prev_pages.map((n, index) =>
-													<DropdownItem key={index} href={`${n.pages_id.comic_pagenum}`}>
+													<DropdownItem key={index} href={
+														`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
+															comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
+															userVars: userVariables
+														})
+													}>
 														{/* <Link className={clsx(
 															"block",
 															"p-2",
 															"hover:bg-black/10",
 														)} href={`${n.pages_id.comic_pagenum}`}> */}
-														<strong>&laquo; {n.pages_id.title}</strong>
+														<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
 														{/* </Link> */}
 													</DropdownItem>
 												)}
@@ -480,7 +543,7 @@ export default function ComicPageUI({
 					}
 				</div>
 
-			</section>
+			</section >
 
 			{
 				/**------------------------------
@@ -502,9 +565,9 @@ export default function ComicPageUI({
 						<li><strong>Last updated by</strong> @{page.user_updated.username} on {page.date_updated}</li>
 					}
 				</ul>
-			</section>
+			</section >
 
-		</div>
+		</div >
 
 
 		<section className={clsx(
