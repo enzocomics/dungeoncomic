@@ -9,8 +9,8 @@ import { getTranslations } from "next-intl/server"
 import { directusURL } from "@/data/env"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
-import replaceComicVariables from "./_functions/replace-comic-vars"
-import { getUserVarsCookie } from "./_action"
+import replaceComicVariables from "../_functions/replace-comic-vars"
+import { getUserVarsCookie } from "../_action"
 
 
 

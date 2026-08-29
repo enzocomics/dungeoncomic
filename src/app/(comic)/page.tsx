@@ -8,7 +8,7 @@ import { redirect, RedirectType } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic } from "@/lib/directus/get-comics"
 // UI
-import { comicMetadata } from "./_metadata"
+import { comicMetadata } from "./_ui/metadata"
 import { HomepagePageUI } from "./_ui/home-page"
 import { ComicLandingPageUI } from "./_ui/comic-page"
 
