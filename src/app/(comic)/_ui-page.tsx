@@ -16,6 +16,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { saveUserVarsCookie } from "./_action"
+import replaceComicVariables from "./functions/replace-comic-vars"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -147,11 +148,15 @@ export default function ComicPageUI({
 				"font-display",
 				"text-center"
 			)}>
-				{replaceComicVariables(
-					(varsExist && varsSubmitted ? page.variables_submit_button_text : page.title),
-					variables,
-					userVariables
-				)
+				{replaceComicVariables({
+					content: (
+						varsExist && varsSubmitted ?
+							page.variables_submit_button_text || page.title :
+							page.title
+					),
+					variables: variables,
+					userVariables: userVariables
+				})
 				}
 			</h4>
 			{/* <p>{page.description}</p> */}
@@ -189,9 +194,15 @@ export default function ComicPageUI({
 								"prose"
 							)}
 								// TODO: You better freakin' sanitize this
-								dangerouslySetInnerHTML={{ __html: replaceComicVariables(p.panel_description, variables, userVariables, true) }}
+								dangerouslySetInnerHTML={{
+									__html: replaceComicVariables({
+										content: p.panel_description,
+										variables: variables,
+										userVariables: userVariables,
+										html: true
+									})
+								}}
 							>
-								{/* {replaceComicVariables(p.panel_description, variables)} */}
 							</div>
 							{/* VARIABLES */}
 							{p.variables && p.variables.length > 0 ?
@@ -347,19 +358,19 @@ export default function ComicPageUI({
 												"hover:bg-black/10",
 											)} href={`${n.linked_pages_id.comic_pagenum}`}>
 												<strong>{
-													replaceComicVariables(
-														n.linked_pages_id.title,
-														variables,
-														userVariables
-													)
+													replaceComicVariables({
+														content: n.linked_pages_id.title,
+														variables: variables,
+														userVariables: userVariables
+													})
 												} &raquo;</strong><br />
 												{n.linked_pages_id.subtitle &&
 													<p>{
-														replaceComicVariables(
-															n.linked_pages_id.subtitle,
-															variables,
-															userVariables
-														)
+														replaceComicVariables({
+															content: n.linked_pages_id.subtitle,
+															variables: variables,
+															userVariables: userVariables
+														})
 													}</p>
 												}
 											</Link>
@@ -510,38 +521,4 @@ function VariablesForm({
 	else if (!varsExist)
 		return children
 
-}
-
-
-/**-----------------------------------
- * Replaces Comic Variables in a string with the User Variables
- * ---
- */
-export function replaceComicVariables(
-	content: string | null,
-	variables: Awaited<ReturnType<typeof getComicVariables>>,
-	userVariables?: Record<string, string> | undefined,
-	html?: boolean
-) {
-	// Remap the variables array so the slug is the key and the variable object is the value, so we can retrieve a variable by its slug
-	const variablesBySlug = new Map(variables.map((v) => [v.slug, v]))
-
-	// Search through the conte t string for every instance of `[var:some-slug]`
-	return content
-		? content.replace(
-			/\[var:([a-zA-Z0-9_-]+)\]/g,
-			// Run every time there is a full match
-			(fullMatch, slug: string) => {
-				const variable = variablesBySlug.get(slug)
-
-				// Fallback to default value
-				const value = (userVariables && userVariables[slug]) ?? variable?.default_value
-
-				// Keep unknown tags unchanged, or return "" if preferred
-				return value !== undefined
-					? (html ? `<strong>${value}</strong>` : value) // TODO: markdown? classname? so we can target and style as needed
-					: fullMatch
-			},
-		)
-		: ""
 }
