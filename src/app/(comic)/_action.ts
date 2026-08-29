@@ -1,7 +1,9 @@
 "use server"
 
-import { getComic } from "@/lib/directus/get-comics"
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { getSettings } from "@/lib/directus/get-settings"
 import { PagesCollection } from "@/lib/directus/schema"
+import slugify from "@/lib/slugify"
 import { cookies } from "next/headers"
 
 /** ------------------------------------------------ **
@@ -9,12 +11,32 @@ import { cookies } from "next/headers"
  * ---
  */
 
-export async function saveUserVarsCookie(vars: Record<string, string | null>) {
+export async function saveUserVarsCookie({
+	vars,
+	page,
+}: {
+	vars: Record<string, string | null>
+	page: Awaited<ReturnType<typeof getComicPage>>
+}) {
+	// Retrieve Cookies & Variables
 	const cookieStore = await cookies()
+	const settings = await getSettings()
+	const title = page.comic.title
 
+	// Build meaningful cookie name string
+	// Outputs as: appname_comicname_uservars
+	const name = `${slugify({
+		string: settings.project_name!,
+		separator: "",
+	})}_${slugify({
+		string: title,
+		separator: "",
+	})}_uservars`
+
+	// Store cookie
 	try {
 		cookieStore.set({
-			name: "DungeonComic UserVars",
+			name: name,
 			value: JSON.stringify(vars),
 		})
 	} catch (err: any) {
@@ -28,17 +50,34 @@ export async function saveUserVarsCookie(vars: Record<string, string | null>) {
 }
 
 /** ------------------------------------------------ **
- * RETREIVE USER VARIABLES COOKIE
+ * RETRIEVE USER VARIABLES COOKIE
  * ---
  */
-export async function getUserVarsCookie(
-	comic: Awaited<ReturnType<typeof getComic>>,
-) {
+export async function getUserVarsCookie({
+	comic,
+}: {
+	comic: Awaited<ReturnType<typeof getComic>>
+}) {
+	// Retrieve Cookies & Variables
 	const cookieStore = await cookies()
+	const settings = await getSettings()
+	const title = comic.title
+
+	// Build meaningful cookie name string
+	// Outputs as: appname_comicname_uservars
+	const name = `${slugify({
+		string: settings.project_name!,
+		separator: "",
+	})}_${slugify({
+		string: title,
+		separator: "",
+	})}_uservars`
 
 	try {
-		if (cookieStore.has("DungeonComic UserVars")) {
-			return cookieStore.get("DungeonComic UserVars")!.value
+		if (cookieStore.has(name)) {
+			return cookieStore.get(name) && cookieStore.get(name)!.value
+				? cookieStore.get(name)!.value
+				: null
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
