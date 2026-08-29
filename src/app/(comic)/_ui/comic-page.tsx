@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -79,8 +79,12 @@ export default function ComicPageUI({
 	// Get the variables that are currently saved in cookies
 	const userVariables: Record<string, string> | undefined = userVarsCookie
 
-	// Check if variables have been submitted to this page and save them to cookie
+	// State that checks if we can go backwards, to the same site, using browser history 
+	const [canGoBack, setCanGoBack] = useState(false)
+
+	// Run every time client navigates (url change or searchparams change)
 	useEffect(() => {
+		// Check if variables have been submitted to this page and save them to cookie
 		const saveUserVariables = async () => {
 			// Save Variables if they have been submitted
 			if (varsSubmitted)
@@ -89,8 +93,32 @@ export default function ComicPageUI({
 					page: page
 				})
 		}
+
+		// Check if browser history exists
+		const hasHistory = window.history.length > 1
+		let previousPageIsSameSite = false
+
+		// DEBUG
+		// console.log("document.referrer:", document.referrer || "none")
+		// If we came from another page
+		if (document.referrer)
+			try {
+				// Check if the other page is from the same host
+				const previousUrl = new URL(document.referrer)
+				previousPageIsSameSite = previousUrl.hostname === window.location.hostname
+
+				// DEBUG
+				// console.log("previousUrl.hostname:", previousUrl.hostname)
+				// console.log("window.location.hostname:", window.location.hostname)
+				// console.log("is the previous page from the same site:", previousPageIsSameSite)
+			}
+			catch {
+				previousPageIsSameSite = false
+			}
+
+		// INIT
 		saveUserVariables()
-		// Run every time client navigates (url change or searchparams change)
+		setCanGoBack(hasHistory && previousPageIsSameSite)
 	}, [pathname, searchParams.toString()])
 
 	// Render
@@ -373,20 +401,48 @@ export default function ComicPageUI({
 								)}>
 									{/* 
 										Back button: Go back 1 step in user's browser history
-										- TODO: Check if previous page in browser history is actually the previous page in the comic
+										- `canGoBack:` Checks if previous page in browser history is actually the previous page in the comic
 									*/}
-									<li>
-										<button className={clsx(
-											"w-full",
-											"block",
-											"p-2",
-											"hover:bg-black/10",
-											"cursor-pointer"
-										)} onClick={() => router.back()} >
-											<span>&laquo; Go Back</span>
-										</button>
-									</li>
+									{canGoBack &&
+										<li>
+											<button className={clsx(
+												"w-full",
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+												"cursor-pointer"
+											)} onClick={() => router.back()} >
+												<span>&laquo; Go Back</span>
+											</button>
+										</li>
+									}
+									{/* 
+										Back button: Go back 1 step in user's browser history
+										- `!canGoBack && varsSubmitted:` If we can't go back, still check if this page is the "submitted" version of a page, and have a back button that returns it to the "pre-submitted" form page
+									*/}
+									{(!canGoBack && varsSubmitted) &&
+										<li>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={pathname}>&laquo; Go Back</Link>
+										</li>
+									}
 
+									{/* 
+										Back button: If only one previous page exists, back button
+									*/}
+									{(!canGoBack && page.prev_pages && page.prev_pages.length == 1) &&
+										<li>
+											<Link className={clsx(
+												"block",
+												"p-2",
+												"hover:bg-black/10",
+											)} href={`${page.prev_pages[0].pages_id.comic_pagenum}`}>&laquo; Go Back</Link>
+										</li>
+
+									}
 									{/* 
 										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
 									*/}
