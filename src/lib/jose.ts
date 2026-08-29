@@ -15,7 +15,9 @@ export type SessionPayload = {
 }
 
 // Signs a JWT with the session payload
-export async function encrypt(payload: SessionPayload): Promise<string> {
+export async function encrypt(
+	payload: SessionPayload | Record<string, string | null>,
+): Promise<string> {
 	return new SignJWT({ ...payload })
 		.setProtectedHeader({ alg: "HS256" })
 		.setIssuedAt()
@@ -24,12 +26,14 @@ export async function encrypt(payload: SessionPayload): Promise<string> {
 }
 
 // Verifies a JWT and returns its payload, or null if invalid/expired
-export async function decrypt(token: string): Promise<SessionPayload | null> {
+export async function decrypt(
+	token: string,
+): Promise<SessionPayload | Record<string, string | null> | null> {
 	try {
 		const { payload } = await jwtVerify(token, encodedKey, {
 			algorithms: ["HS256"],
 		})
-		return payload as unknown as SessionPayload
+		return payload as any
 	} catch {
 		return null
 	}
