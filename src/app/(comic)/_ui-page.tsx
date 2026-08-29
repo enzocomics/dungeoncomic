@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
