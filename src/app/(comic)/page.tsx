@@ -2,13 +2,15 @@
 /**----------------------------------- */
 // TYPES
 import { Metadata } from "next"
+// LIBRARIES
+import { redirect, RedirectType } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-// UI
-import { ComicLandingPageUI, HomepagePageUI } from "./_ui/comic-page"
-import { comicMetadata } from "./_metadata"
 import { getComic } from "@/lib/directus/get-comics"
-import { redirect, RedirectType } from "next/navigation"
+// UI
+import { comicMetadata } from "./_metadata"
+import { HomepagePageUI } from "./_ui/home-page"
+import { ComicLandingPageUI } from "./_ui/comic-page"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
