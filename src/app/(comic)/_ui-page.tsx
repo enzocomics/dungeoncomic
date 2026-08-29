@@ -15,7 +15,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
-import { getUserVarsCookie, saveUserVarsCookie } from "./_action"
+import { saveUserVarsCookie } from "./_action"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -118,7 +118,11 @@ export default function ComicPageUI({
 	useEffect(() => {
 		const saveUserVariables = async () => {
 			// Save Variables if they have been submitted
-			varsSubmitted ?? await saveUserVarsCookie(submittedUserVars)
+			if (varsSubmitted)
+				await saveUserVarsCookie({
+					vars: submittedUserVars,
+					page: page
+				})
 		}
 		saveUserVariables()
 		// Run every time client navigates (url change or searchparams change)
