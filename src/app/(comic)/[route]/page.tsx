@@ -8,7 +8,7 @@ import { notFound, redirect, RedirectType } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
-import ComicPageUI, { ComicLandingPageUI } from "../_ui-page"
+import ComicPageUI, { ComicLandingPageUI } from "../_ui/_ui-page"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_metadata"
 import { getUserVarsCookie } from "../_action"
 

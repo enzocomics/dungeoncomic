@@ -9,7 +9,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { comicPageMetadata, notFoundMetadata } from "../../_metadata"
-import ComicPageUI from "../../_ui-page"
+import ComicPageUI from "../../_ui/_ui-page"
 import { getUserVarsCookie } from "../../_action"
 
 /**-----------------------------------

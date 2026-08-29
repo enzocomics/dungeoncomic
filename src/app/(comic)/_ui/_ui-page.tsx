@@ -15,8 +15,8 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import { useChangeStatus } from "@/components/status-message"
 import { Link } from "@/components/link"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
-import { saveUserVarsCookie } from "./_action"
-import replaceComicVariables from "./_functions/replace-comic-vars"
+import { saveUserVarsCookie } from "../_action"
+import replaceComicVariables from "../_functions/replace-comic-vars"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
