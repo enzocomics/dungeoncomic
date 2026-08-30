@@ -11,12 +11,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 // DATA
 import { directusURL } from "@/data/env"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-// UI
-import { useChangeStatus } from "@/components/status-message"
-import { Link } from "@/components/link"
-import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { saveUserVarsCookie } from "../_action"
 import replaceComicVariables from "../_functions/replace-comic-vars"
+// UI
+import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
+import { Radio, RadioField, RadioGroup } from "@/components/radio"
+import { Fieldset, Label } from "@/components/fieldset"
+import { Link } from "@/components/link"
+import { useChangeStatus } from "@/components/status-message"
 
 
 /**-----------------------------------
@@ -142,15 +144,15 @@ export default function ComicPageUI({
 		comicVars,
 		userVars
 	}: {
-		comicVars: any
-		userVars?: any
+		comicVars: any // TODO: typed as any, please fix
+		userVars?: Record<string, string | null>
 	}) {
 		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
 		const params = new URLSearchParams(
 			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
 				slug,
 				// Fallback to default value if undefined
-				userVars && userVars[slug] !== "undefined" ? userVars[slug] : default_value
+				userVars && userVars[slug] !== undefined ? userVars[slug] : default_value
 			])
 		)
 
@@ -324,28 +326,37 @@ export default function ComicPageUI({
 							userVariables: userVariables
 						})}
 					</h4>
-					<ul className={clsx(
-
-					)}>
-						{/* AUTHOR SUGGESTIONS */}
-						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
-							<li key={index} className={clsx(
-								"text-center"
-							)}>
-								<strong>{s.votes || 0}</strong> | {replaceComicVariables({
-									content: s.title,
-									variables: variables,
-									userVariables: userVariables
-								})} &nbsp;
-								{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-								{page.user_created.id !== s.user_created.id &&
-									<em>&mdash; @{s.user_created.username}</em>
-								}
-							</li>
-						)) : null}
-					</ul>
+					<Fieldset>
+						<RadioGroup className={clsx(
+						)}>
+							{/* PLOT SUGGESTIONS */}
+							{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
+								<RadioField key={index} className={clsx(
+									"text-left",
+									"w-2/3",
+									"mx-auto"
+								)}>
+									<Radio value={s.slug} />
+									<Label>
+										{replaceComicVariables({
+											content: s.title,
+											variables: variables,
+											userVariables: userVariables
+										})}
+										{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+										{page.user_created.id !== s.user_created.id &&
+											<em>&nbsp;&mdash; @{s.user_created.username}</em>
+										}
+										&nbsp;| <strong>{s.votes || 0}</strong>
+									</Label>
+								</RadioField>
+							)) : null}
+						</RadioGroup>
+					</Fieldset>
 					{page.allow_user_suggestions &&
-						<div>
+						<div className={clsx(
+							"mt-8"
+						)}>
 							User Suggestion Form Here
 						</div>
 					}
