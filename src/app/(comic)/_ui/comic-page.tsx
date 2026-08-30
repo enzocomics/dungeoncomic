@@ -582,44 +582,57 @@ function UserFeedbackSection({
 	session
 }: ComicPageUIProps) {
 
-	// Check if the User ID exists in current suggestions
+	// Get the ID of the currently logged-in user, if exists
 	const loggedInUserID = session != false ? session?.id : null
 
-	const matches = page.plot_suggestions!.find(
+	// Check if the User ID exists in current suggestions, and get the ID
+	const userVotedOn = page.plot_suggestions!.find(
 		s => s.users_voted!.some(
 			(v: any) => v.id === loggedInUserID
 		)
 	)
-	console.log(matches?.id)
 
+	const [userVotedOnID, setUserVotedOnID] = useState(userVotedOn?.id.toString())
 
 	// State for the Plot Suggestion Poll
-	const [selected, setSelected] = useState<string>(matches ? matches.id.toString() : "")
+	// Default value: the ID of the suggestion the logged-in user has already voted on
+	const [selected, setSelected] = useState<string>(
+		userVotedOnID ? userVotedOnID : ""
+	)
+	// State of the poll: to prevent the effect from firing multiple times
+	const [clicked, setClicked] = useState(false)
 
-	// Value of radio button to be compared to
+	// Poll Click Handler
+	function handleClick(selected: string) {
+		setSelected(selected)
+		setClicked(true)
+	}
+
+	// Value of radio button that opens up the user suggestion form
 	const selectUserSuggestion = "0"
 
 	// This effect runs every time the poll's radio button selection is changed
 	useEffect(() => {
+		// Send the vote to the CMS
 		const castVote = async (plotSuggestionsID: string) => {
 			VoteOnPlotSuggestion({
 				newVoteID: parseInt(plotSuggestionsID),
 				page: page,
 				user: session ? session : false
 			})
-			// console.log(`update the item on the cms with ${selected}`)
-			// const voteRequest = userClient.request(updateItem(
-			// 	"plot_suggestions", plotSuggestionsID, {
-			// 	// votes: +1
-			// }
-			// ))
 		}
 
 		// Handle the form
 		if (selected == selectUserSuggestion) {
 			console.log("handle the form")
 		}
-		castVote(selected)
+
+		// Cast the vote
+		if (clicked == true) {
+			castVote(selected) // Send the vote to the cms
+			setUserVotedOnID(selected) // Save the suggestion this user voted on for refernece
+			setClicked(false)
+		}
 	}, [selected])
 
 	// Render
@@ -651,12 +664,27 @@ function UserFeedbackSection({
 				<RadioGroup
 					name="suggestions"
 					value={selected}
-					onChange={setSelected}
+					onChange={(selected) => handleClick(selected)}
 					className={clsx(
 					)}>
 					{/* PLOT SUGGESTIONS */}
-					{page.plot_suggestions ? page.plot_suggestions.map((s, index) =>
-						<RadioField
+					{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
+						// Handle State of the vote numbers
+						const [votes, setVote] = useState(s.votes || 0)
+
+						useEffect(() => {
+							// Update the vote numbers on-the-fly
+							if (clicked == true) {
+								// +1 to the vote that is selected
+								if (selected == `${s.id}`)
+									setVote(votes + 1)
+								// -1 to the vote the user previously voted on
+								if (userVotedOnID == `${s.id}`)
+									setVote(votes - 1)
+							}
+						}, [selected])
+						// RENDER
+						return <RadioField
 							key={index}
 							className={clsx(
 								"text-left",
@@ -665,6 +693,7 @@ function UserFeedbackSection({
 							)}>
 							<Radio value={`${s.id}`} />
 							<Label>
+								{`${s.id}`} -&nbsp;
 								{replaceComicVariables({
 									content: s.title,
 									variables: variables,
@@ -674,9 +703,10 @@ function UserFeedbackSection({
 								{page.user_created.id !== s.user_created.id &&
 									<em>&nbsp;&mdash; @{s.user_created.username}</em>
 								}
-								&nbsp;| <strong>{s.votes || 0}</strong>
+								&nbsp;| <strong>{votes}</strong>
 							</Label>
 						</RadioField>
+					}
 					) : null}
 					{/* 
 								SUBMIT OWN SUGGESTION
