@@ -98,6 +98,7 @@ export interface PlotSuggestionsCollection {
 	// Meta
 	id: number
 	page: PagesCollection | number
+	sort: number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser

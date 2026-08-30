@@ -238,6 +238,11 @@ export async function getComicPage(comic_slug: string, num: number) {
 				"date_created",
 				"date_updated",
 			],
+			deep: {
+				plot_suggestions: {
+					_sort: ["sort", "id"],
+				},
+			},
 		}),
 	)
 	return request[0]
