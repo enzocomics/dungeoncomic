@@ -118,6 +118,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 				"variables_submit_button_text",
 				// Feedback
 				"plot_prompt",
+				"allow_user_suggestions",
 				{
 					plot_suggestions: [
 						"title",
@@ -157,6 +158,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 						"date_updated",
 					],
 				},
+				"allow_user_comments",
 				// Navigation
 				{
 					next_pages: [
