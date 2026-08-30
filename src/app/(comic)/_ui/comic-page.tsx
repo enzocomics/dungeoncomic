@@ -713,29 +713,33 @@ function UserFeedbackSection({
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-					<RadioField className={clsx(
-						"text-left",
-						"w-2/3",
-						"mx-auto"
-					)}>
-						<Radio value={selectUserSuggestion} />
-						<Label>
-							Submit my own suggestion
-						</Label>
-					</RadioField>
+					{page.allow_user_suggestions &&
+						<RadioField className={clsx(
+							"text-left",
+							"w-2/3",
+							"mx-auto"
+						)}>
+							<Radio value={selectUserSuggestion} />
+							<Label>
+								Submit my own suggestion
+							</Label>
+						</RadioField>
+					}
 				</RadioGroup>
 
 			</Fieldset>
 			{/* 
 						SUGGESTION FORM
 				*/}
-			{page.allow_user_suggestions && selected == selectUserSuggestion &&
-				<form>
+			{session && page.allow_user_suggestions && selected == selectUserSuggestion &&
+				<form >
 					<Field className={clsx(
 						"mt-8"
 					)}>
 						<Label>User Suggestion Form</Label>
-						<Textarea />
+						<Textarea name="user-suggestion" />
+						<input name="slug" type="text" disabled value={`p=${page.id}&u=${session.id}`} />
+						<input name="userId" type="text" disabled value={session.id} />
 					</Field>
 					<Button>Submit</Button>
 					<input type="hidden" />

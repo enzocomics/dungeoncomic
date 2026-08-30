@@ -103,3 +103,6 @@ export async function VoteOnPlotSuggestion({
 		return { error, reason }
 	}
 }
+
+/**----------------------------------- */
+export async function SubmitUserPlotSuggestion() {}
