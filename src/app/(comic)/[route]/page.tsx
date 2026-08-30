@@ -5,6 +5,7 @@ import { Metadata } from "next"
 // LIBRARIES
 import { notFound, redirect, RedirectType } from "next/navigation"
 // DATA
+import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
@@ -56,6 +57,8 @@ export default async function RoutePage({
 		// 404 if it does not exist
 		if (!page) notFound()
 
+		// Get the user session
+		const session = await verifySession()
 		// Get the User Variable Cookie
 		const comic = await getComic(frontpage_comic.slug)
 		const userVariables = await getUserVarsCookie({ comic: comic })
@@ -70,6 +73,7 @@ export default async function RoutePage({
 				page={comicPage}
 				variables={variables}
 				userVariables={userVariables}
+				session={session}
 			/>
 	}
 

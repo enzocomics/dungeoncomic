@@ -5,6 +5,7 @@ import { Metadata } from "next"
 // LIBRARIES
 import { notFound } from "next/navigation"
 // DATA
+import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
@@ -52,6 +53,8 @@ export default async function ComicPagenumPage({
 	// Throw 404 if the pagenum param is not a number
 	if (isNaN(pagenum)) notFound()
 
+	// Get the user session
+	const session = await verifySession()
 	// Get the User Variable Cookie
 	const comic = await getComic(route)
 	const userVariables = await getUserVarsCookie({ comic: comic })
@@ -65,6 +68,7 @@ export default async function ComicPagenumPage({
 			page={comicPage}
 			variables={variables}
 			userVariables={userVariables}
+			session={session}
 		/>
 }
 

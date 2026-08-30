@@ -10,18 +10,27 @@ import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 // DATA
 import { directusURL } from "@/data/env"
+import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { saveUserVarsCookie } from "../_action"
 import replaceComicVariables from "../_functions/replace-comic-vars"
 // UI
+import { useChangeStatus } from "@/components/status-message"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { Radio, RadioField, RadioGroup } from "@/components/radio"
 import { Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
-import { useChangeStatus } from "@/components/status-message"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
 
+/**----------------------------------- */
+// TYPES
+type ComicPageUIProps = {
+	page: Awaited<ReturnType<typeof getComicPage>>
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
+	session?: Awaited<ReturnType<typeof verifySession>>
+}
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -47,12 +56,6 @@ export function ComicLandingPageUI({
  * Comic Page UI
  * ---
  */
-
-type ComicPageUIProps = {
-	page: Awaited<ReturnType<typeof getComicPage>>
-	variables: Awaited<ReturnType<typeof getComicVariables>>
-	userVariables?: Record<string, string>
-}
 
 export default function ComicPageUI({
 	page,
@@ -302,8 +305,7 @@ export default function ComicPageUI({
 				}
 			</VariablesForm>
 
-			{(varsExist && varsSubmitted || !varsExist) &&
-				page.plot_prompt &&
+			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 				<UserFeedbackSection page={page} variables={variables} userVariables={userVariables} />
 			}
 			{
@@ -574,8 +576,14 @@ function VariablesForm({
 function UserFeedbackSection({
 	page,
 	variables,
-	userVariables
+	userVariables,
+	session
 }: ComicPageUIProps) {
+
+	useEffect(() => {
+	}, [])
+
+	const [selected, setSelected] = useState<string>("")
 
 	return <>
 		{
@@ -590,65 +598,74 @@ function UserFeedbackSection({
 			"p-4",
 			"mt-8",
 		)}>
-			<form>
-				<Fieldset>
-					<Legend>{replaceComicVariables({
-						content: page.plot_prompt,
-						variables: variables,
-						userVariables: userVariables
-					})}</Legend>
-					<RadioGroup onChange={() => console.log("sup")}
-						className={clsx(
-						)}>
-						{/* PLOT SUGGESTIONS */}
-						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
-							<RadioField key={index} className={clsx(
-								"text-left",
-								"w-2/3",
-								"mx-auto"
-							)}>
-								<Radio value={s.slug} />
-								<Label>
-									{replaceComicVariables({
-										content: s.title,
-										variables: variables,
-										userVariables: userVariables
-									})}
-									{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-									{page.user_created.id !== s.user_created.id &&
-										<em>&nbsp;&mdash; @{s.user_created.username}</em>
-									}
-									&nbsp;| <strong>{s.votes || 0}</strong>
-								</Label>
-							</RadioField>
-						)) : null}
-						{/* 
-										SUBMIT OWN SUGGESTION
-										- Only display this radio button if the user hasn't already submitted something
-										- When it's selected, display the suggestion form
-								*/}
-						<RadioField className={clsx(
+			{!session &&
+				<h4 className={clsx(
+					"text-2xl"
+				)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
+			}
+			<Fieldset>
+				<Legend>{replaceComicVariables({
+					content: page.plot_prompt,
+					variables: variables,
+					userVariables: userVariables
+				})}</Legend>
+				<RadioGroup value={selected} onChange={setSelected}
+					className={clsx(
+					)}>
+					{/* PLOT SUGGESTIONS */}
+					{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
+						<RadioField disabled={session ? false : true} key={index} className={clsx(
 							"text-left",
 							"w-2/3",
 							"mx-auto"
 						)}>
-							<Radio value="custom" />
+							<Radio value={s.slug} />
 							<Label>
-								Submit my own suggestion
+								{replaceComicVariables({
+									content: s.title,
+									variables: variables,
+									userVariables: userVariables
+								})}
+								{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+								{page.user_created.id !== s.user_created.id &&
+									<em>&nbsp;&mdash; @{s.user_created.username}</em>
+								}
+								&nbsp;| <strong>{s.votes || 0}</strong>
 							</Label>
 						</RadioField>
-					</RadioGroup>
+					)) : null}
+					{/* 
+								SUBMIT OWN SUGGESTION
+								- Only display this radio button if the user hasn't already submitted something
+								- When it's selected, display the suggestion form
+						*/}
+					<RadioField disabled={session ? false : true} className={clsx(
+						"text-left",
+						"w-2/3",
+						"mx-auto"
+					)}>
+						<Radio value="custom" />
+						<Label>
+							Submit my own suggestion
+						</Label>
+					</RadioField>
+				</RadioGroup>
 
-				</Fieldset>
-				{page.allow_user_suggestions &&
+			</Fieldset>
+			{/* 
+						SUGGESTION FORM
+				*/}
+			{page.allow_user_suggestions && selected == "custom" &&
+				<form>
 					<Field className={clsx(
 						"mt-8"
 					)}>
 						<Label>User Suggestion Form</Label>
 						<Textarea />
 					</Field>
-				}
-			</form>
+					<Button>Submit</Button>
+				</form>
+			}
 		</section>
 
 	</>
