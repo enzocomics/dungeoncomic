@@ -581,8 +581,20 @@ function UserFeedbackSection({
 	userVariables,
 	session
 }: ComicPageUIProps) {
+
+	// Check if the User ID exists in current suggestions
+	const loggedInUserID = session != false ? session?.id : null
+
+	const matches = page.plot_suggestions!.find(
+		s => s.users_voted!.some(
+			(v: any) => v.id === loggedInUserID
+		)
+	)
+	console.log(matches?.id)
+
+
 	// State for the Plot Suggestion Poll
-	const [selected, setSelected] = useState<string>("")
+	const [selected, setSelected] = useState<string>(matches ? matches.id.toString() : "")
 
 	// Value of radio button to be compared to
 	const selectUserSuggestion = "0"
@@ -610,16 +622,6 @@ function UserFeedbackSection({
 		castVote(selected)
 	}, [selected])
 
-	// Check if the User ID exists in current suggestions
-	const loggedInUserID = session != false ? session?.id : null
-
-	const matches = page.plot_suggestions!.find(
-		s => s.users_voted!.some(
-			(v: any) => v.id === loggedInUserID
-		)
-	)
-
-	console.log(matches?.id)
 	// Render
 	return <>
 		{
@@ -648,7 +650,6 @@ function UserFeedbackSection({
 				})}</Legend>
 				<RadioGroup
 					name="suggestions"
-					defaultValue={selectUserSuggestion}
 					value={selected}
 					onChange={setSelected}
 					className={clsx(
@@ -710,6 +711,7 @@ function UserFeedbackSection({
 					<input type="hidden" />
 				</form>
 			}
+
 		</section>
 
 	</>
