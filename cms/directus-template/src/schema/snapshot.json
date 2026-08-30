@@ -2490,7 +2490,7 @@
         "display": null,
         "display_options": null,
         "field": "pages_voted_on",
-        "group": null,
+        "group": "metadata",
         "hidden": true,
         "interface": "select-dropdown-m2o",
         "note": null,
@@ -2498,12 +2498,12 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 3,
         "special": null,
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "pages_voted_on",
@@ -2602,7 +2602,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 1,
         "special": [
           "alias",
           "no-data",
@@ -2676,7 +2676,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 3,
         "special": null,
         "translations": null,
         "validation": null,
@@ -2720,7 +2720,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 4,
         "special": null,
         "translations": null,
         "validation": null,
@@ -2744,6 +2744,94 @@
         "has_auto_increment": false,
         "foreign_key_table": "pages",
         "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "page_branches",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "collection": "page_branches",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort",
+        "group": "meta",
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort",
+        "table": "page_branches",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "page_branches",
+      "field": "sort_next",
+      "type": "integer",
+      "meta": {
+        "collection": "page_branches",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort_next",
+        "group": null,
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort_next",
+        "table": "page_branches",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {
@@ -6539,7 +6627,7 @@
         "one_collection_field": null,
         "one_deselect_action": "nullify",
         "one_field": "prev_pages",
-        "sort_field": null
+        "sort_field": "sort"
       },
       "schema": {
         "table": "page_branches",
@@ -6564,7 +6652,7 @@
         "one_collection_field": null,
         "one_deselect_action": "delete",
         "one_field": "next_pages",
-        "sort_field": null
+        "sort_field": "sort_next"
       },
       "schema": {
         "table": "page_branches",
@@ -6739,7 +6827,7 @@
         "one_collection_field": null,
         "one_deselect_action": "delete",
         "one_field": "plot_suggestions",
-        "sort_field": null
+        "sort_field": "sort"
       },
       "schema": {
         "table": "plot_suggestions",
