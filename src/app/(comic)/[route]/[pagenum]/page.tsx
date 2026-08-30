@@ -54,7 +54,7 @@ export default async function ComicPagenumPage({
 
 	// Get the User Variable Cookie
 	const comic = await getComic(route)
-	const userVarsCookie = await getUserVarsCookie({ comic: comic })
+	const userVariables = await getUserVarsCookie({ comic: comic })
 	// Get the comic page IF it is published
 	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
@@ -64,7 +64,7 @@ export default async function ComicPagenumPage({
 		return <ComicPageUI
 			page={comicPage}
 			variables={variables}
-			userVarsCookie={userVarsCookie}
+			userVariables={userVariables}
 		/>
 }
 

@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -16,9 +16,11 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 // UI
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { Radio, RadioField, RadioGroup } from "@/components/radio"
-import { Fieldset, Label } from "@/components/fieldset"
+import { Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { useChangeStatus } from "@/components/status-message"
+import { Textarea } from "@/components/textarea"
+import { Button } from "@/components/button"
 
 
 /**-----------------------------------
@@ -45,15 +47,18 @@ export function ComicLandingPageUI({
  * Comic Page UI
  * ---
  */
+
+type ComicPageUIProps = {
+	page: Awaited<ReturnType<typeof getComicPage>>
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
+}
+
 export default function ComicPageUI({
 	page,
 	variables,
-	userVarsCookie
-}: {
-	page: Awaited<ReturnType<typeof getComicPage>>
-	variables: Awaited<ReturnType<typeof getComicVariables>>
-	userVarsCookie?: Record<string, string>
-}) {
+	userVariables
+}: ComicPageUIProps) {
 	// VARIABLES
 	const pathname = usePathname()
 	const router = useRouter()
@@ -81,8 +86,6 @@ export default function ComicPageUI({
 		varParams.map((key) => [key, searchParams.get(key)])
 	) : {}
 
-	// Get the variables that are currently saved in cookies
-	const userVariables: Record<string, string> | undefined = userVarsCookie
 
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
@@ -298,69 +301,10 @@ export default function ComicPageUI({
 					</div>
 				}
 			</VariablesForm>
-			{
-				/**------------------------------
-				 * FEEDBACK
-				 * -
-				 */
-			}
+
 			{(varsExist && varsSubmitted || !varsExist) &&
 				page.plot_prompt &&
-				<div className={clsx(
-					"bg-pink-100",
-					"dark:bg-pink-800",
-					"p-4",
-					"mt-8",
-				)}>
-					<h4 className={
-						clsx(
-							"text-2xl",
-							"font-semibold",
-							"text-center",
-							"mb-2"
-						)
-					}>
-						{replaceComicVariables({
-							content: page.plot_prompt,
-							variables: variables,
-							userVariables: userVariables
-						})}
-					</h4>
-					<Fieldset>
-						<RadioGroup className={clsx(
-						)}>
-							{/* PLOT SUGGESTIONS */}
-							{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
-								<RadioField key={index} className={clsx(
-									"text-left",
-									"w-2/3",
-									"mx-auto"
-								)}>
-									<Radio value={s.slug} />
-									<Label>
-										{replaceComicVariables({
-											content: s.title,
-											variables: variables,
-											userVariables: userVariables
-										})}
-										{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-										{page.user_created.id !== s.user_created.id &&
-											<em>&nbsp;&mdash; @{s.user_created.username}</em>
-										}
-										&nbsp;| <strong>{s.votes || 0}</strong>
-									</Label>
-								</RadioField>
-							)) : null}
-						</RadioGroup>
-					</Fieldset>
-					{page.allow_user_suggestions &&
-						<div className={clsx(
-							"mt-8"
-						)}>
-							User Suggestion Form Here
-						</div>
-					}
-				</div>
+				<UserFeedbackSection page={page} variables={variables} userVariables={userVariables} />
 			}
 			{
 				/**------------------------------
@@ -387,7 +331,6 @@ export default function ComicPageUI({
 					<div className={clsx(
 						"mx-auto",
 						"w-2/3",
-
 					)}>
 						{page.next_pages && page.next_pages.length > 0 &&
 							<>
@@ -621,4 +564,92 @@ function VariablesForm({
 	else if (!varsExist)
 		return children
 
+}
+
+
+/**-----------------------------------
+ * User Feedback Section
+ * ---
+ */
+function UserFeedbackSection({
+	page,
+	variables,
+	userVariables
+}: ComicPageUIProps) {
+
+	return <>
+		{
+			/**------------------------------
+			 * FEEDBACK
+			 * -
+			 */
+		}
+		<section className={clsx(
+			"bg-pink-100",
+			"dark:bg-pink-800",
+			"p-4",
+			"mt-8",
+		)}>
+			<form>
+				<Fieldset>
+					<Legend>{replaceComicVariables({
+						content: page.plot_prompt,
+						variables: variables,
+						userVariables: userVariables
+					})}</Legend>
+					<RadioGroup onChange={() => console.log("sup")}
+						className={clsx(
+						)}>
+						{/* PLOT SUGGESTIONS */}
+						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
+							<RadioField key={index} className={clsx(
+								"text-left",
+								"w-2/3",
+								"mx-auto"
+							)}>
+								<Radio value={s.slug} />
+								<Label>
+									{replaceComicVariables({
+										content: s.title,
+										variables: variables,
+										userVariables: userVariables
+									})}
+									{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+									{page.user_created.id !== s.user_created.id &&
+										<em>&nbsp;&mdash; @{s.user_created.username}</em>
+									}
+									&nbsp;| <strong>{s.votes || 0}</strong>
+								</Label>
+							</RadioField>
+						)) : null}
+						{/* 
+										SUBMIT OWN SUGGESTION
+										- Only display this radio button if the user hasn't already submitted something
+										- When it's selected, display the suggestion form
+								*/}
+						<RadioField className={clsx(
+							"text-left",
+							"w-2/3",
+							"mx-auto"
+						)}>
+							<Radio value="custom" />
+							<Label>
+								Submit my own suggestion
+							</Label>
+						</RadioField>
+					</RadioGroup>
+
+				</Fieldset>
+				{page.allow_user_suggestions &&
+					<Field className={clsx(
+						"mt-8"
+					)}>
+						<Label>User Suggestion Form</Label>
+						<Textarea />
+					</Field>
+				}
+			</form>
+		</section>
+
+	</>
 }

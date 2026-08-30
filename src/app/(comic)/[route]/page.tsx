@@ -58,7 +58,7 @@ export default async function RoutePage({
 
 		// Get the User Variable Cookie
 		const comic = await getComic(frontpage_comic.slug)
-		const userVarsCookie = await getUserVarsCookie({ comic: comic })
+		const userVariables = await getUserVarsCookie({ comic: comic })
 		// Get the comic page & variables
 		const variables = await getComicVariables(frontpage_comic.slug)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
@@ -69,7 +69,7 @@ export default async function RoutePage({
 			return <ComicPageUI
 				page={comicPage}
 				variables={variables}
-				userVarsCookie={userVarsCookie}
+				userVariables={userVariables}
 			/>
 	}
 
