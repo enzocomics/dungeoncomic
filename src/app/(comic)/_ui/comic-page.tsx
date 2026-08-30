@@ -12,7 +12,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { saveUserVarsCookie } from "../_functions/actions"
+import { saveUserVarsCookie } from "../_actions/actions"
 import replaceComicVariables from "../_functions/replace-comic-vars"
 // UI
 import { useChangeStatus } from "@/components/status-message"

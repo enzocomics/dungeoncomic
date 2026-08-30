@@ -11,7 +11,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import ComicPageUI, { ComicLandingPageUI } from "../_ui/comic-page"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_ui/metadata"
-import { getUserVarsCookie } from "../_functions/actions"
+import { getUserVarsCookie } from "../_actions/actions"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
