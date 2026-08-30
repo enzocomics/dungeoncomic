@@ -108,6 +108,8 @@ export interface PlotSuggestionsCollection {
 export interface PageBranchesCollection {
 	// Meta
 	id: number
+	sort: number
+	sort_next: number
 	pages_id: PagesCollection
 	linked_pages_id: PagesCollection
 }

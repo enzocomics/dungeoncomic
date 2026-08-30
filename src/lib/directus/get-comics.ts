@@ -210,6 +210,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 						{
 							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
 						},
+						"sort",
 					],
 				},
 				// Meta
@@ -241,6 +242,12 @@ export async function getComicPage(comic_slug: string, num: number) {
 			deep: {
 				plot_suggestions: {
 					_sort: ["sort", "id"],
+				},
+				prev_pages: {
+					_sort: ["sort", "id"],
+				},
+				next_pages: {
+					_sort: ["sort_next", "id"],
 				},
 			},
 		}),
