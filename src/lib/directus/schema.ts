@@ -95,6 +95,8 @@ export interface PlotSuggestionsCollection {
 	slug: string
 	users_voted: DirectusUser[]
 	votes: number
+	// Meta
+	id: number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser

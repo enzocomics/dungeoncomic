@@ -60,7 +60,8 @@ export function ComicLandingPageUI({
 export default function ComicPageUI({
 	page,
 	variables,
-	userVariables
+	userVariables,
+	session
 }: ComicPageUIProps) {
 	// VARIABLES
 	const pathname = usePathname()
@@ -306,7 +307,7 @@ export default function ComicPageUI({
 			</VariablesForm>
 
 			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-				<UserFeedbackSection page={page} variables={variables} userVariables={userVariables} />
+				<UserFeedbackSection page={page} variables={variables} userVariables={userVariables} session={session} />
 			}
 			{
 				/**------------------------------
@@ -579,12 +580,32 @@ function UserFeedbackSection({
 	userVariables,
 	session
 }: ComicPageUIProps) {
-
-	useEffect(() => {
-	}, [])
-
+	// State for the Plot Suggestion Poll
 	const [selected, setSelected] = useState<string>("")
 
+	// Value of radio button to be compared to
+	const selectUserSuggestion = `custom-user-suggestion-${page.id}`
+
+	// This effect runs every time the poll's radio button selection is changed
+	useEffect(() => {
+		const castVote = async (plotSuggestionsID: string) => {
+			// console.log(`update the item on the cms with ${selected}`)
+			// const voteRequest = userClient.request(updateItem(
+			// 	"plot_suggestions", plotSuggestionsID, {
+			// 	// votes: +1
+			// }
+			// ))
+		}
+
+		// Handle the form
+		if (selected == selectUserSuggestion)
+			console.log("handle the form")
+		else if (selected !== "")
+			castVote(selected)
+
+	}, [selected])
+
+	// Render
 	return <>
 		{
 			/**------------------------------
@@ -619,7 +640,7 @@ function UserFeedbackSection({
 							"w-2/3",
 							"mx-auto"
 						)}>
-							<Radio value={s.slug} />
+							<Radio value={`${s.id}`} />
 							<Label>
 								{replaceComicVariables({
 									content: s.title,
@@ -644,7 +665,7 @@ function UserFeedbackSection({
 						"w-2/3",
 						"mx-auto"
 					)}>
-						<Radio value="custom" />
+						<Radio value={selectUserSuggestion} />
 						<Label>
 							Submit my own suggestion
 						</Label>
@@ -655,7 +676,7 @@ function UserFeedbackSection({
 			{/* 
 						SUGGESTION FORM
 				*/}
-			{page.allow_user_suggestions && selected == "custom" &&
+			{page.allow_user_suggestions && selected == selectUserSuggestion &&
 				<form>
 					<Field className={clsx(
 						"mt-8"
@@ -664,6 +685,7 @@ function UserFeedbackSection({
 						<Textarea />
 					</Field>
 					<Button>Submit</Button>
+					<input type="hidden" />
 				</form>
 			}
 		</section>

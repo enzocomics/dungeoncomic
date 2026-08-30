@@ -134,6 +134,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 							],
 						},
 						"votes",
+						"id",
 						{
 							user_created: [
 								"id",
@@ -212,6 +213,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 					],
 				},
 				// Meta
+				"id",
 				{ comic: ["slug", "title"] },
 				{
 					user_created: [
