@@ -22,6 +22,7 @@ import { Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
+import { VoteOnPlotSuggestion } from "../_actions/plot-suggestions"
 
 /**----------------------------------- */
 // TYPES
@@ -584,11 +585,16 @@ function UserFeedbackSection({
 	const [selected, setSelected] = useState<string>("")
 
 	// Value of radio button to be compared to
-	const selectUserSuggestion = `custom-user-suggestion-${page.id}`
+	const selectUserSuggestion = "0"
 
 	// This effect runs every time the poll's radio button selection is changed
 	useEffect(() => {
 		const castVote = async (plotSuggestionsID: string) => {
+			VoteOnPlotSuggestion({
+				newVoteID: parseInt(plotSuggestionsID),
+				page: page,
+				user: session ? session : false
+			})
 			// console.log(`update the item on the cms with ${selected}`)
 			// const voteRequest = userClient.request(updateItem(
 			// 	"plot_suggestions", plotSuggestionsID, {
@@ -598,13 +604,22 @@ function UserFeedbackSection({
 		}
 
 		// Handle the form
-		if (selected == selectUserSuggestion)
+		if (selected == selectUserSuggestion) {
 			console.log("handle the form")
-		else if (selected !== "")
-			castVote(selected)
-
+		}
+		castVote(selected)
 	}, [selected])
 
+	// Check if the User ID exists in current suggestions
+	const loggedInUserID = session != false ? session?.id : null
+
+	const matches = page.plot_suggestions!.find(
+		s => s.users_voted!.some(
+			(v: any) => v.id === loggedInUserID
+		)
+	)
+
+	console.log(matches?.id)
 	// Render
 	return <>
 		{
@@ -624,22 +639,29 @@ function UserFeedbackSection({
 					"text-2xl"
 				)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
 			}
-			<Fieldset>
+			<Fieldset
+				disabled={session ? false : true}>
 				<Legend>{replaceComicVariables({
 					content: page.plot_prompt,
 					variables: variables,
 					userVariables: userVariables
 				})}</Legend>
-				<RadioGroup value={selected} onChange={setSelected}
+				<RadioGroup
+					name="suggestions"
+					defaultValue={selectUserSuggestion}
+					value={selected}
+					onChange={setSelected}
 					className={clsx(
 					)}>
 					{/* PLOT SUGGESTIONS */}
-					{page.plot_suggestions ? page.plot_suggestions.map((s, index) => (
-						<RadioField disabled={session ? false : true} key={index} className={clsx(
-							"text-left",
-							"w-2/3",
-							"mx-auto"
-						)}>
+					{page.plot_suggestions ? page.plot_suggestions.map((s, index) =>
+						<RadioField
+							key={index}
+							className={clsx(
+								"text-left",
+								"w-2/3",
+								"mx-auto"
+							)}>
 							<Radio value={`${s.id}`} />
 							<Label>
 								{replaceComicVariables({
@@ -654,13 +676,13 @@ function UserFeedbackSection({
 								&nbsp;| <strong>{s.votes || 0}</strong>
 							</Label>
 						</RadioField>
-					)) : null}
+					) : null}
 					{/* 
 								SUBMIT OWN SUGGESTION
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-					<RadioField disabled={session ? false : true} className={clsx(
+					<RadioField className={clsx(
 						"text-left",
 						"w-2/3",
 						"mx-auto"

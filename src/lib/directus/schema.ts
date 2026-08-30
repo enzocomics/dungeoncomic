@@ -93,10 +93,11 @@ export interface PagesCollection {
 export interface PlotSuggestionsCollection {
 	title: string
 	slug: string
-	users_voted: DirectusUser[]
+	users_voted: DirectusUser[] | string[]
 	votes: number
 	// Meta
 	id: number
+	page: PagesCollection | number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
