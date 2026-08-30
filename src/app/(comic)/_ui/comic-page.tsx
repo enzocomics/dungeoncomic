@@ -4,16 +4,21 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { useEffect, useState } from "react"
+import React, { useActionState, useEffect, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { useForm } from "@conform-to/react"
+import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { saveUserVarsCookie } from "../_actions/cookies"
 import replaceComicVariables from "../_functions/replace-comic-vars"
+// ACTIONS
+import { saveUserVarsCookie } from "../_actions/cookies"
+import { submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
@@ -22,7 +27,6 @@ import { Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
-import { VoteOnPlotSuggestion } from "../_actions/plot-suggestions"
 
 /**----------------------------------- */
 // TYPES
@@ -308,7 +312,7 @@ export default function ComicPageUI({
 			</VariablesForm>
 
 			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-				<UserFeedbackSection page={page} variables={variables} userVariables={userVariables} session={session} />
+				<UserFeedbackSection />
 			}
 			{
 				/**------------------------------
@@ -547,192 +551,224 @@ export default function ComicPageUI({
 			</section>
 		}
 	</>
-}
-/**-----------------------------------
- * Conditionally Render the Form depending on if variables exist
- * ---
- */
-function VariablesForm({
-	varsExist,
-	children
-}: {
-	varsExist: Boolean
-	children: React.ReactNode
-}) {
-	// Render Form tags if vars exist
-	if (varsExist)
-		return <Form action="">
-			{children}
-		</Form>
-	// Otherwise, render nothing
-	else if (!varsExist)
-		return children
+	/**---------------------------------------------------------------------- */
+	// HELPER FUNCTIONS
 
-}
+	/**-----------------------------------
+	 * Conditionally Render the Form depending on if variables exist
+	 * ---
+	 */
+	function VariablesForm({
+		varsExist,
+		children
+	}: {
+		varsExist: Boolean
+		children: React.ReactNode
+	}) {
+		// Render Form tags if vars exist
+		if (varsExist)
+			return <Form action="">
+				{children}
+			</Form>
+		// Otherwise, render nothing
+		else if (!varsExist)
+			return children
 
-
-/**-----------------------------------
- * User Feedback Section
- * ---
- */
-function UserFeedbackSection({
-	page,
-	variables,
-	userVariables,
-	session
-}: ComicPageUIProps) {
-
-	// Get the ID of the currently logged-in user, if exists
-	const loggedInUserID = session != false ? session?.id : null
-
-	// Check if the User ID exists in current suggestions, and get the ID
-	const userVotedOn = page.plot_suggestions!.find(
-		s => s.users_voted!.some(
-			(v: any) => v.id === loggedInUserID
-		)
-	)
-
-	const [userVotedOnID, setUserVotedOnID] = useState(userVotedOn?.id.toString())
-
-	// State for the Plot Suggestion Poll
-	// Default value: the ID of the suggestion the logged-in user has already voted on
-	const [selected, setSelected] = useState<string>(
-		userVotedOnID ? userVotedOnID : ""
-	)
-	// State of the poll: to prevent the effect from firing multiple times
-	const [clicked, setClicked] = useState(false)
-
-	// Poll Click Handler
-	function handleClick(selectedId: string) {
-		setSelected(selectedId)
-		setClicked(true)
 	}
 
-	// Value of radio button that opens up the user suggestion form
-	const selectUserSuggestion = "0"
+	/**-----------------------------------
+	 * User Feedback Section
+	 * ---
+	 */
+	function UserFeedbackSection() {
+		// Get the ID of the currently logged-in user, if exists
+		const loggedInUserID = session != false ? session?.id : null
 
-	// This effect runs every time the poll's radio button selection is changed
-	useEffect(() => {
-		// Send the vote to the CMS
-		const castVote = async (plotSuggestionsID: string) => {
-			VoteOnPlotSuggestion({
-				newVoteID: parseInt(plotSuggestionsID),
-				page: page,
-				user: session ? session : false
-			})
+		/**----------------------------------- */
+		// SUGGESTIONS
+
+		// Check if the User ID exists in current suggestions, and get the ID
+		const userVotedOn = page.plot_suggestions!.find(
+			s => s.users_voted!.some(
+				(v: any) => v.id === loggedInUserID
+			)
+		)
+
+		// State of the previous suggestion the current user voted on
+		const [userVotedOnID, setUserVotedOnID] = useState(userVotedOn?.id.toString())
+
+		// State for the Plot Suggestion Poll
+		// Default value: the ID of the suggestion the logged-in user has already voted on
+		const [selected, setSelected] = useState<string>(
+			userVotedOnID ? userVotedOnID : ""
+		)
+		// State of the poll: to prevent the effect from firing multiple times
+		const [clicked, setClicked] = useState(false)
+
+		// Poll Click Handler
+		function handleClick(selectedId: string) {
+			setSelected(selectedId)
+			setClicked(true)
 		}
 
-		// Handle the form
-		if (selected == selectUserSuggestion) {
-			console.log("handle the form")
-		}
+		// Value of radio button that opens up the user suggestion form
+		const selectUserSuggestion = "0"
 
-		// Cast the vote
-		if (clicked == true) {
-			castVote(selected) // Send the vote to the cms
-			setUserVotedOnID(selected) // Save the suggestion this user voted on for refernece
-			setClicked(false)
-		}
-	}, [selected])
-
-	// Render
-	return <>
-		{
-			/**------------------------------
-			 * FEEDBACK
-			 * -
-			 */
-		}
-		<section className={clsx(
-			"bg-pink-100",
-			"dark:bg-pink-800",
-			"p-4",
-			"mt-8",
-		)}>
-			{!session &&
-				<h4 className={clsx(
-					"text-2xl"
-				)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
+		// This effect runs every time the poll's radio button selection is changed
+		useEffect(() => {
+			// Send the vote to the CMS
+			const castVote = async (plotSuggestionsID: string) => {
+				voteOnPlotSuggestion({
+					newVoteID: parseInt(plotSuggestionsID),
+					page: page,
+					user: session ? session : false
+				})
 			}
-			<Fieldset
-				disabled={session ? false : true}>
-				<Legend>{replaceComicVariables({
-					content: page.plot_prompt,
-					variables: variables,
-					userVariables: userVariables
-				})}</Legend>
-				<RadioGroup
-					name="suggestions"
-					value={selected}
-					onChange={(selected) => handleClick(selected)}
-					className={clsx(
-					)}>
-					{/* PLOT SUGGESTIONS */}
-					{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
-						// Handle State of the vote numbers
-						const [votes, setVote] = useState(s.votes || 0)
 
-						useEffect(() => {
-							// Update the vote numbers on-the-fly
-							if (clicked == true) {
-								// +1 to the vote that is selected
-								if (selected == `${s.id}`)
-									setVote(votes + 1)
-								// -1 to the vote the user previously voted on
-								if (userVotedOnID == `${s.id}`)
-									setVote(votes - 1)
-							}
-						}, [selected])
-						// RENDER
-						return <RadioField
-							key={index}
-							className={clsx(
-								"text-left",
-								"w-2/3",
-								"mx-auto"
-							)}>
-							<Radio value={`${s.id}`} />
-							<Label>
-								{`${s.id}`} -&nbsp;
-								{replaceComicVariables({
-									content: s.title,
-									variables: variables,
-									userVariables: userVariables
-								})}
-								{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-								{page.user_created.id !== s.user_created.id &&
-									<em>&nbsp;&mdash; @{s.user_created.username}</em>
+			// Handle the form
+			if (selected == selectUserSuggestion) {
+				console.log("handle the form")
+			}
+
+			// Cast the vote
+			if (clicked == true) {
+				castVote(selected) // Send the vote to the cms
+				setUserVotedOnID(selected) // Save the suggestion this user voted on for refernece
+				setClicked(false)
+			}
+		}, [selected])
+		/**----------------------------------- */
+		// Render
+		return <>
+			{
+				/**------------------------------
+				 * FEEDBACK
+				 * -
+				 */
+			}
+			<section className={clsx(
+				"bg-pink-100",
+				"dark:bg-pink-800",
+				"p-4",
+				"mt-8",
+			)}>
+				{!session &&
+					<h4 className={clsx(
+						"text-2xl"
+					)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
+				}
+				<Fieldset
+					disabled={session ? false : true}>
+					<Legend>{replaceComicVariables({
+						content: page.plot_prompt,
+						variables: variables,
+						userVariables: userVariables
+					})}</Legend>
+					<RadioGroup
+						name="suggestions"
+						value={selected}
+						onChange={(selected) => handleClick(selected)}
+						className={clsx(
+						)}>
+						{/* PLOT SUGGESTIONS */}
+						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
+							// Handle State of the vote numbers
+							const [votes, setVote] = useState(s.votes || 0)
+
+							useEffect(() => {
+								// Update the vote numbers on-the-fly
+								if (clicked == true) {
+									// +1 to the vote that is selected
+									if (selected == `${s.id}`)
+										setVote(votes + 1)
+									// -1 to the vote the user previously voted on
+									if (userVotedOnID == `${s.id}`)
+										setVote(votes - 1)
 								}
-								&nbsp;| <strong>{votes}</strong>
-							</Label>
-						</RadioField>
-					}
-					) : null}
-					{/* 
+							}, [selected])
+							// RENDER
+							return <RadioField
+								key={index}
+								className={clsx(
+									"text-left",
+									"w-2/3",
+									"mx-auto"
+								)}>
+								<Radio value={`${s.id}`} />
+								<Label>
+									{`${s.id}`} -&nbsp;
+									{replaceComicVariables({
+										content: s.title,
+										variables: variables,
+										userVariables: userVariables
+									})}
+									{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+									{page.user_created.id !== s.user_created.id &&
+										<em>&nbsp;&mdash; @{s.user_created.username}</em>
+									}
+									&nbsp;| <strong>{votes}</strong>
+								</Label>
+							</RadioField>
+						}
+						) : null}
+						{/* 
 								SUBMIT OWN SUGGESTION
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-					{page.allow_user_suggestions &&
-						<RadioField className={clsx(
-							"text-left",
-							"w-2/3",
-							"mx-auto"
-						)}>
-							<Radio value={selectUserSuggestion} />
-							<Label>
-								Submit my own suggestion
-							</Label>
-						</RadioField>
-					}
-				</RadioGroup>
+						{page.allow_user_suggestions &&
+							<RadioField className={clsx(
+								"text-left",
+								"w-2/3",
+								"mx-auto"
+							)}>
+								<Radio value={selectUserSuggestion} />
+								<Label>
+									Submit my own suggestion
+								</Label>
+							</RadioField>
+						}
+					</RadioGroup>
 
-			</Fieldset>
-			{/* 
+				</Fieldset>
+				{/* 
 						SUGGESTION FORM
 				*/}
-			{session && page.allow_user_suggestions && selected == selectUserSuggestion &&
-				<form >
+				{page.allow_user_suggestions && selected == selectUserSuggestion &&
+					<UserSuggestionForm />
+				}
+
+			</section>
+
+		</>
+	}
+
+	/**----------------------------------- */
+	function UserSuggestionForm() {
+		// VALIDATION
+		const [lastResult, action] = useActionState(submitUserPlotSuggestion, undefined)
+		const [form, fields] = useForm({
+			// Sync the result with the last submission
+			lastResult,
+
+			// Reuse the validation logic on the client
+			onValidate({ formData }) {
+				return parseWithZod(formData, { schema: userSuggestionSchema() })
+			},
+
+			// Validate the form on blur event triggered
+			shouldValidate: "onBlur",
+			shouldRevalidate: "onInput",
+		})
+
+		// Render
+		return <>
+			{session &&
+				<form
+					id={form.id}
+					onSubmit={form.onSubmit}
+					action={action}
+					noValidate>
 					<Field className={clsx(
 						"mt-8"
 					)}>
@@ -745,8 +781,11 @@ function UserFeedbackSection({
 					<input type="hidden" />
 				</form>
 			}
-
-		</section>
-
-	</>
+		</>
+	}
+	/**----------------------------------- */
 }
+
+
+
+

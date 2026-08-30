@@ -6,9 +6,11 @@ import { readItem, readItems, updateItem } from "@directus/sdk"
 import { verifySession } from "@/data/session"
 import { userClient } from "@/lib/directus/clients"
 import { getComicPage } from "@/lib/directus/get-comics"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 
 /**----------------------------------- */
-export async function VoteOnPlotSuggestion({
+export async function voteOnPlotSuggestion({
 	newVoteID,
 	page,
 	user,
@@ -105,4 +107,11 @@ export async function VoteOnPlotSuggestion({
 }
 
 /**----------------------------------- */
-export async function SubmitUserPlotSuggestion() {}
+export async function submitUserPlotSuggestion(
+	prevState: unknown,
+	formData: FormData,
+) {
+	const submission = parseWithZod(formData, { schema: userSuggestionSchema() })
+
+	return submission.reply()
+}
