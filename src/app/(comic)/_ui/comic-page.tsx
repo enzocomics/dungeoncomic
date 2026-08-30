@@ -302,7 +302,8 @@ export default function ComicPageUI({
 				 * -
 				 */
 			}
-			{page.plot_prompt &&
+			{(varsExist && varsSubmitted || !varsExist) &&
+				page.plot_prompt &&
 				<div className={clsx(
 					"bg-pink-100",
 					"dark:bg-pink-800",
@@ -317,7 +318,11 @@ export default function ComicPageUI({
 							"mb-2"
 						)
 					}>
-						{page.plot_prompt}
+						{replaceComicVariables({
+							content: page.plot_prompt,
+							variables: variables,
+							userVariables: userVariables
+						})}
 					</h4>
 					<ul className={clsx(
 
@@ -327,7 +332,11 @@ export default function ComicPageUI({
 							<li key={index} className={clsx(
 								"text-center"
 							)}>
-								<strong>{s.votes || 0}</strong> | {s.title} &nbsp;
+								<strong>{s.votes || 0}</strong> | {replaceComicVariables({
+									content: s.title,
+									variables: variables,
+									userVariables: userVariables
+								})} &nbsp;
 								{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
 								{page.user_created.id !== s.user_created.id &&
 									<em>&mdash; @{s.user_created.username}</em>
@@ -335,9 +344,11 @@ export default function ComicPageUI({
 							</li>
 						)) : null}
 					</ul>
-					<div>
-						User Suggestion Form Here
-					</div>
+					{page.allow_user_suggestions &&
+						<div>
+							User Suggestion Form Here
+						</div>
+					}
 				</div>
 			}
 			{
@@ -563,19 +574,20 @@ export default function ComicPageUI({
 
 		</div >
 
-
-		<section className={clsx(
-			"mt-8"
-		)}>
-			<h4 className={clsx(
-				"text-xl"
-			)}>Comments</h4>
-			<div className={clsx(
-				"bg-base-1"
+		{page.allow_user_comments &&
+			<section className={clsx(
+				"mt-8"
 			)}>
-				Comments here
-			</div>
-		</section>
+				<h4 className={clsx(
+					"text-xl"
+				)}>Comments</h4>
+				<div className={clsx(
+					"bg-base-1"
+				)}>
+					Comments here
+				</div>
+			</section>
+		}
 	</>
 }
 /**-----------------------------------
