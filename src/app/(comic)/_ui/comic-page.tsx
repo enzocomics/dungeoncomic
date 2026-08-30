@@ -139,39 +139,6 @@ export default function ComicPageUI({
 		setCanGoBack(hasHistory && previousPageIsSameSite)
 	}, [pathname, searchParams.toString()])
 
-
-	/**----------------------------------- */
-	// HELPER FUNCTIONS
-	function getComicPageVars(
-		comic_panels:
-			typeof page.comic_panels
-	) {
-		return comic_panels ? comic_panels.flatMap(p =>
-			p.variables && p.variables.length > 0 ?
-				p.variables : []
-		) : null
-	}
-
-	function makeComicVarsUrl({
-		comicVars,
-		userVars
-	}: {
-		comicVars: any // TODO: typed as any, please fix
-		userVars?: Record<string, string | null>
-	}) {
-		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
-		const params = new URLSearchParams(
-			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
-				slug,
-				// Fallback to default value if undefined
-				userVars && userVars[slug] !== undefined ? userVars[slug] : default_value
-			])
-		)
-
-		// Return it as a string
-		return params.size == 0 ? `` : `?${params.toString()}`
-	}
-
 	/**----------------------------------- */
 	// Render
 	return <>
@@ -551,8 +518,41 @@ export default function ComicPageUI({
 			</section>
 		}
 	</>
+
 	/**---------------------------------------------------------------------- */
 	// HELPER FUNCTIONS
+	function getComicPageVars(
+		comic_panels:
+			typeof page.comic_panels
+	) {
+		return comic_panels ? comic_panels.flatMap(p =>
+			p.variables && p.variables.length > 0 ?
+				p.variables : []
+		) : null
+	}
+
+	function makeComicVarsUrl({
+		comicVars,
+		userVars
+	}: {
+		comicVars: any // TODO: typed as any, please fix
+		userVars?: Record<string, string | null>
+	}) {
+		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
+		const params = new URLSearchParams(
+			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
+				slug,
+				// Fallback to default value if undefined
+				userVars && userVars[slug] !== undefined ? userVars[slug] : default_value
+			])
+		)
+
+		// Return it as a string
+		return params.size == 0 ? `` : `?${params.toString()}`
+	}
+
+	/**---------------------------------------------------------------------- */
+	// LAYOUT FUNCTIONS
 
 	/**-----------------------------------
 	 * Conditionally Render the Form depending on if variables exist
@@ -785,7 +785,3 @@ export default function ComicPageUI({
 	}
 	/**----------------------------------- */
 }
-
-
-
-
