@@ -603,8 +603,8 @@ function UserFeedbackSection({
 	const [clicked, setClicked] = useState(false)
 
 	// Poll Click Handler
-	function handleClick(selected: string) {
-		setSelected(selected)
+	function handleClick(selectedId: string) {
+		setSelected(selectedId)
 		setClicked(true)
 	}
 
