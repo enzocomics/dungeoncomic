@@ -23,7 +23,7 @@ import { submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot
 import { useChangeStatus } from "@/components/status-message"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { Radio, RadioField, RadioGroup } from "@/components/radio"
-import { Field, Fieldset, Label, Legend } from "@/components/fieldset"
+import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
@@ -637,6 +637,7 @@ export default function ComicPageUI({
 				setClicked(false)
 			}
 		}, [selected])
+
 		/**----------------------------------- */
 		// Render
 		return <>
@@ -740,48 +741,62 @@ export default function ComicPageUI({
 
 			</section>
 
-		</>
-	}
+		</> // EO UserSuggestionForm() RENDER
 
-	/**----------------------------------- */
-	function UserSuggestionForm() {
-		// VALIDATION
-		const [lastResult, action] = useActionState(submitUserPlotSuggestion, undefined)
-		const [form, fields] = useForm({
-			// Sync the result with the last submission
-			lastResult,
+		/**----------------------------------- */
 
-			// Reuse the validation logic on the client
-			onValidate({ formData }) {
-				return parseWithZod(formData, { schema: userSuggestionSchema() })
-			},
+		function UserSuggestionForm() {
+			// VALIDATION
+			const [lastResult, action] = useActionState(submitUserPlotSuggestion, undefined)
+			const [form, fields] = useForm({
+				// Sync the result with the last submission
+				lastResult,
 
-			// Validate the form on blur event triggered
-			shouldValidate: "onBlur",
-			shouldRevalidate: "onInput",
-		})
+				// Reuse the validation logic on the client
+				onValidate({ formData }) {
+					return parseWithZod(formData, { schema: userSuggestionSchema() })
+				},
 
-		// Render
-		return <>
-			{session &&
-				<form
-					id={form.id}
-					onSubmit={form.onSubmit}
-					action={action}
-					noValidate>
-					<Field className={clsx(
-						"mt-8"
-					)}>
-						<Label>User Suggestion Form</Label>
-						<Textarea name="user-suggestion" />
-						<input name="slug" type="text" disabled value={`p=${page.id}&u=${session.id}`} />
-						<input name="userId" type="text" disabled value={session.id} />
-					</Field>
-					<Button>Submit</Button>
-					<input type="hidden" />
-				</form>
-			}
-		</>
-	}
-	/**----------------------------------- */
+				// Validate the form on blur event triggered
+				shouldValidate: "onBlur",
+				shouldRevalidate: "onInput",
+			})
+
+			// EFFECT: on submit
+			useEffect(() => {
+				if (lastResult?.status == "success") {
+					setSelected("")
+				}
+			}, [lastResult])
+
+			// Render
+			return <>
+				{session &&
+					<form
+						id={form.id}
+						onSubmit={form.onSubmit}
+						action={action}
+						noValidate>
+						<Field className={clsx(
+							"mt-8"
+						)}>
+							<Label required htmlFor={fields.userSuggestion.name}>User Suggestion Form</Label>
+							<Textarea
+								id={fields.userSuggestion.name}
+								name={fields.userSuggestion.name}
+								key={fields.userSuggestion.key}
+							/>
+							<ErrorMessage>{fields.userSuggestion.errors}</ErrorMessage>
+							<input name="slug" type="text" disabled value={`p=${page.id}&u=${session.id}`} />
+							<input name="userId" type="text" disabled value={session.id} />
+						</Field>
+						<Button type="submit">Submit</Button>
+						<input type="hidden" />
+					</form>
+				}
+			</>
+		} // EO UserSuggestionForm()
+		/**----------------------------------- */
+	} // EO UserFeedbackSection()
+
 }

@@ -111,7 +111,24 @@ export async function submitUserPlotSuggestion(
 	prevState: unknown,
 	formData: FormData,
 ) {
+	// VALIDATION
 	const submission = parseWithZod(formData, { schema: userSuggestionSchema() })
 
+	// FORM DATA
+	const userSuggestion = formData.get("userSuggestion") as string
+
+	// SUBMIT USER SUGGESTION TO DIRECTUS
+	try {
+		console.log(userSuggestion)
+	} catch (err: any) {
+		// RETURN ERROR IF UNSUCCESFUL
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return submission.reply({
+			formErrors: [reason],
+		})
+	}
+	// RETURN REPLY so that its last value may be used
 	return submission.reply()
 }
