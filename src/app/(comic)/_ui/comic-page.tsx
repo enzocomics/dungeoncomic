@@ -27,10 +27,11 @@ import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/field
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
+import { CommentsSection } from "./comments"
 
 /**----------------------------------- */
 // TYPES
-type ComicPageUIProps = {
+export type ComicPageUIProps = {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
@@ -502,21 +503,6 @@ export default function ComicPageUI({
 			</section >
 
 		</div >
-
-		{page.allow_user_comments &&
-			<section className={clsx(
-				"mt-8"
-			)}>
-				<h4 className={clsx(
-					"text-xl"
-				)}>Comments</h4>
-				<div className={clsx(
-					"bg-base-1"
-				)}>
-					Comments here
-				</div>
-			</section>
-		}
 	</>
 
 	/**---------------------------------------------------------------------- */

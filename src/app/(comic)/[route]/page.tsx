@@ -12,6 +12,8 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import ComicPageUI, { ComicLandingPageUI } from "../_ui/comic-page"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_ui/metadata"
 import { getUserVarsCookie } from "../_actions/cookies"
+import { CommentsSection } from "../_ui/comments"
+import { getComments } from "@/lib/directus/get-comments"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -65,16 +67,25 @@ export default async function RoutePage({
 		// Get the comic page & variables
 		const variables = await getComicVariables(frontpage_comic.slug)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
+		// Get the comments
+		const comments = await getComments(frontpage_comic.id)
 
 		if (!comicPage || comicPage && comicPage.status !== "published")
 			notFound()
 		else
-			return <ComicPageUI
-				page={comicPage}
-				variables={variables}
-				userVariables={userVariables}
-				session={session}
-			/>
+			return <>
+				<ComicPageUI
+					page={comicPage}
+					variables={variables}
+					userVariables={userVariables}
+					session={session}
+				/>
+				{page.allow_user_comments &&
+					<CommentsSection
+						comments={comments}
+					/>
+				}
+			</>
 	}
 
 	/**----------------------------------- */

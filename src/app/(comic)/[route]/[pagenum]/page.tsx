@@ -12,6 +12,8 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import { comicPageMetadata, notFoundMetadata } from "../../_ui/metadata"
 import ComicPageUI from "../../_ui/comic-page"
 import { getUserVarsCookie } from "../../_actions/cookies"
+import { CommentsSection } from "../../_ui/comments"
+import { getComments } from "@/lib/directus/get-comments"
 
 /**-----------------------------------
  * COMIC SINGLE SUBPAGE
@@ -61,15 +63,24 @@ export default async function ComicPagenumPage({
 	// Get the comic page IF it is published
 	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
+	// Get comments
+	const comments = await getComments(comic.id)
 	if (!comicPage || comicPage && comicPage.status !== "published")
 		notFound()
 	else
-		return <ComicPageUI
-			page={comicPage}
-			variables={variables}
-			userVariables={userVariables}
-			session={session}
-		/>
+		return <>
+			<ComicPageUI
+				page={comicPage}
+				variables={variables}
+				userVariables={userVariables}
+				session={session}
+			/>
+			{comicPage.allow_user_comments &&
+				<CommentsSection
+					comments={comments}
+				/>
+			}
+		</>
 }
 
 /**-----------------------------------
