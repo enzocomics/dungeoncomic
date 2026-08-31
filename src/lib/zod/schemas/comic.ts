@@ -24,3 +24,16 @@ export const userSuggestionSchema = (
 		userId: z.string(),
 		slug: z.string(),
 	})
+
+/**----------------------------------- */
+// SCHEMA - COMMENT FORM
+
+export const userCommentSchema = (
+	// Pass the translations object from next-intl so they can be used for zod validation errors
+	t?: (arg: string) => string,
+) =>
+	z.object({
+		content: z.string(),
+		pageId: z.string(),
+		userId: z.string(),
+	})
