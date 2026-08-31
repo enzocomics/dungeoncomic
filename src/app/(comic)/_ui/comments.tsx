@@ -65,7 +65,7 @@ export function CommentsSection({
 			)}>
 				<h4 className={clsx(
 					"text-xl"
-				)}>Comments</h4>
+				)}>{t("comments")} ({comments.length})</h4>
 				<ul className={clsx(
 					"flex",
 					"flex-col",
@@ -93,20 +93,6 @@ export function CommentsSection({
 								</>
 							}
 
-							{session &&
-								<>
-									{(!isReplying || !(isReplying && isReplying == c.id)) &&
-										<Button onClick={() => {
-											setIsReplying(c.id)
-										}}>{t("reply")}</Button>
-									}
-									{isReplying && isReplying == c.id &&
-										<Button onClick={() => {
-											setIsReplying(null)
-										}}>{t("cancel-reply")}</Button>
-									}
-								</>
-							}
 
 
 
@@ -127,11 +113,26 @@ export function CommentsSection({
 								</ul>
 							}
 
+							{session &&
+								<>
+									{(!isReplying || !(isReplying && isReplying == c.id)) &&
+										<Button onClick={() => {
+											setIsReplying(c.id)
+										}}>{t("reply")}</Button>
+									}
+									{isReplying && isReplying == c.id &&
+										<Button onClick={() => {
+											setIsReplying(null)
+										}}>{t("cancel-reply")}</Button>
+									}
+								</>
+							}
 							{isReplying && isReplying == c.id &&
 
 								<CommentForm />
 
 							}
+
 						</li>
 
 					))}
