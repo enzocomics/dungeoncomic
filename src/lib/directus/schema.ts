@@ -147,9 +147,9 @@ export interface VariablesCollection {
 export interface CommentsCollection {
 	content: string
 	// Relational
-	parent_page: PagesCollection | number
+	parent_page: PagesCollection | number | null
 	children_comments: CommentsCollection[]
-	parent_comment: CommentsCollection | null
+	parent_comment: CommentsCollection | number | null
 	// Meta
 	id: number
 	user_created: DirectusUser

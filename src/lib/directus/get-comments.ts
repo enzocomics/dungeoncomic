@@ -72,6 +72,7 @@ export async function getComments(pageId: number) {
 					],
 				}, // eo child commments
 				// Root Comment - Meta
+				"id",
 				{
 					user_created: [
 						"id",

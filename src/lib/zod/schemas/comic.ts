@@ -36,4 +36,5 @@ export const userCommentSchema = (
 		content: z.string(),
 		pageId: z.string(),
 		userId: z.string(),
+		// parentCommentId: z.string(),
 	})

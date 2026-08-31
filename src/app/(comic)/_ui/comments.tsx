@@ -10,7 +10,7 @@ import { getComments } from "@/lib/directus/get-comments"
 import { Button } from "@/components/button"
 import { ErrorMessage, Field } from "@/components/fieldset"
 import { Textarea } from "@/components/textarea"
-import { useActionState, useEffect } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
@@ -32,30 +32,12 @@ export function CommentsSection({
 	session: Awaited<ReturnType<typeof verifySession>>
 }) {
 	const router = useRouter()
-	// VALIDATION
-	const [lastResult, action] = useActionState(submitUserComment, undefined)
-	const [form, fields] = useForm({
-		// Sync the result with the last su8bmission
-		lastResult,
 
-		// Reuse the validation logic on the client
-		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: userCommentSchema() })
-		},
+	const [isReplying, setIsReplying] = useState<number | null>(null)
 
-		// Validate the form on blur event triggered
-		shouldValidate: "onBlur",
-		shouldRevalidate: "onInput",
-	})
-	// EFFECT: on submit
-	useEffect(() => {
-		if (lastResult?.status == "success") {
-			router.refresh()
-		}
-	}, [lastResult])
 
 	return <>
-		{page.allow_user_comments &&
+		{page.allow_user_comments && !isReplying &&
 
 			<section className={clsx(
 				"mt-8",
@@ -65,44 +47,13 @@ export function CommentsSection({
 				{!session &&
 					<h4>You must be logged in to make a comment!</h4>
 				}
-				<form
-					id={form.id}
-					onSubmit={form.onSubmit}
-					action={action}
-					noValidate
-				>
-					<Field disabled={session ? false : true}>
-						<label className={clsx(
-							"text-xl"
-						)}>Make a Comment</label>
-						<Textarea
-							id={fields.content.name}
-							name={fields.content.name}
-							key={fields.content.key}
-						/>
-						<ErrorMessage>{fields.content.errors}</ErrorMessage>
-						{session &&
-							<>
-								<input
-									name={fields.pageId.name}
-									key={fields.pageId.key}
-									type="hidden"
-									value={page.id.toString()}
-								/>
-								<input
-									name={fields.userId.name}
-									key={fields.userId.key}
-									type="hidden"
-									value={session.id}
-								/>
-							</>
-						}
-					</Field>
-					<Button type="submit">Submit</Button>
-				</form>
+
+				<CommentForm />
+
 			</section>
 		}
-		{comments && comments.length > 0 &&
+		{
+			comments && comments.length > 0 &&
 			<section className={clsx(
 				"mt-8"
 			)}>
@@ -115,11 +66,29 @@ export function CommentsSection({
 					"gap-2",
 				)}>
 					{comments.map((c, index) => (
-						<li key={index} className={clsx(
-							"bg-base-1"
-						)}>
+
+						<li key={index} className={
+							clsx(
+								"bg-base-1"
+							)
+						} >
 							<p>{c.user_created.username} commented on {c.date_created}:</p>
 							{c.content}
+
+							{session &&
+								<>
+									{(!isReplying || !(isReplying && isReplying == c.id)) &&
+										<Button onClick={() => {
+											setIsReplying(c.id)
+										}}>Reply</Button>
+									}
+									{isReplying && isReplying == c.id &&
+										<Button onClick={() => {
+											setIsReplying(null)
+										}}>Cancel Reply</Button>
+									}
+								</>
+							}
 
 
 							{/* Only allow 1 level of replies */}
@@ -139,10 +108,88 @@ export function CommentsSection({
 								</ul>
 							}
 
+							{isReplying && isReplying == c.id &&
+
+								<CommentForm />
+
+							}
 						</li>
+
 					))}
-				</ul>
-			</section>
+				</ul >
+			</section >
 		}
 	</>
+
+	function CommentForm({ parentCommentId = "" }: {
+		parentCommentId?: number | ""
+	}) {
+		// VALIDATION
+		const [lastResult, action] = useActionState(submitUserComment, undefined)
+		const [form, fields] = useForm({
+			// Sync the result with the last su8bmission
+			lastResult,
+
+			// Reuse the validation logic on the client
+			onValidate({ formData }) {
+				return parseWithZod(formData, { schema: userCommentSchema() })
+			},
+
+			// Validate the form on blur event triggered
+			shouldValidate: "onBlur",
+			shouldRevalidate: "onInput",
+		})
+		// EFFECT: on submit
+		useEffect(() => {
+			if (lastResult?.status == "success") {
+				router.refresh()
+				// setIsReplying(null)
+			}
+		}, [lastResult])
+
+		return <>
+			<form
+				id={form.id}
+				onSubmit={form.onSubmit}
+				action={action}
+				noValidate
+			>
+				<Field disabled={session ? false : true}>
+					<label className={clsx(
+						"text-xl"
+					)}>Make a Comment</label>
+					<Textarea
+						id={fields.content.name}
+						name={fields.content.name}
+						key={fields.content.key}
+					/>
+					<ErrorMessage>{fields.content.errors}</ErrorMessage>
+					{session &&
+						<>
+							<input
+								name={fields.pageId.name}
+								key={fields.pageId.key}
+								type="hidden"
+								value={page.id.toString()}
+							/>
+							<input
+								name={fields.userId.name}
+								key={fields.userId.key}
+								type="hidden"
+								value={session.id}
+							/>
+							<input
+								name="parentCommentId"
+								type="text"
+								readOnly
+								value={isReplying ? isReplying : ""}
+							/>
+							{/* <ErrorMessage>{fields.parentCommentId.errors}</ErrorMessage> */}
+						</>
+					}
+				</Field>
+				<Button type="submit">Submit</Button>
+			</form>
+		</>
+	}
 }
