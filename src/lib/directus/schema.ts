@@ -145,6 +145,10 @@ export interface VariablesCollection {
 
 /** ------------------------------------------------ **/
 export interface CommentsCollection {
+	// Relational
+	parent_page: PagesCollection
+	children_comments: CommentsCollection[] | []
+	parent_comment: CommentsCollection | null
 	// Meta
 	id: number
 	user_created: DirectusUser
