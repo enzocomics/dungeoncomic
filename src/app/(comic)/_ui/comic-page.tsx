@@ -804,6 +804,7 @@ export default function ComicPageUI({
 					setSelected("")
 					setUserHasSubmitted(true)
 					setStatus("success", "Your suggestion has been submitted.")
+					router.refresh()
 				}
 			}, [lastResult])
 
