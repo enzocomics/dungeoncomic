@@ -64,7 +64,7 @@ export default async function ComicPagenumPage({
 	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
 	// Get comments
-	const comments = await getComments(comic.id)
+	const comments = await getComments(comicPage.id)
 	if (!comicPage || comicPage && comicPage.status !== "published")
 		notFound()
 	else
