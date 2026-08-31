@@ -520,20 +520,22 @@ export default function ComicPageUI({
 		comicVars,
 		userVars
 	}: {
-		comicVars: any // TODO: typed as any, please fix
+		comicVars: ReturnType<typeof getComicPageVars>
 		userVars?: Record<string, string | null>
 	}) {
 		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
-		const params = new URLSearchParams(
-			comicVars.map(({ slug, default_value }: { slug: string, default_value: string }) => [
+		// - comicVars is possibly null, so have an empty array as fallback
+		const entries: [string, string][] = (comicVars ?? []).map(
+			({ slug, default_value }): [string, string] => [
 				slug,
-				// Fallback to default value if undefined
-				userVars && userVars[slug] !== undefined ? userVars[slug] : default_value
-			])
+				userVars?.[slug] ?? default_value
+			]
 		)
 
+		const params = new URLSearchParams(entries)
+
 		// Return it as a string
-		return params.size == 0 ? `` : `?${params.toString()}`
+		return params.size === 0 ? "" : `?${params.toString()}`
 	}
 
 	/**---------------------------------------------------------------------- */
