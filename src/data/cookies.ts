@@ -36,8 +36,8 @@ export async function getUserCookie() {
 			const data: AuthenticationData = {
 				access_token: cookie.access_token,
 				refresh_token: cookie.refresh_token,
-				expires_at: cookie.expiresAt,
-				expires: cookie.expiresAt,
+				expires_at: cookie.expiresAt as number,
+				expires: cookie.expiresAt as number,
 			}
 			return data
 		}
