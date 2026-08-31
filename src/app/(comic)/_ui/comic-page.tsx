@@ -27,7 +27,6 @@ import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/field
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
-import { CommentsSection } from "./comments"
 
 /**----------------------------------- */
 // TYPES
