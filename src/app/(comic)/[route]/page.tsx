@@ -14,6 +14,8 @@ import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_ui/metad
 import { getUserVarsCookie } from "../_actions/cookies"
 import { CommentsSection } from "../_ui/comments"
 import { getComments } from "@/lib/directus/get-comments"
+import { adminClient } from "@/lib/directus/clients"
+import { readItems } from "@directus/sdk"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -156,3 +158,47 @@ export async function generateMetadata({
 	return await notFoundMetadata()
 
 }
+
+/**-----------------------------------
+ * Generate Static Params
+ * ---
+ **/
+
+/*
+export async function generateStaticParams() {
+	const settings = await getSettings()
+
+	// Generate params for the individual comic pages ONLY if there IS frontpage comic
+	if (settings.frontpage_comic) {
+		const comicPages = await adminClient.request(
+			readItems("pages", {
+				limit: -1,
+				filter: {
+					comic: {
+						slug: {
+							_eq: settings.frontpage_comic.slug
+						}
+					}
+				},
+
+			})
+		)
+
+		return comicPages.map((page) => ({
+			route: page.comic_pagenum.toString()
+		}))
+	}
+	// If there is NO frontpage comic, generate the comic series
+	else if (!settings.frontpage_comic) {
+		const comics = await adminClient.request(
+			readItems("comics", {
+				limit: -1,
+				fields: ["slug"]
+			})
+		)
+		return comics.map((comic) => ({
+			route: comic.slug
+		}))
+	}
+	return []
+}*/
