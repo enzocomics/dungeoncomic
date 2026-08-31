@@ -1941,7 +1941,7 @@
       "display": null,
       "display_options": null,
       "readonly": false,
-      "hidden": true,
+      "hidden": false,
       "sort": 1,
       "width": "full",
       "translations": null,
@@ -1987,8 +1987,8 @@
       "display": null,
       "display_options": null,
       "readonly": false,
-      "hidden": true,
-      "sort": 3,
+      "hidden": false,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
@@ -6566,37 +6566,6 @@
   },
   {
     "collection": "comments",
-    "field": "children_comments",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comments",
-      "field": "children_comments",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "sort": null
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "relational",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comments",
     "field": "meta",
     "type": "alias",
     "schema": null,
@@ -6717,6 +6686,37 @@
       "conditions": null,
       "required": false,
       "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comments",
+    "field": "children_comments",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comments",
+      "field": "children_comments",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "sort": null
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 3,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "relational",
       "validation": null,
       "validation_message": null,
       "searchable": true
