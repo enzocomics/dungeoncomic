@@ -32,7 +32,6 @@ export async function saveUserVarsCookie({
 
 	// Retrieve existing vars if they exist
 	const oldVars = await getUserVarsCookie({ comic: comic })
-	console.log(vars, oldVars)
 
 	// Combine the variables. Object.assign will overwrite any existing keys with the newer inputs from `vars`
 	const updatedVars = oldVars ? Object.assign({}, oldVars, vars) : vars
