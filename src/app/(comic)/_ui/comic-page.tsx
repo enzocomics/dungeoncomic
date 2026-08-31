@@ -739,6 +739,8 @@ export default function ComicPageUI({
 													deleteUserPlotSuggestion(s.id)
 													setDeleteSuggestion(s.id)
 													setUserHasSubmitted(false)
+
+													setStatus("success", "Your suggestion has been deleted.")
 												}}
 											>
 												DELETE
@@ -825,6 +827,7 @@ export default function ComicPageUI({
 								name={fields.userSuggestion.name}
 								key={fields.userSuggestion.key}
 							/>
+							<ErrorMessage>{fields.userSuggestion.errors}</ErrorMessage>
 							<input
 								name={fields.pageId.name}
 								key={fields.pageId.key}
