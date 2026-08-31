@@ -21,6 +21,10 @@
 		"please-login-to-comment": "Please <loginLink>log in</loginLink> to post a comment!",
 		"write-comment": "Write a Comment",
 		"submit-comment": "Submit Comment",
+		"edit-comment": "Edit Comment",
+		"delete-comment": "Delete Comment",
+		"reply": "Reply",
+		"cancel-reply": "Cancel Reply",
 		"reply-to": "Reply to ",
 		"submit-reply": "Submit Reply",
 		"comments": "Comments"

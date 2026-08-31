@@ -81,20 +81,33 @@ export function CommentsSection({
 							<p>{c.user_created.username} commented on {c.date_created}:</p>
 							{c.content}
 
+
+							{session && c.user_created.id == session.id &&
+								<>
+									<Button>
+										{t("edit-comment")}
+									</Button>
+									<Button>
+										{t("delete-comment")}
+									</Button>
+								</>
+							}
+
 							{session &&
 								<>
 									{(!isReplying || !(isReplying && isReplying == c.id)) &&
 										<Button onClick={() => {
 											setIsReplying(c.id)
-										}}>Reply</Button>
+										}}>{t("reply")}</Button>
 									}
 									{isReplying && isReplying == c.id &&
 										<Button onClick={() => {
 											setIsReplying(null)
-										}}>Cancel Reply</Button>
+										}}>{t("cancel-reply")}</Button>
 									}
 								</>
 							}
+
 
 
 							{/* Only allow 1 level of replies */}
