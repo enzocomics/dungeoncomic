@@ -155,6 +155,7 @@ export interface CommentsCollection {
 
 /** ------------------------------------------------ **/
 export interface DirectusUser extends User {
+	id: string
 	email: string
 	name: string | null
 	username: string | null

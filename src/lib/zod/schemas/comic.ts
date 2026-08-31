@@ -20,4 +20,7 @@ export const userSuggestionSchema = (
 ) =>
 	z.object({
 		userSuggestion: z.string(),
+		pageId: z.string(),
+		userId: z.string(),
+		slug: z.string(),
 	})

@@ -1,10 +1,10 @@
 "use server"
 /**----------------------------------- */
 // LIBRARIES
-import { readItem, readItems, updateItem } from "@directus/sdk"
+import { createItem, readItem, readItems, updateItem } from "@directus/sdk"
 // DATA
 import { verifySession } from "@/data/session"
-import { userClient } from "@/lib/directus/clients"
+import { adminClient, userClient } from "@/lib/directus/clients"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
@@ -30,8 +30,6 @@ export async function voteOnPlotSuggestion({
 					fields: ["id", "votes", "users_voted"],
 				}),
 			))
-
-		console.log("newVote:", getNewVote)
 
 		// Get all the plot suggestions on this page
 		const plotSuggestions = await userClient.request(
@@ -75,27 +73,6 @@ export async function voteOnPlotSuggestion({
 				}),
 			))
 
-		// const userVotedOn =
-		// 	user &&
-		// 	plotSuggestions.find((object) => object.users_voted?.includes(user))?.id
-		// console.log("suggestion:", plotSuggestions[2])
-		// console.log("userVotedOn:", userVotedOn)
-		// const userAlreadyVoted =
-		// 	plotSuggestion.users_voted && user
-		// 		? plotSuggestion.users_voted.includes(user)
-		// 		: false
-		// console.log(userAlreadyVoted)
-
-		// console.log(plotSuggestion)
-		// console.log(user)
-
-		// console.log(getRequest)
-
-		// const voteRequest = await userClient.request(
-		// 	updateItem("plot_suggestions", id, {
-		// 		votes: +1,
-		// 	}),
-		// )
 		return "yo"
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
@@ -116,11 +93,22 @@ export async function submitUserPlotSuggestion(
 
 	// FORM DATA
 	const userSuggestion = formData.get("userSuggestion") as string
+	const pageId = parseInt(formData.get("pageId") as unknown as string)
+	const slug = formData.get("slug") as string
+	const userId = formData.get("userId") as string
 
 	// SUBMIT USER SUGGESTION TO DIRECTUS
 	try {
-		console.log(userSuggestion)
+		const userSuggestionRequest = await userClient.request(
+			createItem("plot_suggestions", {
+				title: userSuggestion,
+				slug: slug,
+				page: pageId,
+				users_voted: [{ id: userId }],
+			}),
+		)
 	} catch (err: any) {
+		1
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
 		const code = error?.extensions?.code

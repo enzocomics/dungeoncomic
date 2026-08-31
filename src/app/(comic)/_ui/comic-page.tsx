@@ -20,7 +20,7 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 import { saveUserVarsCookie } from "../_actions/cookies"
 import { submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
-import { useChangeStatus } from "@/components/status-message"
+import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { Radio, RadioField, RadioGroup } from "@/components/radio"
 import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
@@ -639,6 +639,22 @@ export default function ComicPageUI({
 		}, [selected])
 
 		/**----------------------------------- */
+		// SUBMITTED SUGGESTIONS
+
+		const setStatus = useChangeStatus("")
+
+		// Check if the user has submitted anything yet
+		const userSubmission = page.plot_suggestions!.find(
+			s => s.user_created.id === loggedInUserID
+		)
+
+		// Don't allow submissions if they have already submitted one (also if they're the author, they can just edit it in the dashboard)
+		const [userHasSubmitted, setUserHasSubmitted] = useState(userSubmission ? true : false)
+
+		// DEBUG: uncomment me
+		// const [userHasSubmitted, setUserHasSubmitted] = useState(false)
+
+		/**----------------------------------- */
 		// Render
 		return <>
 			{
@@ -658,6 +674,7 @@ export default function ComicPageUI({
 						"text-2xl"
 					)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
 				}
+				<StatusMessage />
 				<Fieldset
 					disabled={session ? false : true}>
 					<Legend>{replaceComicVariables({
@@ -717,7 +734,7 @@ export default function ComicPageUI({
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-						{page.allow_user_suggestions &&
+						{page.allow_user_suggestions && !userHasSubmitted &&
 							<RadioField className={clsx(
 								"text-left",
 								"w-2/3",
@@ -749,7 +766,7 @@ export default function ComicPageUI({
 			// VALIDATION
 			const [lastResult, action] = useActionState(submitUserPlotSuggestion, undefined)
 			const [form, fields] = useForm({
-				// Sync the result with the last submission
+				// Sync the result with the last su8bmission
 				lastResult,
 
 				// Reuse the validation logic on the client
@@ -766,6 +783,8 @@ export default function ComicPageUI({
 			useEffect(() => {
 				if (lastResult?.status == "success") {
 					setSelected("")
+					setUserHasSubmitted(true)
+					setStatus("success", "Your suggestion has been submitted.")
 				}
 			}, [lastResult])
 
@@ -786,9 +805,24 @@ export default function ComicPageUI({
 								name={fields.userSuggestion.name}
 								key={fields.userSuggestion.key}
 							/>
-							<ErrorMessage>{fields.userSuggestion.errors}</ErrorMessage>
-							<input name="slug" type="text" disabled value={`p=${page.id}&u=${session.id}`} />
-							<input name="userId" type="text" disabled value={session.id} />
+							<input
+								name={fields.pageId.name}
+								key={fields.pageId.key}
+								type="hidden"
+								value={page.id.toString()}
+							/>
+							<input
+								name={fields.slug.name}
+								key={fields.slug.key}
+								type="hidden"
+								value={`p=${page.id}&u=${session.id}`}
+							/>
+							<input
+								name={fields.userId.name}
+								key={fields.userId.key}
+								type="hidden"
+								value={session.id}
+							/>
 						</Field>
 						<Button type="submit">Submit</Button>
 						<input type="hidden" />
