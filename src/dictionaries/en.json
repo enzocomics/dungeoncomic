@@ -8,7 +8,7 @@
 	"ComicPage": {
 		"next": "Next",
 		"go-back": "Go Back",
-		"go-to-start": "Go to Start",
+		"go-to-start": "Go to the Beginning",
 		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
 		"suggestion-form-title": "What's your idea?",
 		"submit-own-suggestion": "Suggest something else...",
@@ -16,6 +16,14 @@
 		"edit-suggestion": "Edit your suggestion",
 		"delete-suggestion": "Delete your suggestion",
 		"submit-suggestion": "Submit suggestion"
+	},
+	"Comments": {
+		"please-login-to-comment": "Please <loginLink>log in</loginLink> to post a comment!",
+		"write-comment": "Write a Comment",
+		"submit-comment": "Submit Comment",
+		"reply-to": "Reply to ",
+		"submit-reply": "Submit Reply",
+		"comments": "Comments"
 	},
 	"auth": {
 		"pages": {

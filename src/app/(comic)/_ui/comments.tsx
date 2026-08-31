@@ -16,6 +16,8 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
 import { submitUserComment } from "../_actions/comments"
 import { useRouter } from "next/navigation"
+import { Link } from "@/components/link"
+import { useTranslations } from "next-intl"
 
 
 /**-----------------------------------
@@ -31,6 +33,8 @@ export function CommentsSection({
 	comments: Awaited<ReturnType<typeof getComments>>
 	session: Awaited<ReturnType<typeof verifySession>>
 }) {
+
+	const t = useTranslations("Comments")
 	const router = useRouter()
 
 	const [isReplying, setIsReplying] = useState<number | null>(null)
@@ -45,7 +49,9 @@ export function CommentsSection({
 				"p-2",
 			)}>
 				{!session &&
-					<h4>You must be logged in to make a comment!</h4>
+					<h4>{t.rich("please-login-to-comment", {
+						loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+					})}</h4>
 				}
 
 				<CommentForm />
@@ -157,7 +163,10 @@ export function CommentsSection({
 				<Field disabled={session ? false : true}>
 					<label className={clsx(
 						"text-xl"
-					)}>Make a Comment</label>
+					)}>
+						{/* TODO: reply to "username" */}
+						{isReplying ? `${t("reply-to")} ${isReplying}` : t("write-comment")}
+					</label>
 					<Textarea
 						id={fields.content.name}
 						name={fields.content.name}
@@ -180,15 +189,15 @@ export function CommentsSection({
 							/>
 							<input
 								name="parentCommentId"
-								type="text"
-								readOnly
+								type="hidden"
 								value={isReplying ? isReplying : ""}
 							/>
-							{/* <ErrorMessage>{fields.parentCommentId.errors}</ErrorMessage> */}
 						</>
 					}
 				</Field>
-				<Button type="submit">Submit</Button>
+				<Button type="submit">
+					{isReplying ? t("submit-reply") : t("submit-comment")}
+				</Button>
 			</form>
 		</>
 	}
