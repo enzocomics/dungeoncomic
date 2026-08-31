@@ -73,6 +73,7 @@ export default function ComicPageUI({
 	const router = useRouter()
 	const searchParams = useSearchParams()
 	const t = useTranslations("ComicPage")
+	const comic = page.comic
 
 	/**----------------------------------- */
 	// Get a list of all the comic panel variables
@@ -143,15 +144,172 @@ export default function ComicPageUI({
 	/**----------------------------------- */
 	// Render
 	return <>
+		<div
+			style={{
+				backgroundColor: comic.accent_color ?? `${comic.accent_color}`
+			}}
+			className={clsx(
+				"bg-red-500",
+				"text-white",
+				"text-center",
+				"sm:flex",
+				"sm:justify-center"
+			)}>
+			<div className={clsx(
+				"p-2"
+			)}>
+				<h2 className={clsx(
+					"inline-block",
+					"font-semibold",
+					"font-display",
+				)}>{comic.title}</h2> {comic.authors && comic.authors.length > 0 &&
+					<span className={clsx(
+						"text-sm"
+					)}>
+						by {comic.authors.map((a, index) => {
+							let join = comic.authors!.length > 1 ? ", " : ""
+							join = index == comic.authors!.length - 2 ? " & " : join
+							join = index == comic.authors!.length - 1 ? "" : join
+							return `${a.username}${join}`
+						}
+						)}
+					</span>
+				}
+			</div>
+			{
+				/**------------------------------
+				 * PREV NAVIGATION
+				 * - Instead of linking directly to the previous page,
+				 *   we are going back 1 step in browser history
+				 * - This is because pages can have multiple `prev_pages`
+				 */
+			}
+			{
+				(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
+				<>
+					<div className={clsx(
+						"bg-black/10",
+						"sm:bg-transparent",
+						"text-xs",
+						"sm:ml-auto"
+					)}>
+						<ul className={clsx(
+							"flex",
+							"justify-center",
+							"gap-2",
+						)}>
+							{/* 
+										Back button: Go back 1 step in user's browser history
+										- IF previous page in browser history is from the same host
+									*/}
+							{canGoBack &&
+								<li>
+									<button className={clsx(
+										"w-full",
+										"block",
+										"p-2",
+										"hover:bg-black/10",
+										"cursor-pointer"
+									)} onClick={() => router.back()} >
+										{/* Back: History */}
+										<span>&laquo; {t("go-back")}</span>
+									</button>
+								</li>
+							}
+							{/* 
+										Back button:
+										- If there is no previous page from the same hostname in history, and:
+										- If THIS PAGE has submitted variables:
+											- GO BACK to the "pre-submitted" version of THIS PAGE
+									*/}
+							{(!canGoBack && varsSubmitted) &&
+								<li>
+									<Link className={clsx(
+										"block",
+										"p-2",
+										"hover:bg-black/10",
+									)} href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
+								</li>
+							}
+							{/* 
+										Back button: 
+										- If there is no previous page from the same hostname in history,
+										- If there are no variables being submitted on THIS page,
+										- If the previous page has variable:
+										  - If user variables already exist, rebuild the previous page url with the userVars
+											- If user variables do not exist, build the previouspage url with the default vars
+									*/}
+							{(
+								!canGoBack && !varsSubmitted &&
+								page.prev_pages && page.prev_pages.length == 1
+							) &&
+								<li>
+									<Link className={clsx(
+										"block",
+										"p-2",
+										"hover:bg-black/10",
+									)} href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
+										comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
+										userVars: userVariables
+									})}
+									>&laquo; {t("go-back")} (Single Previous Page)</Link>
+
+								</li>
+							}
+							{/* <li>{getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels)}</li> */}
+							{/* 
+										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
+									*/}
+
+							{
+								page.prev_pages && page.prev_pages.length > 1 &&
+								<Dropdown>
+									<DropdownButton outline>
+										&laquo; {t("go-back")} (All Choices)
+									</DropdownButton>
+									<DropdownMenu>
+										{page.prev_pages.map((n, index) =>
+											<DropdownItem key={index} href={
+												`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
+													comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
+													userVars: userVariables
+												})
+											}>
+												{/* <Link className={clsx(
+															"block",
+															"p-2",
+															"hover:bg-black/10",
+														)} href={`${n.pages_id.comic_pagenum}`}> */}
+												<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
+												{/* </Link> */}
+											</DropdownItem>
+										)}
+									</DropdownMenu>
+								</Dropdown>
+							}
+							<li>
+								<Link className={clsx(
+									"block",
+									"p-2",
+									"hover:bg-black/10",
+								)} href="./">&laquo; {t("go-to-start")}</Link>
+							</li>
+						</ul>
+					</div>
+				</>
+			}
+		</div>
+
 		<div className={clsx(
-			"p-4",
-			"border",
-			"border-dashed",
-			"border-pink-300",
+			"py-4",
+			// "border",
+			// "border-dashed",
+			// "border-pink-300",
 			"flex",
 			"flex-col",
 			"gap-2",
 			"bg-base-1",
+			"dark:bg-base-2",
 			"text-center"
 		)}>
 			<h4 className={clsx(
@@ -352,131 +510,7 @@ export default function ComicPageUI({
 					</div>
 				}
 
-				{
-					/**------------------------------
-					 * PREV NAVIGATION
-					 * - Instead of linking directly to the previous page,
-					 *   we are going back 1 step in browser history
-					 * - This is because pages can have multiple `prev_pages`
-					 */
-				}
-				<div className={clsx(
-					"basis-full",
-				)}>
-					{
-						(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
-						<>
-							<div className={clsx(
-								"p-2",
-								"bg-orange-100",
-								"dark:bg-orange-900",
-								"text-xs"
-							)}>
-								<ul className={clsx(
-									"flex",
-									"flex-col",
-									"gap-2",
-								)}>
-									{/* 
-										Back button: Go back 1 step in user's browser history
-										- IF previous page in browser history is from the same host
-									*/}
-									{canGoBack &&
-										<li>
-											<button className={clsx(
-												"w-full",
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-												"cursor-pointer"
-											)} onClick={() => router.back()} >
-												<span>&laquo; {t("go-back")} (History)</span>
-											</button>
-										</li>
-									}
-									{/* 
-										Back button:
-										- If there is no previous page from the same hostname in history, and:
-										- If THIS PAGE has submitted variables:
-											- GO BACK to the "pre-submitted" version of THIS PAGE
-									*/}
-									{(!canGoBack && varsSubmitted) &&
-										<li>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
-										</li>
-									}
-									{/* 
-										Back button: 
-										- If there is no previous page from the same hostname in history,
-										- If there are no variables being submitted on THIS page,
-										- If the previous page has variable:
-										  - If user variables already exist, rebuild the previous page url with the userVars
-											- If user variables do not exist, build the previouspage url with the default vars
-									*/}
-									{(
-										!canGoBack && !varsSubmitted &&
-										page.prev_pages && page.prev_pages.length == 1
-									) &&
-										<li>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
-												comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
-												userVars: userVariables
-											})}
-											>&laquo; {t("go-back")} (Single Previous Page)</Link>
 
-										</li>
-									}
-									{/* <li>{getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels)}</li> */}
-									{/* 
-										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
-									*/}
-
-									{
-										page.prev_pages && page.prev_pages.length > 1 &&
-										<Dropdown>
-											<DropdownButton outline>
-												&laquo; {t("go-back")} (All Choices)
-											</DropdownButton>
-											<DropdownMenu>
-												{page.prev_pages.map((n, index) =>
-													<DropdownItem key={index} href={
-														`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
-															comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
-															userVars: userVariables
-														})
-													}>
-														{/* <Link className={clsx(
-															"block",
-															"p-2",
-															"hover:bg-black/10",
-														)} href={`${n.pages_id.comic_pagenum}`}> */}
-														<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
-														{/* </Link> */}
-													</DropdownItem>
-												)}
-											</DropdownMenu>
-										</Dropdown>
-									}
-									<li>
-										<Link className={clsx(
-											"block",
-											"p-2",
-											"hover:bg-black/10",
-										)} href="./">&laquo; {t("go-to-start")}</Link>
-									</li>
-								</ul>
-							</div>
-						</>
-					}
-				</div>
 
 			</section >
 

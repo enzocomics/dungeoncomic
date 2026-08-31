@@ -215,7 +215,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 				},
 				// Meta
 				"id",
-				{ comic: ["slug", "title"] },
+				{ comic: ["slug", "title", "accent_color", { authors: ["username"] }] },
 				{
 					user_created: [
 						"id",

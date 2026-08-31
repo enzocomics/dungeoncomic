@@ -19,8 +19,6 @@ export default async function RootLayoutUI({
 		className={clsx(
 			"h-full",
 			Object.values(fonts).map((f) => f.font.variable),
-			// `${copy.variable}`,
-			// `${display.variable}`,
 			// Default Colours
 			"text-base-content",
 			"bg-secondary-200",
@@ -29,6 +27,7 @@ export default async function RootLayoutUI({
 	>
 		<body
 			className={clsx(
+				"min-w-xs",
 				"h-full",
 				"font-copy",
 			)}
