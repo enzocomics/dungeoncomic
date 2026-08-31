@@ -108,5 +108,148 @@
       "*"
     ],
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
+    "collection": "tags",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "settings",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "variables",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "plot_suggestions",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "pages",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "comics",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "comic_panels",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "plot_suggestions",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "plot_suggestions",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "directus_users",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "pages",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "plot_suggestions",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
+  },
+  {
+    "collection": "directus_users",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "50a43aa6-dc29-442e-b76b-149639d52a79"
   }
 ]
