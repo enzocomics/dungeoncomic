@@ -64,6 +64,38 @@
     }
   },
   {
+    "collection": "comments",
+    "meta": {
+      "collection": "comments",
+      "icon": "comment",
+      "note": null,
+      "display_template": null,
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": null,
+      "archive_app_filter": true,
+      "archive_value": null,
+      "unarchive_value": null,
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 3,
+      "group": "pages",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "comments",
+      "comment": null
+    }
+  },
+  {
     "collection": "page_branches",
     "meta": {
       "collection": "page_branches",
@@ -131,7 +163,7 @@
     "collection": "plot_suggestions",
     "meta": {
       "collection": "plot_suggestions",
-      "icon": null,
+      "icon": "add_comment",
       "note": null,
       "display_template": null,
       "hidden": false,

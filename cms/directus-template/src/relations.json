@@ -830,5 +830,109 @@
       "sort_field": "sort_next",
       "one_deselect_action": "delete"
     }
+  },
+  {
+    "collection": "comments",
+    "field": "user_updated",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "comments_user_updated_foreign",
+      "table": "comments",
+      "column": "user_updated",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "comments",
+      "many_field": "user_updated",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "comments",
+    "field": "user_created",
+    "related_collection": "directus_users",
+    "schema": {
+      "constraint_name": "comments_user_created_foreign",
+      "table": "comments",
+      "column": "user_created",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_users",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "comments",
+      "many_field": "user_created",
+      "one_collection": "directus_users",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "comments",
+    "field": "parent_page",
+    "related_collection": "pages",
+    "schema": {
+      "constraint_name": "comments_parent_page_foreign",
+      "table": "comments",
+      "column": "parent_page",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "pages",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "comments",
+      "many_field": "parent_page",
+      "one_collection": "pages",
+      "one_field": "comments",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "comments",
+    "field": "parent_comment",
+    "related_collection": "comments",
+    "schema": {
+      "constraint_name": "comments_parent_comment_foreign",
+      "table": "comments",
+      "column": "parent_comment",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "comments",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "NO ACTION"
+    },
+    "meta": {
+      "many_collection": "comments",
+      "many_field": "parent_comment",
+      "one_collection": "comments",
+      "one_field": "children_comments",
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
   }
 ]
