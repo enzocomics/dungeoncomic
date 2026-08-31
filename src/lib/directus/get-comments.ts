@@ -14,6 +14,12 @@ export async function getComments(pageId: number) {
 				parent_page: { _eq: pageId },
 			},
 			limit: -1,
+			sort: ["-date_created"],
+			deep: {
+				children_comments: {
+					_sort: ["date_created"],
+				},
+			},
 			fields: [
 				// Root Comment - Details
 				"content",
@@ -105,4 +111,5 @@ export async function getComments(pageId: number) {
 			],
 		}),
 	)
+	return request
 }

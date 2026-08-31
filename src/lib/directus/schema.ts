@@ -148,7 +148,7 @@ export interface CommentsCollection {
 	content: string
 	// Relational
 	parent_page: PagesCollection | number
-	children_comments: CommentsCollection[] | []
+	children_comments: CommentsCollection[]
 	parent_comment: CommentsCollection | null
 	// Meta
 	id: number
