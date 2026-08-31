@@ -5,6 +5,18 @@
 	"404Page": {
 		"title": "404 - Page Not Found"
 	},
+	"ComicPage": {
+		"next": "Next",
+		"go-back": "Go Back",
+		"go-to-start": "Go to Start",
+		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
+		"suggestion-form-title": "What's your idea?",
+		"submit-own-suggestion": "Suggest something else...",
+		"suggestion-deleted": "Your suggestion has been deleted.",
+		"edit-suggestion": "Edit your suggestion",
+		"delete-suggestion": "Delete your suggestion",
+		"submit-suggestion": "Submit suggestion"
+	},
 	"auth": {
 		"pages": {
 			"login": {

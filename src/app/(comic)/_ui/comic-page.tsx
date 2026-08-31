@@ -72,6 +72,7 @@ export default function ComicPageUI({
 	const pathname = usePathname()
 	const router = useRouter()
 	const searchParams = useSearchParams()
+	const t = useTranslations("ComicPage")
 
 	/**----------------------------------- */
 	// Get a list of all the comic panel variables
@@ -162,7 +163,7 @@ export default function ComicPageUI({
 				{replaceComicVariables({
 					content: (
 						varsExist && varsSubmitted ?
-							page.variables_submit_button_text || "Next »" : // TODO: hardcoded
+							page.variables_submit_button_text || `${t("next")} »` :
 							page.title
 					),
 					variables: variables,
@@ -273,7 +274,7 @@ export default function ComicPageUI({
 							"p-2",
 							"hover:bg-black/10",
 							"cursor-pointer"
-						)}>{`${page.variables_submit_button_text || "Next Page"} »`}</button>
+						)}>{`${page.variables_submit_button_text || t("next")} »`}</button>
 					</div>
 				}
 			</VariablesForm>
@@ -389,7 +390,7 @@ export default function ComicPageUI({
 												"hover:bg-black/10",
 												"cursor-pointer"
 											)} onClick={() => router.back()} >
-												<span>&laquo; Go Back (History)</span>
+												<span>&laquo; {t("go-back")} (History)</span>
 											</button>
 										</li>
 									}
@@ -405,7 +406,7 @@ export default function ComicPageUI({
 												"block",
 												"p-2",
 												"hover:bg-black/10",
-											)} href={pathname}>&laquo; Go Back (Variable Form Page)</Link>
+											)} href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
 										</li>
 									}
 									{/* 
@@ -429,7 +430,7 @@ export default function ComicPageUI({
 												comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
 												userVars: userVariables
 											})}
-											>&laquo; Go Back (Single Previous Page)</Link>
+											>&laquo; {t("go-back")} (Single Previous Page)</Link>
 
 										</li>
 									}
@@ -442,7 +443,7 @@ export default function ComicPageUI({
 										page.prev_pages && page.prev_pages.length > 1 &&
 										<Dropdown>
 											<DropdownButton outline>
-												Go Back (All Choices) &#8595;
+												&laquo; {t("go-back")} (All Choices)
 											</DropdownButton>
 											<DropdownMenu>
 												{page.prev_pages.map((n, index) =>
@@ -469,7 +470,7 @@ export default function ComicPageUI({
 											"block",
 											"p-2",
 											"hover:bg-black/10",
-										)} href="./">&laquo; Go to Start</Link>
+										)} href="./">&laquo; {t("go-to-start")}</Link>
 									</li>
 								</ul>
 							</div>
@@ -663,9 +664,14 @@ export default function ComicPageUI({
 				"mt-8",
 			)}>
 				{!session &&
-					<h4 className={clsx(
-						"text-2xl"
-					)}>Please <Link href="/login">log in</Link> if you want to vote!</h4>
+					<h4
+						className={clsx(
+							"text-2xl"
+						)}>
+						{t.rich("please-login-to-vote", {
+							loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+						})}
+					</h4>
 				}
 				<StatusMessage />
 				<Fieldset
@@ -720,18 +726,23 @@ export default function ComicPageUI({
 										}
 										&nbsp;| <strong>{votes}</strong>
 										{(session !== false && session !== undefined) && s.user_created.id == session.id &&
-											<Button
-												className={clsx("ml-5")}
-												onClick={async () => {
-													deleteUserPlotSuggestion(s.id)
-													setDeleteSuggestion(s.id)
-													setUserHasSubmitted(false)
-
-													setStatus("success", "Your suggestion has been deleted.")
-												}}
-											>
-												DELETE
-											</Button>
+											<>
+												<Button
+													className={clsx("ml-5")}>
+													{t("edit-suggestion")}
+												</Button>
+												<Button
+													className={clsx("ml-5")}
+													onClick={async () => {
+														deleteUserPlotSuggestion(s.id)
+														setDeleteSuggestion(s.id)
+														setUserHasSubmitted(false)
+														setStatus("success", t("suggestion-deleted"))
+													}}
+												>
+													{t("delete-suggestion")}
+												</Button>
+											</>
 										}
 									</Label>
 								</RadioField>
@@ -751,7 +762,7 @@ export default function ComicPageUI({
 							)}>
 								<Radio value={selectUserSuggestion} />
 								<Label>
-									Submit my own suggestion
+									{t("submit-own-suggestion")}
 								</Label>
 							</RadioField>
 						}
@@ -808,7 +819,7 @@ export default function ComicPageUI({
 						<Field className={clsx(
 							"mt-8"
 						)}>
-							<Label required htmlFor={fields.userSuggestion.name}>User Suggestion Form</Label>
+							<Label required htmlFor={fields.userSuggestion.name}>{t("suggestion-form-title")}</Label>
 							<Textarea
 								id={fields.userSuggestion.name}
 								name={fields.userSuggestion.name}
@@ -834,7 +845,7 @@ export default function ComicPageUI({
 								value={session.id}
 							/>
 						</Field>
-						<Button type="submit">Submit</Button>
+						<Button type="submit">{t("submit-suggestion")}</Button>
 					</form>
 				}
 			</>
