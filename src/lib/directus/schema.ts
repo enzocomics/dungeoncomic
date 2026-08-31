@@ -19,7 +19,7 @@ export interface DirectusSchema {
 			page_branches: PageBranchesCollection[]
 	comic_panels: ComicPanelsCollection[]
 			variables: VariablesCollection[]
-	user_comments: CommentsCollection[]
+	comments: CommentsCollection[]
 	directus_users: DirectusUser
 	// SETTINGS
 	settings: SettingsSingleton
@@ -145,8 +145,9 @@ export interface VariablesCollection {
 
 /** ------------------------------------------------ **/
 export interface CommentsCollection {
+	content: string
 	// Relational
-	parent_page: PagesCollection
+	parent_page: PagesCollection | number
 	children_comments: CommentsCollection[] | []
 	parent_comment: CommentsCollection | null
 	// Meta
