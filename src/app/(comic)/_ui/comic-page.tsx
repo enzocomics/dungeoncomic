@@ -18,7 +18,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import replaceComicVariables from "../_functions/replace-comic-vars"
 // ACTIONS
 import { saveUserVarsCookie } from "../_actions/cookies"
-import { submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
+import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
@@ -654,6 +654,12 @@ export default function ComicPageUI({
 		// DEBUG: uncomment me
 		// const [userHasSubmitted, setUserHasSubmitted] = useState(false)
 
+		const [deleteSuggestion, setDeleteSuggestion] = useState<number | null>(null)
+
+		useEffect(() => {
+
+		}, [])
+
 		/**----------------------------------- */
 		// Render
 		return <>
@@ -705,28 +711,41 @@ export default function ComicPageUI({
 								}
 							}, [selected])
 							// RENDER
-							return <RadioField
-								key={index}
-								className={clsx(
-									"text-left",
-									"w-2/3",
-									"mx-auto"
-								)}>
-								<Radio value={`${s.id}`} />
-								<Label>
-									{`${s.id}`} -&nbsp;
-									{replaceComicVariables({
-										content: s.title,
-										variables: variables,
-										userVariables: userVariables
-									})}
-									{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-									{page.user_created.id !== s.user_created.id &&
-										<em>&nbsp;&mdash; @{s.user_created.username}</em>
-									}
-									&nbsp;| <strong>{votes}</strong>
-								</Label>
-							</RadioField>
+							if (deleteSuggestion !== s.id)
+								return <RadioField
+									key={index}
+									className={clsx(
+										"text-left",
+										"w-2/3",
+										"mx-auto"
+									)}>
+									<Radio value={`${s.id}`} />
+									<Label>
+										{`${s.id}`} -&nbsp;
+										{replaceComicVariables({
+											content: s.title,
+											variables: variables,
+											userVariables: userVariables
+										})}
+										{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+										{page.user_created.id !== s.user_created.id &&
+											<em>&nbsp;&mdash; @{s.user_created.username}</em>
+										}
+										&nbsp;| <strong>{votes}</strong>
+										{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+											<Button
+												className={clsx("ml-5")}
+												onClick={async () => {
+													deleteUserPlotSuggestion(s.id)
+													setDeleteSuggestion(s.id)
+													setUserHasSubmitted(false)
+												}}
+											>
+												DELETE
+											</Button>
+										}
+									</Label>
+								</RadioField>
 						}
 						) : null}
 						{/* 
@@ -734,7 +753,8 @@ export default function ComicPageUI({
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-						{page.allow_user_suggestions && !userHasSubmitted &&
+						{page.allow_user_suggestions &&
+							!userHasSubmitted &&
 							<RadioField className={clsx(
 								"text-left",
 								"w-2/3",
@@ -755,7 +775,6 @@ export default function ComicPageUI({
 				{page.allow_user_suggestions && selected == selectUserSuggestion &&
 					<UserSuggestionForm />
 				}
-
 			</section>
 
 		</> // EO UserSuggestionForm() RENDER

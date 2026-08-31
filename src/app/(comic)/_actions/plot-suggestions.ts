@@ -1,7 +1,13 @@
 "use server"
 /**----------------------------------- */
 // LIBRARIES
-import { createItem, readItem, readItems, updateItem } from "@directus/sdk"
+import {
+	createItem,
+	deleteItem,
+	readItem,
+	readItems,
+	updateItem,
+} from "@directus/sdk"
 // DATA
 import { verifySession } from "@/data/session"
 import { adminClient, userClient } from "@/lib/directus/clients"
@@ -84,6 +90,21 @@ export async function voteOnPlotSuggestion({
 }
 
 /**----------------------------------- */
+export async function deleteUserPlotSuggestion(id: number) {
+	try {
+		const deleteSuggestion = await userClient.request(
+			deleteItem("plot_suggestions", id),
+		)
+	} catch (err: any) {
+		// RETURN ERROR IF UNSUCCESFUL
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return { error }
+	}
+}
+
+/**----------------------------------- */
 export async function submitUserPlotSuggestion(
 	prevState: unknown,
 	formData: FormData,
@@ -104,11 +125,11 @@ export async function submitUserPlotSuggestion(
 				title: userSuggestion,
 				slug: slug,
 				page: pageId,
+				votes: 1,
 				users_voted: [{ id: userId }],
 			}),
 		)
 	} catch (err: any) {
-		1
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
 		const code = error?.extensions?.code
