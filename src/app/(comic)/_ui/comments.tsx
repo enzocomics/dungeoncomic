@@ -1,14 +1,27 @@
 "use client"
-
-import { Button } from "@/components/button"
-import { Field } from "@/components/fieldset"
-import { Textarea } from "@/components/textarea"
+/**----------------------------------- */
+// FUNCTIONS
+import clsx from "clsx"
+// DATA
 import { verifySession } from "@/data/session"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
-import clsx from "clsx"
+// UI
+import { Button } from "@/components/button"
+import { ErrorMessage, Field } from "@/components/fieldset"
+import { Textarea } from "@/components/textarea"
+import { useActionState, useEffect } from "react"
+import { useForm } from "@conform-to/react"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { userCommentSchema } from "@/lib/zod/schemas/comic"
+import { submitUserComment } from "../_actions/comments"
+import { useRouter } from "next/navigation"
 
 
+/**-----------------------------------
+ * Comments Section UI
+ * ---
+ */
 export function CommentsSection({
 	page,
 	comments,
@@ -18,9 +31,32 @@ export function CommentsSection({
 	comments: Awaited<ReturnType<typeof getComments>>
 	session: Awaited<ReturnType<typeof verifySession>>
 }) {
-	console.log(comments)
+	const router = useRouter()
+	// VALIDATION
+	const [lastResult, action] = useActionState(submitUserComment, undefined)
+	const [form, fields] = useForm({
+		// Sync the result with the last su8bmission
+		lastResult,
+
+		// Reuse the validation logic on the client
+		onValidate({ formData }) {
+			return parseWithZod(formData, { schema: userCommentSchema() })
+		},
+
+		// Validate the form on blur event triggered
+		shouldValidate: "onBlur",
+		shouldRevalidate: "onInput",
+	})
+	// EFFECT: on submit
+	useEffect(() => {
+		if (lastResult?.status == "success") {
+			router.refresh()
+		}
+	}, [lastResult])
+
 	return <>
 		{page.allow_user_comments &&
+
 			<section className={clsx(
 				"mt-8",
 				"bg-base-1",
@@ -29,13 +65,41 @@ export function CommentsSection({
 				{!session &&
 					<h4>You must be logged in to make a comment!</h4>
 				}
-				<Field disabled={session ? false : true}>
-					<label className={clsx(
-						"text-xl"
-					)}>Make a Comment</label>
-					<Textarea />
-				</Field>
-				<Button>Submit</Button>
+				<form
+					id={form.id}
+					onSubmit={form.onSubmit}
+					action={action}
+					noValidate
+				>
+					<Field disabled={session ? false : true}>
+						<label className={clsx(
+							"text-xl"
+						)}>Make a Comment</label>
+						<Textarea
+							id={fields.content.name}
+							name={fields.content.name}
+							key={fields.content.key}
+						/>
+						<ErrorMessage>{fields.content.errors}</ErrorMessage>
+						{session &&
+							<>
+								<input
+									name={fields.pageId.name}
+									key={fields.pageId.key}
+									type="hidden"
+									value={page.id.toString()}
+								/>
+								<input
+									name={fields.userId.name}
+									key={fields.userId.key}
+									type="hidden"
+									value={session.id}
+								/>
+							</>
+						}
+					</Field>
+					<Button type="submit">Submit</Button>
+				</form>
 			</section>
 		}
 		{comments && comments.length > 0 &&
