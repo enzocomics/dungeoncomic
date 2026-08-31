@@ -834,7 +834,6 @@ export default function ComicPageUI({
 							/>
 						</Field>
 						<Button type="submit">Submit</Button>
-						<input type="hidden" />
 					</form>
 				}
 			</>
