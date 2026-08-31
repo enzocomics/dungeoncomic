@@ -1,17 +1,44 @@
 "use client"
 
+import { Button } from "@/components/button"
+import { Field } from "@/components/fieldset"
+import { Textarea } from "@/components/textarea"
+import { verifySession } from "@/data/session"
+import { getComicPage } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
 import clsx from "clsx"
 
 
 export function CommentsSection({
-	comments
+	page,
+	comments,
+	session
 }: {
+	page: Awaited<ReturnType<typeof getComicPage>>
 	comments: Awaited<ReturnType<typeof getComments>>
+	session: Awaited<ReturnType<typeof verifySession>>
 }) {
 	console.log(comments)
 	return <>
-		{comments &&
+		{page.allow_user_comments &&
+			<section className={clsx(
+				"mt-8",
+				"bg-base-1",
+				"p-2",
+			)}>
+				{!session &&
+					<h4>You must be logged in to make a comment!</h4>
+				}
+				<Field disabled={session ? false : true}>
+					<label className={clsx(
+						"text-xl"
+					)}>Make a Comment</label>
+					<Textarea />
+				</Field>
+				<Button>Submit</Button>
+			</section>
+		}
+		{comments && comments.length > 0 &&
 			<section className={clsx(
 				"mt-8"
 			)}>

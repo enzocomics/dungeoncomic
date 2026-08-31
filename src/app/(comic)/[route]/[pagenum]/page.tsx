@@ -77,7 +77,9 @@ export default async function ComicPagenumPage({
 			/>
 			{comicPage.allow_user_comments &&
 				<CommentsSection
+					page={comicPage}
 					comments={comments}
+					session={session}
 				/>
 			}
 		</>
