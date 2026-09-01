@@ -116,7 +116,11 @@ export function ComicLayoutUI({
  * - 
  * 
  */
-export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
+export function FrontpageLayoutUI({
+	children
+}: {
+	children: React.ReactNode
+}) {
 	const navigation = [
 		{ name: 'Dashboard', href: '#', current: true },
 		{ name: 'Team', href: '#', current: false },
@@ -171,11 +175,12 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 
 							)}>
 								{/* LOGO */}
-								<Seal menu={true} className={clsx(
-									"group/menu",
-									"w-17",
-									"-rotate-12",
-								)} />
+								<Seal
+									menu={true}
+									className={clsx(
+										"group/menu",
+										"w-17",
+									)} />
 								{/* <span className={clsx(
 									"block",
 									"left-6",
