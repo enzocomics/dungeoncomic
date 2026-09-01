@@ -21,8 +21,7 @@ export default async function RootLayoutUI({
 			Object.values(fonts).map((f) => f.font.variable),
 			// Default Colours
 			"text-base-content",
-			"bg-secondary-200",
-			"dark:bg-secondary-700"
+
 		)}
 	>
 		<body
@@ -30,6 +29,11 @@ export default async function RootLayoutUI({
 				"min-w-xs",
 				"h-full",
 				"font-copy",
+				"relative",
+
+				"bg-neutral-200",
+				"dark:bg-neutral-800",
+				// "dark:bg-yellow-800/50"
 			)}
 		>
 			<GlobalContextProvider>

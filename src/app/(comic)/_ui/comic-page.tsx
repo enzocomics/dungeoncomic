@@ -144,54 +144,95 @@ export default function ComicPageUI({
 	/**----------------------------------- */
 	// Render
 	return <>
+		{/* Header */}
 		<div
-			style={{
-				backgroundColor: comic.accent_color ?? `${comic.accent_color}`
-			}}
 			className={clsx(
-				"bg-red-500",
+				// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
+				// Structure
+				"fixed",
+				"z-40",
+				// Size
+				"min-w-xs",
+				"w-full",
+				// Spacing
+				"md:p-2",
+				// Text
 				"text-white",
-				"text-center",
-				"sm:flex",
-				"sm:justify-center"
+
 			)}>
 			<div className={clsx(
-				"p-2"
+				// This is the "inner" header element
+				// User-selectable
+				"bg-pink-950", // TODO: User Selectable
+				"border-pink-900",
+				// Structure
+				"sm:flex",
+				// Size
+				"max-w-7xl",
+				// Spacing
+				"mx-auto",
+				"sm:justify-center",
+				// Appearance
+				"border-t-4",
+				(!page.prev_pages || !varsSubmitted) && ("border-b-4"),
+				"md:rounded",
 			)}>
-				<h2 className={clsx(
-					"inline-block",
-					"font-semibold",
-					"font-display",
-				)}>{comic.title}</h2> {comic.authors && comic.authors.length > 0 &&
-					<span className={clsx(
-						"text-sm"
+				{/* Title Card */}
+				<div
+					className={clsx(
+						"p-2",
+						"px-18",
+						"sm:pr-0",
+						"h-10",
+						"flex",
+						"items-center",
+						"font-platform-display",
 					)}>
-						by {comic.authors.map((a, index) => {
-							let join = comic.authors!.length > 1 ? ", " : ""
-							join = index == comic.authors!.length - 2 ? " & " : join
-							join = index == comic.authors!.length - 1 ? "" : join
-							return `${a.username}${join}`
-						}
-						)}
-					</span>
+					<h2 className={clsx(
+						// User Selectable
+
+						// Structure
+						"inline-block",
+						"overflow-hidden",
+						"text-nowrap",
+
+						// Text
+						"font-semibold",
+						"text-sm",
+						"text-ellipsis",
+					)}>{comic.title}</h2> {comic.authors && comic.authors.length > 0 &&
+						<span className={clsx(
+							"text-sm",
+							"hidden",
+							"italic",
+							"sm:inline"
+						)}>
+							&nbsp;&mdash; {comic.authors.map((a, index) => {
+								let join = comic.authors!.length > 1 ? ", " : ""
+								join = index == comic.authors!.length - 2 ? " & " : join
+								join = index == comic.authors!.length - 1 ? "" : join
+								return `${a.username}${join}`
+							}
+							)}
+						</span>
+					}
+				</div>
+				{
+					/**------------------------------
+					 * PREV NAVIGATION
+					 * - Instead of linking directly to the previous page,
+					 *   we are going back 1 step in browser history
+					 * - This is because pages can have multiple `prev_pages`
+					 */
 				}
+
 			</div>
-			{
-				/**------------------------------
-				 * PREV NAVIGATION
-				 * - Instead of linking directly to the previous page,
-				 *   we are going back 1 step in browser history
-				 * - This is because pages can have multiple `prev_pages`
-				 */
-			}
 			{
 				(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
 				<>
 					<div className={clsx(
-						"bg-black/10",
-						"sm:bg-transparent",
+						"bg-pink-900",
 						"text-xs",
-						"sm:ml-auto"
 					)}>
 						<ul className={clsx(
 							"flex",
@@ -299,244 +340,260 @@ export default function ComicPageUI({
 				</>
 			}
 		</div>
+		{/* eo Header */}
 
 		<div className={clsx(
-			"py-4",
-			// "border",
-			// "border-dashed",
-			// "border-pink-300",
-			"flex",
-			"flex-col",
-			"gap-2",
-			"bg-base-1",
-			"dark:bg-base-2",
-			"text-center"
-		)}>
-			<h4 className={clsx(
-				"text-3xl",
-				"font-semibold",
-				"font-display",
-				"text-center"
-			)}>
-				{replaceComicVariables({
-					content: (
-						varsExist && varsSubmitted ?
-							page.variables_submit_button_text || `${t("next")} »` :
-							page.title
-					),
-					variables: variables,
-					userVariables: userVariables
-				})
-				}
-			</h4>
-			{/* <p>{page.description}</p> */}
-			{
-				/**------------------------------
-				 *	DISPLAY THE COMIC PANELS
-				 * ---
-				 * - Do not show if variables have been submitted correctly
-				 */
-			}
-			<VariablesForm varsExist={varsExist}>
-				{page.comic_panels ? page.comic_panels.map((p, index) => {
-					// Conditionally render comic panels before OR after variables are submitted based on page option
-					if (
-						(!varsSubmitted && !p.place_after_variables_submitted) ||
-						(varsSubmitted && p.place_after_variables_submitted)
-					)
-						// Render
-						return <div key={index}>
-							{p.panel_image &&
-								<p><Image
-									className={clsx(
-										"mx-auto"
-									)}
-									src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
-									width={`${p.panel_image.width}`}
-									height={`${p.panel_image.height}`}
-									alt={`${p.panel_image.description}`}
-									loading="eager"
-								/></p>
-							}
-							{/* <p>{p.panel_title}</p> */}
-							<div className={clsx(
-								"mt-4",
-								"prose"
-							)}
-								// TODO: You better freakin' sanitize this
-								dangerouslySetInnerHTML={{
-									__html: replaceComicVariables({
-										content: p.panel_description,
-										variables: variables,
-										userVariables: userVariables,
-										html: true
-									})
-								}}
-							>
-							</div>
-							{/* VARIABLES */}
-							{p.variables && p.variables.length > 0 ?
-								<section className={clsx(
-									"bg-teal-100",
-									"dark:bg-teal-700",
-									"p-2",
-									"w-2/3",
-									"mx-auto",
-									"mt-8",
-								)}>
-									<section>
-										{p.variables.map((v, index) => {
-											return <div key={index}>
-												<p className={clsx(
-													"text-center"
-												)}><label>{v.prompt || v.name}</label></p>
-												<p>&gt; <input className={clsx(
-													"p-2",
-													"bg-white",
-													"text-black",
-													"w-9/10",
-												)} type="text" name={v.slug} defaultValue={
-													userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
 
-												} required></input></p>
-											</div>
-										})}
+			((page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) ? "pt-18" : "pt-10"),
+			"md:p-2",
+
+			"md:pt-10", // Title Only
+		)}>
+			{/* CONTENT */}
+			<div className={clsx(
+				"max-w-7xl",
+				"rounded",
+				"px-2",
+				"py-4",
+				"mx-auto",
+				// "border",
+				// "border-dashed",
+				// "border-pink-300",
+				"flex",
+				"flex-col",
+				"gap-2",
+				"bg-base-1",
+				"dark:bg-base-3",
+				"text-center",
+
+				"xl:rounded",
+			)}>
+				<h4 className={clsx(
+					"text-3xl",
+					"font-semibold",
+					"font-display",
+					"text-center"
+				)}>
+					{replaceComicVariables({
+						content: (
+							varsExist && varsSubmitted ?
+								page.variables_submit_button_text || `${t("next")} »` :
+								page.title
+						),
+						variables: variables,
+						userVariables: userVariables
+					})
+					}
+				</h4>
+				{/* <p>{page.description}</p> */}
+				{
+					/**------------------------------
+					 *	DISPLAY THE COMIC PANELS
+					 * ---
+					 * - Do not show if variables have been submitted correctly
+					 */
+				}
+				<VariablesForm varsExist={varsExist}>
+					{page.comic_panels ? page.comic_panels.map((p, index) => {
+						// Conditionally render comic panels before OR after variables are submitted based on page option
+						if (
+							(!varsSubmitted && !p.place_after_variables_submitted) ||
+							(varsSubmitted && p.place_after_variables_submitted)
+						)
+							// Render
+							return <div key={index}>
+								{p.panel_image &&
+									<p><Image
+										className={clsx(
+											"mx-auto",
+										)}
+										src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
+										width={`${p.panel_image.width}`}
+										height={`${p.panel_image.height}`}
+										alt={`${p.panel_image.description}`}
+										loading="eager"
+									/></p>
+								}
+								{/* <p>{p.panel_title}</p> */}
+								<div className={clsx(
+									"mt-4",
+									"prose"
+								)}
+									// TODO: You better freakin' sanitize this
+									dangerouslySetInnerHTML={{
+										__html: replaceComicVariables({
+											content: p.panel_description,
+											variables: variables,
+											userVariables: userVariables,
+											html: true
+										})
+									}}
+								>
+								</div>
+								{/* VARIABLES */}
+								{p.variables && p.variables.length > 0 ?
+									<section className={clsx(
+										"bg-teal-100",
+										"dark:bg-teal-700",
+										"p-2",
+										"w-2/3",
+										"mx-auto",
+										"mt-8",
+									)}>
+										<section>
+											{p.variables.map((v, index) => {
+												return <div key={index}>
+													<p className={clsx(
+														"text-center"
+													)}><label>{v.prompt || v.name}</label></p>
+													<p>&gt; <input className={clsx(
+														"p-2",
+														"bg-white",
+														"text-black",
+														"w-9/10",
+													)} type="text" name={v.slug} defaultValue={
+														userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
+
+													} required></input></p>
+												</div>
+											})}
+										</section>
 									</section>
-								</section>
-								: null}
+									: null}
+							</div>
+					}) : null}
+
+					{
+						/**------------------------------
+						 * SUBMIT BUTTON
+						 * ---
+						 * - Show ONLY if variables exist BUT they haven't been submitted
+						 */
+					}
+					{(varsExist && !varsSubmitted) &&
+						<div className={clsx(
+							"flex",
+							"flex-col",
+							"w-2/3",
+							"mx-auto",
+							"mt-8",
+							"gap-2",
+							"p-2",
+							"bg-amber-100",
+							"dark:bg-amber-900",
+							"text-xs"
+						)}>
+							<button className={clsx(
+								"block",
+								"p-2",
+								"hover:bg-black/10",
+								"cursor-pointer"
+							)}>{`${page.variables_submit_button_text || t("next")} »`}</button>
 						</div>
-				}) : null}
+					}
+				</VariablesForm>
+
+				{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
+					<UserFeedbackSection />
+				}
+				{
+					/**------------------------------
+					 * NAVIGATION BLOCK
+					 * -
+					 */
+				}
+				<section className={clsx(
+					"mt-8",
+					"flex",
+					"flex-col",
+					"gap-8",
+					"w-full"
+				)}>
+					{
+						/**------------------------------
+						 *	NEXT NAVIGATION
+						 * ---
+						 * - Display IF variables don't exist at all,
+						 * - OR if variables exist AND they've been submitted
+						 */
+					}
+					{(!varsExist || (varsExist && varsSubmitted)) &&
+						<div className={clsx(
+							"mx-auto",
+							"w-2/3",
+						)}>
+							{page.next_pages && page.next_pages.length > 0 &&
+								<>
+									<ul className={clsx(
+										"flex",
+										"flex-col",
+										"gap-2",
+										"p-2",
+										"bg-amber-100",
+										"dark:bg-amber-900",
+										"text-xs"
+									)}>
+										{page.next_pages.map((n, index) =>
+											<li key={index} className={clsx(
+											)}>
+												<Link className={clsx(
+													"block",
+													"p-2",
+													"hover:bg-black/10",
+												)} href={`${n.linked_pages_id.comic_pagenum}`}>
+													<strong>{
+														replaceComicVariables({
+															content: n.linked_pages_id.title,
+															variables: variables,
+															userVariables: userVariables
+														})
+													} &raquo;</strong><br />
+													{n.linked_pages_id.subtitle &&
+														<p>{
+															replaceComicVariables({
+																content: n.linked_pages_id.subtitle,
+																variables: variables,
+																userVariables: userVariables
+															})
+														}</p>
+													}
+												</Link>
+											</li>
+										)}
+									</ul>
+								</>
+							}
+						</div>
+					}
+
+
+
+				</section >
 
 				{
 					/**------------------------------
-					 * SUBMIT BUTTON
-					 * ---
-					 * - Show ONLY if variables exist BUT they haven't been submitted
+					 *	Page Meta
 					 */
 				}
-				{(varsExist && !varsSubmitted) &&
-					<div className={clsx(
-						"flex",
-						"flex-col",
-						"w-2/3",
-						"mx-auto",
-						"mt-8",
-						"gap-2",
+				<section>
+					<h4 className={clsx(
+						"font-semibold"
+					)}>Page Metadata</h4>
+					<ul className={clsx(
 						"p-2",
 						"bg-amber-100",
 						"dark:bg-amber-900",
 						"text-xs"
 					)}>
-						<button className={clsx(
-							"block",
-							"p-2",
-							"hover:bg-black/10",
-							"cursor-pointer"
-						)}>{`${page.variables_submit_button_text || t("next")} »`}</button>
-					</div>
-				}
-			</VariablesForm>
-
-			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-				<UserFeedbackSection />
-			}
-			{
-				/**------------------------------
-				 * NAVIGATION BLOCK
-				 * -
-				 */
-			}
-			<section className={clsx(
-				"mt-8",
-				"flex",
-				"flex-col",
-				"gap-8",
-				"w-full"
-			)}>
-				{
-					/**------------------------------
-					 *	NEXT NAVIGATION
-					 * ---
-					 * - Display IF variables don't exist at all,
-					 * - OR if variables exist AND they've been submitted
-					 */
-				}
-				{(!varsExist || (varsExist && varsSubmitted)) &&
-					<div className={clsx(
-						"mx-auto",
-						"w-2/3",
-					)}>
-						{page.next_pages && page.next_pages.length > 0 &&
-							<>
-								<ul className={clsx(
-									"flex",
-									"flex-col",
-									"gap-2",
-									"p-2",
-									"bg-amber-100",
-									"dark:bg-amber-900",
-									"text-xs"
-								)}>
-									{page.next_pages.map((n, index) =>
-										<li key={index} className={clsx(
-										)}>
-											<Link className={clsx(
-												"block",
-												"p-2",
-												"hover:bg-black/10",
-											)} href={`${n.linked_pages_id.comic_pagenum}`}>
-												<strong>{
-													replaceComicVariables({
-														content: n.linked_pages_id.title,
-														variables: variables,
-														userVariables: userVariables
-													})
-												} &raquo;</strong><br />
-												{n.linked_pages_id.subtitle &&
-													<p>{
-														replaceComicVariables({
-															content: n.linked_pages_id.subtitle,
-															variables: variables,
-															userVariables: userVariables
-														})
-													}</p>
-												}
-											</Link>
-										</li>
-									)}
-								</ul>
-							</>
+						<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
+						{page.user_updated &&
+							<li><strong>Last updated by</strong> @{page.user_updated.username} on {page.date_updated}</li>
 						}
-					</div>
-				}
+					</ul>
+				</section >
 
-
-
-			</section >
-
-			{
-				/**------------------------------
-				 *	Page Meta
-				 */
-			}
-			<section>
-				<h4 className={clsx(
-					"font-semibold"
-				)}>Page Metadata</h4>
-				<ul className={clsx(
-					"p-2",
-					"bg-amber-100",
-					"dark:bg-amber-900",
-					"text-xs"
-				)}>
-					<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
-					{page.user_updated &&
-						<li><strong>Last updated by</strong> @{page.user_updated.username} on {page.date_updated}</li>
-					}
-				</ul>
-			</section >
-
-		</div >
+			</div >
+		</div>
 	</>
 
 	/**---------------------------------------------------------------------- */

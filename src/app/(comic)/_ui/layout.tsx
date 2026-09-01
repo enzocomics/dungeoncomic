@@ -15,6 +15,7 @@ import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/
 import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/dropdown"
 import { Avatar } from "@/components/avatar"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Seal } from "@/styles/seal"
 
 
 /**-----------------------------------
@@ -129,39 +130,59 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 			<Disclosure
 				as="nav"
 				className={clsx(
+					// Structure
+					"fixed!",
+					"z-50",
+					"top-0",
 					"relative",
-					"bg-neutral-800",
-					"dark:bg-black",
-					"dark:after:pointer-events-none",
-					"dark:after:absolute",
-					"dark:after:inset-x-0",
-					"dark:after:bottom-0",
-					"dark:after:h-px",
-					"dark:after:bg-white/10"
+					// Size
+					"min-w-xs",
+					"w-full",
+					// Functionality
+					"pointer-events-none",
 				)}
 			>
-				<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-					<div className="relative flex h-16 items-center justify-between">
-						<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+				<div className="mx-auto max-w-7xl ">
+					<div className="relative flex items-center justify-between">
+						<div className={clsx(
+							"relative",
+							"inset-y-0",
+							"left-0",
+							"flex",
+							"items-center",
+							"h-12"
+						)}>
 							{/* Mobile menu button*/}
-							<DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-								<span className="absolute -inset-0.5" />
-								<span className="sr-only">Open main menu</span>
-								<span aria-hidden="true" className="block size-6 group-data-open:hidden" >=</span>
-								<span aria-hidden="true" className="hidden size-6 group-data-open:block" >X</span>
+							<DisclosureButton className={clsx(
+								"group",
+								// Structure
+								"absolute",
+								"-top-0.5",
+								"-left-2",
+								// Appearance
+								"text-pink-500",
+								// Functionality
+								"cursor-pointer",
+								"pointer-events-auto",
+							)}>
+								{/* LOGO */}
+								<Seal className={clsx(
+									"w-17",
+									"-rotate-12",
+								)} />
 							</DisclosureButton>
 						</div>
-						<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-							<div className="flex shrink-0 items-center">
-								<img
-									alt="Your Company"
-									src="/img/logomark.svg"
-									className="h-8 w-auto"
-								/>
-							</div>
+						<div className={clsx(
+							"flex",
+							"flex-1",
+							// "items-center",
+							// "justify-center",
+							// "sm:items-stretch",
+							// "sm:justify-start"
+						)}>
 							<div className="hidden sm:ml-6 sm:block">
 								<div className="flex space-x-4">
-									{navigation.map((item) => (
+									{/* {navigation.map((item) => (
 										<a
 											key={item.name}
 											href={item.href}
@@ -175,11 +196,11 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 										>
 											{item.name}
 										</a>
-									))}
+									))} */}
 								</div>
 							</div>
 						</div>
-						<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+						<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 pointer-events-auto">
 
 							{/* Profile dropdown */}
 							<Menu as="div" className="relative ml-3">
@@ -189,7 +210,7 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 									<img
 										alt=""
 										src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-										className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
+										className="size-12 border-4 border-pink-900 relative rounded-full bg-gray-800"
 									/>
 								</MenuButton>
 
@@ -227,7 +248,8 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 					</div>
 				</div>
 
-				<DisclosurePanel className="sm:hidden">
+				{/* PLATFORM MENU */}
+				<DisclosurePanel className="">
 					<div className="space-y-1 px-2 pt-2 pb-3">
 						{navigation.map((item) => (
 							<DisclosureButton
@@ -248,12 +270,9 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 					</div>
 				</DisclosurePanel>
 			</Disclosure>
-			<main className={clsx(
-				"max-w-7xl",
-				"mx-auto",
-			)}>
-				{children}
-			</main>
+
+			{children}
+
 		</>
 	)
 }
