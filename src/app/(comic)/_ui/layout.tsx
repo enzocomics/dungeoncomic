@@ -168,7 +168,7 @@ export function FrontpageLayoutUI({
 								"-top-0.5",
 								"-left-2",
 								// Appearance
-								"text-pink-500",
+								"text-comic-accent-500",
 								// Functionality
 								"cursor-pointer",
 								"pointer-events-auto",
@@ -240,7 +240,7 @@ export function FrontpageLayoutUI({
 									<img
 										alt=""
 										src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-										className="size-12 border-4 border-pink-900 relative rounded-full bg-gray-800"
+										className="size-12 border-4 border-comic-accent-900 relative rounded-full bg-gray-800"
 									/>
 								</MenuButton>
 

@@ -163,8 +163,8 @@ export default function ComicPageUI({
 			<div className={clsx(
 				// This is the "inner" header element
 				// User-selectable
-				"bg-pink-950", // TODO: User Selectable
-				"border-pink-900",
+				"bg-comic-accent-950", // TODO: User Selectable
+				"border-comic-accent-900",
 				// Structure
 				"sm:flex",
 				// Size
@@ -231,7 +231,7 @@ export default function ComicPageUI({
 				(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
 				<>
 					<div className={clsx(
-						"bg-pink-900",
+						"bg-comic-accent-900",
 						"text-xs",
 					)}>
 						<ul className={clsx(

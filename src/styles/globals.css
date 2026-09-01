@@ -106,4 +106,16 @@
 	--color-base-5: var(--color-base-5);
 	--color-base-content: var(--color-base-content);
 	--color-base-content-inverted: var(--color-base-content-inverted);
+
+	--color-comic-accent-50: var(--color-red-50);
+	--color-comic-accent-100: var(--color-red-100);
+	--color-comic-accent-200: var(--color-red-200);
+	--color-comic-accent-300: var(--color-red-300);
+	--color-comic-accent-400: var(--color-red-400);
+	--color-comic-accent-500: var(--color-red-500);
+	--color-comic-accent-600: var(--color-red-600);
+	--color-comic-accent-700: var(--color-red-700);
+	--color-comic-accent-800: var(--color-red-800);
+	--color-comic-accent-900: var(--color-red-900);
+	--color-comic-accent-950: var(--color-red-950);
 }
