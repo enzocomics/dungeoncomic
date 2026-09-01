@@ -16,6 +16,8 @@ import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel,
 import { Avatar } from "@/components/avatar"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 
 /**-----------------------------------
@@ -155,6 +157,8 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 							{/* Mobile menu button*/}
 							<DisclosureButton className={clsx(
 								"group",
+								"flex",
+								"items-center",
 								// Structure
 								"absolute",
 								"-top-0.5",
@@ -164,12 +168,33 @@ export function FrontpageLayoutUI({ children }: { children: React.ReactNode }) {
 								// Functionality
 								"cursor-pointer",
 								"pointer-events-auto",
+
 							)}>
 								{/* LOGO */}
-								<Seal className={clsx(
+								<Seal menu={true} className={clsx(
+									"group/menu",
 									"w-17",
 									"-rotate-12",
 								)} />
+								{/* <span className={clsx(
+									"block",
+									"left-6",
+									"absolute",
+									"top-3.5",
+									// "-rotate-6",
+								)}>
+									<FontAwesomeIcon icon={faBars} className={clsx(
+
+										"text-white",
+										"group-data-open:hidden!",
+									)} />
+									<FontAwesomeIcon icon={faXmark} className={clsx(
+
+										"hidden!",
+										"text-white",
+										"group-data-open:inline!",
+									)} />
+								</span> */}
 							</DisclosureButton>
 						</div>
 						<div className={clsx(
