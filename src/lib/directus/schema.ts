@@ -46,7 +46,7 @@ export interface ComicsCollection {
 	logo: ImageCollection | null
 	thumbnail: ImageCollection | null
 	banner: ImageCollection | null
-	accent_color: string | null
+	accent_color: TailwindColors | null
 	display_font: typeof displayFonts // fetch from styles/fonts
 	copy_font: typeof copyFonts // fetch from styles/fonts
 	// Settings
@@ -202,3 +202,32 @@ export interface ImageCollection {
 	height: number
 	description: string
 }
+
+/** ------------------------------------------------ **/
+export type TailwindColors =
+	| "red"
+	| "orange"
+	| "amber"
+	| "yellow"
+	| "lime"
+	| "green"
+	| "emerald"
+	| "teal"
+	| "cyan"
+	| "sky"
+	| "blue"
+	| "indigo"
+	| "violet"
+	| "purple"
+	| "fuchsia"
+	| "pink"
+	| "rose"
+	| "slate"
+	| "gray"
+	| "zinc"
+	| "neutral"
+	| "stone"
+	| "taupe"
+	| "mauve"
+	| "mist"
+	| "olive"

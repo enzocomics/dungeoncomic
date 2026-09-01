@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { Suspense } from "react"
+import { ComponentPropsWithoutRef, Suspense, useEffect, useState } from "react"
 import { Link } from "@/components/link"
 // FUNCTIONS
 import clsx from "clsx"
@@ -18,6 +18,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Seal } from "@/styles/seal"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { usePathname, useRouter } from "next/navigation"
 
 
 /**-----------------------------------
@@ -35,92 +36,8 @@ export function ComicLayoutUI({
 	// FETCH COMIC APPEARANCE VARS
 	const displayFontSlug = displayFonts[comic.display_font.toString()].slug
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
+	const accentColor = comic.accent_color || "red"
 
-	return <div
-		style={{
-			// Accent Color
-			// backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
-			// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
-			// Fonts
-			"--font-copy": `var(--font-${copyFontSlug})`,
-			"--font-display": `var(--font-${displayFontSlug})`
-		} as React.CSSProperties}
-		className={clsx(
-			"font-copy"
-		)}
-	>
-		{children}
-	</div>
-
-	// return <div className={clsx(
-	// 	// Temporary CSS
-	// 	// "border",
-	// 	// "border-orange-500",
-	// 	// "border-dashed",
-	// 	// Background
-	// 	"bg-top",
-	// 	"bg-repeat-x",
-	// 	"bg-base-2",
-	// 	// Appearance
-	// 	"h-full",
-	// 	"text-base-content",
-	// 	// "px-8",
-	// 	"font-copy"
-	// )}
-	// 	// COMIC APPEARANCE
-	// 	style={{
-	// 		// Accent Color
-	// 		// backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
-	// 		// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
-	// 		// Fonts
-	// 		"--font-copy": `var(--font-${copyFontSlug})`,
-	// 		"--font-display": `var(--font-${displayFontSlug})`
-	// 	} as React.CSSProperties}
-	// >
-	// 	{/* <h3 className={clsx(
-	// 		// Temporary CSS
-	// 		"font-display",
-	// 		"text-2xl",
-	// 	)}>Comic Layout UI</h3> */}
-	// 	{/* {comic.logo &&
-	// 		<Image
-	// 			src={`${directusURL}/assets/${comic.logo.filename_disk}`}
-	// 			width={comic.logo.width || 100}
-	// 			height={comic.logo.height || 100}
-	// 			alt={comic.logo.description || comic.title}
-	// 		/>
-	// 	} */}
-	// 	{/* {!comic.logo && */}
-	// 	{/* } */}
-	// 	{/* <strong>Comic Description</strong>: {comic.description} <br /> */}
-	// 	<div className={clsx(
-	// 		// "bg-base-1",
-	// 		"max-w-7xl",
-	// 		"mx-auto"
-	// 	)}>
-	// 		<h2 className={clsx(
-	// 			// "my-4",
-	// 			"py-3",
-	// 			"font-semibold",
-	// 			"font-display",
-	// 			"text-2xl",
-	// 		)}>{comic.title}</h2>
-	// 		{children}
-	// 	</div>
-	// </div>
-}
-
-/**-----------------------------------
- * FRONTPAGE LAYOUT
- * ---
- * - 
- * 
- */
-export function FrontpageLayoutUI({
-	children
-}: {
-	children: React.ReactNode
-}) {
 	const navigation = [
 		{ name: 'Dashboard', href: '#', current: true },
 		{ name: 'Team', href: '#', current: false },
@@ -128,11 +45,30 @@ export function FrontpageLayoutUI({
 		{ name: 'Calendar', href: '#', current: false },
 	]
 
-	// function classNames(...classes) {
-	// 	return classes.filter(Boolean).join(' ')
-	// }
 	return (
-		<>
+		<div style={
+			{
+				// Accent Color
+				// backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
+				// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
+				// Fonts
+				"--font-copy": `var(--font-${copyFontSlug})`,
+				"--font-display": `var(--font-${displayFontSlug})`,
+				"--color-comic-accent-50": `var(--color-${accentColor}-50)`,
+				"--color-comic-accent-100": `var(--color-${accentColor}-100)`,
+				"--color-comic-accent-200": `var(--color-${accentColor}-200)`,
+				"--color-comic-accent-300": `var(--color-${accentColor}-300)`,
+				"--color-comic-accent-400": `var(--color-${accentColor}-400)`,
+				"--color-comic-accent-500": `var(--color-${accentColor}-500)`,
+				"--color-comic-accent-600": `var(--color-${accentColor}-600)`,
+				"--color-comic-accent-700": `var(--color-${accentColor}-700)`,
+				"--color-comic-accent-800": `var(--color-${accentColor}-800)`,
+				"--color-comic-accent-900": `var(--color-${accentColor}-900)`,
+				"--color-comic-accent-950": `var(--color-${accentColor}-950)`,
+			} as React.CSSProperties}
+			className={clsx(
+				"font-copy"
+			)}>
 			<Disclosure
 				as="nav"
 				className={clsx(
@@ -181,25 +117,6 @@ export function FrontpageLayoutUI({
 										"group/menu",
 										"w-17",
 									)} />
-								{/* <span className={clsx(
-									"block",
-									"left-6",
-									"absolute",
-									"top-3.5",
-									// "-rotate-6",
-								)}>
-									<FontAwesomeIcon icon={faBars} className={clsx(
-
-										"text-white",
-										"group-data-open:hidden!",
-									)} />
-									<FontAwesomeIcon icon={faXmark} className={clsx(
-
-										"hidden!",
-										"text-white",
-										"group-data-open:inline!",
-									)} />
-								</span> */}
 							</DisclosureButton>
 						</div>
 						<div className={clsx(
@@ -210,25 +127,7 @@ export function FrontpageLayoutUI({
 							// "sm:items-stretch",
 							// "sm:justify-start"
 						)}>
-							<div className="hidden sm:ml-6 sm:block">
-								<div className="flex space-x-4">
-									{/* {navigation.map((item) => (
-										<a
-											key={item.name}
-											href={item.href}
-											aria-current={item.current ? 'page' : undefined}
-											className={clsx(
-												item.current
-													? 'bg-gray-900 text-white dark:bg-gray-950/50'
-													: 'text-gray-300 hover:bg-white/5 hover:text-white',
-												'rounded-md px-3 py-2 text-sm font-medium',
-											)}
-										>
-											{item.name}
-										</a>
-									))} */}
-								</div>
-							</div>
+
 						</div>
 						<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 pointer-events-auto">
 
@@ -303,6 +202,23 @@ export function FrontpageLayoutUI({
 
 			{children}
 
-		</>
+		</div>
 	)
+
+}
+
+/**-----------------------------------
+ * FRONTPAGE LAYOUT
+ * ---
+ * - 
+ * 
+ */
+export function FrontpageLayoutUI({
+	children,
+}: {
+	children: React.ReactNode
+}) {
+
+	return children
+
 }

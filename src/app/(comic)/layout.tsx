@@ -34,11 +34,10 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
-		return <FrontpageLayoutUI>
-			<ComicLayoutUI comic={comic}>
-				{children}
-			</ComicLayoutUI>
-		</FrontpageLayoutUI>
+		return <ComicLayoutUI comic={comic}>
+			{children}
+		</ComicLayoutUI>
+
 	}
 
 	/**----------------------------------- */
