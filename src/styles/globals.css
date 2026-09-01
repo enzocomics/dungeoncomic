@@ -60,6 +60,7 @@
 	/* Fonts */
 	--font-copy: var(--font-lora);
 	--font-display: var(--font-germania-one);
+	--font-platform-display: var(--font-inter);
 
 	/* COLOR VARIABLE DEFINITIONS*/
 
