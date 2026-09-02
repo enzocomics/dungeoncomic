@@ -21,6 +21,7 @@ import { colorVariants } from "@/styles/colors"
 import Icon from "@/styles/icons"
 
 
+
 /**-----------------------------------
  * COMIC FRONTPAGE LAYOUT
  * ---
@@ -38,12 +39,6 @@ export function ComicLayoutUI({
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
 	const accentColor = comic.accent_color || "red"
 
-	const navigation = [
-		{ name: 'Dashboard', href: '#', current: true },
-		{ name: 'Team', href: '#', current: false },
-		{ name: 'Projects', href: '#', current: false },
-		{ name: 'Calendar', href: '#', current: false },
-	]
 
 	return (
 		<div style={
@@ -98,8 +93,19 @@ export function FrontpageLayoutUI({
 }
 
 
+
+
+const navigation = [
+	{ name: 'Dungeon Construction Co.', href: '/', current: false },
+	{ name: 'View All Comics', href: '#', current: false },
+]
+const comicNavigation = [
+	{ name: 'Home', href: '/tutorial', current: true },
+	{ name: 'About', href: '/tutorial/about', current: false },
+]
+
 /**-----------------------------------
- * FRONTPAGE LAYOUT
+ * NAVIGATION LAYOUT
  * ---
  * - 
  * 
@@ -109,14 +115,6 @@ function NavMenu({
 }: {
 	menu?: boolean
 }) {
-
-
-	const navigation = [
-		{ name: 'Dashboard', href: '#', current: true },
-		{ name: 'Team', href: '#', current: false },
-		{ name: 'Projects', href: '#', current: false },
-		{ name: 'Calendar', href: '#', current: false },
-	]
 
 	return <>
 		<Disclosure
@@ -251,9 +249,40 @@ function NavMenu({
 				</div>
 			</div>
 
-			{/* PLATFORM MENU */}
-			<DisclosurePanel className="">
+
+			<DisclosurePanel className={clsx(
+				"pt-2",
+				"relative",
+				"-z-1",
+				"bg-neutral-900/90",
+				"backdrop-blur-2xl",
+				"border-b-6",
+				"border-comic-accent-500",
+				"drop-shadow-lg",
+				"drop-shadow-neutral-500/50",
+				"pointer-events-auto",
+			)}>
+				{/* COMIC MENU */}
 				<div className="space-y-1 px-2 pt-2 pb-3">
+					{comicNavigation.map((item) => (
+						<DisclosureButton
+							key={item.name}
+							as="a"
+							href={item.href}
+							aria-current={item.current ? 'page' : undefined}
+							className={clsx(
+								item.current
+									? "bg-comic-accent-700 text-white"
+									: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+								'block rounded-md px-3 py-2 text-base font-medium',
+							)}
+						>
+							{item.name}
+						</DisclosureButton>
+					))}
+				</div>
+				{/* PLATFORM MENU */}
+				<div className="space-y-1 px-2 pt-2 pb-3 bg-neutral-900">
 					{navigation.map((item) => (
 						<DisclosureButton
 							key={item.name}
@@ -262,9 +291,9 @@ function NavMenu({
 							aria-current={item.current ? 'page' : undefined}
 							className={clsx(
 								item.current
-									? 'bg-gray-900 text-white dark:bg-gray-950/50'
-									: 'text-gray-300 hover:bg-white/5 hover:text-white',
-								'block rounded-md px-3 py-2 text-base font-medium',
+									? "bg-comic-accent-700 text-white"
+									: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+								'block rounded-md px-3 py-2 text-sm',
 							)}
 						>
 							{item.name}
