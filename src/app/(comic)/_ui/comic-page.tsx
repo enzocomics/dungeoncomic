@@ -142,6 +142,10 @@ export default function ComicPageUI({
 		setCanGoBack(hasHistory && previousPageIsSameSite)
 	}, [pathname, searchParams.toString()])
 
+	// Reusable Booleans
+	const hasPrevPage = !!(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted)
+	const hasBanner = !!page.comic.banner
+
 	/**----------------------------------- */
 	// Render
 	return <>
@@ -156,26 +160,30 @@ export default function ComicPageUI({
 				"min-w-xs",
 				"w-full",
 				// Spacing
-				"md:p-2",
+				"md:p-4",
 				// Text
 				"text-white",
-			)}>
+			)}
+		>
 			<div
 				className={clsx(
 					// The "filled/backdrop" part of the header
 					// Size
-					"max-w-7xl",
+					"max-w-6xl",
 					// Spacing
 					"mx-auto",
 					// Appearance
 					"bg-neutral-800/80",
+					"dark:bg-neutral-900/80",
 					"backdrop-blur-xs",
 					"bg-top",
 					"border-b-6",
 					"border-comic-accent-900",
-					// (!page.prev_pages || !varsSubmitted) && ("border-b-4"),
+					hasPrevPage ? "border-none" : "",
 					"md:rounded",
-					// "drop-shadow-lg",
+					hasPrevPage ? "md:rounded-b-none" : "",
+					"md:drop-shadow-xl",
+					"md:drop-shadow-neutral-900/45",
 				)}>
 				{/* Title Card */}
 				<div
@@ -246,10 +254,10 @@ export default function ComicPageUI({
 
 			</div>
 			{
-				(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
+				hasPrevPage &&
 				<>
 					<div className={clsx(
-						"bg-neutral-950",
+						"bg-comic-accent-900",
 						"dark:bg-black",
 						"text-xs",
 					)}>
@@ -325,7 +333,9 @@ export default function ComicPageUI({
 								page.prev_pages && page.prev_pages.length > 1 &&
 								<Dropdown>
 									<DropdownButton outline>
-										&laquo; {t("go-back")} (All Choices)
+										<span className="text-white text-xs">
+											&laquo; {t("go-back")} (All Choices)
+										</span>
 									</DropdownButton>
 									<DropdownMenu>
 										{page.prev_pages.map((n, index) =>
@@ -362,14 +372,18 @@ export default function ComicPageUI({
 		{/* eo Header */}
 
 		<div className={clsx(
-			// "px-4",
-			((page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) ? "pt-21" : "pt-13"),
-			// "md:p-2",
-			// "md:pt-10", // Title Only
+			hasPrevPage ? [
+				"pt-21",
+				"md:pt-28"
+			] : [
+				hasBanner ? "pt-20" : "pt-13",
+				"md:pt-22"
+			],
+			"md:px-4",
 		)}>
 			{/* CONTENT */}
 			<div className={clsx(
-				"max-w-7xl",
+				"max-w-6xl",
 				// "rounded",
 
 				"mx-auto",
@@ -383,7 +397,7 @@ export default function ComicPageUI({
 				"dark:bg-neutral-700",
 				"text-center",
 
-				"xl:rounded",
+				"md:rounded",
 			)}>
 				<h4 className={clsx(
 					"py-6",

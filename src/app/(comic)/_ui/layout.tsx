@@ -41,11 +41,13 @@ export function ComicLayoutUI({
 
 
 	return (
+
 		<div style={
 			{
 				// Accent Color
 				// backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
 				// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
+
 				// Fonts
 				"--font-copy": `var(--font-${copyFontSlug})`,
 				"--font-display": `var(--font-${displayFontSlug})`,
@@ -62,8 +64,44 @@ export function ComicLayoutUI({
 				"--color-comic-accent-950": `var(${colorVariants[accentColor]["950"]})`,
 			} as React.CSSProperties}
 			className={clsx(
-				"font-copy"
+				"relative",
+				"font-copy",
+				"bg-top",
+				"bg-repeat-x",
+				"bg-fixed",
 			)}>
+			{/* Comic Banner Background Image*/}
+			{comic.banner &&
+				<div
+					style={{
+						backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
+					}}
+					className={clsx(
+						// Position
+						"-z-1",
+						"fixed",
+						"left-1/2 -translate-x-1/2 ",
+						// Size
+						"w-full",
+						"max-w-[1600px]",
+						"h-100",
+						// Appearance
+						"opacity-75",
+						// Background
+						"bg-cover",
+						"bg-center",
+						"bg-fixed",
+						"bg-blend-saturation",
+						// Background: Fade to bottom
+						"mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)",
+						"[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)]",
+						// Background: Fade to left & right (desktop)
+						"xl:mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)",
+						"xl:mask-composite:intersect",
+						"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
+						"xl:[-webkit-mask-composite:source-in]",
+					)} />
+			}
 			<NavMenu menu={true} />
 
 			{children}
@@ -128,11 +166,14 @@ function NavMenu({
 				// Size
 				"min-w-xs",
 				"w-full",
+				// Spacing
+				"md:p-4",
+
 				// Functionality
 				"pointer-events-none",
 			)}
 		>
-			<div className="mx-auto max-w-7xl ">
+			<div className="mx-auto max-w-6xl ">
 				<div className="relative flex items-center justify-between">
 					<div className={clsx(
 						"relative",
@@ -145,12 +186,13 @@ function NavMenu({
 						{/* Mobile menu button*/}
 						<DisclosureButton className={clsx(
 							"group",
-							"flex",
-							"items-center",
 							// Structure
 							"absolute",
+							"flex",
+							"items-center",
 							"-top-3",
-							"-left-5",
+							"-left-8",
+							"md:-left-4.5",
 							// Appearance
 							"text-comic-accent-500",
 							"dark:text-comic-accent-600",
@@ -165,7 +207,6 @@ function NavMenu({
 								className={clsx(
 									"group/menu",
 									"w-24",
-
 								)} />
 						</DisclosureButton>
 					</div>
@@ -179,7 +220,7 @@ function NavMenu({
 					)}>
 
 					</div>
-					<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 sm:pr-0 pointer-events-auto">
+					<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
 
 						{/* Profile dropdown */}
 						<Menu as="div" className="relative ml-3">
@@ -257,9 +298,11 @@ function NavMenu({
 				"bg-neutral-900/90",
 				"backdrop-blur-2xl",
 				"border-b-6",
-				"border-comic-accent-500",
+				"border-comic-accent-900",
 				"drop-shadow-lg",
 				"drop-shadow-neutral-500/50",
+				"md:drop-shadow-xl",
+				"md:drop-shadow-neutral-900/45",
 				"pointer-events-auto",
 			)}>
 				{/* COMIC MENU */}
