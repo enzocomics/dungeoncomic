@@ -27,6 +27,7 @@ import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/field
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
+import Icon from "@/styles/icons"
 
 /**----------------------------------- */
 // TYPES
@@ -189,6 +190,9 @@ export default function ComicPageUI({
 						"items-center",
 						"font-platform-display",
 					)}>
+
+					<Icon name="house" className="inline size-5" />
+					<strong className="text-comic-accent-800 mx-1">/&nbsp;</strong>
 					<h2 className={clsx(
 
 						// Structure
@@ -200,7 +204,9 @@ export default function ComicPageUI({
 						"font-semibold",
 						"text-sm",
 						"text-ellipsis",
-					)}>{comic.title}</h2> {comic.authors && comic.authors.length > 0 &&
+					)}>
+						{comic.title}
+					</h2> {comic.authors && comic.authors.length > 0 &&
 						<span className={clsx(
 							"text-sm",
 							"hidden",
