@@ -163,7 +163,7 @@ export default function ComicPageUI({
 			<div className={clsx(
 				// This is the "inner" header element
 				// User-selectable
-				"bg-comic-accent-950", // TODO: User Selectable
+				"bg-comic-accent-950",
 				"border-comic-accent-900",
 				// Structure
 				"sm:flex",
@@ -176,6 +176,7 @@ export default function ComicPageUI({
 				"border-t-4",
 				(!page.prev_pages || !varsSubmitted) && ("border-b-4"),
 				"md:rounded",
+				"drop-shadow-lg",
 			)}>
 				{/* Title Card */}
 				<div
@@ -189,7 +190,6 @@ export default function ComicPageUI({
 						"font-platform-display",
 					)}>
 					<h2 className={clsx(
-						// User Selectable
 
 						// Structure
 						"inline-block",
@@ -354,7 +354,7 @@ export default function ComicPageUI({
 				"max-w-7xl",
 				"rounded",
 				"px-2",
-				"py-4",
+				"py-6",
 				"mx-auto",
 				// "border",
 				// "border-dashed",
@@ -369,7 +369,7 @@ export default function ComicPageUI({
 				"xl:rounded",
 			)}>
 				<h4 className={clsx(
-					"text-3xl",
+					"text-2xl",
 					"font-semibold",
 					"font-display",
 					"text-center"
