@@ -159,32 +159,20 @@ export default function ComicPageUI({
 				"md:p-2",
 				// Text
 				"text-white",
-
 			)}>
 			<div
-
 				className={clsx(
-					// This is the "inner" header element
-					// User-selectable
-					// Structure
-					// "sm:flex",
+					// The "filled/backdrop" part of the header
 					// Size
 					"max-w-7xl",
 					// Spacing
 					"mx-auto",
-					// "sm:justify-center",
 					// Appearance
 					"bg-neutral-800/80",
 					"backdrop-blur-xs",
 					"bg-top",
 					"border-b-6",
 					"border-comic-accent-900",
-
-
-					"drop-shadow-xl",
-					// "drop-shadow-neutral-800/25",
-
-
 					// (!page.prev_pages || !varsSubmitted) && ("border-b-4"),
 					"md:rounded",
 					// "drop-shadow-lg",
@@ -228,7 +216,6 @@ export default function ComicPageUI({
 						)}>
 							{comic.title}
 						</h2>
-
 					</div>
 
 					{/* {comic.authors && comic.authors.length > 0 &&
