@@ -62,19 +62,19 @@ export function Seal({
 			)} href="/img/logomark.svg" width="12" height="12" x="12.2" y="6.5" />
 		}
 		{menu &&
-			<foreignObject width="14" height="14" x="12.8" y="8.5" >
+			<foreignObject width="14" height="14" x="14" y="10" >
 				<span className={clsx(
 					"block",
 					"rotate-12",
 				)}>
 					<Icon name="bars" className={clsx(
 						"block",
-						"size-2.5",
+						"size-2",
 						"text-white",
 						"group-data-open:hidden",
 					)} />
 					<Icon name="xmark" className={clsx(
-						"size-2.5",
+						"size-2",
 						"hidden",
 						"text-white",
 						"group-data-open:block",

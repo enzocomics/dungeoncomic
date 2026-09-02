@@ -18,6 +18,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
+import Icon from "@/styles/icons"
 
 
 /**-----------------------------------
@@ -150,10 +151,11 @@ function NavMenu({
 							"items-center",
 							// Structure
 							"absolute",
-							"-top-1.75",
-							"-left-4",
+							"-top-3",
+							"-left-5",
 							// Appearance
 							"text-comic-accent-500",
+							"dark:text-comic-accent-600",
 							// Functionality
 							"cursor-pointer",
 							"pointer-events-auto",
@@ -164,7 +166,8 @@ function NavMenu({
 								menu={menu}
 								className={clsx(
 									"group/menu",
-									"w-20",
+									"w-24",
+
 								)} />
 						</DisclosureButton>
 					</div>
@@ -178,18 +181,40 @@ function NavMenu({
 					)}>
 
 					</div>
-					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 pointer-events-auto">
+					<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 sm:pr-0 pointer-events-auto">
 
 						{/* Profile dropdown */}
 						<Menu as="div" className="relative ml-3">
-							<MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+							<MenuButton className={clsx(
+								"relative",
+								"flex",
+								"rounded",
+								"focus-visible:outline-2",
+								"focus-visible:outline-offset-2",
+								"focus-visible:outline-indigo-500"
+							)}>
 								<span className="absolute -inset-1.5" />
 								<span className="sr-only">Open user menu</span>
-								<img
+								<Icon name="skull" className={clsx(
+									"text-white",
+									"size-8",
+									"p-2",
+									"bg-comic-accent-700",
+									"rounded-sm",
+
+								)} />
+								{/* <img
 									alt=""
 									src="/apple-touch-icon.png"
-									className="size-12 border-4 border-comic-accent-900 relative rounded-full bg-gray-800"
-								/>
+									className={clsx(
+										"size-8",
+
+										"border-comic-accent-950",
+
+										"relative",
+										"rounded-full",
+										"bg-gray-800")}
+								/> */}
 							</MenuButton>
 
 							<MenuItems

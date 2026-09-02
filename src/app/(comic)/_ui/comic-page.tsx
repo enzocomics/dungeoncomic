@@ -161,52 +161,77 @@ export default function ComicPageUI({
 				"text-white",
 
 			)}>
-			<div className={clsx(
-				// This is the "inner" header element
-				// User-selectable
-				"bg-comic-accent-950",
-				"border-comic-accent-900",
-				// Structure
-				"sm:flex",
-				// Size
-				"max-w-7xl",
-				// Spacing
-				"mx-auto",
-				"sm:justify-center",
-				// Appearance
-				"border-t-4",
-				(!page.prev_pages || !varsSubmitted) && ("border-b-4"),
-				"md:rounded",
-				"drop-shadow-lg",
-			)}>
+			<div
+
+				className={clsx(
+					// This is the "inner" header element
+					// User-selectable
+					// Structure
+					// "sm:flex",
+					// Size
+					"max-w-7xl",
+					// Spacing
+					"mx-auto",
+					// "sm:justify-center",
+					// Appearance
+					"bg-neutral-800/80",
+					"backdrop-blur-xs",
+					"bg-top",
+					"border-b-6",
+					"border-comic-accent-900",
+
+
+					"drop-shadow-xl",
+					// "drop-shadow-neutral-800/25",
+
+
+					// (!page.prev_pages || !varsSubmitted) && ("border-b-4"),
+					"md:rounded",
+					// "drop-shadow-lg",
+				)}>
 				{/* Title Card */}
 				<div
 					className={clsx(
 						"p-2",
 						"px-18",
-						"sm:pr-0",
-						"h-10",
+						"h-12",
 						"flex",
+						"justify-center",
+						// "sm:justify-normal",
 						"items-center",
 						"font-platform-display",
 					)}>
 
-					<Icon name="house" className="inline size-5" />
-					<strong className="text-comic-accent-800 mx-1">/&nbsp;</strong>
-					<h2 className={clsx(
-
-						// Structure
-						"inline-block",
-						"overflow-hidden",
-						"text-nowrap",
-
-						// Text
-						"font-semibold",
-						"text-sm",
-						"text-ellipsis",
+					<Icon name="skull" className={clsx(
+						// "inline",
+						"hidden",
+						"size-4",
+						"text-comic-accent-900",
+						"mr-1.5")} />
+					{/* <strong className="text-comic-accent-800 mr-1">/&nbsp;</strong> */}
+					<div className={clsx(
+						"flex",
+						"items-center",
+						"w-full",
+						"justify-center",
 					)}>
-						{comic.title}
-					</h2> {comic.authors && comic.authors.length > 0 &&
+						<h2 className={clsx(
+							// Structure
+							"inline-block",
+							"overflow-hidden",
+							"text-nowrap",
+
+							// Text
+							"font-semibold",
+							"text-sm",
+							"text-ellipsis",
+						)}>
+							{comic.title}
+						</h2>
+
+					</div>
+
+					{/* {comic.authors && comic.authors.length > 0 &&
 						<span className={clsx(
 							"text-sm",
 							"hidden",
@@ -221,7 +246,7 @@ export default function ComicPageUI({
 							}
 							)}
 						</span>
-					}
+					} */}
 				</div>
 				{
 					/**------------------------------
@@ -237,7 +262,8 @@ export default function ComicPageUI({
 				(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) &&
 				<>
 					<div className={clsx(
-						"bg-comic-accent-900",
+						"bg-neutral-950",
+						"dark:bg-black",
 						"text-xs",
 					)}>
 						<ul className={clsx(
@@ -349,32 +375,31 @@ export default function ComicPageUI({
 		{/* eo Header */}
 
 		<div className={clsx(
-
-			((page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) ? "pt-18" : "pt-10"),
-			"md:p-2",
-
-			"md:pt-10", // Title Only
+			// "px-4",
+			((page.prev_pages && page.prev_pages.length > 0 || varsSubmitted) ? "pt-21" : "pt-13"),
+			// "md:p-2",
+			// "md:pt-10", // Title Only
 		)}>
 			{/* CONTENT */}
 			<div className={clsx(
 				"max-w-7xl",
-				"rounded",
-				"px-2",
-				"py-6",
+				// "rounded",
+
 				"mx-auto",
 				// "border",
 				// "border-dashed",
 				// "border-pink-300",
 				"flex",
 				"flex-col",
-				"gap-2",
+
 				"bg-base-1",
-				"dark:bg-base-3",
+				"dark:bg-neutral-700",
 				"text-center",
 
 				"xl:rounded",
 			)}>
 				<h4 className={clsx(
+					"py-6",
 					"text-2xl",
 					"font-semibold",
 					"font-display",
@@ -439,8 +464,8 @@ export default function ComicPageUI({
 								{/* VARIABLES */}
 								{p.variables && p.variables.length > 0 ?
 									<section className={clsx(
-										"bg-teal-100",
-										"dark:bg-teal-700",
+										"bg-comic-accent-100",
+										"dark:bg-comic-accent-900",
 										"p-2",
 										"w-2/3",
 										"mx-auto",
@@ -485,8 +510,8 @@ export default function ComicPageUI({
 							"mt-8",
 							"gap-2",
 							"p-2",
-							"bg-amber-100",
-							"dark:bg-amber-900",
+							"bg-comic-accent-100",
+							"dark:bg-comic-accent-900",
 							"text-xs"
 						)}>
 							<button className={clsx(
@@ -535,8 +560,8 @@ export default function ComicPageUI({
 										"flex-col",
 										"gap-2",
 										"p-2",
-										"bg-amber-100",
-										"dark:bg-amber-900",
+										"bg-comic-accent-100",
+										"dark:bg-comic-accent-900",
 										"text-xs"
 									)}>
 										{page.next_pages.map((n, index) =>
@@ -587,8 +612,8 @@ export default function ComicPageUI({
 					)}>Page Metadata</h4>
 					<ul className={clsx(
 						"p-2",
-						"bg-amber-100",
-						"dark:bg-amber-900",
+						"bg-comic-accent-100",
+						"dark:bg-comic-accent-900",
 						"text-xs"
 					)}>
 						<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
