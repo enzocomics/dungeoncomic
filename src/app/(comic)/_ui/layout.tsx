@@ -16,8 +16,6 @@ import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel,
 import { Avatar } from "@/components/avatar"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { usePathname, useRouter } from "next/navigation"
 
 

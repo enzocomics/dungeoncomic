@@ -2,13 +2,10 @@
 /**----------------------------------- */
 // TYPES
 export type StatusMessageType = "alert" | "error" | "success" | "info" | ""
-// LIBRARIES
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleCheck, faCircleInfo, faCircleXmark, faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons"
-
 // FUNCTIONS
 import clsx from "clsx"
 // UI
+import Icon from "@/styles/icons"
 import { useGlobalContext } from "@/app/_context"
 import { usePathname, useRouter } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
@@ -61,16 +58,16 @@ export default function StatusMessage({
 				{/* ICON */}
 				<div className="shrink-0">
 					{statusMessage.type == "alert" &&
-						<FontAwesomeIcon icon={faTriangleExclamation} aria-hidden="true" className="size-5 text-yellow-400 dark:text-yellow-300" />
+						<Icon name="triangleExclamation" aria-hidden="true" className="size-5 text-yellow-400 dark:text-yellow-300" />
 					}
 					{statusMessage.type == "error" &&
-						<FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="size-5 text-red-400" />
+						<Icon name="circleXmark" aria-hidden="true" className="size-5 text-red-400" />
 					}
 					{statusMessage.type == "success" &&
-						<FontAwesomeIcon icon={faCircleCheck} aria-hidden="true" className="size-5 text-green-400" />
+						<Icon name="circleCheck" aria-hidden="true" className="size-5 text-green-400" />
 					}
 					{statusMessage.type == "info" &&
-						<FontAwesomeIcon icon={faCircleInfo} aria-hidden="true" className="size-5 text-blue-400" />
+						<Icon name="circleInfo" aria-hidden="true" className="size-5 text-blue-400" />
 					}
 				</div>
 				{/* TEXT */}
@@ -211,7 +208,7 @@ export default function StatusMessage({
 							)}
 						>
 							<span className="sr-only">Dismiss</span>
-							<FontAwesomeIcon icon={faXmark} aria-hidden="true" className="size-5" />
+							<Icon name="xmark" aria-hidden="true" className="size-5" />
 						</button>
 					</div>
 				</div>

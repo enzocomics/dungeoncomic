@@ -5,8 +5,7 @@ import clsx from "clsx"
 import type React from "react"
 // UI
 import Image from "next/image"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faGithub } from "@fortawesome/free-brands-svg-icons"
+import Icon from "@/styles/icons"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -146,7 +145,7 @@ function AuthFooter() {
 				"lg:hover:scale-120",
 			)}
 		>
-			<FontAwesomeIcon icon={faGithub} className="size-4" />
+			<Icon name="github" className="size-4" />
 		</a>
 	</footer>
 }
