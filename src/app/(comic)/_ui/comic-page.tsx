@@ -175,11 +175,12 @@ export default function ComicPageUI({
 				// Structure
 				"fixed",
 				"z-10",
-				"left-1/2",
-				"-translate-x-1/2",
+				"left-0",
+				"md:left-1/2",
+				"md:-translate-x-1/2",
 				// Size
-				"min-w-xs",
 				"w-full",
+				"min-w-xs",
 				"max-w-6xl",
 				// Spacing
 				"md:py-4",
@@ -588,9 +589,6 @@ export default function ComicPageUI({
 			{/* CONTENT */}
 			< div className={
 				clsx(
-					// "max-w-6xl",
-					// "rounded",
-					// "mx-auto",
 					"flex",
 					"flex-col",
 

@@ -169,8 +169,9 @@ function NavMenu({
 				"top-0",
 				// Position
 				"relative",
-				"left-1/2",
-				"-translate-x-1/2",
+				"left-0",
+				"md:left-1/2",
+				"md:-translate-x-1/2",
 				// Size
 				"min-w-xs",
 				"max-w-6xl",
@@ -302,8 +303,6 @@ function NavMenu({
 
 
 			<DisclosurePanel className={clsx(
-				// "max-w-6xl",
-				// "mx-auto",
 				"pt-2",
 				"relative",
 				"-z-1",
