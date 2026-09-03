@@ -144,7 +144,24 @@ export default function ComicPageUI({
 	}, [pathname, searchParams.toString()])
 
 	// Reusable Booleans
-	const hasPrevPage = !!(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted)
+	const hasPrevPage = !!(
+		page.prev_pages &&
+		page.prev_pages.length > 0 &&
+		page.prev_pages.some(
+			// checks that at least ONE page is published
+			p => p.pages_id.status === "published"
+		)
+		|| varsSubmitted)
+
+	const hasNextPage = !!(
+		page.next_pages &&
+		page.next_pages.length > 0 &&
+		page.next_pages.some(
+			// checks that at least ONE page is published
+			p => p.linked_pages_id.status === "published"
+		)
+	)
+
 	const hasBanner = !!page.comic.banner
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
@@ -524,16 +541,22 @@ export default function ComicPageUI({
 		</div >
 		{/* eo Header */}
 
+		{/* Main Body */}
 		< div className={
 			clsx(
-				hasPrevPage ? [
-					"pt-28",
-					"md:pt-28"
-				] : [
-					hasBanner ? "pt-20" : "pt-13",
-					"md:pt-22"
-				],
-				"md:px-4",
+				// Comic Nav Menu
+				hasBanner && "pt-28",
+				!hasBanner && "pt-13.5",
+				// hasPrevPage ? [
+				// 	"pt-28",
+				// 	"md:pt-28"
+				// ] : [
+				// 	hasBanner ?
+				// 		"pt-20" :
+				// 		"pt-13",
+				// 	"md:pt-22"
+				// ],
+				// "md:px-4",
 			)
 		} >
 			{/* CONTENT */}
@@ -708,7 +731,7 @@ export default function ComicPageUI({
 							"mx-auto",
 							"w-2/3",
 						)}>
-							{page.next_pages && page.next_pages.length > 0 &&
+							{hasNextPage &&
 								<>
 									<ul className={clsx(
 										"flex",
@@ -719,7 +742,7 @@ export default function ComicPageUI({
 										"dark:bg-comic-accent-900",
 										"text-xs"
 									)}>
-										{page.next_pages.map((n, index) =>
+										{page?.next_pages?.map((n, index) =>
 											<li key={index} className={clsx(
 											)}>
 												<Link className={clsx(

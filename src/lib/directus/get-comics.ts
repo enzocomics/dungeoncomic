@@ -165,9 +165,23 @@ export async function getComicPage(comic_slug: string, num: number) {
 				// Navigation
 				{
 					next_pages: [
-						{ pages_id: ["title", "subtitle", "comic", "comic_pagenum"] },
 						{
-							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
+							pages_id: [
+								"title",
+								"subtitle",
+								"comic",
+								"comic_pagenum",
+								"status",
+							],
+						},
+						{
+							linked_pages_id: [
+								"title",
+								"subtitle",
+								"comic",
+								"comic_pagenum",
+								"status",
+							],
 						},
 					],
 				},
@@ -179,6 +193,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 								"subtitle",
 								"comic",
 								"comic_pagenum",
+								"status",
 								{
 									comic_panels: [
 										// Content
@@ -210,7 +225,13 @@ export async function getComicPage(comic_slug: string, num: number) {
 							],
 						},
 						{
-							linked_pages_id: ["title", "subtitle", "comic", "comic_pagenum"],
+							linked_pages_id: [
+								"title",
+								"subtitle",
+								"comic",
+								"comic_pagenum",
+								"status",
+							],
 						},
 						"sort",
 					],
