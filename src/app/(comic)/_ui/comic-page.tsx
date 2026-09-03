@@ -241,7 +241,7 @@ export default function ComicPageUI({
 							"border-b-6",
 							"border-comic-accent-900",
 							"drop-shadow-lg",
-							"drop-shadow-neutral-500/50",
+							"drop-shadow-neutral-900/50",
 							"md:drop-shadow-xl",
 							"md:drop-shadow-neutral-900/45",
 							"pointer-events-auto",
@@ -260,12 +260,12 @@ export default function ComicPageUI({
 								"p-4",
 								"rounded",
 							)}>
+								{/* Comic Info Header */}
 								<header className={clsx(
 									"flex",
 									"gap-x-2",
 								)}>
 									{page.comic.thumbnail &&
-
 										<Image
 											src={`${directusURL}/assets/${page.comic.thumbnail.filename_disk}`}
 											alt={page.comic.thumbnail.description ?? ""}
@@ -330,12 +330,11 @@ export default function ComicPageUI({
 												)}
 											</p>
 										}
-
 									</div>
 								</header>
 
+								{/* Comic Info Body */}
 								<div className={clsx(
-
 								)}>
 									{comic.description &&
 										<p className={clsx(
@@ -354,41 +353,8 @@ export default function ComicPageUI({
 										Last updated on {comic.date_updated}
 									</p>
 								</div>
-
 							</section>
 						</DisclosurePanel>
-						{
-							/*
-							comic.authors && comic.authors.length > 0 &&
-								<>
-		
-		
-		
-									<span className={clsx(
-										"pl-3",
-										"text-xs",
-										// "hidden",
-										"self-stretch",
-										"pt-0.5",
-										"italic",
-										// "sm:inline",
-		
-									)}>
-										by {comic.authors.map((a, index) => {
-											let join = comic.authors!.length > 1 ? ", " : ""
-											join = index == comic.authors!.length - 2 ? " & " : join
-											join = index == comic.authors!.length - 1 ? "" : join
-											return `${a.username}${join}`
-										}
-										)}
-									</span>
-		
-		
-								</>
-							*/
-						}
-
-
 					</div>
 				</Disclosure>
 				{

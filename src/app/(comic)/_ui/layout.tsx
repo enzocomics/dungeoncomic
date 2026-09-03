@@ -300,7 +300,7 @@ function NavMenu({
 				"border-b-6",
 				"border-comic-accent-900",
 				"drop-shadow-lg",
-				"drop-shadow-neutral-500/50",
+				"drop-shadow-neutral-900/50",
 				"md:drop-shadow-xl",
 				"md:drop-shadow-neutral-900/45",
 				"pointer-events-auto",
