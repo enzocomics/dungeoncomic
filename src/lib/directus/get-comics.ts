@@ -39,7 +39,9 @@ export async function getComic(slug: string) {
 						"description",
 					],
 				},
-				{ banner: ["filename_disk", "type", "width", "height", "description"] },
+				{
+					banner: ["filename_disk", "type", "width", "height", "description"],
+				},
 				"accent_color",
 				"display_font",
 				"copy_font",
@@ -231,6 +233,18 @@ export async function getComicPage(comic_slug: string, num: number) {
 								"description",
 							],
 						},
+						{
+							thumbnail: [
+								"filename_disk",
+								"type",
+								"width",
+								"height",
+								"description",
+							],
+						},
+						// Meta
+						"date_created",
+						"date_updated",
 					],
 				},
 				{

@@ -246,8 +246,7 @@ export default function ComicPageUI({
 							"md:drop-shadow-neutral-900/45",
 							"pointer-events-auto",
 						)}>
-							<ul className={clsx(
-								"py-2",
+							<section className={clsx(
 								"w-full",
 								"max-w-lg",
 								"mx-auto",
@@ -255,53 +254,108 @@ export default function ComicPageUI({
 								"flex",
 								"flex-col",
 								"gap-2",
+								"bg-base-1",
+								"dark:bg-base-1/50",
+								"text-base-content",
+								"p-4",
+								"rounded",
 							)}>
-								<li className={clsx(
-									"text-center"
+								<header className={clsx(
+									"flex",
+									"gap-x-2",
 								)}>
-									<h2 className={clsx(
-										"w-full",
+									{page.comic.thumbnail &&
 
-										"font-semibold",
-										"text-xl",
-										"mb-2",
-										"text-pretty"
-									)}>{comic.title}</h2>
+										<Image
+											src={`${directusURL}/assets/${page.comic.thumbnail.filename_disk}`}
+											alt={page.comic.thumbnail.description ?? ""}
+											width={`${page.comic.thumbnail.width}`}
+											height={`${page.comic.thumbnail.height}`}
+											className={clsx(
+												"self-center",
+												"block",
+												"max-w-20",
+												"md:max-w-30",
+												"rounded",
+												"mr-1",
+											)}
+										/>
 
-									{hasAuthors &&
-										<div className={clsx(
+									}
+									<div className={clsx(
+										"grow",
+										"place-content-center",
+										"flex",
+										"flex-col",
+										"text-center",
+									)}>
+										<h2 className={clsx(
+											"w-full",
+											"peer-visible:ml-5",
+											"font-semibold",
+											"text-lg",
+											"mb-2",
+											// "text-center",
+											"text-pretty"
+										)}>{comic.title}</h2>
+										<p className={clsx(
 											"italic",
 											"text-xs",
 											"text-neutral-500",
-											"mb-2",
 										)}>
-											Created by&nbsp;
-											{comic.authors && comic.authors.map((a, index) => {
-												let join = comic.authors!.length > 1 ? ", " : ""
-												join = index == comic.authors!.length - 2 ? " & " : join
-												join = index == comic.authors!.length - 1 ? "" : join
-												return <span>
-													<a href="#" className={clsx(
-														"font-semibold",
-														"text-comic-accent-500",
-													)}>
-														{a.username}
-													</a>
-													{join}
-												</span>
-											}
-											)}
-										</div>
-									}
+											Created on {comic.date_created}
+										</p>
+										{hasAuthors &&
+											<p className={clsx(
+												"italic",
+												"text-xs",
+												"text-neutral-500",
+												"mb-2",
+											)}>
+												By&nbsp;
+												{comic.authors && comic.authors.map((a, index) => {
+													let join = comic.authors!.length > 1 ? ", " : ""
+													join = index == comic.authors!.length - 2 ? " and " : join
+													join = index == comic.authors!.length - 1 ? "" : join
+													return <span key={index}>
+														<a href="#" className={clsx(
+															"font-semibold",
+															"text-comic-accent-500",
+														)}>
+															{a.username}
+														</a>
+														{join}
+													</span>
+												}
+												)}
+											</p>
+										}
+
+									</div>
+								</header>
+
+								<div className={clsx(
+
+								)}>
 									{comic.description &&
 										<p className={clsx(
+											"my-4",
 
 										)}>
 											{comic.description}
 										</p>
 									}
-								</li>
-							</ul>
+									<p className={clsx(
+										"italic",
+										"text-xs",
+										"text-neutral-500",
+										"text-center"
+									)}>
+										Last updated on {comic.date_updated}
+									</p>
+								</div>
+
+							</section>
 						</DisclosurePanel>
 						{
 							/*

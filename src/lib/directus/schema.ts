@@ -83,7 +83,7 @@ export interface PagesCollection {
 	prev_pages: PageBranchesCollection[]
 	next_pages: PageBranchesCollection[]
 	// Meta
-	id: number
+	id: ComicsCollection | number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
