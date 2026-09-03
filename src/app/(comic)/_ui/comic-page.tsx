@@ -178,7 +178,6 @@ export default function ComicPageUI({
 					"bg-neutral-800/80",
 					"dark:bg-neutral-900/80",
 					"backdrop-blur-xs",
-					"bg-top",
 					"border-b-6",
 					"border-comic-accent-900",
 					hasPrevPage ? "border-none" : "",
@@ -191,7 +190,6 @@ export default function ComicPageUI({
 				<Disclosure>
 					<div
 						className={clsx(
-
 							"p-2",
 							"px-18",
 							"h-12",
@@ -204,10 +202,20 @@ export default function ComicPageUI({
 						)}>
 						<DisclosureButton className={clsx(
 							"group",
+							"peer",
 							"flex",
-							"w-full",
+							"max-w-full",
 							"justify-center",
 							"cursor-pointer",
+							"data-open:bg-comic-accent-600",
+							"dark:data-open:bg-comic-accent-700",
+
+							"pl-3 pr-1.5",
+							"py-1.5",
+							"rounded-lg",
+
+							"ml-5",
+							"relative",
 						)}>
 							<h1 className={clsx(
 								// Structure
@@ -219,46 +227,73 @@ export default function ComicPageUI({
 								"font-semibold",
 								"text-sm",
 								"text-ellipsis",
-								"ml-5",
 							)}>
 								{comic.title}
 							</h1>
 
-							<Icon name="caretDown" className="text-comic-accent-500 size-5 pl-1 group-data-open:hidden shrink-0" />
-							<Icon name="xmark" className="text-comic-accent-500 size-5 pl-1 hidden group-data-open:inline shrink-0" />
+							<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-2 group-data-open:hidden shrink-0" />
+							<Icon name="xmark" className="text-white size-5 p-0.5 ml-2 hidden group-data-open:inline shrink-0" />
 
 						</DisclosureButton>
-						<DisclosurePanel className={clsx(
+						<DisclosurePanel transition className={clsx(
+							// Transitions
+							"transition-all",
+							"ease-in-out",
+							"data-closed:opacity-0",
+							"data-closed:duration-300",
+							"data-open:opacity-100",
+							"data-open:duration-none",
+							"data-closed:top-8",
+
 							// Position
 							"absolute",
-							"-z-1",
-							"top-12",
+							// "-z-1",
+							"top-10",
+							"md:top-13",
 							// Size & Spacing
-							"w-full",
-							"p-4",
-							// Appearance
-							"bg-neutral-800",
-							"border-b-6",
-							"border-comic-accent-900",
-							"drop-shadow-lg",
-							"drop-shadow-neutral-900/50",
-							"md:drop-shadow-xl",
-							"md:drop-shadow-neutral-900/45",
-							"pointer-events-auto",
+							"max-w-lg",
+							"p-2",
+							"rounded"
 						)}>
 							<section className={clsx(
-								"w-full",
-								"max-w-lg",
-								"mx-auto",
-								"text-sm",
+								// Functionality
+								"pointer-events-auto",
+								// Structure
+								"relative",
 								"flex",
 								"flex-col",
 								"gap-2",
-								"bg-base-1",
-								"dark:bg-base-1/50",
-								"text-base-content",
+								// Size
+								"w-full",
+								// Spacing
+								"mx-auto",
 								"p-4",
+								// Text
+								"text-sm",
+								"text-base-content",
+								// Appearance
 								"rounded",
+								"md:rounded",
+								// Colours
+								"bg-base-1",
+								"dark:bg-base-2",
+								// "border",
+								// "drop-shadow-2xl",
+								// "drop-shadow-neutral-900/25",
+								// "md:drop-shadow-2xl",
+								// "md:drop-shadow-neutral-900/25",
+								// Arrow
+								"before:absolute",
+								"before:z-10",
+								"before:-top-3",
+								"before:left-1/2",
+								"before:-translate-x-1/2",
+								"before:h-0 before:w-0",
+								"before:border-l-14 before:border-r-14",
+								"before:border-t-14",
+								"before:border-l-transparent before:border-r-transparent",
+								"before:border-t-base-1 dark:before:border-t-base-2",
+								"before:rotate-180"
 							)}>
 								{/* Comic Info Header */}
 								<header className={clsx(
