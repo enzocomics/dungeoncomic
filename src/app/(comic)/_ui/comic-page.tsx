@@ -175,11 +175,15 @@ export default function ComicPageUI({
 				// Structure
 				"fixed",
 				"z-10",
+				"left-1/2",
+				"-translate-x-1/2",
 				// Size
 				"min-w-xs",
 				"w-full",
+				"max-w-6xl",
 				// Spacing
-				"md:p-4",
+				"md:py-4",
+				"md:px-6",
 				// Text
 				"text-white",
 			)}
@@ -191,7 +195,6 @@ export default function ComicPageUI({
 					"relative",
 					"z-1",
 					// Size
-					"max-w-6xl",
 					// Spacing
 					"mx-auto",
 					// Appearance
@@ -425,8 +428,8 @@ export default function ComicPageUI({
 				hasPrevPage &&
 				<>
 					<div className={clsx(
-						"max-w-6xl",
-						"mx-auto",
+						// "max-w-6xl",
+						// "mx-auto",
 						"bg-comic-accent-700",
 						"dark:bg-comic-accent-900",
 						"text-xs",
@@ -585,9 +588,9 @@ export default function ComicPageUI({
 			{/* CONTENT */}
 			< div className={
 				clsx(
-					"max-w-6xl",
+					// "max-w-6xl",
 					// "rounded",
-					"mx-auto",
+					// "mx-auto",
 					"flex",
 					"flex-col",
 

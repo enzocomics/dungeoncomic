@@ -103,8 +103,13 @@ export function ComicLayoutUI({
 					)} />
 			}
 			<NavMenu menu={true} />
-
-			{children}
+			<div className={clsx(
+				"mx-auto",
+				"max-w-6xl",
+				"md:px-6",
+			)}>
+				{children}
+			</div>
 
 		</div>
 	)
@@ -124,7 +129,7 @@ export function FrontpageLayoutUI({
 }) {
 
 	return <>
-		<NavMenu />
+		{/* <NavMenu /> */}
 		{children}
 	</>
 
@@ -162,18 +167,23 @@ function NavMenu({
 				"fixed!",
 				"z-50",
 				"top-0",
+				// Position
 				"relative",
+				"left-1/2",
+				"-translate-x-1/2",
 				// Size
 				"min-w-xs",
+				"max-w-6xl",
+				// "mx-auto",
 				"w-full",
 				// Spacing
-				"md:p-4",
-
+				"md:py-4",
+				"md:px-6",
 				// Functionality
 				"pointer-events-none",
 			)}
 		>
-			<div className="mx-auto max-w-6xl ">
+			<div className="">
 				<div className="relative flex items-center justify-between">
 					<div className={clsx(
 						"relative",
@@ -292,6 +302,8 @@ function NavMenu({
 
 
 			<DisclosurePanel className={clsx(
+				// "max-w-6xl",
+				// "mx-auto",
 				"pt-2",
 				"relative",
 				"-z-1",
