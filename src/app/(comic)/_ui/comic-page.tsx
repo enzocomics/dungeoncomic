@@ -174,7 +174,7 @@ export default function ComicPageUI({
 				// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
 				// Structure
 				"fixed",
-				"z-40",
+				"z-10",
 				// Size
 				"min-w-xs",
 				"w-full",
@@ -187,6 +187,9 @@ export default function ComicPageUI({
 			<div
 				className={clsx(
 					// The "filled/backdrop" part of the header
+					// Position
+					"relative",
+					"z-1",
 					// Size
 					"max-w-6xl",
 					// Spacing
@@ -233,6 +236,7 @@ export default function ComicPageUI({
 
 							"ml-5",
 							"relative",
+							"z-45",
 						)}>
 							<h1 className={clsx(
 								// Structure
@@ -427,15 +431,34 @@ export default function ComicPageUI({
 						"bg-comic-accent-700",
 						"dark:bg-comic-accent-900",
 						"text-xs",
-						"rounded-b",
+						"md:rounded-b",
 						"md:drop-shadow-xl",
 						"md:drop-shadow-neutral-900/45",
 					)}>
-						<ul className={clsx(
+
+						<nav className={clsx(
+							"list-none",
 							"flex",
 							"justify-center",
 							"gap-2",
 						)}>
+							<li>
+								<Link className={clsx(
+									"block",
+									"flex",
+									"items-center",
+									"p-2",
+									"hover:bg-black/10",
+								)} href="./">
+									<Icon name="forwardStep" className={clsx(
+										"inline-block",
+										"size-3",
+										"rotate-180",
+										"mr-1",
+									)} />
+									<span>{t("go-to-start")}</span>
+								</Link>
+							</li>
 							{/* 
 										Back button: Go back 1 step in user's browser history
 										- IF previous page in browser history is from the same host
@@ -444,13 +467,20 @@ export default function ComicPageUI({
 								<li>
 									<button className={clsx(
 										"w-full",
-										"block",
+										"flex",
+										"items-center",
 										"p-2",
 										"hover:bg-black/10",
 										"cursor-pointer"
 									)} onClick={() => router.back()} >
 										{/* Back: History */}
-										<span>&laquo; {t("go-back")}</span>
+										<Icon name="play" className={clsx(
+											"inline-block",
+											"size-3",
+											"rotate-180",
+											"mr-1",
+										)} />
+										<span>{t("go-back")}</span>
 									</button>
 								</li>
 							}
@@ -503,8 +533,15 @@ export default function ComicPageUI({
 								page.prev_pages && page.prev_pages.length > 1 &&
 								<Dropdown>
 									<DropdownButton outline>
+										<Icon name="play" className={clsx(
+											"text-white",
+											"inline-block",
+											"size-3",
+											"rotate-180",
+											"mr-1",
+										)} />
 										<span className="text-white text-xs">
-											&laquo; {t("go-back")} (All Choices)
+											{t("go-back")}
 										</span>
 									</DropdownButton>
 									<DropdownMenu>
@@ -527,14 +564,7 @@ export default function ComicPageUI({
 									</DropdownMenu>
 								</Dropdown>
 							}
-							<li>
-								<Link className={clsx(
-									"block",
-									"p-2",
-									"hover:bg-black/10",
-								)} href="./">&laquo; {t("go-to-start")}</Link>
-							</li>
-						</ul>
+						</nav>
 					</div>
 				</>
 			}
@@ -546,7 +576,7 @@ export default function ComicPageUI({
 			clsx(
 				// Comic Nav Menu
 				"pt-13.5",
-				hasBanner && "pt-28",
+				hasBanner && "pt-20",
 				hasPrevPage && "pt-20",
 				"md:pt-22.5",
 				hasBanner && "md:pt-28",
