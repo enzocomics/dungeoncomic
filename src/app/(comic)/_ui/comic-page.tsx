@@ -183,8 +183,8 @@ export default function ComicPageUI({
 					hasPrevPage ? "border-none" : "",
 					"md:rounded",
 					hasPrevPage ? "md:rounded-b-none" : "",
-					"md:drop-shadow-xl",
-					"md:drop-shadow-neutral-900/45",
+					!hasPrevPage && "md:drop-shadow-xl",
+					!hasPrevPage && "md:drop-shadow-neutral-900/45",
 				)}>
 				{/* Title Card */}
 				<Disclosure>
@@ -241,10 +241,11 @@ export default function ComicPageUI({
 							"ease-in-out",
 							"data-closed:opacity-0",
 							"data-closed:duration-300",
-							"data-open:opacity-100",
+							"data-closed:top-6",
+							"data-closed:scale-90",
+							"opacity-100",
 							"data-open:duration-none",
-							"data-closed:top-8",
-
+							"scale-100",
 							// Position
 							"absolute",
 							// "-z-1",
@@ -253,7 +254,9 @@ export default function ComicPageUI({
 							// Size & Spacing
 							"max-w-lg",
 							"p-2",
-							"rounded"
+							"rounded",
+							"drop-shadow-2xl",
+							"drop-shadow-neutral-900/50",
 						)}>
 							<section className={clsx(
 								// Functionality
@@ -278,10 +281,6 @@ export default function ComicPageUI({
 								"bg-base-1",
 								"dark:bg-base-2",
 								// "border",
-								// "drop-shadow-2xl",
-								// "drop-shadow-neutral-900/25",
-								// "md:drop-shadow-2xl",
-								// "md:drop-shadow-neutral-900/25",
 								// Arrow
 								"before:absolute",
 								"before:z-10",
@@ -406,9 +405,14 @@ export default function ComicPageUI({
 				hasPrevPage &&
 				<>
 					<div className={clsx(
-						"bg-comic-accent-900",
-						"dark:bg-black",
+						"max-w-6xl",
+						"mx-auto",
+						"bg-comic-accent-700",
+						"dark:bg-comic-accent-900",
 						"text-xs",
+						"rounded-b",
+						"md:drop-shadow-xl",
+						"md:drop-shadow-neutral-900/45",
 					)}>
 						<ul className={clsx(
 							"flex",
@@ -523,7 +527,7 @@ export default function ComicPageUI({
 		< div className={
 			clsx(
 				hasPrevPage ? [
-					"pt-21",
+					"pt-28",
 					"md:pt-28"
 				] : [
 					hasBanner ? "pt-20" : "pt-13",
