@@ -270,8 +270,7 @@ export default function ComicPageUI({
 							// Position
 							"absolute",
 							// "-z-1",
-							"top-10",
-							"md:top-13",
+							"top-11.5",
 							// Size & Spacing
 							"max-w-lg",
 							"p-2",
@@ -309,8 +308,8 @@ export default function ComicPageUI({
 								"before:left-1/2",
 								"before:-translate-x-1/2",
 								"before:h-0 before:w-0",
-								"before:border-l-14 before:border-r-14",
-								"before:border-t-14",
+								"before:border-l-12 before:border-r-12",
+								"before:border-t-12",
 								"before:border-l-transparent before:border-r-transparent",
 								"before:border-t-base-1 dark:before:border-t-base-2",
 								"before:rotate-180"
