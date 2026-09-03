@@ -545,18 +545,12 @@ export default function ComicPageUI({
 		< div className={
 			clsx(
 				// Comic Nav Menu
+				"pt-13.5",
 				hasBanner && "pt-28",
-				!hasBanner && "pt-13.5",
-				// hasPrevPage ? [
-				// 	"pt-28",
-				// 	"md:pt-28"
-				// ] : [
-				// 	hasBanner ?
-				// 		"pt-20" :
-				// 		"pt-13",
-				// 	"md:pt-22"
-				// ],
-				// "md:px-4",
+				hasPrevPage && "pt-20",
+				"md:pt-22.5",
+				hasBanner && "md:pt-28",
+				hasPrevPage && "md:pt-28",
 			)
 		} >
 			{/* CONTENT */}
