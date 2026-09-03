@@ -242,22 +242,57 @@ export default function ComicPageUI({
 							"relative",
 							"z-45",
 						)}>
-							<h1 className={clsx(
+							<div className={clsx(
 								// Structure
 								"inline-block",
 								"overflow-hidden",
 								"text-nowrap",
-
+								"grow",
 								// Text
-								"font-semibold",
 								"text-sm",
 								"text-ellipsis",
 							)}>
-								{comic.title}
-							</h1>
+								<h1 className={clsx(
+									"inline",
+									"font-semibold",
+								)}>
+									{comic.title}
+								</h1>
 
-							<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-2 group-data-open:hidden shrink-0" />
-							<Icon name="xmark" className="text-white size-5 p-0.5 ml-2 hidden group-data-open:inline shrink-0" />
+								{comic.authors && comic.authors.length > 0 &&
+									<span className={clsx(
+										"hidden",
+										"md:inline-block",
+										"px-1",
+										"text-xs",
+										"text-neutral-500",
+										"group-data-open:text-white/40",
+										"font-normal",
+										"italic",
+									)}>
+										by&nbsp;
+										{comic.authors.map((a, index) => {
+											let join = comic.authors!.length > 1 ? ", " : ""
+											join = index == comic.authors!.length - 2 ? " & " : join
+											join = index == comic.authors!.length - 1 ? "" : join
+											return <span key={index}>
+												<span className={clsx(
+													"font-semibold",
+													"text-neutral-400",
+													"group-data-open:text-white/70",
+												)}>
+													{a.username}
+												</span>
+												{join}
+											</span>
+										}
+										)}
+									</span>
+								}
+							</div>
+
+							<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-1 group-data-open:hidden shrink-0" />
+							<Icon name="xmark" className="text-white size-5 p-0.5 ml-1 hidden group-data-open:inline shrink-0" />
 
 						</DisclosureButton>
 						<DisclosurePanel transition className={clsx(
