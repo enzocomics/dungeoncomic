@@ -4,6 +4,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
+import ComicContextProvider from "./_ui/context"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -34,9 +35,11 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
-		return <ComicLayoutUI comic={comic}>
-			{children}
-		</ComicLayoutUI>
+		return <ComicContextProvider>
+			<ComicLayoutUI comic={comic}>
+				{children}
+			</ComicLayoutUI>
+		</ComicContextProvider>
 
 	}
 

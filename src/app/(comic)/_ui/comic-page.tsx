@@ -16,6 +16,8 @@ import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import replaceComicVariables from "../_functions/replace-comic-vars"
+// CONTEXT
+import { useComicContext } from "./context"
 // ACTIONS
 import { saveUserVarsCookie } from "../_actions/cookies"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
@@ -103,45 +105,50 @@ export default function ComicPageUI({
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
 	const [canGoBack, setCanGoBack] = useState(false)
+
+	const { comicPreviousPage, setComicPreviousPage } = useComicContext()
+
+	console.log(comicPreviousPage, "sup")
+
 	// Run every time client navigates (url change or searchparams change)
-	useEffect(() => {
-		// Check if variables have been submitted to this page and save them to cookie
-		const saveUserVariables = async () => {
-			// Save Variables if they have been submitted
-			if (varsSubmitted)
-				await saveUserVarsCookie({
-					vars: submittedUserVars,
-					page: page
-				})
-		}
+	// useEffect(() => {
+	// 	// Check if variables have been submitted to this page and save them to cookie
+	// 	const saveUserVariables = async () => {
+	// 		// Save Variables if they have been submitted
+	// 		if (varsSubmitted)
+	// 			await saveUserVarsCookie({
+	// 				vars: submittedUserVars,
+	// 				page: page
+	// 			})
+	// 	}
 
-		// Check if browser history exists
-		const hasHistory = window.history.length > 1
-		let previousPageIsSameSite = false
+	// 	// Check if browser history exists
+	// 	const hasHistory = window.history.length > 1
+	// 	let previousPageIsSameSite = false
 
-		// DEBUG
-		// console.log("document.referrer:", document.referrer || "none")
-		// If we came from another page
-		// NOTE: THIS DOES NOT WORK IN PRIVATE BROWSERS
-		if (document.referrer)
-			try {
-				// Check if the other page is from the same host
-				const previousUrl = new URL(document.referrer)
-				previousPageIsSameSite = previousUrl.hostname === window.location.hostname
+	// 	// DEBUG
+	// 	console.log("document.referrer:", document.referrer || "none")
+	// 	// If we came from another page
+	// 	// NOTE: THIS DOES NOT WORK IN PRIVATE BROWSERS
+	// 	if (document.referrer)
+	// 		try {
+	// 			// Check if the other page is from the same host
+	// 			const previousUrl = new URL(document.referrer)
+	// 			previousPageIsSameSite = previousUrl.hostname === window.location.hostname
 
-				// DEBUG
-				// console.log("previousUrl.hostname:", previousUrl.hostname)
-				// console.log("window.location.hostname:", window.location.hostname)
-				// console.log("is the previous page from the same site:", previousPageIsSameSite)
-			}
-			catch {
-				previousPageIsSameSite = false
-			}
+	// 			// DEBUG
+	// 			// console.log("previousUrl.hostname:", previousUrl.hostname)
+	// 			// console.log("window.location.hostname:", window.location.hostname)
+	// 			// console.log("is the previous page from the same site:", previousPageIsSameSite)
+	// 		}
+	// 		catch {
+	// 			previousPageIsSameSite = false
+	// 		}
 
-		// INIT
-		saveUserVariables()
-		setCanGoBack(hasHistory && previousPageIsSameSite)
-	}, [pathname, searchParams.toString()])
+	// 	// INIT
+	// 	saveUserVariables()
+	// 	setCanGoBack(hasHistory && previousPageIsSameSite)
+	// }, [pathname, searchParams.toString()])
 
 	// Reusable Booleans
 	const hasPrevPage = !!(

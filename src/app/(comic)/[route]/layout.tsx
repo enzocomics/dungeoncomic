@@ -2,6 +2,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { ComicLayoutUI } from "../_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
+import ComicContextProvider from "../_ui/context"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -49,8 +50,10 @@ export default async function RouteLayout({
 		if (!comic) notFound()
 
 		// RENDER
-		return <ComicLayoutUI comic={comic}>
-			{children}
-		</ComicLayoutUI>
+		return <ComicContextProvider>
+			<ComicLayoutUI comic={comic}>
+				{children}
+			</ComicLayoutUI>
+		</ComicContextProvider>
 	}
 }
