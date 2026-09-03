@@ -28,6 +28,7 @@ import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
 
 /**----------------------------------- */
 // TYPES
@@ -145,6 +146,7 @@ export default function ComicPageUI({
 	// Reusable Booleans
 	const hasPrevPage = !!(page.prev_pages && page.prev_pages.length > 0 || varsSubmitted)
 	const hasBanner = !!page.comic.banner
+	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
 	/**----------------------------------- */
 	// Render
@@ -186,63 +188,155 @@ export default function ComicPageUI({
 					"md:drop-shadow-neutral-900/45",
 				)}>
 				{/* Title Card */}
-				<div
-					className={clsx(
-						"p-2",
-						"px-18",
-						"h-12",
-						"flex",
-						"justify-center",
-						// "sm:justify-normal",
-						"items-center",
-						"font-platform-display",
-					)}>
+				<Disclosure>
+					<div
+						className={clsx(
 
-					<Icon name="skull" className={clsx(
-						// "inline",
-						"hidden",
-						"size-4",
-						"text-comic-accent-900",
-						"mr-1.5")} />
-					{/* <strong className="text-comic-accent-800 mr-1">/&nbsp;</strong> */}
-					<div className={clsx(
-						"flex",
-						"items-center",
-						"w-full",
-						"justify-center",
-					)}>
-						<h2 className={clsx(
-							// Structure
-							"inline-block",
-							"overflow-hidden",
-							"text-nowrap",
-
-							// Text
-							"font-semibold",
-							"text-sm",
-							"text-ellipsis",
+							"p-2",
+							"px-18",
+							"h-12",
+							"flex",
+							"justify-center",
+							// "sm:justify-normal",
+							"items-center",
+							"font-platform-display",
+							"overflow-clip",
 						)}>
-							{comic.title}
-						</h2>
+						<DisclosureButton className={clsx(
+							"group",
+							"flex",
+							"w-full",
+							"justify-center",
+							"cursor-pointer",
+						)}>
+							<h1 className={clsx(
+								// Structure
+								"inline-block",
+								"overflow-hidden",
+								"text-nowrap",
+
+								// Text
+								"font-semibold",
+								"text-sm",
+								"text-ellipsis",
+								"ml-5",
+							)}>
+								{comic.title}
+							</h1>
+
+							<Icon name="caretDown" className="text-comic-accent-500 size-5 pl-1 group-data-open:hidden shrink-0" />
+							<Icon name="xmark" className="text-comic-accent-500 size-5 pl-1 hidden group-data-open:inline shrink-0" />
+
+						</DisclosureButton>
+						<DisclosurePanel className={clsx(
+							// Position
+							"absolute",
+							"-z-1",
+							"top-12",
+							// Size & Spacing
+							"w-full",
+							"p-4",
+							// Appearance
+							"bg-neutral-800",
+							"border-b-6",
+							"border-comic-accent-900",
+							"drop-shadow-lg",
+							"drop-shadow-neutral-500/50",
+							"md:drop-shadow-xl",
+							"md:drop-shadow-neutral-900/45",
+							"pointer-events-auto",
+						)}>
+							<ul className={clsx(
+								"py-2",
+								"w-full",
+								"max-w-lg",
+								"mx-auto",
+								"text-sm",
+								"flex",
+								"flex-col",
+								"gap-2",
+							)}>
+								<li className={clsx(
+									"text-center"
+								)}>
+									<h2 className={clsx(
+										"w-full",
+
+										"font-semibold",
+										"text-xl",
+										"mb-2",
+										"text-pretty"
+									)}>{comic.title}</h2>
+
+									{hasAuthors &&
+										<div className={clsx(
+											"italic",
+											"text-xs",
+											"text-neutral-500",
+											"mb-2",
+										)}>
+											Created by&nbsp;
+											{comic.authors && comic.authors.map((a, index) => {
+												let join = comic.authors!.length > 1 ? ", " : ""
+												join = index == comic.authors!.length - 2 ? " & " : join
+												join = index == comic.authors!.length - 1 ? "" : join
+												return <span>
+													<a href="#" className={clsx(
+														"font-semibold",
+														"text-comic-accent-500",
+													)}>
+														{a.username}
+													</a>
+													{join}
+												</span>
+											}
+											)}
+										</div>
+									}
+									{comic.description &&
+										<p className={clsx(
+
+										)}>
+											{comic.description}
+										</p>
+									}
+								</li>
+							</ul>
+						</DisclosurePanel>
+						{
+							/*
+							comic.authors && comic.authors.length > 0 &&
+								<>
+		
+		
+		
+									<span className={clsx(
+										"pl-3",
+										"text-xs",
+										// "hidden",
+										"self-stretch",
+										"pt-0.5",
+										"italic",
+										// "sm:inline",
+		
+									)}>
+										by {comic.authors.map((a, index) => {
+											let join = comic.authors!.length > 1 ? ", " : ""
+											join = index == comic.authors!.length - 2 ? " & " : join
+											join = index == comic.authors!.length - 1 ? "" : join
+											return `${a.username}${join}`
+										}
+										)}
+									</span>
+		
+		
+								</>
+							*/
+						}
+
+
 					</div>
-
-					{/* {comic.authors && comic.authors.length > 0 &&
-						<span className={clsx(
-							"text-sm",
-							"hidden",
-							"italic",
-							"sm:inline"
-						)}>
-							&nbsp;&mdash; {comic.authors.map((a, index) => {
-								let join = comic.authors!.length > 1 ? ", " : ""
-								join = index == comic.authors!.length - 2 ? " & " : join
-								join = index == comic.authors!.length - 1 ? "" : join
-								return `${a.username}${join}`
-							}
-							)}
-						</span>
-					} */}
-				</div>
+				</Disclosure>
 				{
 					/**------------------------------
 					 * PREV NAVIGATION
@@ -252,7 +346,7 @@ export default function ComicPageUI({
 					 */
 				}
 
-			</div>
+			</div >
 			{
 				hasPrevPage &&
 				<>
@@ -368,37 +462,37 @@ export default function ComicPageUI({
 					</div>
 				</>
 			}
-		</div>
+		</div >
 		{/* eo Header */}
 
-		<div className={clsx(
-			hasPrevPage ? [
-				"pt-21",
-				"md:pt-28"
-			] : [
-				hasBanner ? "pt-20" : "pt-13",
-				"md:pt-22"
-			],
-			"md:px-4",
-		)}>
+		< div className={
+			clsx(
+				hasPrevPage ? [
+					"pt-21",
+					"md:pt-28"
+				] : [
+					hasBanner ? "pt-20" : "pt-13",
+					"md:pt-22"
+				],
+				"md:px-4",
+			)
+		} >
 			{/* CONTENT */}
-			<div className={clsx(
-				"max-w-6xl",
-				// "rounded",
+			< div className={
+				clsx(
+					"max-w-6xl",
+					// "rounded",
+					"mx-auto",
+					"flex",
+					"flex-col",
 
-				"mx-auto",
-				// "border",
-				// "border-dashed",
-				// "border-pink-300",
-				"flex",
-				"flex-col",
+					"bg-base-1",
+					"dark:bg-neutral-700",
+					"text-center",
 
-				"bg-base-1",
-				"dark:bg-neutral-700",
-				"text-center",
-
-				"md:rounded",
-			)}>
+					"md:rounded",
+				)
+			} >
 				<h4 className={clsx(
 					"py-6",
 					"text-2xl",
@@ -525,7 +619,8 @@ export default function ComicPageUI({
 					}
 				</VariablesForm>
 
-				{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
+				{
+					(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 					<UserFeedbackSection />
 				}
 				{
@@ -625,7 +720,7 @@ export default function ComicPageUI({
 				</section >
 
 			</div >
-		</div>
+		</div >
 	</>
 
 	/**---------------------------------------------------------------------- */

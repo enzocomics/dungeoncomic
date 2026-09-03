@@ -219,6 +219,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 					comic: [
 						"slug",
 						"title",
+						"description",
 						"accent_color",
 						{ authors: ["username"] },
 						{
