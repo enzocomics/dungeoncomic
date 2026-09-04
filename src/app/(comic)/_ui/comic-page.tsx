@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { useActionState, useEffect, useState } from "react"
+import React, { ComponentPropsWithoutRef, useActionState, useEffect, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -28,7 +28,7 @@ import { Radio, RadioField, RadioGroup } from "@/components/radio"
 import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
-import { Button } from "@headlessui/react"
+import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 
@@ -881,20 +881,25 @@ export default function ComicPageUI({
 			{/* CONTENT */}
 			< div className={
 				clsx(
+					// Structure
 					"flex",
 					"flex-col",
-
+					"gap-6",
+					// Spacing
+					"py-6",
+					// Appearance
 					"bg-base-1",
 					"dark:bg-neutral-700",
 					"text-center",
-
 					"md:rounded",
 				)
 			} >
 				<h4 className={clsx(
-					"py-6",
+					"px-6",
+					"max-w-prose",
+					"mx-auto",
 					"text-2xl",
-					"font-semibold",
+					"font-bold",
 					"font-display",
 					"text-center"
 				)}>
@@ -909,7 +914,7 @@ export default function ComicPageUI({
 					})
 					}
 				</h4>
-				{/* <p>{page.description}</p> */}
+
 				{
 					/**------------------------------
 					 *	DISPLAY THE COMIC PANELS
@@ -917,7 +922,11 @@ export default function ComicPageUI({
 					 * - Do not show if variables have been submitted correctly
 					 */
 				}
-				<VariablesForm varsExist={varsExist}>
+				<VariablesForm varsExist={varsExist} className={clsx(
+					"flex",
+					"flex-col",
+					"gap-y-6",
+				)}>
 					{page.comic_panels ? page.comic_panels.map((p, index) => {
 						// Conditionally render comic panels before OR after variables are submitted based on page option
 						if (
@@ -925,7 +934,11 @@ export default function ComicPageUI({
 							(varsSubmitted && p.place_after_variables_submitted)
 						)
 							// Render
-							return <div key={index}>
+							return <div key={index} className={clsx(
+								"flex",
+								"flex-col",
+								"gap-y-6",
+							)}>
 								{p.panel_image &&
 									<p><Image
 										className={clsx(
@@ -940,8 +953,10 @@ export default function ComicPageUI({
 								}
 								{/* <p>{p.panel_title}</p> */}
 								<div className={clsx(
-									"mt-4",
-									"prose"
+									"px-6",
+									"prose",
+									"max-w-prose",
+									"mx-auto",
 								)}
 									// TODO: You better freakin' sanitize this
 									dangerouslySetInnerHTML={{
@@ -957,31 +972,36 @@ export default function ComicPageUI({
 								{/* VARIABLES */}
 								{p.variables && p.variables.length > 0 ?
 									<section className={clsx(
-										"bg-comic-accent-100",
-										"dark:bg-comic-accent-900",
-										"p-2",
-										"w-2/3",
+										"flex",
+										"flex-col",
+										"gap-y-2",
+										"px-6",
+										"w-full",
 										"mx-auto",
-										"mt-8",
+										"max-w-prose",
 									)}>
-										<section>
-											{p.variables.map((v, index) => {
-												return <div key={index}>
-													<p className={clsx(
-														"text-center"
-													)}><label>{v.prompt || v.name}</label></p>
-													<p>&gt; <input className={clsx(
-														"p-2",
-														"bg-white",
-														"text-black",
-														"w-9/10",
-													)} type="text" name={v.slug} defaultValue={
-														userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
 
-													} required></input></p>
-												</div>
-											})}
-										</section>
+										{p.variables.map((v, index) => {
+											return <div key={index} className={clsx(
+												"p-4",
+												"bg-comic-accent-100",
+												"dark:bg-comic-accent-900",
+												"rounded",
+											)}>
+												<p className={clsx(
+													"text-center",
+												)}><label>{v.prompt || v.name}</label></p>
+												<p>&gt; <input className={clsx(
+													"p-2",
+													"bg-white",
+													"text-black",
+													"w-9/10",
+												)} type="text" name={v.slug} defaultValue={
+													userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
+												} required></input></p>
+											</div>
+										})}
+
 									</section>
 									: null}
 							</div>
@@ -996,23 +1016,52 @@ export default function ComicPageUI({
 					}
 					{(varsExist && !varsSubmitted) &&
 						<div className={clsx(
-							"flex",
-							"flex-col",
-							"w-2/3",
+							"px-6",
+							"prose",
+							"w-full",
+							"max-w-prose",
 							"mx-auto",
-							"mt-8",
-							"gap-2",
-							"p-2",
-							"bg-comic-accent-100",
-							"dark:bg-comic-accent-900",
-							"text-xs"
 						)}>
-							<button className={clsx(
-								"block",
+							<button type="submit" className={clsx(
+								// structure
 								"p-2",
-								"hover:bg-black/10",
-								"cursor-pointer"
-							)}>{`${page.variables_submit_button_text || t("next")} »`}</button>
+								"w-full",
+								"flex",
+								"items-center",
+								"justify-center",
+								// Appearance
+								"bg-comic-accent-500",
+								"rounded",
+								"text-white",
+								"text-sm",
+								"font-display",
+								"font-semibold",
+								"cursor-pointer",
+								"border-y-2",
+								"border-t-white/40",
+								"border-b-black/20",
+								// States
+								"hover:duration-0",
+								"hover:bg-comic-accent-700",
+								"active:translate-px",
+								"active:bg-comic-accent-900",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"duration-300",
+							)}>
+								<span className={clsx(
+									"ml-5",
+									"text-pretty",
+									"grow",
+								)}>
+									{`${page.variables_submit_button_text || t("next")}`}
+								</span>
+								<Icon name="play" className={clsx(
+									"ml-1",
+									"size-4",
+								)} />
+							</button>
 						</div>
 					}
 				</VariablesForm>
@@ -1028,7 +1077,6 @@ export default function ComicPageUI({
 					 */
 				}
 				<section className={clsx(
-					"mt-8",
 					"flex",
 					"flex-col",
 					"gap-8",
@@ -1097,27 +1145,6 @@ export default function ComicPageUI({
 
 				</section >
 
-				{
-					/**------------------------------
-					 *	Page Meta
-					 */
-				}
-				<section>
-					<h4 className={clsx(
-						"font-semibold"
-					)}>Page Metadata</h4>
-					<ul className={clsx(
-						"p-2",
-						"bg-comic-accent-100",
-						"dark:bg-comic-accent-900",
-						"text-xs"
-					)}>
-						<li><strong>Created by</strong> @{page.user_created.username ? page.user_created.username : ""} on {page.date_created}</li>
-						{page.user_updated &&
-							<li><strong>Last updated by</strong> @{page.user_updated.username} on {page.date_updated}</li>
-						}
-					</ul>
-				</section >
 
 			</div >
 		</div >
@@ -1166,14 +1193,15 @@ export default function ComicPageUI({
 	 */
 	function VariablesForm({
 		varsExist,
-		children
-	}: {
+		children,
+		...props
+	}: ComponentPropsWithoutRef<"form"> & {
 		varsExist: Boolean
 		children: React.ReactNode
 	}) {
 		// Render Form tags if vars exist
 		if (varsExist)
-			return <Form action="">
+			return <Form action="" {...props}>
 				{children}
 			</Form>
 		// Otherwise, render nothing
