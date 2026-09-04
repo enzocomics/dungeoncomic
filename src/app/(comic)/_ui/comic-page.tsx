@@ -128,7 +128,10 @@ export default function ComicPageUI({
 	// State that checks if we can go backwards, to the same site, using browser history 
 	const [canGoBack, setCanGoBack] = useState(false)
 
-	const { comicPreviousPage, setComicPreviousPage } = useComicContext()
+	const {
+		comicPreviousPage, setComicPreviousPage,
+		comicPageHistory, setComicPageHistory
+	} = useComicContext()
 
 	// const prevPageMatches = hasPrevPage && page.prev_pages!.some(p =>
 	// 	p.pages_id?.comic_pagenum === comicPreviousPage.pagenum
@@ -159,6 +162,9 @@ export default function ComicPageUI({
 			pagenum: page.comic_pagenum,
 			params: searchParams.toString() || undefined
 		})
+
+
+		setComicPageHistory([...comicPageHistory, page.comic_pagenum.toString()])
 
 	}, [pathname, searchParams.toString()])
 
@@ -695,6 +701,8 @@ export default function ComicPageUI({
 					})
 					}
 				</h4>
+
+				<h3>page history: {comicPageHistory.map(h => `${h}, `)}</h3>
 				{/* <p>{page.description}</p> */}
 				{
 					/**------------------------------
