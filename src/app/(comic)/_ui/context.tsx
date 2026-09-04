@@ -12,10 +12,14 @@ type ComicPreviousPageSchema = {
 	params?: string,
 }
 
+type ComicPageHistorySchema = string[]
+
 // CONTEXT TYPE
 type ContextType = {
 	comicPreviousPage: ComicPreviousPageSchema,
-	setComicPreviousPage: (comicPreviousPage: SetStateAction<ComicPreviousPageSchema>) => void
+	setComicPreviousPage: (comicPreviousPage: SetStateAction<ComicPreviousPageSchema>) => void,
+	comicPageHistory: ComicPageHistorySchema,
+	setComicPageHistory: (comicPageHistory: SetStateAction<ComicPageHistorySchema>) => void
 }
 
 // Default Variables
@@ -24,20 +28,29 @@ const comicPreviousPageDefault: ComicPreviousPageSchema = {
 	params: undefined
 }
 
+const comicPageHistoryDefault: ComicPageHistorySchema = []
+
+
 /** ------------------------------------------------ **/
 // CONTEXT
 export const ComicContext = createContext<ContextType | undefined>({
 	comicPreviousPage: comicPreviousPageDefault,
-	setComicPreviousPage: (comicPreviousPage) => { }
+	setComicPreviousPage: (comicPreviousPage) => { },
+	comicPageHistory: comicPageHistoryDefault,
+	setComicPageHistory: (comicPageHistory) => { }
 })
 
 // CONTEXT PROVIDER
 export default function ComicContextProvider({ children }:
 	PropsWithChildren<{}>) {
 	const [comicPreviousPage, setComicPreviousPage] = useState(comicPreviousPageDefault)
+	const [comicPageHistory, setComicPageHistory] = useState(comicPageHistoryDefault)
 
 	// OUTPUT
-	return <ComicContext.Provider value={{ comicPreviousPage, setComicPreviousPage }}>
+	return <ComicContext.Provider value={{
+		comicPreviousPage, setComicPreviousPage,
+		comicPageHistory, setComicPageHistory,
+	}}>
 		{children}
 	</ComicContext.Provider>
 }
