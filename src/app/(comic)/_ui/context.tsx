@@ -7,7 +7,10 @@ import { createContext, PropsWithChildren, SetStateAction, useContext, useState 
  * - Previous Comic Page
  ** ------------------------------------------------ **/
 // STATE TYPES
-type ComicPreviousPageSchema = { pagenum?: number }
+type ComicPreviousPageSchema = {
+	pagenum?: number,
+	params?: string,
+}
 
 // CONTEXT TYPE
 type ContextType = {
@@ -17,7 +20,8 @@ type ContextType = {
 
 // Default Variables
 const comicPreviousPageDefault: ComicPreviousPageSchema = {
-	pagenum: undefined
+	pagenum: undefined,
+	params: undefined
 }
 
 /** ------------------------------------------------ **/

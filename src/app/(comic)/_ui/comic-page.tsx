@@ -101,6 +101,28 @@ export default function ComicPageUI({
 		varParams.map((key) => [key, searchParams.get(key)])
 	) : {}
 
+	/**----------------------------------- */
+	// Reusable Booleans
+	const hasPrevPage = !!(
+		page.prev_pages &&
+		page.prev_pages.length > 0 &&
+		page.prev_pages.some(
+			// checks that at least ONE page is published
+			p => p.pages_id.status === "published"
+		)
+		|| varsSubmitted)
+
+	const hasNextPage = !!(
+		page.next_pages &&
+		page.next_pages.length > 0 &&
+		page.next_pages.some(
+			// checks that at least ONE page is published
+			p => p.linked_pages_id.status === "published"
+		)
+	)
+
+	const hasBanner = !!page.comic.banner
+	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
@@ -108,7 +130,37 @@ export default function ComicPageUI({
 
 	const { comicPreviousPage, setComicPreviousPage } = useComicContext()
 
-	console.log(comicPreviousPage, "sup")
+	// const prevPageMatches = hasPrevPage && page.prev_pages!.some(p =>
+	// 	p.pages_id?.comic_pagenum === comicPreviousPage.pagenum
+	// )
+
+
+	useEffect(() => {
+		let prevUrl
+		let prevPageMatches
+		// Get the PREVIOUS url, including anything with params
+		if (comicPreviousPage.pagenum !== undefined) {
+			prevUrl = comicPreviousPage.params !== undefined ?
+				comicPreviousPage.pagenum + "?" + comicPreviousPage.params :
+				comicPreviousPage.pagenum
+			// outputs: `1?name=Steve&othervar=value` or just `1`
+
+			// Check if the pagenum exists in the list of this page's "prevpages"
+			prevPageMatches = hasPrevPage && page.prev_pages!.some(p =>
+				p.pages_id?.comic_pagenum === comicPreviousPage.pagenum
+			)
+
+			// Allow the history back button only when the browser's previous page matches a page in the prevpages list
+			setCanGoBack(prevPageMatches)
+		}
+
+		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
+		setComicPreviousPage({
+			pagenum: page.comic_pagenum,
+			params: searchParams.toString() || undefined
+		})
+
+	}, [pathname, searchParams.toString()])
 
 	// Run every time client navigates (url change or searchparams change)
 	// useEffect(() => {
@@ -150,27 +202,6 @@ export default function ComicPageUI({
 	// 	setCanGoBack(hasHistory && previousPageIsSameSite)
 	// }, [pathname, searchParams.toString()])
 
-	// Reusable Booleans
-	const hasPrevPage = !!(
-		page.prev_pages &&
-		page.prev_pages.length > 0 &&
-		page.prev_pages.some(
-			// checks that at least ONE page is published
-			p => p.pages_id.status === "published"
-		)
-		|| varsSubmitted)
-
-	const hasNextPage = !!(
-		page.next_pages &&
-		page.next_pages.length > 0 &&
-		page.next_pages.some(
-			// checks that at least ONE page is published
-			p => p.linked_pages_id.status === "published"
-		)
-	)
-
-	const hasBanner = !!page.comic.banner
-	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
 	/**----------------------------------- */
 	// Render
@@ -505,37 +536,13 @@ export default function ComicPageUI({
 								</Link>
 							</li>
 							{/* 
-										Back button: Go back 1 step in user's browser history
-										- IF previous page in browser history is from the same host
-									*/}
-							{canGoBack &&
-								<li>
-									<button className={clsx(
-										"w-full",
-										"flex",
-										"items-center",
-										"p-2",
-										"hover:bg-black/10",
-										"cursor-pointer"
-									)} onClick={() => router.back()} >
-										{/* Back: History */}
-										<Icon name="play" className={clsx(
-											"inline-block",
-											"size-3",
-											"rotate-180",
-											"mr-1",
-										)} />
-										<span>{t("go-back")}</span>
-									</button>
-								</li>
-							}
-							{/* 
 										Back button:
 										- If there is no previous page from the same hostname in history, and:
 										- If THIS PAGE has submitted variables:
 											- GO BACK to the "pre-submitted" version of THIS PAGE
 									*/}
-							{(!canGoBack && varsSubmitted) &&
+							{/* {(!canGoBack && varsSubmitted) && */}
+							{(varsSubmitted) &&
 								<li>
 									<Link className={clsx(
 										"block",
@@ -553,7 +560,8 @@ export default function ComicPageUI({
 											- If user variables do not exist, build the previouspage url with the default vars
 									*/}
 							{(
-								!canGoBack && !varsSubmitted &&
+								// canGoBack && !varsSubmitted &&
+								!varsSubmitted &&
 								page.prev_pages && page.prev_pages.length == 1
 							) &&
 								<li>
@@ -574,7 +582,35 @@ export default function ComicPageUI({
 										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
 									*/}
 
+							{/* 
+										Back button: Go back 1 step in user's browser history
+										- IF the browser's previousPage (saved in state) is on the list of prev pages
+									*/}
 							{
+								// canGoBack &&
+								canGoBack &&
+								page.prev_pages && page.prev_pages.length > 1 &&
+								<li>
+									<button className={clsx(
+										"w-full",
+										"flex",
+										"items-center",
+										"p-2",
+										"hover:bg-black/10",
+										"cursor-pointer"
+									)} onClick={() => router.back()} >
+										<Icon name="play" className={clsx(
+											"inline-block",
+											"size-3",
+											"rotate-180",
+											"mr-1",
+										)} />
+										<span>{t("go-back")}</span>
+									</button>
+								</li>
+							}
+							{
+								!canGoBack &&
 								page.prev_pages && page.prev_pages.length > 1 &&
 								<Dropdown>
 									<DropdownButton outline>

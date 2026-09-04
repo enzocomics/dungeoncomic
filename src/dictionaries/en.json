@@ -7,8 +7,8 @@
 	},
 	"ComicPage": {
 		"next": "Next",
-		"go-back": "Go Back",
-		"go-to-start": "Go to the Beginning",
+		"go-back": "Previous Page",
+		"go-to-start": "Back to Start",
 		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
 		"suggestion-form-title": "What's your idea?",
 		"submit-own-suggestion": "Suggest something else...",
