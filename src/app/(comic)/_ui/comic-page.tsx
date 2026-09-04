@@ -158,29 +158,23 @@ export default function ComicPageUI({
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
 
-	const [thing, setThing] = useState<any>()
 
 	useEffect(() => {
-
-		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
-		// LEAVE THIS AT THE VERY BOTTOM, it shoudl happen LAST
-		setComicPreviousPage({
-			pagenum: page.comic_pagenum,
-			params: searchParams.toString() || undefined
-		})
-
+		//////////////////////////////////////////////////////////////////////
+		// TODO: WIP: COMIC PAGE HISTORY
+		// CURRENTLY NOT WORKING, LEAVING FOR NOW
 		let isHistorySet = false
 
 		if (
 			!isHistorySet
 			// && !varsSubmitted
-			&& `${comicPreviousPage.pagenum}` !== comicPageHistory.at(-1)
+			// && `${comicPreviousPage.pagenum}` !== comicPageHistory.at(-1)
 		) {
-			setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
+			comicPreviousPage.pagenum !== undefined &&
+				setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
 			isHistorySet = true
 		}
-
-		/* --------- */
+		//////////////////////////////////////////////////////////////////////
 
 		let prevUrl
 		let prevPageMatches
@@ -200,31 +194,13 @@ export default function ComicPageUI({
 			setCanGoBack(prevPageMatches)
 		}
 
-
+		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
+		setComicPreviousPage({
+			pagenum: page.comic_pagenum,
+			params: searchParams.toString() || undefined
+		})
 	}, [pathname, searchParams.toString()])
 
-
-	// useEffect(() => {
-	// 	if (
-	// 		navClickType == "prev" &&
-	// 		!(comicPageHistory.at(-1) == comicPreviousPage.pagenum)
-	// 	) {
-	// 		// only delete from history if it's the same
-	// 		// if (comicPreviousPage.pagenum == comicPageHistory.at(-1))
-	// 		// setComicPageHistory([...comicPageHistory.slice(0, 1)])
-	// 		// setComicPageHistory([...comicPageHistory.slice(0, -1), `${comicPreviousPage.pagenum}`])
-	// 	}
-	// 	// Add to history
-	// 	else if (
-	// 		navClickType == "next" &&
-	// 		// Don't add to history if it repeats
-	// 		!(comicPageHistory.at(-1) == comicPreviousPage.pagenum)
-	// 	) {
-	// 		setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
-	// 	}
-	// 	// setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
-
-	// }, [navClickType])
 	/**----------------------------------- */
 	// Render
 	return <>
@@ -556,7 +532,7 @@ export default function ComicPageUI({
 							"list-none",
 							"flex",
 							"justify-center",
-							"gap-2",
+
 						)}>
 							<li>
 								<Link
@@ -564,8 +540,15 @@ export default function ComicPageUI({
 										"block",
 										"flex",
 										"items-center",
-										"p-2",
-										"hover:bg-black/10",
+										"py-2",
+										"px-3",
+										// Hover
+										"duration-300",
+										"hover:bg-comic-accent-950/50",
+										"hover:duration-0",
+										// Transition
+										"transition-all",
+										"ease-in-out",
 									)}
 
 									onClick={() => { setNavClickType("prev") }}
@@ -601,8 +584,14 @@ export default function ComicPageUI({
 											"flex",
 											"items-center",
 											"p-2",
-											"hover:bg-black/10",
-											"cursor-pointer"
+											"cursor-pointer",
+											// Hover
+											"duration-300",
+											"hover:bg-comic-accent-950/50",
+											"hover:duration-0",
+											// Transition
+											"transition-all",
+											"ease-in-out",
 										)}
 
 										onClick={() => {
@@ -647,39 +636,98 @@ export default function ComicPageUI({
 									<Menu>
 										<MenuButton
 											className={clsx(
+												"group",
 												"w-full",
 												"flex",
 												"items-center",
 												"p-2",
-												"hover:bg-black/10",
-												"cursor-pointer"
+												"pl-3",
+												"cursor-pointer",
+												// Hover
+												"duration-300",
+												"hover:bg-comic-accent-950/50",
+												"hover:duration-0",
+												// Transition
+												"transition-all",
+												"ease-in-out",
+												"bg-transparent",
+												"data-closed:duration-300",
+												"data-open:bg-comic-accent-950",
+												"data-open:rounded-t",
+												"data-open:duration-none",
 											)}>
-											Previous Pages Dropdown
+											{t("all-prev-pages")}
+											<Icon name="caretDown" className={clsx(
+												"relative",
+												"size-4",
+												"ml-1",
+												// Transition
+												"transition-all",
+												"ease-in-out",
+												"group-data-open:duration-none",
+												"group-data-open:-rotate-180",
+												"group-data-open:top-0.5",
+												"group-data-closed:duration-300",
+											)} />
 										</MenuButton>
 
-										<MenuItems className={clsx(
+										<MenuItems transition className={clsx(
+											// Position
 											"absolute",
 											"z-10",
-											"top-10"
+											"top-8",
+											"flex",
+											"flex-col",
+											"gap-y-0.5",
+											// "left-1/2",
+											// "-translate-x-1/2",
+											"min-w-46",
+											"md:min-w-80",
+											// Appearance
+											"p-2",
+											"bg-comic-accent-950",
+											"rounded-b",
+											"drop-shadow-xl",
+											"drop-shadow-neutral-900/50",
+											// Transitions
+											"transition-all",
+											"ease-in-out",
+											"origin-left",
+											"scale-100",
+											"opacity-100",
+											"data-closed:opacity-0",
+											"data-closed:duration-300",
+											"data-closed:top-6",
+											"data-closed:scale-90",
+											"data-open:duration-none",
 										)}>
 											{page.prev_pages.map((n, index) =>
 												<MenuItem key={index}
 												>
-													<a className="block" onClick={() => { setNavClickType("prev") }}
+													<Link
+														className={clsx(
+															// Structure
+															"grid",
+															"grid-cols-[20px_1fr]",
+															"items-center",
+															// Appearance
+															"p-2",
+															"text-white/90",
+															"hover:text-white",
+															"hover:bg-comic-accent-900",
+															"rounded",
+														)}
+														onClick={() => { setNavClickType("prev") }}
 														href={
 															`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
 																comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
 																userVars: userVariables
 															})
 														}>
-														{/* <Link className={clsx(
-															"block",
-															"p-2",
-															"hover:bg-black/10",
-														)} href={`${n.pages_id.comic_pagenum}`}> */}
-														<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
+														<span>&laquo;</span>
+														<span>{n.pages_id.variables_submit_button_text || n.pages_id.title}</span>
 														{/* </Link> */}
-													</a>
+													</Link>
 												</MenuItem>
 											)}
 										</MenuItems>
