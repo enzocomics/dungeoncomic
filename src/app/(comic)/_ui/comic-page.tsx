@@ -31,6 +31,7 @@ import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
+import { cp } from "node:fs"
 
 /**----------------------------------- */
 // TYPES
@@ -125,20 +126,57 @@ export default function ComicPageUI({
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
 	/**----------------------------------- */
+	// Submit the User Variables
+	useEffect(() => {
+		// Check if variables have been submitted to this page and save them to cookie
+		const saveUserVariables = async () => {
+			// Save Variables if they have been submitted
+			if (varsSubmitted)
+				await saveUserVarsCookie({
+					vars: submittedUserVars,
+					page: page
+				})
+		}
+		saveUserVariables()
+	}, [pathname, searchParams.toString()])
+
+	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
 	const [canGoBack, setCanGoBack] = useState(false)
 
+	// State that checks which nav button type has been clicked
+	const [navClickType, setNavClickType] = useState<"next" | "prev" | null>(null)
+
+	// Retrieve Context
 	const {
 		comicPreviousPage, setComicPreviousPage,
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
 
-	// const prevPageMatches = hasPrevPage && page.prev_pages!.some(p =>
-	// 	p.pages_id?.comic_pagenum === comicPreviousPage.pagenum
-	// )
-
+	const [thing, setThing] = useState<any>()
 
 	useEffect(() => {
+
+		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
+		// LEAVE THIS AT THE VERY BOTTOM, it shoudl happen LAST
+		setComicPreviousPage({
+			pagenum: page.comic_pagenum,
+			params: searchParams.toString() || undefined
+		})
+
+		let isHistorySet = false
+
+		if (
+			!isHistorySet
+			// && !varsSubmitted
+			&& `${comicPreviousPage.pagenum}` !== comicPageHistory.at(-1)
+		) {
+			setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
+			isHistorySet = true
+		}
+
+		/* --------- */
+
 		let prevUrl
 		let prevPageMatches
 		// Get the PREVIOUS url, including anything with params
@@ -157,61 +195,52 @@ export default function ComicPageUI({
 			setCanGoBack(prevPageMatches)
 		}
 
-		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
-		setComicPreviousPage({
-			pagenum: page.comic_pagenum,
-			params: searchParams.toString() || undefined
-		})
-
-
-		setComicPageHistory([...comicPageHistory, page.comic_pagenum.toString()])
 
 	}, [pathname, searchParams.toString()])
 
-	// Run every time client navigates (url change or searchparams change)
+
 	// useEffect(() => {
-	// 	// Check if variables have been submitted to this page and save them to cookie
-	// 	const saveUserVariables = async () => {
-	// 		// Save Variables if they have been submitted
-	// 		if (varsSubmitted)
-	// 			await saveUserVarsCookie({
-	// 				vars: submittedUserVars,
-	// 				page: page
-	// 			})
+	// 	if (
+	// 		navClickType == "prev" &&
+	// 		!(comicPageHistory.at(-1) == comicPreviousPage.pagenum)
+	// 	) {
+	// 		// only delete from history if it's the same
+	// 		// if (comicPreviousPage.pagenum == comicPageHistory.at(-1))
+	// 		// setComicPageHistory([...comicPageHistory.slice(0, 1)])
+	// 		// setComicPageHistory([...comicPageHistory.slice(0, -1), `${comicPreviousPage.pagenum}`])
 	// 	}
+	// 	// Add to history
+	// 	else if (
+	// 		navClickType == "next" &&
+	// 		// Don't add to history if it repeats
+	// 		!(comicPageHistory.at(-1) == comicPreviousPage.pagenum)
+	// 	) {
+	// 		setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
+	// 	}
+	// 	// setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
 
-	// 	// Check if browser history exists
-	// 	const hasHistory = window.history.length > 1
-	// 	let previousPageIsSameSite = false
-
-	// 	// DEBUG
-	// 	console.log("document.referrer:", document.referrer || "none")
-	// 	// If we came from another page
-	// 	// NOTE: THIS DOES NOT WORK IN PRIVATE BROWSERS
-	// 	if (document.referrer)
-	// 		try {
-	// 			// Check if the other page is from the same host
-	// 			const previousUrl = new URL(document.referrer)
-	// 			previousPageIsSameSite = previousUrl.hostname === window.location.hostname
-
-	// 			// DEBUG
-	// 			// console.log("previousUrl.hostname:", previousUrl.hostname)
-	// 			// console.log("window.location.hostname:", window.location.hostname)
-	// 			// console.log("is the previous page from the same site:", previousPageIsSameSite)
-	// 		}
-	// 		catch {
-	// 			previousPageIsSameSite = false
-	// 		}
-
-	// 	// INIT
-	// 	saveUserVariables()
-	// 	setCanGoBack(hasHistory && previousPageIsSameSite)
-	// }, [pathname, searchParams.toString()])
-
-
+	// }, [navClickType])
 	/**----------------------------------- */
 	// Render
 	return <>
+		{/* DEBUG */}
+		<span
+			className={clsx(
+				"hidden",
+				"fixed",
+				"w-full",
+				"z-100",
+				"bottom-0",
+				"bg-green-900/50",
+				"backdrop-blur-xl",
+				"text-green-500",
+				"p-4",
+				"font-mono",
+			)}>
+			<p><strong>prevpage in state:</strong> {comicPreviousPage.pagenum}</p>
+			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
+		</span>
+
 		{/* Header */}
 		<div
 			className={clsx(
@@ -525,13 +554,18 @@ export default function ComicPageUI({
 							"gap-2",
 						)}>
 							<li>
-								<Link className={clsx(
-									"block",
-									"flex",
-									"items-center",
-									"p-2",
-									"hover:bg-black/10",
-								)} href="./">
+								<Link
+									className={clsx(
+										"block",
+										"flex",
+										"items-center",
+										"p-2",
+										"hover:bg-black/10",
+									)}
+
+									onClick={() => { setNavClickType("prev") }}
+									href="./1"
+								>
 									<Icon name="forwardStep" className={clsx(
 										"inline-block",
 										"size-3",
@@ -554,7 +588,9 @@ export default function ComicPageUI({
 										"block",
 										"p-2",
 										"hover:bg-black/10",
-									)} href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
+									)}
+										onClick={() => { setNavClickType("prev") }}
+										href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
 								</li>
 							}
 							{/* 
@@ -575,10 +611,12 @@ export default function ComicPageUI({
 										"block",
 										"p-2",
 										"hover:bg-black/10",
-									)} href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
-										comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
-										userVars: userVariables
-									})}
+									)}
+										onClick={() => { setNavClickType("prev") }}
+										href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
+											comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
+											userVars: userVariables
+										})}
 									>&laquo; {t("go-back")} (Single Previous Page)</Link>
 
 								</li>
@@ -604,7 +642,10 @@ export default function ComicPageUI({
 										"p-2",
 										"hover:bg-black/10",
 										"cursor-pointer"
-									)} onClick={() => router.back()} >
+									)} onClick={() => {
+										router.back()
+										setNavClickType("prev")
+									}} >
 										<Icon name="play" className={clsx(
 											"inline-block",
 											"size-3",
@@ -633,12 +674,14 @@ export default function ComicPageUI({
 									</DropdownButton>
 									<DropdownMenu>
 										{page.prev_pages.map((n, index) =>
-											<DropdownItem key={index} href={
-												`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
-													comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
-													userVars: userVariables
-												})
-											}>
+											<DropdownItem key={index}
+												onClick={() => { setNavClickType("prev") }}
+												href={
+													`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
+														comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
+														userVars: userVariables
+													})
+												}>
 												{/* <Link className={clsx(
 															"block",
 															"p-2",
@@ -701,8 +744,6 @@ export default function ComicPageUI({
 					})
 					}
 				</h4>
-
-				<h3>page history: {comicPageHistory.map(h => `${h}, `)}</h3>
 				{/* <p>{page.description}</p> */}
 				{
 					/**------------------------------
@@ -859,7 +900,9 @@ export default function ComicPageUI({
 													"block",
 													"p-2",
 													"hover:bg-black/10",
-												)} href={`${n.linked_pages_id.comic_pagenum}`}>
+												)}
+													onClick={() => { setNavClickType("next") }}
+													href={`./${n.linked_pages_id.comic_pagenum}`}>
 													<strong>{
 														replaceComicVariables({
 															content: n.linked_pages_id.title,
