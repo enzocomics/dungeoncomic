@@ -28,10 +28,9 @@ import { Radio, RadioField, RadioGroup } from "@/components/radio"
 import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
-import { Button } from "@/components/button"
+import { Button } from "@headlessui/react"
 import Icon from "@/styles/icons"
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react"
-import { cp } from "node:fs"
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 
 /**----------------------------------- */
 // TYPES
@@ -128,14 +127,20 @@ export default function ComicPageUI({
 	/**----------------------------------- */
 	// Submit the User Variables
 	useEffect(() => {
+
 		// Check if variables have been submitted to this page and save them to cookie
 		const saveUserVariables = async () => {
 			// Save Variables if they have been submitted
-			if (varsSubmitted)
+			if (varsSubmitted) {
+				// if vars already exist, put them together so they don't get overwritten
 				await saveUserVarsCookie({
-					vars: submittedUserVars,
+					vars: {
+						...userVariables,
+						...submittedUserVars
+					},
 					page: page
 				})
+			}
 		}
 		saveUserVariables()
 	}, [pathname, searchParams.toString()])
@@ -575,6 +580,116 @@ export default function ComicPageUI({
 									<span>{t("go-to-start")}</span>
 								</Link>
 							</li>
+
+							{/* Back Button */}
+
+							{
+								hasPrevPage
+								&& (
+									// Submission Form
+									!canGoBack && varsSubmitted
+									// Single Previous Page Back
+									|| !varsSubmitted && page.prev_pages && page.prev_pages.length == 1
+									// Browser History + Multiple Page Back
+									|| canGoBack && page.prev_pages && page.prev_pages.length > 1
+								)
+								&&
+								<li>
+									<button
+										className={clsx(
+											"w-full",
+											"flex",
+											"items-center",
+											"p-2",
+											"hover:bg-black/10",
+											"cursor-pointer"
+										)}
+
+										onClick={() => {
+											setNavClickType("prev")
+
+											// Variable Submission Form back
+											!canGoBack && varsSubmitted && router.push(pathname)
+											// Single Previous Page back
+											!varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && router.push(
+												`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
+													comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
+													userVars: userVariables
+												})
+											)
+											// Browser history +  Multiple prev pages: 
+											canGoBack && page.prev_pages && page.prev_pages.length > 1
+												// 
+												&& router.back()
+											//
+										}}
+									>
+										<Icon name="play" className={clsx(
+											"inline-block",
+											"size-3",
+											"rotate-180",
+											"mr-1",
+										)} />
+										<span>{t("go-back")}</span>
+										{
+											// varsSubmitted && "Variable Form Page"
+											!varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && "single prev page back"
+											// canGoBack && page.prev_pages && page.prev_pages.length > 1 && "multi prev + browser back"
+										}
+									</button>
+								</li>
+							}
+							{!canGoBack
+								&& page.prev_pages && page.prev_pages.length > 1 &&
+								<li className={clsx(
+									"relative"
+								)}>
+									<Menu>
+										<MenuButton
+											className={clsx(
+												"w-full",
+												"flex",
+												"items-center",
+												"p-2",
+												"hover:bg-black/10",
+												"cursor-pointer"
+											)}>
+											Previous Pages Dropdown
+										</MenuButton>
+
+										<MenuItems className={clsx(
+											"absolute",
+											"z-10",
+											"top-10"
+										)}>
+											{page.prev_pages.map((n, index) =>
+												<MenuItem key={index}
+												>
+													<a className="block" onClick={() => { setNavClickType("prev") }}
+														href={
+															`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
+																comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
+																userVars: userVariables
+															})
+														}>
+														{/* <Link className={clsx(
+															"block",
+															"p-2",
+															"hover:bg-black/10",
+														)} href={`${n.pages_id.comic_pagenum}`}> */}
+														<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
+														{/* </Link> */}
+													</a>
+												</MenuItem>
+											)}
+										</MenuItems>
+									</Menu>
+								</li>
+							}
+
+
+
+
 							{/* 
 										Back button:
 										- If there is no previous page from the same hostname in history, and:
@@ -582,8 +697,8 @@ export default function ComicPageUI({
 											- GO BACK to the "pre-submitted" version of THIS PAGE
 									*/}
 							{/* {(!canGoBack && varsSubmitted) && */}
-							{(varsSubmitted) &&
-								<li>
+							{/* {(varsSubmitted) &&
+								<li className="hidden">
 									<Link className={clsx(
 										"block",
 										"p-2",
@@ -592,7 +707,7 @@ export default function ComicPageUI({
 										onClick={() => { setNavClickType("prev") }}
 										href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
 								</li>
-							}
+							} */}
 							{/* 
 										Back button: 
 										- If there is no previous page from the same hostname in history,
@@ -601,12 +716,12 @@ export default function ComicPageUI({
 										  - If user variables already exist, rebuild the previous page url with the userVars
 											- If user variables do not exist, build the previouspage url with the default vars
 									*/}
-							{(
+							{/* {(
 								// canGoBack && !varsSubmitted &&
 								!varsSubmitted &&
 								page.prev_pages && page.prev_pages.length == 1
 							) &&
-								<li>
+								<li className="hidden">
 									<Link className={clsx(
 										"block",
 										"p-2",
@@ -620,7 +735,7 @@ export default function ComicPageUI({
 									>&laquo; {t("go-back")} (Single Previous Page)</Link>
 
 								</li>
-							}
+							} */}
 							{/* <li>{getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels)}</li> */}
 							{/* 
 										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
@@ -630,12 +745,13 @@ export default function ComicPageUI({
 										Back button: Go back 1 step in user's browser history
 										- IF the browser's previousPage (saved in state) is on the list of prev pages
 									*/}
-							{
+							{/* {
 								// canGoBack &&
 								canGoBack &&
 								page.prev_pages && page.prev_pages.length > 1 &&
 								<li>
 									<button className={clsx(
+										"hidden",
 										"w-full",
 										"flex",
 										"items-center",
@@ -655,8 +771,8 @@ export default function ComicPageUI({
 										<span>{t("go-back")}</span>
 									</button>
 								</li>
-							}
-							{
+							} */}
+							{/* {
 								!canGoBack &&
 								page.prev_pages && page.prev_pages.length > 1 &&
 								<Dropdown>
@@ -682,18 +798,18 @@ export default function ComicPageUI({
 														userVars: userVariables
 													})
 												}>
-												{/* <Link className={clsx(
+												<Link className={clsx(
 															"block",
 															"p-2",
 															"hover:bg-black/10",
-														)} href={`${n.pages_id.comic_pagenum}`}> */}
+														)} href={`${n.pages_id.comic_pagenum}`}>
 												<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
-												{/* </Link> */}
+												</Link>
 											</DropdownItem>
 										)}
 									</DropdownMenu>
 								</Dropdown>
-							}
+							} */}
 						</nav>
 					</div>
 				</>
