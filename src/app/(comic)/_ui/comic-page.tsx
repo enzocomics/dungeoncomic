@@ -727,7 +727,6 @@ export default function ComicPageUI({
 														}>
 														<span>&laquo;</span>
 														<span>{n.pages_id.variables_submit_button_text || n.pages_id.title}</span>
-														{/* </Link> */}
 													</Link>
 												</MenuItem>
 											)}
@@ -735,130 +734,6 @@ export default function ComicPageUI({
 									</Menu>
 								</li>
 							}
-
-
-
-
-							{/* 
-										Back button:
-										- If there is no previous page from the same hostname in history, and:
-										- If THIS PAGE has submitted variables:
-											- GO BACK to the "pre-submitted" version of THIS PAGE
-									*/}
-							{/* {(!canGoBack && varsSubmitted) && */}
-							{/* {(varsSubmitted) &&
-								<li className="hidden">
-									<Link className={clsx(
-										"block",
-										"p-2",
-										"hover:bg-black/10",
-									)}
-										onClick={() => { setNavClickType("prev") }}
-										href={pathname}>&laquo; {t("go-back")} (Variable Form Page)</Link>
-								</li>
-							} */}
-							{/* 
-										Back button: 
-										- If there is no previous page from the same hostname in history,
-										- If there are no variables being submitted on THIS page,
-										- If the previous page has variable:
-										  - If user variables already exist, rebuild the previous page url with the userVars
-											- If user variables do not exist, build the previouspage url with the default vars
-									*/}
-							{/* {(
-								// canGoBack && !varsSubmitted &&
-								!varsSubmitted &&
-								page.prev_pages && page.prev_pages.length == 1
-							) &&
-								<li className="hidden">
-									<Link className={clsx(
-										"block",
-										"p-2",
-										"hover:bg-black/10",
-									)}
-										onClick={() => { setNavClickType("prev") }}
-										href={`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
-											comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
-											userVars: userVariables
-										})}
-									>&laquo; {t("go-back")} (Single Previous Page)</Link>
-
-								</li>
-							} */}
-							{/* <li>{getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels)}</li> */}
-							{/* 
-										Display list of previous pages if there's more than one, OR if the user's "previous page" in the browser history is NOT a possible previous page in this comic series
-									*/}
-
-							{/* 
-										Back button: Go back 1 step in user's browser history
-										- IF the browser's previousPage (saved in state) is on the list of prev pages
-									*/}
-							{/* {
-								// canGoBack &&
-								canGoBack &&
-								page.prev_pages && page.prev_pages.length > 1 &&
-								<li>
-									<button className={clsx(
-										"hidden",
-										"w-full",
-										"flex",
-										"items-center",
-										"p-2",
-										"hover:bg-black/10",
-										"cursor-pointer"
-									)} onClick={() => {
-										router.back()
-										setNavClickType("prev")
-									}} >
-										<Icon name="play" className={clsx(
-											"inline-block",
-											"size-3",
-											"rotate-180",
-											"mr-1",
-										)} />
-										<span>{t("go-back")}</span>
-									</button>
-								</li>
-							} */}
-							{/* {
-								!canGoBack &&
-								page.prev_pages && page.prev_pages.length > 1 &&
-								<Dropdown>
-									<DropdownButton outline>
-										<Icon name="play" className={clsx(
-											"text-white",
-											"inline-block",
-											"size-3",
-											"rotate-180",
-											"mr-1",
-										)} />
-										<span className="text-white text-xs">
-											{t("go-back")}
-										</span>
-									</DropdownButton>
-									<DropdownMenu>
-										{page.prev_pages.map((n, index) =>
-											<DropdownItem key={index}
-												onClick={() => { setNavClickType("prev") }}
-												href={
-													`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
-														comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
-														userVars: userVariables
-													})
-												}>
-												<Link className={clsx(
-															"block",
-															"p-2",
-															"hover:bg-black/10",
-														)} href={`${n.pages_id.comic_pagenum}`}>
-												<strong>&laquo; {n.pages_id.variables_submit_button_text || n.pages_id.title}</strong>
-												</Link>
-											</DropdownItem>
-										)}
-									</DropdownMenu>
-								</Dropdown>
-							} */}
 						</nav>
 					</div>
 				</>
@@ -951,12 +826,14 @@ export default function ComicPageUI({
 										loading="eager"
 									/></p>
 								}
-								{/* <p>{p.panel_title}</p> */}
+								{/* PANEL TEXT */}
 								<div className={clsx(
+									"py-6",
 									"px-6",
 									"prose",
 									"max-w-prose",
 									"mx-auto",
+
 								)}
 									// TODO: You better freakin' sanitize this
 									dangerouslySetInnerHTML={{
@@ -1079,8 +956,7 @@ export default function ComicPageUI({
 				<section className={clsx(
 					"flex",
 					"flex-col",
-					"gap-8",
-					"w-full"
+					"gap-y-6",
 				)}>
 					{
 						/**------------------------------
@@ -1092,8 +968,13 @@ export default function ComicPageUI({
 					}
 					{(!varsExist || (varsExist && varsSubmitted)) &&
 						<div className={clsx(
+							"flex",
+							"flex-col",
+							"gap-y-2",
+							"px-6",
+							"w-full",
 							"mx-auto",
-							"w-2/3",
+							"max-w-prose",
 						)}>
 							{hasNextPage &&
 								<>
@@ -1101,37 +982,66 @@ export default function ComicPageUI({
 										"flex",
 										"flex-col",
 										"gap-2",
-										"p-2",
-										"bg-comic-accent-100",
-										"dark:bg-comic-accent-900",
-										"text-xs"
 									)}>
 										{page?.next_pages?.map((n, index) =>
 											<li key={index} className={clsx(
 											)}>
 												<Link className={clsx(
-													"block",
+													// structure
 													"p-2",
-													"hover:bg-black/10",
+													"w-full",
+													"flex",
+													"items-center",
+													"justify-center",
+													// Appearance
+													"bg-comic-accent-500",
+													"visited:bg-neutral-500",
+													"rounded",
+													"text-white",
+													"text-sm",
+													"font-display",
+													"font-semibold",
+													"cursor-pointer",
+													"border-y-2",
+													"border-t-white/40",
+													"border-b-black/20",
+													// States
+													"hover:duration-0",
+													"hover:bg-comic-accent-700",
+													"active:translate-px",
+													"active:bg-comic-accent-900",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
 												)}
 													onClick={() => { setNavClickType("next") }}
 													href={`./${n.linked_pages_id.comic_pagenum}`}>
-													<strong>{
-														replaceComicVariables({
-															content: n.linked_pages_id.title,
-															variables: variables,
-															userVariables: userVariables
-														})
-													} &raquo;</strong><br />
-													{n.linked_pages_id.subtitle &&
-														<p>{
+													<span className={clsx(
+														"grow",
+														"text-pretty",
+													)}>
+														<span>{
 															replaceComicVariables({
-																content: n.linked_pages_id.subtitle,
+																content: n.linked_pages_id.title,
 																variables: variables,
 																userVariables: userVariables
 															})
-														}</p>
-													}
+														}</span><br />
+														{n.linked_pages_id.subtitle &&
+															<p>{
+																replaceComicVariables({
+																	content: n.linked_pages_id.subtitle,
+																	variables: variables,
+																	userVariables: userVariables
+																})
+															}</p>
+														}
+													</span>
+													<Icon name="play" className={clsx(
+														"ml-1",
+														"size-4",
+													)} />
 												</Link>
 											</li>
 										)}
@@ -1140,7 +1050,6 @@ export default function ComicPageUI({
 							}
 						</div>
 					}
-
 
 
 				</section >
