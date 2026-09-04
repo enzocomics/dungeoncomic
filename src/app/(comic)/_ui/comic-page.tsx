@@ -621,8 +621,9 @@ export default function ComicPageUI({
 										)} />
 										<span>{t("go-back")}</span>
 										{
+											// DEBUG
 											// varsSubmitted && "Variable Form Page"
-											!varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && "single prev page back"
+											// !varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && "single prev page back"
 											// canGoBack && page.prev_pages && page.prev_pages.length > 1 && "multi prev + browser back"
 										}
 									</button>
