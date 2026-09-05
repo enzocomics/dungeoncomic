@@ -222,8 +222,8 @@ export default function ComicPageUI({
 			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
 		</span>
 
-		{/* Header */}
-		<div
+		{/* COMIC PAGE HEADER - WRAPPER */}
+		<header
 			className={clsx(
 				// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
 				// Structure
@@ -243,9 +243,10 @@ export default function ComicPageUI({
 				"text-white",
 			)}
 		>
+			{/* The "filled/backdrop" part of the header */}
 			<div
 				className={clsx(
-					// The "filled/backdrop" part of the header
+					// 
 					// Position
 					"relative",
 					"z-1",
@@ -263,257 +264,350 @@ export default function ComicPageUI({
 					hasPrevPage ? "md:rounded-b-none" : "",
 					!hasPrevPage && "md:drop-shadow-xl",
 					!hasPrevPage && "md:drop-shadow-neutral-900/45",
-				)}>
-				{/* Title Card */}
-				<Disclosure>
-					<div
-						className={clsx(
-							"p-2",
-							"px-18",
-							"h-12",
-							"flex",
-							"justify-center",
-							// "sm:justify-normal",
-							"items-center",
-							"font-platform-display",
-							"overflow-clip",
-						)}>
-						<DisclosureButton className={clsx(
-							"group",
-							"peer",
-							"flex",
-							"max-w-full",
-							"justify-center",
-							"cursor-pointer",
-							"data-open:bg-comic-accent-600",
-							"dark:data-open:bg-comic-accent-700",
+				)}
+			>
+				<ComicPageHeaderTitle />
+			</div>
+			<ComicPageHeaderNav />
+		</header>
 
-							"pl-3 pr-1.5",
-							"py-1.5",
-							"rounded-lg",
+		{/* COMIC PAGE - CONTENT WRAPPER */}
+		<div
+			className={
+				clsx(
+					"pt-13.5", // Comic Nav Menu
+					hasBanner && "pt-20",
+					hasPrevPage && "pt-20",
+					"md:pt-22.5",
+					hasBanner && "md:pt-28",
+					hasPrevPage && "md:pt-28",
+				)
+			}
+		>
+			{/* COMIC PAGE - CONTENT BODY */}
+			<article
+				className={clsx(
+					// Structure
+					"flex",
+					"flex-col",
+					"gap-6",
+					// Spacing
+					"py-6",
+					// Appearance
+					"bg-base-1",
+					"dark:bg-neutral-700",
+					"text-center",
+					"md:rounded",
+				)}
+			>
+				<ComicPageTitle
+					className={clsx(
+						"px-6",
+						"max-w-prose",
+						"mx-auto",
+						"text-2xl",
+						"font-bold",
+						"font-display",
+						"text-center"
+					)}
+				/>
 
-							"ml-5",
-							"relative",
-							"z-45",
+				<ComicPanels />
+				<UserFeedbackSection />
+				<ComicPageNavigation />
+			</article >
+		</div >
+	</>
+
+	/**---------------------------------------------------------------------- */
+	// HELPER FUNCTIONS
+	function getComicPageVars(
+		comic_panels:
+			typeof page.comic_panels
+	) {
+		return comic_panels ? comic_panels.flatMap(p =>
+			p.variables && p.variables.length > 0 ?
+				p.variables : []
+		) : null
+	}
+
+	function makeComicVarsUrl({
+		comicVars,
+		userVars
+	}: {
+		comicVars: ReturnType<typeof getComicPageVars>
+		userVars?: Record<string, string | null>
+	}) {
+		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
+		// - comicVars is possibly null, so have an empty array as fallback
+		const entries: [string, string][] = (comicVars ?? []).map(
+			({ slug, default_value }): [string, string] => [
+				slug,
+				userVars?.[slug] ?? default_value
+			]
+		)
+
+		const params = new URLSearchParams(entries)
+
+		// Return it as a string
+		return params.size === 0 ? "" : `?${params.toString()}`
+	}
+
+	/**---------------------------------------------------------------------- */
+	// TEMPLATE FUNCTIONS
+
+	/**-----------------------------------
+		 * SECTION: COMIC PAGE HEADER
+		 * ---
+		 */
+
+	function ComicPageHeaderTitle() {
+		return <>
+
+			<Disclosure>
+				<div
+					className={clsx(
+						"p-2",
+						"px-18",
+						"h-12",
+						"flex",
+						"justify-center",
+						// "sm:justify-normal",
+						"items-center",
+						"font-platform-display",
+						"overflow-clip",
+					)}>
+					<DisclosureButton className={clsx(
+						"group",
+						"peer",
+						"flex",
+						"max-w-full",
+						"justify-center",
+						"cursor-pointer",
+						"data-open:bg-comic-accent-600",
+						"dark:data-open:bg-comic-accent-700",
+
+						"pl-3 pr-1.5",
+						"py-1.5",
+						"rounded-lg",
+
+						"ml-5",
+						"relative",
+						"z-45",
+					)}>
+						<div className={clsx(
+							// Structure
+							"inline-block",
+							"overflow-hidden",
+							"text-nowrap",
+							"grow",
+							// Text
+							"text-sm",
+							"text-ellipsis",
 						)}>
-							<div className={clsx(
-								// Structure
-								"inline-block",
-								"overflow-hidden",
-								"text-nowrap",
-								"grow",
-								// Text
-								"text-sm",
-								"text-ellipsis",
+							<h1 className={clsx(
+								"inline",
+								"font-semibold",
 							)}>
-								<h1 className={clsx(
-									"inline",
-									"font-semibold",
+								{comic.title}
+							</h1>
+
+							{comic.authors && comic.authors.length > 0 &&
+								<span className={clsx(
+									"hidden",
+									"md:inline-block",
+									"px-1",
+									"text-xs",
+									"text-neutral-500",
+									"group-data-open:text-white/40",
+									"font-normal",
+									"italic",
 								)}>
-									{comic.title}
-								</h1>
-
-								{comic.authors && comic.authors.length > 0 &&
-									<span className={clsx(
-										"hidden",
-										"md:inline-block",
-										"px-1",
-										"text-xs",
-										"text-neutral-500",
-										"group-data-open:text-white/40",
-										"font-normal",
-										"italic",
-									)}>
-										by&nbsp;
-										{comic.authors.map((a, index) => {
-											let join = comic.authors!.length > 1 ? ", " : ""
-											join = index == comic.authors!.length - 2 ? " & " : join
-											join = index == comic.authors!.length - 1 ? "" : join
-											return <span key={index}>
-												<span className={clsx(
-													"font-semibold",
-													"text-neutral-400",
-													"group-data-open:text-white/70",
-												)}>
-													{a.username}
-												</span>
-												{join}
-											</span>
-										}
-										)}
-									</span>
-								}
-							</div>
-
-							<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-1 group-data-open:hidden shrink-0" />
-							<Icon name="xmark" className="text-white size-5 p-0.5 ml-1 hidden group-data-open:inline shrink-0" />
-
-						</DisclosureButton>
-						<DisclosurePanel transition className={clsx(
-							// Transitions
-							"transition-all",
-							"ease-in-out",
-							"data-closed:opacity-0",
-							"data-closed:duration-300",
-							"data-closed:top-6",
-							"data-closed:scale-90",
-							"opacity-100",
-							"data-open:duration-none",
-							"scale-100",
-							// Position
-							"absolute",
-							// "-z-1",
-							"top-11.5",
-							// Size & Spacing
-							"max-w-lg",
-							"p-2",
-							"rounded",
-							"drop-shadow-2xl",
-							"drop-shadow-neutral-900/50",
-						)}>
-							<section className={clsx(
-								// Functionality
-								"pointer-events-auto",
-								// Structure
-								"relative",
-								"flex",
-								"flex-col",
-								"gap-2",
-								// Size
-								"w-full",
-								// Spacing
-								"mx-auto",
-								"p-4",
-								// Text
-								"text-sm",
-								"text-base-content",
-								// Appearance
-								"rounded",
-								"md:rounded",
-								// Colours
-								"bg-base-1",
-								"dark:bg-base-2",
-								// "border",
-								// Arrow
-								"before:absolute",
-								"before:z-10",
-								"before:-top-3",
-								"before:left-1/2",
-								"before:-translate-x-1/2",
-								"before:h-0 before:w-0",
-								"before:border-l-12 before:border-r-12",
-								"before:border-t-12",
-								"before:border-l-transparent before:border-r-transparent",
-								"before:border-t-base-1 dark:before:border-t-base-2",
-								"before:rotate-180"
-							)}>
-								{/* Comic Info Header */}
-								<header className={clsx(
-									"flex",
-									"gap-x-2",
-								)}>
-									{page.comic.thumbnail &&
-										<Image
-											src={`${directusURL}/assets/${page.comic.thumbnail.filename_disk}`}
-											alt={page.comic.thumbnail.description ?? ""}
-											width={`${page.comic.thumbnail.width}`}
-											height={`${page.comic.thumbnail.height}`}
-											className={clsx(
-												"self-center",
-												"block",
-												"max-w-20",
-												"md:max-w-30",
-												"rounded",
-												"mr-1",
-											)}
-										/>
-
-									}
-									<div className={clsx(
-										"grow",
-										"place-content-center",
-										"flex",
-										"flex-col",
-										"text-center",
-									)}>
-										<h2 className={clsx(
-											"w-full",
-											"peer-visible:ml-5",
-											"font-semibold",
-											"text-lg",
-											"mb-2",
-											// "text-center",
-											"text-pretty"
-										)}>{comic.title}</h2>
-										<p className={clsx(
-											"italic",
-											"text-xs",
-											"text-neutral-500",
-										)}>
-											Created on {comic.date_created}
-										</p>
-										{hasAuthors &&
-											<p className={clsx(
-												"italic",
-												"text-xs",
-												"text-neutral-500",
-												"mb-2",
+									by&nbsp;
+									{comic.authors.map((a, index) => {
+										let join = comic.authors!.length > 1 ? ", " : ""
+										join = index == comic.authors!.length - 2 ? " & " : join
+										join = index == comic.authors!.length - 1 ? "" : join
+										return <span key={index}>
+											<span className={clsx(
+												"font-semibold",
+												"text-neutral-400",
+												"group-data-open:text-white/70",
 											)}>
-												By&nbsp;
-												{comic.authors && comic.authors.map((a, index) => {
-													let join = comic.authors!.length > 1 ? ", " : ""
-													join = index == comic.authors!.length - 2 ? " and " : join
-													join = index == comic.authors!.length - 1 ? "" : join
-													return <span key={index}>
-														<a href="#" className={clsx(
-															"font-semibold",
-															"text-comic-accent-500",
-														)}>
-															{a.username}
-														</a>
-														{join}
-													</span>
-												}
-												)}
-											</p>
-										}
-									</div>
-								</header>
-
-								{/* Comic Info Body */}
-								<div className={clsx(
-								)}>
-									{comic.description &&
-										<p className={clsx(
-											"my-4",
-
-										)}>
-											{comic.description}
-										</p>
+												{a.username}
+											</span>
+											{join}
+										</span>
 									}
+									)}
+								</span>
+							}
+						</div>
+
+						<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-1 group-data-open:hidden shrink-0" />
+						<Icon name="xmark" className="text-white size-5 p-0.5 ml-1 hidden group-data-open:inline shrink-0" />
+
+					</DisclosureButton>
+					<DisclosurePanel transition className={clsx(
+						// Transitions
+						"transition-all",
+						"ease-in-out",
+						"data-closed:opacity-0",
+						"data-closed:duration-300",
+						"data-closed:top-6",
+						"data-closed:scale-90",
+						"opacity-100",
+						"data-open:duration-none",
+						"scale-100",
+						// Position
+						"absolute",
+						// "-z-1",
+						"top-11.5",
+						// Size & Spacing
+						"max-w-lg",
+						"p-2",
+						"rounded",
+						"drop-shadow-2xl",
+						"drop-shadow-neutral-900/50",
+					)}>
+						<section className={clsx(
+							// Functionality
+							"pointer-events-auto",
+							// Structure
+							"relative",
+							"flex",
+							"flex-col",
+							"gap-2",
+							// Size
+							"w-full",
+							// Spacing
+							"mx-auto",
+							"p-4",
+							// Text
+							"text-sm",
+							"text-base-content",
+							// Appearance
+							"rounded",
+							"md:rounded",
+							// Colours
+							"bg-base-1",
+							"dark:bg-base-2",
+							// "border",
+							// Arrow
+							"before:absolute",
+							"before:z-10",
+							"before:-top-3",
+							"before:left-1/2",
+							"before:-translate-x-1/2",
+							"before:h-0 before:w-0",
+							"before:border-l-12 before:border-r-12",
+							"before:border-t-12",
+							"before:border-l-transparent before:border-r-transparent",
+							"before:border-t-base-1 dark:before:border-t-base-2",
+							"before:rotate-180"
+						)}>
+							{/* Comic Info Header */}
+							<header className={clsx(
+								"flex",
+								"gap-x-2",
+							)}>
+								{page.comic.thumbnail &&
+									<Image
+										src={`${directusURL}/assets/${page.comic.thumbnail.filename_disk}`}
+										alt={page.comic.thumbnail.description ?? ""}
+										width={`${page.comic.thumbnail.width}`}
+										height={`${page.comic.thumbnail.height}`}
+										className={clsx(
+											"self-center",
+											"block",
+											"max-w-20",
+											"md:max-w-30",
+											"rounded",
+											"mr-1",
+										)}
+									/>
+
+								}
+								<div className={clsx(
+									"grow",
+									"place-content-center",
+									"flex",
+									"flex-col",
+									"text-center",
+								)}>
+									<h2 className={clsx(
+										"w-full",
+										"peer-visible:ml-5",
+										"font-semibold",
+										"text-lg",
+										"mb-2",
+										// "text-center",
+										"text-pretty"
+									)}>{comic.title}</h2>
 									<p className={clsx(
 										"italic",
 										"text-xs",
 										"text-neutral-500",
-										"text-center"
 									)}>
-										Last updated on {comic.date_updated}
+										Created on {comic.date_created}
 									</p>
+									{hasAuthors &&
+										<p className={clsx(
+											"italic",
+											"text-xs",
+											"text-neutral-500",
+											"mb-2",
+										)}>
+											By&nbsp;
+											{comic.authors && comic.authors.map((a, index) => {
+												let join = comic.authors!.length > 1 ? ", " : ""
+												join = index == comic.authors!.length - 2 ? " and " : join
+												join = index == comic.authors!.length - 1 ? "" : join
+												return <span key={index}>
+													<a href="#" className={clsx(
+														"font-semibold",
+														"text-comic-accent-500",
+													)}>
+														{a.username}
+													</a>
+													{join}
+												</span>
+											}
+											)}
+										</p>
+									}
 								</div>
-							</section>
-						</DisclosurePanel>
-					</div>
-				</Disclosure>
-				{
-					/**------------------------------
-					 * PREV NAVIGATION
-					 * - Instead of linking directly to the previous page,
-					 *   we are going back 1 step in browser history
-					 * - This is because pages can have multiple `prev_pages`
-					 */
-				}
+							</header>
 
-			</div >
+							{/* Comic Info Body */}
+							<div className={clsx(
+							)}>
+								{comic.description &&
+									<p className={clsx(
+										"my-4",
+
+									)}>
+										{comic.description}
+									</p>
+								}
+								<p className={clsx(
+									"italic",
+									"text-xs",
+									"text-neutral-500",
+									"text-center"
+								)}>
+									Last updated on {comic.date_updated}
+								</p>
+							</div>
+						</section>
+					</DisclosurePanel>
+				</div>
+			</Disclosure>
+		</>
+	}
+
+	function ComicPageHeaderNav() {
+		return <>
 			{
 				hasPrevPage &&
 				<>
@@ -738,99 +832,6 @@ export default function ComicPageUI({
 					</div>
 				</>
 			}
-		</div >
-		{/* eo Header */}
-
-		{/* COMIC PAGE - CONTENT WRAPPER */}
-		<div className={
-			clsx(
-				"pt-13.5", // Comic Nav Menu
-				hasBanner && "pt-20",
-				hasPrevPage && "pt-20",
-				"md:pt-22.5",
-				hasBanner && "md:pt-28",
-				hasPrevPage && "md:pt-28",
-			)
-		} >
-			{/* COMIC PAGE - CONTENT BODY */}
-			<article className={
-				clsx(
-					// Structure
-					"flex",
-					"flex-col",
-					"gap-6",
-					// Spacing
-					"py-6",
-					// Appearance
-					"bg-base-1",
-					"dark:bg-neutral-700",
-					"text-center",
-					"md:rounded",
-				)
-			} >
-				<ComicPageTitle className={
-					clsx(
-						"px-6",
-						"max-w-prose",
-						"mx-auto",
-						"text-2xl",
-						"font-bold",
-						"font-display",
-						"text-center"
-					)
-				} />
-
-				<ComicPanels />
-				<UserFeedbackSection />
-				<ComicPageNavigation />
-			</article >
-		</div >
-	</>
-
-	/**---------------------------------------------------------------------- */
-	// HELPER FUNCTIONS
-	function getComicPageVars(
-		comic_panels:
-			typeof page.comic_panels
-	) {
-		return comic_panels ? comic_panels.flatMap(p =>
-			p.variables && p.variables.length > 0 ?
-				p.variables : []
-		) : null
-	}
-
-	function makeComicVarsUrl({
-		comicVars,
-		userVars
-	}: {
-		comicVars: ReturnType<typeof getComicPageVars>
-		userVars?: Record<string, string | null>
-	}) {
-		// Build a URLSearchParams object that handles all the syntax/concatenation automatically
-		// - comicVars is possibly null, so have an empty array as fallback
-		const entries: [string, string][] = (comicVars ?? []).map(
-			({ slug, default_value }): [string, string] => [
-				slug,
-				userVars?.[slug] ?? default_value
-			]
-		)
-
-		const params = new URLSearchParams(entries)
-
-		// Return it as a string
-		return params.size === 0 ? "" : `?${params.toString()}`
-	}
-
-	/**---------------------------------------------------------------------- */
-	// TEMPLATE FUNCTIONS
-
-	/**-----------------------------------
-		 * SECTION: COMIC PAGE HEADER
-		 * ---
-		 */
-
-	function ComicPageHeader() {
-		return <>
 		</>
 	}
 
