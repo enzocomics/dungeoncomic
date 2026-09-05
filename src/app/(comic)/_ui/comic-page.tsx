@@ -19,7 +19,7 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 // CONTEXT
 import { useComicContext } from "./context"
 // ACTIONS
-import { saveUserVarsCookie, saveUserVars } from "../_actions/variables"
+import { /*saveUserVarsCookie,*/ saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
@@ -1181,6 +1181,8 @@ export default function ComicPageUI({
 						</button>
 					</div>
 				}
+				<input type="hidden" name="pageVars" value={JSON.stringify(pageVars)} />
+				<input type="hidden" name="comicPage" value={JSON.stringify(page)} />
 			</VariablesForm >
 		</>
 
