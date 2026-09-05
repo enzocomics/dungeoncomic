@@ -378,21 +378,32 @@ export default function ComicPageUI({
 					)}>
 					<DisclosureButton className={clsx(
 						"group",
-						"peer",
+						// Structure
+						"relative",
 						"flex",
 						"max-w-full",
 						"justify-center",
-						"cursor-pointer",
-						"data-open:bg-comic-accent-600",
-						"dark:data-open:bg-comic-accent-700",
-
+						// Spacing
+						"z-45",
+						"ml-5",
 						"pl-3 pr-1.5",
 						"py-1.5",
+						// Functionality
+						"cursor-pointer",
+						// Appearance
+						"data-open:bg-comic-accent-600",
+						"dark:data-open:bg-comic-accent-700",
 						"rounded-lg",
+						// Hover
+						"hover:duration-0",
+						"hover:bg-comic-accent-700",
+						"active:translate-px",
+						"active:bg-comic-accent-900",
+						// Transition
+						"transition-all",
+						"ease-in-out",
+						"duration-300",
 
-						"ml-5",
-						"relative",
-						"z-45",
 					)}>
 						<div className={clsx(
 							// Structure
@@ -418,9 +429,16 @@ export default function ComicPageUI({
 									"px-1",
 									"text-xs",
 									"text-neutral-500",
+									"group-hover:duration-0",
+									"group-hover:text-white/40",
+									"group-active:text-white/40",
 									"group-data-open:text-white/40",
 									"font-normal",
 									"italic",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
 								)}>
 									by&nbsp;
 									{comic.authors.map((a, index) => {
@@ -431,7 +449,14 @@ export default function ComicPageUI({
 											<span className={clsx(
 												"font-semibold",
 												"text-neutral-400",
+												"group-hover:duration-0",
+												"group-hover:text-white/70",
+												"group-active:text-white/70",
 												"group-data-open:text-white/70",
+												// Transition
+												"transition-all",
+												"ease-in-out",
+												"duration-300",
 											)}>
 												{a.username}
 											</span>
@@ -443,8 +468,50 @@ export default function ComicPageUI({
 							}
 						</div>
 
-						<Icon name="caretDown" className="text-comic-accent-500 size-5 ml-1 group-data-open:hidden shrink-0" />
-						<Icon name="xmark" className="text-white size-5 p-0.5 ml-1 hidden group-data-open:inline shrink-0" />
+						<span className={clsx(
+							"relative",
+							"size-5",
+							"ml-1",
+						)}>
+							<Icon name="caretDown" className={clsx(
+								"size-5",
+								"shrink-0",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"duration-300",
+								"group-hover:duration-0",
+								// Diff
+								"opacity-100",
+								"text-comic-accent-500",
+								"group-hover:text-white",
+
+								"group-data-open:opacity-0",
+								"group-data-open:rotate-45",
+								// "group-data-open:hidden",
+							)} />
+							<Icon name="xmark" className={clsx(
+								"text-white",
+								"size-5",
+								"p-0.5",
+								"shrink-0",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"duration-300",
+								//
+								"absolute",
+								"left-0",
+								"top-0",
+								"opacity-0",
+								"-rotate-45",
+								"group-hover:duration-0",
+								// Diff
+								"group-data-open:group-hover:duration-100",
+								"group-data-open:opacity-100",
+								"group-data-open:rotate-0",
+							)} />
+						</span>
 
 					</DisclosureButton>
 					<DisclosurePanel transition className={clsx(
@@ -536,7 +603,6 @@ export default function ComicPageUI({
 								)}>
 									<h2 className={clsx(
 										"w-full",
-										"peer-visible:ml-5",
 										"font-semibold",
 										"text-lg",
 										"mb-2",
