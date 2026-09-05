@@ -7,6 +7,8 @@ import slugify from "@/lib/slugify"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { userVariablesSchema } from "@/lib/zod/schemas/comic"
 
 /** ----------------------------------------------------------------- */
 /**
@@ -17,6 +19,27 @@ import { getComic, getComicPage } from "@/lib/directus/get-comics"
  * @param params.page - the Directus PageCollection item object
  *
  */
+
+export async function saveUserVars(prevState: unknown, formData: FormData) {
+	// VALIDATION
+	const submission = parseWithZod(formData, { schema: userVariablesSchema() })
+
+	// SAVE USER VARIABLES TO COOKIES
+	try {
+		// Do stuff here
+	} catch (err: any) {
+		// RETURN ERROR IF UNSUCCESFUL
+		const error = err.errors?.[0]
+		const code = error?.extensions?.code
+		const reason = error?.message
+		return submission.reply({
+			formErrors: [reason],
+		})
+	}
+	// RETURN REPLY so that its last value may be used
+	return submission.reply()
+}
+
 export async function saveUserVarsCookie({
 	vars,
 	page,

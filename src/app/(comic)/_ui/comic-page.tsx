@@ -10,7 +10,7 @@ import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
-import { userSuggestionSchema, userVariablesSchema } from "@/lib/zod/schemas/comic"
+import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
@@ -19,7 +19,7 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 // CONTEXT
 import { useComicContext } from "./context"
 // ACTIONS
-import { saveUserVarsCookie } from "../_actions/variables"
+import { saveUserVarsCookie, saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
@@ -31,6 +31,9 @@ import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import z from "zod"
+import { SomeType } from "zod/v4/core"
+import slugify from "@/lib/slugify"
 
 /**----------------------------------- */
 // TYPES
@@ -940,17 +943,50 @@ export default function ComicPageUI({
 		 */
 
 	function ComicPanels() {
-		// const [form, fields] = useForm({
-		// 	onValidate({ formData }) {
-		// 		return parseWithZod(formData, { userVariablesSchema() })
-		// 	}
-		// })
+		// VALIDATION
+		const schema = z.object({
+			// userVariables: z.array(z.string())
+			test: z.string()
+		})
 
+		// VALIDATION
+		const [lastResult, action] = useActionState(saveUserVars, undefined)
 
+		const [form, fields] = useForm({
+			lastResult,
+			onValidate({ formData }) {
+				return parseWithZod(formData, { schema })
+			},
+			onSubmit(e, { formData }) {
+				const test = formData.get("test")
+				router.push(`?test=${test}`)
+				// router.push("?blarg=flarg")
+			},
+			shouldValidate: "onBlur",
+			shouldRevalidate: "onInput",
+		})
 		return <>
+			<form
+				id={form.id}
+				action={action}
+				onSubmit={form.onSubmit}
+			>
+				<input
+					id={fields.test.id}
+					type="text"
+					name={fields.test.name}
+
+				/>
+				<span>{fields.test.errors}</span>
+				<button type="submit">Submit</button>
+			</form>
 			<VariablesForm
-				// id={form.id}
 				varsExist={varsExist}
+				// id={form.id}
+				// onSubmit={form.onSubmit}
+				// action={action}
+				// method="GET"
+				noValidate
 				className={clsx(
 					"flex",
 					"flex-col",
@@ -971,12 +1007,14 @@ export default function ComicPageUI({
 								(varsSubmitted && p.place_after_variables_submitted)
 							)
 								// SINGLE COMIC PANEL
-								return <li key={index} className={clsx(
-									"flex",
-									"flex-col",
-									"gap-y-6",
-									"pb-6",
-								)}>
+								return <li
+									key={index}
+									className={clsx(
+										"flex",
+										"flex-col",
+										"gap-y-6",
+										"pb-6",
+									)}>
 									{p.panel_image &&
 										<Image
 											className={clsx(
@@ -1022,12 +1060,14 @@ export default function ComicPageUI({
 										)}>
 
 											{p.variables.map((v, index) => {
-												return <div key={index} className={clsx(
-													"p-4",
-													"bg-comic-accent-100",
-													"dark:bg-comic-accent-900",
-													"rounded",
-												)}>
+												return <div
+													key={index}
+													className={clsx(
+														"p-4",
+														"bg-comic-accent-100",
+														"dark:bg-comic-accent-900",
+														"rounded",
+													)}>
 													<p className={clsx(
 														"text-center",
 													)}><label>{v.prompt || v.name}</label></p>
@@ -1110,6 +1150,8 @@ export default function ComicPageUI({
 				}
 			</VariablesForm >
 		</>
+
+
 	}
 
 	// Conditionally render the form if variables exist
@@ -1123,9 +1165,9 @@ export default function ComicPageUI({
 	}) {
 		// Render Form tags if vars exist
 		if (varsExist)
-			return <Form action="" {...props}>
+			return <form action="" {...props}>
 				{children}
-			</Form>
+			</form>
 		// Otherwise, render nothing
 		else if (!varsExist)
 			return children
