@@ -243,7 +243,7 @@ export default function ComicPageUI({
 				"text-white",
 			)}
 		>
-			{/* The "filled/backdrop" part of the header */}
+			{/* COMIC PAGE HEADER - FILL */}
 			<div
 				className={clsx(
 					// 
@@ -363,7 +363,6 @@ export default function ComicPageUI({
 
 	function ComicPageHeaderTitle() {
 		return <>
-
 			<Disclosure>
 				<div
 					className={clsx(
@@ -808,6 +807,8 @@ export default function ComicPageUI({
 															// Appearance
 															"p-2",
 															"text-white/90",
+															"bg-comic-accent-500",
+															"visited:bg-neutral-500",
 															"hover:text-white",
 															"hover:bg-comic-accent-900",
 															"rounded",

@@ -2,7 +2,6 @@
 
 :root {
 	main a {
-		@apply font-semibold underline;
 	}
 
 	/* DEFAULT ACCENT COLOUR: OLIVE */
