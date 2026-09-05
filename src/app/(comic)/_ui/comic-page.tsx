@@ -129,24 +129,24 @@ export default function ComicPageUI({
 
 	/**----------------------------------- */
 	// Submit the User Variables
-	useEffect(() => {
+	// useEffect(() => {
 
-		// Check if variables have been submitted to this page and save them to cookie
-		const saveUserVariables = async () => {
-			// Save Variables if they have been submitted
-			if (varsSubmitted) {
-				// if vars already exist, put them together so they don't get overwritten
-				await saveUserVarsCookie({
-					vars: {
-						...userVariables,
-						...submittedUserVars
-					},
-					page: page
-				})
-			}
-		}
-		saveUserVariables()
-	}, [pathname, searchParams.toString()])
+	// 	// Check if variables have been submitted to this page and save them to cookie
+	// 	const saveUserVariables = async () => {
+	// 		// Save Variables if they have been submitted
+	// 		if (varsSubmitted) {
+	// 			// if vars already exist, put them together so they don't get overwritten
+	// 			await saveUserVarsCookie({
+	// 				vars: {
+	// 					...userVariables,
+	// 					...submittedUserVars
+	// 				},
+	// 				page: page
+	// 			})
+	// 		}
+	// 	}
+	// 	saveUserVariables()
+	// }, [pathname, searchParams.toString()])
 
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
@@ -981,52 +981,35 @@ export default function ComicPageUI({
 				return parseWithZod(formData, { schema })
 			},
 			onSubmit(e, { formData }) {
-				// const things = formData.get("tests")
-				// console.log(things)
-				// const thing1 = formData.get("tests.thing1")
-				// const thing2 = formData.get("tests.thing2")
-				// router.push(`?thing1=${thing1}&thing2=${thing2}`)
-				// router.push("?blarg=flarg")
+				// Make a new search params object
+				const params = new URLSearchParams()
+				// Iterate through the variables and dynamically get each one based on its id
+				Object.values(pageVars).forEach(v => {
+					const slug = pageVars[v.id].slug
+					const value = formData.get(`userVars.var${v.id}`)
+					// add each value to the search params object
+					if (value !== null) params.set(slug, String(value))
+				})
+
+				// build a query string from the params
+				const queryString = params.toString()
+
+				// Push the string to the router
+				router.push(`?${queryString}`)
 			},
 			shouldValidate: "onBlur",
 			shouldRevalidate: "onInput",
 		})
-		const tests = fields.userVars.getFieldset()
-		const varId = 1
-		console.log(tests[`var${varId}`].id)
+		// Get the fields from the schema
+		const userVarsFields = fields.userVars.getFieldset()
 
+		// RENDER
 		return <>
-			<form
-				id={form.id}
-				action={action}
-				onSubmit={form.onSubmit}
-			>
-				{page.comic_panels && page.comic_panels.map((p, pIndex) => (
-					<div key={pIndex}>
-						{p.variables && p.variables.length > 0 && p.variables.map((v, vIndex) => (
-							<p key={vIndex}>
-								{v.slug}
-							</p>
-						))
-						}
-					</div>
-				))}
-				<input
-					id={tests.thing1.id}
-					type="text"
-					name={tests.thing1.name}
-				/>
-				<span>{tests.thing1.errors}</span>
-
-				<span>{tests.thing2.errors}</span>
-				<button type="submit">Submit</button>
-			</form>
 			<VariablesForm
 				varsExist={varsExist}
-				// id={form.id}
-				// onSubmit={form.onSubmit}
-				// action={action}
-				// method="GET"
+				id={form.id}
+				onSubmit={form.onSubmit}
+				action={action}
 				noValidate
 				className={clsx(
 					"flex",
@@ -1041,7 +1024,7 @@ export default function ComicPageUI({
 						"flex-col",
 						"gap-y-6",
 					)}>
-						{page.comic_panels.map((p, index) => {
+						{page.comic_panels.map((p, pIndex) => {
 							// Conditionally render comic panels before OR after variables are submitted based on page option
 							if (
 								(!varsSubmitted && !p.place_after_variables_submitted) ||
@@ -1049,7 +1032,7 @@ export default function ComicPageUI({
 							)
 								// SINGLE COMIC PANEL
 								return <li
-									key={index}
+									key={pIndex}
 									className={clsx(
 										"flex",
 										"flex-col",
@@ -1100,26 +1083,35 @@ export default function ComicPageUI({
 											"max-w-prose",
 										)}>
 
-											{p.variables.map((v, index) => {
+											{p.variables.map((v, vIndex) => {
 												return <div
-													key={index}
+													key={vIndex}
 													className={clsx(
 														"p-4",
 														"bg-comic-accent-100",
 														"dark:bg-comic-accent-900",
 														"rounded",
 													)}>
-													<p className={clsx(
-														"text-center",
-													)}><label>{v.prompt || v.name}</label></p>
-													<p>&gt; <input className={clsx(
-														"p-2",
-														"bg-white",
-														"text-black",
-														"w-9/10",
-													)} type="text" name={v.slug} defaultValue={
-														userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
-													} required></input></p>
+													<label>{v.prompt || v.name}</label>
+
+													<input
+														id={userVarsFields[`var${v.id}`].id}
+														name={userVarsFields[`var${v.id}`].name}
+														className={clsx(
+															"p-2",
+															"bg-white",
+															"text-black",
+															"w-9/10",
+														)}
+														type="text"
+														defaultValue={
+															userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
+														}
+														required
+													>
+													</input>
+													<p>{userVarsFields[`var${v.id}`].errors}</p>
+
 												</div>
 											})}
 
