@@ -10,7 +10,7 @@ import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
-import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
+import { userSuggestionSchema, userVariablesSchema } from "@/lib/zod/schemas/comic"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
@@ -19,11 +19,11 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 // CONTEXT
 import { useComicContext } from "./context"
 // ACTIONS
-import { saveUserVarsCookie } from "../_actions/cookies"
+import { saveUserVarsCookie } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
-import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
+// import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
 import { Radio, RadioField, RadioGroup } from "@/components/radio"
 import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
 import { Link } from "@/components/link"
@@ -415,12 +415,12 @@ export default function ComicPageUI({
 							"text-sm",
 							"text-ellipsis",
 						)}>
-							<h1 className={clsx(
+							<span className={clsx(
 								"inline",
 								"font-semibold",
 							)}>
 								{comic.title}
-							</h1>
+							</span>
 
 							{comic.authors && comic.authors.length > 0 &&
 								<span className={clsx(
@@ -940,12 +940,23 @@ export default function ComicPageUI({
 		 */
 
 	function ComicPanels() {
+		// const [form, fields] = useForm({
+		// 	onValidate({ formData }) {
+		// 		return parseWithZod(formData, { userVariablesSchema() })
+		// 	}
+		// })
+
+
 		return <>
-			<VariablesForm varsExist={varsExist} className={clsx(
-				"flex",
-				"flex-col",
-				"gap-y-6",
-			)}>
+			<VariablesForm
+				// id={form.id}
+				varsExist={varsExist}
+				className={clsx(
+					"flex",
+					"flex-col",
+					"gap-y-6",
+				)}
+			>
 				{page.comic_panels &&
 					// PANEL LIST
 					<ul className={clsx(

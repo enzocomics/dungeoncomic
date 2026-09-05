@@ -11,7 +11,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import { comicPageMetadata, notFoundMetadata } from "../../_ui/metadata"
 import ComicPageUI from "../../_ui/comic-page"
-import { getUserVarsCookie } from "../../_actions/cookies"
+import { getUserVarsCookie } from "../../_actions/variables"
 import { CommentsSection } from "../../_ui/comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { readItems } from "@directus/sdk"
