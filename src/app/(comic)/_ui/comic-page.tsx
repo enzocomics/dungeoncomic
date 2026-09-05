@@ -741,11 +741,10 @@ export default function ComicPageUI({
 		</div >
 		{/* eo Header */}
 
-		{/* Main Body */}
-		< div className={
+		{/* COMIC PAGE - CONTENT WRAPPER */}
+		<div className={
 			clsx(
-				// Comic Nav Menu
-				"pt-13.5",
+				"pt-13.5", // Comic Nav Menu
 				hasBanner && "pt-20",
 				hasPrevPage && "pt-20",
 				"md:pt-22.5",
@@ -753,8 +752,8 @@ export default function ComicPageUI({
 				hasPrevPage && "md:pt-28",
 			)
 		} >
-			{/* CONTENT */}
-			< div className={
+			{/* COMIC PAGE - CONTENT BODY */}
+			<article className={
 				clsx(
 					// Structure
 					"flex",
@@ -769,293 +768,22 @@ export default function ComicPageUI({
 					"md:rounded",
 				)
 			} >
-				<h4 className={clsx(
-					"px-6",
-					"max-w-prose",
-					"mx-auto",
-					"text-2xl",
-					"font-bold",
-					"font-display",
-					"text-center"
-				)}>
-					{replaceComicVariables({
-						content: (
-							varsExist && varsSubmitted ?
-								page.variables_submit_button_text || `${t("next")} »` :
-								page.title
-						),
-						variables: variables,
-						userVariables: userVariables
-					})
-					}
-				</h4>
+				<ComicPageTitle className={
+					clsx(
+						"px-6",
+						"max-w-prose",
+						"mx-auto",
+						"text-2xl",
+						"font-bold",
+						"font-display",
+						"text-center"
+					)
+				} />
 
-				{
-					/**------------------------------
-					 *	DISPLAY THE COMIC PANELS
-					 * ---
-					 * - Do not show if variables have been submitted correctly
-					 */
-				}
-				<VariablesForm varsExist={varsExist} className={clsx(
-					"flex",
-					"flex-col",
-					"gap-y-6",
-				)}>
-					{page.comic_panels ? page.comic_panels.map((p, index) => {
-						// Conditionally render comic panels before OR after variables are submitted based on page option
-						if (
-							(!varsSubmitted && !p.place_after_variables_submitted) ||
-							(varsSubmitted && p.place_after_variables_submitted)
-						)
-							// Render
-							return <div key={index} className={clsx(
-								"flex",
-								"flex-col",
-								"gap-y-6",
-							)}>
-								{p.panel_image &&
-									<p><Image
-										className={clsx(
-											"mx-auto",
-										)}
-										src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
-										width={`${p.panel_image.width}`}
-										height={`${p.panel_image.height}`}
-										alt={`${p.panel_image.description}`}
-										loading="eager"
-									/></p>
-								}
-								{/* PANEL TEXT */}
-								<div className={clsx(
-									"py-6",
-									"px-6",
-									"prose",
-									"max-w-prose",
-									"mx-auto",
-
-								)}
-									// TODO: You better freakin' sanitize this
-									dangerouslySetInnerHTML={{
-										__html: replaceComicVariables({
-											content: p.panel_description,
-											variables: variables,
-											userVariables: userVariables,
-											html: true
-										})
-									}}
-								>
-								</div>
-								{/* VARIABLES */}
-								{p.variables && p.variables.length > 0 ?
-									<section className={clsx(
-										"flex",
-										"flex-col",
-										"gap-y-2",
-										"px-6",
-										"w-full",
-										"mx-auto",
-										"max-w-prose",
-									)}>
-
-										{p.variables.map((v, index) => {
-											return <div key={index} className={clsx(
-												"p-4",
-												"bg-comic-accent-100",
-												"dark:bg-comic-accent-900",
-												"rounded",
-											)}>
-												<p className={clsx(
-													"text-center",
-												)}><label>{v.prompt || v.name}</label></p>
-												<p>&gt; <input className={clsx(
-													"p-2",
-													"bg-white",
-													"text-black",
-													"w-9/10",
-												)} type="text" name={v.slug} defaultValue={
-													userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
-												} required></input></p>
-											</div>
-										})}
-
-									</section>
-									: null}
-							</div>
-					}) : null}
-
-					{
-						/**------------------------------
-						 * SUBMIT BUTTON
-						 * ---
-						 * - Show ONLY if variables exist BUT they haven't been submitted
-						 */
-					}
-					{(varsExist && !varsSubmitted) &&
-						<div className={clsx(
-							"px-6",
-							"prose",
-							"w-full",
-							"max-w-prose",
-							"mx-auto",
-						)}>
-							<button type="submit" className={clsx(
-								// structure
-								"p-2",
-								"w-full",
-								"flex",
-								"items-center",
-								"justify-center",
-								// Appearance
-								"bg-comic-accent-500",
-								"rounded",
-								"text-white",
-								"text-sm",
-								"font-display",
-								"font-semibold",
-								"cursor-pointer",
-								"border-y-2",
-								"border-t-white/40",
-								"border-b-black/20",
-								// States
-								"hover:duration-0",
-								"hover:bg-comic-accent-700",
-								"active:translate-px",
-								"active:bg-comic-accent-900",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
-							)}>
-								<span className={clsx(
-									"ml-5",
-									"text-pretty",
-									"grow",
-								)}>
-									{`${page.variables_submit_button_text || t("next")}`}
-								</span>
-								<Icon name="play" className={clsx(
-									"ml-1",
-									"size-4",
-								)} />
-							</button>
-						</div>
-					}
-				</VariablesForm>
-
-				{
-					(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-					<UserFeedbackSection />
-				}
-				{
-					/**------------------------------
-					 * NAVIGATION BLOCK
-					 * -
-					 */
-				}
-				<section className={clsx(
-					"flex",
-					"flex-col",
-					"gap-y-6",
-				)}>
-					{
-						/**------------------------------
-						 *	NEXT NAVIGATION
-						 * ---
-						 * - Display IF variables don't exist at all,
-						 * - OR if variables exist AND they've been submitted
-						 */
-					}
-					{(!varsExist || (varsExist && varsSubmitted)) &&
-						<div className={clsx(
-							"flex",
-							"flex-col",
-							"gap-y-2",
-							"px-6",
-							"w-full",
-							"mx-auto",
-							"max-w-prose",
-						)}>
-							{hasNextPage &&
-								<>
-									<ul className={clsx(
-										"flex",
-										"flex-col",
-										"gap-2",
-									)}>
-										{page?.next_pages?.map((n, index) =>
-											<li key={index} className={clsx(
-											)}>
-												<Link className={clsx(
-													// structure
-													"p-2",
-													"w-full",
-													"flex",
-													"items-center",
-													"justify-center",
-													// Appearance
-													"bg-comic-accent-500",
-													"visited:bg-neutral-500",
-													"rounded",
-													"text-white",
-													"text-sm",
-													"font-display",
-													"font-semibold",
-													"cursor-pointer",
-													"border-y-2",
-													"border-t-white/40",
-													"border-b-black/20",
-													// States
-													"hover:duration-0",
-													"hover:bg-comic-accent-700",
-													"active:translate-px",
-													"active:bg-comic-accent-900",
-													// Transition
-													"transition-all",
-													"ease-in-out",
-													"duration-300",
-												)}
-													onClick={() => { setNavClickType("next") }}
-													href={`./${n.linked_pages_id.comic_pagenum}`}>
-													<span className={clsx(
-														"grow",
-														"text-pretty",
-													)}>
-														<span>{
-															replaceComicVariables({
-																content: n.linked_pages_id.title,
-																variables: variables,
-																userVariables: userVariables
-															})
-														}</span><br />
-														{n.linked_pages_id.subtitle &&
-															<p>{
-																replaceComicVariables({
-																	content: n.linked_pages_id.subtitle,
-																	variables: variables,
-																	userVariables: userVariables
-																})
-															}</p>
-														}
-													</span>
-													<Icon name="play" className={clsx(
-														"ml-1",
-														"size-4",
-													)} />
-												</Link>
-											</li>
-										)}
-									</ul>
-								</>
-							}
-						</div>
-					}
-
-
-				</section >
-
-
-			</div >
+				<ComicPanels />
+				<UserFeedbackSection />
+				<ComicPageNavigation />
+			</article >
 		</div >
 	</>
 
@@ -1094,12 +822,208 @@ export default function ComicPageUI({
 	}
 
 	/**---------------------------------------------------------------------- */
-	// LAYOUT FUNCTIONS
+	// TEMPLATE FUNCTIONS
 
 	/**-----------------------------------
-	 * Conditionally Render the Form depending on if variables exist
-	 * ---
-	 */
+		 * SECTION: COMIC PAGE HEADER
+		 * ---
+		 */
+
+	function ComicPageHeader() {
+		return <>
+		</>
+	}
+
+	/**-----------------------------------
+		 * SECTION: COMIC PAGE
+		 * ---
+		 */
+
+	function ComicPageTitle({
+		...props
+	}: ComponentPropsWithoutRef<"h1">) {
+		return <h1 {...props}>
+			{replaceComicVariables({
+				content: (
+					varsExist && varsSubmitted ?
+						page.variables_submit_button_text || `${t("next")} »` :
+						page.title
+				),
+				variables: variables,
+				userVariables: userVariables
+			})
+			}
+		</h1>
+	}
+
+	/**-----------------------------------
+		 * SECTION: COMIC PANELS
+		 * ---
+		 */
+
+	function ComicPanels() {
+		return <>
+			<VariablesForm varsExist={varsExist} className={clsx(
+				"flex",
+				"flex-col",
+				"gap-y-6",
+			)}>
+				{page.comic_panels &&
+					// PANEL LIST
+					<ul className={clsx(
+						"flex",
+						"flex-col",
+						"gap-y-6",
+					)}>
+						{page.comic_panels.map((p, index) => {
+							// Conditionally render comic panels before OR after variables are submitted based on page option
+							if (
+								(!varsSubmitted && !p.place_after_variables_submitted) ||
+								(varsSubmitted && p.place_after_variables_submitted)
+							)
+								// SINGLE COMIC PANEL
+								return <li key={index} className={clsx(
+									"flex",
+									"flex-col",
+									"gap-y-6",
+									"pb-6",
+								)}>
+									{p.panel_image &&
+										<Image
+											className={clsx(
+												"mx-auto",
+											)}
+											src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
+											width={`${p.panel_image.width}`}
+											height={`${p.panel_image.height}`}
+											alt={`${p.panel_image.description}`}
+											loading="eager"
+										/>
+									}
+									{/* PANEL TEXT */}
+									<div className={clsx(
+										"py-6",
+										"px-6",
+										"prose",
+										"max-w-prose",
+										"mx-auto",
+
+									)}
+										// TODO: You better freakin' sanitize this
+										dangerouslySetInnerHTML={{
+											__html: replaceComicVariables({
+												content: p.panel_description,
+												variables: variables,
+												userVariables: userVariables,
+												html: true
+											})
+										}}
+									>
+									</div>
+									{/* VARIABLES */}
+									{p.variables && p.variables.length > 0 ?
+										<section className={clsx(
+											"flex",
+											"flex-col",
+											"gap-y-2",
+											"px-6",
+											"w-full",
+											"mx-auto",
+											"max-w-prose",
+										)}>
+
+											{p.variables.map((v, index) => {
+												return <div key={index} className={clsx(
+													"p-4",
+													"bg-comic-accent-100",
+													"dark:bg-comic-accent-900",
+													"rounded",
+												)}>
+													<p className={clsx(
+														"text-center",
+													)}><label>{v.prompt || v.name}</label></p>
+													<p>&gt; <input className={clsx(
+														"p-2",
+														"bg-white",
+														"text-black",
+														"w-9/10",
+													)} type="text" name={v.slug} defaultValue={
+														userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
+													} required></input></p>
+												</div>
+											})}
+
+										</section>
+										: null}
+								</li>
+						})
+						}
+					</ul>
+				}
+
+
+				{
+					/**------------------------------
+					 * SUBMIT BUTTON
+					 * ---
+					 * - Show ONLY if variables exist BUT they haven't been submitted
+					 */
+				}
+				{(varsExist && !varsSubmitted) &&
+					<div className={clsx(
+						"px-6",
+						"prose",
+						"w-full",
+						"max-w-prose",
+						"mx-auto",
+					)}>
+						<button type="submit" className={clsx(
+							// structure
+							"p-2",
+							"w-full",
+							"flex",
+							"items-center",
+							"justify-center",
+							// Appearance
+							"bg-comic-accent-500",
+							"rounded",
+							"text-white",
+							"text-sm",
+							"font-display",
+							"font-semibold",
+							"cursor-pointer",
+							"border-y-2",
+							"border-t-white/40",
+							"border-b-black/20",
+							// States
+							"hover:duration-0",
+							"hover:bg-comic-accent-700",
+							"active:translate-px",
+							"active:bg-comic-accent-900",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+						)}>
+							<span className={clsx(
+								"ml-5",
+								"text-pretty",
+								"grow",
+							)}>
+								{`${page.variables_submit_button_text || t("next")}`}
+							</span>
+							<Icon name="play" className={clsx(
+								"ml-1",
+								"size-4",
+							)} />
+						</button>
+					</div>
+				}
+			</VariablesForm >
+		</>
+	}
+
+	// Conditionally render the form if variables exist
 	function VariablesForm({
 		varsExist,
 		children,
@@ -1120,7 +1044,115 @@ export default function ComicPageUI({
 	}
 
 	/**-----------------------------------
-	 * User Feedback Section
+	 * SECTION: COMIC PAGE NAVIGATION (BOTTOM)
+	 * ---
+	 */
+
+	function ComicPageNavigation() {
+		return <>
+			<section className={clsx(
+				"flex",
+				"flex-col",
+				"gap-y-6",
+			)}>
+				{
+					/**------------------------------
+					 *	NEXT NAVIGATION
+					 * ---
+					 * - Display IF variables don't exist at all,
+					 * - OR if variables exist AND they've been submitted
+					 */
+				}
+				{(!varsExist || (varsExist && varsSubmitted)) &&
+					<div className={clsx(
+						"flex",
+						"flex-col",
+						"gap-y-2",
+						"px-6",
+						"w-full",
+						"mx-auto",
+						"max-w-prose",
+					)}>
+						{hasNextPage &&
+							<>
+								<ul className={clsx(
+									"flex",
+									"flex-col",
+									"gap-2",
+								)}>
+									{page?.next_pages?.map((n, index) =>
+										<li key={index} className={clsx(
+										)}>
+											<Link className={clsx(
+												// structure
+												"p-2",
+												"w-full",
+												"flex",
+												"items-center",
+												"justify-center",
+												// Appearance
+												"bg-comic-accent-500",
+												"visited:bg-neutral-500",
+												"rounded",
+												"text-white",
+												"text-sm",
+												"font-display",
+												"font-semibold",
+												"cursor-pointer",
+												"border-y-2",
+												"border-t-white/40",
+												"border-b-black/20",
+												// States
+												"hover:duration-0",
+												"hover:bg-comic-accent-700",
+												"active:translate-px",
+												"active:bg-comic-accent-900",
+												// Transition
+												"transition-all",
+												"ease-in-out",
+												"duration-300",
+											)}
+												onClick={() => { setNavClickType("next") }}
+												href={`./${n.linked_pages_id.comic_pagenum}`}>
+												<span className={clsx(
+													"grow",
+													"text-pretty",
+												)}>
+													<span>{
+														replaceComicVariables({
+															content: n.linked_pages_id.title,
+															variables: variables,
+															userVariables: userVariables
+														})
+													}</span><br />
+													{n.linked_pages_id.subtitle &&
+														<p>{
+															replaceComicVariables({
+																content: n.linked_pages_id.subtitle,
+																variables: variables,
+																userVariables: userVariables
+															})
+														}</p>
+													}
+												</span>
+												<Icon name="play" className={clsx(
+													"ml-1",
+													"size-4",
+												)} />
+											</Link>
+										</li>
+									)}
+								</ul>
+							</>
+						}
+					</div>
+				}
+			</section >
+		</>
+	}
+
+	/**-----------------------------------
+	 * SECTION: USER FEEDBACK
 	 * ---
 	 */
 	function UserFeedbackSection() {
@@ -1212,126 +1244,127 @@ export default function ComicPageUI({
 				 * -
 				 */
 			}
-			<section className={clsx(
-				"bg-pink-100",
-				"dark:bg-pink-800",
-				"p-4",
-				"mt-8",
-			)}>
-				{!session &&
-					<h4
-						className={clsx(
-							"text-2xl"
-						)}>
-						{t.rich("please-login-to-vote", {
-							loginLink: (chunks) => <Link href="/login">{chunks}</Link>
-						})}
-					</h4>
-				}
-				<StatusMessage />
-				<Fieldset
-					disabled={session ? false : true}>
-					<Legend>{replaceComicVariables({
-						content: page.plot_prompt,
-						variables: variables,
-						userVariables: userVariables
-					})}</Legend>
-					<RadioGroup
-						name="suggestions"
-						value={selected}
-						onChange={(selected) => handleClick(selected)}
-						className={clsx(
-						)}>
-						{/* PLOT SUGGESTIONS */}
-						{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
-							// Handle State of the vote numbers
-							const [votes, setVote] = useState(s.votes || 0)
+			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
+				<section className={clsx(
+					"bg-pink-100",
+					"dark:bg-pink-800",
+					"p-4",
+					"mt-8",
+				)}>
+					{!session &&
+						<h4
+							className={clsx(
+								"text-2xl"
+							)}>
+							{t.rich("please-login-to-vote", {
+								loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+							})}
+						</h4>
+					}
+					<StatusMessage />
+					<Fieldset
+						disabled={session ? false : true}>
+						<Legend>{replaceComicVariables({
+							content: page.plot_prompt,
+							variables: variables,
+							userVariables: userVariables
+						})}</Legend>
+						<RadioGroup
+							name="suggestions"
+							value={selected}
+							onChange={(selected) => handleClick(selected)}
+							className={clsx(
+							)}>
+							{/* PLOT SUGGESTIONS */}
+							{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
+								// Handle State of the vote numbers
+								const [votes, setVote] = useState(s.votes || 0)
 
-							useEffect(() => {
-								// Update the vote numbers on-the-fly
-								if (clicked == true) {
-									// +1 to the vote that is selected
-									if (selected == `${s.id}`)
-										setVote(votes + 1)
-									// -1 to the vote the user previously voted on
-									if (userVotedOnID == `${s.id}`)
-										setVote(votes - 1)
-								}
-							}, [selected])
-							// RENDER
-							if (deleteSuggestion !== s.id)
-								return <RadioField
-									key={index}
-									className={clsx(
-										"text-left",
-										"w-2/3",
-										"mx-auto"
-									)}>
-									<Radio value={`${s.id}`} />
-									<Label>
-										{`${s.id}`} -&nbsp;
-										{replaceComicVariables({
-											content: s.title,
-											variables: variables,
-											userVariables: userVariables
-										})}
-										{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-										{page.user_created.id !== s.user_created.id &&
-											<em>&nbsp;&mdash; @{s.user_created.username}</em>
-										}
-										&nbsp;| <strong>{votes}</strong>
-										{(session !== false && session !== undefined) && s.user_created.id == session.id &&
-											<>
-												<Button
-													className={clsx("ml-5")}>
-													{t("edit-suggestion")}
-												</Button>
-												<Button
-													className={clsx("ml-5")}
-													onClick={async () => {
-														deleteUserPlotSuggestion(s.id)
-														setDeleteSuggestion(s.id)
-														setUserHasSubmitted(false)
-														setStatus("success", t("suggestion-deleted"))
-													}}
-												>
-													{t("delete-suggestion")}
-												</Button>
-											</>
-										}
-									</Label>
-								</RadioField>
-						}
-						) : null}
-						{/* 
+								useEffect(() => {
+									// Update the vote numbers on-the-fly
+									if (clicked == true) {
+										// +1 to the vote that is selected
+										if (selected == `${s.id}`)
+											setVote(votes + 1)
+										// -1 to the vote the user previously voted on
+										if (userVotedOnID == `${s.id}`)
+											setVote(votes - 1)
+									}
+								}, [selected])
+								// RENDER
+								if (deleteSuggestion !== s.id)
+									return <RadioField
+										key={index}
+										className={clsx(
+											"text-left",
+											"w-2/3",
+											"mx-auto"
+										)}>
+										<Radio value={`${s.id}`} />
+										<Label>
+											{`${s.id}`} -&nbsp;
+											{replaceComicVariables({
+												content: s.title,
+												variables: variables,
+												userVariables: userVariables
+											})}
+											{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+											{page.user_created.id !== s.user_created.id &&
+												<em>&nbsp;&mdash; @{s.user_created.username}</em>
+											}
+											&nbsp;| <strong>{votes}</strong>
+											{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+												<>
+													<Button
+														className={clsx("ml-5")}>
+														{t("edit-suggestion")}
+													</Button>
+													<Button
+														className={clsx("ml-5")}
+														onClick={async () => {
+															deleteUserPlotSuggestion(s.id)
+															setDeleteSuggestion(s.id)
+															setUserHasSubmitted(false)
+															setStatus("success", t("suggestion-deleted"))
+														}}
+													>
+														{t("delete-suggestion")}
+													</Button>
+												</>
+											}
+										</Label>
+									</RadioField>
+							}
+							) : null}
+							{/* 
 								SUBMIT OWN SUGGESTION
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-						{page.allow_user_suggestions &&
-							!userHasSubmitted &&
-							<RadioField className={clsx(
-								"text-left",
-								"w-2/3",
-								"mx-auto"
-							)}>
-								<Radio value={selectUserSuggestion} />
-								<Label>
-									{t("submit-own-suggestion")}
-								</Label>
-							</RadioField>
-						}
-					</RadioGroup>
+							{page.allow_user_suggestions &&
+								!userHasSubmitted &&
+								<RadioField className={clsx(
+									"text-left",
+									"w-2/3",
+									"mx-auto"
+								)}>
+									<Radio value={selectUserSuggestion} />
+									<Label>
+										{t("submit-own-suggestion")}
+									</Label>
+								</RadioField>
+							}
+						</RadioGroup>
 
-				</Fieldset>
-				{/* 
+					</Fieldset>
+					{/* 
 						SUGGESTION FORM
 				*/}
-				{page.allow_user_suggestions && selected == selectUserSuggestion &&
-					<UserSuggestionForm />
-				}
-			</section>
-
+					{page.allow_user_suggestions && selected == selectUserSuggestion &&
+						<UserSuggestionForm />
+					}
+				</section>
+			}
 		</> // EO UserSuggestionForm() RENDER
 
 		/**----------------------------------- */
@@ -1406,6 +1439,6 @@ export default function ComicPageUI({
 			</>
 		} // EO UserSuggestionForm()
 		/**----------------------------------- */
-	} // EO UserFeedbackSection()
+	}
 
 }

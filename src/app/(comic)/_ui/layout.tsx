@@ -103,13 +103,13 @@ export function ComicLayoutUI({
 					)} />
 			}
 			<NavMenu menu={true} />
-			<div className={clsx(
+			<main className={clsx(
 				"mx-auto",
 				"max-w-6xl",
 				"md:px-6",
 			)}>
 				{children}
-			</div>
+			</main>
 
 		</div>
 	)
