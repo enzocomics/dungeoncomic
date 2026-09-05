@@ -836,6 +836,9 @@ export default function ComicPageUI({
 											"absolute",
 											"z-10",
 											"top-8",
+											"right-0",
+											"sm:left-0",
+											"xs:left-auto",
 											"flex",
 											"flex-col",
 											"gap-y-0.5",
@@ -852,7 +855,7 @@ export default function ComicPageUI({
 											// Transitions
 											"transition-all",
 											"ease-in-out",
-											"origin-left",
+											"origin-right",
 											"scale-100",
 											"opacity-100",
 											"data-closed:opacity-0",
@@ -874,10 +877,17 @@ export default function ComicPageUI({
 															"p-2",
 															"text-white/90",
 															"bg-comic-accent-500",
+															"visited:text-neutral-300",
 															"visited:bg-neutral-500",
 															"hover:text-white",
 															"hover:bg-comic-accent-900",
+															"active:translate-px",
 															"rounded",
+															// Transition
+															"hover:duration-0",
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
 														)}
 														onClick={() => { setNavClickType("prev") }}
 														href={
