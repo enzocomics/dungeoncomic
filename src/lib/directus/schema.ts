@@ -140,6 +140,7 @@ export interface VariablesCollection {
 	description: string | null
 	prompt: string | null
 	// Meta
+	id: number
 	panel_id: ComicPanelsCollection
 }
 

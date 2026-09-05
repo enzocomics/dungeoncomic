@@ -943,10 +943,33 @@ export default function ComicPageUI({
 		 */
 
 	function ComicPanels() {
-		// VALIDATION
+
+		// Get this page's variables
+		const pageVars = Object.fromEntries(
+			(page.comic_panels ?? []) // Iterate through page panels
+				.flatMap((p) => p.variables ?? [])
+				.filter(Boolean) // Collect only valid variables
+				.map((v) => [v.id, v]) // Convert array to an object keyed by `id`
+			/* Outputs:
+				[
+					{ name: "Variable Name", slug: "variable-name", id: 1, etc}
+					{ name: "Another Var Name", slug: "another-var-name", id: 2, etc}
+				]
+			*/
+		)
+
+		// VALIDATION SCHEMA
 		const schema = z.object({
-			// userVariables: z.array(z.string())
-			test: z.string()
+			userVars: z.object(
+				Object.fromEntries(
+					Object.keys(pageVars).map((id) => [`var${id}`, z.string()])
+				)
+			) /* Outputs:
+					{
+						1: z.string(),
+						2: z.string()
+					}
+			*/
 		})
 
 		// VALIDATION
@@ -958,26 +981,44 @@ export default function ComicPageUI({
 				return parseWithZod(formData, { schema })
 			},
 			onSubmit(e, { formData }) {
-				const test = formData.get("test")
-				router.push(`?test=${test}`)
+				// const things = formData.get("tests")
+				// console.log(things)
+				// const thing1 = formData.get("tests.thing1")
+				// const thing2 = formData.get("tests.thing2")
+				// router.push(`?thing1=${thing1}&thing2=${thing2}`)
 				// router.push("?blarg=flarg")
 			},
 			shouldValidate: "onBlur",
 			shouldRevalidate: "onInput",
 		})
+		const tests = fields.userVars.getFieldset()
+		const varId = 1
+		console.log(tests[`var${varId}`].id)
+
 		return <>
 			<form
 				id={form.id}
 				action={action}
 				onSubmit={form.onSubmit}
 			>
+				{page.comic_panels && page.comic_panels.map((p, pIndex) => (
+					<div key={pIndex}>
+						{p.variables && p.variables.length > 0 && p.variables.map((v, vIndex) => (
+							<p key={vIndex}>
+								{v.slug}
+							</p>
+						))
+						}
+					</div>
+				))}
 				<input
-					id={fields.test.id}
+					id={tests.thing1.id}
 					type="text"
-					name={fields.test.name}
-
+					name={tests.thing1.name}
 				/>
-				<span>{fields.test.errors}</span>
+				<span>{tests.thing1.errors}</span>
+
+				<span>{tests.thing2.errors}</span>
 				<button type="submit">Submit</button>
 			</form>
 			<VariablesForm
