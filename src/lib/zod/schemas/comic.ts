@@ -13,6 +13,16 @@ import {
 } from "./fields"
 
 /**----------------------------------- */
+// SCHEMA - USER VARIABLES FORM
+export const userVariablesSchema = (
+	// Pass the translations object from next-intl so they can be used for zod validation errors
+	t?: (arg: string) => string,
+) =>
+	z.object({
+		userVariables: z.array(z.string()),
+	})
+
+/**----------------------------------- */
 // SCHEMA - USER SUGGESTION FORM
 export const userSuggestionSchema = (
 	// Pass the translations object from next-intl so they can be used for zod validation errors
