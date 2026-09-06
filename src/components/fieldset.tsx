@@ -96,19 +96,20 @@ export function ErrorMessage({
 				data-slot="error"
 				{...props}
 				className={clsx(className, clsx(
-					"block",
-					"mt-1",
-					"py-2",
-					"px-2.5",
-					"w-full",
-					"rounded-sm",
-					"dark:border",
-					"dark:border-red-500/25",
-					"bg-red-50",
-					"dark:bg-red-500/15",
-					"text-red-800",
-					"dark:text-red-200",
-					"text-xs",
+					// "block",
+					// "mt-1",
+					// "py-2",
+					// "px-2.5",
+					// "w-full",
+					// "w-full",
+					// "rounded-sm",
+					// "dark:border",
+					// "dark:border-red-500/25",
+					// "bg-red-50",
+					// "dark:bg-red-500/15",
+					// "text-red-800",
+					// "dark:text-red-200",
+					// "text-xs",
 				))}
 			>
 				{errors.map((error, i) => {

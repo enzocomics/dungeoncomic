@@ -1216,6 +1216,7 @@ export default function ComicPageUI({
 														<div
 															className={clsx(
 																"group",
+																"peer",
 																"relative",
 																"py-2",
 																"px-4",
@@ -1232,9 +1233,11 @@ export default function ComicPageUI({
 																	"outline-2",
 																	"outline-red-500",
 																	"focus-within:outline-red-500",
+																	"rounded-b-none",
 																] : [
-																	"focus-within:outline-comic-accent-500",
-																	"dark:focus-within:outline-comic-accent-800",
+																	"outline-none",
+																	"focus-within:outline-none",
+																	"dark:focus-within:outline-none",
 																],
 															)}
 														>
@@ -1343,7 +1346,33 @@ export default function ComicPageUI({
 															}
 														</div>
 
-														<ErrorMessage>{userVarsFields[`var${v.id}`].errors}</ErrorMessage>
+														<ErrorMessage className={
+															clsx(
+																"pt-3",
+																"pb-2",
+																"px-4",
+																// Appearance
+																// "border-2",
+																// "border-red-50",
+																// "peer-has-invalid:bg-red-500",
+																"outline-2",
+																"outline-red-50",
+																"bg-red-50",
+																"rounded-b-sm",
+																"dark:outline-none",
+																"dark:bg-black/10",
+																// Text
+																"text-xs",
+																"text-red-600",
+																"dark:text-white",
+																// Transition
+																"transition-all",
+																"ease-in-out",
+																"duration-300",
+
+															)
+														}
+														>{userVarsFields[`var${v.id}`].errors}</ErrorMessage>
 													</label>
 												</Field>
 											)}
