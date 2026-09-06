@@ -137,8 +137,10 @@ export interface VariablesCollection {
 	name: string
 	slug: string
 	default_value: string
-	description: string | null
+	value_prefix: string | null
+	value_suffix: string | null
 	prompt: string | null
+	description: string | null
 	// Meta
 	id: number
 	panel_id: ComicPanelsCollection

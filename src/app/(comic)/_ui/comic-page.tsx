@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { ComponentPropsWithoutRef, useActionState, useEffect, useState } from "react"
+import React, { ComponentPropsWithoutRef, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -535,7 +535,7 @@ export default function ComicPageUI({
 						// Size & Spacing
 						"max-w-lg",
 						"p-2",
-						"rounded",
+						"rounded-sm",
 						"drop-shadow-2xl",
 						"drop-shadow-neutral-900/50",
 					)}>
@@ -556,7 +556,7 @@ export default function ComicPageUI({
 							"text-sm",
 							"text-base-content",
 							// Appearance
-							"rounded",
+							"rounded-sm",
 							"md:rounded",
 							// Colours
 							"bg-base-1",
@@ -591,7 +591,7 @@ export default function ComicPageUI({
 											"block",
 											"max-w-20",
 											"md:max-w-30",
-											"rounded",
+											"rounded-sm",
 											"mr-1",
 										)}
 									/>
@@ -885,7 +885,7 @@ export default function ComicPageUI({
 															"hover:text-white",
 															"hover:bg-comic-accent-900",
 															"active:translate-px",
-															"rounded",
+															"rounded-sm",
 															// Transition
 															"hover:duration-0",
 															"transition-all",
@@ -962,7 +962,12 @@ export default function ComicPageUI({
 		const schema = z.object({
 			userVars: z.object(
 				Object.fromEntries(
-					Object.keys(pageVars).map((id) => [`var${id}`, z.string()])
+					Object.keys(pageVars).map(
+						(id) => [
+							`var${id}`,
+							z.string().max(64)
+						]
+					)
 				)
 			) /* Outputs:
 					{
@@ -1084,35 +1089,129 @@ export default function ComicPageUI({
 										)}>
 
 											{p.variables.map((v, vIndex) => {
-												return <div
-													key={vIndex}
-													className={clsx(
-														"p-4",
-														"bg-comic-accent-100",
-														"dark:bg-comic-accent-900",
-														"rounded",
-													)}>
-													<label>{v.prompt || v.name}</label>
-
-													<input
-														id={userVarsFields[`var${v.id}`].id}
-														name={userVarsFields[`var${v.id}`].name}
+												return <Field key={vIndex}>
+													<label
+														htmlFor={userVarsFields[`var${v.id}`].id}
 														className={clsx(
-															"p-2",
-															"bg-white",
-															"text-black",
-															"w-9/10",
+															"cursor-pointer",
+															"p-4",
+															// "bg-comic-accent-100",
+															// "dark:bg-comic-accent-900",
+															"bg-neutral-100",
+															"dark:bg-neutral-800/50",
+															"rounded-sm",
+															"flex",
+															"flex-col",
+															// "justify-center",
+															// "w-full",
 														)}
-														type="text"
-														defaultValue={
-															userVariables && userVariables[v.slug] ? userVariables[v.slug] as string : v.default_value
-														}
-														required
 													>
-													</input>
-													<p>{userVarsFields[`var${v.id}`].errors}</p>
+														<div
+															// 
+															className={clsx(
+																// "font-semibold",
+																"pb-2",
+																"px-2",
+																// "text-right",
+																"text-lg/8",
+																"font-copy",
+																"font-medium",
+																// "font-semibold",
+																"content-center",
+																// "w-1/2",
+															)}
+														>
+															{v.prompt || v.name}
+														</div>
+														{/* INPUT */}
+														<div className={clsx(
+															"py-2",
+															"px-4",
+															"max-w-prose",
+															"bg-white",
+															"font-mono",
+															// "border",
+															"rounded",
+															"focus-within:outline-2",
+															userVarsFields[`var${v.id}`].errors ? [
+																"outline-2",
+																"outline-red-500",
+																"focus-within:outline-red-500",
+															] : [
+																"focus-within:outline-comic-accent-500",
+															],
+														)}
+															onClick={() => { console.log("sup") }}
+														>
+															{v.value_prefix &&
+																<span className={clsx(
+																	"inline",
+																	"text-neutral-400",
+																)}>
+																	{v.value_prefix}
+																</span>
+															}
+															<VariableInput
+																className={clsx(
+																	// Structure
+																	"inline-block",
+																	// Size
+																	"min-w-10",
+																	"max-w-full",
+																	// Appearance
+																	(v.value_prefix || v.value_suffix) && "border-b-2",
+																	"focus:text-comic-accent-500",
+																	"focus:border-b-comic-accent-800",
+																	"focus:outline-none",
 
-												</div>
+																	// "py-2",
+																	"text-black",
+																	"text-center",
+																	// ERRORS
+																	(v.value_prefix || v.value_suffix)
+																		&& userVarsFields[`var${v.id}`].errors ? [
+																		"outline-2",
+																		"outline-red-500",
+																		"-outline-offset-2",
+																		"outline-dashed",
+																		"rounded",
+																		"border-b-transparent",
+																		"focus:rounded-none",
+																	] : [
+																		"border-b-black",
+																	],
+																)}
+																maxLength={65}
+																id={userVarsFields[`var${v.id}`].id}
+																name={userVarsFields[`var${v.id}`].name}
+																type="text"
+																defaultValue={
+																	userVariables && userVariables[v.slug]
+																		? userVariables[v.slug] as string
+																		: v.default_value
+																}
+																size={(userVariables && userVariables[v.slug]
+																	? userVariables[v.slug] as string
+																	: v.default_value).length}
+																required
+															>
+															</VariableInput>
+
+															{v.value_suffix &&
+																<span className={clsx(
+																	"inline",
+																	"py-2",
+																	"pr-4",
+																	"text-neutral-400",
+																)}>
+																	{v.value_suffix}
+																</span>
+															}
+														</div>
+
+														<ErrorMessage>{userVarsFields[`var${v.id}`].errors}</ErrorMessage>
+													</label>
+												</Field>
 											})}
 
 										</section>
@@ -1148,7 +1247,7 @@ export default function ComicPageUI({
 							"justify-center",
 							// Appearance
 							"bg-comic-accent-500",
-							"rounded",
+							"rounded-sm",
 							"text-white",
 							"text-sm",
 							"font-display",
@@ -1209,6 +1308,37 @@ export default function ComicPageUI({
 
 	}
 
+	function VariableInput({
+		className,
+		defaultValue,
+		...props
+	}: ComponentPropsWithoutRef<"input">) {
+		const [value, setValue] = useState((String(defaultValue)))
+		const inputRef = useRef<HTMLInputElement>(null)
+
+		useLayoutEffect(() => {
+			if (!inputRef.current) return
+			const defaultLength = String(defaultValue).length
+			// console.log(inputRef, value)
+			inputRef.current.size = value && value.length ? Math.max(value.length, 1) : inputRef.current.size
+			if (inputRef.current.size == 0) inputRef.current.size = defaultLength
+		}, [value])
+
+		return <input
+			{...props}
+			className={clsx(
+				className
+			)}
+			ref={inputRef}
+			value={value}
+			onChange={(e) => {
+				setValue(e.target.value)
+				// preserves a parent-provided handler (if you use <VariableInput) onChange={something} it will pass it to here />)
+				props.onChange?.(e)
+			}}
+		/>
+	}
+
 	/**-----------------------------------
 	 * SECTION: COMIC PAGE NAVIGATION (BOTTOM)
 	 * ---
@@ -1259,7 +1389,7 @@ export default function ComicPageUI({
 												// Appearance
 												"bg-comic-accent-500",
 												"visited:bg-neutral-500",
-												"rounded",
+												"rounded-sm",
 												"text-white",
 												"text-sm",
 												"font-display",

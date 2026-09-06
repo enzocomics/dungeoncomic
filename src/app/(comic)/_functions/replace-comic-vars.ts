@@ -33,7 +33,7 @@ export default function replaceComicVariables({
 					// Keep unknown tags unchanged, or return "" if preferred
 					return value !== undefined
 						? html
-							? `<strong>${value}</strong>`
+							? `<strong>${variable?.value_prefix ?? ""}${value}${variable?.value_suffix ?? ""}</strong>`
 							: value // TODO: markdown? classname? so we can target and style as needed
 						: fullMatch
 				},
