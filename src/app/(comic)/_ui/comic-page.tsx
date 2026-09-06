@@ -536,8 +536,8 @@ export default function ComicPageUI({
 						"max-w-lg",
 						"p-2",
 						"rounded-sm",
-						"drop-shadow-2xl",
-						"drop-shadow-neutral-900/50",
+						// "drop-shadow-2xl",
+						// "drop-shadow-neutral-900/10",
 					)}>
 						<section className={clsx(
 							// Functionality
