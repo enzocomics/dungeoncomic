@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, Ref, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
+import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLElementType, Ref, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -24,8 +24,9 @@ import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestio
 // UI
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 // import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
-import { Radio, RadioField, RadioGroup } from "@/components/radio"
-import { ErrorMessage, Field, Fieldset, Label, Legend } from "@/components/fieldset"
+import { Radio, RadioGroup } from "@headlessui/react"
+import { Field, Fieldset, Label, Legend } from "@headlessui/react"
+import { ErrorMessage } from "@/components/fieldset"
 import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
@@ -1057,17 +1058,15 @@ export default function ComicPageUI({
 			}
 		}	*/
 		const [inputStates, setInputStates] = useState(savedInputStates)
-		const [areFieldsAnimating, setAreFieldsAnimating] = useState(false)
 
+		// State of the input fields that lets them "pop in" on reset
+		const [areFieldsAnimating, setAreFieldsAnimating] = useState(false)
 		const runFieldAnimation = () => {
 			setAreFieldsAnimating(false)
-
 			requestAnimationFrame(() => {
 				setAreFieldsAnimating(true)
 			})
-
 		}
-
 
 		// RENDER
 		return <>
@@ -1141,30 +1140,15 @@ export default function ComicPageUI({
 									</div>
 									{/* VARIABLES */}
 									{p.variables && p.variables.length > 0 ?
-										<section className={clsx(
-											// Structure
-											"flex",
-											"flex-col",
-											"gap-y-2",
-											// Spacing
-											"px-2",
-											"md:px-6",
-											// Size
-											"w-full",
-											"mx-auto",
-											"max-w-prose",
-										)}>
-
+										<ComicInputSection>
 											{p.variables.map((v, vIndex) =>
 												// RENDER
 												<Field key={vIndex}>
-													<label
+													<ComicInputSectionRow
+														as="label"
 														htmlFor={userVarsFields[`var${v.id}`].id}
 														className={clsx(
 															"cursor-pointer",
-															"p-4",
-															"bg-neutral-100",
-															"rounded",
 															"flex",
 															"flex-col",
 															"hover:bg-neutral-200/60",
@@ -1343,10 +1327,10 @@ export default function ComicPageUI({
 														<ComicErrorMessage>
 															{userVarsFields[`var${v.id}`].errors}
 														</ComicErrorMessage>
-													</label>
+													</ComicInputSectionRow>
 												</Field>
 											)}
-										</section>
+										</ComicInputSection>
 										: null}
 								</li>
 						})
@@ -1507,6 +1491,57 @@ export default function ComicPageUI({
 			{props.children}
 		</ErrorMessage>
 	}
+
+	function ComicInputSection({
+		className,
+		...props
+	}: ComponentPropsWithoutRef<"section">) {
+		return <section
+			{...props}
+			className={
+				clsx(
+					className,
+					// Structure
+					"flex",
+					"flex-col",
+					"gap-y-2",
+					// Spacing
+					"px-2",
+					"md:px-6",
+					// Size
+					"w-full",
+					"mx-auto",
+					"max-w-prose",
+				)
+			}
+		>
+			{props.children}
+		</section>
+	}
+
+	function ComicInputSectionRow({
+		as: Tag = "div",
+		...props
+	}: {
+		as?: import("react").ElementType
+	} & ComponentPropsWithoutRef<import("react").ElementType>) {
+		return <Tag
+			{...props}
+			className={
+				clsx(
+					props.className,
+					"p-4",
+					"rounded",
+					"bg-neutral-100",
+					"dark:bg-neutral-800/50"
+				)
+			}
+		>
+			{props.children}
+		</Tag>
+	}
+
+
 
 	/**-----------------------------------
 	 * SECTION: COMIC PAGE NAVIGATION (BOTTOM)
@@ -1710,125 +1745,136 @@ export default function ComicPageUI({
 				 */
 			}
 			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-				<section className={clsx(
-					"bg-pink-100",
-					"dark:bg-pink-800",
-					"p-4",
-					"mt-8",
-				)}>
-					{!session &&
-						<h4
-							className={clsx(
-								"text-2xl"
-							)}>
-							{t.rich("please-login-to-vote", {
-								loginLink: (chunks) => <Link href="/login">{chunks}</Link>
-							})}
-						</h4>
-					}
-					<StatusMessage />
-					<Fieldset
-						disabled={session ? false : true}>
-						<Legend>{replaceComicVariables({
-							content: page.plot_prompt,
-							variables: variables,
-							userVariables: userVariables
-						})}</Legend>
-						<RadioGroup
-							name="suggestions"
-							value={selected}
-							onChange={(selected) => handleClick(selected)}
-							className={clsx(
-							)}>
-							{/* PLOT SUGGESTIONS */}
-							{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
-								// Handle State of the vote numbers
-								const [votes, setVote] = useState(s.votes || 0)
+				<ComicInputSection>
+					<ComicInputSectionRow>
+						{!session &&
+							<div
+								className={clsx(
+									"text-2xl"
+								)}>
+								{t.rich("please-login-to-vote", {
+									loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+								})}
+							</div>
+						}
+						<StatusMessage />
+						<Fieldset
+							disabled={session ? false : true}>
+							<Legend className={
+								clsx(
+									"pb-2",
+									"text-sm",
+									"font-display",
+									"font-semibold",
+								)
+							}>
+								{replaceComicVariables({
+									content: page.plot_prompt,
+									variables: variables,
+									userVariables: userVariables
+								})}
+							</Legend>
+							<RadioGroup
+								name="suggestions"
+								value={selected}
+								onChange={(selected) => handleClick(selected)}
+								className={clsx(
+								)}>
+								{/* PLOT SUGGESTIONS */}
+								{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
+									// Handle State of the vote numbers
+									const [votes, setVote] = useState(s.votes || 0)
 
-								useEffect(() => {
-									// Update the vote numbers on-the-fly
-									if (clicked == true) {
-										// +1 to the vote that is selected
-										if (selected == `${s.id}`)
-											setVote(votes + 1)
-										// -1 to the vote the user previously voted on
-										if (userVotedOnID == `${s.id}`)
-											setVote(votes - 1)
-									}
-								}, [selected])
-								// RENDER
-								if (deleteSuggestion !== s.id)
-									return <RadioField
-										key={index}
-										className={clsx(
-											"text-left",
-											"w-2/3",
-											"mx-auto"
-										)}>
-										<Radio value={`${s.id}`} />
-										<Label>
-											{`${s.id}`} -&nbsp;
-											{replaceComicVariables({
-												content: s.title,
-												variables: variables,
-												userVariables: userVariables
-											})}
-											{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-											{page.user_created.id !== s.user_created.id &&
-												<em>&nbsp;&mdash; @{s.user_created.username}</em>
-											}
-											&nbsp;| <strong>{votes}</strong>
-											{(session !== false && session !== undefined) && s.user_created.id == session.id &&
-												<>
-													<Button
-														className={clsx("ml-5")}>
-														{t("edit-suggestion")}
-													</Button>
-													<Button
-														className={clsx("ml-5")}
-														onClick={async () => {
-															deleteUserPlotSuggestion(s.id)
-															setDeleteSuggestion(s.id)
-															setUserHasSubmitted(false)
-															setStatus("success", t("suggestion-deleted"))
-														}}
-													>
-														{t("delete-suggestion")}
-													</Button>
-												</>
-											}
-										</Label>
-									</RadioField>
-							}
-							) : null}
-							{/* 
+									useEffect(() => {
+										// Update the vote numbers on-the-fly
+										if (clicked == true) {
+											// +1 to the vote that is selected
+											if (selected == `${s.id}`)
+												setVote(votes + 1)
+											// -1 to the vote the user previously voted on
+											if (userVotedOnID == `${s.id}`)
+												setVote(votes - 1)
+										}
+									}, [selected])
+									// RENDER
+									if (deleteSuggestion !== s.id)
+										return <Radio
+											value={`${s.id}`}
+											key={index}
+											className={clsx(
+												"text-left",
+												"w-2/3",
+												"mx-auto",
+												"cursor-pointer",
+											)}>
+											{/* <Radio value={`${s.id}`} /> */}
+											<Label>
+												{`${s.id}`} -&nbsp;
+												{replaceComicVariables({
+													content: s.title,
+													variables: variables,
+													userVariables: userVariables
+												})}
+												{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+												{page.user_created.id !== s.user_created.id &&
+													<em>&nbsp;&mdash; @{s.user_created.username}</em>
+												}
+												&nbsp;| <strong>{votes}</strong>
+												{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+													<>
+														<Button
+															className={clsx("ml-5")}>
+															{t("edit-suggestion")}
+														</Button>
+														<Button
+															className={clsx("ml-5")}
+															onClick={async () => {
+																deleteUserPlotSuggestion(s.id)
+																setDeleteSuggestion(s.id)
+																setUserHasSubmitted(false)
+																setStatus("success", t("suggestion-deleted"))
+															}}
+														>
+															{t("delete-suggestion")}
+														</Button>
+													</>
+												}
+											</Label>
+										</Radio>
+								}
+								) : null}
+								{/* 
 								SUBMIT OWN SUGGESTION
 								- Only display this radio button if the user hasn't already submitted something
 								- When it's selected, display the suggestion form
 						*/}
-							{page.allow_user_suggestions &&
-								!userHasSubmitted &&
-								<RadioField className={clsx(
-									"text-left",
-									"w-2/3",
-									"mx-auto"
-								)}>
-									<Radio value={selectUserSuggestion} />
-									<Label>
-										{t("submit-own-suggestion")}
-									</Label>
-								</RadioField>
-							}
-						</RadioGroup>
+								{page.allow_user_suggestions &&
+									!userHasSubmitted &&
+									<Radio
+										value={selectUserSuggestion}
+										className={clsx(
+											"text-left",
+											"w-2/3",
+											"mx-auto",
+											"cursor-pointer"
+										)}>
+										{/* <Radio value={selectUserSuggestion} /> */}
+										<Label>
+											{t("submit-own-suggestion")}
+										</Label>
+									</Radio>
+								}
+							</RadioGroup>
 
-					</Fieldset>
-					{/* 
+						</Fieldset>
+						{/* 
 						SUGGESTION FORM
 				*/}
-					{page.allow_user_suggestions && selected == selectUserSuggestion &&
-						<UserSuggestionForm />
-					}
-				</section>
+						{page.allow_user_suggestions && selected == selectUserSuggestion &&
+							<UserSuggestionForm />
+						}
+					</ComicInputSectionRow>
+				</ComicInputSection>
 			}
 		</> // EO UserSuggestionForm() RENDER
 
@@ -1870,9 +1916,9 @@ export default function ComicPageUI({
 						action={action}
 						noValidate>
 						<Field className={clsx(
-							"mt-8"
+							// "mt-8"
 						)}>
-							<Label required htmlFor={fields.userSuggestion.name}>{t("suggestion-form-title")}</Label>
+							<Label htmlFor={fields.userSuggestion.name}>{t("suggestion-form-title")}</Label>
 							<Textarea
 								id={fields.userSuggestion.name}
 								name={fields.userSuggestion.name}
