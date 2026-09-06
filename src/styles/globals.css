@@ -117,4 +117,26 @@
 	--color-comic-accent-800: var(--color-red-800);
 	--color-comic-accent-900: var(--color-red-900);
 	--color-comic-accent-950: var(--color-red-950);
+
+	/* ANIMATION */
+	--animate-fade-in: fade-in 300ms ease-in 1;
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	--animate-pop-in: pop-in 300ms ease-in 1;
+	@keyframes pop-in {
+		0% {
+			opacity: 0;
+			scale: 1.1;
+		}
+		100% {
+			opacity: 1;
+			scale: 1;
+		}
+	}
 }

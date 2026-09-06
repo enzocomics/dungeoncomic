@@ -1055,8 +1055,16 @@ export default function ComicPageUI({
 			}
 		}	*/
 		const [inputStates, setInputStates] = useState(savedInputStates)
-		// console.log(defaultInputStates)
+		const [areFieldsAnimating, setAreFieldsAnimating] = useState(false)
 
+		const runFieldAnimation = () => {
+			setAreFieldsAnimating(false)
+
+			requestAnimationFrame(() => {
+				setAreFieldsAnimating(true)
+			})
+
+		}
 
 
 		// RENDER
@@ -1291,7 +1299,11 @@ export default function ComicPageUI({
 																	],
 																	"transition-all",
 																	"scale-100",
+																	// Animation
+																	// "origin-left",
+																	areFieldsAnimating ? "animate-pop-in" : ""
 																)}
+																onAnimationEnd={() => setAreFieldsAnimating(false)}
 																ref={(i) => {
 																	inputRefs.current[vIndex] = i
 																}}
@@ -1416,11 +1428,19 @@ export default function ComicPageUI({
 									"p-1",
 									"text-comic-accent-800",
 									"dark:text-comic-accent-300/90",
+									"hover:text-current/50",
+									"hover:duration-0",
+									"active:translate-px",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
 								)}
 
 								type="button"
 								onClick={() => {
 									form.reset()
+									runFieldAnimation()
 									setInputStates(defaultInputStates)
 								}
 
