@@ -30,6 +30,7 @@ import { Link } from "@/components/link"
 import { Textarea } from "@/components/textarea"
 import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
+import * as Headless from "@headlessui/react"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import z from "zod"
 import { SomeType } from "zod/v4/core"
@@ -937,6 +938,7 @@ export default function ComicPageUI({
 		</h1>
 	}
 
+
 	/**-----------------------------------
 		 * SECTION: COMIC PANELS
 		 * ---
@@ -1338,32 +1340,12 @@ export default function ComicPageUI({
 																</span>
 															}
 														</div>
-
-														<ErrorMessage className={
-															clsx(
-																"pt-3",
-																"pb-2",
-																"px-4",
-																// Appearance
-																"outline-2",
-																"outline-red-100",
-																"bg-red-100",
-																"rounded-b-sm",
-																"dark:outline-none",
-																"dark:bg-black/10",
-																// Text
-																"text-xs",
-																"text-red-600",
-																"dark:text-white",
-															)
-														}
-														>
+														<ComicErrorMessage>
 															{userVarsFields[`var${v.id}`].errors}
-														</ErrorMessage>
+														</ComicErrorMessage>
 													</label>
 												</Field>
 											)}
-
 										</section>
 										: null}
 								</li>
@@ -1477,8 +1459,6 @@ export default function ComicPageUI({
 				}
 			</VariablesForm>
 		</>
-
-
 	}
 
 	// Conditionally render the form if variables exist
@@ -1499,6 +1479,33 @@ export default function ComicPageUI({
 		else if (!varsExist)
 			return children
 
+	}
+
+	function ComicErrorMessage({
+		className,
+		...props
+	}: { className?: string } & Omit<Headless.DescriptionProps, 'as' | 'className'>) {
+		return <ErrorMessage
+			{...props}
+			className={clsx(
+				className,
+				"pt-3",
+				"pb-2",
+				"px-4",
+				// Appearance
+				"outline-2",
+				"outline-red-100",
+				"bg-red-100",
+				"rounded-b-sm",
+				"dark:outline-none",
+				"dark:bg-black/10",
+				// Text
+				"text-xs",
+				"text-red-600",
+				"dark:text-white",
+			)}>
+			{props.children}
+		</ErrorMessage>
 	}
 
 	/**-----------------------------------
@@ -1871,7 +1878,7 @@ export default function ComicPageUI({
 								name={fields.userSuggestion.name}
 								key={fields.userSuggestion.key}
 							/>
-							<ErrorMessage>{fields.userSuggestion.errors}</ErrorMessage>
+							<ComicErrorMessage>{fields.userSuggestion.errors}</ComicErrorMessage>
 							<input
 								name={fields.pageId.name}
 								key={fields.pageId.key}
