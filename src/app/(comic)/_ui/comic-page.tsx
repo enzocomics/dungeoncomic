@@ -308,7 +308,7 @@ export default function ComicPageUI({
 						"px-6",
 						"max-w-prose",
 						"mx-auto",
-						"text-2xl",
+						"text-3xl",
 						"font-bold",
 						"font-display",
 						"text-center"
@@ -965,7 +965,7 @@ export default function ComicPageUI({
 					Object.keys(pageVars).map(
 						(id) => [
 							`var${id}`,
-							z.string().max(64)
+							z.string().max(32)
 						]
 					)
 				)
@@ -1061,6 +1061,7 @@ export default function ComicPageUI({
 										"py-6",
 										"px-6",
 										"prose",
+										"text-base",
 										"max-w-prose",
 										"mx-auto",
 
@@ -1079,56 +1080,92 @@ export default function ComicPageUI({
 									{/* VARIABLES */}
 									{p.variables && p.variables.length > 0 ?
 										<section className={clsx(
+											// Structure
 											"flex",
 											"flex-col",
 											"gap-y-2",
-											"px-6",
+											// Spacing
+											"px-2",
+											"md:px-6",
+											// Size
 											"w-full",
 											"mx-auto",
 											"max-w-prose",
 										)}>
 
 											{p.variables.map((v, vIndex) => {
+
+												const value = userVariables && userVariables[v.slug]
+													? userVariables[v.slug] as string
+													: v.default_value
+
+												const [valueLength, setValueLength] = useState(value.length)
 												return <Field key={vIndex}>
 													<label
 														htmlFor={userVarsFields[`var${v.id}`].id}
 														className={clsx(
 															"cursor-pointer",
 															"p-4",
-															// "bg-comic-accent-100",
-															// "dark:bg-comic-accent-900",
 															"bg-neutral-100",
-															"dark:bg-neutral-800/50",
-															"rounded-sm",
+															"md:rounded",
 															"flex",
 															"flex-col",
-															// "justify-center",
-															// "w-full",
+															"hover:bg-neutral-200/60",
+															"dark:hover:bg-neutral-900",
+															// 
+															userVarsFields[`var${v.id}`].errors ? [
+																"dark:bg-red-500",
+																"dark:focus-within:bg-red-500",
+																"dark:hover:bg-red-500",
+																"dark:hover:focus-within:bg-red-500",
+															] : [
+																"dark:bg-neutral-800/50",
+																"dark:focus-within:bg-comic-accent-800/60",
+																"dark:hover:focus-within:bg-comic-accent-800",
+															],
+															// Transition
+															"hover:duration-0",
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
 														)}
 													>
 														<div
-															// 
 															className={clsx(
-																// "font-semibold",
 																"pb-2",
-																"px-2",
-																// "text-right",
-																"text-lg/8",
-																"font-copy",
-																"font-medium",
-																// "font-semibold",
-																"content-center",
-																// "w-1/2",
+																// "px-2",
+																"text-sm",
+																"font-display",
+																"flex",
+																"items-center",
+																"gap-x-1",
 															)}
 														>
-															{v.prompt || v.name}
+															<span className={clsx(
+																"font-semibold",
+															)}>
+																{v.prompt || `${v.name}`}
+															</span>
+															<span className={clsx(
+																"ml-auto",
+																"font-normal",
+																"text-xs",
+																"text-current/50"
+															)}>
+																{`${valueLength}/32`}
+															</span>
 														</div>
 														{/* INPUT */}
 														<div className={clsx(
+															"group",
+															"relative",
 															"py-2",
 															"px-4",
-															"max-w-prose",
+															"pl-8",
+															"w-full",
 															"bg-white",
+															"text-sm",
+															"text-left",
 															"font-mono",
 															// "border",
 															"rounded",
@@ -1139,10 +1176,30 @@ export default function ComicPageUI({
 																"focus-within:outline-red-500",
 															] : [
 																"focus-within:outline-comic-accent-500",
+																"dark:focus-within:outline-comic-accent-800",
 															],
 														)}
-															onClick={() => { console.log("sup") }}
+
 														>
+															<Icon name="chevronRight"
+																className={clsx(
+																	"absolute",
+																	"left-2",
+																	"bottom-1/2",
+																	"translate-y-1/2",
+																	"size-4",
+																	userVarsFields[`var${v.id}`].errors ? [
+																		"text-red-500",
+																	] : [
+																		"text-neutral-400",
+																		"group-focus-within:text-comic-accent-500",
+																	],
+																	// Transition
+																	"transition-all",
+																	"ease-in-out",
+																	"duration-300",
+																)} />
+
 															{v.value_prefix &&
 																<span className={clsx(
 																	"inline",
@@ -1163,10 +1220,11 @@ export default function ComicPageUI({
 																	"focus:text-comic-accent-500",
 																	"focus:border-b-comic-accent-800",
 																	"focus:outline-none",
-
+																	"dark:selection:bg-comic-accent-300",
+																	"dark:selection:text-white",
 																	// "py-2",
 																	"text-black",
-																	"text-center",
+																	// "text-center",
 																	// ERRORS
 																	(v.value_prefix || v.value_suffix)
 																		&& userVarsFields[`var${v.id}`].errors ? [
@@ -1181,19 +1239,16 @@ export default function ComicPageUI({
 																		"border-b-black",
 																	],
 																)}
-																maxLength={65}
+																maxLength={32}
 																id={userVarsFields[`var${v.id}`].id}
 																name={userVarsFields[`var${v.id}`].name}
 																type="text"
-																defaultValue={
-																	userVariables && userVariables[v.slug]
-																		? userVariables[v.slug] as string
-																		: v.default_value
-																}
-																size={(userVariables && userVariables[v.slug]
-																	? userVariables[v.slug] as string
-																	: v.default_value).length}
+																defaultValue={value}
+																size={value.length}
 																required
+																onChange={(e) => (
+																	setValueLength(e.target.value.length)
+																)}
 															>
 															</VariableInput>
 
@@ -1231,57 +1286,85 @@ export default function ComicPageUI({
 					 */
 				}
 				{(varsExist && !varsSubmitted) &&
-					<div className={clsx(
-						"px-6",
-						"prose",
-						"w-full",
-						"max-w-prose",
-						"mx-auto",
-					)}>
-						<button type="submit" className={clsx(
-							// structure
-							"p-2",
+					<>
+						<div className={clsx(
+							"px-6",
+							"prose",
 							"w-full",
-							"flex",
-							"items-center",
-							"justify-center",
-							// Appearance
-							"bg-comic-accent-500",
-							"rounded-sm",
-							"text-white",
-							"text-sm",
-							"font-display",
-							"font-semibold",
-							"cursor-pointer",
-							"border-y-2",
-							"border-t-white/40",
-							"border-b-black/20",
-							// States
-							"hover:duration-0",
-							"hover:bg-comic-accent-700",
-							"active:translate-px",
-							"active:bg-comic-accent-900",
-							// Transition
-							"transition-all",
-							"ease-in-out",
-							"duration-300",
+							"max-w-prose",
+							"mx-auto",
 						)}>
-							<span className={clsx(
-								"ml-5",
-								"text-pretty",
-								"grow",
+							<button type="submit" className={clsx(
+								// structure
+								"p-2",
+								"w-full",
+								"flex",
+								"items-center",
+								"justify-center",
+								// Appearance
+								"bg-comic-accent-500",
+								"rounded-sm",
+								"text-white",
+								"text-sm",
+								"font-display",
+								"font-semibold",
+								"cursor-pointer",
+								"border-y-2",
+								"border-t-white/40",
+								"border-b-black/20",
+								// States
+								"hover:duration-0",
+								"hover:bg-comic-accent-700",
+								"active:translate-px",
+								"active:bg-comic-accent-900",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"duration-300",
 							)}>
-								{`${page.variables_submit_button_text || t("next")}`}
-							</span>
-							<Icon name="play" className={clsx(
-								"ml-1",
-								"size-4",
-							)} />
-						</button>
-					</div>
+								<span className={clsx(
+									"ml-5",
+									"text-pretty",
+									"grow",
+								)}>
+									{`${page.variables_submit_button_text || t("next")}`}
+								</span>
+								<Icon name="play" className={clsx(
+									"ml-1",
+									"size-4",
+								)} />
+							</button>
+							&nbsp;
+							<button type="button" className={clsx(
+								"block",
+								"mt-3",
+								"cursor-pointer",
+								"text-sm",
+								"float-right",
+								"float-end",
+								"flex",
+								"gap-x-1",
+								"items-center",
+								"p-1",
+								"text-comic-accent-800",
+								"dark:text-comic-accent-300/90",
+							)}>
+								<Icon name="rotateLeft"
+									className={clsx(
+										"size-3",
+									)}
+								/>
+								<span>
+									Reset fields to defaults
+								</span>
+							</button>
+						</div>
+						<input type="hidden" name="pageVars" value={JSON.stringify(pageVars)} />
+						<input type="hidden" name="comicPage" value={JSON.stringify(page)} />
+					</>
 				}
-				<input type="hidden" name="pageVars" value={JSON.stringify(pageVars)} />
-				<input type="hidden" name="comicPage" value={JSON.stringify(page)} />
+
+
 			</VariablesForm >
 		</>
 
