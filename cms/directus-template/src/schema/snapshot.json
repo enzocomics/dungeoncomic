@@ -1754,50 +1754,6 @@
     },
     {
       "collection": "comics",
-      "field": "accent_color",
-      "type": "string",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "accent_color",
-        "group": "appearance",
-        "hidden": false,
-        "interface": "select-color",
-        "note": null,
-        "options": {},
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "accent_color",
-        "table": "comics",
-        "data_type": "character varying",
-        "default_value": null,
-        "max_length": 255,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "comics",
       "field": "logo",
       "type": "uuid",
       "meta": {
@@ -2275,6 +2231,183 @@
         "data_type": "boolean",
         "default_value": false,
         "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "accent_color",
+      "type": "string",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "accent_color",
+        "group": "appearance",
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": {
+          "choices": [
+            {
+              "color": "#EF4444",
+              "text": "Red",
+              "value": "red"
+            },
+            {
+              "color": "#F97316",
+              "text": "Orange",
+              "value": "orange"
+            },
+            {
+              "color": "#F59E0B",
+              "text": "Amber",
+              "value": "amber"
+            },
+            {
+              "color": "#EAB308",
+              "text": "Yellow",
+              "value": "yellow"
+            },
+            {
+              "color": "#84CC16",
+              "text": "Lime",
+              "value": "lime"
+            },
+            {
+              "color": "#22C55E",
+              "text": "Green",
+              "value": "green"
+            },
+            {
+              "color": "#10B981",
+              "text": "Emerald",
+              "value": "emerald"
+            },
+            {
+              "color": "#14B8A6",
+              "text": "Teal",
+              "value": "teal"
+            },
+            {
+              "color": "#06B6D4",
+              "text": "Cyan",
+              "value": "cyan"
+            },
+            {
+              "color": "#0EA5E9",
+              "text": "Sky",
+              "value": "sky"
+            },
+            {
+              "color": "#3B82F6",
+              "text": "Blue",
+              "value": "blue"
+            },
+            {
+              "color": "#6366F1",
+              "text": "Indigo",
+              "value": "indigo"
+            },
+            {
+              "color": "#8B5CF6",
+              "text": "Violet",
+              "value": "violet"
+            },
+            {
+              "color": "#A855F7",
+              "text": "Purple",
+              "value": "purple"
+            },
+            {
+              "color": "#D946EF",
+              "text": "Fuchsia",
+              "value": "fuchsia"
+            },
+            {
+              "color": "#EC4899",
+              "text": "Pink",
+              "value": "pink"
+            },
+            {
+              "color": "#F43F5E",
+              "text": "Rose",
+              "value": "rose"
+            },
+            {
+              "color": "#64748B",
+              "text": "Slate",
+              "value": "slate"
+            },
+            {
+              "color": "#6B7280",
+              "text": "Gray",
+              "value": "gray"
+            },
+            {
+              "color": "#71717A",
+              "text": "Zinc",
+              "value": "zinc"
+            },
+            {
+              "color": "#737373",
+              "text": "Neutral",
+              "value": "neutral"
+            },
+            {
+              "color": "#78716C",
+              "text": "Stone",
+              "value": "stone"
+            },
+            {
+              "color": "#7C6D67",
+              "text": "Taupe",
+              "value": "taupe"
+            },
+            {
+              "color": "#79697B",
+              "text": "Mauve",
+              "value": "mauve"
+            },
+            {
+              "color": "#67787C",
+              "text": "Mist",
+              "value": "mist"
+            },
+            {
+              "color": "#7C7C67",
+              "text": "Olive",
+              "value": "olive"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "accent_color",
+        "table": "comics",
+        "data_type": "character varying",
+        "default_value": "red",
+        "max_length": 255,
         "numeric_precision": null,
         "numeric_scale": null,
         "is_nullable": true,
@@ -6536,7 +6669,9 @@
         "hidden": false,
         "interface": "input",
         "note": null,
-        "options": null,
+        "options": {
+          "softLength": 64
+        },
         "readonly": false,
         "required": true,
         "searchable": true,
@@ -6580,11 +6715,13 @@
         "hidden": false,
         "interface": "input",
         "note": null,
-        "options": null,
+        "options": {
+          "softLength": 64
+        },
         "readonly": false,
         "required": true,
         "searchable": true,
-        "sort": 3,
+        "sort": 4,
         "special": null,
         "translations": null,
         "validation": null,
@@ -6628,7 +6765,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 4,
+        "sort": 7,
         "special": null,
         "translations": null,
         "validation": null,
@@ -6669,7 +6806,8 @@
         "interface": "input",
         "note": null,
         "options": {
-          "slug": true
+          "slug": true,
+          "softLength": 32
         },
         "readonly": false,
         "required": true,
@@ -6714,7 +6852,56 @@
         "hidden": false,
         "interface": "input",
         "note": "Input label for the variable field. If empty, it will default to the name.",
-        "options": null,
+        "options": {
+          "softLength": 140
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "prompt",
+        "table": "variables",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "variables",
+      "field": "value_prefix",
+      "type": "string",
+      "meta": {
+        "collection": "variables",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "value_prefix",
+        "group": "content",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "This string is added automatically to the start of the value string",
+          "softLength": 48
+        },
         "readonly": false,
         "required": false,
         "searchable": true,
@@ -6726,7 +6913,54 @@
         "width": "half"
       },
       "schema": {
-        "name": "prompt",
+        "name": "value_prefix",
+        "table": "variables",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "variables",
+      "field": "value_suffix",
+      "type": "string",
+      "meta": {
+        "collection": "variables",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "value_suffix",
+        "group": "content",
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "This string is automatically added to the end of the value",
+          "softLength": 48
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "value_suffix",
         "table": "variables",
         "data_type": "character varying",
         "default_value": null,
@@ -6929,7 +7163,7 @@
         "foreign_key_column": "id",
         "constraint_name": "comic_panels_page_id_foreign",
         "on_update": "NO ACTION",
-        "on_delete": "CASCADE"
+        "on_delete": "SET NULL"
       }
     },
     {
