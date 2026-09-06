@@ -1107,7 +1107,7 @@ export default function ComicPageUI({
 															"cursor-pointer",
 															"p-4",
 															"bg-neutral-100",
-															"md:rounded",
+															"rounded",
 															"flex",
 															"flex-col",
 															"hover:bg-neutral-200/60",
@@ -1153,6 +1153,7 @@ export default function ComicPageUI({
 																"text-current/50"
 															)}>
 																{`${valueLength}/32`}
+																{/* TODO: hardcoded */}
 															</span>
 														</div>
 														{/* INPUT */}
