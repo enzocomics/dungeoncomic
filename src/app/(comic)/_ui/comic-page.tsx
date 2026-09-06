@@ -4,7 +4,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { ComponentPropsWithoutRef, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
+import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, Ref, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -1008,6 +1008,18 @@ export default function ComicPageUI({
 		// Get the fields from the schema
 		const userVarsFields = fields.userVars.getFieldset()
 
+		// Variable form inputs ref
+
+		const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
+
+		// Form Reset Button
+		const [formReset, setFormReset] = useState(false)
+
+		useEffect(() => {
+			// Allow the form to reset only once per click
+			formReset ?? setFormReset(false)
+		}, [formReset])
+
 		// RENDER
 		return <>
 			<VariablesForm
@@ -1019,7 +1031,7 @@ export default function ComicPageUI({
 				className={clsx(
 					"flex",
 					"flex-col",
-					"gap-y-6",
+					"gap-y-0",
 				)}
 			>
 				{page.comic_panels &&
@@ -1030,6 +1042,7 @@ export default function ComicPageUI({
 						"gap-y-6",
 					)}>
 						{page.comic_panels.map((p, pIndex) => {
+
 							// Conditionally render comic panels before OR after variables are submitted based on page option
 							if (
 								(!varsSubmitted && !p.place_after_variables_submitted) ||
@@ -1094,12 +1107,24 @@ export default function ComicPageUI({
 										)}>
 
 											{p.variables.map((v, vIndex) => {
-
-												const value = userVariables && userVariables[v.slug]
-													? userVariables[v.slug] as string
-													: v.default_value
-
+												// State Variables
+												const [value, setValue] = useState(
+													userVariables && userVariables[v.slug]
+														? userVariables[v.slug] as string
+														: v.default_value)
 												const [valueLength, setValueLength] = useState(value.length)
+
+												useEffect(() => {
+													// formReset is set to `true` when the reset button is clicked
+													if (formReset) {
+														// reset the default value on the input field
+														if (inputRefs.current?.[vIndex]) inputRefs.current[vIndex].value = v.default_value
+														// also reset the default value in state
+														setValue(v.default_value)
+													}
+												}, [formReset])
+
+												// RENDER
 												return <Field key={vIndex}>
 													<label
 														htmlFor={userVarsFields[`var${v.id}`].id}
@@ -1141,9 +1166,10 @@ export default function ComicPageUI({
 																"gap-x-1",
 															)}
 														>
-															<span className={clsx(
-																"font-semibold",
-															)}>
+															<span
+																className={clsx(
+																	"font-semibold",
+																)}>
 																{v.prompt || `${v.name}`}
 															</span>
 															<span className={clsx(
@@ -1152,35 +1178,35 @@ export default function ComicPageUI({
 																"text-xs",
 																"text-current/50"
 															)}>
-																{`${valueLength}/32`}
-																{/* TODO: hardcoded */}
+																{`${valueLength}/32`}{/* TODO: should this be hardcoded? */}
+
 															</span>
 														</div>
 														{/* INPUT */}
-														<div className={clsx(
-															"group",
-															"relative",
-															"py-2",
-															"px-4",
-															"pl-8",
-															"w-full",
-															"bg-white",
-															"text-sm",
-															"text-left",
-															"font-mono",
-															// "border",
-															"rounded",
-															"focus-within:outline-2",
-															userVarsFields[`var${v.id}`].errors ? [
-																"outline-2",
-																"outline-red-500",
-																"focus-within:outline-red-500",
-															] : [
-																"focus-within:outline-comic-accent-500",
-																"dark:focus-within:outline-comic-accent-800",
-															],
-														)}
-
+														<div
+															className={clsx(
+																"group",
+																"relative",
+																"py-2",
+																"px-4",
+																"pl-8",
+																"w-full",
+																"bg-white",
+																"text-sm",
+																"text-left",
+																"font-mono",
+																// "border",
+																"rounded",
+																"focus-within:outline-2",
+																userVarsFields[`var${v.id}`].errors ? [
+																	"outline-2",
+																	"outline-red-500",
+																	"focus-within:outline-red-500",
+																] : [
+																	"focus-within:outline-comic-accent-500",
+																	"dark:focus-within:outline-comic-accent-800",
+																],
+															)}
 														>
 															<Icon name="chevronRight"
 																className={clsx(
@@ -1199,7 +1225,8 @@ export default function ComicPageUI({
 																	"transition-all",
 																	"ease-in-out",
 																	"duration-300",
-																)} />
+																)}
+															/>
 
 															{v.value_prefix &&
 																<span className={clsx(
@@ -1209,8 +1236,9 @@ export default function ComicPageUI({
 																	{v.value_prefix}
 																</span>
 															}
-															<VariableInput
-																className={clsx(
+															{/* Variable Input */}
+															<input className={
+																clsx(
 																	// Structure
 																	"inline-block",
 																	// Size
@@ -1239,19 +1267,25 @@ export default function ComicPageUI({
 																	] : [
 																		"border-b-black",
 																	],
+																	"transition-all",
+																	"scale-100",
 																)}
+																ref={(i) => {
+																	inputRefs.current[vIndex] = i
+																}}
 																maxLength={32}
 																id={userVarsFields[`var${v.id}`].id}
 																name={userVarsFields[`var${v.id}`].name}
 																type="text"
-																defaultValue={value}
-																size={value.length}
+																value={value}
+																size={value.length || 1}
 																required
-																onChange={(e) => (
+																onChange={(e) => {
+																	setValue(e.target.value)
 																	setValueLength(e.target.value.length)
-																)}
+																}}
 															>
-															</VariableInput>
+															</input>
 
 															{v.value_suffix &&
 																<span className={clsx(
@@ -1349,7 +1383,7 @@ export default function ComicPageUI({
 								"p-1",
 								"text-comic-accent-800",
 								"dark:text-comic-accent-300/90",
-							)}>
+							)} onClick={() => (setFormReset(true))}>
 								<Icon name="rotateLeft"
 									className={clsx(
 										"size-3",
@@ -1364,9 +1398,7 @@ export default function ComicPageUI({
 						<input type="hidden" name="comicPage" value={JSON.stringify(page)} />
 					</>
 				}
-
-
-			</VariablesForm >
+			</VariablesForm>
 		</>
 
 
@@ -1390,37 +1422,6 @@ export default function ComicPageUI({
 		else if (!varsExist)
 			return children
 
-	}
-
-	function VariableInput({
-		className,
-		defaultValue,
-		...props
-	}: ComponentPropsWithoutRef<"input">) {
-		const [value, setValue] = useState((String(defaultValue)))
-		const inputRef = useRef<HTMLInputElement>(null)
-
-		useLayoutEffect(() => {
-			if (!inputRef.current) return
-			const defaultLength = String(defaultValue).length
-			// console.log(inputRef, value)
-			inputRef.current.size = value && value.length ? Math.max(value.length, 1) : inputRef.current.size
-			if (inputRef.current.size == 0) inputRef.current.size = defaultLength
-		}, [value])
-
-		return <input
-			{...props}
-			className={clsx(
-				className
-			)}
-			ref={inputRef}
-			value={value}
-			onChange={(e) => {
-				setValue(e.target.value)
-				// preserves a parent-provided handler (if you use <VariableInput) onChange={something} it will pass it to here />)
-				props.onChange?.(e)
-			}}
-		/>
 	}
 
 	/**-----------------------------------
