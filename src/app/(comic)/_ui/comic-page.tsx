@@ -1451,7 +1451,7 @@ export default function ComicPageUI({
 									)}
 								/>
 								<span>
-									Reset fields to defaults
+									{t("reset-variable-fields")}
 								</span>
 							</button>
 						</div>

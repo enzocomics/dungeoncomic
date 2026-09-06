@@ -10,6 +10,7 @@
 		"go-back": "Previous Page",
 		"go-to-start": "Back to Start",
 		"all-prev-pages": "Previous Pages",
+		"reset-variable-fields": "Reset fields to defaults",
 		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
 		"suggestion-form-title": "What's your idea?",
 		"submit-own-suggestion": "Suggest something else...",
