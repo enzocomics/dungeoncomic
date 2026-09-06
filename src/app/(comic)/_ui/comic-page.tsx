@@ -1188,7 +1188,6 @@ export default function ComicPageUI({
 														<div
 															className={clsx(
 																"pb-2",
-																// "px-2",
 																"text-sm",
 																"font-display",
 																"flex",
@@ -1284,9 +1283,7 @@ export default function ComicPageUI({
 																	"focus:outline-none",
 																	"dark:selection:bg-comic-accent-300",
 																	"dark:selection:text-white",
-																	// "py-2",
 																	"text-black",
-																	// "text-center",
 																	// ERRORS
 																	(v.value_prefix || v.value_suffix)
 																		&& userVarsFields[`var${v.id}`].errors ? [
@@ -1303,7 +1300,6 @@ export default function ComicPageUI({
 																	"transition-all",
 																	"scale-100",
 																	// Animation
-																	// "origin-left",
 																	areFieldsAnimating ? "animate-pop-in" : ""
 																)}
 																onAnimationEnd={() => setAreFieldsAnimating(false)}
@@ -1314,7 +1310,7 @@ export default function ComicPageUI({
 																id={userVarsFields[`var${v.id}`].id}
 																name={userVarsFields[`var${v.id}`].name}
 																type="text"
-																// value={value}
+
 																value={inputStates[v.id].value}
 																size={inputStates[v.id].value_length || 1}
 																required
@@ -1327,9 +1323,6 @@ export default function ComicPageUI({
 																			value_length: e.target.value.length
 																		}
 																	})
-																	// setValue(e.target.value)
-																	// setValueLength(e.target.value.length)
-																	// console.log(value)
 																}}
 															>
 															</input>
@@ -1352,12 +1345,9 @@ export default function ComicPageUI({
 																"pb-2",
 																"px-4",
 																// Appearance
-																// "border-2",
-																// "border-red-50",
-																// "peer-has-invalid:bg-red-500",
 																"outline-2",
-																"outline-red-50",
-																"bg-red-50",
+																"outline-red-100",
+																"bg-red-100",
 																"rounded-b-sm",
 																"dark:outline-none",
 																"dark:bg-black/10",
@@ -1365,14 +1355,11 @@ export default function ComicPageUI({
 																"text-xs",
 																"text-red-600",
 																"dark:text-white",
-																// Transition
-																"transition-all",
-																"ease-in-out",
-																"duration-300",
-
 															)
 														}
-														>{userVarsFields[`var${v.id}`].errors}</ErrorMessage>
+														>
+															{userVarsFields[`var${v.id}`].errors}
+														</ErrorMessage>
 													</label>
 												</Field>
 											)}
