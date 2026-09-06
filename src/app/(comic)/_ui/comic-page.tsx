@@ -1009,16 +1009,55 @@ export default function ComicPageUI({
 		const userVarsFields = fields.userVars.getFieldset()
 
 		// Variable form inputs ref
-
 		const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
 
-		// Form Reset Button
-		const [formReset, setFormReset] = useState(false)
+		// TODO: I'm sure there's a way I don't need to have two almost identical objects just to handle state buuuuut if it works, it works
+		const savedInputStates =
+			Object.fromEntries(
+				// Look through the page variables object
+				Object.keys(pageVars).map(
+					(id) => {
+						// If the user variables exist, match the slug to the saved value
+						const value = userVariables
+							? userVariables[pageVars[id].slug]
+							: pageVars[id].default_value
+						return [
+							id, {
+								// Build an obejct with key:value pairs
+								slug: pageVars[id].slug,
+								value: value,
+								value_length: value.length
+							}
+						]
+					}
+				)
+			)
 
-		useEffect(() => {
-			// Allow the form to reset only once per click
-			formReset ?? setFormReset(false)
-		}, [formReset])
+		const defaultInputStates =
+			Object.fromEntries(
+				// Look through the page variables object
+				Object.keys(pageVars).map(
+					(id) => [
+						id, {
+							// Build an obejct with key:value pairs
+							slug: pageVars[id].slug,
+							value: pageVars[id].default_value,
+							value_length: pageVars[id].default_value.length
+						}
+					]
+				)
+			)
+		/* output example: {
+			1 (panel id): {
+				slug: "dudes-name",
+				saved_value: "Blargen"
+				default_value: "Steve",
+			}
+		}	*/
+		const [inputStates, setInputStates] = useState(savedInputStates)
+		// console.log(defaultInputStates)
+
+
 
 		// RENDER
 		return <>
@@ -1106,26 +1145,9 @@ export default function ComicPageUI({
 											"max-w-prose",
 										)}>
 
-											{p.variables.map((v, vIndex) => {
-												// State Variables
-												const [value, setValue] = useState(
-													userVariables && userVariables[v.slug]
-														? userVariables[v.slug] as string
-														: v.default_value)
-												const [valueLength, setValueLength] = useState(value.length)
-
-												useEffect(() => {
-													// formReset is set to `true` when the reset button is clicked
-													if (formReset) {
-														// reset the default value on the input field
-														if (inputRefs.current?.[vIndex]) inputRefs.current[vIndex].value = v.default_value
-														// also reset the default value in state
-														setValue(v.default_value)
-													}
-												}, [formReset])
-
+											{p.variables.map((v, vIndex) =>
 												// RENDER
-												return <Field key={vIndex}>
+												<Field key={vIndex}>
 													<label
 														htmlFor={userVarsFields[`var${v.id}`].id}
 														className={clsx(
@@ -1178,7 +1200,7 @@ export default function ComicPageUI({
 																"text-xs",
 																"text-current/50"
 															)}>
-																{`${valueLength}/32`}{/* TODO: should this be hardcoded? */}
+																{`${inputStates[v.id].value_length}/32`}{/* TODO: should this be hardcoded? */}
 
 															</span>
 														</div>
@@ -1277,12 +1299,22 @@ export default function ComicPageUI({
 																id={userVarsFields[`var${v.id}`].id}
 																name={userVarsFields[`var${v.id}`].name}
 																type="text"
-																value={value}
-																size={value.length || 1}
+																// value={value}
+																value={inputStates[v.id].value}
+																size={inputStates[v.id].value_length || 1}
 																required
 																onChange={(e) => {
-																	setValue(e.target.value)
-																	setValueLength(e.target.value.length)
+																	setInputStates({
+																		...inputStates,
+																		[v.id]: {
+																			...inputStates[v.id],
+																			value: e.target.value,
+																			value_length: e.target.value.length
+																		}
+																	})
+																	// setValue(e.target.value)
+																	// setValueLength(e.target.value.length)
+																	// console.log(value)
 																}}
 															>
 															</input>
@@ -1302,7 +1334,7 @@ export default function ComicPageUI({
 														<ErrorMessage>{userVarsFields[`var${v.id}`].errors}</ErrorMessage>
 													</label>
 												</Field>
-											})}
+											)}
 
 										</section>
 										: null}
@@ -1370,20 +1402,29 @@ export default function ComicPageUI({
 								)} />
 							</button>
 							&nbsp;
-							<button type="button" className={clsx(
-								"block",
-								"mt-3",
-								"cursor-pointer",
-								"text-sm",
-								"float-right",
-								"float-end",
-								"flex",
-								"gap-x-1",
-								"items-center",
-								"p-1",
-								"text-comic-accent-800",
-								"dark:text-comic-accent-300/90",
-							)} onClick={() => (setFormReset(true))}>
+							<button className={
+								clsx(
+									"block",
+									"mt-3",
+									"cursor-pointer",
+									"text-sm",
+									"float-right",
+									"float-end",
+									"flex",
+									"gap-x-1",
+									"items-center",
+									"p-1",
+									"text-comic-accent-800",
+									"dark:text-comic-accent-300/90",
+								)}
+
+								type="button"
+								onClick={() => {
+									form.reset()
+									setInputStates(defaultInputStates)
+								}
+
+								}>
 								<Icon name="rotateLeft"
 									className={clsx(
 										"size-3",
