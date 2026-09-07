@@ -8,34 +8,27 @@ import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLElementType
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
+import * as Headless from "@headlessui/react"
+import { Button, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Textarea, } from "@headlessui/react"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import replaceComicVariables from "../_functions/replace-comic-vars"
-// CONTEXT
-import { useComicContext } from "./context"
 // ACTIONS
-import { /*saveUserVarsCookie,*/ saveUserVars } from "../_actions/variables"
+import { saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
+import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
-// import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from "@/components/dropdown"
-import { Radio, RadioGroup } from "@headlessui/react"
-import { Field, Fieldset, Label, Legend } from "@headlessui/react"
 import { ErrorMessage } from "@/components/fieldset"
 import { Link } from "@/components/link"
-import { Textarea, Button } from "@headlessui/react"
-// import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
-import * as Headless from "@headlessui/react"
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
-import z from "zod"
-import { SomeType } from "zod/v4/core"
-import slugify from "@/lib/slugify"
+
 
 /**----------------------------------- */
 // TYPES
@@ -1443,9 +1436,9 @@ export default function ComicPageUI({
 	}) {
 		// Render Form tags if vars exist
 		if (varsExist)
-			return <form action="" {...props}>
+			return <Form action="" {...props}>
 				{children}
-			</form>
+			</Form>
 		// Otherwise, render nothing
 		else if (!varsExist)
 			return children
@@ -1620,13 +1613,6 @@ export default function ComicPageUI({
 				{props.children}
 			</>
 		</Radio>
-	}
-
-	function ComicPageLink({
-		className,
-		...props
-	}: ComponentPropsWithoutRef<typeof Link>) {
-
 	}
 
 	function ComicButton({
@@ -2112,7 +2098,7 @@ export default function ComicPageUI({
 			// Render
 			return <>
 				{session &&
-					<form className={
+					<Form className={
 						clsx(
 							"mt-2",
 							"animate-fade-in"
@@ -2199,7 +2185,7 @@ export default function ComicPageUI({
 							/>
 						</Field>
 						<ComicButton as="button" type="submit">{t("submit-suggestion")}</ComicButton>
-					</form>
+					</Form>
 				}
 			</>
 		} // EO UserSuggestionForm()
