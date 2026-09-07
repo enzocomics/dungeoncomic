@@ -83,6 +83,7 @@ export default function ComicPageUI({
 	const searchParams = useSearchParams()
 	const t = useTranslations("ComicPage")
 	const comic = page.comic
+	const setStatus = useChangeStatus("")
 
 	/**----------------------------------- */
 	// Get a list of all the comic panel variables
@@ -204,6 +205,8 @@ export default function ComicPageUI({
 			pagenum: page.comic_pagenum,
 			params: searchParams.toString() || undefined
 		})
+		// Clear the status message
+		setStatus("")
 	}, [pathname, searchParams.toString()])
 
 	/**----------------------------------- */
@@ -1463,8 +1466,9 @@ export default function ComicPageUI({
 				// Appearance
 				"outline-2",
 				"outline-red-100",
+				"-outline-offset-2",
 				"bg-red-100",
-				"rounded-b-sm",
+				"rounded-sm",
 				"dark:outline-none",
 				"dark:bg-black/10",
 				// Text
@@ -1532,14 +1536,21 @@ export default function ComicPageUI({
 		return <Radio {...props}
 			className={clsx(
 				className,
+				"cursor-pointer",
+				"data-disabled:cursor-not-allowed",
+				// Structure & Position
 				"group",
 				"relative",
 				"flex",
 				"gap-x-2",
 				"items-center",
-				"cursor-pointer",
+				// Size & Spacing
 				"w-full",
 				"p-4",
+				// Text
+				"font-copy",
+				"text-base",
+				// Appearance
 				"rounded",
 				"bg-base-1",
 				"dark:bg-base-1/25",
@@ -1554,6 +1565,14 @@ export default function ComicPageUI({
 				"duration-300",
 				"dark:data-checked:bg-comic-accent-800/60",
 				"dark:hover:data-checked:bg-comic-accent-800",
+				// Outline
+				"focus:outline-4",
+				"focus:-outline-offset-3",
+				"focus:outline-comic-accent-500",
+				"focus-within:outline-4",
+				"focus-within:-outline-offset-3",
+				"focus-within:outline-comic-accent-500",
+				"data-disabled:outline-none",
 			)}
 		>
 			<>
@@ -1808,8 +1827,6 @@ export default function ComicPageUI({
 		/**----------------------------------- */
 		// SUBMITTED SUGGESTIONS
 
-		const setStatus = useChangeStatus("")
-
 		// Check if the user has submitted anything yet
 		const userSubmission = page.plot_suggestions!.find(
 			s => s.user_created.id === loggedInUserID
@@ -1852,8 +1869,8 @@ export default function ComicPageUI({
 							disabled={session ? false : true}>
 							<Legend className={
 								clsx(
-									"pb-2",
-									"text-sm",
+									"pb-4",
+									"text-",
 									"font-display",
 									"font-semibold",
 								)
@@ -1900,11 +1917,74 @@ export default function ComicPageUI({
 												clsx(
 													"grow",
 													"text-left",
-													"font-copy",
-													"text-base",
 												)
 											}
 											>
+												{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
+												{page.user_created.id !== s.user_created.id &&
+													<div className={clsx(
+
+														"flex",
+														"text-sm",
+														"mt-1",
+														"cursor-auto",
+														"gap-x-4",
+													)}>
+														<em className={clsx(
+															"text-neutral-400",
+															"dark:text-white/70",
+														)}>
+															@{s.user_created.username} says:
+														</em>
+
+														{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+															<span className={clsx(
+																"absolute",
+																"-top-1",
+																"-right-1",
+																"flex",
+																"ml-auto",
+																"gap-x-1",
+															)}>
+																{/* <button
+																	title={t("edit-suggestion")}
+																	className={clsx(
+																		"px-1",
+																		"bg-neutral-400",
+																		"text-white",
+																		"rounded-sm",
+																		"cursor-pointer",
+																	)}>
+																	<Icon name="penToSquare" className={clsx(
+																		"size-4",
+																	)} />
+																</button> */}
+																<button
+																	title={t("delete-suggestion")}
+																	className={clsx(
+																		"p-1",
+																		"bg-red-400",
+																		"text-white",
+																		"rounded-sm",
+																		"cursor-pointer",
+																	)}
+																	onClick={async () => {
+																		deleteUserPlotSuggestion(s.id)
+																		setDeleteSuggestion(s.id)
+																		setUserHasSubmitted(false)
+																		setStatus("success", t("suggestion-deleted"))
+																		router.refresh()
+																	}}
+																>
+																	<Icon name="xmark" className={clsx(
+																		"size-4",
+																	)} />
+																</button>
+															</span>
+														}
+													</div>
+												}
+
 												<div className={clsx(
 													"cursor-auto"
 												)}>
@@ -1915,60 +1995,6 @@ export default function ComicPageUI({
 													})}
 												</div>
 
-												{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
-												{page.user_created.id !== s.user_created.id &&
-													<div className={clsx(
-														"flex",
-														"text-sm",
-														"mt-2",
-														"cursor-auto",
-														"gap-x-4",
-													)}>
-														<em className={clsx(
-															"text-comic-accent-900/50",
-														)}>
-															@{s.user_created.username}
-														</em>
-
-														{(session !== false && session !== undefined) && s.user_created.id == session.id &&
-															<span className={clsx(
-																"flex",
-																"ml-auto",
-																"gap-x-2",
-															)}>
-																<button
-																	className={clsx(
-																		"px-2",
-																		"bg-comic-accent-100/50",
-																		"hover:bg-comic-accent-100",
-																		// "text-white",
-																		"rounded-sm",
-																		"cursor-pointer",
-																	)}>
-																	{t("edit-suggestion")}
-																</button>
-																<button
-																	className={clsx(
-																		"px-2",
-																		"bg-comic-accent-100/50",
-																		"hover:bg-comic-accent-100",
-																		// "text-white",
-																		"rounded-sm",
-																		"cursor-pointer",
-																	)}
-																	onClick={async () => {
-																		deleteUserPlotSuggestion(s.id)
-																		setDeleteSuggestion(s.id)
-																		setUserHasSubmitted(false)
-																		setStatus("success", t("suggestion-deleted"))
-																	}}
-																>
-																	{t("delete-suggestion")}
-																</button>
-															</span>
-														}
-													</div>
-												}
 											</Label>
 											<div className={
 												clsx(
@@ -1998,7 +2024,6 @@ export default function ComicPageUI({
 										className={clsx(
 											"text-left",
 											"mx-auto",
-											"cursor-pointer"
 										)}>
 										{/* <Radio value={selectUserSuggestion} /> */}
 										<Label className={
@@ -2059,7 +2084,7 @@ export default function ComicPageUI({
 				if (lastResult?.status == "success") {
 					setSelected("")
 					setUserHasSubmitted(true)
-					setStatus("success", "Your suggestion has been submitted.")
+					setStatus("success", t("suggestion-submitted"))
 					router.refresh()
 				}
 			}, [lastResult])
@@ -2117,15 +2142,14 @@ export default function ComicPageUI({
 									"text-black",
 									"border-2",
 									"border-neutral-200",
+									"dark:border-white",
 									"rounded",
 									"w-full",
 									"p-2",
 									"font-mono",
 									"font-base",
 									"resize-none",
-									"focus:outline-1",
-									"focus:outline-comic-accent-800",
-									"focus:border-comic-accent-800",
+									"outline-none",
 								)
 							}
 								rows={1}
@@ -2145,6 +2169,7 @@ export default function ComicPageUI({
 							/>
 							<ComicErrorMessage className={clsx(
 								"mb-2",
+								"text-center",
 							)}>
 								{fields.userSuggestion.errors}
 							</ComicErrorMessage>
