@@ -8,12 +8,11 @@ import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLElementType
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+// VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
-import * as Headless from "@headlessui/react"
-import { Button, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Textarea, } from "@headlessui/react"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
@@ -23,6 +22,8 @@ import replaceComicVariables from "../_functions/replace-comic-vars"
 import { saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
+import * as Headless from "@headlessui/react"
+import { Button, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Textarea, } from "@headlessui/react"
 import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/fieldset"
@@ -70,13 +71,14 @@ export default function ComicPageUI({
 	userVariables,
 	session
 }: ComicPageUIProps) {
-	// VARIABLES
+	// HOOKS
 	const pathname = usePathname()
 	const router = useRouter()
 	const searchParams = useSearchParams()
 	const t = useTranslations("ComicPage")
-	const comic = page.comic
 	const setStatus = useChangeStatus("")
+	// PRIMARY VARS
+	const comic = page.comic
 
 	/**----------------------------------- */
 	// Get a list of all the comic panel variables
@@ -122,27 +124,6 @@ export default function ComicPageUI({
 
 	const hasBanner = !!page.comic.banner
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
-
-	/**----------------------------------- */
-	// Submit the User Variables
-	// useEffect(() => {
-
-	// 	// Check if variables have been submitted to this page and save them to cookie
-	// 	const saveUserVariables = async () => {
-	// 		// Save Variables if they have been submitted
-	// 		if (varsSubmitted) {
-	// 			// if vars already exist, put them together so they don't get overwritten
-	// 			await saveUserVarsCookie({
-	// 				vars: {
-	// 					...userVariables,
-	// 					...submittedUserVars
-	// 				},
-	// 				page: page
-	// 			})
-	// 		}
-	// 	}
-	// 	saveUserVariables()
-	// }, [pathname, searchParams.toString()])
 
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
@@ -688,6 +669,7 @@ export default function ComicPageUI({
 						"bg-comic-accent-700",
 						"dark:bg-comic-accent-900",
 						"text-xs",
+						"font-platform-display",
 						"md:rounded-b",
 						"md:drop-shadow-xl",
 						"md:drop-shadow-neutral-900/45",
@@ -697,7 +679,6 @@ export default function ComicPageUI({
 							"list-none",
 							"flex",
 							"justify-center",
-
 						)}>
 							<li>
 								<Link
