@@ -28,8 +28,8 @@ import { Radio, RadioGroup } from "@headlessui/react"
 import { Field, Fieldset, Label, Legend } from "@headlessui/react"
 import { ErrorMessage } from "@/components/fieldset"
 import { Link } from "@/components/link"
-import { Textarea } from "@headlessui/react"
-import { Button } from "@/components/button"
+import { Textarea, Button } from "@headlessui/react"
+// import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
@@ -411,6 +411,11 @@ export default function ComicPageUI({
 						"transition-all",
 						"ease-in-out",
 						"duration-300",
+						// Outline
+						"outline-transparent",
+						"focus:outline-4",
+						"focus:-outline-offset-4",
+						"focus:outline-comic-accent-500",
 
 					)}>
 						<div className={clsx(
@@ -1357,7 +1362,7 @@ export default function ComicPageUI({
 							"max-w-prose",
 							"mx-auto",
 						)}>
-							<ComicButton type="submit" className={clsx(
+							<ComicButton as="button" type="submit" className={clsx(
 							)}>
 								<span className={clsx(
 									"ml-5",
@@ -1393,6 +1398,12 @@ export default function ComicPageUI({
 									"transition-all",
 									"ease-in-out",
 									"duration-300",
+									// Outline
+									"rounded",
+									"outline-transparent",
+									"focus:outline-2",
+									"focus:outline-offset-1",
+									"focus:outline-comic-accent-500",
 								)}
 
 								type="button"
@@ -1611,46 +1622,73 @@ export default function ComicPageUI({
 		</Radio>
 	}
 
-	function ComicButton({
+	function ComicPageLink({
 		className,
 		...props
-	}: ComponentPropsWithoutRef<"button">) {
-		return <button {...props} className={
-			clsx(
-				// structure
-				"p-2",
-				"w-full",
-				"flex",
-				"items-center",
-				"justify-center",
-				// Appearance
-				"bg-comic-accent-500",
-				"rounded-sm",
-				"text-white",
-				"text-sm",
-				"font-display",
-				"font-semibold",
-				"cursor-pointer",
-				"border-y-2",
-				"border-t-white/40",
-				"border-b-black/20",
-				// States
-				"hover:duration-0",
-				"hover:bg-comic-accent-700",
-				"active:translate-px",
-				"active:bg-comic-accent-900",
-				// Transition
-				"transition-all",
-				"ease-in-out",
-				"duration-300",
-				// Outline
-				"focus:outline-3",
-				"focus:outline-offset-3",
-				"focus:outline-comic-accent-500",
-			)
-		}>
-			{props.children}
-		</button>
+	}: ComponentPropsWithoutRef<typeof Link>) {
+
+	}
+
+	function ComicButton({
+		className,
+		...props }:
+		| ({
+			as?: "button"
+		} & ComponentPropsWithoutRef<"button">)
+		| ({
+			as?: "link"
+		} & ComponentPropsWithoutRef<typeof Link>)
+	) {
+		const classes = clsx(
+			className,
+
+			"p-2",
+			"w-full",
+			"flex",
+			"items-center",
+			"justify-center",
+			// Appearance
+			"bg-comic-accent-500",
+			"visited:bg-neutral-500",
+			"rounded-sm",
+			"text-white",
+			"text-sm",
+			"font-display",
+			"font-semibold",
+			"cursor-pointer",
+			"border-y-2",
+			"border-t-white/40",
+			"border-b-black/20",
+			// States
+			"hover:duration-0",
+			"hover:bg-comic-accent-700",
+			"active:translate-px",
+			"active:bg-comic-accent-900",
+			// Transition
+			"transition-all",
+			"ease-in-out",
+			"duration-300",
+			// Outline
+			"outline-transparent",
+			"focus:outline-4",
+			"focus:outline-offset-4",
+			"focus:outline-comic-accent-500",
+		)
+
+		// logic here that returns Button or Link conditionally
+
+		if (props.as === "link") {
+			const { as, ...linkProps } = props
+			return <Link className={classes} {...linkProps}>
+				{linkProps.children}
+			</Link>
+		}
+		if (props.as === "button") {
+			const { as, ...buttonProps } = props
+			return <Button {...buttonProps} className={classes}>
+				{props.children}
+			</Button>
+		}
 	}
 
 	/**-----------------------------------
@@ -1693,37 +1731,10 @@ export default function ComicPageUI({
 									{page?.next_pages?.map((n, index) =>
 										<li key={index} className={clsx(
 										)}>
-											<Link className={clsx(
-												// structure
-												"p-2",
-												"w-full",
-												"flex",
-												"items-center",
-												"justify-center",
-												// Appearance
-												"bg-comic-accent-500",
-												"visited:bg-neutral-500",
-												"rounded-sm",
-												"text-white",
-												"text-sm",
-												"font-display",
-												"font-semibold",
-												"cursor-pointer",
-												"border-y-2",
-												"border-t-white/40",
-												"border-b-black/20",
-												// States
-												"hover:duration-0",
-												"hover:bg-comic-accent-700",
-												"active:translate-px",
-												"active:bg-comic-accent-900",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-											)}
+											<ComicButton as="link"
 												onClick={() => { setNavClickType("next") }}
-												href={`./${n.linked_pages_id.comic_pagenum}`}>
+												href={`./${n.linked_pages_id.comic_pagenum}`}
+											>
 												<span className={clsx(
 													"grow",
 													"text-pretty",
@@ -1749,7 +1760,7 @@ export default function ComicPageUI({
 													"ml-1",
 													"size-4",
 												)} />
-											</Link>
+											</ComicButton>
 										</li>
 									)}
 								</ul>
@@ -1861,7 +1872,7 @@ export default function ComicPageUI({
 						}
 						<Fieldset
 							disabled={session ? false : true}>
-							<Legend className={
+							<Legend as="legend" className={
 								clsx(
 									"pb-4",
 									"text-",
@@ -2187,7 +2198,7 @@ export default function ComicPageUI({
 								value={session.id}
 							/>
 						</Field>
-						<ComicButton type="submit">{t("submit-suggestion")}</ComicButton>
+						<ComicButton as="button" type="submit">{t("submit-suggestion")}</ComicButton>
 					</form>
 				}
 			</>
