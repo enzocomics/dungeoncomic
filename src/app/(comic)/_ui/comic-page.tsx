@@ -28,7 +28,7 @@ import { Radio, RadioGroup } from "@headlessui/react"
 import { Field, Fieldset, Label, Legend } from "@headlessui/react"
 import { ErrorMessage } from "@/components/fieldset"
 import { Link } from "@/components/link"
-import { Textarea } from "@/components/textarea"
+import { Textarea } from "@headlessui/react"
 import { Button } from "@/components/button"
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
@@ -1029,7 +1029,7 @@ export default function ComicPageUI({
 								// Build an obejct with key:value pairs
 								slug: pageVars[id].slug,
 								value: value,
-								value_length: value.length
+								value_length: String(value).length ?? 0
 							}
 						]
 					}
@@ -1187,6 +1187,7 @@ export default function ComicPageUI({
 																)}>
 																{v.prompt || `${v.name}`}
 															</span>
+															{/* Length Checker */}
 															<span className={clsx(
 																"ml-auto",
 																"font-normal",
@@ -1355,33 +1356,7 @@ export default function ComicPageUI({
 							"max-w-prose",
 							"mx-auto",
 						)}>
-							<button type="submit" className={clsx(
-								// structure
-								"p-2",
-								"w-full",
-								"flex",
-								"items-center",
-								"justify-center",
-								// Appearance
-								"bg-comic-accent-500",
-								"rounded-sm",
-								"text-white",
-								"text-sm",
-								"font-display",
-								"font-semibold",
-								"cursor-pointer",
-								"border-y-2",
-								"border-t-white/40",
-								"border-b-black/20",
-								// States
-								"hover:duration-0",
-								"hover:bg-comic-accent-700",
-								"active:translate-px",
-								"active:bg-comic-accent-900",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
+							<ComicButton type="submit" className={clsx(
 							)}>
 								<span className={clsx(
 									"ml-5",
@@ -1394,7 +1369,7 @@ export default function ComicPageUI({
 									"ml-1",
 									"size-4",
 								)} />
-							</button>
+							</ComicButton>
 							&nbsp;
 							<button className={
 								clsx(
@@ -1541,7 +1516,114 @@ export default function ComicPageUI({
 		</Tag>
 	}
 
+	function ComicInputRadio({
+		className,
+		...props
+	}: Headless.RadioProps) {
+		return <Radio {...props}
+			className={clsx(
+				className,
+				"group",
+				"relative",
+				"flex",
+				"gap-x-2",
+				"items-center",
+				"cursor-pointer",
+				"w-full",
+				"p-4",
+				"rounded",
+				"bg-base-1",
+				"dark:bg-base-1/25",
+				"opacity-60",
+				"data-checked:opacity-100",
+				"hover:duration-0",
+				"hover:opacity-90",
+				// Transition
+				"transition-all",
+				"ease-in-out",
+				"duration-300",
+			)}
+		>
+			<>
+				<div className={
+					clsx(
+						"shrink-0",
+						"relative",
+						"size-5",
+					)
+				}>
+					<Icon name="circle"
+						className={
+							clsx(
+								"text-neutral-200",
+								"size-5",
+							)
+						}
+					/>
+					<Icon name="circleCheck"
+						className={
+							clsx(
+								"absolute",
+								"left-0",
+								"top-1/2",
+								"-translate-y-1/2",
+								"text-neutral-200",
+								"size-5",
+								"opacity-0",
+								"scale-50",
+								"group-data-checked:scale-100",
+								"group-data-checked:opacity-100",
+								"group-data-checked:text-comic-accent-500",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"duration-300",
+							)
+						}
+					/>
+				</div>
+				{props.children}
+			</>
+		</Radio>
+	}
 
+	function ComicButton({
+		className,
+		...props
+	}: ComponentPropsWithoutRef<"button">) {
+		return <button {...props} className={
+			clsx(
+				// structure
+				"p-2",
+				"w-full",
+				"flex",
+				"items-center",
+				"justify-center",
+				// Appearance
+				"bg-comic-accent-500",
+				"rounded-sm",
+				"text-white",
+				"text-sm",
+				"font-display",
+				"font-semibold",
+				"cursor-pointer",
+				"border-y-2",
+				"border-t-white/40",
+				"border-b-black/20",
+				// States
+				"hover:duration-0",
+				"hover:bg-comic-accent-700",
+				"active:translate-px",
+				"active:bg-comic-accent-900",
+				// Transition
+				"transition-all",
+				"ease-in-out",
+				"duration-300",
+			)
+		}>
+			{props.children}
+		</button>
+	}
 
 	/**-----------------------------------
 	 * SECTION: COMIC PAGE NAVIGATION (BOTTOM)
@@ -1731,9 +1813,8 @@ export default function ComicPageUI({
 
 		const [deleteSuggestion, setDeleteSuggestion] = useState<number | null>(null)
 
-		useEffect(() => {
-
-		}, [])
+		// User Suggestion Textarea Ref
+		const suggestionRef = useRef<HTMLTextAreaElement | null>(null)
 
 		/**----------------------------------- */
 		// Render
@@ -1779,6 +1860,9 @@ export default function ComicPageUI({
 								value={selected}
 								onChange={(selected) => handleClick(selected)}
 								className={clsx(
+									"flex",
+									"flex-col",
+									"gap-y-2",
 								)}>
 								{/* PLOT SUGGESTIONS */}
 								{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
@@ -1796,20 +1880,22 @@ export default function ComicPageUI({
 												setVote(votes - 1)
 										}
 									}, [selected])
+
 									// RENDER
 									if (deleteSuggestion !== s.id)
-										return <Radio
+										return <ComicInputRadio
 											value={`${s.id}`}
 											key={index}
-											className={clsx(
-												"text-left",
-												"w-2/3",
-												"mx-auto",
-												"cursor-pointer",
-											)}>
-											{/* <Radio value={`${s.id}`} /> */}
-											<Label>
-												{`${s.id}`} -&nbsp;
+										>
+											<Label className={
+												clsx(
+													"grow",
+													"text-left",
+													"font-copy",
+													"text-base",
+												)
+											}
+											>
 												{replaceComicVariables({
 													content: s.title,
 													variables: variables,
@@ -1819,7 +1905,6 @@ export default function ComicPageUI({
 												{page.user_created.id !== s.user_created.id &&
 													<em>&nbsp;&mdash; @{s.user_created.username}</em>
 												}
-												&nbsp;| <strong>{votes}</strong>
 												{(session !== false && session !== undefined) && s.user_created.id == session.id &&
 													<>
 														<Button
@@ -1840,7 +1925,19 @@ export default function ComicPageUI({
 													</>
 												}
 											</Label>
-										</Radio>
+											<div className={
+												clsx(
+													"px-2",
+													"self-stretch",
+													"bg-neutral-100",
+													"rounded",
+													"font-mono",
+													"dark:bg-neutral-800",
+												)
+											}>
+												{votes}
+											</div>
+										</ComicInputRadio>
 								}
 								) : null}
 								{/* 
@@ -1850,37 +1947,45 @@ export default function ComicPageUI({
 						*/}
 								{page.allow_user_suggestions &&
 									!userHasSubmitted &&
-									<Radio
+									<ComicInputRadio
 										value={selectUserSuggestion}
 										className={clsx(
 											"text-left",
-											"w-2/3",
 											"mx-auto",
 											"cursor-pointer"
 										)}>
 										{/* <Radio value={selectUserSuggestion} /> */}
-										<Label>
+										<Label className={
+											clsx(
+												"grow",
+												"font-copy",
+											)
+										}>
 											{t("submit-own-suggestion")}
+											{page.allow_user_suggestions && selected == selectUserSuggestion &&
+												<UserSuggestionForm ref={suggestionRef} />
+											}
 										</Label>
-									</Radio>
+										<Icon name="penToSquare" className={
+											clsx(
+												"size-5",
+												"mr-1",
+												"group-data-checked:hidden"
+											)
+										} />
+									</ComicInputRadio>
 								}
 							</RadioGroup>
 
 						</Fieldset>
-						{/* 
-						SUGGESTION FORM
-				*/}
-						{page.allow_user_suggestions && selected == selectUserSuggestion &&
-							<UserSuggestionForm />
-						}
 					</ComicInputSectionRow>
 				</ComicInputSection>
 			}
-		</> // EO UserSuggestionForm() RENDER
+		</>
 
 		/**----------------------------------- */
 
-		function UserSuggestionForm() {
+		function UserSuggestionForm(props: ComponentPropsWithRef<"textarea">) {
 			// VALIDATION
 			const [lastResult, action] = useActionState(submitUserPlotSuggestion, undefined)
 			const [form, fields] = useForm({
@@ -1907,24 +2012,76 @@ export default function ComicPageUI({
 				}
 			}, [lastResult])
 
+			// Textarea length checker
+			const [inputLength, setInputLength] = useState(0)
+
+			function handleTextarea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+				const textarea = e.target
+
+				// Reset height first so it cqn shrink when text is deleted
+				textarea.style.height = "auto"
+
+				// Expand the height to fit the content
+				textarea.style.height = `${textarea.scrollHeight + 4}px`
+			}
+
 			// Render
 			return <>
 				{session &&
-					<form
+					<form className={
+						clsx(
+							"mt-2",
+							"animate-fade-in"
+						)
+					}
 						id={form.id}
 						onSubmit={form.onSubmit}
 						action={action}
-						noValidate>
+						noValidate
+					>
 						<Field className={clsx(
-							// "mt-8"
+							"relative",
 						)}>
-							<Label htmlFor={fields.userSuggestion.name}>{t("suggestion-form-title")}</Label>
-							<Textarea
+							{/* Length Checker */}
+							<span className={clsx(
+								"absolute",
+								"-top-6.5",
+								"right-0",
+								"ml-auto",
+								"font-display",
+								"font-normal",
+								"text-xs",
+								"text-current/50"
+							)}>
+								{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
+
+							</span>
+							<Textarea ref={props.ref} className={
+								clsx(
+									"border-2",
+									"border-neutral-200",
+									"rounded",
+									"w-full",
+									"p-2",
+									"font-mono",
+									"font-base",
+									"resize-none",
+								)
+							}
+								rows={1}
 								id={fields.userSuggestion.name}
 								name={fields.userSuggestion.name}
 								key={fields.userSuggestion.key}
+								onChange={(e) => {
+									setInputLength(e.target.value.length)
+									handleTextarea(e)
+								}}
+								maxLength={140} // TODO: should this be hardcoded?
 							/>
-							<ComicErrorMessage>{fields.userSuggestion.errors}</ComicErrorMessage>
+							<ComicErrorMessage>
+								{fields.userSuggestion.errors}
+							</ComicErrorMessage>
+
 							<input
 								name={fields.pageId.name}
 								key={fields.pageId.key}
@@ -1944,7 +2101,7 @@ export default function ComicPageUI({
 								value={session.id}
 							/>
 						</Field>
-						<Button type="submit">{t("submit-suggestion")}</Button>
+						<ComicButton type="submit">{t("submit-suggestion")}</ComicButton>
 					</form>
 				}
 			</>

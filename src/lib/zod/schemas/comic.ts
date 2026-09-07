@@ -29,7 +29,7 @@ export const userSuggestionSchema = (
 	t?: (arg: string) => string,
 ) =>
 	z.object({
-		userSuggestion: z.string(),
+		userSuggestion: z.string().max(140),
 		pageId: z.string(),
 		userId: z.string(),
 		slug: z.string(),
