@@ -1153,17 +1153,24 @@ export default function ComicPageUI({
 															"flex-col",
 															"hover:bg-neutral-200/60",
 															"dark:hover:bg-neutral-900",
+															"outline-3",
+															"-outline-offset-3",
+															"focus-within:outline-3",
+															"focus-within:outline-comic-accent-500",
 															// 
 															userVarsFields[`var${v.id}`].errors ? [
-																"dark:bg-red-500",
-																"dark:focus-within:bg-red-500",
-																"dark:hover:bg-red-500",
-																"dark:hover:focus-within:bg-red-500",
+																"outline-transparent",
+																"dark:bg-red-500/40",
+																"dark:focus-within:bg-comic-accent-500/60",
+																"dark:outline-comic-accent-500/0",
+																"dark:focus-within:outline-comic-accent-500",
 															] : [
-																"dark:bg-neutral-800/50",
-																"dark:focus-within:bg-comic-accent-800/60",
-																"dark:hover:focus-within:bg-comic-accent-800",
+																"dark:bg-neutral-800/40",
+																"dark:hover:focus-within:bg-comic-accent-800.",
+																"outline-comic-accent-500/0",
 															],
+
+															"dark:hover:bg-red-500",
 															// Transition
 															"hover:duration-0",
 															"transition-all",
@@ -1214,16 +1221,16 @@ export default function ComicPageUI({
 																"font-mono",
 																// "border",
 																"rounded",
-																"focus-within:outline-2",
+																// "focus-within:outline-2",
 																userVarsFields[`var${v.id}`].errors ? [
-																	"outline-2",
-																	"outline-red-500",
-																	"focus-within:outline-red-500",
-																	"rounded-b-none",
+																	// "outline-2",
+																	// "outline-red-500",
+																	// "focus-within:outline-red-500",
+																	// "rounded-b-none",
 																] : [
-																	"outline-none",
-																	"focus-within:outline-none",
-																	"dark:focus-within:outline-none",
+																	// "outline-none",
+																	// "focus-within:outline-none",
+																	// "dark:focus-within:outline-none",
 																],
 															)}
 														>
@@ -1325,7 +1332,9 @@ export default function ComicPageUI({
 																</span>
 															}
 														</div>
-														<ComicErrorMessage>
+														<ComicErrorMessage className={clsx(
+															"mt-1",
+														)}>
 															{userVarsFields[`var${v.id}`].errors}
 														</ComicErrorMessage>
 													</ComicInputSectionRow>
@@ -1538,10 +1547,13 @@ export default function ComicPageUI({
 				"data-checked:opacity-100",
 				"hover:duration-0",
 				"hover:opacity-90",
+				"active:translate-px",
 				// Transition
 				"transition-all",
 				"ease-in-out",
 				"duration-300",
+				"dark:data-checked:bg-comic-accent-800/60",
+				"dark:hover:data-checked:bg-comic-accent-800",
 			)}
 		>
 			<>
@@ -1557,6 +1569,8 @@ export default function ComicPageUI({
 							clsx(
 								"text-neutral-200",
 								"size-5",
+								"dark:group-data-checked:text-comic-accent-800",
+
 							)
 						}
 					/>
@@ -1578,6 +1592,7 @@ export default function ComicPageUI({
 								"transition-all",
 								"ease-in-out",
 								"duration-300",
+								"dark:group-data-checked:text-white"
 							)
 						}
 					/>
@@ -1782,11 +1797,6 @@ export default function ComicPageUI({
 				})
 			}
 
-			// Handle the form
-			if (selected == selectUserSuggestion) {
-				console.log("handle the form")
-			}
-
 			// Cast the vote
 			if (clicked == true) {
 				castVote(selected) // Send the vote to the cms
@@ -1838,7 +1848,6 @@ export default function ComicPageUI({
 								})}
 							</div>
 						}
-						<StatusMessage />
 						<Fieldset
 							disabled={session ? false : true}>
 							<Legend className={
@@ -1896,50 +1905,87 @@ export default function ComicPageUI({
 												)
 											}
 											>
-												{replaceComicVariables({
-													content: s.title,
-													variables: variables,
-													userVariables: userVariables
-												})}
+												<div className={clsx(
+													"cursor-auto"
+												)}>
+													{replaceComicVariables({
+														content: s.title,
+														variables: variables,
+														userVariables: userVariables
+													})}
+												</div>
+
 												{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
 												{page.user_created.id !== s.user_created.id &&
-													<em>&nbsp;&mdash; @{s.user_created.username}</em>
-												}
-												{(session !== false && session !== undefined) && s.user_created.id == session.id &&
-													<>
-														<Button
-															className={clsx("ml-5")}>
-															{t("edit-suggestion")}
-														</Button>
-														<Button
-															className={clsx("ml-5")}
-															onClick={async () => {
-																deleteUserPlotSuggestion(s.id)
-																setDeleteSuggestion(s.id)
-																setUserHasSubmitted(false)
-																setStatus("success", t("suggestion-deleted"))
-															}}
-														>
-															{t("delete-suggestion")}
-														</Button>
-													</>
+													<div className={clsx(
+														"flex",
+														"text-sm",
+														"mt-2",
+														"cursor-auto",
+														"gap-x-4",
+													)}>
+														<em className={clsx(
+															"text-comic-accent-900/50",
+														)}>
+															@{s.user_created.username}
+														</em>
+
+														{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+															<span className={clsx(
+																"flex",
+																"ml-auto",
+																"gap-x-2",
+															)}>
+																<button
+																	className={clsx(
+																		"px-2",
+																		"bg-comic-accent-100/50",
+																		"hover:bg-comic-accent-100",
+																		// "text-white",
+																		"rounded-sm",
+																		"cursor-pointer",
+																	)}>
+																	{t("edit-suggestion")}
+																</button>
+																<button
+																	className={clsx(
+																		"px-2",
+																		"bg-comic-accent-100/50",
+																		"hover:bg-comic-accent-100",
+																		// "text-white",
+																		"rounded-sm",
+																		"cursor-pointer",
+																	)}
+																	onClick={async () => {
+																		deleteUserPlotSuggestion(s.id)
+																		setDeleteSuggestion(s.id)
+																		setUserHasSubmitted(false)
+																		setStatus("success", t("suggestion-deleted"))
+																	}}
+																>
+																	{t("delete-suggestion")}
+																</button>
+															</span>
+														}
+													</div>
 												}
 											</Label>
 											<div className={
 												clsx(
 													"px-2",
 													"self-stretch",
+													"content-center",
 													"bg-neutral-100",
 													"rounded",
 													"font-mono",
-													"dark:bg-neutral-800",
+													"dark:bg-neutral-900/40",
+													"min-w-12",
 												)
 											}>
 												{votes}
 											</div>
 										</ComicInputRadio>
-								}
-								) : null}
+								}) : null}
 								{/* 
 								SUBMIT OWN SUGGESTION
 								- Only display this radio button if the user hasn't already submitted something
@@ -1969,7 +2015,7 @@ export default function ComicPageUI({
 										<Icon name="penToSquare" className={
 											clsx(
 												"size-5",
-												"mr-1",
+												"mr-3.5",
 												"group-data-checked:hidden"
 											)
 										} />
@@ -1978,6 +2024,12 @@ export default function ComicPageUI({
 							</RadioGroup>
 
 						</Fieldset>
+
+						<StatusMessage className={
+							clsx(
+								"mt-2"
+							)
+						} />
 					</ComicInputSectionRow>
 				</ComicInputSection>
 			}
@@ -2012,6 +2064,8 @@ export default function ComicPageUI({
 				}
 			}, [lastResult])
 
+			// props.ref ? props.ref.current?.focus() : null
+
 			// Textarea length checker
 			const [inputLength, setInputLength] = useState(0)
 
@@ -2038,6 +2092,7 @@ export default function ComicPageUI({
 						onSubmit={form.onSubmit}
 						action={action}
 						noValidate
+						onAnimationEnd={() => suggestionRef.current?.focus()}
 					>
 						<Field className={clsx(
 							"relative",
@@ -2058,6 +2113,8 @@ export default function ComicPageUI({
 							</span>
 							<Textarea ref={props.ref} className={
 								clsx(
+									"bg-white",
+									"text-black",
 									"border-2",
 									"border-neutral-200",
 									"rounded",
@@ -2066,6 +2123,9 @@ export default function ComicPageUI({
 									"font-mono",
 									"font-base",
 									"resize-none",
+									"focus:outline-1",
+									"focus:outline-comic-accent-800",
+									"focus:border-comic-accent-800",
 								)
 							}
 								rows={1}
@@ -2076,9 +2136,16 @@ export default function ComicPageUI({
 									setInputLength(e.target.value.length)
 									handleTextarea(e)
 								}}
+								// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
+								// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
+								onKeyDown={
+									(e) => (e.key == " " || e.code == "Space" || e.keyCode == 32) && e.stopPropagation()
+								}
 								maxLength={140} // TODO: should this be hardcoded?
 							/>
-							<ComicErrorMessage>
+							<ComicErrorMessage className={clsx(
+								"mb-2",
+							)}>
 								{fields.userSuggestion.errors}
 							</ComicErrorMessage>
 

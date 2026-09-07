@@ -14,8 +14,8 @@
 		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
 		"submit-own-suggestion": "Something else...",
 		"suggestion-deleted": "Your suggestion has been deleted.",
-		"edit-suggestion": "Edit your suggestion",
-		"delete-suggestion": "Delete your suggestion",
+		"edit-suggestion": "Edit",
+		"delete-suggestion": "Delete",
 		"submit-suggestion": "Submit suggestion"
 	},
 	"Comments": {

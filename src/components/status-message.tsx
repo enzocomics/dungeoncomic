@@ -148,7 +148,7 @@ export default function StatusMessage({
 						<button
 							type="button"
 							onClick={() => {
-								router.push(pathname,) // Clear the search params from the url
+								// router.push(pathname,) // Clear the search params from the url
 								setStatus("") // Clear the status message, which hides the message uI
 							}}
 							className={clsx(
