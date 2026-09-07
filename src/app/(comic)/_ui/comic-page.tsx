@@ -1156,24 +1156,25 @@ export default function ComicPageUI({
 															"flex-col",
 															"hover:bg-neutral-200/60",
 															"dark:hover:bg-neutral-900",
-															"outline-3",
-															"-outline-offset-3",
-															"focus-within:outline-3",
+															"outline-transparent",
+															"outline-4",
+															"focus-within:-outline-offset-4",
+															"focus-within:outline-4",
 															"focus-within:outline-comic-accent-500",
 															// 
 															userVarsFields[`var${v.id}`].errors ? [
-																"outline-transparent",
+																"focus-within:outline-red-500",
 																"dark:bg-red-500/40",
-																"dark:focus-within:bg-comic-accent-500/60",
-																"dark:outline-comic-accent-500/0",
-																"dark:focus-within:outline-comic-accent-500",
+																"dark:focus-within:bg-red-500/60",
+																"dark:outline-red-500/0",
+																"dark:focus-within:outline-red-500",
 															] : [
 																"dark:bg-neutral-800/40",
-																"dark:hover:focus-within:bg-comic-accent-800.",
+																"dark:hover:focus-within:bg-comic-accent-800",
 																"outline-comic-accent-500/0",
 															],
 
-															"dark:hover:bg-red-500",
+															"dark:hover:bg-comic-accent-500",
 															// Transition
 															"hover:duration-0",
 															"transition-all",
@@ -1222,19 +1223,7 @@ export default function ComicPageUI({
 																"text-sm",
 																"text-left",
 																"font-mono",
-																// "border",
 																"rounded",
-																// "focus-within:outline-2",
-																userVarsFields[`var${v.id}`].errors ? [
-																	// "outline-2",
-																	// "outline-red-500",
-																	// "focus-within:outline-red-500",
-																	// "rounded-b-none",
-																] : [
-																	// "outline-none",
-																	// "focus-within:outline-none",
-																	// "dark:focus-within:outline-none",
-																],
 															)}
 														>
 															<Icon name="chevronRight"
@@ -1566,11 +1555,12 @@ export default function ComicPageUI({
 				"dark:data-checked:bg-comic-accent-800/60",
 				"dark:hover:data-checked:bg-comic-accent-800",
 				// Outline
+				"outline-transparent",
 				"focus:outline-4",
-				"focus:-outline-offset-3",
+				"focus:-outline-offset-4",
 				"focus:outline-comic-accent-500",
 				"focus-within:outline-4",
-				"focus-within:-outline-offset-3",
+				"focus-within:-outline-offset-4",
 				"focus-within:outline-comic-accent-500",
 				"data-disabled:outline-none",
 			)}
@@ -1653,6 +1643,10 @@ export default function ComicPageUI({
 				"transition-all",
 				"ease-in-out",
 				"duration-300",
+				// Outline
+				"focus:outline-3",
+				"focus:outline-offset-3",
+				"focus:outline-comic-accent-500",
 			)
 		}>
 			{props.children}
