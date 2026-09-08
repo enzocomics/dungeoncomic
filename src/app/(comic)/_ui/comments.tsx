@@ -7,11 +7,11 @@ import { verifySession } from "@/data/session"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
 // UI
-import { Button } from "@headlessui/react"
+import { Button, Field, } from "@headlessui/react"
 import { ErrorMessage } from "@/components/catalyst/fieldset"
-import { Field } from "@headlessui/react"
-import { Textarea } from "@/components/catalyst/textarea"
-import { useActionState, useEffect, useState } from "react"
+// import { Textarea } from "@/components/catalyst/textarea"
+import { Textarea } from "@/components/textarea"
+import { ComponentPropsWithoutRef, useActionState, useEffect, useState } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
@@ -48,6 +48,7 @@ export function CommentsSection({
 				"mt-8",
 				"bg-base-1",
 				"p-2",
+				"md:rounded",
 			)}>
 				{!session &&
 					<h4>{t.rich("please-login-to-comment", {
@@ -62,21 +63,30 @@ export function CommentsSection({
 		{
 			comments && comments.length > 0 &&
 			<section className={clsx(
-				"mt-8"
+				"mt-8",
 			)}>
 				<h4 className={clsx(
-					"text-xl"
+					"text-lg",
+					"bg-black/50",
+					"text-white",
+					"p-4",
+					"md:rounded",
+					"mb-2",
+					"backdrop-blur-sm",
 				)}>{t("comments")} ({comments.length})</h4>
-				<ul className={clsx(
+				<CommentList className={clsx(
 					"flex",
 					"flex-col",
 					"gap-2",
+
 				)}>
 					{comments.map((c, index) => (
-
-						<li key={index} className={
+						<CommentListItem key={index} className={
 							clsx(
-								"bg-base-1"
+								"bg-base-1",
+								"dark:bg-base-2",
+								"md:rounded",
+								"p-4",
 							)
 						} >
 							<p>{c.user_created.username} commented on {c.date_created}:</p>
@@ -134,10 +144,10 @@ export function CommentsSection({
 
 							}
 
-						</li>
+						</CommentListItem>
 
 					))}
-				</ul >
+				</CommentList >
 			</section >
 		}
 	</>
@@ -176,9 +186,14 @@ export function CommentsSection({
 				noValidate
 			>
 				<Field disabled={session ? false : true}>
-					<label className={clsx(
-						"text-xl"
-					)}>
+					<label
+						htmlFor={fields.content.name}
+						className={clsx(
+							"font-display",
+							"font-semibold",
+							"text-lg",
+						)}
+					>
 						{/* TODO: reply to "username" */}
 						{isReplying ? `${t("reply-to")} ${isReplying}` : t("write-comment")}
 					</label>
@@ -216,4 +231,24 @@ export function CommentsSection({
 			</form>
 		</>
 	}
+}
+
+function CommentList(props: ComponentPropsWithoutRef<"ul">) {
+	return (
+		<ul
+			{...props}
+		>
+			{props.children}
+		</ul>
+	)
+}
+
+function CommentListItem(props: ComponentPropsWithoutRef<"li">) {
+	return (
+		<li
+			{...props}
+		>
+			{props.children}
+		</li>
+	)
 }

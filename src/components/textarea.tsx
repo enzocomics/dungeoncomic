@@ -3,7 +3,8 @@ import clsx from "clsx"
 import * as Headless from "@headlessui/react"
 import { forwardRef } from "react"
 
-/**
+
+/**----------------------------------- 
  * A reusable styled textarea component
  */
 export const Textarea = forwardRef(function Textarea({
@@ -24,19 +25,19 @@ export const Textarea = forwardRef(function Textarea({
 			{...props}
 			className={clsx(
 				className,
-				"bg-white",
-				"text-black",
+				// SPACING & SIZE
+				"p-2",
+				"w-full",
+				// APPEARANCE
+				"rounded",
 				"border-2",
 				"border-neutral-200",
 				"dark:border-white",
-				"rounded",
-				"w-full",
-				"p-2",
+				"bg-white",
+				"text-black",
+				// TEXT
 				"font-mono",
 				"font-base",
-				"resize-none",
-				"outline-none",
-
 			)}
 		/>
 	)

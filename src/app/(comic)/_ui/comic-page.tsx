@@ -2234,16 +2234,16 @@ export default function ComicPageUI({
 							</span>
 							<Textarea ref={props.ref} className={
 								clsx(
-									"bg-white",
-									"text-black",
-									"border-2",
-									"border-neutral-200",
-									"dark:border-white",
-									"rounded",
-									"w-full",
-									"p-2",
-									"font-mono",
-									"font-base",
+									// "bg-white",
+									// "text-black",
+									// "border-2",
+									// "border-neutral-200",
+									// "dark:border-white",
+									// "rounded",
+									// "w-full",
+									// "p-2",
+									// "font-mono",
+									// "font-base",
 									"resize-none",
 									"outline-none",
 								)
