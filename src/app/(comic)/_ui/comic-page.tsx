@@ -690,7 +690,8 @@ export default function ComicPageUI({
 						<nav className={clsx(
 							"list-none",
 							"flex",
-							isTop ? "justify-center" : "justify-between",
+							"justify-center"
+							// isTop ? "justify-center" : "justify-between",
 						)}>
 							{/* GO BACK TO START BUTTON */}
 							{isTop &&
@@ -916,7 +917,10 @@ export default function ComicPageUI({
 									</Menu>
 								</li>
 							}
-							<li>
+							{/* ARCHIVE COMBOBOX: WIP */}
+							<li className={clsx(
+								"hidden"
+							)}>
 								{!isTop &&
 									<Combobox>
 										<ComboboxButton className={
