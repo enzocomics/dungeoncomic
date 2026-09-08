@@ -23,7 +23,7 @@ import { saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import * as Headless from "@headlessui/react"
-import { Button, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Textarea, } from "@headlessui/react"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Textarea, } from "@headlessui/react"
 import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/fieldset"
@@ -250,13 +250,14 @@ export default function ComicPageUI({
 			>
 				<ComicPageHeaderTitle />
 			</div>
-			<ComicPageHeaderNav />
+			<ComicPageNav />
 		</header>
 
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<div
 			className={
 				clsx(
+					"relative",
 					"pt-13.5", // Comic Nav Menu
 					hasBanner && "pt-20",
 					hasPrevPage && "pt-20",
@@ -274,12 +275,14 @@ export default function ComicPageUI({
 					"flex-col",
 					"gap-6",
 					// Spacing
-					"py-6",
+					"pt-6",
+					"pb-18",
 					// Appearance
 					"bg-base-1",
 					"dark:bg-neutral-700",
 					"text-center",
-					"md:rounded",
+					"md:rounded-t",
+					"md:last:rounded-b"
 				)}
 			>
 				<ComicPageTitle
@@ -298,6 +301,7 @@ export default function ComicPageUI({
 				<UserFeedbackSection />
 				<ComicPageNavigation />
 			</article >
+			<ComicPageNav where="bottom" />
 		</div >
 	</>
 
@@ -658,7 +662,12 @@ export default function ComicPageUI({
 		</>
 	}
 
-	function ComicPageHeaderNav() {
+	function ComicPageNav({
+		where = "top"
+	}: {
+		where?: "top" | "bottom"
+	}) {
+		const isTop = where === "top"
 		return <>
 			{
 				hasPrevPage &&
@@ -669,49 +678,55 @@ export default function ComicPageUI({
 						"bg-comic-accent-700",
 						"dark:bg-comic-accent-900",
 						"text-xs",
+						"text-white",
 						"font-platform-display",
-						"md:rounded-b",
-						"md:drop-shadow-xl",
-						"md:drop-shadow-neutral-900/45",
+						// "md:rounded-b",
+						isTop && "md:drop-shadow-xl",
+						isTop && "md:drop-shadow-neutral-900/45",
+						!isTop && "sticky",
+						!isTop && "bottom-0",
 					)}>
 
 						<nav className={clsx(
 							"list-none",
 							"flex",
-							"justify-center",
+							isTop ? "justify-center" : "justify-between",
 						)}>
-							<li>
-								<Link
-									className={clsx(
-										"block",
-										"flex",
-										"items-center",
-										"py-2",
-										"px-3",
-										// Hover
-										"duration-300",
-										"hover:bg-comic-accent-950/50",
-										"hover:duration-0",
-										// Transition
-										"transition-all",
-										"ease-in-out",
-									)}
+							{/* GO BACK TO START BUTTON */}
+							{isTop &&
+								<li>
+									<Link
+										className={clsx(
+											"block",
+											"flex",
+											"items-center",
+											"py-2",
+											isTop ? "px-3" : "px-1.5",
+											// Hover
+											"duration-300",
+											"hover:bg-comic-accent-950/50",
+											"hover:duration-0",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+										)}
+										onClick={() => { setNavClickType("prev") }}
+										href="./1"
+									>
+										<Icon name="forwardStep" className={clsx(
+											"inline-block",
+											"h-4",
+											"size-3",
+											"rotate-180",
+											"mr-1",
+										)} />
 
-									onClick={() => { setNavClickType("prev") }}
-									href="./1"
-								>
-									<Icon name="forwardStep" className={clsx(
-										"inline-block",
-										"size-3",
-										"rotate-180",
-										"mr-1",
-									)} />
-									<span>{t("go-to-start")}</span>
-								</Link>
-							</li>
+										<span>{t("go-to-start")}</span>
 
+									</Link>
+								</li>
+							}
 							{/* Back Button */}
-
 							{
 								hasPrevPage
 								&& (
@@ -775,6 +790,7 @@ export default function ComicPageUI({
 									</button>
 								</li>
 							}
+							{/* BACK BUTTON: MULTIPLE PREVIOUS PAGES DROPDOWN */}
 							{!canGoBack
 								&& page.prev_pages && page.prev_pages.length > 1 &&
 								<li className={clsx(
@@ -788,7 +804,6 @@ export default function ComicPageUI({
 												"flex",
 												"items-center",
 												"p-2",
-												"pl-3",
 												"cursor-pointer",
 												// Hover
 												"duration-300",
@@ -800,14 +815,16 @@ export default function ComicPageUI({
 												"bg-transparent",
 												"data-closed:duration-300",
 												"data-open:bg-comic-accent-950",
-												"data-open:rounded-t",
 												"data-open:duration-none",
+												isTop ? [
+													"data-open:rounded-t",
+												] : [
+												]
 											)}>
-											{t("all-prev-pages")}
 											<Icon name="caretDown" className={clsx(
 												"relative",
 												"size-4",
-												"ml-1",
+												"mr-1",
 												// Transition
 												"transition-all",
 												"ease-in-out",
@@ -816,40 +833,47 @@ export default function ComicPageUI({
 												"group-data-open:top-0.5",
 												"group-data-closed:duration-300",
 											)} />
+											{t("all-prev-pages")}
 										</MenuButton>
 
 										<MenuItems transition className={clsx(
 											// Position
 											"absolute",
 											"z-10",
-											"top-8",
-											"right-0",
 											"sm:left-0",
 											"xs:left-auto",
+											// "left-0",
 											"flex",
 											"flex-col",
 											"gap-y-0.5",
-											// "left-1/2",
-											// "-translate-x-1/2",
 											"min-w-46",
 											"md:min-w-80",
 											// Appearance
 											"p-2",
 											"bg-comic-accent-950",
-											"rounded-b",
-											"drop-shadow-xl",
-											"drop-shadow-neutral-900/50",
 											// Transitions
 											"transition-all",
 											"ease-in-out",
-											"origin-right",
 											"scale-100",
 											"opacity-100",
 											"data-closed:opacity-0",
 											"data-closed:duration-300",
-											"data-closed:top-6",
 											"data-closed:scale-90",
 											"data-open:duration-none",
+											// TOP VS BOTTOM
+											isTop ? [
+												"top-8",
+												"right-0",
+												"rounded-b",
+												"data-closed:top-6",
+												"drop-shadow-xl",
+												"drop-shadow-neutral-900/50",
+											] : [
+												"bottom-8",
+												"left-0",
+												"rounded-t",
+												"data-closed:bottom-6",
+											],
 										)}>
 											{page.prev_pages.map((n, index) =>
 												<MenuItem key={index}
@@ -892,6 +916,88 @@ export default function ComicPageUI({
 									</Menu>
 								</li>
 							}
+							<li>
+								{!isTop &&
+									<Combobox>
+										<ComboboxButton className={
+											clsx(
+												"group",
+												"relative",
+												"flex",
+												"items-center",
+												"px-2",
+												"cursor-pointer",
+												"hover:bg-comic-accent-800",
+												"data-closed:duration-300",
+												"data-open:bg-comic-accent-950",
+												"data-open:duration-none",
+											)
+										}>
+											<Icon name="boxArchive" className={
+												clsx(
+													"absolute",
+													"size-4",
+													"ml-2",
+													"text-comic-accent-800",
+													"dark:text-white",
+												)
+											} />
+											<ComboboxInput className={
+												clsx(
+													"my-1",
+													"pl-8",
+													"py-2",
+													"px-3",
+													"h-6",
+													"w-36",
+													"rounded-sm",
+													"bg-white",
+													"focus:text-base-content",
+													"placeholder:text-comic-accent-800",
+													"focus:placeholder:text-current/40",
+													"focus:outline-none",
+													"dark:bg-black/40",
+													"dark:placeholder:text-white"
+												)
+											}
+												placeholder="Archive" />
+
+											<Icon name="caretDown" className={clsx(
+												"relative",
+												"size-4",
+												"ml-1",
+												// Transition
+												"transition-all",
+												"ease-in-out",
+												"group-data-open:duration-none",
+												"group-data-open:-rotate-180",
+												"group-data-open:top-0.5",
+												"group-data-closed:duration-300",
+											)} />
+
+										</ComboboxButton>
+
+
+										<ComboboxOptions className={
+											clsx(
+												"absolute",
+												"min-w-46",
+												"p-2",
+												"bottom-8",
+												"right-0",
+												"bg-comic-accent-950",
+												"rounded-t",
+											)
+										}>
+											<ComboboxOption value="v">
+												Pages here
+											</ComboboxOption>
+										</ComboboxOptions>
+
+									</Combobox>
+								}
+							</li>
+
 						</nav>
 					</div>
 				</>
