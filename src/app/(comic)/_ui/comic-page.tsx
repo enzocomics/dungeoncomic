@@ -710,6 +710,12 @@ export default function ComicPageUI({
 											// Transition
 											"transition-all",
 											"ease-in-out",
+											// Outline
+											"outline-transparent",
+											"focus:rounded",
+											"focus:outline-3",
+											"focus:-outline-offset-3",
+											"focus:outline-comic-accent-500",
 										)}
 										onClick={() => { setNavClickType("prev") }}
 										href="./1"
@@ -754,6 +760,12 @@ export default function ComicPageUI({
 											// Transition
 											"transition-all",
 											"ease-in-out",
+											// Outline
+											"outline-transparent",
+											"focus:rounded",
+											"focus:outline-3",
+											"focus:-outline-offset-3",
+											"focus:outline-comic-accent-500",
 										)}
 
 										onClick={() => {
