@@ -1,15 +1,15 @@
 "use server"
 
-import { Avatar } from "@/components/avatar"
-import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/dropdown"
-import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/components/navbar"
-import { Sidebar, SidebarBody, SidebarDivider, SidebarFooter, SidebarHeader, SidebarHeading, SidebarItem, SidebarLabel, SidebarSection } from "@/components/sidebar"
-import { SidebarLayout } from "@/components/sidebar-layout"
+import { Avatar } from "@/components/catalyst/avatar"
+import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/catalyst/dropdown"
+import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/components/catalyst/navbar"
+import { Sidebar, SidebarBody, SidebarDivider, SidebarFooter, SidebarHeader, SidebarHeading, SidebarItem, SidebarLabel, SidebarSection } from "@/components/catalyst/sidebar"
+import { SidebarLayout } from "@/components/catalyst/sidebar-layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRightFromBracket, faGauge, faChessRook, faChevronDown, faChevronUp, faGear, faSquarePlus, faUser } from "@fortawesome/free-solid-svg-icons"
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/button"
+import { Button } from "@/components/catalyst/button"
 
 
 export default async function DashboardLayoutUI({

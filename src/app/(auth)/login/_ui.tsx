@@ -16,10 +16,10 @@ import { login } from "./_action"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
-import { Button } from "@/components/button"
-import { Input } from "@/components/input"
-import { Link } from "@/components/link"
+import { ErrorMessage, Field, FieldGroup, Label } from "@/components/catalyst/fieldset"
+import { Button } from "@headlessui/react"
+import { Input } from "@headlessui/react"
+import Link from "next/link"
 
 /** ------------------------------------------------ **
  * LOGIN FORM
@@ -107,7 +107,7 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.email as string}
 							type="email"
 							autoComplete="current-email"
-							errors={fields.email.errors}
+							// errors={fields.email.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -122,7 +122,7 @@ export default function LoginPageUI() {
 							defaultValue={lastResult?.initialValue?.password as string}
 							type="password"
 							autoComplete="current-password"
-							errors={fields.password.errors}
+							// errors={fields.password.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>
