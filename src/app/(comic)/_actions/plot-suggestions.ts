@@ -42,7 +42,7 @@ export async function voteOnPlotSuggestion({
 			readItems("plot_suggestions", {
 				filter: {
 					page: {
-						_eq: page.id,
+						_eq: page.id as number,
 					},
 				},
 				fields: ["id", "votes", "users_voted"],

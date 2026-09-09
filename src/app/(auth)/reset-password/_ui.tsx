@@ -4,6 +4,7 @@
 import clsx from "clsx"
 // NEXT
 import { redirect, useSearchParams } from "next/navigation"
+import Link from "next/link"
 // I18N
 import { useTranslations } from "next-intl"
 // AUTH + VALIDATION
@@ -16,10 +17,8 @@ import { requestReset, submitReset } from "./_action"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
-import { Button } from "@/components/button"
-import { Input } from "@/components/input"
-import { Link } from "@/components/link"
+import { ErrorMessage } from "@/components/forms"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
@@ -87,9 +86,9 @@ function RequestResetForm() {
 				action={action}
 				noValidate
 			>
-				<FieldGroup>
+				<div>
 					<Field>
-						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
+						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							type="email"
@@ -97,7 +96,7 @@ function RequestResetForm() {
 							name={fields.email.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.email as string}
-							errors={fields.email.errors}
+							// errors={fields.email.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -110,7 +109,7 @@ function RequestResetForm() {
 							"mt-6"
 						)}
 					>{t("pages.reset-password.request")}</Button>
-				</FieldGroup>
+				</div>
 			</form>
 			<AuthNav>
 				<Link className="mx-auto text-primary-800 dark:text-primary-300" href="/login">&laquo; {n("go-back")}</Link>
@@ -172,7 +171,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 				action={action}
 				noValidate
 			>
-				<FieldGroup>
+				<div>
 					<Field>
 						<Label htmlFor={fields.password.name}>{t("fields.new-password")}</Label>
 						<Input
@@ -182,7 +181,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.password.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.password as string}
-							errors={fields.password.errors}
+							// errors={fields.password.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>
@@ -197,7 +196,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 							name={fields.passwordConfirm.name}
 							// Retain the value of the previous submission
 							defaultValue={lastResult?.initialValue?.passwordConfirm as string}
-							errors={fields.passwordConfirm.errors}
+							// errors={fields.passwordConfirm.errors}
 							aria-required
 						/>
 						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
@@ -211,7 +210,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 						)}
 					>{t("pages.reset-password.submit")}</Button>
 
-				</FieldGroup>
+				</div>
 				{/* Password Reset Token */}
 				<input name="token" type="hidden" value={token} />
 			</form>

@@ -11,6 +11,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { comicMetadata } from "./_ui/metadata"
 import { HomepagePageUI } from "./_ui/home-page"
 import { ComicLandingPageUI } from "./_ui/comic-page"
+import { Suspense } from "react"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -41,7 +42,7 @@ export default async function Homepage() {
 		switch (landing_page) {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
-				return <ComicLandingPageUI comic={comic} />
+				return <Suspense><ComicLandingPageUI comic={comic} /></Suspense>
 			// REDIRECT TO FIRST PAGE
 			case "first-page":
 				redirect(`1`, RedirectType.replace)
@@ -55,7 +56,7 @@ export default async function Homepage() {
 	}
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else {
-		return <HomepagePageUI />
+		return <Suspense><HomepagePageUI /></Suspense>
 	}
 
 }

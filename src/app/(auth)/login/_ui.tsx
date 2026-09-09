@@ -16,9 +16,9 @@ import { login } from "./_action"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
-import { ErrorMessage, Field, FieldGroup, Label } from "@/components/catalyst/fieldset"
-import { Button } from "@headlessui/react"
-import { Input } from "@headlessui/react"
+// import { ErrorMessage, FieldGroup } from "@/components/catalyst/fieldset"
+import { ErrorMessage } from "@/components/forms"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import Link from "next/link"
 
 /** ------------------------------------------------ **
@@ -96,9 +96,9 @@ export default function LoginPageUI() {
 				action={action}
 				noValidate
 			>
-				<FieldGroup>
+				<div>
 					<Field>
-						<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
+						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
 							id={fields.email.name}
 							name={fields.email.name}
@@ -113,7 +113,7 @@ export default function LoginPageUI() {
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
 					</Field>
 					<Field>
-						<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
+						<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
 						<Input
 							id={fields.password.name}
 							name={fields.password.name}
@@ -135,7 +135,7 @@ export default function LoginPageUI() {
 							"mt-6",
 						)}
 					>{t("pages.login.submit")}</Button>
-				</FieldGroup>
+				</div>
 			</form>
 
 			{/* NAVIGATION */}

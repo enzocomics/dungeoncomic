@@ -26,10 +26,9 @@ import * as Headless from "@headlessui/react"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
-import { ErrorMessage } from "@/components/catalyst/fieldset"
+import { ErrorMessage } from "@/components/forms"
 import Link from "next/link"
 import Icon from "@/styles/icons"
-
 import { Textarea } from "@/components/textarea"
 
 

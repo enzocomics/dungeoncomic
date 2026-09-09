@@ -19,9 +19,8 @@ import { adminContactEmail } from "@/data/env"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage, Field, FieldGroup, Label } from "@/components/fieldset"
-import { Button } from "@/components/button"
-import { Input } from "@/components/input"
+import { ErrorMessage } from "@/components/forms"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -140,9 +139,9 @@ export default function RegisterPageUI({ public_registration = false }: { public
 					action={action}
 					noValidate
 				>
-					<FieldGroup>
+					<div>
 						<Field>
-							<Label required htmlFor={fields.email.name}>{t("fields.email")}</Label>
+							<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
 							<Input
 								id={fields.email.name}
 								name={fields.email.name}
@@ -150,7 +149,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 								type="email"
 								// Retain the value of the previous submission
 								defaultValue={lastResult?.initialValue?.email as string}
-								errors={fields.email.errors}
+								// errors={fields.email.errors}
 								aria-required
 							/>
 							<ErrorMessage>{fields.email.errors}</ErrorMessage>
@@ -169,7 +168,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 			</div> */}
 
 						<Field>
-							<Label required htmlFor={fields.password.name}>{t("fields.password")}</Label>
+							<Label htmlFor={fields.password.name}>{t("fields.password")}</Label>
 							<Input
 								id={fields.password.name}
 								name={fields.password.name}
@@ -178,7 +177,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 								// Retain the value of the previous submission
 								defaultValue={lastResult?.initialValue?.password as string}
 
-								errors={fields.password.errors}
+								// errors={fields.password.errors}
 								aria-required
 							/>
 							<ErrorMessage>{fields.password.errors}</ErrorMessage>
@@ -186,7 +185,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 
 
 						<Field>
-							<Label required htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
+							<Label htmlFor="passwordConfirm">{t("fields.password-confirm")}</Label>
 							<Input
 								id={fields.passwordConfirm.name}
 								type="password"
@@ -194,7 +193,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 								name={fields.passwordConfirm.name}
 								// Retain the value of the previous submission
 								defaultValue={lastResult?.initialValue?.passwordConfirm as string}
-								errors={fields.passwordConfirm.errors}
+								// errors={fields.passwordConfirm.errors}
 								aria-required
 							/>
 							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
@@ -207,7 +206,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 								"mt-6",
 							)}
 						>{t("pages.register.submit")}</Button>
-					</FieldGroup>
+					</div>
 				</form>
 			}
 			{/* NAVIGATION */}
