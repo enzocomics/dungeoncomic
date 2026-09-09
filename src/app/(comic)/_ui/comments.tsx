@@ -65,7 +65,7 @@ export function CommentsSection({
 			<section className={clsx(
 				"mt-8",
 			)}>
-				<h4 className={clsx(
+				<h1 className={clsx(
 					"text-lg",
 					"bg-black/50",
 					"text-white",
@@ -73,7 +73,7 @@ export function CommentsSection({
 					"md:rounded",
 					"mb-2",
 					"backdrop-blur-sm",
-				)}>{t("comments")} ({comments.length})</h4>
+				)}>{t("comments")} ({comments.length})</h1>
 				<CommentList className={clsx(
 					"flex",
 					"flex-col",
@@ -201,6 +201,9 @@ export function CommentsSection({
 						id={fields.content.name}
 						name={fields.content.name}
 						key={fields.content.key}
+						className={clsx(
+							"max-w-prose",
+						)}
 					/>
 					<ErrorMessage>{fields.content.errors}</ErrorMessage>
 					{session &&
