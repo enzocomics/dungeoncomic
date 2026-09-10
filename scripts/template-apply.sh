@@ -55,9 +55,10 @@ SAVED_ACCESS_FILE="./cms/directus-template/src/access.json"
 
 tmp=$(mktemp)
 
-jq --arg new_id "$ADMIN_POLICY_UUID" --arg old_id "$SAVED_ADMIN_POLICY_UUID" '
+jq --arg new_id "$ADMIN_POLICY_UUID" --arg old_id "$SAVED_ADMIN_POLICY_UUID" --arg new_role_uuid "ADMIN_ROLE_UUID" '
   walk(if type == "object" and .policy == $old_id
        then .policy = $new_id
+			 and .role = $new_role_uuid
        else .
        end)
 ' "$SAVED_ACCESS_FILE" > "$tmp" && mv "$tmp" "$SAVED_ACCESS_FILE"
