@@ -116,7 +116,6 @@ jq --arg ADMIN_POLICY_UUID "$ADMIN_POLICY_UUID" '
 SAVED_ROLES_FILE="./cms/directus-template/src/roles.json"
 TMP_ROLES_FILE=$(mktemp)
 
-
 jq --arg ADMIN_ROLE_UUID "$ADMIN_ROLE_UUID" '
 walk (
 	if type == "object" and .id == $ADMIN_ROLE_UUID
