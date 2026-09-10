@@ -28,10 +28,10 @@ GET_ADMIN_ACCESS_ITEM=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/access?filter[role]
 ADMIN_POLICY_UUID=$(echo $GET_ADMIN_ACCESS_ITEM | jq -r '.data[0].policy')
 #  echo "adminPolicyID = $ADMIN_POLICY_UUID"
 
-
-
 # Now, we have to look through `policies.json` and REPLACE the SAVED administrator policy UUID with the CURRENT one 
 SAVED_POLICIES_FILE="./cms/directus-template/src/policies.json"
+OLD_POLICIES_FILE="./cms/directus-template/src/policies-old.json"
+cp -- "$SAVED_POLICIES_FILE" "$OLD_POLICIES_FILE"
 
 # We'll need the old uuid for reference
 SAVED_ADMIN_POLICY_UUID=$(
@@ -52,6 +52,8 @@ jq --arg new_id "$ADMIN_POLICY_UUID" '
 
 # We also have to update the `access.json` junction collection, using the old UUID for reference
 SAVED_ACCESS_FILE="./cms/directus-template/src/access.json"
+OLD_ACCESS_FILE="./cms/directus-template/src/access-old.json"
+cp -- "$SAVED_ACCESS_FILE" "$OLD_ACCESS_FILE"
 
 tmp=$(mktemp)
 
@@ -72,7 +74,6 @@ GET_PUBLIC_ACCESS_ITEM=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/access?filter[role
 
 PUBLIC_POLICY_UUID=$(echo $GET_PUBLIC_ACCESS_ITEM | jq -r '.data[0].policy')
 # echo "publicPolicyID = $PUBLIC_POLICY_UUID"
-
 
 # Now, AGAIN, we have to look through `policies.json` and REPLACE the SAVED PUBLIC policy UUID with the CURRENT one 
 SAVED_POLICIES_FILE2="./cms/directus-template/src/policies.json"
@@ -108,6 +109,8 @@ jq --arg new_id "$PUBLIC_POLICY_UUID" --arg old_id "$SAVED_PUBLIC_POLICY_UUID" '
 
 # Additionally, we need to update the public permissions `permissions.json` to the new uuid
 SAVED_PERMISSIONS_FILE="./cms/directus-template/src/permissions.json"
+OLD_PERMISSIONS_FILE="./cms/directus-template/src/permissions-old.json"
+cp -- "$SAVED_PERMISSIONS_FILE" "$OLD_PERMISSIONS_FILE"
 
 TMP_FILE=$(mktemp)
 
@@ -133,3 +136,11 @@ npx directus-template-cli@latest apply -p \
 	--no-extensions \
 	--no-users \
 	--no-assets
+
+# CLEANUP -- restore the original files (with placeholders) after the template has been extracted
+cp -- "$OLD_ACCESS_FILE" "$SAVED_ACCESS_FILE"
+cp -- "$OLD_POLICIES_FILE" "$SAVED_POLICIES_FILE" 
+cp -- "$OLD_PERMISSIONS_FILE" "$SAVED_PERMISSIONS_FILE" 
+rm -f -- "$OLD_ACCESS_FILE"
+rm -f -- "$OLD_POLICIES_FILE"
+rm -f -- "$OLD_PERMISSIONS_FILE"
