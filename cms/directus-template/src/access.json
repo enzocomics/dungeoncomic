@@ -1,6 +1,6 @@
 [
   {
-    "id": "9b797daa-a3a7-47ab-8577-4f0fda844c5e",
+    "id": "PUBLIC_ACCESS_ITEM_ID_PLACEHOLDER",
     "role": null,
     "user": null,
     "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER",
@@ -14,7 +14,7 @@
     "sort": 1
   },
   {
-    "id": "b8a201ee-3c08-4872-8d3c-eb729a6b2dd3",
+    "id": "ADMIN_ACCESS_ITEM_ID_PLACEHOLDER",
     "role": "ADMIN_ROLE_UUID_PLACEHOLDER",
     "user": null,
     "policy": "ADMIN_POLICY_UUID_PLACEHOLDER",
