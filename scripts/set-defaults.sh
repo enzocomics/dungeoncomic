@@ -14,14 +14,14 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
 # Retrieve the UUID of the initial admin user
-ADMINRESPONSE=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_eq]=Administrator" \
+GET_ADMIN_UUID=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_eq]=Administrator" \
 	-H "Authorization: Bearer $CMS_ADMIN_TOKEN")
-ADMIN_UUID=$(echo "$ADMINRESPONSE" | jq -r '.data[0].id')
+ADMIN_UUID=$(echo "$GET_ADMIN_UUID" | jq -r '.data[0].id')
 
 ##------------------------------------------------------##
 # Set up the default variables for the default comic
-title="My Dungeon Comic"
-slug="mydungeoncomic"
+title="Dungeon Comic Tutorial"
+slug="tutorial"
 description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
 authors=$ADMIN_UUID
 
@@ -65,7 +65,7 @@ curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
 project_color="#7c7c67"
 project_logo=$LOGO_UUID
 public_registration=true
-public_registration_role="5ad2a6f5-74a6-4ebc-9864-5e7b451203d2" #TODO: this should not be hardcoded
+public_registration_role="5ad2a6f5-74a6-4ebc-9864-5e7b451203d2" # READER ROLE
 
 # Set up the payload for DIRECTUS settings
 DIRECTUS_SETTINGS_PAYLOAD=$(jq -n \
@@ -84,24 +84,3 @@ curl -X PATCH "$NEXT_PUBLIC_CMS_URL/settings" \
   -H "Content-Type: application/json" \
   -d "$DIRECTUS_SETTINGS_PAYLOAD"
 
-
-##------------------------------------------------------##
-# Apply our extracted Directus Presets to the current Admin User
-PRESETS="$(<./cms/directus-template/src/presets.json)"
-
-# Change the user UUID to the current admin user
-DIRECTUS_PRESETS_PAYLOAD=$(echo $PRESETS |jq --arg admin_uuid "$ADMIN_UUID" 'walk(
-  if type == "object" and has("user")
-  then .user = $admin_uuid
-  else .
-  end
-)' )
-
-# Update default `directus_presets` collection 
-curl -X POST "$NEXT_PUBLIC_CMS_URL/presets" \
-  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "$DIRECTUS_PRESETS_PAYLOAD"
-
-
-echo "\`directus_presets\` have been applied successfully."
