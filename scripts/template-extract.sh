@@ -67,6 +67,7 @@ jq --arg PUBLIC_POLICY_UUID "$PUBLIC_POLICY_UUID" '
 jq --arg PUBLIC_POLICY_UUID "$PUBLIC_POLICY_UUID" '
   walk(if type == "object" and .policy == $PUBLIC_POLICY_UUID
        then .policy = "PUBLIC_POLICY_UUID_PLACEHOLDER"
+			 | .id = "PUBLIC_ACCESS_ITEM_ID_PLACEHOLDER"
        else .
        end)
 ' "$SAVED_ACCESS_FILE" > "$TMP_ACCESS_FILE" && mv "$TMP_ACCESS_FILE" "$SAVED_ACCESS_FILE"
@@ -108,6 +109,7 @@ jq --arg ADMIN_POLICY_UUID "$ADMIN_POLICY_UUID" '
   walk(if type == "object" and .policy == $ADMIN_POLICY_UUID
        then .policy = "ADMIN_POLICY_UUID_PLACEHOLDER"
 			 | .role = "ADMIN_ROLE_UUID_PLACEHOLDER"
+			 | .id = "ADMIN_ACCESS_ITEM_ID_PLACEHOLDER"
        else .
        end)
 ' "$SAVED_ACCESS_FILE" > "$TMP_ACCESS_FILE" && mv "$TMP_ACCESS_FILE" "$SAVED_ACCESS_FILE"
