@@ -9,11 +9,10 @@ GET_ADMIN_UUID=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_
 	-H "Authorization: Bearer $CMS_ADMIN_TOKEN")
 ADMIN_UUID=$(echo "$GET_ADMIN_UUID" | jq -r '.data[0].id')
 
-
 ##------------------------------------------------------##
 # Set up the default variables for the default comic
 title="Dungeon Comic Tutorial"
-slug="tutorial2"
+slug="tutorial"
 description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
 authors=$ADMIN_UUID
 
@@ -44,7 +43,6 @@ PAGE1_PANEL1=$(jq -n \
   '{panel_description: $panel_description}'
 )
 
-#
 PAGE1_PAYLOAD=$(jq -n \
 --arg comic "$COMIC_ID" \
 --arg comic_pagenum "1" \
@@ -55,3 +53,30 @@ PAGE1_PAYLOAD=$(jq -n \
 )
 
 echo "$PAGE1_PAYLOAD"
+
+# Update our DEFAULT `comic` collection 
+COMIC_PAGE_RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/items/pages" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$PAGE1_PAYLOAD")
+
+echo $COMIC_PAGE_RESPONSE
+
+##------------------------------------------------------##
+# Set up the default variables for the project settings
+project_name="Dungeon Construction Co."
+project_url=$NEXT_PUBLIC_SITE_URL
+frontpage_comic=$COMIC_ID
+
+# Set up the payload for the PROJECT settings
+PROJECT_SETTINGS_PAYLOAD=$(jq -n \
+--arg project_name "$project_name" \
+--arg project_url "$project_url" \
+--arg frontpage_comic "$frontpage_comic" \
+'{project_name: $project_name, project_url: $project_url, frontpage_comic: $frontpage_comic}')
+
+# Update our project `settings` collection 
+curl -X PATCH "$NEXT_PUBLIC_CMS_URL/items/settings" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$PROJECT_SETTINGS_PAYLOAD"

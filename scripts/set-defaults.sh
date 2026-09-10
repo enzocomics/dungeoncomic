@@ -13,6 +13,23 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 # This looks for "id":" followed by any characters until the next double quote
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
+# Retrieve the UUID of the initial admin user
+GET_ADMIN_UUID=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_eq]=Administrator" \
+	-H "Authorization: Bearer $CMS_ADMIN_TOKEN")
+ADMIN_UUID=$(echo "$GET_ADMIN_UUID" | jq -r '.data[0].id')
+
+## Update the Admin User
+ADMIN_USER_PAYLOAD=$(jq -n \
+--arg username "admin" \
+--arg name "Namey McNameName" \
+'{username: $username, name: $name}'
+)
+# Update our project `settings` collection 
+curl -X PATCH "$NEXT_PUBLIC_CMS_URL/users/$ADMIN_UUID" \
+  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "$ADMIN_USER_PAYLOAD"
+
 ##------------------------------------------------------##
 # Set up the default variables for the project settings
 project_name="Dungeon Construction Co."
