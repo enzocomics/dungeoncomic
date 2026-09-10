@@ -66,10 +66,11 @@ export default async function ComicPagenumPage({
 	const variables = await getComicVariables(route)
 	const comicPage = await getComicPage(route, pagenum)
 	// Get comments
-	const comments = await getComments(comicPage.id as number)
-	if (!comicPage || comicPage && comicPage.status !== "published")
+	if (!comicPage || comicPage && comicPage.status !== "published") {
 		notFound()
-	else
+	} else {
+
+		const comments = await getComments(comicPage.id as number)
 		return <>
 			<ComicPageUI
 				page={comicPage}
@@ -85,6 +86,7 @@ export default async function ComicPagenumPage({
 				/>
 			}
 		</>
+	}
 }
 
 /**-----------------------------------

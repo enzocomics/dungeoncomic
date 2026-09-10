@@ -69,12 +69,13 @@ export default async function RoutePage({
 		// Get the comic page & variables
 		const variables = await getComicVariables(frontpage_comic.slug)
 		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
-		// Get the comments
-		const comments = await getComments(comicPage.id as number)
 
-		if (!comicPage || comicPage && comicPage.status !== "published")
+		if (!comicPage || comicPage && comicPage.status !== "published") {
 			notFound()
-		else
+		} else {
+
+			// Get the comments
+			const comments = await getComments(comicPage.id as number)
 			return <>
 				<ComicPageUI
 					page={comicPage}
@@ -90,6 +91,7 @@ export default async function RoutePage({
 					/>
 				}
 			</>
+		}
 	}
 
 	/**----------------------------------- */
