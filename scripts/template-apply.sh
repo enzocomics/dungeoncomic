@@ -126,20 +126,20 @@ jq --arg new_id "$PUBLIC_POLICY_UUID" --arg old_id "$SAVED_PUBLIC_POLICY_UUID" '
 ' "$SAVED_PERMISSIONS_FILE" > "$tmp" && mv "$tmp" "$SAVED_PERMISSIONS_FILE"
 
 # Apply the Directus Template
-# npx directus-template-cli@latest apply -p \
-# 	--directusUrl=$NEXT_PUBLIC_CMS_URL \
-# 	--directusToken=$CMS_ADMIN_TOKEN \
-# 	--templateLocation="./cms/directus-template" \
-# 	--templateType="local" \
-# 	--schema \
-# 	--no-content \
-# 	--flows \
-# 	--no-dashboards \
-# 	--permissions \
-# 	--no-settings \
-# 	--no-extensions \
-# 	--no-users \
-# 	--no-assets
+npx directus-template-cli@latest apply -p \
+	--directusUrl=$NEXT_PUBLIC_CMS_URL \
+	--directusToken=$CMS_ADMIN_TOKEN \
+	--templateLocation="./cms/directus-template" \
+	--templateType="local" \
+	--schema \
+	--no-content \
+	--flows \
+	--no-dashboards \
+	--permissions \
+	--no-settings \
+	--no-extensions \
+	--no-users \
+	--no-assets
 
 # CLEANUP -- restore the original files (with placeholders) after the template has been extracted
 cp -- "$OLD_ACCESS_FILE" "$SAVED_ACCESS_FILE"
