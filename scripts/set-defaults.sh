@@ -13,34 +13,6 @@ RESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/files" \
 # This looks for "id":" followed by any characters until the next double quote
 LOGO_UUID=$(echo "$RESPONSE" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p')
 
-# Retrieve the UUID of the initial admin user
-GET_ADMIN_UUID=$(curl -g -X GET "$NEXT_PUBLIC_CMS_URL/users?filter[role][name][_eq]=Administrator" \
-	-H "Authorization: Bearer $CMS_ADMIN_TOKEN")
-ADMIN_UUID=$(echo "$GET_ADMIN_UUID" | jq -r '.data[0].id')
-
-##------------------------------------------------------##
-# Set up the default variables for the default comic
-title="Dungeon Comic Tutorial"
-slug="tutorial"
-description="Hello! This is a starter dungeon with example content. Edit or delete it, and happy building!"
-authors=$ADMIN_UUID
-
-# Set up the payload for the DEFAULT COMIC settings
-DEFAULT_COMIC_PAYLOAD=$(jq -n \
---arg title "$title" \
---arg slug "$slug" \
---arg description "$description" \
---arg authors "$authors" \
-'{title: $title, slug: $slug, description: $description, authors: [$authors] }')
-
-# Update our DEFAULT `comic` collection 
-COMICRESPONSE=$(curl -X POST "$NEXT_PUBLIC_CMS_URL/items/comics" \
-  -H "Authorization: Bearer $CMS_ADMIN_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "$DEFAULT_COMIC_PAYLOAD")
-# Get the Comic ID: we will set it as the frontpage_comic in the project settings
-COMIC_ID=$(echo "$COMICRESPONSE" | jq -r '.data.id')
-
 ##------------------------------------------------------##
 # Set up the default variables for the project settings
 project_name="Dungeon Construction Co."
