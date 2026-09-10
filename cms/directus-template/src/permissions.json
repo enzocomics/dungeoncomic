@@ -8,7 +8,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "page_branches",
@@ -19,7 +19,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "pages",
@@ -30,7 +30,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "tags",
@@ -41,7 +41,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "directus_users",
@@ -52,7 +52,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "directus_files",
@@ -63,7 +63,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "comic_panels",
@@ -74,7 +74,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "plot_suggestions",
@@ -85,7 +85,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "settings",
@@ -96,7 +96,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "variables",
@@ -107,7 +107,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "tags",
@@ -261,7 +261,7 @@
     "fields": [
       "*"
     ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+    "policy": "PUBLIC_POLICY_UUID_PLACEHOLDER"
   },
   {
     "collection": "comments",
