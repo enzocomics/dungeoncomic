@@ -107,6 +107,7 @@ jq --arg ADMIN_POLICY_UUID "$ADMIN_POLICY_UUID" '
 jq --arg ADMIN_POLICY_UUID "$ADMIN_POLICY_UUID" '
   walk(if type == "object" and .policy == $ADMIN_POLICY_UUID
        then .policy = "ADMIN_POLICY_UUID_PLACEHOLDER"
+			 | .role = "ADMIN_ROLE_UUID_PLACEHOLDER"
        else .
        end)
 ' "$SAVED_ACCESS_FILE" > "$TMP_ACCESS_FILE" && mv "$TMP_ACCESS_FILE" "$SAVED_ACCESS_FILE"
