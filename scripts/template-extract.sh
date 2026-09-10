@@ -110,3 +110,19 @@ jq --arg ADMIN_POLICY_UUID "$ADMIN_POLICY_UUID" '
        else .
        end)
 ' "$SAVED_ACCESS_FILE" > "$TMP_ACCESS_FILE" && mv "$TMP_ACCESS_FILE" "$SAVED_ACCESS_FILE"
+
+# DELETE THE AUTOMATICALLY EXTRACTED ADMINISTRATOR ROLE
+# Directus should always have one generated and ready to go anyway.
+SAVED_ROLES_FILE="./cms/directus-template/src/roles.json"
+TMP_ROLES_FILE=$(mktemp)
+
+
+jq --arg ADMIN_ROLE_UUID "$ADMIN_ROLE_UUID" '
+walk (
+	if type == "object" and .id == $ADMIN_ROLE_UUID
+	and .name == "Administrator"
+	then empty
+	else .
+	end
+)
+' "$SAVED_ROLES_FILE" > "$TMP_ROLES_FILE" && mv "$TMP_ROLES_FILE" "$SAVED_ROLES_FILE"
