@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@custom-variant dark (
+  &:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *)
+);
+
+@custom-variant light (
+  &:where([data-theme="light"], [data-theme="light"] *, .light, .light *)
+);
+
 :root {
 	main a {
 	}
@@ -40,17 +48,15 @@
 	--color-base-content-inverted: var(--color-gray-100);
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		/* DEFAULT DARK BASE COLOURS */
-		--color-base-1: var(--color-gray-950);
-		--color-base-2: var(--color-gray-900);
-		--color-base-3: var(--color-gray-800);
-		--color-base-4: var(--color-gray-700);
-		--color-base-5: var(--color-gray-600);
-		--color-base-content: var(--color-gray-100);
-		--color-base-content-inverted: var(--color-gray-800);
-	}
+&[data-theme="dark"] {
+	/* DEFAULT DARK BASE COLOURS */
+	--color-base-1: var(--color-gray-950);
+	--color-base-2: var(--color-gray-900);
+	--color-base-3: var(--color-gray-800);
+	--color-base-4: var(--color-gray-700);
+	--color-base-5: var(--color-gray-600);
+	--color-base-content: var(--color-gray-100);
+	--color-base-content-inverted: var(--color-gray-800);
 }
 
 /* BASE THEME VARIABLES */

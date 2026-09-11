@@ -19,6 +19,7 @@ import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
 import Icon from "@/styles/icons"
+import { useTheme } from "@teispace/next-themes"
 
 
 
@@ -158,7 +159,7 @@ function NavMenu({
 }: {
 	menu?: boolean
 }) {
-
+	const { theme, setTheme } = useTheme()
 	return <>
 		<Disclosure
 			as="nav"
@@ -253,18 +254,6 @@ function NavMenu({
 									"rounded-sm",
 
 								)} />
-								{/* <img
-									alt=""
-									src="/apple-touch-icon.png"
-									className={clsx(
-										"size-8",
-
-										"border-comic-accent-950",
-
-										"relative",
-										"rounded-full",
-										"bg-gray-800")}
-								/> */}
 							</MenuButton>
 
 							<MenuItems
@@ -294,6 +283,70 @@ function NavMenu({
 									>
 										Sign out
 									</a>
+								</MenuItem>
+								<MenuItem>
+									<div className={
+										clsx(
+											"flex",
+											"px-4",
+											"py-2",
+											"justify-center",
+											"bg-black/20",
+										)
+									}>
+										<div className={
+											clsx(
+												"flex",
+												"bg-black/20",
+												"p-2",
+												"gap-x-2",
+												"rounded-2xl",
+											)
+										}>
+											<button className={
+												clsx(
+													"cursor-pointer",
+													"size-5",
+												)
+											}
+												onClick={(e) => (setTheme("system"))}
+											>
+												<Icon name="desktop" className={
+													clsx(
+														"size-6",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"cursor-pointer",
+													"size-5",
+												)
+											}
+												onClick={(e) => (setTheme("light"))}
+											>
+												<Icon name="sun" className={
+													clsx(
+														"size-6",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"cursor-pointer",
+													"size-5",
+												)
+											}
+												onClick={(e) => (setTheme("dark"))}
+											>
+												<Icon name="moon" className={
+													clsx(
+														"size-6",
+													)
+												} />
+											</button>
+										</div>
+									</div>
 								</MenuItem>
 							</MenuItems>
 						</Menu>

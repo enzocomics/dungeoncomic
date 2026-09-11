@@ -7,6 +7,8 @@ import clsx from "clsx"
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "@teispace/next-themes"
+import { getTheme } from "@teispace/next-themes/server"
+
 // UI
 import GlobalContextProvider from "./_context"
 
@@ -15,6 +17,8 @@ export default async function RootLayoutUI({
 }: {
 	children: React.ReactNode | null
 }) {
+	const initialTheme = await getTheme()
+	console.log(initialTheme)
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
@@ -41,7 +45,12 @@ export default async function RootLayoutUI({
 		// }}
 		>
 			<GlobalContextProvider>
-				<ThemeProvider>
+				<ThemeProvider
+					defaultTheme="light"
+					attribute={['class', 'data-theme']}
+					initialTheme={initialTheme ?? undefined}
+					themes={["system", "light", "dark"]}
+				>
 					<NextIntlClientProvider>
 						{children}
 					</NextIntlClientProvider>
