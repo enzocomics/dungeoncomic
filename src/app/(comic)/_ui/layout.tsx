@@ -235,8 +235,8 @@ function NavMenu({
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
 
 						{/* Profile dropdown */}
-						<Menu as="div" className="relative ml-3">
-							<MenuButton className={clsx(
+						<Disclosure as="div" className="relative ml-3">
+							<DisclosureButton className={clsx(
 								"relative",
 								"flex",
 								"rounded",
@@ -254,102 +254,140 @@ function NavMenu({
 									"rounded-sm",
 
 								)} />
-							</MenuButton>
+							</DisclosureButton>
 
-							<MenuItems
+							<DisclosurePanel
 								transition
 								className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10"
 							>
-								<MenuItem>
+								<div>
 									<a
 										href="#"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
 									>
 										Your profile
 									</a>
-								</MenuItem>
-								<MenuItem>
+								</div>
+								<div>
 									<a
 										href="#"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
 									>
 										Settings
 									</a>
-								</MenuItem>
-								<MenuItem>
+								</div>
+								<div>
 									<a
 										href="#"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
 									>
 										Sign out
 									</a>
-								</MenuItem>
-								<MenuItem>
+								</div>
+								<div>
 									<div className={
 										clsx(
 											"flex",
 											"px-4",
 											"py-2",
 											"justify-center",
-											"bg-black/20",
+											"bg-base-2/40",
 										)
 									}>
 										<div className={
 											clsx(
 												"flex",
-												"bg-black/20",
-												"p-2",
-												"gap-x-2",
+												"p-1",
+												"gap-x-1",
+												"items-center",
+												"justify-center",
 												"rounded-2xl",
+												"bg-base-2/40",
 											)
 										}>
 											<button className={
 												clsx(
+													"flex",
+													"items-center",
+													"justify-center",
 													"cursor-pointer",
-													"size-5",
+													"p-1",
+													"rounded-2xl",
+													"hover:bg-comic-accent-500/90",
+													"hover:text-white",
+													// "size-",
+													theme == "system" ? [
+														"text-white",
+														"bg-comic-accent-500/75",
+														"hover:bg-comic-accent-500/90",
+													] : "",
 												)
 											}
 												onClick={(e) => (setTheme("system"))}
 											>
 												<Icon name="desktop" className={
 													clsx(
-														"size-6",
+														"size-5",
 													)
 												} />
 											</button>
 											<button className={
 												clsx(
+													"flex",
+													"items-center",
+													"justify-center",
 													"cursor-pointer",
-													"size-5",
+													"p-1",
+													"rounded-2xl",
+													"hover:bg-comic-accent-500/90",
+													"hover:text-white",
+													// "size-",
+													theme == "light" ? [
+														"text-white",
+														"bg-comic-accent-500/75",
+														"hover:bg-comic-accent-500/90",
+													] : "",
 												)
 											}
 												onClick={(e) => (setTheme("light"))}
 											>
 												<Icon name="sun" className={
 													clsx(
-														"size-6",
+														"size-5",
 													)
 												} />
 											</button>
 											<button className={
 												clsx(
+													"flex",
+													"items-center",
+													"justify-center",
 													"cursor-pointer",
-													"size-5",
+													"p-1",
+													"rounded-2xl",
+													"hover:bg-comic-accent-500/90",
+													"hover:text-white",
+													// "size-",
+													theme == "dark" ? [
+														"text-white",
+														"bg-comic-accent-500/75",
+														"hover:bg-comic-accent-500/90",
+													] : "",
 												)
 											}
 												onClick={(e) => (setTheme("dark"))}
 											>
 												<Icon name="moon" className={
 													clsx(
-														"size-6",
+														"size-5",
 													)
 												} />
 											</button>
 										</div>
 									</div>
-								</MenuItem>
-							</MenuItems>
-						</Menu>
+								</div>
+							</DisclosurePanel>
+						</Disclosure>
 					</div>
 				</div>
 			</div>
