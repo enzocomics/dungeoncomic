@@ -78,7 +78,7 @@ export async function saveUserCookie(
 			expires: expires_at,
 			maxAge: expires,
 			path: "/",
-			secure: true,
+			secure: false,
 			httpOnly: true,
 			sameSite: "strict",
 		})
