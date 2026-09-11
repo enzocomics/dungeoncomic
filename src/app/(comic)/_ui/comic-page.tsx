@@ -30,6 +30,7 @@ import { ErrorMessage } from "@/components/forms"
 import Link from "next/link"
 import Icon from "@/styles/icons"
 import { Textarea } from "@/components/textarea"
+import { DisclosureCloseHandler } from "@/components/disclosure"
 
 
 /**----------------------------------- */
@@ -367,20 +368,30 @@ export default function ComicPageUI({
 		 */
 
 	function ComicPageHeaderTitle() {
+		// Set up the refs for the Disclosure Closer
+		const comicDetailsButtonRef = useRef<HTMLButtonElement>(null)
+		const comicDetailsPanelRef = useRef<HTMLDivElement>(null)
+
 		return <>
-			<Disclosure>
-				<div
-					className={clsx(
+			<div
+				className={
+					clsx(
 						"p-2",
 						"px-18",
 						"h-12",
 						"flex",
 						"justify-center",
-						// "sm:justify-normal",
+					)
+				}>
+				<Disclosure as="div" ref={comicDetailsButtonRef} className={
+					clsx(
+						"flex",
+						"justify-center",
 						"items-center",
 						"font-comic-header",
 						"overflow-clip",
-					)}>
+					)
+				}>
 					<DisclosureButton className={clsx(
 						"group",
 						// Structure
@@ -524,28 +535,30 @@ export default function ComicPageUI({
 						</span>
 
 					</DisclosureButton>
-					<DisclosurePanel transition className={clsx(
-						// Transitions
-						"transition-all",
-						"ease-in-out",
-						"data-closed:opacity-0",
-						"data-closed:duration-300",
-						"data-closed:top-6",
-						"data-closed:scale-90",
-						"opacity-100",
-						"data-open:duration-none",
-						"scale-100",
-						// Position
-						"absolute",
-						// "-z-1",
-						"top-11.5",
-						// Size & Spacing
-						"max-w-lg",
-						"p-2",
-						"rounded-sm",
-						"drop-shadow-2xl",
-						"drop-shadow-neutral-900/45",
-					)}>
+					<DisclosurePanel ref={comicDetailsPanelRef}
+						transition className={clsx(
+							// Transitions
+							"transition-all",
+							"ease-in-out",
+							"data-closed:opacity-0",
+							"data-closed:duration-300",
+							"data-closed:top-6",
+							"data-closed:scale-90",
+							"opacity-100",
+							"data-open:duration-none",
+							"scale-100",
+							// Position
+							"absolute",
+							// "-z-1",
+							"top-11.5",
+							// Size & Spacing
+							"max-w-lg",
+							"p-2",
+							"rounded-sm",
+							"drop-shadow-2xl",
+							"drop-shadow-neutral-900/45",
+						)}>
+						<DisclosureCloseHandler buttonRef={comicDetailsButtonRef} panelRef={comicDetailsPanelRef} />
 						<section className={clsx(
 							// Functionality
 							"pointer-events-auto",
@@ -679,8 +692,8 @@ export default function ComicPageUI({
 							</div>
 						</section>
 					</DisclosurePanel>
-				</div>
-			</Disclosure>
+				</Disclosure>
+			</div>
 		</>
 	}
 

@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { ComponentPropsWithoutRef, Suspense, useEffect, useRef, useState } from "react"
+import { ComponentPropsWithoutRef, RefObject, Suspense, useEffect, useRef, useState } from "react"
 // import { Link } from "@/components/link"
 // FUNCTIONS
 import clsx from "clsx"
@@ -20,6 +20,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
 import Icon from "@/styles/icons"
 import { useTheme } from "@teispace/next-themes"
+
+import { DisclosureCloseHandler } from "@/components/disclosure"
 
 
 
@@ -137,9 +139,6 @@ export function FrontpageLayoutUI({
 
 }
 
-
-
-
 const navigation = [
 	{ name: 'Dungeon Construction Co.', href: '/', current: false },
 	{ name: 'View All Comics', href: '#', current: false },
@@ -162,474 +161,477 @@ function NavMenu({
 }) {
 	const { theme, setTheme } = useTheme()
 
-	let close = useClose()
+	// Set up the refs for the Disclosure Closer
+	const navMenuButtonRef = useRef<HTMLButtonElement>(null)
+	const navMenuPanelRef = useRef<HTMLDivElement>(null)
+	const profileButtonRef = useRef<HTMLButtonElement>(null)
 	const profilePanelRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
-		window.onclick = (e) => {
-			const panel = profilePanelRef.current
-			const target = e.target as Node
 
-			if (!panel?.contains(target)) {
-				console.log("close me bitch")
-			}
-		}
-	}, [])
-
-
-	return <>
-		<Disclosure
-			as="nav"
-			className={clsx(
-				// Structure
-				"fixed!",
-				"z-50",
-				"top-0",
-				// Position
-				"relative",
-				"left-0",
-				"md:left-1/2",
-				"md:-translate-x-1/2",
-				// Size
-				"min-w-xs",
-				"max-w-6xl",
-				// "mx-auto",
-				"w-full",
-				// Spacing
-				"md:py-4",
-				"md:px-6",
-				// Functionality
-				"pointer-events-none",
-			)}
-		>
-			<div className="">
-				<div className="relative flex items-center justify-between">
-					<div className={clsx(
-						"relative",
-						"inset-y-0",
-						"left-0",
-						"flex",
-						"items-center",
-						"h-12"
-					)}>
-						{/* Mobile menu button*/}
-						<DisclosureButton className={clsx(
-							"group",
-							// Structure
-							"absolute",
+	return (
+		<>
+			<Disclosure
+				ref={navMenuButtonRef}
+				as="nav"
+				className={clsx(
+					// Structure
+					"fixed!",
+					"z-50",
+					"top-0",
+					// Position
+					"relative",
+					"left-0",
+					"md:left-1/2",
+					"md:-translate-x-1/2",
+					// Size
+					"min-w-xs",
+					"max-w-6xl",
+					// "mx-auto",
+					"w-full",
+					// Spacing
+					"md:py-4",
+					"md:px-6",
+					// Functionality
+					"pointer-events-none",
+				)}
+			>
+				<div className="">
+					<div className="relative flex items-center justify-between">
+						<div className={clsx(
+							"relative",
+							"inset-y-0",
+							"left-0",
 							"flex",
 							"items-center",
-							"-top-3",
-							"-left-8",
-							"md:-left-4.5",
-							// Appearance
-							"text-comic-accent-500",
-							"dark:text-comic-accent-600",
-							// Functionality
-							"cursor-pointer",
-							"pointer-events-auto",
-
+							"h-12"
 						)}>
-							{/* LOGO */}
-							<Seal
-								menu={menu}
-								className={clsx(
-									"group/menu",
-									"w-24",
-								)} />
-						</DisclosureButton>
-					</div>
-					<div className={clsx(
-						"flex",
-						"flex-1",
-						// "items-center",
-						// "justify-center",
-						// "sm:items-stretch",
-						// "sm:justify-start"
-					)}>
-
-					</div>
-					<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
-
-						{/* Profile dropdown */}
-						<Disclosure as="div" className="relative">
+							{/* Mobile menu button*/}
 							<DisclosureButton className={clsx(
 								"group",
-								"relative",
+								// Structure
+								"absolute",
 								"flex",
-								"rounded",
+								"items-center",
+								"-top-3",
+								"-left-8",
+								"md:-left-4.5",
+								// Appearance
+								"text-comic-accent-500",
+								"dark:text-comic-accent-600",
 								// Functionality
 								"cursor-pointer",
-								// Appearance
-								"data-open:bg-comic-accent-600",
-								"dark:data-open:bg-comic-accent-700",
-								"rounded-lg",
-								// Hover
-								"scale-100",
-								"hover:duration-0",
-								"hover:scale-120",
-								"active:translate-px",
-								"active:bg-comic-accent-900",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
-								// Outline
-								"outline-transparent",
-								"focus:outline-4",
-								"focus:-outline-offset-4",
-								"focus:outline-comic-accent-500",
+								"pointer-events-auto",
+
 							)}>
-								<span className="absolute -inset-1.5" />
-								<span className="sr-only">Open user menu</span>
-								<span className={
-									clsx(
-										"relative",
-										"size-8",
-									)
-								}>
-									{/* <Icon name="skull" className={clsx(
+								{/* LOGO */}
+								<Seal
+									menu={menu}
+									className={clsx(
+										"group/menu",
+										"w-24",
+									)} />
+							</DisclosureButton>
+						</div>
+						<div className={clsx(
+							"flex",
+							"flex-1",
+							// "items-center",
+							// "justify-center",
+							// "sm:items-stretch",
+							// "sm:justify-start"
+						)}>
+
+						</div>
+						<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
+
+							{/* Profile dropdown */}
+							<Disclosure as="div" className="relative" ref={profileButtonRef} >
+								<DisclosureButton className={clsx(
+									"group",
+									"relative",
+									"flex",
+									"rounded",
+									// Functionality
+									"cursor-pointer",
+									// Appearance
+									"data-open:bg-comic-accent-600",
+									"dark:data-open:bg-comic-accent-700",
+									"rounded-lg",
+									// Hover
+									"scale-100",
+									"hover:duration-0",
+									"hover:scale-120",
+									"active:translate-px",
+									"active:bg-comic-accent-900",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
+									// Outline
+									"outline-transparent",
+									"focus:outline-4",
+									"focus:-outline-offset-4",
+									"focus:outline-comic-accent-500",
+								)}>
+									<span className="absolute -inset-1.5" />
+									<span className="sr-only">Open user menu</span>
+									<span className={
+										clsx(
+											"relative",
+											"size-8",
+										)
+									}>
+										{/* <Icon name="skull" className={clsx(
 									"text-white",
 									"size-8",
 									"p-2",
 									"bg-comic-accent-700",
 									"rounded-sm",
 								)} /> */}
-									<Icon name="skull" className={clsx(
-										"size-8",
-										"p-1.5",
-										"rounded-sm",
-										// Transition
+										<Icon name="skull" className={clsx(
+											"size-8",
+											"p-1.5",
+											"rounded-sm",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"duration-300",
+											"group-hover:duration-0",
+											// Diff
+
+											"opacity-100",
+											"text-white",
+											"bg-comic-accent-700",
+											"group-data-open:opacity-0",
+											"group-data-open:rotate-45",
+										)} />
+										<Icon name="xmark" className={clsx(
+											"text-white",
+											"size-8",
+											"p-1.5",
+											"shrink-0",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"duration-300",
+											//
+											"absolute",
+											"left-0",
+											"top-0",
+											"opacity-0",
+											"-rotate-45",
+											"group-hover:duration-0",
+											// Diff
+											"group-data-open:group-hover:duration-100",
+											"group-data-open:opacity-100",
+											"group-data-open:rotate-0",
+										)} />
+									</span>
+
+								</DisclosureButton>
+
+								<DisclosurePanel
+									transition
+									className={clsx(
+										// Transitions
 										"transition-all",
 										"ease-in-out",
-										"duration-300",
-										"group-hover:duration-0",
-										// Diff
-
+										"data-closed:opacity-0",
+										"data-closed:duration-300",
+										"data-closed:top-6",
+										"data-closed:scale-90",
 										"opacity-100",
-										"text-white",
-										"bg-comic-accent-700",
-										"group-data-open:opacity-0",
-										"group-data-open:rotate-45",
-									)} />
-									<Icon name="xmark" className={clsx(
-										"text-white",
-										"size-8",
-										"p-1.5",
-										"shrink-0",
-										// Transition
-										"transition-all",
-										"ease-in-out",
-										"duration-300",
-										//
+										"data-open:duration-none",
+										"scale-100",
+										// Position
+										"origin-top-right",
 										"absolute",
-										"left-0",
-										"top-0",
-										"opacity-0",
-										"-rotate-45",
-										"group-hover:duration-0",
-										// Diff
-										"group-data-open:group-hover:duration-100",
-										"group-data-open:opacity-100",
-										"group-data-open:rotate-0",
-									)} />
-								</span>
-
-							</DisclosureButton>
-
-							<DisclosurePanel
-								transition
-								className={clsx(
-									// Transitions
-									"transition-all",
-									"ease-in-out",
-									"data-closed:opacity-0",
-									"data-closed:duration-300",
-									"data-closed:top-6",
-									"data-closed:scale-90",
-									"opacity-100",
-									"data-open:duration-none",
-									"scale-100",
-									// Position
-									"origin-top-right",
-									"absolute",
-									"right-0",
-									"top-11.5",
-									// Size & Spacing
-									"max-w-lg",
-									"rounded-sm",
-									"drop-shadow-2xl",
-									"drop-shadow-neutral-900/45",
-								)}
-								ref={profilePanelRef}
-							>
-								<section className={
-									clsx(
-										// Appearance
+										"right-0",
+										"top-11.5",
+										// Size & Spacing
+										"max-w-lg",
 										"rounded-sm",
-										"md:rounded",
-										// Colours
-										"bg-base-1",
-										"dark:bg-base-3",
-										"dark:outline",
-										"dark:-outline-offset-1",
-										"dark:outline-base-5/50",
-										// "border",
-										// Arrow
-										"before:absolute",
-										"before:z-10",
-										"before:-top-2.5",
-										"before:right-1",
-
-										"before:h-0 before:w-0",
-										"before:border-l-11 before:border-r-11",
-										"before:border-t-11",
-										"before:border-l-transparent before:border-r-transparent",
-										"before:border-t-base-1 dark:before:border-t-base-3",
-										"before:rotate-180"
-									)
-								}>
-									<div>
-										<a
-											href="#"
-											className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-										>
-											Your profile
-										</a>
-									</div>
-									<div>
-										<a
-											href="#"
-											className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-										>
-											Settings
-										</a>
-									</div>
-									<div>
-										<a
-											href="#"
-											className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-										>
-											Sign out
-										</a>
-									</div>
-									{/* MODE TOGGLER */}
-									<div className={
+										"drop-shadow-2xl",
+										"drop-shadow-neutral-900/45",
+									)}
+									ref={profilePanelRef}
+								>
+									<DisclosureCloseHandler buttonRef={profileButtonRef} panelRef={profilePanelRef} />
+									<section className={
 										clsx(
-											"flex",
-											"px-4",
-											"py-2",
-											"justify-center",
-											"bg-base-2/20",
-											"dark:bg-base-2/50",
+											// Appearance
+											"rounded-sm",
+											"md:rounded",
+											// Colours
+											"bg-base-1",
+											"dark:bg-base-3",
+											"dark:outline",
+											"dark:-outline-offset-1",
+											"dark:outline-base-5/50",
+											// "border",
+											// Arrow
+											"before:absolute",
+											"before:z-10",
+											"before:-top-2.5",
+											"before:right-1",
+
+											"before:h-0 before:w-0",
+											"before:border-l-11 before:border-r-11",
+											"before:border-t-11",
+											"before:border-l-transparent before:border-r-transparent",
+											"before:border-t-base-1 dark:before:border-t-base-3",
+											"before:rotate-180"
 										)
 									}>
+										<div>
+											<a
+												href="#"
+												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+											>
+												Your profile
+											</a>
+										</div>
+										<div>
+											<a
+												href="#"
+												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+											>
+												Settings
+											</a>
+										</div>
+										<div>
+											<a
+												href="#"
+												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+											>
+												Sign out
+											</a>
+										</div>
+										{/* MODE TOGGLER */}
 										<div className={
 											clsx(
-
-												"p-1",
-												"gap-x-1",
-												"items-center",
+												"flex",
+												"px-4",
+												"py-2",
 												"justify-center",
-												"rounded-2xl",
-												"bg-base-2/40",
-												"dark:bg-base-2",
+												"bg-base-2/20",
+												"dark:bg-base-2/50",
 											)
-										} >
-											<div
-												data-theme={theme}
-												className={
-													clsx(
-														"group",
-														"relative",
-														"flex",
-													)
-												}>
-												<button className={
-													clsx(
-														"relative",
-														"z-1",
-														"peer",
-														"peer/system",
-														"flex",
-														"items-center",
-														"justify-center",
-														"cursor-pointer",
-														"p-1",
-														"px-2",
-														"rounded-2xl",
-														// Transition
-														"transition-all",
-														"ease-in-out",
-														"duration-300",
-														// Button Specific
-														theme == "system" && "text-white",
-														"group-data-[theme=system]:group-hover:text-base-content",
-														"hover:text-white!",
-													)
-												}
-													onClick={(e) => (setTheme("system"))}
-												>
-													<Icon name="desktop" className={
+										}>
+											<div className={
+												clsx(
+
+													"p-1",
+													"gap-x-1",
+													"items-center",
+													"justify-center",
+													"rounded-2xl",
+													"bg-base-2/40",
+													"dark:bg-base-2",
+												)
+											} >
+												<div
+													data-theme={theme}
+													className={
 														clsx(
-															"size-5",
+															"group",
+															"relative",
+															"flex",
+														)
+													}>
+													<button className={
+														clsx(
+															"relative",
+															"z-1",
+															"peer",
+															"peer/system",
+															"flex",
+															"items-center",
+															"justify-center",
+															"cursor-pointer",
+															"p-1",
+															"px-2",
+															"rounded-2xl",
+															// Transition
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
+															// Button Specific
+															theme == "system" && "text-white",
+															"group-data-[theme=system]:group-hover:text-base-content",
+															"hover:text-white!",
+														)
+													}
+														onClick={(e) => (setTheme("system"))}
+													>
+														<Icon name="desktop" className={
+															clsx(
+																"size-5",
+															)
+														} />
+													</button>
+													<button className={
+														clsx(
+															"relative",
+															"z-1",
+															"peer/light",
+															"flex",
+															"peer",
+															"items-center",
+															"justify-center",
+															"cursor-pointer",
+															"p-1",
+															"px-2",
+															"rounded-2xl",
+															// Transition
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
+															// Button Specific
+															theme == "light" && "text-white",
+															"group-data-[theme=light]:group-hover:text-base-content",
+															"hover:text-white!",
+														)
+													}
+														onClick={(e) => (setTheme("light"))}
+													>
+														<Icon name="sun" className={
+															clsx(
+																"size-5",
+															)
+														} />
+													</button>
+													<button className={
+														clsx(
+															"relative",
+															"z-1",
+															"peer",
+															"peer/dark",
+															"flex",
+															"items-center",
+															"justify-center",
+															"cursor-pointer",
+															"p-1",
+															"px-2",
+															"rounded-2xl",
+															// Transition
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
+															// Button Specific
+															theme == "dark" && "text-white",
+															"group-data-[theme=dark]:group-hover:text-base-content",
+															"hover:text-white!",
+														)
+													}
+														onClick={(e) => (setTheme("dark"))}
+													>
+														<Icon name="moon" className={
+															clsx(
+																"size-5",
+															)
+														} />
+													</button>
+													<span className={
+														clsx(
+															// Toggle
+															"block",
+															"absolute",
+															"top-1/2",
+															"-translate-1/2",
+															"size-7",
+															"bg-comic-accent-500",
+															"dark:bg-comic-accent-500/50",
+															"rounded-full",
+															// "-z-1",
+															"scale-100",
+															"peer-hover:scale-120",
+															"dark:peer-hover:bg-comic-accent-500/90",
+															"peer-hover/system:left-4.5",
+															"peer-hover/light:left-13.5",
+															"peer-hover/dark:left-22.5",
+															theme == "system" && "left-4.5",
+															theme == "light" && "left-13.5",
+															theme == "dark" && "left-22.5",
+															// Transition
+															"transition-all",
+															"ease-in-out",
+															"duration-300",
 														)
 													} />
-												</button>
-												<button className={
-													clsx(
-														"relative",
-														"z-1",
-														"peer/light",
-														"flex",
-														"peer",
-														"items-center",
-														"justify-center",
-														"cursor-pointer",
-														"p-1",
-														"px-2",
-														"rounded-2xl",
-														// Transition
-														"transition-all",
-														"ease-in-out",
-														"duration-300",
-														// Button Specific
-														theme == "light" && "text-white",
-														"group-data-[theme=light]:group-hover:text-base-content",
-														"hover:text-white!",
-													)
-												}
-													onClick={(e) => (setTheme("light"))}
-												>
-													<Icon name="sun" className={
-														clsx(
-															"size-5",
-														)
-													} />
-												</button>
-												<button className={
-													clsx(
-														"relative",
-														"z-1",
-														"peer",
-														"peer/dark",
-														"flex",
-														"items-center",
-														"justify-center",
-														"cursor-pointer",
-														"p-1",
-														"px-2",
-														"rounded-2xl",
-														// Transition
-														"transition-all",
-														"ease-in-out",
-														"duration-300",
-														// Button Specific
-														theme == "dark" && "text-white",
-														"group-data-[theme=dark]:group-hover:text-base-content",
-														"hover:text-white!",
-													)
-												}
-													onClick={(e) => (setTheme("dark"))}
-												>
-													<Icon name="moon" className={
-														clsx(
-															"size-5",
-														)
-													} />
-												</button>
-												<span className={
-													clsx(
-														// Toggle
-														"block",
-														"absolute",
-														"top-1/2",
-														"-translate-1/2",
-														"size-7",
-														"bg-comic-accent-500",
-														"dark:bg-comic-accent-500/50",
-														"rounded-full",
-														// "-z-1",
-														"scale-100",
-														"peer-hover:scale-120",
-														"dark:peer-hover:bg-comic-accent-500/90",
-														"peer-hover/system:left-4.5",
-														"peer-hover/light:left-13.5",
-														"peer-hover/dark:left-22.5",
-														theme == "system" && "left-4.5",
-														theme == "light" && "left-13.5",
-														theme == "dark" && "left-22.5",
-														// Transition
-														"transition-all",
-														"ease-in-out",
-														"duration-300",
-													)
-												} />
+												</div>
 											</div>
 										</div>
-									</div>
-								</section>
-							</DisclosurePanel>
-						</Disclosure>
+									</section>
+								</DisclosurePanel>
+							</Disclosure>
+						</div>
 					</div>
 				</div>
-			</div>
 
 
-			<DisclosurePanel className={clsx(
-				"pt-2",
-				"relative",
-				"-z-1",
-				"bg-neutral-900/90",
-				"backdrop-blur-2xl",
-				"border-b-6",
-				"border-comic-accent-900",
-				"drop-shadow-lg",
-				"drop-shadow-neutral-900/50",
-				"md:drop-shadow-xl",
-				"md:drop-shadow-neutral-900/45",
-				"pointer-events-auto",
-			)}
-			>
-				{/* COMIC MENU */}
-				<div className="space-y-1 px-2 pt-2 pb-3">
-					{comicNavigation.map((item) => (
-						<DisclosureButton
-							key={item.name}
-							as="a"
-							href={item.href}
-							aria-current={item.current ? 'page' : undefined}
-							className={clsx(
-								item.current
-									? "bg-comic-accent-700 text-white"
-									: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-								'block rounded-md px-3 py-2 text-base font-medium',
-							)}
-						>
-							{item.name}
-						</DisclosureButton>
-					))}
-				</div>
-				{/* PLATFORM MENU */}
-				<div className="space-y-1 px-2 pt-2 pb-3 bg-neutral-900">
-					{navigation.map((item) => (
-						<DisclosureButton
-							key={item.name}
-							as="a"
-							href={item.href}
-							aria-current={item.current ? 'page' : undefined}
-							className={clsx(
-								item.current
-									? "bg-comic-accent-700 text-white"
-									: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-								'block rounded-md px-3 py-2 text-sm',
-							)}
-						>
-							{item.name}
-						</DisclosureButton>
-					))}
-				</div>
-			</DisclosurePanel>
-		</Disclosure>
-	</>
+				<DisclosurePanel
+					ref={navMenuPanelRef}
+					className={clsx(
+						"pt-2",
+						"relative",
+						"-z-1",
+						"bg-neutral-900/90",
+						"backdrop-blur-2xl",
+						"border-b-6",
+						"border-comic-accent-900",
+						"drop-shadow-lg",
+						"drop-shadow-neutral-900/50",
+						"md:drop-shadow-xl",
+						"md:drop-shadow-neutral-900/45",
+						"pointer-events-auto",
+					)}
+				>
+					<DisclosureCloseHandler buttonRef={navMenuButtonRef} panelRef={navMenuPanelRef} />
+					{/* COMIC MENU */}
+					<div className="space-y-1 px-2 pt-2 pb-3">
+						{comicNavigation.map((item) => (
+							<DisclosureButton
+								key={item.name}
+								as="a"
+								href={item.href}
+								aria-current={item.current ? 'page' : undefined}
+								className={clsx(
+									item.current
+										? "bg-comic-accent-700 text-white"
+										: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+									'block rounded-md px-3 py-2 text-base font-medium',
+								)}
+							>
+								{item.name}
+							</DisclosureButton>
+						))}
+					</div>
+					{/* PLATFORM MENU */}
+					<div className="space-y-1 px-2 pt-2 pb-3 bg-neutral-900">
+						{navigation.map((item) => (
+							<DisclosureButton
+								key={item.name}
+								as="a"
+								href={item.href}
+								aria-current={item.current ? 'page' : undefined}
+								className={clsx(
+									item.current
+										? "bg-comic-accent-700 text-white"
+										: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+									'block rounded-md px-3 py-2 text-sm',
+								)}
+							>
+								{item.name}
+							</DisclosureButton>
+						))}
+					</div>
+				</DisclosurePanel>
+			</Disclosure>
+		</>
+	)
+
+
 }
+
+
