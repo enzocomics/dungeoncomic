@@ -280,7 +280,11 @@ export default function ComicPageUI({
 					"pb-18",
 					// Appearance
 					"bg-base-1",
-					"dark:bg-neutral-700",
+					"dark:bg-base-2",
+					"dark:shadow-none",
+					"dark:outline",
+					"dark:-outline-offset-1",
+					"dark:outline-base-5/50",
 					"text-center",
 					"md:rounded-t",
 					"md:last:rounded-b"
@@ -293,7 +297,7 @@ export default function ComicPageUI({
 						"mx-auto",
 						"text-3xl",
 						"font-bold",
-						"font-platform-display",
+						"font-comic-display",
 						"text-center"
 					)}
 				/>
@@ -360,7 +364,7 @@ export default function ComicPageUI({
 						"justify-center",
 						// "sm:justify-normal",
 						"items-center",
-						"font-platform-display",
+						"font-platform-header",
 						"overflow-clip",
 					)}>
 					<DisclosureButton className={clsx(

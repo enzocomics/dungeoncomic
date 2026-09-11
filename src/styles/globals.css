@@ -58,8 +58,12 @@
 	/** --------------------------------------
 	/* Fonts */
 	--font-platform-display: var(--font-germania-one);
-	--font-platform-header: var(--font-inter);
+	--font-platform-header: var(--font-lora);
 	--font-platform-copy: var(--font-lora);
+
+	--font-comic-display: var(--font-germania-one);
+	--font-comic-header: var(--font-inter);
+	--font-comic-copy: var(--font-lora);
 
 	/* COLOR VARIABLE DEFINITIONS*/
 
