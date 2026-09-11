@@ -285,43 +285,59 @@ function NavMenu({
 										Sign out
 									</a>
 								</div>
-								<div>
+								{/* MODE TOGGLER */}
+								<div className={
+									clsx(
+										"flex",
+										"px-4",
+										"py-2",
+										"justify-center",
+										"bg-base-2/20",
+										"dark:bg-base-2/50",
+									)
+								}>
 									<div className={
 										clsx(
-											"flex",
-											"px-4",
-											"py-2",
+
+											"p-1",
+											"gap-x-1",
+											"items-center",
 											"justify-center",
+											"rounded-2xl",
 											"bg-base-2/40",
+											"dark:bg-base-2",
 										)
-									}>
-										<div className={
-											clsx(
-												"flex",
-												"p-1",
-												"gap-x-1",
-												"items-center",
-												"justify-center",
-												"rounded-2xl",
-												"bg-base-2/40",
-											)
-										}>
+									} >
+										<div
+											data-theme={theme}
+											className={
+												clsx(
+													"group",
+													"relative",
+													"flex",
+												)
+											}>
 											<button className={
 												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/system",
 													"flex",
 													"items-center",
 													"justify-center",
 													"cursor-pointer",
 													"p-1",
+													"px-2",
 													"rounded-2xl",
-													"hover:bg-comic-accent-500/90",
-													"hover:text-white",
-													// "size-",
-													theme == "system" ? [
-														"text-white",
-														"bg-comic-accent-500/75",
-														"hover:bg-comic-accent-500/90",
-													] : "",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "system" && "text-white",
+													"group-data-[theme=system]:group-hover:text-base-content",
+													"hover:text-white!",
 												)
 											}
 												onClick={(e) => (setTheme("system"))}
@@ -334,20 +350,25 @@ function NavMenu({
 											</button>
 											<button className={
 												clsx(
+													"relative",
+													"z-1",
+													"peer/light",
 													"flex",
+													"peer",
 													"items-center",
 													"justify-center",
 													"cursor-pointer",
 													"p-1",
+													"px-2",
 													"rounded-2xl",
-													"hover:bg-comic-accent-500/90",
-													"hover:text-white",
-													// "size-",
-													theme == "light" ? [
-														"text-white",
-														"bg-comic-accent-500/75",
-														"hover:bg-comic-accent-500/90",
-													] : "",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "light" && "text-white",
+													"group-data-[theme=light]:group-hover:text-base-content",
+													"hover:text-white!",
 												)
 											}
 												onClick={(e) => (setTheme("light"))}
@@ -360,20 +381,25 @@ function NavMenu({
 											</button>
 											<button className={
 												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/dark",
 													"flex",
 													"items-center",
 													"justify-center",
 													"cursor-pointer",
 													"p-1",
+													"px-2",
 													"rounded-2xl",
-													"hover:bg-comic-accent-500/90",
-													"hover:text-white",
-													// "size-",
-													theme == "dark" ? [
-														"text-white",
-														"bg-comic-accent-500/75",
-														"hover:bg-comic-accent-500/90",
-													] : "",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "dark" && "text-white",
+													"group-data-[theme=dark]:group-hover:text-base-content",
+													"hover:text-white!",
 												)
 											}
 												onClick={(e) => (setTheme("dark"))}
@@ -384,6 +410,33 @@ function NavMenu({
 													)
 												} />
 											</button>
+											<span className={
+												clsx(
+													// Toggle
+													"block",
+													"absolute",
+													"top-1/2",
+													"-translate-1/2",
+													"size-7",
+													"bg-comic-accent-500",
+													"dark:bg-comic-accent-500/50",
+													"rounded-full",
+													// "-z-1",
+													"scale-100",
+													"peer-hover:scale-120",
+													"dark:peer-hover:bg-comic-accent-500/90",
+													"peer-hover/system:left-4.5",
+													"peer-hover/light:left-13.5",
+													"peer-hover/dark:left-22.5",
+													theme == "system" && "left-4.5",
+													theme == "light" && "left-13.5",
+													theme == "dark" && "left-22.5",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+												)
+											} />
 										</div>
 									</div>
 								</div>

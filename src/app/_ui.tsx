@@ -48,6 +48,7 @@ export default async function RootLayoutUI({
 					attribute={['class', 'data-theme']}
 					initialTheme={initialTheme ?? undefined}
 					themes={["system", "light", "dark"]}
+					disableTransitionOnChange={true}
 				>
 					<NextIntlClientProvider>
 						{children}
