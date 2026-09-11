@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { ComponentPropsWithoutRef, Suspense, useEffect, useState } from "react"
+import { ComponentPropsWithoutRef, Suspense, useEffect, useRef, useState } from "react"
 // import { Link } from "@/components/link"
 // FUNCTIONS
 import clsx from "clsx"
@@ -14,7 +14,7 @@ import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
 // import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/components/navbar"
 // import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/dropdown"
 // import { Avatar } from "@/components/avatar"
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, useClose } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
@@ -161,6 +161,22 @@ function NavMenu({
 	menu?: boolean
 }) {
 	const { theme, setTheme } = useTheme()
+
+	let close = useClose()
+	const profilePanelRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		window.onclick = (e) => {
+			const panel = profilePanelRef.current
+			const target = e.target as Node
+
+			if (!panel?.contains(target)) {
+				console.log("close me bitch")
+			}
+		}
+	}, [])
+
+
 	return <>
 		<Disclosure
 			as="nav"
@@ -345,6 +361,7 @@ function NavMenu({
 									"drop-shadow-2xl",
 									"drop-shadow-neutral-900/45",
 								)}
+								ref={profilePanelRef}
 							>
 								<section className={
 									clsx(
@@ -572,7 +589,8 @@ function NavMenu({
 				"md:drop-shadow-xl",
 				"md:drop-shadow-neutral-900/45",
 				"pointer-events-auto",
-			)}>
+			)}
+			>
 				{/* COMIC MENU */}
 				<div className="space-y-1 px-2 pt-2 pb-3">
 					{comicNavigation.map((item) => (
