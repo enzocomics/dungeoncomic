@@ -28,7 +28,7 @@ export default async function RootLayoutUI({
 			className={clsx(
 				"min-w-xs",
 				"h-full",
-				"font-copy",
+				"font-platform-copy",
 				"relative",
 				"bg-fixed",
 				"bg-neutral-600",

@@ -293,7 +293,7 @@ export default function ComicPageUI({
 						"mx-auto",
 						"text-3xl",
 						"font-bold",
-						"font-display",
+						"font-platform-display",
 						"text-center"
 					)}
 				/>
@@ -1288,7 +1288,7 @@ export default function ComicPageUI({
 															className={clsx(
 																"pb-2",
 																"text-sm",
-																"font-display",
+																"font-comic-display",
 																"flex",
 																"items-center",
 																"gap-x-1",
@@ -1645,7 +1645,7 @@ export default function ComicPageUI({
 				"w-full",
 				"p-4",
 				// Text
-				"font-copy",
+				"font-comic-copy",
 				"text-base",
 				// Appearance
 				"rounded",
@@ -1743,7 +1743,7 @@ export default function ComicPageUI({
 			"rounded-sm",
 			"text-white",
 			"text-sm",
-			"font-display",
+			"font-comic-display",
 			"font-semibold",
 			"cursor-pointer",
 			"border-y-2",
@@ -1966,7 +1966,7 @@ export default function ComicPageUI({
 								clsx(
 									"pb-4",
 									"text-",
-									"font-display",
+									"font-comic-display",
 									"font-semibold",
 								)
 							}>
@@ -2124,7 +2124,7 @@ export default function ComicPageUI({
 										<Label className={
 											clsx(
 												"grow",
-												"font-copy",
+												"font-comic-copy",
 											)
 										}>
 											{t("submit-own-suggestion")}
@@ -2223,7 +2223,7 @@ export default function ComicPageUI({
 								"-top-6.5",
 								"right-0",
 								"ml-auto",
-								"font-display",
+								"font-comic-display",
 								"font-normal",
 								"text-xs",
 								"text-current/50"

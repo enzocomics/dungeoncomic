@@ -10,6 +10,6 @@ import Link from "next/link"
 export default function DashboardPageUI() {
 	const t = useTranslations("auth")
 	return <>
-		<h1 className="font-display text-3xl">{t("pages.dashboard.title")}</h1>
+		<h1 className="font-platform-display text-3xl">{t("pages.dashboard.title")}</h1>
 	</>
 }

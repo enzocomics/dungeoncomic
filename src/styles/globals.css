@@ -57,9 +57,9 @@
 @theme {
 	/** --------------------------------------
 	/* Fonts */
-	--font-copy: var(--font-lora);
-	--font-display: var(--font-germania-one);
-	--font-platform-display: var(--font-inter);
+	--font-platform-display: var(--font-germania-one);
+	--font-platform-header: var(--font-inter);
+	--font-platform-copy: var(--font-lora);
 
 	/* COLOR VARIABLE DEFINITIONS*/
 

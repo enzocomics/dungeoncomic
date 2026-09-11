@@ -189,7 +189,7 @@ export function CommentsSection({
 					<label
 						htmlFor={fields.content.name}
 						className={clsx(
-							"font-display",
+							"font-comic-display",
 							"font-semibold",
 							"text-lg",
 						)}

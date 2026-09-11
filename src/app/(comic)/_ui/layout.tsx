@@ -49,8 +49,8 @@ export function ComicLayoutUI({
 				// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
 
 				// Fonts
-				"--font-copy": `var(--font-${copyFontSlug})`,
-				"--font-display": `var(--font-${displayFontSlug})`,
+				"--font-comic-copy": `var(--font-${copyFontSlug})`,
+				"--font-comic-display": `var(--font-${displayFontSlug})`,
 				"--color-comic-accent-50": `var(${colorVariants[accentColor]["50"]})`,
 				"--color-comic-accent-100": `var(${colorVariants[accentColor]["100"]})`,
 				"--color-comic-accent-200": `var(${colorVariants[accentColor]["200"]})`,
@@ -65,7 +65,7 @@ export function ComicLayoutUI({
 			} as React.CSSProperties}
 			className={clsx(
 				"relative",
-				"font-copy",
+				"font-comic-copy",
 				"bg-top",
 				"bg-repeat-x",
 				"bg-fixed",
