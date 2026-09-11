@@ -567,7 +567,7 @@ export default function ComicPageUI({
 							"md:rounded",
 							// Colours
 							"bg-base-1",
-							"dark:bg-base-2",
+							"dark:bg-base-3",
 							"dark:outline",
 							"dark:-outline-offset-1",
 							"dark:outline-base-5/50",
@@ -575,14 +575,14 @@ export default function ComicPageUI({
 							// Arrow
 							"before:absolute",
 							"before:z-10",
-							"before:-top-3",
+							"before:-top-2.5",
 							"before:left-1/2",
 							"before:-translate-x-1/2",
 							"before:h-0 before:w-0",
 							"before:border-l-12 before:border-r-12",
 							"before:border-t-12",
 							"before:border-l-transparent before:border-r-transparent",
-							"before:border-t-base-1 dark:before:border-t-base-2",
+							"before:border-t-base-1 dark:before:border-t-base-3",
 							"before:rotate-180"
 						)}>
 							{/* Comic Info Header */}
