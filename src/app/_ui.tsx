@@ -18,7 +18,6 @@ export default async function RootLayoutUI({
 	children: React.ReactNode | null
 }) {
 	const initialTheme = await getTheme()
-	console.log(initialTheme)
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
@@ -35,9 +34,8 @@ export default async function RootLayoutUI({
 				"font-platform-copy",
 				"relative",
 				"bg-fixed",
-				"bg-neutral-600",
+				"bg-neutral-100",
 				"dark:bg-neutral-800",
-				// "dark:bg-yellow-800/50"
 			)}
 		// style={{
 		// 	// https://heropatterns.com/

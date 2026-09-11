@@ -51,6 +51,7 @@ export function ComicLayoutUI({
 
 				// Fonts
 				"--font-comic-copy": `var(--font-${copyFontSlug})`,
+				"--font-comic-header": `var(--font-${copyFontSlug})`,
 				"--font-comic-display": `var(--font-${displayFontSlug})`,
 				"--color-comic-accent-50": `var(${colorVariants[accentColor]["50"]})`,
 				"--color-comic-accent-100": `var(${colorVariants[accentColor]["100"]})`,

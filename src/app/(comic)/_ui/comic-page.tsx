@@ -242,11 +242,19 @@ export default function ComicPageUI({
 					"backdrop-blur-xs",
 					"border-b-6",
 					"border-comic-accent-900",
-					hasPrevPage ? "border-none" : "",
 					"md:rounded",
-					hasPrevPage ? "md:rounded-b-none" : "",
-					!hasPrevPage && "md:drop-shadow-xl",
-					!hasPrevPage && "md:drop-shadow-neutral-900/45",
+					hasPrevPage ? [
+						"border-none",
+						"md:rounded-b-none",
+					] : [
+						hasBanner ? [
+							// No Prev Page + Banner
+							"drop-shadow-xl",
+							"drop-shadow-neutral-900/45",
+						] : [
+							// No Prev Page + No Banner
+						]
+					],
 				)}
 			>
 				<ComicPageHeaderTitle />
@@ -259,12 +267,14 @@ export default function ComicPageUI({
 			className={
 				clsx(
 					"relative",
-					"pt-13.5", // Comic Nav Menu
-					hasBanner && "pt-20",
-					hasPrevPage && "pt-20",
-					"md:pt-22.5",
-					hasBanner && "md:pt-28",
-					hasPrevPage && "md:pt-28",
+					hasBanner ? [
+						// Banner
+						"pt-28",
+					] : [
+						// No Banner
+						"pt-20",
+						"md:pt-24",
+					],
 				)
 			}
 		>
@@ -364,7 +374,7 @@ export default function ComicPageUI({
 						"justify-center",
 						// "sm:justify-normal",
 						"items-center",
-						"font-platform-header",
+						"font-comic-header",
 						"overflow-clip",
 					)}>
 					<DisclosureButton className={clsx(
@@ -684,10 +694,13 @@ export default function ComicPageUI({
 						"dark:bg-comic-accent-900",
 						"text-xs",
 						"text-white",
-						"font-platform-display",
-						// "md:rounded-b",
-						isTop && "md:drop-shadow-xl",
-						isTop && "md:drop-shadow-neutral-900/45",
+						"font-comic-header",
+						isTop && [
+							hasBanner && "drop-shadow-xl",
+							hasBanner && "drop-shadow-neutral-900/45",
+							hasBanner && "md:rounded-b",
+						],
+						!isTop && "md:rounded-b",
 						!isTop && "sticky",
 						!isTop && "bottom-0",
 					)}>
