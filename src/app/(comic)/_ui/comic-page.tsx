@@ -242,6 +242,9 @@ export default function ComicPageUI({
 					"backdrop-blur-xs",
 					"border-b-6",
 					"border-comic-accent-900",
+					"dark:outline",
+					"dark:-outline-offset-1",
+					"dark:outline-base-5/50",
 					"md:rounded",
 					hasPrevPage ? [
 						"border-none",
@@ -296,7 +299,8 @@ export default function ComicPageUI({
 					"dark:-outline-offset-1",
 					"dark:outline-base-5/50",
 					"text-center",
-					"md:rounded-t",
+					hasBanner || !hasPrevPage ? "md:rounded-t" : "",
+					// "md:rounded-t",
 					"md:last:rounded-b"
 				)}
 			>
@@ -539,8 +543,8 @@ export default function ComicPageUI({
 						"max-w-lg",
 						"p-2",
 						"rounded-sm",
-						// "drop-shadow-2xl",
-						// "drop-shadow-neutral-900/10",
+						"drop-shadow-2xl",
+						"drop-shadow-neutral-900/45",
 					)}>
 						<section className={clsx(
 							// Functionality
@@ -564,6 +568,9 @@ export default function ComicPageUI({
 							// Colours
 							"bg-base-1",
 							"dark:bg-base-2",
+							"dark:outline",
+							"dark:-outline-offset-1",
+							"dark:outline-base-5/50",
 							// "border",
 							// Arrow
 							"before:absolute",
