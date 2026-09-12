@@ -23,14 +23,13 @@ import { saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import * as Headless from "@headlessui/react"
-import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/forms"
 import Link from "next/link"
 import Icon from "@/styles/icons"
 import { Textarea } from "@/components/textarea"
-import { DisclosureCloseHandler } from "@/components/disclosure"
 
 
 /**----------------------------------- */

@@ -10,19 +10,12 @@ import { getComic } from "@/lib/directus/get-comics"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
 import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
-// import { StackedLayout } from "@/components/stacked-layout"
-// import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/components/navbar"
-// import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/dropdown"
-// import { Avatar } from "@/components/avatar"
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
+import { Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
 import Icon from "@/styles/icons"
 import { useTheme } from "@teispace/next-themes"
-
-import { DisclosureCloseHandler } from "@/components/disclosure"
-
 
 
 /**-----------------------------------
