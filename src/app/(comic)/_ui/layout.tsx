@@ -40,6 +40,7 @@ export function ComicLayoutUI({
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
 	const accentColor = comic.accent_color || "red"
 
+	// FRONTPAGE COIMC BOOLEAN
 	const isFrontpageComic = settings?.frontpage_comic
 
 	// RENDER COMIC LAYOUT UI
@@ -103,6 +104,9 @@ export function ComicLayoutUI({
 					)} />
 			}
 			<NavMenu menu={!isFrontpageComic && true} />
+			{/* Hide the navmenu if it's the frontpagecomic
+				- #TODO: In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
+			*/}
 			<main className={clsx(
 				"mx-auto",
 				"max-w-6xl",
