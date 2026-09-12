@@ -148,6 +148,11 @@ function NavMenu({
 		{ name: 'Dungeon Construction Co.', href: '/', current: false },
 	]
 
+	const accountMenuNavigation = [
+		{ name: "Login", href: "/login" },
+		{ name: "Sign up", href: "/register" }
+	]
+
 	return (
 		<>
 			{/* MAIN MENU NAV - POPOVER WRAPPER */}
@@ -493,7 +498,7 @@ function NavMenu({
 							"drop-shadow-neutral-900/45",
 						)}
 					>
-						<section className={
+						<div className={
 							clsx(
 								// Appearance
 								"rounded-sm",
@@ -504,7 +509,6 @@ function NavMenu({
 								"dark:outline",
 								"dark:-outline-offset-1",
 								"dark:outline-base-5/50",
-								// "border",
 								// Arrow
 								"before:absolute",
 								"before:z-10",
@@ -519,32 +523,31 @@ function NavMenu({
 								"before:rotate-180"
 							)
 						}>
-							<div>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-								>
-									Your profile
-								</a>
-							</div>
-							<div>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-								>
-									Settings
-								</a>
-							</div>
-							<div>
-								<a
-									href="#"
-									className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-								>
-									Sign out
-								</a>
-							</div>
+							<section className={
+								clsx(
+									"py-1",
+									"font-platform-header",
+								)
+							}>
+								{accountMenuNavigation.map((item, index) => (
+									<Link
+										key={index}
+										href={item.href}
+										className={
+											clsx(
+												"block",
+												"px-4",
+												"py-2",
+												"text-sm",
+											)
+										}
+									>
+										{item.name}
+									</Link>
+								))}
+							</section>
 							{/* MODE TOGGLER */}
-							<div className={
+							<section className={
 								clsx(
 									"flex",
 									"px-4",
@@ -697,8 +700,8 @@ function NavMenu({
 										} />
 									</div>
 								</div>
-							</div>
-						</section>
+							</section>
+						</div>
 					</PopoverPanel>
 				</Popover>
 			</nav>
