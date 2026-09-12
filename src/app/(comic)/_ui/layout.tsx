@@ -1,22 +1,19 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { ComponentPropsWithoutRef, RefObject, Suspense, useEffect, useRef, useState } from "react"
-// import { Link } from "@/components/link"
+import Link from "next/link"
+import { CloseButton, Popover, PopoverButton, PopoverPanel, useClose } from "@headlessui/react"
+import { useTheme } from "@teispace/next-themes"
 // FUNCTIONS
 import clsx from "clsx"
-// DATA
-import { getComic } from "@/lib/directus/get-comics"
-import Image from "next/image"
-import { directusURL } from "@/data/env"
-import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
-import { CloseButton, Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
-import { Seal } from "@/styles/seal"
-import { usePathname, useRouter } from "next/navigation"
-import { colorVariants } from "@/styles/colors"
+// STYLES
 import Icon from "@/styles/icons"
-import { useTheme } from "@teispace/next-themes"
-import Link from "next/link"
+import Seal from "@/styles/seal"
+import { colorVariants } from "@/styles/colors"
+import { displayFonts, copyFonts } from "@/styles/fonts"
+// DATA
+import { directusURL } from "@/data/env"
+import { getComic } from "@/lib/directus/get-comics"
 
 
 /**-----------------------------------
@@ -38,13 +35,8 @@ export function ComicLayoutUI({
 
 
 	return (
-
 		<div style={
 			{
-				// Accent Color
-				// backgroundColor: comic.accent_color ? `${comic.accent_color}40` : "transparent",
-				// backgroundImage: comic.banner ? `url(${directusURL}/assets/${comic.banner.filename_disk})` : `none`,
-
 				// Fonts
 				"--font-comic-copy": `var(--font-${copyFontSlug})`,
 				"--font-comic-header": `var(--font-${copyFontSlug})`,
@@ -68,6 +60,7 @@ export function ComicLayoutUI({
 				"bg-repeat-x",
 				"bg-fixed",
 			)}>
+
 			{/* Comic Banner Background Image*/}
 			{comic.banner &&
 				<div
@@ -108,10 +101,8 @@ export function ComicLayoutUI({
 			)}>
 				{children}
 			</main>
-
 		</div>
 	)
-
 }
 
 /**-----------------------------------
@@ -261,7 +252,6 @@ function NavMenu({
 							</span>
 							{/* WAX SEAL SVG */}
 							<Seal
-								menu={menu}
 								className={clsx(
 									"group/menu",
 									"w-24",
