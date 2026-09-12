@@ -23,7 +23,7 @@ import { saveUserVars } from "../_actions/variables"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import * as Headless from "@headlessui/react"
-import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useComicContext } from "./context"
 import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/forms"
@@ -376,6 +376,7 @@ export default function ComicPageUI({
 			<div
 				className={
 					clsx(
+
 						"p-2",
 						"px-18",
 						"h-12",
@@ -383,7 +384,7 @@ export default function ComicPageUI({
 						"justify-center",
 					)
 				}>
-				<Disclosure as="div" ref={comicDetailsButtonRef} className={
+				<Popover as="div" ref={comicDetailsButtonRef} className={
 					clsx(
 						"flex",
 						"justify-center",
@@ -392,7 +393,7 @@ export default function ComicPageUI({
 						"overflow-clip",
 					)
 				}>
-					<DisclosureButton className={clsx(
+					<PopoverButton className={clsx(
 						"group",
 						// Structure
 						"relative",
@@ -534,8 +535,8 @@ export default function ComicPageUI({
 							)} />
 						</span>
 
-					</DisclosureButton>
-					<DisclosurePanel ref={comicDetailsPanelRef}
+					</PopoverButton>
+					<PopoverPanel ref={comicDetailsPanelRef}
 						transition className={clsx(
 							// Transitions
 							"transition-all",
@@ -558,7 +559,6 @@ export default function ComicPageUI({
 							"drop-shadow-2xl",
 							"drop-shadow-neutral-900/45",
 						)}>
-						<DisclosureCloseHandler buttonRef={comicDetailsButtonRef} panelRef={comicDetailsPanelRef} />
 						<section className={clsx(
 							// Functionality
 							"pointer-events-auto",
@@ -691,8 +691,8 @@ export default function ComicPageUI({
 								</p>
 							</div>
 						</section>
-					</DisclosurePanel>
-				</Disclosure>
+					</PopoverPanel>
+				</Popover>
 			</div>
 		</>
 	}

@@ -14,7 +14,7 @@ import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
 // import { Navbar, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from "@/components/navbar"
 // import { Dropdown, DropdownButton, DropdownDivider, DropdownItem, DropdownLabel, DropdownMenu } from "@/components/dropdown"
 // import { Avatar } from "@/components/avatar"
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, useClose } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
@@ -170,7 +170,7 @@ function NavMenu({
 
 	return (
 		<>
-			<Disclosure
+			<Popover
 				ref={navMenuButtonRef}
 				as="nav"
 				className={clsx(
@@ -206,7 +206,7 @@ function NavMenu({
 							"h-12"
 						)}>
 							{/* Mobile menu button*/}
-							<DisclosureButton className={clsx(
+							<PopoverButton className={clsx(
 								"group",
 								// Structure
 								"absolute",
@@ -230,7 +230,7 @@ function NavMenu({
 										"group/menu",
 										"w-24",
 									)} />
-							</DisclosureButton>
+							</PopoverButton>
 						</div>
 						<div className={clsx(
 							"flex",
@@ -245,8 +245,8 @@ function NavMenu({
 						<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
 
 							{/* Profile dropdown */}
-							<Disclosure as="div" className="relative" ref={profileButtonRef} >
-								<DisclosureButton className={clsx(
+							<Popover as="div" className="relative" ref={profileButtonRef} >
+								<PopoverButton className={clsx(
 									"group",
 									"relative",
 									"flex",
@@ -328,9 +328,8 @@ function NavMenu({
 										)} />
 									</span>
 
-								</DisclosureButton>
-
-								<DisclosurePanel
+								</PopoverButton>
+								<PopoverPanel
 									transition
 									className={clsx(
 										// Transitions
@@ -356,7 +355,6 @@ function NavMenu({
 									)}
 									ref={profilePanelRef}
 								>
-									<DisclosureCloseHandler buttonRef={profileButtonRef} panelRef={profilePanelRef} />
 									<section className={
 										clsx(
 											// Appearance
@@ -563,14 +561,14 @@ function NavMenu({
 											</div>
 										</div>
 									</section>
-								</DisclosurePanel>
-							</Disclosure>
+								</PopoverPanel>
+							</Popover>
 						</div>
 					</div>
 				</div>
 
 
-				<DisclosurePanel
+				<PopoverPanel
 					ref={navMenuPanelRef}
 					className={clsx(
 						"pt-2",
@@ -587,11 +585,11 @@ function NavMenu({
 						"pointer-events-auto",
 					)}
 				>
-					<DisclosureCloseHandler buttonRef={navMenuButtonRef} panelRef={navMenuPanelRef} />
+
 					{/* COMIC MENU */}
 					<div className="space-y-1 px-2 pt-2 pb-3">
 						{comicNavigation.map((item) => (
-							<DisclosureButton
+							<PopoverButton
 								key={item.name}
 								as="a"
 								href={item.href}
@@ -604,13 +602,13 @@ function NavMenu({
 								)}
 							>
 								{item.name}
-							</DisclosureButton>
+							</PopoverButton>
 						))}
 					</div>
 					{/* PLATFORM MENU */}
 					<div className="space-y-1 px-2 pt-2 pb-3 bg-neutral-900">
 						{navigation.map((item) => (
-							<DisclosureButton
+							<PopoverButton
 								key={item.name}
 								as="a"
 								href={item.href}
@@ -623,14 +621,13 @@ function NavMenu({
 								)}
 							>
 								{item.name}
-							</DisclosureButton>
+							</PopoverButton>
 						))}
 					</div>
-				</DisclosurePanel>
-			</Disclosure>
+				</PopoverPanel>
+			</Popover>
 		</>
 	)
-
 
 }
 
