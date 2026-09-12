@@ -375,7 +375,6 @@ export default function ComicPageUI({
 			<div
 				className={
 					clsx(
-
 						"p-2",
 						"px-18",
 						"h-12",
@@ -570,7 +569,6 @@ export default function ComicPageUI({
 							"w-full",
 							// Spacing
 							"mx-auto",
-							"p-4",
 							// Text
 							"text-sm",
 							"text-base-content",
@@ -600,7 +598,10 @@ export default function ComicPageUI({
 							{/* Comic Info Header */}
 							<header className={clsx(
 								"flex",
+								"p-4",
 								"gap-x-2",
+								"bg-base-2/30",
+								"dark:bg-base-2/50",
 							)}>
 								{page.comic.thumbnail &&
 									<Image
@@ -671,23 +672,26 @@ export default function ComicPageUI({
 
 							{/* Comic Info Body */}
 							<div className={clsx(
+								"p-4",
 							)}>
 								{comic.description &&
 									<p className={clsx(
-										"my-4",
 
 									)}>
 										{comic.description}
 									</p>
 								}
-								<p className={clsx(
-									"italic",
-									"text-xs",
-									"text-neutral-500",
-									"text-center"
-								)}>
-									Last updated on {comic.date_updated}
-								</p>
+								{comic.date_updated &&
+									<p className={clsx(
+										"mt-4",
+										"italic",
+										"text-xs",
+										"text-neutral-500",
+										"text-center"
+									)}>
+										Last updated on {comic.date_updated}
+									</p>
+								}
 							</div>
 						</section>
 					</PopoverPanel>
