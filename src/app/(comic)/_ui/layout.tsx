@@ -10,12 +10,13 @@ import { getComic } from "@/lib/directus/get-comics"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
 import { displayFonts, copyFonts, fonts } from "@/styles/fonts"
-import { Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
+import { CloseButton, Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
 import { Seal } from "@/styles/seal"
 import { usePathname, useRouter } from "next/navigation"
 import { colorVariants } from "@/styles/colors"
 import Icon from "@/styles/icons"
 import { useTheme } from "@teispace/next-themes"
+import Link from "next/link"
 
 
 /**-----------------------------------
@@ -132,14 +133,6 @@ export function FrontpageLayoutUI({
 
 }
 
-const navigation = [
-	{ name: 'Dungeon Construction Co.', href: '/', current: false },
-	{ name: 'View All Comics', href: '#', current: false },
-]
-const comicNavigation = [
-	{ name: 'Home', href: '/tutorial', current: true },
-	{ name: 'About', href: '/tutorial/about', current: false },
-]
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -154,17 +147,18 @@ function NavMenu({
 }) {
 	const { theme, setTheme } = useTheme()
 
-	// Set up the refs for the Disclosure Closer
-	const navMenuButtonRef = useRef<HTMLButtonElement>(null)
-	const navMenuPanelRef = useRef<HTMLDivElement>(null)
-	const profileButtonRef = useRef<HTMLButtonElement>(null)
-	const profilePanelRef = useRef<HTMLDivElement>(null)
+	const comicNavigation = [
+		{ name: 'Home', href: './', current: true },
+		{ name: 'About', href: './about', current: false },
+	]
 
+	const navigation = [
+		{ name: 'Dungeon Construction Co.', href: '/', current: false },
+	]
 
 	return (
 		<>
 			<Popover
-				ref={navMenuButtonRef}
 				as="nav"
 				className={clsx(
 					// Structure
@@ -211,18 +205,77 @@ function NavMenu({
 								// Appearance
 								"text-comic-accent-500",
 								"dark:text-comic-accent-600",
+								"rounded-full",
 								// Functionality
 								"cursor-pointer",
 								"pointer-events-auto",
-
+								// Hover
+								"scale-100",
+								"hover:duration-0",
+								"hover:scale-105",
+								"active:translate-px",
+								"active:bg-comic-accent-900",
+								// Transition
+								"transition-all",
+								"ease-in-out",
+								"outline-none",
 							)}>
 								{/* LOGO */}
-								<Seal
-									menu={menu}
-									className={clsx(
-										"group/menu",
-										"w-24",
-									)} />
+								<span className={
+									clsx(
+										"relative"
+									)
+								}>
+									<span className={
+										clsx(
+											"absolute",
+											"z-5",
+											"left-9",
+											"top-6",
+											"size-6",
+											"-rotate-1",
+										)
+									}>
+										<Icon name="bars" className={clsx(
+											"rotate-0",
+											"opacity-100",
+											"text-white",
+											"group-data-open:opacity-0",
+											"group-data-open:rotate-45",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"outline-none",
+										)} />
+										<Icon name="xmark" className={clsx(
+											"absolute",
+											"top-0",
+											"opacity-0",
+											"text-white",
+											"-rotate-45",
+											"group-data-open:rotate-0",
+											"group-data-open:block",
+											"group-data-open:opacity-100",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"outline-none",
+										)} />
+									</span>
+									<Seal
+										menu={menu}
+										className={clsx(
+											"group/menu",
+											"w-24",
+											// Outline
+											"rounded-full",
+											"outline-transparent",
+											"group-focus:outline-4",
+											"group-focus:outline-offset-1",
+											"group-focus:outline-comic-accent-500",
+										)} />
+								</span>
+								<span className="sr-only">Open Main Navigation</span>
 							</PopoverButton>
 						</div>
 						<div className={clsx(
@@ -238,7 +291,7 @@ function NavMenu({
 						<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
 
 							{/* Profile dropdown */}
-							<Popover as="div" className="relative" ref={profileButtonRef} >
+							<Popover as="div" className="relative"  >
 								<PopoverButton className={clsx(
 									"group",
 									"relative",
@@ -263,10 +316,10 @@ function NavMenu({
 									// Outline
 									"outline-transparent",
 									"focus:outline-4",
-									"focus:-outline-offset-4",
+									"focus:outline-offset-2",
 									"focus:outline-comic-accent-500",
 								)}>
-									<span className="absolute -inset-1.5" />
+									{/* <span className="absolute -inset-1.5" /> */}
 									<span className="sr-only">Open user menu</span>
 									<span className={
 										clsx(
@@ -346,7 +399,6 @@ function NavMenu({
 										"drop-shadow-2xl",
 										"drop-shadow-neutral-900/45",
 									)}
-									ref={profilePanelRef}
 								>
 									<section className={
 										clsx(
@@ -560,63 +612,111 @@ function NavMenu({
 					</div>
 				</div>
 
-
+				{/* MAIN MENU */}
 				<PopoverPanel
-					ref={navMenuPanelRef}
+					transition
 					className={clsx(
-						"pt-2",
-						"relative",
-						"-z-1",
-						"bg-neutral-900/90",
-						"backdrop-blur-2xl",
-						"border-b-6",
-						"border-comic-accent-900",
-						"drop-shadow-lg",
-						"drop-shadow-neutral-900/50",
-						"md:drop-shadow-xl",
-						"md:drop-shadow-neutral-900/45",
 						"pointer-events-auto",
+						// Transitions
+						"transition-all",
+						"ease-in-out",
+						"data-closed:opacity-0",
+						"data-closed:duration-300",
+						"data-closed:-top-3",
+						"data-closed:scale-90",
+						"opacity-100",
+						"data-open:duration-none",
+						"scale-100",
+						// Position
+						"origin-top-left",
+						"relative",
+						"left-0",
+						"top-1.5",
+						"z-1",
+						// Size & Spacing
+						"w-full",
+						"sm:max-w-sm",
+						"rounded-sm",
+						"drop-shadow-2xl",
+						"drop-shadow-neutral-900/45",
+						// Arrow
+						"before:absolute",
+						"before:z-10",
+						"before:-top-2.5",
+						"before:left-1.5",
+						"md:before:left-5",
+
+						"before:h-0 before:w-0",
+						"before:border-l-11 before:border-r-11",
+						"before:border-t-11",
+						"before:border-l-transparent before:border-r-transparent",
+						"before:border-t-base-1 dark:before:border-t-base-3",
+						"before:rotate-180"
 					)}
 				>
+					<section className={
+						clsx(
+							// Appearance
+							"rounded-sm",
+							"md:rounded",
+							// Colours
+							"bg-base-1",
+							"dark:bg-base-3",
+							"dark:outline",
+							"dark:-outline-offset-1",
+							"dark:outline-base-5/50",
+						)
+					}>
+						{/* COMIC MENU */}
+						<div className={
+							clsx(
+								"space-y-1 px-2 pt-2 pb-3"
+							)
+						}>
+							{comicNavigation.map((item) => (
 
-					{/* COMIC MENU */}
-					<div className="space-y-1 px-2 pt-2 pb-3">
-						{comicNavigation.map((item) => (
-							<PopoverButton
-								key={item.name}
-								as="a"
-								href={item.href}
-								aria-current={item.current ? 'page' : undefined}
-								className={clsx(
-									item.current
-										? "bg-comic-accent-700 text-white"
-										: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-									'block rounded-md px-3 py-2 text-base font-medium',
-								)}
-							>
-								{item.name}
-							</PopoverButton>
-						))}
-					</div>
-					{/* PLATFORM MENU */}
-					<div className="space-y-1 px-2 pt-2 pb-3 bg-neutral-900">
-						{navigation.map((item) => (
-							<PopoverButton
-								key={item.name}
-								as="a"
-								href={item.href}
-								aria-current={item.current ? 'page' : undefined}
-								className={clsx(
-									item.current
-										? "bg-comic-accent-700 text-white"
-										: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-									'block rounded-md px-3 py-2 text-sm',
-								)}
-							>
-								{item.name}
-							</PopoverButton>
-						))}
-					</div>
+								<CloseButton
+									as={Link}
+									key={item.name}
+									href={item.href}
+									aria-current={item.current ? 'page' : undefined}
+									className={clsx(
+										item.current
+											? "bg-comic-accent-700 text-white"
+											: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+										'block rounded-md px-3 py-2 text-base font-medium',
+									)}
+								>
+									{item.name}
+								</CloseButton>
+							))}
+						</div>
+						{/* PLATFORM MENU */}
+						<div className={
+							clsx(
+								// "space-y-1 px-2 pt-2 pb-3 bg-base-2/50"
+								"bg-base-2/20",
+								"dark:bg-base-2/50",
+							)
+						}>
+							{navigation.map((item) => (
+								<CloseButton
+									as={Link}
+									key={item.name}
+									href={item.href}
+									aria-current={item.current ? 'page' : undefined}
+									className={clsx(
+										item.current
+											? "bg-comic-accent-700 text-white"
+											: 'text-neutral-400 hover:bg-white/5 hover:text-white',
+										'block rounded-md px-3 py-2 text-sm',
+									)}
+								>
+									{item.name}
+								</CloseButton>
+							))}
+						</div>
+					</section>
 				</PopoverPanel>
 			</Popover>
 		</>
