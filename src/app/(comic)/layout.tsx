@@ -39,7 +39,7 @@ export default async function HomepageLayout({
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
 		return <ComicContextProvider>
-			<ComicLayoutUI comic={comic} session={session}>
+			<ComicLayoutUI settings={settings} comic={comic} session={session}>
 				{children}
 			</ComicLayoutUI>
 		</ComicContextProvider>

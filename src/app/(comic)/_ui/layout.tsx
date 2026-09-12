@@ -17,6 +17,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
 import { useRouter } from "next/navigation"
 import NavMenu from "./nav-menu"
+import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * COMIC FRONTPAGE LAYOUT
@@ -26,18 +27,20 @@ import NavMenu from "./nav-menu"
 export function ComicLayoutUI({
 	children,
 	comic,
-	session
+	session,
+	settings
 }: {
 	children: React.ReactNode
 	comic: Awaited<ReturnType<typeof getComic>>
 	session?: Awaited<ReturnType<typeof verifySession>>
+	settings?: Awaited<ReturnType<typeof getSettings>>
 }) {
 	// FETCH COMIC APPEARANCE VARS
 	const displayFontSlug = displayFonts[comic.display_font.toString()].slug
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
 	const accentColor = comic.accent_color || "red"
 
-
+	const isFrontpageComic = settings?.frontpage_comic
 
 	// RENDER COMIC LAYOUT UI
 	return (
@@ -99,7 +102,7 @@ export function ComicLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu menu={true} />
+			<NavMenu menu={!isFrontpageComic && true} />
 			<main className={clsx(
 				"mx-auto",
 				"max-w-6xl",
