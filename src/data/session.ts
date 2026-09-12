@@ -3,8 +3,8 @@ import "server-only"
 // LIBRARIES
 import { cache } from "react"
 // CMS
-import { readMe } from "@directus/sdk"
-import { userClient } from "@/lib/directus/clients"
+import { readMe, readRole, readUser, readUserPermissions } from "@directus/sdk"
+import { adminClient, userClient } from "@/lib/directus/clients"
 
 /** ------------------------------------------------ **
  * VERIFY SESSION
@@ -13,8 +13,31 @@ import { userClient } from "@/lib/directus/clients"
  */
 export const verifySession = cache(async () => {
 	try {
-		const response = await userClient.request(readMe())
-		return response
+		// Get the logged-in user object
+		const readMeResponse = await userClient.request(
+			readMe({
+				fields: [
+					"id",
+					"email",
+					"name",
+					"username",
+					"homepage_url",
+					"avatar",
+					"status",
+				],
+			}),
+		)
+
+		// Get the logged-in user permissions
+		const readMyPermissions = await userClient.request(readUserPermissions())
+
+		// Merge them into the same object
+		const mergedObject = {
+			...readMeResponse,
+			permissions: readMyPermissions,
+		}
+
+		return mergedObject
 	} catch {
 		return false
 	}
