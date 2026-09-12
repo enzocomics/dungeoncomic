@@ -3,6 +3,7 @@ import { ComicLayoutUI } from "../_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
 import ComicContextProvider from "../_ui/context"
+import { verifySession } from "@/data/session"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -32,6 +33,8 @@ export default async function RouteLayout({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	// CHECK IF user is logged in
+	const session = await verifySession()
 
 	/**----------------------------------- */
 	// LAYOUT MODE 1 - FRONTPAGE COMIC
@@ -51,7 +54,7 @@ export default async function RouteLayout({
 
 		// RENDER
 		return <ComicContextProvider>
-			<ComicLayoutUI comic={comic}>
+			<ComicLayoutUI comic={comic} session={session}>
 				{children}
 			</ComicLayoutUI>
 		</ComicContextProvider>

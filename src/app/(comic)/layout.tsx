@@ -5,6 +5,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import ComicContextProvider from "./_ui/context"
+import { verifySession } from "@/data/session"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -30,13 +31,15 @@ export default async function HomepageLayout({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	// CHECK IF user is logged in
+	const session = await verifySession()
 
 	/**----------------------------------- */
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
 		return <ComicContextProvider>
-			<ComicLayoutUI comic={comic}>
+			<ComicLayoutUI comic={comic} session={session}>
 				{children}
 			</ComicLayoutUI>
 		</ComicContextProvider>
