@@ -158,6 +158,7 @@ function NavMenu({
 
 	return (
 		<>
+			{/* MAIN MENU NAVIGATION POPOVER */}
 			<Popover
 				as="nav"
 				className={clsx(
@@ -180,458 +181,471 @@ function NavMenu({
 					"md:px-6",
 					// Functionality
 					"pointer-events-none",
+					"relative flex items-center justify-between"
 				)}
 			>
-				<div className="">
-					<div className="relative flex items-center justify-between">
-						<div className={clsx(
-							"relative",
-							"inset-y-0",
-							"left-0",
+
+				<div className={
+					clsx(
+						"relative",
+						"inset-y-0",
+						"left-0",
+						"flex",
+						"items-center",
+						"h-12"
+					)}>
+					{/* Mobile menu button*/}
+					<PopoverButton className={
+						clsx(
+							"group",
+							// Structure
+							"absolute",
 							"flex",
 							"items-center",
-							"h-12"
+							"-top-3",
+							"-left-8",
+							"md:-left-4.5",
+							// Appearance
+							"text-comic-accent-500",
+							"dark:text-comic-accent-600",
+							"rounded-full",
+							// Functionality
+							"cursor-pointer",
+							"pointer-events-auto",
+							// Hover
+							"hover:duration-0",
+							"active:translate-px",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+
+							"focus:outline-4",
+							"focus:outline-offset-1",
+							"focus:outline-comic-accent-500",
 						)}>
-							{/* Mobile menu button*/}
-							<PopoverButton className={clsx(
-								"group",
-								// Structure
-								"absolute",
-								"flex",
-								"items-center",
-								"-top-3",
-								"-left-8",
-								"md:-left-4.5",
-								// Appearance
-								"text-comic-accent-500",
-								"dark:text-comic-accent-600",
-								"rounded-full",
-								// Functionality
-								"cursor-pointer",
-								"pointer-events-auto",
-								// Hover
-								"scale-100",
-								"hover:duration-0",
-								"hover:scale-105",
-								"active:translate-px",
-								"active:bg-comic-accent-900",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"outline-none",
+						{/* LOGO */}
+						<span className={
+							clsx(
+								"relative"
 							)}>
-								{/* LOGO */}
-								<span className={
+							<span className={
+								clsx(
+									"absolute",
+									"z-5",
+									"left-9",
+									"top-6",
+									"size-6",
+									"-rotate-1",
+								)
+							}>
+								<Icon name="bars" className={
 									clsx(
-										"relative"
-									)
-								}>
-									<span className={
-										clsx(
-											"absolute",
-											"z-5",
-											"left-9",
-											"top-6",
-											"size-6",
-											"-rotate-1",
-										)
-									}>
-										<Icon name="bars" className={clsx(
-											"rotate-0",
-											"opacity-100",
-											"text-white",
-											"group-data-open:opacity-0",
-											"group-data-open:rotate-45",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"outline-none",
-										)} />
-										<Icon name="xmark" className={clsx(
-											"absolute",
-											"top-0",
-											"opacity-0",
-											"text-white",
-											"-rotate-45",
-											"group-data-open:rotate-0",
-											"group-data-open:block",
-											"group-data-open:opacity-100",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"outline-none",
-										)} />
-									</span>
-									<Seal
-										menu={menu}
-										className={clsx(
-											"group/menu",
-											"w-24",
-											// Outline
-											"rounded-full",
-											"outline-transparent",
-											"group-focus:outline-4",
-											"group-focus:outline-offset-1",
-											"group-focus:outline-comic-accent-500",
-										)} />
-								</span>
-								<span className="sr-only">Open Main Navigation</span>
-							</PopoverButton>
-						</div>
-						<div className={clsx(
-							"flex",
-							"flex-1",
-							// "items-center",
-							// "justify-center",
-							// "sm:items-stretch",
-							// "sm:justify-start"
-						)}>
-
-						</div>
-						<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
-
-							{/* Profile dropdown */}
-							<Popover as="div" className="relative"  >
-								<PopoverButton className={clsx(
-									"group",
-									"relative",
-									"flex",
-									"rounded",
-									// Functionality
-									"cursor-pointer",
-									// Appearance
-									"data-open:bg-comic-accent-600",
-									"dark:data-open:bg-comic-accent-700",
-									"rounded-lg",
-									// Hover
-									"scale-100",
-									"hover:duration-0",
-									"hover:scale-120",
-									"active:translate-px",
-									"active:bg-comic-accent-900",
+										"rotate-0",
+										"opacity-100",
+										"text-white",
+										"group-data-open:opacity-0",
+										"group-data-open:rotate-45",
+										// Transition
+										"transition-all",
+										"ease-in-out",
+										"outline-none",
+									)} />
+								<Icon name="xmark" className={clsx(
+									"absolute",
+									"top-0",
+									"opacity-0",
+									"text-white",
+									"-rotate-45",
+									"group-data-open:rotate-0",
+									"group-data-open:block",
+									"group-data-open:opacity-100",
 									// Transition
 									"transition-all",
 									"ease-in-out",
-									"duration-300",
+									"outline-none",
+								)} />
+							</span>
+							<Seal
+								menu={menu}
+								className={clsx(
+									"group/menu",
+									"w-24",
 									// Outline
+									"rounded-full",
 									"outline-transparent",
-									"focus:outline-4",
-									"focus:outline-offset-2",
-									"focus:outline-comic-accent-500",
-								)}>
-									{/* <span className="absolute -inset-1.5" /> */}
-									<span className="sr-only">Open user menu</span>
-									<span className={
-										clsx(
-											"relative",
-											"size-8",
-										)
-									}>
-										{/* <Icon name="skull" className={clsx(
+									"rotate-0",
+									"group-hover:text-comic-accent-600",
+									"dark:group-hover:text-comic-accent-700",
+									"group-data-open:rotate-12",
+									"group-data-open:text-comic-accent-700",
+									"dark:group-data-open:text-comic-accent-800",
+									"group-active:text-comic-accent-700",
+									"dark:group-active:text-comic-accent-800",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"outline-none",
+								)} />
+						</span>
+						<span className="sr-only">Open Main Navigation</span>
+					</PopoverButton>
+				</div>
+				<div className={clsx(
+					"flex",
+					"flex-1",
+					// "items-center",
+					// "justify-center",
+					// "sm:items-stretch",
+					// "sm:justify-start"
+				)}>
+
+				</div>
+				<div className="absolute inset-y-0 right-0 flex items-center pr-2.5 sm:static sm:inset-auto sm:ml-6 pointer-events-auto">
+
+					{/* Profile dropdown */}
+					<Popover as="div" className="relative"  >
+						<PopoverButton className={clsx(
+							"group",
+							"relative",
+							"flex",
+							"rounded",
+							// Functionality
+							"cursor-pointer",
+							// Appearance
+							"data-open:bg-comic-accent-600",
+							"dark:data-open:bg-comic-accent-700",
+							"rounded-lg",
+							// Hover
+							"scale-100",
+							"hover:duration-0",
+							"hover:scale-120",
+							"active:translate-px",
+							"active:bg-comic-accent-900",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+							// Outline
+							"outline-transparent",
+							"focus:outline-4",
+							"focus:outline-offset-2",
+							"focus:outline-comic-accent-500",
+						)}>
+							{/* <span className="absolute -inset-1.5" /> */}
+							<span className="sr-only">Open user menu</span>
+							<span className={
+								clsx(
+									"relative",
+									"size-8",
+								)
+							}>
+								{/* <Icon name="skull" className={clsx(
 									"text-white",
 									"size-8",
 									"p-2",
 									"bg-comic-accent-700",
 									"rounded-sm",
 								)} /> */}
-										<Icon name="skull" className={clsx(
-											"size-8",
-											"p-1.5",
-											"rounded-sm",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"duration-300",
-											"group-hover:duration-0",
-											// Diff
+								<Icon name="skull" className={clsx(
+									"size-8",
+									"p-1.5",
+									"rounded-sm",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
+									"group-hover:duration-0",
+									// Diff
 
-											"opacity-100",
-											"text-white",
-											"bg-comic-accent-700",
-											"group-data-open:opacity-0",
-											"group-data-open:rotate-45",
-										)} />
-										<Icon name="xmark" className={clsx(
-											"text-white",
-											"size-8",
-											"p-1.5",
-											"shrink-0",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"duration-300",
-											//
-											"absolute",
-											"left-0",
-											"top-0",
-											"opacity-0",
-											"-rotate-45",
-											"group-hover:duration-0",
-											// Diff
-											"group-data-open:group-hover:duration-100",
-											"group-data-open:opacity-100",
-											"group-data-open:rotate-0",
-										)} />
-									</span>
+									"opacity-100",
+									"text-white",
+									"bg-comic-accent-700",
+									"group-data-open:opacity-0",
+									"group-data-open:rotate-45",
+								)} />
+								<Icon name="xmark" className={clsx(
+									"text-white",
+									"size-8",
+									"p-1.5",
+									"shrink-0",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
+									//
+									"absolute",
+									"left-0",
+									"top-0",
+									"opacity-0",
+									"-rotate-45",
+									"group-hover:duration-0",
+									// Diff
+									"group-data-open:group-hover:duration-100",
+									"group-data-open:opacity-100",
+									"group-data-open:rotate-0",
+								)} />
+							</span>
 
-								</PopoverButton>
-								<PopoverPanel
-									transition
-									className={clsx(
-										// Transitions
-										"transition-all",
-										"ease-in-out",
-										"data-closed:opacity-0",
-										"data-closed:duration-300",
-										"data-closed:top-6",
-										"data-closed:scale-90",
-										"opacity-100",
-										"data-open:duration-none",
-										"scale-100",
-										// Position
-										"origin-top-right",
-										"absolute",
-										"right-0",
-										"top-11.5",
-										// Size & Spacing
-										"max-w-lg",
-										"rounded-sm",
-										"drop-shadow-2xl",
-										"drop-shadow-neutral-900/45",
-									)}
-								>
-									<section className={
+						</PopoverButton>
+						<PopoverPanel
+							transition
+							className={clsx(
+								// Transitions
+								"transition-all",
+								"ease-in-out",
+								"data-closed:opacity-0",
+								"data-closed:duration-300",
+
+								"data-closed:scale-90",
+								"opacity-100",
+								"data-open:duration-none",
+								"scale-100",
+								// Position
+								"origin-top-right",
+								"absolute",
+								"right-0",
+								"top-11.5",
+								// Size & Spacing
+								"max-w-lg",
+								"rounded-sm",
+								"drop-shadow-2xl",
+								"drop-shadow-neutral-900/45",
+							)}
+						>
+							<section className={
+								clsx(
+									// Appearance
+									"rounded-sm",
+									"md:rounded",
+									// Colours
+									"bg-base-1",
+									"dark:bg-base-3",
+									"dark:outline",
+									"dark:-outline-offset-1",
+									"dark:outline-base-5/50",
+									// "border",
+									// Arrow
+									"before:absolute",
+									"before:z-10",
+									"before:-top-2.5",
+									"before:right-1",
+
+									"before:h-0 before:w-0",
+									"before:border-l-11 before:border-r-11",
+									"before:border-t-11",
+									"before:border-l-transparent before:border-r-transparent",
+									"before:border-t-base-1 dark:before:border-t-base-3",
+									"before:rotate-180"
+								)
+							}>
+								<div>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+									>
+										Your profile
+									</a>
+								</div>
+								<div>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+									>
+										Settings
+									</a>
+								</div>
+								<div>
+									<a
+										href="#"
+										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
+									>
+										Sign out
+									</a>
+								</div>
+								{/* MODE TOGGLER */}
+								<div className={
+									clsx(
+										"flex",
+										"px-4",
+										"py-2",
+										"justify-center",
+										"bg-base-2/20",
+										"dark:bg-base-2/50",
+									)
+								}>
+									<div className={
 										clsx(
-											// Appearance
-											"rounded-sm",
-											"md:rounded",
-											// Colours
-											"bg-base-1",
-											"dark:bg-base-3",
-											"dark:outline",
-											"dark:-outline-offset-1",
-											"dark:outline-base-5/50",
-											// "border",
-											// Arrow
-											"before:absolute",
-											"before:z-10",
-											"before:-top-2.5",
-											"before:right-1",
 
-											"before:h-0 before:w-0",
-											"before:border-l-11 before:border-r-11",
-											"before:border-t-11",
-											"before:border-l-transparent before:border-r-transparent",
-											"before:border-t-base-1 dark:before:border-t-base-3",
-											"before:rotate-180"
+											"p-1",
+											"gap-x-1",
+											"items-center",
+											"justify-center",
+											"rounded-2xl",
+											"bg-base-2/40",
+											"dark:bg-base-2",
 										)
-									}>
-										<div>
-											<a
-												href="#"
-												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-											>
-												Your profile
-											</a>
-										</div>
-										<div>
-											<a
-												href="#"
-												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-											>
-												Settings
-											</a>
-										</div>
-										<div>
-											<a
-												href="#"
-												className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5"
-											>
-												Sign out
-											</a>
-										</div>
-										{/* MODE TOGGLER */}
-										<div className={
-											clsx(
-												"flex",
-												"px-4",
-												"py-2",
-												"justify-center",
-												"bg-base-2/20",
-												"dark:bg-base-2/50",
-											)
-										}>
-											<div className={
+									} >
+										<div
+											data-theme={theme}
+											className={
 												clsx(
-
-													"p-1",
-													"gap-x-1",
+													"group",
+													"relative",
+													"flex",
+												)
+											}>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/system",
+													"flex",
 													"items-center",
 													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
 													"rounded-2xl",
-													"bg-base-2/40",
-													"dark:bg-base-2",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "system" && "text-white",
+													"group-data-[theme=system]:group-hover:text-base-content",
+													"hover:text-white!",
 												)
-											} >
-												<div
-													data-theme={theme}
-													className={
-														clsx(
-															"group",
-															"relative",
-															"flex",
-														)
-													}>
-													<button className={
-														clsx(
-															"relative",
-															"z-1",
-															"peer",
-															"peer/system",
-															"flex",
-															"items-center",
-															"justify-center",
-															"cursor-pointer",
-															"p-1",
-															"px-2",
-															"rounded-2xl",
-															// Transition
-															"transition-all",
-															"ease-in-out",
-															"duration-300",
-															// Button Specific
-															theme == "system" && "text-white",
-															"group-data-[theme=system]:group-hover:text-base-content",
-															"hover:text-white!",
-														)
-													}
-														onClick={(e) => (setTheme("system"))}
-													>
-														<Icon name="desktop" className={
-															clsx(
-																"size-5",
-															)
-														} />
-													</button>
-													<button className={
-														clsx(
-															"relative",
-															"z-1",
-															"peer/light",
-															"flex",
-															"peer",
-															"items-center",
-															"justify-center",
-															"cursor-pointer",
-															"p-1",
-															"px-2",
-															"rounded-2xl",
-															// Transition
-															"transition-all",
-															"ease-in-out",
-															"duration-300",
-															// Button Specific
-															theme == "light" && "text-white",
-															"group-data-[theme=light]:group-hover:text-base-content",
-															"hover:text-white!",
-														)
-													}
-														onClick={(e) => (setTheme("light"))}
-													>
-														<Icon name="sun" className={
-															clsx(
-																"size-5",
-															)
-														} />
-													</button>
-													<button className={
-														clsx(
-															"relative",
-															"z-1",
-															"peer",
-															"peer/dark",
-															"flex",
-															"items-center",
-															"justify-center",
-															"cursor-pointer",
-															"p-1",
-															"px-2",
-															"rounded-2xl",
-															// Transition
-															"transition-all",
-															"ease-in-out",
-															"duration-300",
-															// Button Specific
-															theme == "dark" && "text-white",
-															"group-data-[theme=dark]:group-hover:text-base-content",
-															"hover:text-white!",
-														)
-													}
-														onClick={(e) => (setTheme("dark"))}
-													>
-														<Icon name="moon" className={
-															clsx(
-																"size-5",
-															)
-														} />
-													</button>
-													<span className={
-														clsx(
-															// Toggle
-															"block",
-															"absolute",
-															"top-1/2",
-															"-translate-1/2",
-															"size-7",
-															"bg-comic-accent-500",
-															"dark:bg-comic-accent-500/50",
-															"rounded-full",
-															// "-z-1",
-															"scale-100",
-															"peer-hover:scale-120",
-															"dark:peer-hover:bg-comic-accent-500/90",
-															"peer-hover/system:left-4.5",
-															"peer-hover/light:left-13.5",
-															"peer-hover/dark:left-22.5",
-															theme == "system" && "left-4.5",
-															theme == "light" && "left-13.5",
-															theme == "dark" && "left-22.5",
-															// Transition
-															"transition-all",
-															"ease-in-out",
-															"duration-300",
-														)
-													} />
-												</div>
-											</div>
+											}
+												onClick={(e) => (setTheme("system"))}
+											>
+												<Icon name="desktop" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer/light",
+													"flex",
+													"peer",
+													"items-center",
+													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
+													"rounded-2xl",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "light" && "text-white",
+													"group-data-[theme=light]:group-hover:text-base-content",
+													"hover:text-white!",
+												)
+											}
+												onClick={(e) => (setTheme("light"))}
+											>
+												<Icon name="sun" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/dark",
+													"flex",
+													"items-center",
+													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
+													"rounded-2xl",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "dark" && "text-white",
+													"group-data-[theme=dark]:group-hover:text-base-content",
+													"hover:text-white!",
+												)
+											}
+												onClick={(e) => (setTheme("dark"))}
+											>
+												<Icon name="moon" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<span className={
+												clsx(
+													// Toggle
+													"block",
+													"absolute",
+													"top-1/2",
+													"-translate-1/2",
+													"size-7",
+													"bg-comic-accent-500",
+													"dark:bg-comic-accent-500/50",
+													"rounded-full",
+													// "-z-1",
+													"scale-100",
+													"peer-hover:scale-120",
+													"dark:peer-hover:bg-comic-accent-500/90",
+													"peer-hover/system:left-4.5",
+													"peer-hover/light:left-13.5",
+													"peer-hover/dark:left-22.5",
+													theme == "system" && "left-4.5",
+													theme == "light" && "left-13.5",
+													theme == "dark" && "left-22.5",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+												)
+											} />
 										</div>
-									</section>
-								</PopoverPanel>
-							</Popover>
-						</div>
-					</div>
+									</div>
+								</div>
+							</section>
+						</PopoverPanel>
+					</Popover>
 				</div>
+
+
 
 				{/* MAIN MENU */}
 				<PopoverPanel
 					transition
 					className={clsx(
+						"absolute",
 						"pointer-events-auto",
 						// Transitions
 						"transition-all",
 						"ease-in-out",
 						"data-closed:opacity-0",
 						"data-closed:duration-300",
-						"data-closed:-top-3",
 						"data-closed:scale-90",
 						"opacity-100",
 						"data-open:duration-none",
 						"scale-100",
 						// Position
 						"origin-top-left",
-						"relative",
+						// "relative",
 						"left-0",
-						"top-1.5",
+						"top-13.5",
+						"md:left-6",
+						"md:top-17.5",
 						"z-1",
 						// Size & Spacing
 						"w-full",
