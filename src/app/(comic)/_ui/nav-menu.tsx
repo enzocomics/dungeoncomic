@@ -133,9 +133,13 @@ export default function NavMenu({
 										"-rotate-1",
 										"size-6",
 									] : [
-										"left-8.5",
-										"top-5",
-										"size-8",
+										// Seal
+										"left-9",
+										"top-5.5",
+										"size-7",
+										"md:left-8.5",
+										"md:top-5",
+										"md:size-8",
 									],
 								)
 							}>

@@ -626,10 +626,12 @@ export default function ComicPageUI({
 									"flex",
 									"flex-col",
 									"text-center",
+									"font-comic-header",
 								)}>
 									<h2 className={clsx(
 										"w-full",
 										"font-semibold",
+										"font-comic-display",
 										"text-lg",
 										"mb-2",
 										// "text-center",
@@ -687,7 +689,8 @@ export default function ComicPageUI({
 										"italic",
 										"text-xs",
 										"text-neutral-500",
-										"text-center"
+										"text-center",
+										"font-comic-copy",
 									)}>
 										Last updated on {comic.date_updated}
 									</p>
