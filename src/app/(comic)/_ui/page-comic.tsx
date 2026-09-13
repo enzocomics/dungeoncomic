@@ -8,6 +8,9 @@ import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLElementType
 import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { marked } from "marked"
+import DOMPurify from "isomorphic-dompurify"
+import { detailedDate, relativeDate } from "@/lib/dayjs"
 // VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
@@ -444,7 +447,7 @@ export default function ComicPageUI({
 								"inline",
 								"font-semibold",
 							)}>
-								{comic.title}
+								{DOMPurify.sanitize(comic.title)}
 							</span>
 
 							{comic.authors && comic.authors.length > 0 &&
@@ -645,40 +648,38 @@ export default function ComicPageUI({
 										// "text-center",
 										"text-pretty"
 									)}>
-										{comic.title}
+										{DOMPurify.sanitize(comic.title)}
 									</h2>
-									<p className={clsx(
-										"italic",
-										"text-xs",
-										"text-neutral-500",
-									)}>
-										Created on {comic.date_created}
-									</p>
-									{hasAuthors &&
-										<p className={clsx(
-											"italic",
-											"text-xs",
-											"text-neutral-500",
-											"mb-2",
-										)}>
-											By&nbsp;
-											{comic.authors && comic.authors.map((a, index) => {
-												let join = comic.authors!.length > 1 ? ", " : ""
-												join = index == comic.authors!.length - 2 ? " and " : join
-												join = index == comic.authors!.length - 1 ? "" : join
-												return <span key={index}>
-													<a href="#" className={clsx(
-														"font-semibold",
-														"text-comic-accent-500",
-													)}>
-														{a.username}
-													</a>
-													{join}
+									<p>
+										{hasAuthors &&
+											<>
+												<span className={clsx(
+													"italic",
+													"text-xs",
+													"text-neutral-500",
+													"mb-2",
+												)}>
+													by&nbsp;
+													{comic.authors && comic.authors.map((a, index) => {
+														let join = comic.authors!.length > 1 ? ", " : ""
+														join = index == comic.authors!.length - 2 ? " and " : join
+														join = index == comic.authors!.length - 1 ? "" : join
+														return <span key={index}>
+															<span className={clsx(
+																"font-semibold",
+																"text-comic-accent-500",
+															)}>
+																{a.username}
+															</span>
+															{join}
+														</span>
+													}
+													)}
+
 												</span>
-											}
-											)}
-										</p>
-									}
+											</>
+										}
+									</p>
 								</div>
 							</header>
 
@@ -690,21 +691,84 @@ export default function ComicPageUI({
 								{comic.description &&
 									<span className={clsx(
 										"text-sm/loose",
-									)}>
-										{comic.description}
-									</span>
+									)}
+										dangerouslySetInnerHTML={{
+											__html:
+												replaceComicVariables({
+													content: DOMPurify.sanitize(
+														String(
+															marked.parse(comic.description)
+														)
+													),
+													variables: variables,
+													userVariables: userVariables,
+													html: true
+												}),
+
+										}}
+									/>
 								}
+							</div>
+
+							<div className={
+								clsx(
+									"flex",
+									"justify-center",
+									"p-4",
+									"gap-x-1",
+									"bg-base-2/30",
+									"dark:bg-base-2/50",
+								)
+							}>
+								<span className={clsx(
+									"italic",
+									"text-xs",
+									"text-neutral-500",
+								)}>
+									Created <time
+										dateTime={new Date(comic.date_created).toISOString()}
+										title={detailedDate(new Date(comic.date_created))}
+										className={
+											clsx(
+												"font-semibold",
+												"cursor-help"
+											)
+										}>
+										{relativeDate(new Date(comic.date_created))}
+									</time>
+								</span>
+								{/* TODO: This only gets the time the COMIC post type was updated. we need to get the date of the latest comic page to be created */}
 								{comic.date_updated &&
-									<p className={clsx(
-										"mt-4",
-										"italic",
-										"text-xs",
-										"text-neutral-500",
-										"text-center",
-										"font-comic-copy",
-									)}>
-										Last updated on {comic.date_updated}
-									</p>
+									<>
+										<span className={
+											clsx(
+												"italic",
+												"text-xs",
+												"text-neutral-500",
+												"font-comic-copy",
+											)
+										}>
+											∙
+										</span>
+										<span className={clsx(
+											"italic",
+											"text-xs",
+											"text-neutral-500",
+											"font-comic-copy",
+										)}>
+											Last updated <time
+												dateTime={new Date(comic.date_updated).toISOString()}
+												title={detailedDate(new Date(comic.date_updated))}
+												className={
+													clsx(
+														"font-semibold",
+														"cursor-help"
+													)
+												}>
+												{relativeDate(new Date(comic.date_updated))}
+											</time>
+										</span>
+									</>
 								}
 							</div>
 						</section>
@@ -1088,8 +1152,8 @@ export default function ComicPageUI({
 			{replaceComicVariables({
 				content: (
 					varsExist && varsSubmitted ?
-						page.variables_submit_button_text || `${t("next")} »` :
-						page.title
+						DOMPurify.sanitize(String(page.variables_submit_button_text)) || `${t("next")} »` :
+						DOMPurify.sanitize(page.title)
 				),
 				variables: variables,
 				userVariables: userVariables
@@ -1291,10 +1355,15 @@ export default function ComicPageUI({
 										"text-pretty",
 
 									)}
-										// TODO: You better freakin' sanitize this
 										dangerouslySetInnerHTML={{
 											__html: replaceComicVariables({
-												content: p.panel_description,
+												content: DOMPurify.sanitize(
+													String(
+														marked.parse(
+															String(p.panel_description)
+														)
+													)
+												),
 												variables: variables,
 												userVariables: userVariables,
 												html: true
@@ -1425,7 +1494,7 @@ export default function ComicPageUI({
 																	"inline",
 																	"text-neutral-400",
 																)}>
-																	{v.value_prefix}
+																	{DOMPurify.sanitize(v.value_prefix)}
 																</span>
 															}
 															{/* Variable Input */}
@@ -1499,7 +1568,7 @@ export default function ComicPageUI({
 																	"pr-4",
 																	"text-neutral-400",
 																)}>
-																	{v.value_suffix}
+																	{DOMPurify.sanitize(v.value_suffix)}
 																</span>
 															}
 														</div>
@@ -1544,7 +1613,7 @@ export default function ComicPageUI({
 									"text-pretty",
 									"grow",
 								)}>
-									{`${page.variables_submit_button_text || t("next")}`}
+									{`${DOMPurify.sanitize(String(page.variables_submit_button_text)) || t("next")}`}
 								</span>
 								<Icon name="play" className={clsx(
 									"ml-1",
@@ -1847,7 +1916,7 @@ export default function ComicPageUI({
 												)}>
 													<span>{
 														replaceComicVariables({
-															content: n.linked_pages_id.title,
+															content: DOMPurify.sanitize(n.linked_pages_id.title),
 															variables: variables,
 															userVariables: userVariables
 														})
@@ -1855,7 +1924,7 @@ export default function ComicPageUI({
 													{n.linked_pages_id.subtitle &&
 														<p>{
 															replaceComicVariables({
-																content: n.linked_pages_id.subtitle,
+																content: DOMPurify.sanitize(n.linked_pages_id.subtitle),
 																variables: variables,
 																userVariables: userVariables
 															})
@@ -2100,7 +2169,7 @@ export default function ComicPageUI({
 													"cursor-auto"
 												)}>
 													{replaceComicVariables({
-														content: s.title,
+														content: DOMPurify.sanitize(s.title),
 														variables: variables,
 														userVariables: userVariables
 													})}

@@ -543,7 +543,7 @@ export function CommentsSection({
 							clsx(
 							)
 						}>
-							·
+							∙
 						</span>
 						<time
 							dateTime={new Date(c.date_created).toISOString()}
