@@ -95,7 +95,8 @@ export function CommentsSection({
 			comments && comments.length > 0 &&
 			<section className={clsx(
 				"mt-8",
-				"py-6",
+				"pt-10",
+				"pb-12",
 				"bg-base-1",
 				"dark:bg-base-2",
 				"dark:shadow-none",
@@ -117,10 +118,11 @@ export function CommentsSection({
 				}
 				>
 					<h1 className={clsx(
-						"text-lg",
+						"text-xl",
 						"font-comic-header",
 						"font-semibold",
 						"w-full",
+						"pb-2",
 					)}>{t("comments")} ({comments.length})</h1>
 
 					<CommentList className={clsx(
@@ -132,14 +134,36 @@ export function CommentsSection({
 						{comments.map((c, index) => (
 							<CommentListItem key={index} className={
 								clsx(
+									"bg-neutral-100",
+									"dark:bg-neutral-800/60",
+									"flex",
+									"flex-col",
+									"gap-2",
 								)
-							} >
-								<p>{c.user_created.username} {t("commented-on")} {c.date_created}:</p>
-								{c.content}
+							}>
+								<div className={
+									clsx(
+										"text-xs",
+										"text-base-content/50",
+									)
+								}>
+									{c.user_created.username} {t("commented-on")} {c.date_created}:
+								</div>
+								<div>
+									{c.content}
+								</div>
 
-
+								{/* USER/MODERATOR PANEL */}
 								{session && c.user_created.id == session.id &&
-									<>
+									<div className={
+										clsx(
+											"hidden", // TODO: buttons
+											"text-xs",
+											"text-base-content/50",
+											"flex",
+											"gap-2",
+										)
+									}>
 										{userCanUpdate &&
 											<Button>
 												{t("edit-comment")}
@@ -150,34 +174,48 @@ export function CommentsSection({
 												{t("delete-comment")}
 											</Button>
 										}
-									</>
+									</div>
 								}
 
 								{/* Only allow 1 level of replies */}
 								{c.children_comments && c.children_comments.length > 0 &&
-									<ul className={clsx(
-										"mx-4",
-										"mt-4",
-										"mb-2",
-										"flex",
-										"flex-col",
-										"gap-2",
-									)}>
+									<CommentList className={
+										clsx(
+											"mx-4",
+											"mt-2",
+											"mb-2",
+											"flex",
+											"flex-col",
+											"gap-2",
+										)
+									}>
 										{c.children_comments.map((cc, cindex) => (
-											<li key={cindex} className={
+											<CommentListItem key={cindex} className={
 												clsx(
-													"p-4",
-													"bg-base-2/25",
-													"dark:bg-base-4/50",
-													"rounded",
+													"bg-neutral-200/50",
+													"dark:bg-neutral-800/80",
+													// "p-4",
+													// "bg-base-2/25",
+													// "dark:bg-base-4/50",
+													// "rounded",
 												)
 											}>
 												{/* TODO: Dictionaries */}
-												<p>{cc.user_created.username} {t("commented-on")} {cc.date_created}:</p>
+
+												<div className={
+													clsx(
+														"block",
+														"text-xs",
+														"text-base-content/50",
+														"pb-2",
+													)
+												}>
+													{cc.user_created.username} {t("commented-on")} {cc.date_created}:
+												</div>
 												{cc.content}
-											</li>
+											</CommentListItem>
 										))}
-									</ul>
+									</CommentList>
 								}
 
 								{userCanCreate &&
@@ -370,8 +408,7 @@ function CommentListItem(props: ComponentPropsWithoutRef<"li">) {
 				clsx(
 					props.className,
 					"p-4",
-					"bg-neutral-100",
-					"dark:bg-neutral-800/40",
+					"rounded"
 				)
 			}
 		>
