@@ -17,7 +17,7 @@ import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav }
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 // import { ErrorMessage, FieldGroup } from "@/components/catalyst/fieldset"
-import { ErrorMessage } from "@/components/forms"
+import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import Link from "next/link"
 
