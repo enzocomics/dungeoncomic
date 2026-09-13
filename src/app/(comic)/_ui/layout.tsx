@@ -16,7 +16,7 @@ import { directusURL } from "@/data/env"
 import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
 import { useRouter } from "next/navigation"
-import NavMenu from "./nav-menu"
+import NavMenu from "./site-nav"
 import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------

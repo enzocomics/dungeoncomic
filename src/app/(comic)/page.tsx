@@ -9,8 +9,8 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic } from "@/lib/directus/get-comics"
 // UI
 import { comicMetadata } from "./_ui/metadata"
-import { HomepagePageUI } from "./_ui/home-page"
-import { ComicLandingPageUI } from "./_ui/comic-page"
+import { HomepagePageUI } from "./_ui/page-home"
+import { ComicLandingPageUI } from "./_ui/page-comic"
 import { Suspense } from "react"
 
 /**-----------------------------------

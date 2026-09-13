@@ -9,7 +9,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import NavMenu from "./nav-menu"
+import NavMenu from "./site-nav"
 /**-----------------------------------
  * HOMEPAGE PAGE UI
  * ---
