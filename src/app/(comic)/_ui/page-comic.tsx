@@ -2253,16 +2253,6 @@ export default function ComicPageUI({
 			// Textarea length checker
 			const [inputLength, setInputLength] = useState(0)
 
-			function handleTextarea(e: React.ChangeEvent<HTMLTextAreaElement>) {
-				const textarea = e.target
-
-				// Reset height first so it cqn shrink when text is deleted
-				textarea.style.height = "auto"
-
-				// Expand the height to fit the content
-				textarea.style.height = `${textarea.scrollHeight + 4}px`
-			}
-
 			// Render
 			return <>
 				{session &&
@@ -2297,27 +2287,14 @@ export default function ComicPageUI({
 							</span>
 							<Textarea ref={props.ref} className={
 								clsx(
-									// "bg-white",
-									// "text-black",
-									// "border-2",
-									// "border-neutral-200",
-									// "dark:border-white",
-									// "rounded",
-									// "w-full",
-									// "p-2",
-									// "font-mono",
-									// "font-base",
-									"resize-none",
-									"outline-none",
+									"outline-none!",
 								)
 							}
-								rows={1}
 								id={fields.userSuggestion.name}
 								name={fields.userSuggestion.name}
 								key={fields.userSuggestion.key}
 								onChange={(e) => {
 									setInputLength(e.target.value.length)
-									handleTextarea(e)
 								}}
 								// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
 								// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)

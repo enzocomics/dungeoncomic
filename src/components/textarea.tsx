@@ -9,6 +9,7 @@ import { forwardRef } from "react"
  */
 export const Textarea = forwardRef(function Textarea({
 	className,
+	onChange,
 	...props
 }: {
 	className?: string
@@ -18,11 +19,23 @@ export const Textarea = forwardRef(function Textarea({
 	ref: React.ForwardedRef<HTMLTextAreaElement> // Forwarded ref points to an HTMLTextarea Element
 ) {
 
+
+	function handleTextarea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+		const textarea = e.target
+
+		// Reset height first so it cqn shrink when text is deleted
+		textarea.style.height = "auto"
+
+		// Expand the height to fit the content
+		textarea.style.height = `${textarea.scrollHeight + 4}px`
+	}
+
 	// RENDER
 	return (
 		<Headless.Textarea
-			ref={ref}
 			{...props}
+			ref={ref}
+			rows={1}
 			className={clsx(
 				className,
 				// SPACING & SIZE
@@ -38,7 +51,17 @@ export const Textarea = forwardRef(function Textarea({
 				// TEXT
 				"font-mono",
 				"font-base",
+				"resize-none",
+				// Outline
+				"outline-transparent",
+				"focus:outline-4",
+				"focus:-outline-offset-4",
+				"focus:outline-comic-accent-500",
 			)}
+			onChange={(e) => {
+				handleTextarea(e)
+				onChange?.(e)
+			}}
 		/>
 	)
 })
