@@ -2024,7 +2024,7 @@ export default function ComicPageUI({
 				voteTimer.current && clearTimeout(voteTimer.current)
 				voteTimer.current = setTimeout(() => {
 					castVote(selected) // Send the vote to the cms only
-				}, 2000)
+				}, 1000)
 
 				setUserVotedOnID(selected) // Save the suggestion this user voted on for reference
 				setClicked(false)
