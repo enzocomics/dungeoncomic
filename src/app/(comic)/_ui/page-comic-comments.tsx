@@ -22,6 +22,9 @@ import { submitUserComment } from "../_actions/comments"
 import { ErrorMessage } from "@/components/catalyst/fieldset"
 import { ComicButton, SmallComicButton } from "@/components/button"
 import { Textarea } from "@/components/textarea"
+import Image from "next/image"
+import { directusURL } from "@/data/env"
+import Icon from "@/styles/icons"
 
 
 /**-----------------------------------
@@ -54,22 +57,23 @@ export function CommentsSection({
 	return <>
 		{/* Show the initial form if comments are allowed and it's not a reply */}
 		{page.allow_user_comments && !isReplying &&
-			<section className={clsx(
-				"mt-8",
-				"pt-8",
-				"pb-12",
-				"bg-base-1",
-				"dark:bg-base-2",
-				"dark:shadow-none",
-				"dark:outline",
-				"dark:-outline-offset-1",
-				"dark:outline-base-5/50",
-				"md:rounded",
-				"flex",
-				"flex-col",
-				"items-center",
+			<section className={
+				clsx(
+					"mt-8",
+					"pt-8",
+					"pb-12",
+					"bg-base-1",
+					"dark:bg-base-2",
+					"dark:shadow-none",
+					"dark:outline",
+					"dark:-outline-offset-1",
+					"dark:outline-base-5/50",
+					"md:rounded",
+					"flex",
+					"flex-col",
+					"items-center",
 
-			)}>
+				)}>
 				<div className={
 					clsx(
 						"px-6",
@@ -80,11 +84,15 @@ export function CommentsSection({
 				}
 				>
 					{!session &&
-						<h4>{t.rich("please-login-to-comment", {
-							loginLink: (chunks) => <Link href="/login">{chunks}</Link>
-						})}</h4>
+						// "You are not logged in" Message
+						<h4>
+							{t.rich("please-login-to-comment", {
+								loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+							})}
+						</h4>
 					}
 					{!userCanCreate &&
+						// You don't have permissions" Message
 						<h4>{t("permission-no-comments")}</h4>
 					}
 					<CommentForm />
@@ -110,7 +118,7 @@ export function CommentsSection({
 			)}>
 				<div className={
 					clsx(
-						"px-6",
+						"sm:px-6",
 						"mx-auto",
 						"w-full",
 						"max-w-2xl",
@@ -118,6 +126,8 @@ export function CommentsSection({
 				}
 				>
 					<h1 className={clsx(
+						"px-6",
+						"sm:px-0",
 						"text-xl",
 						"font-comic-header",
 						"font-semibold",
@@ -132,33 +142,13 @@ export function CommentsSection({
 						"gap-2",
 					)}>
 						{comments.map((c, index) => (
-							<CommentListItem key={index} className={
+							<CommentListItem comment={c} key={index} className={
 								clsx(
 									"bg-neutral-100",
 									"dark:bg-neutral-800/60",
+									"sm:rounded",
 								)
 							}>
-								<section className={
-									clsx(
-										"p-4",
-										"pb-0",
-										"flex",
-										"flex-col",
-										"gap-2",
-									)
-								}>
-									<div className={
-										clsx(
-											"text-xs",
-											"text-base-content/50",
-										)
-									}>
-										{c.user_created.username} {t("commented-on")} {c.date_created}:
-									</div>
-									<div>
-										{c.content}
-									</div>
-								</section>
 
 								{/* USER/MODERATOR PANEL */}
 								{session && c.user_created.id == session.id &&
@@ -189,7 +179,9 @@ export function CommentsSection({
 
 									<div className={
 										clsx(
+											"rounded",
 											"mt-6",
+											"mx-2",
 											"border-t-4",
 											"border-neutral-300",
 											"bg-neutral-400/20",
@@ -199,6 +191,7 @@ export function CommentsSection({
 									}>
 										<CommentList className={
 											clsx(
+												"rounded",
 												"relative",
 												"ml-4",
 												"px-4",
@@ -217,11 +210,11 @@ export function CommentsSection({
 											)
 										}>
 											{c.children_comments.map((cc, cindex) => (
-												<CommentListItem key={cindex} className={
+												<CommentListItem comment={cc} key={cindex} className={
 													clsx(
 														"first:mt-4",
 														"last:mb-4",
-														"p-4",
+														"pb-4",
 														"relative",
 														"bg-neutral-100",
 														"dark:bg-neutral-800/50",
@@ -244,17 +237,6 @@ export function CommentsSection({
 												}>
 													{/* TODO: Dictionaries */}
 
-													<div className={
-														clsx(
-															"block",
-															"text-xs",
-															"text-base-content/50",
-															"pb-2",
-														)
-													}>
-														{cc.user_created.username} {t("commented-on")} {cc.date_created}:
-													</div>
-													{cc.content}
 												</CommentListItem>
 											))}
 										</CommentList>
@@ -267,7 +249,7 @@ export function CommentsSection({
 											"flex",
 											"flex-row",
 											"px-4",
-											"py-2",
+											"py-4",
 										)
 									}>
 										{(!isReplying || !(isReplying && isReplying == c.id)) &&
@@ -445,6 +427,95 @@ export function CommentsSection({
 			</form>
 		</>
 	}
+
+
+	function CommentListItem({
+		comment,
+		...props
+	}: ComponentPropsWithoutRef<"li"> & {
+		comment: Awaited<ReturnType<typeof getComments>>[number]
+	}) {
+		const c = comment
+		return (
+			<li
+				{...props}
+				className={
+					clsx(
+						props.className,
+					)
+				}
+			>
+				<section className={
+					clsx(
+						"p-6",
+						// "lg:p-4",
+						"pb-0",
+						"grid",
+						"grid-cols-[24px_1fr]",
+						"grid-rows-[24px_1fr]",
+						"gap-x-3",
+						"gap-y-2",
+						"lg:grid-cols-[48px_1fr]",
+						"lg:grid-rows-[48p_1fr]",
+					)
+				}>
+					{c.user_created.avatar &&
+						<Image
+							src={`${directusURL}/assets/${c.user_created.avatar.filename_disk}`}
+							alt={c.user_created.avatar.description || ""}
+							width={c.user_created.avatar.width}
+							height={c.user_created.avatar.height}
+							className={
+								clsx(
+									"row-span-1",
+									"size-6",
+									"rounded-lg",
+									"lg:size-12",
+									"lg:row-span-2",
+								)
+							}
+						/>
+					}
+					{!c.user_created.avatar &&
+						<Icon name="skull"
+							className={
+								clsx(
+									"text-white",
+									"p-1",
+									"lg:p-3",
+									"row-span-1",
+									"size-6",
+									"rounded-lg",
+									"bg-neutral-600",
+									"lg:size-12",
+									"lg:row-span-2",
+								)
+							}
+						/>
+					}
+					<div className={
+						clsx(
+							"text-xs",
+							"text-base-content/50",
+							"flex",
+							"items-center",
+						)
+					}>
+						{c.user_created.username} {t("commented-on")} {c.date_created}:
+					</div>
+					<div className={
+						clsx(
+							"col-span-2",
+							"lg:col-span-1",
+						)
+					}>
+						{c.content}
+					</div>
+				</section>
+				{props.children}
+			</li>
+		)
+	}
 }
 
 function CommentList(props: ComponentPropsWithoutRef<"ul">) {
@@ -454,21 +525,5 @@ function CommentList(props: ComponentPropsWithoutRef<"ul">) {
 		>
 			{props.children}
 		</ul>
-	)
-}
-
-function CommentListItem(props: ComponentPropsWithoutRef<"li">) {
-	return (
-		<li
-			{...props}
-			className={
-				clsx(
-					props.className,
-					"rounded"
-				)
-			}
-		>
-			{props.children}
-		</li>
 	)
 }

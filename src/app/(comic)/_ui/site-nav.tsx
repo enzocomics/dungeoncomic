@@ -392,7 +392,7 @@ export default function NavMenu({
 									}
 								/>
 							}
-							{!session || (session && !session.avatar) &&
+							{(!session || (session && !session.avatar)) &&
 								<Icon name="skull" className={clsx(
 									"size-8",
 									"p-1.5",
