@@ -2078,7 +2078,7 @@ export default function ComicPageUI({
 								)
 							}>
 								{replaceComicVariables({
-									content: page.plot_prompt,
+									content: DOMPurify.sanitize(page.plot_prompt),
 									variables: variables,
 									userVariables: userVariables
 								})}
