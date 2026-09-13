@@ -19,7 +19,7 @@ import { userCommentSchema } from "@/lib/zod/schemas/comic"
 // ACTIONS
 import { submitUserComment } from "../_actions/comments"
 // UI
-import { ErrorMessage } from "@/components/catalyst/fieldset"
+import { ErrorMessage } from "@/components/error-message"
 import { ComicButton, SmallComicButton } from "@/components/button"
 import { Textarea } from "@/components/textarea"
 import Image from "next/image"
@@ -84,18 +84,6 @@ export function CommentsSection({
 					)
 				}
 				>
-					{!session &&
-						// "You are not logged in" Message
-						<h1>
-							{t.rich("please-login-to-comment", {
-								loginLink: (chunks) => <Link href="/login">{chunks}</Link>
-							})}
-						</h1>
-					}
-					{!userCanCreate &&
-						// You don't have permissions" Message
-						<h1>{t("permission-no-comments")}</h1>
-					}
 					<CommentForm />
 				</div>
 			</section>
@@ -239,16 +227,16 @@ export function CommentsSection({
 								}
 
 								{/* REPLY BUTTON */}
-								{userCanCreate &&
-									<div className={
-										clsx(
-											"flex",
-											"flex-row",
-											"px-4",
-											"py-4",
-										)
-									}>
-										{(!isReplying || !(isReplying && isReplying == c.id)) &&
+								<div className={
+									clsx(
+										"flex",
+										"flex-row",
+										"px-4",
+										"py-4",
+									)
+								}>
+									{userCanCreate &&
+										<>{(!isReplying || !(isReplying && isReplying == c.id)) &&
 											<SmallComicButton
 												onClick={() => {
 													setIsReplying(c.id)
@@ -259,20 +247,22 @@ export function CommentsSection({
 												{t("reply")}
 											</SmallComicButton>
 										}
-										{isReplying && isReplying == c.id &&
-											<SmallComicButton
-												onClick={() => {
-													setIsReplying(null)
-												}}
-												icon={{ name: "xmark", position: "right" }}
-												color="red"
-												className="ml-auto"
-											>
-												{t("cancel-reply")}
-											</SmallComicButton>
-										}
-									</div>
-								}
+											{isReplying && isReplying == c.id &&
+												<SmallComicButton
+													onClick={() => {
+														setIsReplying(null)
+													}}
+													icon={{ name: "xmark", position: "right" }}
+													color="red"
+													className="ml-auto"
+												>
+													{t("cancel-reply")}
+												</SmallComicButton>
+											}
+										</>
+									}
+								</div>
+
 								{isReplying && isReplying == c.id &&
 									<div className={
 										clsx(
@@ -382,6 +372,24 @@ export function CommentsSection({
 						{`${inputLength}/1024`}{/* TODO: should this be hardcoded? */}
 
 					</span>
+					{(!session || !userCanCreate) &&
+						// You don't have permissions" Message
+						<span className={
+							clsx(
+								"absolute",
+								"bottom-4",
+								"left-4",
+								"cursor-not-allowed",
+								"font-mono",
+								"text-neutral-500",
+							)
+						}>
+							{session && !userCanCreate && t("permission-no-comments")}
+							{!session && t.rich("please-login-to-comment", {
+								loginLink: (chunks) => <Link className="text-comic-accent-500" href="/login">{chunks}</Link>
+							})}
+						</span>
+					}
 					<Textarea
 						id={fields.content.name}
 						name={fields.content.name}
@@ -392,6 +400,10 @@ export function CommentsSection({
 						onChange={(e) => {
 							setInputLength(e.target.value.length)
 						}}
+						disabled={
+							userCanCreate
+								? false : true
+						}
 					/>
 					<ErrorMessage>{fields.content.errors}</ErrorMessage>
 					{session &&
@@ -416,7 +428,13 @@ export function CommentsSection({
 						</>
 					}
 				</Field>
-				<ComicButton as="button" type="submit">
+				<ComicButton
+					as="button"
+					type={userCanCreate ? "submit" : undefined}
+					disabled={
+						userCanCreate ? false : true
+					}
+				>
 					{isReplying ? t("submit-reply") : t("submit-comment")}
 				</ComicButton>
 			</form>
@@ -450,6 +468,7 @@ export function CommentsSection({
 						"grid-rows-[24px_1fr]",
 						"gap-x-2",
 						"gap-y-2",
+						"lg:gap-x-4",
 						"lg:grid-cols-[48px_1fr]",
 						"lg:grid-rows-[48p_1fr]",
 					)

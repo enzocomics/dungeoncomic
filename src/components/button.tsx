@@ -97,12 +97,15 @@ export function SmallComicButton({
 
 export function ComicButton({
 	className,
+	disabled,
 	...props }:
 	| ({
-		as?: "button"
+		as?: "button",
+		disabled?: boolean,
 	} & ComponentPropsWithoutRef<"button">)
 	| ({
-		as?: "link"
+		as?: "link",
+		disabled?: boolean,
 	} & ComponentPropsWithoutRef<typeof Link>)
 ) {
 	const classes = clsx(
@@ -113,33 +116,39 @@ export function ComicButton({
 		"flex",
 		"items-center",
 		"justify-center",
-		// Appearance
-		"bg-comic-accent-500",
-		"visited:bg-neutral-500",
 		"rounded-sm",
 		"text-white",
 		"text-base",
 		"lg:text-lg",
 		"font-comic-header",
 		"font-semibold",
-		"cursor-pointer",
 		"border-y-2",
 		"border-t-white/40",
 		"border-b-black/20",
-		// States
-		"hover:duration-0",
-		"hover:bg-comic-accent-700",
-		"active:translate-px",
-		"active:bg-comic-accent-900",
-		// Transition
-		"transition-all",
-		"ease-in-out",
-		"duration-300",
-		// Outline
-		"outline-transparent",
-		"focus:outline-4",
-		"focus:outline-offset-4",
-		"focus:outline-comic-accent-500",
+		disabled ? [
+			"cursor-not-allowed",
+			"bg-neutral-500",
+			"opacity-20",
+		] : [
+			"cursor-pointer",
+			// Appearance
+			"bg-comic-accent-500",
+			"visited:bg-neutral-500",
+			// States
+			"hover:duration-0",
+			"hover:bg-comic-accent-700",
+			"active:translate-px",
+			"active:bg-comic-accent-900",
+			// Transition
+			"transition-all",
+			"ease-in-out",
+			"duration-300",
+			// Outline
+			"outline-transparent",
+			"focus:outline-4",
+			"focus:outline-offset-4",
+			"focus:outline-comic-accent-500",
+		]
 	)
 
 	// logic here that returns Button or Link conditionally

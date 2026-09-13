@@ -57,6 +57,11 @@ export const Textarea = forwardRef(function Textarea({
 				"focus:outline-4",
 				"focus:-outline-offset-4",
 				"focus:outline-comic-accent-500",
+				props.disabled == true ? [
+					"cursor-not-allowed",
+				] : [
+
+				]
 			)}
 			onChange={(e) => {
 				handleTextarea(e)
