@@ -309,6 +309,7 @@ export default function ComicPageUI({
 				<ComicPageTitle
 					className={clsx(
 						"px-6",
+						"lg:pt-6",
 						"max-w-prose",
 						"mx-auto",
 						"text-3xl",
@@ -1258,6 +1259,7 @@ export default function ComicPageUI({
 									{p.panel_image &&
 										<Image
 											className={clsx(
+												"lg:pt-6",
 												"mx-auto",
 											)}
 											src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
@@ -1269,7 +1271,8 @@ export default function ComicPageUI({
 									}
 									{/* PANEL TEXT */}
 									<div className={clsx(
-										"py-6",
+										// "py-6",
+										"lg:pt-6",
 										"px-6",
 										"prose",
 										"text-base/loose",
