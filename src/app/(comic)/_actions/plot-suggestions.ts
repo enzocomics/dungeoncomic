@@ -51,7 +51,7 @@ export async function voteOnPlotSuggestion({
 
 		// Check if the user has already voted on anything
 		const oldVote =
-			user !== false &&
+			user &&
 			plotSuggestions.find((object) => object.users_voted.includes(user.id))
 
 		// If a vote already exists, remove the user from that old vote, and -1
@@ -68,7 +68,7 @@ export async function voteOnPlotSuggestion({
 		}
 
 		const updateNewVote =
-			user !== false &&
+			user &&
 			getNewVote &&
 			(await userClient.request(
 				updateItem("plot_suggestions", newVoteID, {

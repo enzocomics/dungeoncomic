@@ -53,8 +53,13 @@ export function CommentsSection({
 		{page.allow_user_comments && !isReplying &&
 			<section className={clsx(
 				"mt-8",
+				"p-4",
 				"bg-base-1",
-				"p-2",
+				"dark:bg-base-2",
+				"dark:shadow-none",
+				"dark:outline",
+				"dark:-outline-offset-1",
+				"dark:outline-base-5/50",
 				"md:rounded",
 			)}>
 				{!session &&
@@ -73,92 +78,121 @@ export function CommentsSection({
 			comments && comments.length > 0 &&
 			<section className={clsx(
 				"mt-8",
+				"p-4",
+				"bg-base-1",
+				"dark:bg-base-2",
+				"dark:shadow-none",
+				"dark:outline",
+				"dark:-outline-offset-1",
+				"dark:outline-base-5/50",
 			)}>
-				<h1 className={clsx(
-					"text-lg",
-					"bg-black/50",
-					"text-white",
-					"p-4",
-					"md:rounded",
-					"mb-2",
-					"backdrop-blur-sm",
-				)}>{t("comments")} ({comments.length})</h1>
-				<CommentList className={clsx(
-					"flex",
-					"flex-col",
-					"gap-2",
+				<div className={
+					clsx(
+						"flex",
+						"flex-col",
+						"items-center",
+					)
+				}
+				>
+					<h1 className={clsx(
+						"text-lg",
+						"font-comic-header",
+						"font-semibold",
+						"w-full",
+						"max-w-3xl",
+					)}>{t("comments")} ({comments.length})</h1>
 
-				)}>
-					{comments.map((c, index) => (
-						<CommentListItem key={index} className={
-							clsx(
-								"bg-base-1",
-								"dark:bg-base-2",
-								"md:rounded",
-								"p-4",
-							)
-						} >
-							<p>{c.user_created.username} t("commented-on") {c.date_created}:</p>
-							{c.content}
+					<CommentList className={clsx(
+						"w-full",
+						"max-w-3xl",
+						"flex",
+						"flex-col",
+						"gap-2",
+					)}>
+						{comments.map((c, index) => (
+							<CommentListItem key={index} className={
+								clsx(
+									"bg-base-2/25",
+									"dark:bg-base-4/50",
+									"md:rounded",
+									"p-4",
+								)
+							} >
+								<p>{c.user_created.username} t("commented-on") {c.date_created}:</p>
+								{c.content}
 
 
-							{session && c.user_created.id == session.id &&
-								<>
-									{userCanUpdate &&
-										<Button>
-											{t("edit-comment")}
-										</Button>
-									}
-									{userCanDelete &&
-										<Button>
-											{t("delete-comment")}
-										</Button>
-									}
-								</>
-							}
+								{session && c.user_created.id == session.id &&
+									<>
+										{userCanUpdate &&
+											<Button>
+												{t("edit-comment")}
+											</Button>
+										}
+										{userCanDelete &&
+											<Button>
+												{t("delete-comment")}
+											</Button>
+										}
+									</>
+								}
 
-							{/* Only allow 1 level of replies */}
-							{c.children_comments &&
-								<ul className={clsx(
-									"ml-4",
-									"flex",
-									"flex-col",
-									"gap-2",
-								)}>
-									{c.children_comments.map((cc, cindex) => (
-										<li key={cindex}>
-											{/* TODO: Dictionaries */}
-											<p>{cc.user_created.username} t("commented-on") {cc.date_created}:</p>
-											{cc.content}
-										</li>
-									))}
-								</ul>
-							}
+								{/* Only allow 1 level of replies */}
+								{c.children_comments && c.children_comments.length > 0 &&
+									<ul className={clsx(
+										"mx-4",
+										"mt-4",
+										"mb-2",
+										"flex",
+										"flex-col",
+										"gap-2",
+									)}>
+										{c.children_comments.map((cc, cindex) => (
+											<li key={cindex} className={
+												clsx(
+													"p-4",
+													"bg-base-2/25",
+													"dark:bg-base-4/50",
+													"rounded",
+												)
+											}>
+												{/* TODO: Dictionaries */}
+												<p>{cc.user_created.username} t("commented-on") {cc.date_created}:</p>
+												{cc.content}
+											</li>
+										))}
+									</ul>
+								}
 
-							{session &&
-								<>
-									{(!isReplying || !(isReplying && isReplying == c.id)) &&
-										<Button onClick={() => {
-											setIsReplying(c.id)
-										}}>{t("reply")}</Button>
-									}
-									{isReplying && isReplying == c.id &&
-										<Button onClick={() => {
-											setIsReplying(null)
-										}}>{t("cancel-reply")}</Button>
-									}
-								</>
-							}
-							{isReplying && isReplying == c.id &&
+								{userCanCreate &&
+									<div className={
+										clsx(
+											"text-right"
+										)
+									}>
+										{(!isReplying || !(isReplying && isReplying == c.id)) &&
+											<Button onClick={() => {
+												setIsReplying(c.id)
+											}}>{t("reply")}</Button>
+										}
+										{isReplying && isReplying == c.id &&
+											<Button onClick={() => {
+												setIsReplying(null)
+											}}>{t("cancel-reply")}</Button>
+										}
+									</div>
+								}
+								{isReplying && isReplying == c.id &&
 
-								<CommentForm />
+									<CommentForm />
 
-							}
+								}
 
-						</CommentListItem>
+							</CommentListItem>
 
-					))}
-				</CommentList >
+						))}
+					</CommentList >
+				</div>
 			</section >
 		}
 	</>
@@ -195,14 +229,30 @@ export function CommentsSection({
 				onSubmit={form.onSubmit}
 				action={action}
 				noValidate
+				className={
+					clsx(
+						"flex",
+						"flex-col",
+						"items-center",
+					)
+				}
 			>
-				<Field disabled={
-					userCanCreate
-						? false : true}>
+				<Field
+					disabled={
+						userCanCreate
+							? false : true
+					}
+					className={
+						clsx(
+							"w-full",
+							"max-w-3xl",
+						)
+					}
+				>
 					<label
 						htmlFor={fields.content.name}
 						className={clsx(
-							"font-comic-display",
+							"font-comic-header",
 							"font-semibold",
 							"text-lg",
 						)}
@@ -215,7 +265,6 @@ export function CommentsSection({
 						name={fields.content.name}
 						key={fields.content.key}
 						className={clsx(
-							"max-w-prose",
 						)}
 					/>
 					<ErrorMessage>{fields.content.errors}</ErrorMessage>

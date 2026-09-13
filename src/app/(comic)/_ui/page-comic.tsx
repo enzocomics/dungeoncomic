@@ -312,9 +312,10 @@ export default function ComicPageUI({
 						"lg:pt-6",
 						"max-w-prose",
 						"mx-auto",
-						"text-3xl",
 						"font-bold",
 						"font-comic-display",
+						"text-3xl",
+						"lg:text-4xl",
 						"text-center"
 					)}
 				/>
@@ -637,11 +638,14 @@ export default function ComicPageUI({
 										"w-full",
 										"font-semibold",
 										"font-comic-display",
-										"text-lg/normal",
+										"text-xl/normal",
+										"lg:text-2xl/normal",
 										"mb-2",
 										// "text-center",
 										"text-pretty"
-									)}>{comic.title}</h2>
+									)}>
+										{comic.title}
+									</h2>
 									<p className={clsx(
 										"italic",
 										"text-xs",
@@ -1280,7 +1284,7 @@ export default function ComicPageUI({
 										"prose",
 										"text-base/loose",
 										"lg:text-lg/loose",
-										"max-w-prose",
+										"max-w-2xl",
 										"mx-auto",
 										"text-left",
 										"text-pretty",
@@ -1342,7 +1346,7 @@ export default function ComicPageUI({
 															className={clsx(
 																"pb-2",
 																"text-sm",
-																"font-comic-display",
+																"font-comic-header",
 																"flex",
 																"items-center",
 																"gap-x-1",
@@ -1350,6 +1354,9 @@ export default function ComicPageUI({
 														>
 															<span
 																className={clsx(
+																	"text-base",
+																	"lg:text-lg",
+																	"font-comic-header",
 																	"font-semibold",
 																)}>
 																{v.prompt || `${v.name}`}
@@ -1359,6 +1366,8 @@ export default function ComicPageUI({
 																"ml-auto",
 																"font-normal",
 																"text-xs",
+																"lg:text-sm",
+																"font-comic-header",
 																"text-current/50"
 															)}>
 																{`${inputStates[v.id].value_length}/32`}{/* TODO: should this be hardcoded? */}
@@ -1510,7 +1519,7 @@ export default function ComicPageUI({
 							"px-6",
 							"prose",
 							"w-full",
-							"max-w-prose",
+							"max-w-2xl",
 							"mx-auto",
 						)}>
 							<ComicButton as="button" type="submit" className={clsx(
@@ -1650,7 +1659,7 @@ export default function ComicPageUI({
 					// Size
 					"w-full",
 					"mx-auto",
-					"max-w-prose",
+					"max-w-2xl",
 				)
 			}
 		>
@@ -1796,8 +1805,9 @@ export default function ComicPageUI({
 			"visited:bg-neutral-500",
 			"rounded-sm",
 			"text-white",
-			"text-sm",
-			"font-comic-display",
+			"text-base",
+			"lg:text-lg",
+			"font-comic-header",
 			"font-semibold",
 			"cursor-pointer",
 			"border-y-2",
@@ -1863,7 +1873,7 @@ export default function ComicPageUI({
 						"px-6",
 						"w-full",
 						"mx-auto",
-						"max-w-prose",
+						"max-w-2xl",
 					)}>
 						{hasNextPage &&
 							<>
@@ -1922,7 +1932,7 @@ export default function ComicPageUI({
 	 */
 	function UserFeedbackSection() {
 		// Get the ID of the currently logged-in user, if exists
-		const loggedInUserID = session != false ? session?.id : null
+		const loggedInUserID = session?.id || null
 
 		/**----------------------------------- */
 		// SUGGESTIONS
@@ -1961,7 +1971,7 @@ export default function ComicPageUI({
 				voteOnPlotSuggestion({
 					newVoteID: parseInt(plotSuggestionsID),
 					page: page,
-					user: session ? session : false
+					user: session || null
 				})
 			}
 
@@ -2019,8 +2029,8 @@ export default function ComicPageUI({
 							<Legend as="legend" className={
 								clsx(
 									"pb-4",
-									"text-",
-									"font-comic-display",
+									"text-lg",
+									"font-comic-header",
 									"font-semibold",
 								)
 							}>
@@ -2086,7 +2096,7 @@ export default function ComicPageUI({
 															@{s.user_created.username} says:
 														</em>
 
-														{(session !== false && session !== undefined) && s.user_created.id == session.id &&
+														{session && s.user_created.id == session.id &&
 															<span className={clsx(
 																"absolute",
 																"-top-1",
@@ -2277,7 +2287,7 @@ export default function ComicPageUI({
 								"-top-6.5",
 								"right-0",
 								"ml-auto",
-								"font-comic-display",
+								"font-comic-header",
 								"font-normal",
 								"text-xs",
 								"text-current/50"
