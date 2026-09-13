@@ -145,6 +145,8 @@ export default function ComicPageUI({
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
 
+	// State that checks if the page has loaded the first time
+	const [firstLoad, setFirstLoad] = useState(false)
 
 	useEffect(() => {
 		//////////////////////////////////////////////////////////////////////
@@ -188,6 +190,8 @@ export default function ComicPageUI({
 		})
 		// Clear the status message
 		setStatus("")
+
+		setFirstLoad(true)
 	}, [pathname, searchParams.toString()])
 
 	/**----------------------------------- */
@@ -273,18 +277,17 @@ export default function ComicPageUI({
 
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<div
-			className={
-				clsx(
-					"relative",
-					hasBanner ? [
-						// Banner
-						"pt-28",
-					] : [
-						// No Banner
-						"pt-20",
-						"md:pt-24",
-					],
-				)
+			className={clsx(
+				"relative",
+				hasBanner ? [
+					// Banner
+					"pt-28",
+				] : [
+					// No Banner
+					"pt-20",
+					"md:pt-24",
+				],
+			)
 			}
 		>
 			{/* COMIC PAGE - CONTENT BODY */}
@@ -307,7 +310,7 @@ export default function ComicPageUI({
 					"text-center",
 					hasBanner || !hasPrevPage ? "md:rounded-t" : "",
 					// "md:rounded-t",
-					"md:last:rounded-b"
+					"md:last:rounded-b",
 				)}
 			>
 				<ComicPageTitle
@@ -320,7 +323,8 @@ export default function ComicPageUI({
 						"font-comic-display",
 						"text-3xl",
 						"lg:text-4xl",
-						"text-center"
+						"text-center",
+						firstLoad && "animate-pop-in",
 					)}
 				/>
 
@@ -836,7 +840,10 @@ export default function ComicPageUI({
 											"focus:-outline-offset-3",
 											"focus:outline-comic-accent-500",
 										)}
-										onClick={() => { setNavClickType("prev") }}
+										onClick={() => {
+											setNavClickType("prev")
+											setFirstLoad(false)
+										}}
 										href="./1"
 									>
 										<Icon name="forwardStep" className={clsx(
@@ -889,6 +896,7 @@ export default function ComicPageUI({
 
 										onClick={() => {
 											setNavClickType("prev")
+											setFirstLoad(false)
 
 											// Variable Submission Form back
 											!canGoBack && varsSubmitted && router.push(pathname)
@@ -1032,7 +1040,10 @@ export default function ComicPageUI({
 															"ease-in-out",
 															"duration-300",
 														)}
-														onClick={() => { setNavClickType("prev") }}
+														onClick={() => {
+															setNavClickType("prev")
+															setFirstLoad(false)
+														}}
 														href={
 															`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
 																comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
@@ -1152,7 +1163,7 @@ export default function ComicPageUI({
 			{replaceComicVariables({
 				content: (
 					varsExist && varsSubmitted ?
-						DOMPurify.sanitize(String(page.variables_submit_button_text)) || `${t("next")} »` :
+						DOMPurify.sanitize(page.variables_submit_button_text as string) || `${t("next")} »` :
 						DOMPurify.sanitize(page.title)
 				),
 				variables: variables,
@@ -1212,6 +1223,7 @@ export default function ComicPageUI({
 				return parseWithZod(formData, { schema })
 			},
 			onSubmit(e, { formData }) {
+				setFirstLoad(false)
 				// Make a new search params object
 				const params = new URLSearchParams()
 				// Iterate through the variables and dynamically get each one based on its id
@@ -1311,6 +1323,7 @@ export default function ComicPageUI({
 						"flex",
 						"flex-col",
 						"gap-y-6",
+						firstLoad && "animate-fade-in",
 					)}>
 						{page.comic_panels.map((p, pIndex) => {
 
@@ -1605,6 +1618,7 @@ export default function ComicPageUI({
 							"w-full",
 							"max-w-2xl",
 							"mx-auto",
+							firstLoad && "animate-fade-in",
 						)}>
 							<ComicButton as="button" type="submit" className={clsx(
 							)}>
@@ -1613,7 +1627,7 @@ export default function ComicPageUI({
 									"text-pretty",
 									"grow",
 								)}>
-									{`${DOMPurify.sanitize(String(page.variables_submit_button_text)) || t("next")}`}
+									{`${DOMPurify.sanitize(page.variables_submit_button_text as string) || t("next")}`}
 								</span>
 								<Icon name="play" className={clsx(
 									"ml-1",
@@ -1877,6 +1891,7 @@ export default function ComicPageUI({
 				"flex",
 				"flex-col",
 				"gap-y-6",
+				firstLoad && "animate-fade-in",
 			)}>
 				{
 					/**------------------------------
@@ -1907,7 +1922,10 @@ export default function ComicPageUI({
 										<li key={index} className={clsx(
 										)}>
 											<ComicButton as="link"
-												onClick={() => { setNavClickType("next") }}
+												onClick={() => {
+													setNavClickType("next")
+													setFirstLoad(false)
+												}}
 												href={`./${n.linked_pages_id.comic_pagenum}`}
 											>
 												<span className={clsx(
@@ -2033,7 +2051,11 @@ export default function ComicPageUI({
 				 */
 			}
 			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-				<ComicInputSection>
+				<ComicInputSection className={
+					clsx(
+						firstLoad && "animate-fade-in",
+					)
+				}>
 					<ComicInputSectionRow>
 						{!session &&
 							<div
