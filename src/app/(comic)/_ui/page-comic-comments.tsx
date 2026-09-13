@@ -8,7 +8,7 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
 import { Button, Field, } from "@headlessui/react"
 import { marked } from "marked"
-import DOMPurify from "isomorphic-dompurify"
+import { sanitize } from "@/lib/sanitize"
 // FUNCTIONS
 import clsx from "clsx"
 // I18N
@@ -566,7 +566,7 @@ export function CommentsSection({
 						dangerouslySetInnerHTML={{
 							__html:
 								replaceComicVariables({
-									content: DOMPurify.sanitize(
+									content: sanitize(
 										String(
 											marked.parse(c.content)
 										)

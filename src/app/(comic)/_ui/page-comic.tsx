@@ -9,7 +9,7 @@ import Image from "next/image"
 import Form from "next/form"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { marked } from "marked"
-import DOMPurify from "isomorphic-dompurify"
+import { sanitize } from "@/lib/sanitize"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 // VALIDATION
 import z from "zod"
@@ -451,7 +451,7 @@ export default function ComicPageUI({
 								"inline",
 								"font-semibold",
 							)}>
-								{DOMPurify.sanitize(comic.title)}
+								{sanitize(comic.title)}
 							</span>
 
 							{comic.authors && comic.authors.length > 0 &&
@@ -652,7 +652,7 @@ export default function ComicPageUI({
 										// "text-center",
 										"text-pretty"
 									)}>
-										{DOMPurify.sanitize(comic.title)}
+										{sanitize(comic.title)}
 									</h2>
 									<p>
 										{hasAuthors &&
@@ -699,7 +699,7 @@ export default function ComicPageUI({
 										dangerouslySetInnerHTML={{
 											__html:
 												replaceComicVariables({
-													content: DOMPurify.sanitize(
+													content: sanitize(
 														String(
 															marked.parse(comic.description)
 														)
@@ -1163,8 +1163,8 @@ export default function ComicPageUI({
 			{replaceComicVariables({
 				content: (
 					varsExist && varsSubmitted ?
-						DOMPurify.sanitize(page.variables_submit_button_text as string) || `${t("next")} »` :
-						DOMPurify.sanitize(page.title)
+						sanitize(page.variables_submit_button_text as string) || `${t("next")} »` :
+						sanitize(page.title)
 				),
 				variables: variables,
 				userVariables: userVariables
@@ -1370,7 +1370,7 @@ export default function ComicPageUI({
 									)}
 										dangerouslySetInnerHTML={{
 											__html: replaceComicVariables({
-												content: DOMPurify.sanitize(
+												content: sanitize(
 													String(
 														marked.parse(
 															String(p.panel_description)
@@ -1507,7 +1507,7 @@ export default function ComicPageUI({
 																	"inline",
 																	"text-neutral-400",
 																)}>
-																	{DOMPurify.sanitize(v.value_prefix)}
+																	{sanitize(v.value_prefix)}
 																</span>
 															}
 															{/* Variable Input */}
@@ -1581,7 +1581,7 @@ export default function ComicPageUI({
 																	"pr-4",
 																	"text-neutral-400",
 																)}>
-																	{DOMPurify.sanitize(v.value_suffix)}
+																	{sanitize(v.value_suffix)}
 																</span>
 															}
 														</div>
@@ -1627,7 +1627,7 @@ export default function ComicPageUI({
 									"text-pretty",
 									"grow",
 								)}>
-									{`${DOMPurify.sanitize(page.variables_submit_button_text as string) || t("next")}`}
+									{`${sanitize(page.variables_submit_button_text as string) || t("next")}`}
 								</span>
 								<Icon name="play" className={clsx(
 									"ml-1",
@@ -1934,7 +1934,7 @@ export default function ComicPageUI({
 												)}>
 													<span>{
 														replaceComicVariables({
-															content: DOMPurify.sanitize(n.linked_pages_id.title),
+															content: sanitize(n.linked_pages_id.title),
 															variables: variables,
 															userVariables: userVariables
 														})
@@ -1942,7 +1942,7 @@ export default function ComicPageUI({
 													{n.linked_pages_id.subtitle &&
 														<p>{
 															replaceComicVariables({
-																content: DOMPurify.sanitize(n.linked_pages_id.subtitle),
+																content: sanitize(n.linked_pages_id.subtitle),
 																variables: variables,
 																userVariables: userVariables
 															})
@@ -2078,7 +2078,7 @@ export default function ComicPageUI({
 								)
 							}>
 								{replaceComicVariables({
-									content: DOMPurify.sanitize(page.plot_prompt),
+									content: sanitize(page.plot_prompt),
 									variables: variables,
 									userVariables: userVariables
 								})}
@@ -2191,7 +2191,7 @@ export default function ComicPageUI({
 													"cursor-auto"
 												)}>
 													{replaceComicVariables({
-														content: DOMPurify.sanitize(s.title),
+														content: sanitize(s.title),
 														variables: variables,
 														userVariables: userVariables
 													})}

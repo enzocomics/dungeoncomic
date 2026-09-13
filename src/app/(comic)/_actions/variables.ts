@@ -9,6 +9,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userVariablesSchema } from "@/lib/zod/schemas/comic"
+import { sanitize } from "@/lib/sanitize"
 
 /** ----------------------------------------------------------------- */
 /**
@@ -30,7 +31,7 @@ export async function saveUserVars(prevState: unknown, formData: FormData) {
 		// Update the cookie payload
 		cookiePayload = {
 			...cookiePayload,
-			[slug]: value,
+			[slug]: sanitize(value as string),
 		}
 	})
 

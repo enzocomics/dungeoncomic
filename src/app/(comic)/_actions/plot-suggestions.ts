@@ -14,6 +14,7 @@ import { adminClient, userClient } from "@/lib/directus/clients"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
+import { sanitize } from "@/lib/sanitize"
 
 /**----------------------------------- */
 export async function voteOnPlotSuggestion({
@@ -122,7 +123,7 @@ export async function submitUserPlotSuggestion(
 	try {
 		const userSuggestionRequest = await userClient.request(
 			createItem("plot_suggestions", {
-				title: userSuggestion,
+				title: sanitize(userSuggestion),
 				slug: slug,
 				page: pageId,
 				votes: 1,
