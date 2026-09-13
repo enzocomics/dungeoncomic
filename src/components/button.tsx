@@ -1,7 +1,98 @@
+
+import { ComponentPropsWithoutRef } from "react"
+import Link from "next/link"
 import { Button } from "@headlessui/react"
 import clsx from "clsx"
-import Link from "next/link"
-import { ComponentPropsWithoutRef } from "react"
+import Icon, { icons } from "@/styles/icons"
+
+export function SmallComicButton({
+	className,
+	color,
+	icon,
+	...props
+}: ComponentPropsWithoutRef<"button"> & {
+	icon?: { name: keyof typeof icons, position: "left" | "right" }
+}) {
+
+	return <Button
+		{...props}
+		className={
+			clsx(
+				className,
+				// Functionality
+				"cursor-pointer",
+				// Structure
+				"flex",
+				"flex-row",
+				"gap-x-1.5",
+				// Spacing
+				"py-1",
+				icon?.position == "left" && [
+					"pl-1",
+					"pr-2",
+				],
+				icon?.position == "right" && [
+					"pl-2",
+					"pr-1",
+				],
+				!icon && "px-2",
+				// Text
+				"text-xs",
+				// Appearance
+				"rounded-sm",
+				"bg-base-1",
+				"border",
+				// States
+				"hover:duration-0",
+				"active:translate-px",
+				// Transition
+				"transition-all",
+				"ease-in-out",
+				"duration-300",
+				// Media Queries
+				"lg:text-sm",
+				// Colors
+				color == "red" ? [
+					"border-red-200/50",
+					"text-red-700",
+					"bg-red-100/50",
+					"hover:text-red-700",
+					"hover:border-red-300/50",
+					"hover:bg-red-200",
+				] : [
+					"border-base-2/50",
+					"text-base-content/50",
+					"hover:text-comic-accent-500",
+					"hover:border-comic-accent-500/10",
+					"hover:bg-comic-accent-100",
+				]
+			)
+		}
+	>
+		{icon &&
+			<Icon name={icon.name} className={
+				clsx(
+					icon.position == "left" && [
+						"order-first",
+					],
+					icon.position == "right" && [
+						"order-last",
+					],
+					"size-4",
+					"lg:size-5",
+				)
+			} />
+		}
+		<span className={
+			clsx(
+				"order-1"
+			)
+		}>
+			{props.children}
+		</span>
+	</Button>
+
+}
 
 export function ComicButton({
 	className,
