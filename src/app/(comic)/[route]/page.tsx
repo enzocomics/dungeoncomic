@@ -83,13 +83,13 @@ export default async function RoutePage({
 					userVariables={userVariables}
 					session={session}
 				/>
-				{page.allow_user_comments &&
-					<CommentsSection
-						page={comicPage}
-						comments={comments}
-						session={session}
-					/>
-				}
+
+				<CommentsSection
+					page={comicPage}
+					comments={comments}
+					session={session}
+				/>
+
 			</>
 		}
 	}

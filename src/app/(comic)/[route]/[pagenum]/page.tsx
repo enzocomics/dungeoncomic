@@ -78,13 +78,13 @@ export default async function ComicPagenumPage({
 				userVariables={userVariables}
 				session={session}
 			/>
-			{comicPage.allow_user_comments &&
-				<CommentsSection
-					page={comicPage}
-					comments={comments}
-					session={session}
-				/>
-			}
+
+			<CommentsSection
+				page={comicPage}
+				comments={comments}
+				session={session}
+			/>
+
 		</>
 	}
 }
