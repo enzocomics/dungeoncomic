@@ -1259,7 +1259,7 @@ export default function ComicPageUI({
 									{p.panel_image &&
 										<Image
 											className={clsx(
-												"lg:pt-6",
+												"lg:mt-6",
 												"mx-auto",
 											)}
 											src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
