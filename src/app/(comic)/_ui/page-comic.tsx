@@ -1993,6 +1993,7 @@ export default function ComicPageUI({
 		)
 		// State of the poll: to prevent the effect from firing multiple times
 		const [clicked, setClicked] = useState(false)
+		const [voteComplete, setVoteComplete] = useState(true)
 
 		const voteTimer = useRef<NodeJS.Timeout | null>(null)
 
@@ -2009,7 +2010,7 @@ export default function ComicPageUI({
 		useEffect(() => {
 			// Send the vote to the CMS
 			const castVote = async (plotSuggestionsID: string) => {
-				voteOnPlotSuggestion({
+				const response = voteOnPlotSuggestion({
 					newVoteID: parseInt(plotSuggestionsID),
 					page: page,
 					user: session || null
@@ -2023,7 +2024,9 @@ export default function ComicPageUI({
 				// Only submit to CMS after a two-second delay where no more input is accepted
 				voteTimer.current && clearTimeout(voteTimer.current)
 				voteTimer.current = setTimeout(() => {
+
 					castVote(selected) // Send the vote to the cms only
+
 				}, 1000)
 
 				setUserVotedOnID(selected) // Save the suggestion this user voted on for reference
@@ -2104,7 +2107,7 @@ export default function ComicPageUI({
 								{/* PLOT SUGGESTIONS */}
 								{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
 									// Handle State of the vote numbers
-									const [votes, setVote] = useState(s.votes || 0)
+									const [votes, setVote] = useState(s?.users_voted?.length || 0)
 
 									useEffect(() => {
 										// Update the vote numbers on-the-fly

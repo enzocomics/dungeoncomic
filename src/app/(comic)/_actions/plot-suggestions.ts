@@ -29,15 +29,6 @@ export async function voteOnPlotSuggestion({
 	// If the newVoteID is 0, it means the user has selected to add their own suggestions.
 	// This means we should only remove old votes without adding a new one
 	try {
-		// Get info on the new vote
-		const getNewVote =
-			newVoteID !== 0 &&
-			(await userClient.request(
-				readItem("plot_suggestions", newVoteID, {
-					fields: ["id", "votes", "users_voted"],
-				}),
-			))
-
 		// Get all the plot suggestions on this page
 		const plotSuggestions = await userClient.request(
 			readItems("plot_suggestions", {
@@ -50,43 +41,93 @@ export async function voteOnPlotSuggestion({
 			}),
 		)
 
-		const castNewVote = async () => {
-			const updateNewVote =
-				user &&
-				getNewVote &&
-				(await userClient.request(
-					updateItem("plot_suggestions", newVoteID, {
-						votes: getNewVote.votes + 1,
-						users_voted: {
-							update: [{ id: user.id }],
-						},
-					}),
-				))
-		}
-
 		// Check if the user has already voted on anything
 		const oldVote =
 			user &&
 			plotSuggestions.find((object) => object.users_voted.includes(user.id))
 
-		// If a vote already exists, remove the user from that old vote FIRST before registering new vote
-		if (oldVote) {
-			const oldVoteNum = oldVote.votes - 1
-			const updateOldVote = await userClient
-				.request(
-					updateItem("plot_suggestions", oldVote.id, {
-						users_voted: {
-							delete: [user.id],
+		// Get info on the new vote
+		// const getNewVote =
+		// 	newVoteID !== 0 &&
+		// 	(await userClient.request(
+		// 		readItem("plot_suggestions", newVoteID, {
+		// 			fields: ["id", "votes", "users_voted"],
+		// 		}),
+		// 	))
+
+		if (newVoteID !== 0) {
+			await userClient.request(
+				updateItem("pages", page.id as number, {
+					plot_suggestions: [
+						{
+							id: oldVote?.id,
+							users_voted: {
+								delete: [user?.id],
+							},
 						},
-						votes: oldVote.votes - 1,
-					}),
-				)
-				.then(castNewVote)
+						{
+							id: newVoteID,
+							users_voted: {
+								update: [user && { id: user.id }],
+							},
+						},
+					],
+				}),
+			)
 		} else {
-			// otherwise, just cast the new vote
-			castNewVote()
+			await userClient.request(
+				updateItem("pages", page.id as number, {
+					plot_suggestions: [
+						{
+							id: oldVote?.id,
+							users_voted: {
+								delete: [user?.id],
+							},
+						},
+					],
+				}),
+			)
 		}
 
+		// console.log(updatePage)
+
+		// const castNewVote = async () => {
+		// 	const updateNewVote =
+		// 		user &&
+		// 		getNewVote &&
+		// 		(await userClient.request(
+		// 			updateItem("plot_suggestions", newVoteID, {
+		// 				votes: getNewVote.votes + 1,
+		// 				users_voted: {
+		// 					update: [{ id: user.id }],
+		// 				},
+		// 			}),
+		// 		))
+
+		// 	return updateNewVote
+		// }
+
+		// If a vote already exists, remove the user from that old vote FIRST before registering new vote
+		// if (oldVote) {
+		// 	const oldVoteNum = oldVote.votes - 1
+		// 	const updateOldVote = await userClient
+		// 		.request(
+		// 			updateItem("plot_suggestions", oldVote.id, {
+		// 				users_voted: {
+		// 					delete: [user.id],
+		// 				},
+		// 				votes: oldVote.votes - 1,
+		// 			}),
+		// 		)
+		// 		.then(castNewVote)
+		// 	// console.log(updateOldVote)
+		// 	// return updateOldVote
+		// } else {
+		// 	// otherwise, just cast the new vote
+		// 	const thing = await castNewVote()
+		// 	// console.log(thing)
+		// 	// return thing
+		// }
 		// return "yo"
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
