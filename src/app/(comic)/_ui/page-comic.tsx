@@ -1994,6 +1994,8 @@ export default function ComicPageUI({
 		// State of the poll: to prevent the effect from firing multiple times
 		const [clicked, setClicked] = useState(false)
 
+		const voteTimer = useRef<NodeJS.Timeout | null>(null)
+
 		// Poll Click Handler
 		function handleClick(selectedId: string) {
 			setSelected(selectedId)
@@ -2014,10 +2016,17 @@ export default function ComicPageUI({
 				})
 			}
 
+			let timeout = false
+
 			// Cast the vote
 			if (clicked == true) {
-				castVote(selected) // Send the vote to the cms
-				setUserVotedOnID(selected) // Save the suggestion this user voted on for refernece
+				// Only submit to CMS after a two-second delay where no more input is accepted
+				voteTimer.current && clearTimeout(voteTimer.current)
+				voteTimer.current = setTimeout(() => {
+					castVote(selected) // Send the vote to the cms only
+				}, 2000)
+
+				setUserVotedOnID(selected) // Save the suggestion this user voted on for reference
 				setClicked(false)
 			}
 		}, [selected])
