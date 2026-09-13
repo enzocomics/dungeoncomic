@@ -601,8 +601,9 @@ export default function ComicPageUI({
 							{/* Comic Info Header */}
 							<header className={clsx(
 								"flex",
+								"justify-center",
 								"p-4",
-								"gap-x-2",
+								"gap-x-4",
 								"bg-base-2/30",
 								"dark:bg-base-2/50",
 							)}>
@@ -624,18 +625,19 @@ export default function ComicPageUI({
 
 								}
 								<div className={clsx(
-									"grow",
+									// "grow",
 									"place-content-center",
 									"flex",
 									"flex-col",
-									"text-center",
+									page.comic.thumbnail ? "text-left"
+										: "text-center",
 									"font-comic-header",
 								)}>
 									<h2 className={clsx(
 										"w-full",
 										"font-semibold",
 										"font-comic-display",
-										"text-lg",
+										"text-lg/normal",
 										"mb-2",
 										// "text-center",
 										"text-pretty"
@@ -678,13 +680,14 @@ export default function ComicPageUI({
 							{/* Comic Info Body */}
 							<div className={clsx(
 								"p-4",
+								"font-comic-copy"
 							)}>
 								{comic.description &&
-									<p className={clsx(
-
+									<span className={clsx(
+										"text-sm/loose",
 									)}>
 										{comic.description}
-									</p>
+									</span>
 								}
 								{comic.date_updated &&
 									<p className={clsx(
@@ -702,7 +705,7 @@ export default function ComicPageUI({
 						</section>
 					</PopoverPanel>
 				</Popover>
-			</div>
+			</div >
 		</>
 	}
 
