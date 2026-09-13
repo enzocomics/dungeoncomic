@@ -379,16 +379,13 @@ export default function NavMenu({
 									className={
 										clsx(
 											"size-8",
-
 											"rounded-sm",
 											// Transition
 											"transition-all",
 											"ease-in-out",
 											"duration-300",
-											"group-hover:duration-0",
 											// Diff
 											"opacity-100",
-											"text-white",
 											"bg-comic-accent-700",
 											"group-data-open:opacity-0",
 										)
@@ -428,7 +425,7 @@ export default function NavMenu({
 								"top-0",
 								"opacity-0",
 								"-rotate-45",
-								"group-hover:duration-0",
+								// "group-hover:duration-0",
 								// Diff
 								"group-data-open:group-hover:duration-100",
 								"group-data-open:opacity-100",
