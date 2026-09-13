@@ -34,16 +34,23 @@ export function CommentsSection({
 	comments: Awaited<ReturnType<typeof getComments>>
 	session: Awaited<ReturnType<typeof verifySession>>
 }) {
-
-	const t = useTranslations("Comments")
+	// HOOKS
 	const router = useRouter()
+	// TRANSLATIONS
+	const t = useTranslations("Comments")
 
+	// BOOLEANS
 	const [isReplying, setIsReplying] = useState<number | null>(null)
 
+	// PERMISSIONS
+	const userCanCreate = session?.permissions?.comments?.create?.access === "full"
+	const userCanUpdate = session?.permissions?.comments?.update?.access === "full"
+	const userCanDelete = session?.permissions?.comments?.delete?.access === "full"
 
+	// RENDER
 	return <>
+		{/* Show the initial form if comments are allowed and it's not a reply */}
 		{page.allow_user_comments && !isReplying &&
-
 			<section className={clsx(
 				"mt-8",
 				"bg-base-1",
@@ -55,7 +62,9 @@ export function CommentsSection({
 						loginLink: (chunks) => <Link href="/login">{chunks}</Link>
 					})}</h4>
 				}
-
+				{!userCanCreate &&
+					<h4>{t("permission-no-comments")}</h4>
+				}
 				<CommentForm />
 
 			</section>
@@ -89,23 +98,24 @@ export function CommentsSection({
 								"p-4",
 							)
 						} >
-							<p>{c.user_created.username} commented on {c.date_created}:</p>
+							<p>{c.user_created.username} t("commented-on") {c.date_created}:</p>
 							{c.content}
 
 
 							{session && c.user_created.id == session.id &&
 								<>
-									<Button>
-										{t("edit-comment")}
-									</Button>
-									<Button>
-										{t("delete-comment")}
-									</Button>
+									{userCanUpdate &&
+										<Button>
+											{t("edit-comment")}
+										</Button>
+									}
+									{userCanDelete &&
+										<Button>
+											{t("delete-comment")}
+										</Button>
+									}
 								</>
 							}
-
-
-
 
 							{/* Only allow 1 level of replies */}
 							{c.children_comments &&
@@ -117,7 +127,8 @@ export function CommentsSection({
 								)}>
 									{c.children_comments.map((cc, cindex) => (
 										<li key={cindex}>
-											<p>{cc.user_created.username} commented on {cc.date_created}:</p>
+											{/* TODO: Dictionaries */}
+											<p>{cc.user_created.username} t("commented-on") {cc.date_created}:</p>
 											{cc.content}
 										</li>
 									))}
@@ -185,7 +196,9 @@ export function CommentsSection({
 				action={action}
 				noValidate
 			>
-				<Field disabled={session ? false : true}>
+				<Field disabled={
+					userCanCreate
+						? false : true}>
 					<label
 						htmlFor={fields.content.name}
 						className={clsx(

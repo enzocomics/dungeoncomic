@@ -21,6 +21,7 @@
 	},
 	"Comments": {
 		"please-login-to-comment": "Please <loginLink>log in</loginLink> to post a comment!",
+		"permission-no-comments": "You do not have permission to post comments.",
 		"write-comment": "Write a Comment",
 		"submit-comment": "Submit Comment",
 		"edit-comment": "Edit Comment",
@@ -29,7 +30,8 @@
 		"cancel-reply": "Cancel Reply",
 		"reply-to": "Reply to ",
 		"submit-reply": "Submit Reply",
-		"comments": "Comments"
+		"comments": "Comments",
+		"commented-on": "commented on"
 	},
 	"auth": {
 		"pages": {

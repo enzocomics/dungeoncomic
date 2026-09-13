@@ -61,6 +61,6 @@ export const verifySession = cache(async () => {
 
 		return mergedObject
 	} catch {
-		return false
+		return null
 	}
 })
