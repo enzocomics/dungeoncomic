@@ -1,24 +1,27 @@
 "use client"
 /**----------------------------------- */
+// LIBRARIES
+import { ComponentPropsWithoutRef, useActionState, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { useForm } from "@conform-to/react"
+import { Button, Field, } from "@headlessui/react"
 // FUNCTIONS
 import clsx from "clsx"
+// I18N
+import { useTranslations } from "next-intl"
 // DATA
 import { verifySession } from "@/data/session"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
-// UI
-import { Button, Field, } from "@headlessui/react"
-import { ErrorMessage } from "@/components/catalyst/fieldset"
-// import { Textarea } from "@/components/catalyst/textarea"
-import { Textarea } from "@/components/textarea"
-import { ComponentPropsWithoutRef, useActionState, useEffect, useState } from "react"
-import { useForm } from "@conform-to/react"
-import { parseWithZod } from "@conform-to/zod/v4"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
+// ACTIONS
 import { submitUserComment } from "../_actions/comments"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useTranslations } from "next-intl"
+// UI
+import { ErrorMessage } from "@/components/catalyst/fieldset"
+import { ComicButton, SmallComicButton } from "@/components/button"
+import { Textarea } from "@/components/textarea"
 
 
 /**-----------------------------------
@@ -53,7 +56,8 @@ export function CommentsSection({
 		{page.allow_user_comments && !isReplying &&
 			<section className={clsx(
 				"mt-8",
-				"py-6",
+				"pt-8",
+				"pb-12",
 				"bg-base-1",
 				"dark:bg-base-2",
 				"dark:shadow-none",
@@ -64,6 +68,7 @@ export function CommentsSection({
 				"flex",
 				"flex-col",
 				"items-center",
+
 			)}>
 				<div className={
 					clsx(
@@ -127,10 +132,6 @@ export function CommentsSection({
 						{comments.map((c, index) => (
 							<CommentListItem key={index} className={
 								clsx(
-									"bg-base-2/25",
-									"dark:bg-base-4/50",
-									"md:rounded",
-									"p-4",
 								)
 							} >
 								<p>{c.user_created.username} {t("commented-on")} {c.date_created}:</p>
@@ -182,18 +183,32 @@ export function CommentsSection({
 								{userCanCreate &&
 									<div className={
 										clsx(
-											"text-right"
+											"flex",
+											"flex-row",
 										)
 									}>
 										{(!isReplying || !(isReplying && isReplying == c.id)) &&
-											<Button onClick={() => {
-												setIsReplying(c.id)
-											}}>{t("reply")}</Button>
+											<SmallComicButton
+												onClick={() => {
+													setIsReplying(c.id)
+												}}
+												icon={{ name: "reply", position: "right" }}
+												className="ml-auto"
+											>
+												{t("reply")}
+											</SmallComicButton>
 										}
 										{isReplying && isReplying == c.id &&
-											<Button onClick={() => {
-												setIsReplying(null)
-											}}>{t("cancel-reply")}</Button>
+											<SmallComicButton
+												onClick={() => {
+													setIsReplying(null)
+												}}
+												icon={{ name: "xmark", position: "right" }}
+												color="red"
+												className="ml-auto"
+											>
+												{t("cancel-reply")}
+											</SmallComicButton>
 										}
 									</div>
 								}
@@ -238,6 +253,10 @@ export function CommentsSection({
 			}
 		}, [lastResult])
 
+
+		// Textarea length checker
+		const [inputLength, setInputLength] = useState(0)
+
 		return <>
 			<form
 				id={form.id}
@@ -247,6 +266,7 @@ export function CommentsSection({
 				className={
 					clsx(
 						"w-full",
+						"animate-fade-in",
 					)
 				}
 			>
@@ -257,6 +277,7 @@ export function CommentsSection({
 					}
 					className={
 						clsx(
+							"relative",
 							"w-full",
 						)
 					}
@@ -264,20 +285,41 @@ export function CommentsSection({
 					<label
 						htmlFor={fields.content.name}
 						className={clsx(
+							"relative",
+							"block",
 							"font-comic-header",
 							"font-semibold",
-							"text-lg",
+							"text-xl",
+							"pb-2",
 						)}
 					>
 						{/* TODO: reply to "username" */}
 						{isReplying ? `${t("reply-to")} ${isReplying}` : t("write-comment")}
 					</label>
+					{/* Length Checker */}
+					<span className={clsx(
+						"absolute",
+						"top-2.5",
+						"right-0",
+						"ml-auto",
+						"font-comic-header",
+						"font-normal",
+						"text-xs",
+						"text-current/50"
+					)}>
+						{`${inputLength}/1024`}{/* TODO: should this be hardcoded? */}
+
+					</span>
 					<Textarea
 						id={fields.content.name}
 						name={fields.content.name}
 						key={fields.content.key}
 						className={clsx(
 						)}
+						maxLength={1024}
+						onChange={(e) => {
+							setInputLength(e.target.value.length)
+						}}
 					/>
 					<ErrorMessage>{fields.content.errors}</ErrorMessage>
 					{session &&
@@ -302,9 +344,9 @@ export function CommentsSection({
 						</>
 					}
 				</Field>
-				<Button type="submit">
+				<ComicButton as="button" type="submit">
 					{isReplying ? t("submit-reply") : t("submit-comment")}
-				</Button>
+				</ComicButton>
 			</form>
 		</>
 	}
@@ -324,6 +366,14 @@ function CommentListItem(props: ComponentPropsWithoutRef<"li">) {
 	return (
 		<li
 			{...props}
+			className={
+				clsx(
+					props.className,
+					"p-4",
+					"bg-neutral-100",
+					"dark:bg-neutral-800/40",
+				)
+			}
 		>
 			{props.children}
 		</li>
