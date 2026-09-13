@@ -30,8 +30,7 @@
 		"cancel-reply": "Cancel Reply",
 		"reply-to": "Reply to ",
 		"submit-reply": "Submit Reply",
-		"comments": "Comments",
-		"commented-on": "commented on"
+		"comments": "Comments"
 	},
 	"auth": {
 		"pages": {

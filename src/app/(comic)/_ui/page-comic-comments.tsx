@@ -25,6 +25,7 @@ import { Textarea } from "@/components/textarea"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
+import { detailedDate, relativeDate } from "@/lib/dayjs"
 
 
 /**-----------------------------------
@@ -504,17 +505,20 @@ export function CommentsSection({
 						</strong>
 						<span className={
 							clsx(
-
-								"italic"
 							)
-						}>{t("commented-on")}
+						}>
+							·
 						</span>
-						<span className={
-							clsx(
-
-							)
-						}>{c.date_created}:
-						</span>
+						<time
+							dateTime={new Date(c.date_created).toISOString()}
+							title={detailedDate(new Date(c.date_created))}
+							className={
+								clsx(
+									"cursor-help"
+								)
+							}>
+							{relativeDate(new Date(c.date_created))}
+						</time>
 					</div>
 					<div className={
 						clsx(
