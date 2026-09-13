@@ -1269,12 +1269,15 @@ export default function ComicPageUI({
 									}
 									{/* PANEL TEXT */}
 									<div className={clsx(
-										// "py-6",
+										"py-6",
 										"px-6",
 										"prose",
-										"text-base",
+										"text-base/loose",
+										"lg:text-lg/loose",
 										"max-w-prose",
 										"mx-auto",
+										"text-left",
+										"text-pretty",
 
 									)}
 										// TODO: You better freakin' sanitize this
