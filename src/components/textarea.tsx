@@ -50,7 +50,7 @@ export const Textarea = forwardRef(function Textarea({
 				"text-black",
 				// TEXT
 				"font-platform-mono",
-				"font-base",
+				"text-base",
 				"resize-none",
 				// Outline
 				"outline-transparent",

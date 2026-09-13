@@ -204,8 +204,9 @@ export function CommentsSection({
 													clsx(
 														"first:mt-4",
 														"last:mb-4",
-														"pb-4",
+														"pb-8",
 														"relative",
+														"rounded",
 														"bg-neutral-100",
 														"dark:bg-neutral-800/50",
 														"before:absolute",
