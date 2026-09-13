@@ -12,6 +12,7 @@ import { comicMetadata } from "./_ui/metadata"
 import { HomepagePageUI } from "./_ui/page-home"
 import { ComicLandingPageUI } from "./_ui/page-comic"
 import { Suspense } from "react"
+import { verifySession } from "@/data/session"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -32,6 +33,8 @@ export default async function Homepage() {
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	//GET THE SESSION
+	const session = await verifySession()
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		// FETCH COMIC DATA
@@ -42,7 +45,9 @@ export default async function Homepage() {
 		switch (landing_page) {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
-				return <Suspense><ComicLandingPageUI comic={comic} /></Suspense>
+				return <Suspense>
+					<ComicLandingPageUI comic={comic} session={session} />
+				</Suspense>
 			// REDIRECT TO FIRST PAGE
 			case "first-page":
 				redirect(`1`, RedirectType.replace)
@@ -56,7 +61,9 @@ export default async function Homepage() {
 	}
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else {
-		return <Suspense><HomepagePageUI /></Suspense>
+		return <Suspense>
+			<HomepagePageUI session={session} />
+		</Suspense>
 	}
 
 }

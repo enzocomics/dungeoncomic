@@ -10,11 +10,14 @@ import { useTranslations } from "next-intl"
 // UI
 import { useChangeStatus } from "@/components/status-message"
 import NavMenu from "./site-nav"
+import { verifySession } from "@/data/session"
 /**-----------------------------------
  * HOMEPAGE PAGE UI
  * ---
  */
-export function HomepagePageUI() {
+export function HomepagePageUI({ session }: {
+	session?: Awaited<ReturnType<typeof verifySession>>
+}) {
 	// STATUS MESSAGE
 	const setStatus = useChangeStatus("")
 	// I18N
@@ -23,6 +26,7 @@ export function HomepagePageUI() {
 	// Get the url search param
 	const params = useSearchParams()
 	const urlStatus = params.get("status")
+	// Get the user session
 
 	// Display the status notification
 	useEffect(() => {
@@ -72,7 +76,7 @@ export function HomepagePageUI() {
 					"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
 					"xl:[-webkit-mask-composite:source-in]",
 				)} />
-			<NavMenu menu={false} />
+			<NavMenu menu={false} session={session} />
 			<main className={clsx(
 				"mx-auto",
 				"max-w-6xl",

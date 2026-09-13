@@ -44,6 +44,8 @@ export default async function RoutePage({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	// Get the user session
+	const session = await verifySession()
 
 	/**----------------------------------- */
 	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS A STRING/NOT A NUMBER
@@ -61,8 +63,6 @@ export default async function RoutePage({
 		// 404 if it does not exist
 		if (!page) notFound()
 
-		// Get the user session
-		const session = await verifySession()
 		// Get the User Variable Cookie
 		const comic = await getComic(frontpage_comic.slug)
 		const userVariables = await getUserVarsCookie({ comic: comic })
@@ -109,7 +109,7 @@ export default async function RoutePage({
 		switch (landing_page) {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
-				return <ComicLandingPageUI comic={comic} />
+				return <ComicLandingPageUI comic={comic} session={session} />
 			// REDIRECT TO FIRST PAGE
 			case "first-page":
 				redirect(`${route}/1`, RedirectType.replace)

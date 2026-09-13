@@ -46,9 +46,11 @@ export type ComicPageUIProps = {
  * ---
  */
 export function ComicLandingPageUI({
-	comic
+	comic,
+	session
 }: {
 	comic: Awaited<ReturnType<typeof getComic>>
+	session?: Awaited<ReturnType<typeof verifySession>>
 }) {
 	return <>
 		<div className={clsx(

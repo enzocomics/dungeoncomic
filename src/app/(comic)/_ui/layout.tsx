@@ -103,7 +103,7 @@ export function ComicLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu menu={!isFrontpageComic && true} />
+			<NavMenu session={session} menu={!isFrontpageComic && true} />
 			{/* Hide the navmenu if it's the frontpagecomic
 				- #TODO: In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
 			*/}
