@@ -1269,7 +1269,7 @@ export default function ComicPageUI({
 									}
 									{/* PANEL TEXT */}
 									<div className={clsx(
-										"py-6",
+										// "py-6",
 										"px-6",
 										"prose",
 										"text-base",
