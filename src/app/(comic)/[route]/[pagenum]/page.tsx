@@ -83,6 +83,8 @@ export default async function ComicPagenumPage({
 				page={comicPage}
 				comments={comments}
 				session={session}
+				variables={variables}
+				userVariables={userVariables}
 			/>
 
 		</>

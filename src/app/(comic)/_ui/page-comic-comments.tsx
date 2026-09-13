@@ -7,13 +7,15 @@ import Link from "next/link"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
 import { Button, Field, } from "@headlessui/react"
+import { marked } from "marked"
+import DOMPurify from "isomorphic-dompurify"
 // FUNCTIONS
 import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // DATA
 import { verifySession } from "@/data/session"
-import { getComicPage } from "@/lib/directus/get-comics"
+import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
 // ACTIONS
@@ -26,6 +28,7 @@ import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
+import replaceComicVariables from "../_functions/replace-comic-vars"
 
 
 /**-----------------------------------
@@ -35,11 +38,15 @@ import { detailedDate, relativeDate } from "@/lib/dayjs"
 export function CommentsSection({
 	page,
 	comments,
-	session
+	session,
+	variables,
+	userVariables
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	comments: Awaited<ReturnType<typeof getComments>>
 	session: Awaited<ReturnType<typeof verifySession>>
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
 }) {
 	// HOOKS
 	const router = useRouter()
@@ -53,7 +60,6 @@ export function CommentsSection({
 	const userCanCreate = session?.permissions?.comments?.create?.access === "full"
 	const userCanUpdate = session?.permissions?.comments?.update?.access === "full"
 	const userCanDelete = session?.permissions?.comments?.delete?.access === "full"
-
 	// RENDER
 	return <>
 		{/* ROOT COMMENT FORM */}
@@ -545,9 +551,21 @@ export function CommentsSection({
 							"col-span-2",
 							"lg:col-span-1",
 						)
-					}>
-						{c.content}
-					</div>
+					}
+						dangerouslySetInnerHTML={{
+							__html:
+								replaceComicVariables({
+									content: DOMPurify.sanitize(
+										String(
+											marked.parse(c.content)
+										)
+									),
+									variables: variables,
+									userVariables: userVariables
+								}),
+
+						}} />
+
 				</section>
 				{props.children}
 			</li>

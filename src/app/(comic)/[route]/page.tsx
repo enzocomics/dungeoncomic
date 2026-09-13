@@ -88,6 +88,8 @@ export default async function RoutePage({
 					page={comicPage}
 					comments={comments}
 					session={session}
+					variables={variables}
+					userVariables={userVariables}
 				/>
 
 			</>
