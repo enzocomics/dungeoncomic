@@ -36,6 +36,7 @@ export default function NavMenu({
 	const router = useRouter()
 	const { theme, setTheme } = useTheme()
 
+	// TODO: These are all hardcoded & should be in the dictionaries
 	const comicNavigation = [
 		{ name: 'Home', href: './', current: true },
 		{ name: 'About', href: './about', current: false },
@@ -44,6 +45,7 @@ export default function NavMenu({
 	const navigation = [
 		{ name: 'Dungeon Construction Co.', href: '/', current: false },
 	]
+
 
 	const accountMenuNavigation = session ? [
 		{ name: "Edit Profile", href: "/dashboard" },
@@ -212,6 +214,7 @@ export default function NavMenu({
 								)} />
 						</span>
 						{/* BUTTON LABELS (FOR SCREENREADERS) */}
+						{/* TODO: Dictionaries */}
 						<span className="sr-only group-data-open:hidden">Open Main Navigation</span>
 						<span className="hidden group-data-open:sr-only">Close Main Navigation</span>
 					</PopoverButton>
@@ -298,6 +301,7 @@ export default function NavMenu({
 									))}
 								</section>
 								{/* PLATFORM MENU */}
+								{/* TODO: Unfinished for sites with no frontpage comic set */}
 								<section className={
 									clsx(
 										"bg-base-2/20",
@@ -357,6 +361,7 @@ export default function NavMenu({
 						"focus:outline-offset-2",
 						"focus:outline-comic-accent-500",
 					)}>
+						{/* TODO: Dictionaries */}
 						<span className="sr-only group-data-open:hidden">Open user menu</span>
 						<span className="hidden group-data-open:sr-only">Close user menu</span>
 						<span className={
@@ -535,7 +540,11 @@ export default function NavMenu({
 											"ease-in-out",
 											"duration-300",
 										)}
-									>Log out</a>
+
+									>
+										{/* TODO: Dictionaries */}
+										Log out
+									</a>
 								}
 							</section>
 							{/* MODE TOGGLER */}
@@ -551,7 +560,6 @@ export default function NavMenu({
 							}>
 								<div className={
 									clsx(
-
 										"p-1",
 										"gap-x-1",
 										"items-center",
