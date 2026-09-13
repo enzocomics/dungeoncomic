@@ -296,9 +296,19 @@ export function CommentsSection({
 									</div>
 								}
 								{isReplying && isReplying == c.id &&
-
-									<CommentForm />
-
+									<div className={
+										clsx(
+											"m-4",
+											"mt-0",
+											"rounded",
+											"bg-base-1",
+											"dark:bg-base-2",
+											"p-4",
+											"animate-fade-in",
+										)
+									}>
+										<CommentForm />
+									</div>
 								}
 
 							</CommentListItem>
@@ -372,12 +382,14 @@ export function CommentsSection({
 							"block",
 							"font-comic-header",
 							"font-semibold",
-							"text-xl",
+							isReplying
+								? "text-base"
+								: "text-xl",
 							"pb-2",
 						)}
 					>
-						{/* TODO: reply to "username" */}
-						{isReplying ? `${t("reply-to")} ${isReplying}` : t("write-comment")}
+						{/* Reply to "username" */}
+						{isReplying ? `${t("reply-to")} ${comments.find(comment => comment.id === isReplying)?.user_created.username}` : t("write-comment")}
 					</label>
 					{/* Length Checker */}
 					<span className={clsx(

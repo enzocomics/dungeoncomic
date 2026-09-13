@@ -40,8 +40,7 @@ export function SmallComicButton({
 				"text-xs",
 				// Appearance
 				"rounded-sm",
-				"bg-base-1",
-				"border",
+				"border-y-2",
 				// States
 				"hover:duration-0",
 				"active:translate-px",
@@ -52,19 +51,21 @@ export function SmallComicButton({
 				// Media Queries
 				"lg:text-sm",
 				// Colors
+				"text-white",
 				color == "red" ? [
-					"border-red-200/50",
-					"text-red-700",
-					"bg-red-100/50",
-					"hover:text-red-700",
-					"hover:border-red-300/50",
-					"hover:bg-red-200",
+					"bg-red-500",
+					"border-t-red-400",
+					"border-b-red-600",
+					"hover:bg-red-600",
+					"hover:border-t-red-500",
+					"hover:border-b-red-700",
 				] : [
-					"border-base-2/50",
-					"text-base-content/50",
-					"hover:text-comic-accent-500",
-					"hover:border-comic-accent-500/10",
-					"hover:bg-comic-accent-100",
+					"bg-comic-accent-500",
+					"border-t-comic-accent-400",
+					"border-b-comic-accent-600",
+					"hover:bg-comic-accent-600",
+					"hover:border-t-comic-accent-500",
+					"hover:border-b-comic-accent-700",
 				]
 			)
 		}
