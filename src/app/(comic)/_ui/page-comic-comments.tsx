@@ -53,7 +53,7 @@ export function CommentsSection({
 		{page.allow_user_comments && !isReplying &&
 			<section className={clsx(
 				"mt-8",
-				"p-4",
+				"py-6",
 				"bg-base-1",
 				"dark:bg-base-2",
 				"dark:shadow-none",
@@ -61,36 +61,53 @@ export function CommentsSection({
 				"dark:-outline-offset-1",
 				"dark:outline-base-5/50",
 				"md:rounded",
+				"flex",
+				"flex-col",
+				"items-center",
 			)}>
-				{!session &&
-					<h4>{t.rich("please-login-to-comment", {
-						loginLink: (chunks) => <Link href="/login">{chunks}</Link>
-					})}</h4>
+				<div className={
+					clsx(
+						"px-6",
+						"mx-auto",
+						"w-full",
+						"max-w-2xl",
+					)
 				}
-				{!userCanCreate &&
-					<h4>{t("permission-no-comments")}</h4>
-				}
-				<CommentForm />
-
+				>
+					{!session &&
+						<h4>{t.rich("please-login-to-comment", {
+							loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+						})}</h4>
+					}
+					{!userCanCreate &&
+						<h4>{t("permission-no-comments")}</h4>
+					}
+					<CommentForm />
+				</div>
 			</section>
 		}
 		{
 			comments && comments.length > 0 &&
 			<section className={clsx(
 				"mt-8",
-				"p-4",
+				"py-6",
 				"bg-base-1",
 				"dark:bg-base-2",
 				"dark:shadow-none",
 				"dark:outline",
 				"dark:-outline-offset-1",
 				"dark:outline-base-5/50",
+				"md:rounded",
+				"flex",
+				"flex-col",
+				"items-center",
 			)}>
 				<div className={
 					clsx(
-						"flex",
-						"flex-col",
-						"items-center",
+						"px-6",
+						"mx-auto",
+						"w-full",
+						"max-w-2xl",
 					)
 				}
 				>
@@ -99,12 +116,10 @@ export function CommentsSection({
 						"font-comic-header",
 						"font-semibold",
 						"w-full",
-						"max-w-3xl",
 					)}>{t("comments")} ({comments.length})</h1>
 
 					<CommentList className={clsx(
 						"w-full",
-						"max-w-3xl",
 						"flex",
 						"flex-col",
 						"gap-2",
@@ -118,7 +133,7 @@ export function CommentsSection({
 									"p-4",
 								)
 							} >
-								<p>{c.user_created.username} t("commented-on") {c.date_created}:</p>
+								<p>{c.user_created.username} {t("commented-on")} {c.date_created}:</p>
 								{c.content}
 
 
@@ -157,7 +172,7 @@ export function CommentsSection({
 												)
 											}>
 												{/* TODO: Dictionaries */}
-												<p>{cc.user_created.username} t("commented-on") {cc.date_created}:</p>
+												<p>{cc.user_created.username} {t("commented-on")} {cc.date_created}:</p>
 												{cc.content}
 											</li>
 										))}
@@ -231,9 +246,7 @@ export function CommentsSection({
 				noValidate
 				className={
 					clsx(
-						"flex",
-						"flex-col",
-						"items-center",
+						"w-full",
 					)
 				}
 			>
@@ -245,7 +258,6 @@ export function CommentsSection({
 					className={
 						clsx(
 							"w-full",
-							"max-w-3xl",
 						)
 					}
 				>
