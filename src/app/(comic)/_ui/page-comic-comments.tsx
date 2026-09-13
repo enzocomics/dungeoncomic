@@ -55,7 +55,7 @@ export function CommentsSection({
 
 	// RENDER
 	return <>
-		{/* Show the initial form if comments are allowed and it's not a reply */}
+		{/* ROOT COMMENT FORM */}
 		{page.allow_user_comments && !isReplying &&
 			<section className={
 				clsx(
@@ -85,20 +85,21 @@ export function CommentsSection({
 				>
 					{!session &&
 						// "You are not logged in" Message
-						<h4>
+						<h1>
 							{t.rich("please-login-to-comment", {
 								loginLink: (chunks) => <Link href="/login">{chunks}</Link>
 							})}
-						</h4>
+						</h1>
 					}
 					{!userCanCreate &&
 						// You don't have permissions" Message
-						<h4>{t("permission-no-comments")}</h4>
+						<h1>{t("permission-no-comments")}</h1>
 					}
 					<CommentForm />
 				</div>
 			</section>
 		}
+		{/* COMMENT LIST SECTION */}
 		{
 			comments && comments.length > 0 &&
 			<section className={clsx(
@@ -228,21 +229,15 @@ export function CommentsSection({
 														"before:border-t-4",
 														"before:border-neutral-300",
 														"dark:before:border-neutral-900",
-
-														// "p-4",
-														// "bg-base-2/25",
-														// "dark:bg-base-4/50",
-														// "rounded",
 													)
 												}>
-													{/* TODO: Dictionaries */}
-
 												</CommentListItem>
 											))}
 										</CommentList>
 									</div>
 								}
 
+								{/* REPLY BUTTON */}
 								{userCanCreate &&
 									<div className={
 										clsx(
@@ -292,7 +287,6 @@ export function CommentsSection({
 										<CommentForm />
 									</div>
 								}
-
 							</CommentListItem>
 
 						))}
@@ -453,7 +447,7 @@ export function CommentsSection({
 						"grid",
 						"grid-cols-[24px_1fr]",
 						"grid-rows-[24px_1fr]",
-						"gap-x-3",
+						"gap-x-2",
 						"gap-y-2",
 						"lg:grid-cols-[48px_1fr]",
 						"lg:grid-rows-[48p_1fr]",
@@ -499,9 +493,28 @@ export function CommentsSection({
 							"text-base-content/50",
 							"flex",
 							"items-center",
+							"gap-x-1",
 						)
 					}>
-						{c.user_created.username} {t("commented-on")} {c.date_created}:
+						<strong className={
+							clsx(
+							)
+						}>
+							{c.user_created.username}
+						</strong>
+						<span className={
+							clsx(
+
+								"italic"
+							)
+						}>{t("commented-on")}
+						</span>
+						<span className={
+							clsx(
+
+							)
+						}>{c.date_created}:
+						</span>
 					</div>
 					<div className={
 						clsx(
