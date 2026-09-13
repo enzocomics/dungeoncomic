@@ -1305,37 +1305,41 @@ export default function ComicPageUI({
 									{/* VARIABLES */}
 									{p.variables && p.variables.length > 0 ?
 										<ComicInputSection>
-											{p.variables.map((v, vIndex) =>
+											{p.variables.map((v, vIndex) => {
+												const vField = userVarsFields[`var${v.id}`]
 												// RENDER
-												<Field key={vIndex}>
+												return <Field key={vIndex}>
 													<ComicInputSectionRow
 														as="label"
-														htmlFor={userVarsFields[`var${v.id}`].id}
+														htmlFor={vField.id}
 														className={clsx(
 															"cursor-pointer",
 															"flex",
 															"flex-col",
-															"hover:bg-neutral-200/60",
-															"dark:hover:bg-neutral-900",
+															"hover:bg-comic-accent-100/50",
 															"outline-transparent",
 															"outline-4",
 															"focus-within:-outline-offset-4",
 															"focus-within:outline-4",
 															"focus-within:outline-comic-accent-500",
 															// 
-															userVarsFields[`var${v.id}`].errors ? [
+															vField.errors ? [
 																"focus-within:outline-red-500",
-																"dark:bg-red-500/40",
-																"dark:focus-within:bg-red-500/60",
+																"bg-red-100/40",
+																"hover:bg-red-100/50",
+																"dark:bg-red-500/10",
+																"dark:hover:bg-red-500/20",
+																"dark:focus-within:bg-red-500/30",
 																"dark:outline-red-500/0",
 																"dark:focus-within:outline-red-500",
 															] : [
 																"dark:bg-neutral-800/40",
+																"dark:hover:bg-comic-accent-500/10",
 																"dark:hover:focus-within:bg-comic-accent-800",
 																"outline-comic-accent-500/0",
 															],
 
-															"dark:hover:bg-comic-accent-500",
+															// "dark:hover:bg-comic-accent-500",
 															// Transition
 															"hover:duration-0",
 															"transition-all",
@@ -1359,6 +1363,7 @@ export default function ComicPageUI({
 																	"lg:text-lg",
 																	"font-comic-header",
 																	"font-semibold",
+																	vField.errors && "text-red-500",
 																)}>
 																{v.prompt || `${v.name}`}
 															</span>
@@ -1369,7 +1374,10 @@ export default function ComicPageUI({
 																"text-xs",
 																"lg:text-sm",
 																"font-comic-header",
-																"text-current/50"
+																vField.errors
+																	? "text-red-500/50"
+																	: "text-current/50"
+																,
 															)}>
 																{`${inputStates[v.id].value_length}/32`}{/* TODO: should this be hardcoded? */}
 
@@ -1399,7 +1407,7 @@ export default function ComicPageUI({
 																	"bottom-1/2",
 																	"translate-y-1/2",
 																	"size-4",
-																	userVarsFields[`var${v.id}`].errors ? [
+																	vField.errors ? [
 																		"text-red-500",
 																	] : [
 																		"text-neutral-400",
@@ -1430,15 +1438,14 @@ export default function ComicPageUI({
 																	"max-w-full",
 																	// Appearance
 																	(v.value_prefix || v.value_suffix) && "border-b-2",
-																	"focus:text-comic-accent-500",
 																	"focus:border-b-comic-accent-800",
 																	"focus:outline-none",
 																	"dark:selection:bg-comic-accent-300",
 																	"dark:selection:text-white",
 																	"text-black",
-																	// ERRORS
+																	// ERRORS w/ PREFIX/SUFFIX
 																	(v.value_prefix || v.value_suffix)
-																		&& userVarsFields[`var${v.id}`].errors ? [
+																		&& vField.errors ? [
 																		"outline-2",
 																		"outline-red-500",
 																		"-outline-offset-2",
@@ -1448,6 +1455,12 @@ export default function ComicPageUI({
 																		"focus:rounded-none",
 																	] : [
 																		"border-b-black",
+																	],
+																	// ERRORS 
+																	vField.errors ? [
+																		"focus:text-red-500",
+																	] : [
+																		"focus:text-comic-accent-500",
 																	],
 																	"transition-all",
 																	"scale-100",
@@ -1459,8 +1472,8 @@ export default function ComicPageUI({
 																	inputRefs.current[vIndex] = i
 																}}
 																maxLength={32}
-																id={userVarsFields[`var${v.id}`].id}
-																name={userVarsFields[`var${v.id}`].name}
+																id={vField.id}
+																name={vField.name}
 																type="text"
 
 																value={inputStates[v.id].value}
@@ -1493,10 +1506,11 @@ export default function ComicPageUI({
 														<ComicErrorMessage className={clsx(
 															"mt-1",
 														)}>
-															{userVarsFields[`var${v.id}`].errors}
+															{vField.errors}
 														</ComicErrorMessage>
 													</ComicInputSectionRow>
 												</Field>
+											}
 											)}
 										</ComicInputSection>
 										: null}
