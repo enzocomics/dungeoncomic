@@ -202,7 +202,7 @@ export default function ComicPageUI({
 				"backdrop-blur-xl",
 				"text-green-500",
 				"p-4",
-				"font-mono",
+				"font-platform-mono",
 			)}>
 			<p><strong>prevpage in state:</strong> {comicPreviousPage.pagenum}</p>
 			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
@@ -1396,7 +1396,7 @@ export default function ComicPageUI({
 																"bg-white",
 																"text-sm",
 																"text-left",
-																"font-mono",
+																"font-platform-mono",
 																"rounded",
 															)}
 														>
@@ -2114,7 +2114,7 @@ export default function ComicPageUI({
 													"content-center",
 													"bg-neutral-100",
 													"rounded",
-													"font-mono",
+													"font-platform-mono",
 													"dark:bg-neutral-900/40",
 													"min-w-12",
 												)

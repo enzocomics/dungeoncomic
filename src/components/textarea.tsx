@@ -49,7 +49,7 @@ export const Textarea = forwardRef(function Textarea({
 				"bg-white",
 				"text-black",
 				// TEXT
-				"font-mono",
+				"font-platform-mono",
 				"font-base",
 				"resize-none",
 				// Outline

@@ -6,6 +6,7 @@ import {
 	Caesar_Dressing,
 	Comic_Neue,
 	Germania_One,
+	Google_Sans_Code,
 	Great_Vibes,
 	Inter,
 	Lexend,
@@ -13,6 +14,7 @@ import {
 	Manufacturing_Consent,
 	Montserrat,
 	Press_Start_2P,
+	Roboto_Mono,
 	Sancreek,
 	Uncial_Antiqua,
 } from "next/font/google"
@@ -82,6 +84,15 @@ export const greatVibes = Great_Vibes({
 	fallback: ["cursive"],
 })
 
+export const googleSansCode = Google_Sans_Code({
+	subsets: ["latin", "latin-ext"],
+	weight: "400",
+	style: ["normal"],
+	display: "swap",
+	variable: "--font-google-sans-code",
+	fallback: ["mono"],
+})
+
 export const inter = Inter({
 	subsets: ["latin", "latin-ext"],
 	weight: "variable",
@@ -136,6 +147,15 @@ export const pressStart2P = Press_Start_2P({
 	fallback: ["sans-serif"],
 })
 
+export const robotoMono = Roboto_Mono({
+	subsets: ["latin", "latin-ext"],
+	weight: ["400"],
+	style: ["normal"],
+	display: "swap",
+	variable: "--font-roboto-mono",
+	fallback: ["mono"],
+})
+
 export const sancreek = Sancreek({
 	subsets: ["latin", "latin-ext"],
 	weight: ["400"],
@@ -161,6 +181,7 @@ export const fonts = {
 		font: atkinsonHyperlegible,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Bebas_Neue: {
 		name: "Bebas Neue",
@@ -168,6 +189,7 @@ export const fonts = {
 		font: bebasNeue,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Chicle: {
 		name: "Chicle",
@@ -175,6 +197,7 @@ export const fonts = {
 		font: chicle,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Caesar_Dressing: {
 		name: "Caesar Dressing",
@@ -182,6 +205,7 @@ export const fonts = {
 		font: caesarDressing,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Comic_Neue: {
 		name: "Comic Neue",
@@ -189,6 +213,7 @@ export const fonts = {
 		font: comicNeue,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Germania_One: {
 		name: "Germania One",
@@ -196,6 +221,15 @@ export const fonts = {
 		font: germaniaOne,
 		copy: false,
 		display: true,
+		mono: false,
+	},
+	Google_Sans_Code: {
+		name: "Google Sans Code",
+		slug: "google-sans-code",
+		font: googleSansCode,
+		copy: true,
+		display: false,
+		mono: true,
 	},
 	Great_Vibes: {
 		name: "Great Vibes",
@@ -203,6 +237,7 @@ export const fonts = {
 		font: greatVibes,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Inter: {
 		name: "Inter",
@@ -210,6 +245,7 @@ export const fonts = {
 		font: inter,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Lexend: {
 		name: "Lexend",
@@ -217,6 +253,7 @@ export const fonts = {
 		font: lexend,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Lora: {
 		name: "Lora",
@@ -224,6 +261,7 @@ export const fonts = {
 		font: lora,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Manufacturing_Consent: {
 		name: "Manufacturing Consent",
@@ -231,6 +269,7 @@ export const fonts = {
 		font: manufacturingConsent,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Montserrat: {
 		name: "Montserrat",
@@ -238,6 +277,7 @@ export const fonts = {
 		font: montserrat,
 		copy: true,
 		display: true,
+		mono: false,
 	},
 	Press_Start_2P: {
 		name: "Press Start 2P",
@@ -245,6 +285,15 @@ export const fonts = {
 		font: pressStart2P,
 		copy: true,
 		display: true,
+		mono: false,
+	},
+	Roboto_Mono: {
+		name: "Roboto Mono",
+		slug: "roboto-mono",
+		font: robotoMono,
+		copy: true,
+		display: false,
+		mono: true,
 	},
 	Sancreek: {
 		name: "Sancreek",
@@ -252,6 +301,7 @@ export const fonts = {
 		font: sancreek,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 	Uncial_Antiqua: {
 		name: "Uncial Antiqua",
@@ -259,6 +309,7 @@ export const fonts = {
 		font: uncialAntiqua,
 		copy: false,
 		display: true,
+		mono: false,
 	},
 }
 
@@ -271,4 +322,8 @@ export const copyFonts = Object.fromEntries(
 
 export const displayFonts = Object.fromEntries(
 	Object.entries(fonts).filter(([key, font]) => font.display === true),
+)
+
+export const monoFonts = Object.fromEntries(
+	Object.entries(fonts).filter(([key, font]) => font.mono === true),
 )

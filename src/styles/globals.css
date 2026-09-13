@@ -71,6 +71,8 @@
 	--font-comic-header: var(--font-inter);
 	--font-comic-copy: var(--font-lora);
 
+	--font-platform-mono: var(--font-roboto-mono);
+
 	/* COLOR VARIABLE DEFINITIONS*/
 
 	--color-gray-100: #fefefe;

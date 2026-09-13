@@ -380,7 +380,7 @@ export function CommentsSection({
 								"bottom-4",
 								"left-4",
 								"cursor-not-allowed",
-								"font-mono",
+								"font-platform-mono",
 								"text-neutral-500",
 							)
 						}>
