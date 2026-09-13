@@ -48,6 +48,16 @@ export function CommentsSection({
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
 }) {
+
+	// Do not display marked images
+	marked.use({
+		renderer: {
+			image() {
+				return ""
+			}
+		}
+	})
+
 	// HOOKS
 	const router = useRouter()
 	// TRANSLATIONS
@@ -550,6 +560,7 @@ export function CommentsSection({
 						clsx(
 							"col-span-2",
 							"lg:col-span-1",
+							"prose",
 						)
 					}
 						dangerouslySetInnerHTML={{
@@ -561,7 +572,8 @@ export function CommentsSection({
 										)
 									),
 									variables: variables,
-									userVariables: userVariables
+									userVariables: userVariables,
+									html: true
 								}),
 
 						}} />

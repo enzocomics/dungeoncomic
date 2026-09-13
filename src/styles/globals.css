@@ -9,7 +9,69 @@
 );
 
 :root {
-	main a {
+	.comicVariable {
+		@apply px-1.5 py-px rounded font-platform-mono font-semibold text-comic-accent-800 dark:text-comic-accent-300 bg-black/5 dark:bg-black/40;
+	}
+
+	.prose {
+		p,
+		hr,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			@apply first:mt-0 last:mb-0 my-6;
+		}
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			@apply font-semibold font-comic-header;
+		}
+		h1 {
+			@apply text-3xl;
+		}
+		h2 {
+			@apply text-2xl;
+		}
+		h3 {
+			@apply text-xl;
+		}
+		h4 {
+			@apply text-lg;
+		}
+		h5 {
+			@apply text-base;
+		}
+		h6 {
+			@apply text-sm;
+		}
+		a {
+			@apply text-comic-accent-500 underline;
+		}
+		blockquote {
+			@apply rounded-r-sm border-l-6 border-comic-accent-500 px-4 py-6 bg-white italic text-current/60;
+		}
+
+		ol {
+			@apply pl-4 list-decimal;
+		}
+
+		ul {
+			@apply pl-4 list-disc;
+		}
+
+		code {
+			@apply px-1 py-0.5 rounded-xs font-platform-mono text-current/80 bg-black/10;
+		}
+
+		hr {
+			@apply h-0.5 border-none rounded-full bg-comic-accent-500/50;
+		}
 	}
 
 	/* DEFAULT ACCENT COLOUR: OLIVE */

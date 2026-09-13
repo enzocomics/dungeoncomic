@@ -21,22 +21,22 @@ export default function replaceComicVariables({
 	// Search through the conte t string for every instance of `[var:some-slug]`
 	return content
 		? content.replace(
-				/\[var:([a-zA-Z0-9_-]+)\]/g,
-				// Run every time there is a full match
-				(fullMatch, slug: string) => {
-					const variable = variablesBySlug.get(slug)
+			/\[var:([a-zA-Z0-9_-]+)\]/g,
+			// Run every time there is a full match
+			(fullMatch, slug: string) => {
+				const variable = variablesBySlug.get(slug)
 
-					// Fallback to default value
-					const value =
-						(userVariables && userVariables[slug]) ?? variable?.default_value
+				// Fallback to default value
+				const value =
+					(userVariables && userVariables[slug]) ?? variable?.default_value
 
-					// Keep unknown tags unchanged, or return "" if preferred
-					return value !== undefined
-						? html
-							? `<strong>${variable?.value_prefix ?? ""}${value}${variable?.value_suffix ?? ""}</strong>`
-							: value // TODO: markdown? classname? so we can target and style as needed
-						: fullMatch
-				},
-			)
+				// Keep unknown tags unchanged, or return "" if preferred
+				return value !== undefined
+					? html
+						? `<span class="comicVariable">${variable?.value_prefix ?? ""}${value}${variable?.value_suffix ?? ""}</span>`
+						: value // TODO: markdown? classname? so we can target and style as needed
+					: fullMatch
+			},
+		)
 		: ""
 }
