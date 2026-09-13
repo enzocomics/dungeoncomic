@@ -365,22 +365,49 @@ export default function NavMenu({
 								"size-8",
 							)
 						}>
-							<Icon name="skull" className={clsx(
-								"size-8",
-								"p-1.5",
-								"rounded-sm",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
-								"group-hover:duration-0",
-								// Diff
-								"opacity-100",
-								"text-white",
-								"bg-comic-accent-700",
-								"group-data-open:opacity-0",
-								"group-data-open:rotate-45",
-							)} />
+							{session && session.avatar &&
+								<Image
+									src={`${directusURL}/assets/${session.avatar.filename_disk}`}
+									alt={session.avatar.description || ""}
+									width={session.avatar.width || "64"}
+									height={session.avatar.height || "64"}
+									className={
+										clsx(
+											"size-8",
+
+											"rounded-sm",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"duration-300",
+											"group-hover:duration-0",
+											// Diff
+											"opacity-100",
+											"text-white",
+											"bg-comic-accent-700",
+											"group-data-open:opacity-0",
+										)
+									}
+								/>
+							}
+							{!session || (session && !session.avatar) &&
+								<Icon name="skull" className={clsx(
+									"size-8",
+									"p-1.5",
+									"rounded-sm",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
+									"group-hover:duration-0",
+									// Diff
+									"opacity-100",
+									"text-white",
+									"bg-comic-accent-700",
+									"group-data-open:opacity-0",
+									"group-data-open:rotate-45",
+								)} />
+							}
 							<Icon name="xmark" className={clsx(
 								"text-white",
 								"size-8",
@@ -402,6 +429,7 @@ export default function NavMenu({
 								"group-data-open:opacity-100",
 								"group-data-open:rotate-0",
 							)} />
+
 						</span>
 					</PopoverButton>
 
