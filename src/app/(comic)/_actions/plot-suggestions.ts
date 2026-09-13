@@ -50,37 +50,44 @@ export async function voteOnPlotSuggestion({
 			}),
 		)
 
+		const castNewVote = async () => {
+			const updateNewVote =
+				user &&
+				getNewVote &&
+				(await userClient.request(
+					updateItem("plot_suggestions", newVoteID, {
+						votes: getNewVote.votes + 1,
+						users_voted: {
+							update: [{ id: user.id }],
+						},
+					}),
+				))
+		}
+
 		// Check if the user has already voted on anything
 		const oldVote =
 			user &&
 			plotSuggestions.find((object) => object.users_voted.includes(user.id))
 
-		// If a vote already exists, remove the user from that old vote, and -1
+		// If a vote already exists, remove the user from that old vote FIRST before registering new vote
 		if (oldVote) {
 			const oldVoteNum = oldVote.votes - 1
-			const updateOldVote = await userClient.request(
-				updateItem("plot_suggestions", oldVote.id, {
-					users_voted: {
-						delete: [user.id],
-					},
-					votes: oldVote.votes - 1,
-				}),
-			)
+			const updateOldVote = await userClient
+				.request(
+					updateItem("plot_suggestions", oldVote.id, {
+						users_voted: {
+							delete: [user.id],
+						},
+						votes: oldVote.votes - 1,
+					}),
+				)
+				.then(castNewVote)
+		} else {
+			// otherwise, just cast the new vote
+			castNewVote()
 		}
 
-		const updateNewVote =
-			user &&
-			getNewVote &&
-			(await userClient.request(
-				updateItem("plot_suggestions", newVoteID, {
-					votes: getNewVote.votes + 1,
-					users_voted: {
-						update: [{ id: user.id }],
-					},
-				}),
-			))
-
-		return "yo"
+		// return "yo"
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
