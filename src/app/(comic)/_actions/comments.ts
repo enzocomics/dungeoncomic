@@ -4,6 +4,8 @@ import { userCommentSchema } from "@/lib/zod/schemas/comic"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { createItem } from "@directus/sdk"
 
+import DOMPurify from "isomorphic-dompurify"
+
 export async function submitUserComment(
 	prevState: unknown,
 	formData: FormData,
@@ -20,7 +22,7 @@ export async function submitUserComment(
 	try {
 		const addComment = await userClient.request(
 			createItem("comments", {
-				content: content,
+				content: DOMPurify.sanitize(content, { USE_PROFILES: { html: false } }),
 				parent_page: !parentCommentId ? pageId : null,
 				parent_comment: parentCommentId ?? null,
 			}),
