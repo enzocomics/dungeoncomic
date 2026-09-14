@@ -34,6 +34,7 @@ import Link from "next/link"
 import Icon from "@/styles/icons"
 import { Textarea } from "@/components/textarea"
 import { ComicButton } from "@/components/button"
+import { AuthLink } from "@/components/auth"
 
 
 /**----------------------------------- */
@@ -2079,7 +2080,7 @@ export default function ComicPageUI({
 									"text-2xl"
 								)}>
 								{t.rich("please-login-to-vote", {
-									loginLink: (chunks) => <Link href="/login">{chunks}</Link>
+									loginLink: (chunks) => <AuthLink modal="login">{chunks}</AuthLink>
 								})}
 							</div>
 						}

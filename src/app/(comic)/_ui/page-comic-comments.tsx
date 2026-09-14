@@ -29,6 +29,7 @@ import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 import replaceComicVariables from "../_functions/replace-comic-vars"
+import { AuthLink } from "@/components/auth"
 
 
 /**-----------------------------------
@@ -403,7 +404,7 @@ export function CommentsSection({
 						}>
 							{session && !userCanCreate && t("permission-no-comments")}
 							{!session && t.rich("please-login-to-comment", {
-								loginLink: (chunks) => <Link className="text-comic-accent-500" href="/login">{chunks}</Link>
+								loginLink: (chunks) => <AuthLink modal="login" className="text-comic-accent-500">{chunks}</AuthLink>
 							})}
 						</span>
 					}
