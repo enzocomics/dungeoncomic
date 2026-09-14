@@ -1346,7 +1346,7 @@ export default function ComicPageUI({
 											className={clsx(
 												"lg:mt-6",
 												"mx-auto",
-												firstLoad && "animate-fade-in"
+												// firstLoad && "animate-fade-in"
 											)}
 											src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
 											width={`${p.panel_image.width}`}
