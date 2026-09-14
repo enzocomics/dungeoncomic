@@ -55,6 +55,7 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>
+			<AuthModal />
 			{children}
 		</FrontpageLayoutUI>
 }
