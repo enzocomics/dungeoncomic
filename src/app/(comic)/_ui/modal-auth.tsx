@@ -16,18 +16,33 @@ export default function AuthModal() {
 
 	const router = useRouter()
 	const modalRef = useRef<HTMLDivElement>(null)
+	const backgroundRef = useRef<HTMLDivElement>(null)
 
 	// Close the modal if user clicks anywhere outside of it
 	const handleClick = (target: EventTarget) => {
+		// Wait for the Animation to end before unmounting the modal
+		const closeModal = (e: AnimationEvent) => {
+			if (e.animationName !== "fade-out") return
+			backgroundRef?.current?.removeEventListener("animationend", closeModal)
+			backgroundRef?.current?.classList.add("hidden")
+			// Unmount
+			setOpenAuthModal(null)
+		}
+
 		// Check if the click target is NOT the modal OR a descendant of it
 		if (target !== modalRef.current && !modalRef.current?.contains(target as Node)) {
-			setOpenAuthModal(null)
+			backgroundRef?.current?.classList.remove("animate-fade-in")
+			backgroundRef?.current?.classList.add("animate-fade-out")
+			backgroundRef?.current?.addEventListener("animationend", closeModal)
+
+			// setOpenAuthModal(null)
 		}
 	}
 
 	// RENDER
 	if (authModal) {
 		return <div
+			ref={backgroundRef}
 			onClick={(e) => handleClick(e.target)}
 			className={clsx(
 				"fixed",
@@ -36,6 +51,7 @@ export default function AuthModal() {
 				"w-screen",
 				"h-screen",
 				"bg-neutral-100/50",
+				"dark:bg-neutral-900/80",
 				"backdrop-blur-sm",
 				"pointer-events-auto",
 				"flex",
