@@ -5,7 +5,7 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 // AUTH + VALIDATION
 import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
@@ -21,6 +21,7 @@ import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import Link from "next/link"
 import { AuthLink } from "@/components/auth"
+import { useGlobalContext } from "@/app/_context"
 
 /** ------------------------------------------------ **
  * LOGIN FORM
@@ -29,6 +30,12 @@ export default function LoginPageUI() {
 	// I18N
 	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
+
+	// Get the authModal context
+	const { authModal, setOpenAuthModal } = useGlobalContext()
+
+	// Router 
+	const router = useRouter()
 
 	// VALIDATION
 	const [lastResult, action] = useActionState(login, undefined)
@@ -60,13 +67,27 @@ export default function LoginPageUI() {
 		}
 	}, [urlStatus])
 
-	// EFFECT: Display error
+
 	useEffect(() => {
+		// EFFECT: Display error
 		if (lastResult?.status == "error" && form.errors) {
 			const messages = Object.values(form.errors).flat()
 			setStatus("error", `${s("types.error").toUpperCase()}: ${messages[0]}`)
 		}
+		// EFFECT: Log-in Success
+		if (lastResult?.status == "success") {
+			// if we're in a modal, just close it
+			if (authModal) {
+				setOpenAuthModal(null)
+			} else {
+				// otherwise, redirect to the dashboard
+				router.push("/dashboard")
+			}
+			// refresh page
+			router.refresh()
+		}
 	}, [lastResult])
+
 
 
 
