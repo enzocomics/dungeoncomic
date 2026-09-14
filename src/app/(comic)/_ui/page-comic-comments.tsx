@@ -566,9 +566,9 @@ export function CommentsSection({
 						dangerouslySetInnerHTML={{
 							__html:
 								replaceComicVariables({
-									content: sanitize(
-										String(
-											marked.parse(c.content)
+									content: String(
+										marked.parse(
+											sanitize(c.content)
 										)
 									),
 									variables: variables,

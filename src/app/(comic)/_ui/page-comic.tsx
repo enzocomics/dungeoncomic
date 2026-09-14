@@ -699,10 +699,10 @@ export default function ComicPageUI({
 										dangerouslySetInnerHTML={{
 											__html:
 												replaceComicVariables({
-													content: sanitize(
-														String(
-															marked.parse(comic.description)
-														)
+													content: String(
+														marked.parse(
+															sanitize(comic.description)
+														),
 													),
 													variables: variables,
 													userVariables: userVariables,
@@ -1370,9 +1370,9 @@ export default function ComicPageUI({
 									)}
 										dangerouslySetInnerHTML={{
 											__html: replaceComicVariables({
-												content: sanitize(
-													String(
-														marked.parse(
+												content: String(
+													marked.parse(
+														sanitize(
 															String(p.panel_description)
 														)
 													)
