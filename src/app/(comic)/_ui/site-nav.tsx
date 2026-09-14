@@ -17,6 +17,9 @@ import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { AuthModalSchema, useGlobalContext } from "@/app/_context"
+import { SetStateAction } from "react"
+import { AuthLink } from "@/components/auth"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -32,7 +35,9 @@ export default function NavMenu({
 	session?: Awaited<ReturnType<typeof verifySession>>
 	menu?: boolean
 }) {
-
+	// AuthModal Global Context
+	const { authModal, setOpenAuthModal } = useGlobalContext()
+	//Hooks
 	const router = useRouter()
 	const { theme, setTheme } = useTheme()
 
@@ -47,15 +52,16 @@ export default function NavMenu({
 	]
 
 
-	const accountMenuNavigation = session ? [
-		{ name: "Edit Profile", href: "/dashboard" },
-		{ name: "Settings", href: "/dashboard/settings" },
+	const accountMenuNavigation = session && [
+		{ name: "Edit Profile", href: "/dashboard", modal: null },
+		{ name: "Settings", href: "/dashboard/settings", modal: null },
 		// { name: "Logout", href: "/logout" },
-
-	] : [
-		{ name: "Login", href: "/login" },
-		{ name: "Sign up", href: "/register" },
 	]
+
+	const accountMenuAuthNav = !session ? [
+		{ name: "Login", href: "/login", modal: "login" },
+		{ name: "Sign up", href: "/register", modal: "register" },
+	] : []
 
 	// RENDER NAV MENU
 	return (
@@ -464,43 +470,93 @@ export default function NavMenu({
 							"drop-shadow-neutral-900/45",
 						)}
 					>
-						<div className={
-							clsx(
-								// Appearance
-								"rounded-sm",
-								"md:rounded",
-								// Colours
-								"bg-base-1",
-								"dark:bg-base-3",
-								"dark:outline",
-								"dark:-outline-offset-1",
-								"dark:outline-base-5/50",
-								// Arrow
-								"before:absolute",
-								"before:z-10",
-								"before:-top-2.5",
-								"before:right-3.5",
-
-								"before:h-0 before:w-0",
-								"before:border-l-11 before:border-r-11",
-								"before:border-t-11",
-								"before:border-l-transparent before:border-r-transparent",
-								"before:border-t-base-1 dark:before:border-t-base-3",
-								"before:rotate-180"
-							)
-						}>
-							<section className={
+						{({ close }) => (
+							<div className={
 								clsx(
-									"py-1",
-									"font-platform-header",
+									// Appearance
+									"rounded-sm",
+									"md:rounded",
+									// Colours
+									"bg-base-1",
+									"dark:bg-base-3",
+									"dark:outline",
+									"dark:-outline-offset-1",
+									"dark:outline-base-5/50",
+									// Arrow
+									"before:absolute",
+									"before:z-10",
+									"before:-top-2.5",
+									"before:right-3.5",
+
+									"before:h-0 before:w-0",
+									"before:border-l-11 before:border-r-11",
+									"before:border-t-11",
+									"before:border-l-transparent before:border-r-transparent",
+									"before:border-t-base-1 dark:before:border-t-base-3",
+									"before:rotate-180"
 								)
 							}>
-								{accountMenuNavigation.map((item, index) => (
-									<CloseButton
-										as={Link}
-										key={index}
-										href={item.href}
-										className={
+								<section className={
+									clsx(
+										"py-1",
+										"font-platform-header",
+									)
+								}>
+									{accountMenuNavigation?.map((item, index) => (
+										<CloseButton
+											as={Link}
+											key={index}
+											href={item.href}
+											className={
+												clsx(
+													"block",
+													"px-4",
+													"py-2",
+													"text-sm",
+													"hover:bg-comic-accent-500",
+													"dark:hover:bg-comic-accent-700",
+													"hover:text-white",
+													"hover:duration-0",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+												)
+											}
+										>
+											{item.name}
+										</CloseButton>
+									))}
+									{accountMenuAuthNav?.map((item, index) => (
+										<AuthLink
+											modal={item.modal as AuthModalSchema}
+											key={index}
+											// href={item.href}
+											className={
+												clsx(
+													"block",
+													"px-4",
+													"py-2",
+													"text-sm",
+													"hover:bg-comic-accent-500",
+													"dark:hover:bg-comic-accent-700",
+													"hover:text-white",
+													"hover:duration-0",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+												)
+											}
+											// Because <AuthLink> has a preventDefault on it
+											onClick={() => close()}
+										>
+											{item.name}
+										</AuthLink>
+									))}
+									{session &&
+										// Use a regular anchor tag instead of <Link> because we want to force a refresh
+										<a href="/logout" className={
 											clsx(
 												"block",
 												"px-4",
@@ -514,191 +570,170 @@ export default function NavMenu({
 												"transition-all",
 												"ease-in-out",
 												"duration-300",
-											)
-										}
-									>
-										{item.name}
-									</CloseButton>
-								))}
-								{session &&
-									// Use a regular anchor tag instead of <Link> because we want to force a refresh
-									<a href="/logout" className={
-										clsx(
-											"block",
-											"px-4",
-											"py-2",
-											"text-sm",
-											"hover:bg-comic-accent-500",
-											"dark:hover:bg-comic-accent-700",
-											"hover:text-white",
-											"hover:duration-0",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"duration-300",
-										)}
+											)}
 
-									>
-										{/* TODO: Dictionaries */}
-										Log out
-									</a>
-								}
-							</section>
-							{/* MODE TOGGLER */}
-							<section className={
-								clsx(
-									"flex",
-									"px-4",
-									"py-2",
-									"justify-center",
-									"bg-base-2/20",
-									"dark:bg-base-2/50",
-								)
-							}>
-								<div className={
+										>
+											{/* TODO: Dictionaries */}
+											Log out
+										</a>
+									}
+								</section>
+								{/* MODE TOGGLER */}
+								<section className={
 									clsx(
-										"p-1",
-										"gap-x-1",
-										"items-center",
+										"flex",
+										"px-4",
+										"py-2",
 										"justify-center",
-										"rounded-2xl",
-										"bg-base-2/40",
-										"dark:bg-base-2",
+										"bg-base-2/20",
+										"dark:bg-base-2/50",
 									)
-								} >
-									<div
-										data-theme={theme}
-										className={
-											clsx(
-												"group",
-												"relative",
-												"flex",
-											)
-										}>
-										<button className={
-											clsx(
-												"relative",
-												"z-1",
-												"peer",
-												"peer/system",
-												"flex",
-												"items-center",
-												"justify-center",
-												"cursor-pointer",
-												"p-1",
-												"px-2",
-												"rounded-2xl",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-												// Button Specific
-												theme == "system" && "text-white",
-												"group-data-[theme=system]:group-hover:text-base-content",
-												"hover:text-white!",
-											)
-										}
-											onClick={(e) => (setTheme("system"))}
-										>
-											<Icon name="desktop" className={
+								}>
+									<div className={
+										clsx(
+											"p-1",
+											"gap-x-1",
+											"items-center",
+											"justify-center",
+											"rounded-2xl",
+											"bg-base-2/40",
+											"dark:bg-base-2",
+										)
+									} >
+										<div
+											data-theme={theme}
+											className={
 												clsx(
-													"size-5",
+													"group",
+													"relative",
+													"flex",
+												)
+											}>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/system",
+													"flex",
+													"items-center",
+													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
+													"rounded-2xl",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "system" && "text-white",
+													"group-data-[theme=system]:group-hover:text-base-content",
+													"hover:text-white!",
+												)
+											}
+												onClick={(e) => (setTheme("system"))}
+											>
+												<Icon name="desktop" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer/light",
+													"flex",
+													"peer",
+													"items-center",
+													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
+													"rounded-2xl",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "light" && "text-white",
+													"group-data-[theme=light]:group-hover:text-base-content",
+													"hover:text-white!",
+												)
+											}
+												onClick={(e) => (setTheme("light"))}
+											>
+												<Icon name="sun" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<button className={
+												clsx(
+													"relative",
+													"z-1",
+													"peer",
+													"peer/dark",
+													"flex",
+													"items-center",
+													"justify-center",
+													"cursor-pointer",
+													"p-1",
+													"px-2",
+													"rounded-2xl",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+													// Button Specific
+													theme == "dark" && "text-white",
+													"group-data-[theme=dark]:group-hover:text-base-content",
+													"hover:text-white!",
+												)
+											}
+												onClick={(e) => (setTheme("dark"))}
+											>
+												<Icon name="moon" className={
+													clsx(
+														"size-5",
+													)
+												} />
+											</button>
+											<span className={
+												clsx(
+													// Toggle
+													"block",
+													"absolute",
+													"top-1/2",
+													"-translate-1/2",
+													"size-7",
+													"bg-comic-accent-500",
+													"dark:bg-comic-accent-500/50",
+													"rounded-full",
+													// "-z-1",
+													"scale-100",
+													"peer-hover:scale-120",
+													"dark:peer-hover:bg-comic-accent-500/90",
+													"peer-hover/system:left-4.5",
+													"peer-hover/light:left-13.5",
+													"peer-hover/dark:left-22.5",
+													theme == "system" && "left-4.5",
+													theme == "light" && "left-13.5",
+													theme == "dark" && "left-22.5",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
 												)
 											} />
-										</button>
-										<button className={
-											clsx(
-												"relative",
-												"z-1",
-												"peer/light",
-												"flex",
-												"peer",
-												"items-center",
-												"justify-center",
-												"cursor-pointer",
-												"p-1",
-												"px-2",
-												"rounded-2xl",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-												// Button Specific
-												theme == "light" && "text-white",
-												"group-data-[theme=light]:group-hover:text-base-content",
-												"hover:text-white!",
-											)
-										}
-											onClick={(e) => (setTheme("light"))}
-										>
-											<Icon name="sun" className={
-												clsx(
-													"size-5",
-												)
-											} />
-										</button>
-										<button className={
-											clsx(
-												"relative",
-												"z-1",
-												"peer",
-												"peer/dark",
-												"flex",
-												"items-center",
-												"justify-center",
-												"cursor-pointer",
-												"p-1",
-												"px-2",
-												"rounded-2xl",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-												// Button Specific
-												theme == "dark" && "text-white",
-												"group-data-[theme=dark]:group-hover:text-base-content",
-												"hover:text-white!",
-											)
-										}
-											onClick={(e) => (setTheme("dark"))}
-										>
-											<Icon name="moon" className={
-												clsx(
-													"size-5",
-												)
-											} />
-										</button>
-										<span className={
-											clsx(
-												// Toggle
-												"block",
-												"absolute",
-												"top-1/2",
-												"-translate-1/2",
-												"size-7",
-												"bg-comic-accent-500",
-												"dark:bg-comic-accent-500/50",
-												"rounded-full",
-												// "-z-1",
-												"scale-100",
-												"peer-hover:scale-120",
-												"dark:peer-hover:bg-comic-accent-500/90",
-												"peer-hover/system:left-4.5",
-												"peer-hover/light:left-13.5",
-												"peer-hover/dark:left-22.5",
-												theme == "system" && "left-4.5",
-												theme == "light" && "left-13.5",
-												theme == "dark" && "left-22.5",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-											)
-										} />
+										</div>
 									</div>
-								</div>
-							</section>
-						</div>
+								</section>
+							</div>
+						)}
 					</PopoverPanel>
 				</Popover>
 			</nav>
