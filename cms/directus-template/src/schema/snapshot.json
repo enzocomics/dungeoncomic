@@ -277,36 +277,6 @@
   "fields": [
     {
       "collection": "comic_panels",
-      "field": "meta",
-      "type": "alias",
-      "meta": {
-        "collection": "comic_panels",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "meta",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comic_panels",
       "field": "content",
       "type": "alias",
       "meta": {
@@ -354,6 +324,36 @@
         "required": false,
         "searchable": true,
         "sort": 2,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comic_panels",
+      "field": "meta",
+      "type": "alias",
+      "meta": {
+        "collection": "comic_panels",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
         "special": [
           "alias",
           "no-data",
@@ -883,37 +883,6 @@
     },
     {
       "collection": "comic_panels",
-      "field": "variables",
-      "type": "alias",
-      "meta": {
-        "collection": "comic_panels",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "variables",
-        "group": "user_input",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "sort": null,
-          "template": "{{slug}} ({{default_value}}) "
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comic_panels",
       "field": "place_after_variables_submitted",
       "type": "boolean",
       "meta": {
@@ -959,95 +928,62 @@
       }
     },
     {
-      "collection": "comics",
-      "field": "appearance",
+      "collection": "comic_panels",
+      "field": "variables",
       "type": "alias",
       "meta": {
-        "collection": "comics",
+        "collection": "comic_panels",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "appearance",
-        "group": null,
+        "field": "variables",
+        "group": "user_input",
         "hidden": false,
-        "interface": "group-detail",
+        "interface": "list-o2m",
         "note": null,
         "options": {
-          "headerColor": "#7C7C67",
-          "headerIcon": "palette"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comics",
-      "field": "options",
-      "type": "alias",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "options",
-        "group": null,
-        "hidden": false,
-        "interface": "group-detail",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comics",
-      "field": "header-eshpcn",
-      "type": "alias",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "header-eshpcn",
-        "group": null,
-        "hidden": false,
-        "interface": "header",
-        "note": null,
-        "options": {
-          "color": "#7C7C67",
-          "icon": "account_box",
-          "subtitle": "{{title}}",
-          "title": "Comic"
+          "sort": null,
+          "template": "{{slug}} ({{default_value}}) "
         },
         "readonly": false,
         "required": false,
         "searchable": true,
         "sort": 1,
         "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "details",
+      "type": "alias",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "details",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": {
+          "headerColor": "#7C7C67",
+          "headerIcon": "info"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
           "alias",
-          "no-data"
+          "no-data",
+          "group"
         ],
         "translations": null,
         "validation": null,
@@ -1120,26 +1056,90 @@
     },
     {
       "collection": "comics",
-      "field": "details",
+      "field": "header-eshpcn",
       "type": "alias",
       "meta": {
         "collection": "comics",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "details",
+        "field": "header-eshpcn",
+        "group": null,
+        "hidden": false,
+        "interface": "header",
+        "note": null,
+        "options": {
+          "color": "#7C7C67",
+          "icon": "account_box",
+          "subtitle": "{{title}}",
+          "title": "Comic"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "appearance",
+      "type": "alias",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "appearance",
         "group": null,
         "hidden": false,
         "interface": "group-detail",
         "note": null,
         "options": {
           "headerColor": "#7C7C67",
-          "headerIcon": "info"
+          "headerIcon": "palette"
         },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 3,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "options",
+      "type": "alias",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "options",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
         "special": [
           "alias",
           "no-data",
@@ -1947,6 +1947,10 @@
               "value": "Lexend"
             },
             {
+              "text": "Lora",
+              "value": "Lora"
+            },
+            {
               "text": "Montserrat",
               "value": "Montserrat"
             },
@@ -2082,158 +2086,6 @@
         "numeric_precision": null,
         "numeric_scale": null,
         "is_nullable": false,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "comics",
-      "field": "landing_page",
-      "type": "string",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "landing_page",
-        "group": "options",
-        "hidden": false,
-        "interface": "select-radio",
-        "note": null,
-        "options": {
-          "allowOther": true,
-          "choices": [
-            {
-              "text": "Show Cover Page",
-              "value": "cover-page"
-            },
-            {
-              "text": "Show First Page",
-              "value": "first-page"
-            },
-            {
-              "text": "Show Last Page",
-              "value": "last-page"
-            }
-          ]
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "landing_page",
-        "table": "comics",
-        "data_type": "character varying",
-        "default_value": "first-page",
-        "max_length": 255,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": false,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "comics",
-      "field": "allow_comments",
-      "type": "boolean",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "allow_comments",
-        "group": "options",
-        "hidden": false,
-        "interface": "boolean",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "cast-boolean"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "allow_comments",
-        "table": "comics",
-        "data_type": "boolean",
-        "default_value": true,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "comics",
-      "field": "allow_user_suggestions",
-      "type": "boolean",
-      "meta": {
-        "collection": "comics",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "allow_user_suggestions",
-        "group": "options",
-        "hidden": false,
-        "interface": "boolean",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "cast-boolean"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "allow_user_suggestions",
-        "table": "comics",
-        "data_type": "boolean",
-        "default_value": false,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
         "is_unique": false,
         "is_indexed": false,
         "is_primary_key": false,
@@ -2419,6 +2271,262 @@
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "landing_page",
+      "type": "string",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "landing_page",
+        "group": "options",
+        "hidden": false,
+        "interface": "select-radio",
+        "note": null,
+        "options": {
+          "allowOther": true,
+          "choices": [
+            {
+              "text": "Show Cover Page",
+              "value": "cover-page"
+            },
+            {
+              "text": "Show First Page",
+              "value": "first-page"
+            },
+            {
+              "text": "Show Last Page",
+              "value": "last-page"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "landing_page",
+        "table": "comics",
+        "data_type": "character varying",
+        "default_value": "first-page",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "allow_comments",
+      "type": "boolean",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "allow_comments",
+        "group": "options",
+        "hidden": false,
+        "interface": "boolean",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "allow_comments",
+        "table": "comics",
+        "data_type": "boolean",
+        "default_value": true,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comics",
+      "field": "allow_user_suggestions",
+      "type": "boolean",
+      "meta": {
+        "collection": "comics",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "allow_user_suggestions",
+        "group": "options",
+        "hidden": false,
+        "interface": "boolean",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "allow_user_suggestions",
+        "table": "comics",
+        "data_type": "boolean",
+        "default_value": false,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comments",
+      "field": "content",
+      "type": "text",
+      "meta": {
+        "collection": "comments",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "content",
+        "group": null,
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "content",
+        "table": "comments",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "comments",
+      "field": "meta",
+      "type": "alias",
+      "meta": {
+        "collection": "comments",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "comments",
+      "field": "relational",
+      "type": "alias",
+      "meta": {
+        "collection": "comments",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "relational",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
       }
     },
     {
@@ -2659,36 +2767,6 @@
     },
     {
       "collection": "comments",
-      "field": "meta",
-      "type": "alias",
-      "meta": {
-        "collection": "comments",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "meta",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comments",
       "field": "parent_page",
       "type": "integer",
       "meta": {
@@ -2729,66 +2807,6 @@
         "has_auto_increment": false,
         "foreign_key_table": "pages",
         "foreign_key_column": "id"
-      }
-    },
-    {
-      "collection": "comments",
-      "field": "relational",
-      "type": "alias",
-      "meta": {
-        "collection": "comments",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "relational",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "comments",
-      "field": "children_comments",
-      "type": "alias",
-      "meta": {
-        "collection": "comments",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "children_comments",
-        "group": "relational",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "sort": null
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
       }
     },
     {
@@ -2837,46 +2855,32 @@
     },
     {
       "collection": "comments",
-      "field": "content",
-      "type": "text",
+      "field": "children_comments",
+      "type": "alias",
       "meta": {
         "collection": "comments",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "content",
-        "group": null,
+        "field": "children_comments",
+        "group": "relational",
         "hidden": false,
-        "interface": "input-multiline",
+        "interface": "list-o2m",
         "note": null,
-        "options": null,
+        "options": {
+          "sort": null
+        },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 1,
-        "special": null,
+        "sort": 3,
+        "special": [
+          "o2m"
+        ],
         "translations": null,
         "validation": null,
         "validation_message": null,
         "width": "full"
-      },
-      "schema": {
-        "name": "content",
-        "table": "comments",
-        "data_type": "text",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
       }
     },
     {
@@ -3207,6 +3211,50 @@
     },
     {
       "collection": "page_branches",
+      "field": "sort_next",
+      "type": "integer",
+      "meta": {
+        "collection": "page_branches",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort_next",
+        "group": null,
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort_next",
+        "table": "page_branches",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "page_branches",
       "field": "meta",
       "type": "alias",
       "meta": {
@@ -3412,149 +3460,6 @@
       }
     },
     {
-      "collection": "page_branches",
-      "field": "sort_next",
-      "type": "integer",
-      "meta": {
-        "collection": "page_branches",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "sort_next",
-        "group": null,
-        "hidden": true,
-        "interface": null,
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 5,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "sort_next",
-        "table": "page_branches",
-        "data_type": "integer",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "details",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "details",
-        "group": null,
-        "hidden": false,
-        "interface": "group-detail",
-        "note": null,
-        "options": {
-          "headerColor": "#7C7C67",
-          "headerIcon": "info"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "content",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "content",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": {
-          "headerColor": "#7C7C67",
-          "headerIcon": "content_copy"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "routing",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "routing",
-        "group": null,
-        "hidden": false,
-        "interface": "group-detail",
-        "note": null,
-        "options": {
-          "headerColor": "#7C7C67",
-          "headerIcon": "menu_open"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 5,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
       "collection": "pages",
       "field": "meta",
       "type": "alias",
@@ -3620,6 +3525,39 @@
     },
     {
       "collection": "pages",
+      "field": "details",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "details",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": {
+          "headerColor": "#7C7C67",
+          "headerIcon": "info"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
       "field": "feedback",
       "type": "alias",
       "meta": {
@@ -3637,6 +3575,72 @@
         "required": false,
         "searchable": true,
         "sort": 4,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "routing",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "routing",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": {
+          "headerColor": "#7C7C67",
+          "headerIcon": "menu_open"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
+      "field": "content",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "content",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": {
+          "headerColor": "#7C7C67",
+          "headerIcon": "content_copy"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
         "special": [
           "alias",
           "no-data",
@@ -4421,6 +4425,37 @@
     },
     {
       "collection": "pages",
+      "field": "plot_suggestions",
+      "type": "alias",
+      "meta": {
+        "collection": "pages",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "plot_suggestions",
+        "group": "feedback",
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "sort": "sort",
+          "template": "{{title}} ({{votes}}) -- @{{user_created.username}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "pages",
       "field": "divider-z5xybj",
       "type": "alias",
       "meta": {
@@ -4450,26 +4485,25 @@
     },
     {
       "collection": "pages",
-      "field": "plot_suggestions",
+      "field": "comments",
       "type": "alias",
       "meta": {
         "collection": "pages",
         "conditions": null,
         "display": null,
         "display_options": null,
-        "field": "plot_suggestions",
+        "field": "comments",
         "group": "feedback",
         "hidden": false,
         "interface": "list-o2m",
         "note": null,
         "options": {
-          "sort": "sort",
-          "template": "{{title}} ({{votes}}) -- @{{user_created.username}}"
+          "enableLink": true
         },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 6,
         "special": [
           "o2m"
         ],
@@ -4623,36 +4657,6 @@
         "validation": null,
         "validation_message": null,
         "width": "half"
-      }
-    },
-    {
-      "collection": "pages",
-      "field": "comments",
-      "type": "alias",
-      "meta": {
-        "collection": "pages",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "comments",
-        "group": "feedback",
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "enableLink": true
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 6,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
       }
     },
     {
