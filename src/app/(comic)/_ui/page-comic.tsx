@@ -23,7 +23,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import replaceComicVariables from "../_functions/replace-comic-vars"
 // ACTIONS
 import { saveUserVars } from "../_actions/variables"
-import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
+import { deleteUserPlotSuggestion, PlotSuggestionType, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../_actions/plot-suggestions"
 // UI
 import * as Headless from "@headlessui/react"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
@@ -1991,6 +1991,8 @@ export default function ComicPageUI({
 		const [selected, setSelected] = useState<string>(
 			userVotedOnID ? userVotedOnID : ""
 		)
+		const [selectedObject, setSelectedObject] = useState<PlotSuggestionType>()
+
 		// State of the poll: to prevent the effect from firing multiple times
 		const [clicked, setClicked] = useState(false)
 		const [voteComplete, setVoteComplete] = useState(true)
@@ -2009,9 +2011,10 @@ export default function ComicPageUI({
 		// This effect runs every time the poll's radio button selection is changed
 		useEffect(() => {
 			// Send the vote to the CMS
-			const castVote = async (plotSuggestionsID: string) => {
+			const castVote = async (s?: PlotSuggestionType) => {
 				const response = voteOnPlotSuggestion({
-					newVoteID: parseInt(plotSuggestionsID),
+					// newVoteID: parseInt(plotSuggestionsID),
+					vote: s,
 					page: page,
 					user: session || null
 				})
@@ -2025,7 +2028,7 @@ export default function ComicPageUI({
 				voteTimer.current && clearTimeout(voteTimer.current)
 				voteTimer.current = setTimeout(() => {
 
-					castVote(selected) // Send the vote to the cms only
+					castVote(selectedObject) // Send the vote to the cms only
 
 				}, 1000)
 
@@ -2126,6 +2129,7 @@ export default function ComicPageUI({
 										return <ComicInputRadio
 											value={`${s.id}`}
 											key={index}
+											onClick={() => setSelectedObject(s)}
 										>
 											<Label className={
 												clsx(
@@ -2236,6 +2240,7 @@ export default function ComicPageUI({
 									!userHasSubmitted &&
 									<ComicInputRadio
 										value={selectUserSuggestion}
+										onClick={() => setSelectedObject(undefined)}
 										className={clsx(
 											"text-left",
 											"mx-auto",
