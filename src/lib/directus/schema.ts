@@ -94,7 +94,6 @@ export interface PlotSuggestionsCollection {
 	title: string
 	slug: string
 	users_voted: DirectusUser[] | string[]
-	votes: number
 	// Meta
 	id: number
 	page: PagesCollection | number

@@ -139,7 +139,6 @@ export async function getComicPage(comic_slug: string, num: number) {
 								"homepage_url",
 							],
 						},
-						"votes",
 						"id",
 						{
 							user_created: [
