@@ -20,6 +20,7 @@ import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayou
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { AuthLink } from "@/components/auth"
+import { PlatformButton } from "@/components/button"
 
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
@@ -102,14 +103,15 @@ function RequestResetForm() {
 						/>
 						<ErrorMessage>{fields.email.errors}</ErrorMessage>
 					</Field>
-					<Button
+
+					<PlatformButton
 						type="submit"
 						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6"
 						)}
-					>{t("pages.reset-password.request")}</Button>
+					>{t("pages.reset-password.request")}</PlatformButton>
 				</div>
 			</form>
 			<AuthNav>
@@ -202,14 +204,14 @@ function ResetPasswordForm({ token }: { token: string }) {
 						/>
 						<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 					</Field>
-					<Button
+					<PlatformButton
 						type="submit"
 						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6",
 						)}
-					>{t("pages.reset-password.submit")}</Button>
+					>{t("pages.reset-password.submit")}</PlatformButton>
 
 				</div>
 				{/* Password Reset Token */}

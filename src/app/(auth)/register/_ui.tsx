@@ -22,6 +22,7 @@ import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav }
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { AuthLink } from "@/components/auth"
+import { PlatformButton } from "@/components/button"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -199,14 +200,14 @@ export default function RegisterPageUI({ public_registration = false }: { public
 							/>
 							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 						</Field>
-						<Button
+						<PlatformButton
 							type="submit"
 							color="primary"
 							className={clsx(
 								"w-full",
 								"mt-6",
 							)}
-						>{t("pages.register.submit")}</Button>
+						>{t("pages.register.submit")}</PlatformButton>
 					</div>
 				</form>
 			}
