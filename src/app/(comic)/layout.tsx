@@ -8,6 +8,8 @@ import ComicContextProvider from "./_ui/context"
 import { verifySession } from "@/data/session"
 import React from "react"
 import AuthModal from "./_ui/modal-auth"
+import { adminClient } from "@/lib/directus/clients"
+import { readSettings } from "@directus/sdk"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -30,6 +32,10 @@ export default async function HomepageLayout({
 }: {
 	children: React.ReactNode
 }) {
+	// Check if public registration is open
+	const { public_registration } = await adminClient.request(readSettings({
+		fields: ["public_registration"]
+	}))
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
@@ -42,7 +48,7 @@ export default async function HomepageLayout({
 		const comic = await getComic(frontpage_comic.slug)
 		return <>
 			<ComicContextProvider>
-				<AuthModal />
+				<AuthModal public_registration={public_registration} />
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
 				</ComicLayoutUI>
@@ -55,7 +61,7 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>
-			<AuthModal />
+			<AuthModal public_registration={public_registration} />
 			{children}
 		</FrontpageLayoutUI>
 }

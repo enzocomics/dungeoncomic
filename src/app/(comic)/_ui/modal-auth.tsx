@@ -4,13 +4,15 @@ import LoginPageUI from "@/app/(auth)/login/_ui"
 import RegisterPageUI from "@/app/(auth)/register/_ui"
 import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"
 import { useGlobalContext } from "@/app/_context"
-import { Dialog, DialogPanel } from "@headlessui/react"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
 import { useRef } from "react"
 
 
-export default function AuthModal() {
+export default function AuthModal({
+	public_registration = false
+}: { public_registration?: Boolean }
+) {
 	// Get the authModal context
 	const { authModal, setOpenAuthModal } = useGlobalContext()
 
@@ -35,7 +37,6 @@ export default function AuthModal() {
 			backgroundRef?.current?.classList.add("animate-fade-out")
 			backgroundRef?.current?.addEventListener("animationend", closeModal)
 
-			// setOpenAuthModal(null)
 		}
 	}
 
@@ -73,7 +74,7 @@ export default function AuthModal() {
 						<LoginPageUI />
 					}
 					{authModal == "register" &&
-						<RegisterPageUI />
+						<RegisterPageUI public_registration={public_registration} />
 					}
 
 					{authModal == "reset-password" &&
