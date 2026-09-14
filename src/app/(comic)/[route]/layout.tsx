@@ -4,6 +4,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
 import ComicContextProvider from "../_ui/context"
 import { verifySession } from "@/data/session"
+import React from "react"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -23,9 +24,11 @@ import { verifySession } from "@/data/session"
  * 
  */
 export default async function RouteLayout({
+	auth,
 	children,
-	params
+	params,
 }: {
+	auth: React.ReactNode
 	children: React.ReactNode
 	params: Promise<{ route: string }>
 }) {
@@ -40,7 +43,9 @@ export default async function RouteLayout({
 	// LAYOUT MODE 1 - FRONTPAGE COMIC
 	// - No additional UI. We are displaying the comic layout in the root already
 	if (frontpage_comic)
-		return children
+		return <>
+			{children}
+		</>
 
 	/**----------------------------------- */
 	// LAYOUT MODE 2 - HOMEPAGE
@@ -53,10 +58,12 @@ export default async function RouteLayout({
 		if (!comic) notFound()
 
 		// RENDER
-		return <ComicContextProvider>
-			<ComicLayoutUI settings={settings} comic={comic} session={session}>
-				{children}
-			</ComicLayoutUI>
-		</ComicContextProvider>
+		return <>
+			<ComicContextProvider>
+				<ComicLayoutUI settings={settings} comic={comic} session={session}>
+					{children}
+				</ComicLayoutUI>
+			</ComicContextProvider>
+		</>
 	}
 }

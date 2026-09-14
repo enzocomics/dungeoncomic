@@ -6,6 +6,7 @@ import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import ComicContextProvider from "./_ui/context"
 import { verifySession } from "@/data/session"
+import React from "react"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -24,8 +25,10 @@ import { verifySession } from "@/data/session"
  * 
  */
 export default async function HomepageLayout({
-	children
+	children,
+	auth
 }: {
+	auth: React.ReactNode
 	children: React.ReactNode
 }) {
 	// CHECK IF `frontpage_comic` HAS BEEN SET
@@ -38,11 +41,14 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
-		return <ComicContextProvider>
-			<ComicLayoutUI settings={settings} comic={comic} session={session}>
-				{children}
-			</ComicLayoutUI>
-		</ComicContextProvider>
+		return <>
+			{auth}
+			<ComicContextProvider>
+				<ComicLayoutUI settings={settings} comic={comic} session={session}>
+					{children}
+				</ComicLayoutUI>
+			</ComicContextProvider>
+		</>
 
 	}
 
@@ -50,6 +56,7 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>
+			{auth}
 			{children}
 		</FrontpageLayoutUI>
 }

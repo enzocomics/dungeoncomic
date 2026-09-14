@@ -18,6 +18,7 @@ import { verifySession } from "@/data/session"
 import { useRouter } from "next/navigation"
 import NavMenu from "./site-nav"
 import { getSettings } from "@/lib/directus/get-settings"
+import React from "react"
 
 /**-----------------------------------
  * COMIC FRONTPAGE LAYOUT
@@ -28,7 +29,7 @@ export function ComicLayoutUI({
 	children,
 	comic,
 	session,
-	settings
+	settings,
 }: {
 	children: React.ReactNode
 	comic: Awaited<ReturnType<typeof getComic>>
