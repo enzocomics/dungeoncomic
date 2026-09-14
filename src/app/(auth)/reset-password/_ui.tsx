@@ -19,6 +19,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { AuthLink } from "@/components/auth"
 
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
@@ -112,7 +113,7 @@ function RequestResetForm() {
 				</div>
 			</form>
 			<AuthNav>
-				<Link className="mx-auto text-primary-800 dark:text-primary-300" href="/login">&laquo; {n("go-back")}</Link>
+				<AuthLink modal="login" className="mx-auto text-primary-800 dark:text-primary-300">&laquo; {n("go-back")}</AuthLink>
 			</AuthNav>
 		</AuthBody >
 	</>

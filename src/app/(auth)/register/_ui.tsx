@@ -21,6 +21,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/app/(auth)/_ui"
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { AuthLink } from "@/components/auth"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
@@ -211,12 +212,17 @@ export default function RegisterPageUI({ public_registration = false }: { public
 			}
 			{/* NAVIGATION */}
 			<AuthNav>
-				<p className="grow text-center" dangerouslySetInnerHTML={{
-					__html: t.rich("pages.register.login-link", {
-						a: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/login">${chunks} &raquo;</a>`
-					}) as string
-				}}
-				/>
+				<p className="grow text-center">
+					{t.rich("pages.register.login-link")}&nbsp;
+					<AuthLink
+						modal="login"
+						className={clsx(
+							"text-primary-800 dark:text-primary-300"
+						)}
+					>
+						Log In &raquo;
+					</AuthLink>
+				</p>
 			</AuthNav>
 		</AuthBody >
 	</>

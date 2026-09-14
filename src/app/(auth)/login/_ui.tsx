@@ -20,6 +20,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import Link from "next/link"
+import { AuthLink } from "@/components/auth"
 
 /** ------------------------------------------------ **
  * LOGIN FORM
@@ -140,20 +141,29 @@ export default function LoginPageUI() {
 
 			{/* NAVIGATION */}
 			<AuthNav>
-				<Link
+				<AuthLink
+					modal="reset-password"
 					className={clsx(
 						"text-primary-800",
 						"dark:text-primary-300",
-					)}
-					href="/reset-password">{t("pages.login.reset-password-link")} &raquo;</Link>
-				<div className={clsx(
+					)}>
+					{t("pages.login.reset-password-link")} &raquo;
+				</AuthLink>
+				{/* <div className={clsx(
 
 				)}
 					dangerouslySetInnerHTML={{
 						__html: t.rich("pages.login.register-link", {
 							a: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/register">${chunks} &raquo;</a>`
 						}) as string
-					}} />
+					}} /> */}
+				<AuthLink
+					modal="register"
+					className={clsx(
+						"text-primary-800 dark:text-primary-300"
+					)}
+					onClick={() => { }}
+				>Sign Up &raquo;</AuthLink>
 			</AuthNav>
 		</AuthBody>
 	</>
