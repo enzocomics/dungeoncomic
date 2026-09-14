@@ -26,9 +26,7 @@ import React from "react"
  */
 export default async function HomepageLayout({
 	children,
-	auth
 }: {
-	auth: React.ReactNode
 	children: React.ReactNode
 }) {
 	// CHECK IF `frontpage_comic` HAS BEEN SET
@@ -42,7 +40,6 @@ export default async function HomepageLayout({
 	if (frontpage_comic) {
 		const comic = await getComic(frontpage_comic.slug)
 		return <>
-			{auth}
 			<ComicContextProvider>
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
@@ -56,7 +53,6 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
 	else if (!frontpage_comic)
 		return <FrontpageLayoutUI>
-			{auth}
 			{children}
 		</FrontpageLayoutUI>
 }

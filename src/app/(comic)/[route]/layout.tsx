@@ -24,11 +24,9 @@ import React from "react"
  * 
  */
 export default async function RouteLayout({
-	auth,
 	children,
 	params,
 }: {
-	auth: React.ReactNode
 	children: React.ReactNode
 	params: Promise<{ route: string }>
 }) {
