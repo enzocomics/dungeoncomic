@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import ComicContextProvider from "../_ui/context"
 import { verifySession } from "@/data/session"
 import React from "react"
+import AuthModal from "../_ui/modal-auth"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -58,6 +59,7 @@ export default async function RouteLayout({
 		// RENDER
 		return <>
 			<ComicContextProvider>
+				<AuthModal />
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
 				</ComicLayoutUI>

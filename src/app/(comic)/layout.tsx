@@ -7,6 +7,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import ComicContextProvider from "./_ui/context"
 import { verifySession } from "@/data/session"
 import React from "react"
+import AuthModal from "./_ui/modal-auth"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -41,6 +42,7 @@ export default async function HomepageLayout({
 		const comic = await getComic(frontpage_comic.slug)
 		return <>
 			<ComicContextProvider>
+				<AuthModal />
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
 				</ComicLayoutUI>
