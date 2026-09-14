@@ -19,6 +19,7 @@ import { useChangeStatus } from "@/components/status-message"
 // import { ErrorMessage, FieldGroup } from "@/components/catalyst/fieldset"
 import { ErrorMessage } from "@/components/error-message"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { PlatformButton } from "@/components/button"
 import Link from "next/link"
 import { AuthLink } from "@/components/auth"
 import { useGlobalContext } from "@/app/_context"
@@ -149,14 +150,14 @@ export default function LoginPageUI() {
 						/>
 						<ErrorMessage>{fields.password.errors}</ErrorMessage>
 					</Field>
-					<Button
+					<PlatformButton
 						type="submit"
 						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6",
 						)}
-					>{t("pages.login.submit")}</Button>
+					>{t("pages.login.submit")}</PlatformButton>
 				</div>
 			</form>
 
