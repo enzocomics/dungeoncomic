@@ -324,7 +324,7 @@ export default function ComicPageUI({
 						"text-3xl",
 						"lg:text-4xl",
 						"text-center",
-						firstLoad && "animate-pop-in",
+						// firstLoad && "animate-pop-in",
 					)}
 				/>
 
@@ -1323,7 +1323,7 @@ export default function ComicPageUI({
 						"flex",
 						"flex-col",
 						"gap-y-6",
-						firstLoad && "animate-fade-in",
+						// firstLoad && "animate-fade-in",
 					)}>
 						{page.comic_panels.map((p, pIndex) => {
 
@@ -1346,6 +1346,7 @@ export default function ComicPageUI({
 											className={clsx(
 												"lg:mt-6",
 												"mx-auto",
+												firstLoad && "animate-fade-in"
 											)}
 											src={`${directusURL}/assets/${p.panel_image.filename_disk}.${p.panel_image.type}`}
 											width={`${p.panel_image.width}`}
@@ -1547,7 +1548,7 @@ export default function ComicPageUI({
 																	"transition-all",
 																	"scale-100",
 																	// Animation
-																	areFieldsAnimating ? "animate-pop-in" : ""
+																	// areFieldsAnimating ? "animate-pop-in" : ""
 																)}
 																onAnimationEnd={() => setAreFieldsAnimating(false)}
 																ref={(i) => {
@@ -1618,7 +1619,7 @@ export default function ComicPageUI({
 							"w-full",
 							"max-w-2xl",
 							"mx-auto",
-							firstLoad && "animate-fade-in",
+							// firstLoad && "animate-fade-in",
 						)}>
 							<ComicButton as="button" type="submit" className={clsx(
 							)}>
@@ -1891,7 +1892,7 @@ export default function ComicPageUI({
 				"flex",
 				"flex-col",
 				"gap-y-6",
-				firstLoad && "animate-fade-in",
+				// firstLoad && "animate-fade-in",
 			)}>
 				{
 					/**------------------------------
@@ -2068,7 +2069,7 @@ export default function ComicPageUI({
 			{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 				<ComicInputSection className={
 					clsx(
-						firstLoad && "animate-fade-in",
+						// firstLoad && "animate-fade-in",
 					)
 				}>
 					<ComicInputSectionRow>
