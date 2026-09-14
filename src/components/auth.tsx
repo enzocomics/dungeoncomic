@@ -17,6 +17,7 @@ export function AuthLink({
 	href?: string
 	modal: AuthModalSchema
 }) {
+
 	// Get the authModal context
 	const { authModal, setOpenAuthModal } = useGlobalContext()
 
@@ -25,10 +26,8 @@ export function AuthLink({
 		{...props}
 		href={href}
 		onClick={(e) => {
-			if (authModal) {
-				e.preventDefault()
-				setOpenAuthModal(modal)
-			}
+			e.preventDefault()
+			setOpenAuthModal(modal)
 			props.onClick?.(e)
 		}}
 	>
