@@ -166,3 +166,55 @@ export function ComicButton({
 		</Button>
 	}
 }
+
+export function PlatformButton({
+	className,
+	...props
+}: ComponentPropsWithoutRef<"button">) {
+	return <Button
+		{...props}
+		className={clsx(
+			className,
+			// Spacing
+			"py-1",
+			// Appearance
+			"rounded",
+			// Colours
+			"border-y-2",
+			"border-t-white/40",
+			"border-b-black/20",
+			"border-t-comic-accent-300",
+			// Text
+			"text-white",
+			"text-base",
+			"font-platform-header",
+			// States
+			props.disabled ? [
+				"cursor-not-allowed",
+				"bg-neutral-500",
+				"opacity-20",
+			] : [
+				"cursor-pointer",
+				// Appearance
+				"bg-comic-accent-500",
+				"visited:bg-neutral-500",
+				// States
+				"hover:duration-0",
+				"hover:bg-comic-accent-700",
+				"active:translate-px",
+				"active:bg-comic-accent-900",
+				// Transition
+				"transition-all",
+				"ease-in-out",
+				"duration-300",
+				// Outline
+				"outline-transparent",
+				"focus:outline-4",
+				"focus:outline-offset-4",
+				"focus:outline-comic-accent-500",
+			]
+		)}
+	>
+		{props.children}
+	</Button>
+}
