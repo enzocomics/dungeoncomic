@@ -170,21 +170,16 @@ export default function LoginPageUI() {
 					)}>
 					{t("pages.login.reset-password-link")} &raquo;
 				</AuthLink>
-				{/* <div className={clsx(
-
-				)}
-					dangerouslySetInnerHTML={{
-						__html: t.rich("pages.login.register-link", {
-							a: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/register">${chunks} &raquo;</a>`
-						}) as string
-					}} /> */}
-				<AuthLink
-					modal="register"
-					className={clsx(
-						"text-primary-800 dark:text-primary-300"
-					)}
-					onClick={() => { }}
-				>Sign Up &raquo;</AuthLink>
+				<p>
+					{t("pages.login.register-link")}&nbsp;
+					<AuthLink
+						modal="register"
+						className={clsx(
+							"text-primary-800 dark:text-primary-300"
+						)}
+						onClick={() => { }}
+					>Sign Up &raquo;</AuthLink>
+				</p>
 			</AuthNav>
 		</AuthBody>
 	</>

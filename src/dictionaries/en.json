@@ -39,14 +39,16 @@
 				"description": "",
 				"submit": "Sign In",
 				"reset-password-link": "Reset password",
-				"register-link": "I don't have an account. <a>Sign up</a>"
+				"register-link": "I don't have an account.",
+				"sign-up": "Sign Up"
 			},
 			"register": {
 				"title": "Sign Up",
 				"title-verbose": "Sign Up for an Account",
 				"submit": "Create Account",
 				"verify-account": "Please click the verification link that has been sent to your email to complete your registration.",
-				"login-link": "I already have an account. <a>Log in</a>",
+				"login-link": "I already have an account.",
+				"log-in": "Log In",
 				"acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>.",
 				"registration-closed": "User registration is currently disabled."
 			},
