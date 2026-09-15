@@ -10,7 +10,7 @@ import { getComic } from "@/lib/directus/get-comics"
 // UI
 import { comicMetadata } from "./_ui/metadata"
 import { HomepagePageUI } from "./_ui/page-home"
-import { ComicLandingPageUI } from "./_ui/page-comic"
+import ComicLandingPageUI from "./_ui/page-comic-landing"
 import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 
