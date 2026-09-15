@@ -46,28 +46,7 @@ export type ComicPageUIProps = {
 	session?: Awaited<ReturnType<typeof verifySession>>
 }
 
-/**-----------------------------------
- * Comic Landing Page UI
- * ---
- */
-export function ComicLandingPageUI({
-	comic,
-	session
-}: {
-	comic: Awaited<ReturnType<typeof getComic>>
-	session?: Awaited<ReturnType<typeof verifySession>>
-}) {
-	return <>
-		<div className={clsx(
-			"p-4",
-			"border",
-			"border-dashed",
-			"border-yellow-500",
-		)}>
-			This is the Comic Landing Page
-		</div>
-	</>
-}
+
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -845,7 +824,7 @@ export default function ComicPageUI({
 											setNavClickType("prev")
 											setFirstLoad(false)
 										}}
-										href="./1"
+										href="./"
 									>
 										<Icon name="forwardStep" className={clsx(
 											"inline-block",
