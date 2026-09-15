@@ -273,6 +273,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 						// Meta
 						"date_created",
 						"date_updated",
+						"landing_page",
 					],
 				},
 				{

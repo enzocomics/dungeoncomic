@@ -91,6 +91,9 @@ export default function ComicPageUI({
 
 	/**----------------------------------- */
 	// Reusable Booleans
+
+	const hasCoverPage = comic.landing_page === "cover-page" ? true : false
+
 	const hasPrevPage = !!(
 		page.prev_pages &&
 		page.prev_pages.length > 0 &&
@@ -252,7 +255,6 @@ export default function ComicPageUI({
 			>
 				<ComicPageHeaderTitle />
 			</div>
-			<ComicPageNav />
 		</header>
 
 		{/* COMIC PAGE - CONTENT WRAPPER */}
@@ -270,6 +272,7 @@ export default function ComicPageUI({
 			)
 			}
 		>
+			<ComicPageNav />
 			{/* COMIC PAGE - CONTENT BODY */}
 			<article
 				className={clsx(
@@ -770,7 +773,7 @@ export default function ComicPageUI({
 		const isTop = where === "top"
 		return <>
 			{
-				hasPrevPage &&
+				(hasPrevPage || where == "bottom") &&
 				<>
 					<div className={clsx(
 						// "max-w-6xl",
@@ -780,14 +783,18 @@ export default function ComicPageUI({
 						"text-xs",
 						"text-white",
 						"font-comic-header",
-						isTop && [
-							hasBanner && "drop-shadow-xl",
-							hasBanner && "drop-shadow-neutral-900/45",
-							hasBanner && "md:rounded-b",
+						isTop ? [
+							// hasBanner && "drop-shadow-xl",
+							// hasBanner && "drop-shadow-neutral-900/45",pm 
+							// hasBanner && "md:rounded-b",
+							"top-12",
+							"md:top-16",
+							"md:rounded-t",
+						] : [
+							"md:rounded-b",
+							"bottom-0",
 						],
-						!isTop && "md:rounded-b",
-						!isTop && "sticky",
-						!isTop && "bottom-0",
+						"sticky",
 					)}>
 
 						<nav className={clsx(
@@ -797,9 +804,9 @@ export default function ComicPageUI({
 							// isTop ? "justify-center" : "justify-between",
 						)}>
 							{/* GO BACK TO START BUTTON */}
-							{isTop &&
+							{(isTop || hasCoverPage) &&
 								<li>
-									<Link
+									<a
 										className={clsx(
 											"block",
 											"flex",
@@ -836,7 +843,7 @@ export default function ComicPageUI({
 
 										<span>{t("go-to-start")}</span>
 
-									</Link>
+									</a>
 								</li>
 							}
 							{/* Back Button */}
