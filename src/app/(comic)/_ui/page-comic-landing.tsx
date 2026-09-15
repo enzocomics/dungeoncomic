@@ -1,14 +1,19 @@
 "use client"
+import { Button, Field, } from "@headlessui/react"
+import { marked } from "marked"
+import { sanitize } from "@/lib/sanitize"
 import { useChangeStatus } from "@/components/status-message"
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
-import { getComic } from "@/lib/directus/get-comics"
+import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
+import replaceComicVariables from "../_functions/replace-comic-vars"
+import { ComicButton } from "@/components/button"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -16,10 +21,14 @@ import { useRouter } from "next/router"
  */
 export default function ComicLandingPageUI({
 	comic,
-	session
+	session,
+	variables,
+	userVariables
 }: {
 	comic: Awaited<ReturnType<typeof getComic>>
 	session?: Awaited<ReturnType<typeof verifySession>>
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
 }) {
 	// HOOKS
 	const pathname = usePathname()
@@ -36,9 +45,7 @@ export default function ComicLandingPageUI({
 		<div
 			className={clsx(
 				"relative",
-
-			)
-			}
+			)}
 		>
 			<header
 				className={clsx(
@@ -66,8 +73,7 @@ export default function ComicLandingPageUI({
 			{/* COMIC PAGE - CONTENT BODY */}
 			<article
 				className={clsx(
-					// TEmp
-					"h-400",
+
 					// Structure
 					"flex",
 					"flex-col",
@@ -75,6 +81,8 @@ export default function ComicLandingPageUI({
 					// Spacing
 					"pt-6",
 					"pb-18",
+					"sm:pt-12",
+					"lg:pt-18",
 					// Appearance
 					"bg-base-1",
 					"dark:bg-base-2",
@@ -86,7 +94,42 @@ export default function ComicLandingPageUI({
 					"md:rounded-t",
 				)}
 			>
-				<Link href={`${path}1`}>Go to first page</Link>
+				<div dangerouslySetInnerHTML={{
+					__html:
+						replaceComicVariables({
+							content: String(
+								marked.parse(
+									sanitize(String(comic.landing_page_content))
+								)
+							),
+							variables: variables,
+							userVariables: userVariables,
+							html: true
+						}),
+				}}
+					className={clsx(
+						// "py-6",
+
+						"px-6",
+						"prose",
+						"text-base/loose",
+						"lg:text-lg/loose",
+						"max-w-2xl",
+						"mx-auto",
+						"text-left",
+						"text-pretty",
+					)}
+				/>
+				<div className={clsx(
+					"px-6",
+					"mx-auto",
+					"w-full",
+					"max-w-2xl"
+				)}>
+					<ComicButton as="link" href={`${path}1`}>
+						Start Reading &raquo;
+					</ComicButton>
+				</div>
 			</article>
 		</div>
 	</>

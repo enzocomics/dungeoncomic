@@ -6,13 +6,14 @@ import { Metadata } from "next"
 import { redirect, RedirectType } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
-import { getComic } from "@/lib/directus/get-comics"
+import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { comicMetadata } from "./_ui/metadata"
 import { HomepagePageUI } from "./_ui/page-home"
 import ComicLandingPageUI from "./_ui/page-comic-landing"
 import { Suspense } from "react"
 import { verifySession } from "@/data/session"
+import { getUserVarsCookie } from "./_actions/variables"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -35,10 +36,15 @@ export default async function Homepage() {
 	const frontpage_comic = settings.frontpage_comic
 	//GET THE SESSION
 	const session = await verifySession()
+
+
 	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
 	if (frontpage_comic) {
 		// FETCH COMIC DATA
 		const comic = await getComic(frontpage_comic.slug)
+		const userVariables = await getUserVarsCookie({ comic: comic })
+		// Get the comic page & variables
+		const variables = await getComicVariables(frontpage_comic.slug)
 		// CHECK `landing_page` SETTING
 		const landing_page = comic.landing_page
 		const page_count = comic.pages_count
@@ -46,7 +52,12 @@ export default async function Homepage() {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
 				return <Suspense>
-					<ComicLandingPageUI comic={comic} session={session} />
+					<ComicLandingPageUI
+						comic={comic}
+						session={session}
+						variables={variables}
+						userVariables={userVariables}
+					/>
 				</Suspense>
 			// REDIRECT TO FIRST PAGE
 			case "first-page":

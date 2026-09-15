@@ -105,6 +105,9 @@ export default async function RoutePage({
 		const comic = await getComic(route)
 		// Throw 404 if it doesn't exist
 		if (!comic) notFound()
+		const userVariables = await getUserVarsCookie({ comic: comic })
+		// Get the comic page & variables
+		const variables = await getComicVariables(route)
 		// Otherwise, render it
 		// CHECK `landing_page` SETTING
 		const landing_page = comic.landing_page
@@ -112,7 +115,12 @@ export default async function RoutePage({
 		switch (landing_page) {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
-				return <ComicLandingPageUI comic={comic} session={session} />
+				return <ComicLandingPageUI
+					comic={comic}
+					session={session}
+					variables={variables}
+					userVariables={userVariables}
+				/>
 			// REDIRECT TO FIRST PAGE
 			case "first-page":
 				redirect(`${route}/1`, RedirectType.replace)
