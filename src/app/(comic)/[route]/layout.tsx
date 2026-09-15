@@ -34,10 +34,6 @@ export default async function RouteLayout({
 	params: Promise<{ route: string }>
 }) {
 	const { route } = await params
-	// Check if public registration is open
-	const { public_registration } = await adminClient.request(readSettings({
-		fields: ["public_registration"]
-	}))
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
@@ -65,7 +61,6 @@ export default async function RouteLayout({
 		// RENDER
 		return <>
 			<ComicContextProvider>
-				<AuthModal public_registration={public_registration} />
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
 				</ComicLayoutUI>

@@ -62,6 +62,8 @@ export default function AuthModal({
 			)}
 		>
 			<div
+				role="dialog"
+				aria-modal="true"
 				ref={modalRef}
 				onClick={(e) => handleClick(e.target)}
 				className={clsx(
@@ -83,5 +85,7 @@ export default function AuthModal({
 				</AuthLayout>
 			</div>
 		</div >
+	} else {
+		return null
 	}
 }
