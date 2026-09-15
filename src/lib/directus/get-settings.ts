@@ -61,6 +61,7 @@ export async function getSettings() {
 						{ authors: ["name", "username", "email"] },
 					],
 				},
+				"single_comic_site",
 			],
 		}),
 	)

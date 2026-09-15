@@ -189,6 +189,7 @@ export interface SettingsSingleton {
 	project_thumbnail: ImageCollection | null
 	project_authors: DirectusUser[] | null
 	frontpage_comic: ComicsCollection | null
+	single_comic_site: boolean
 	// Icons
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null
