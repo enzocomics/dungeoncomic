@@ -56,6 +56,7 @@ export interface ComicsCollection {
 	date_created: "datetime"
 	user_updated: DirectusUser
 	date_updated: "datetime"
+	landing_page_content: Text | null
 }
 
 /** ------------------------------------------------ **/

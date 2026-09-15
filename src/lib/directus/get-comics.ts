@@ -48,6 +48,7 @@ export async function getComic(slug: string) {
 				// Content
 				// Settings
 				"landing_page",
+				"landing_page_content",
 				// Meta
 				"id",
 				"count(pages)",
