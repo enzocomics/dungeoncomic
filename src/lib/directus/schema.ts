@@ -40,7 +40,6 @@ export interface ComicsCollection {
 	description: string
 	authors: DirectusUser[] | null
 	// Content
-	variables: JSON | null
 	pages: number[] | PagesCollection[]
 	// Appearance
 	logo: ImageCollection | null
