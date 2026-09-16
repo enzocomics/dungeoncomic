@@ -37,7 +37,6 @@ export function ComicLayoutUI({
 
 	// FRONTPAGE COIMC BOOLEAN
 	const singleComicSite = settings?.single_comic_site
-	console.log(singleComicSite)
 
 	// RENDER COMIC LAYOUT UI
 	return (
