@@ -98,16 +98,20 @@ export function SmallComicButton({
 export function ComicButton({
 	className,
 	disabled,
+	visited = false,
 	...props }:
 	| ({
 		as?: "button",
 		disabled?: boolean,
+		visited?: boolean
 	} & ComponentPropsWithoutRef<"button">)
 	| ({
 		as?: "link",
 		disabled?: boolean,
+		visited?: boolean
 	} & ComponentPropsWithoutRef<typeof Link>)
 ) {
+	console.log(visited)
 	const classes = clsx(
 		className,
 
@@ -133,7 +137,7 @@ export function ComicButton({
 			"cursor-pointer",
 			// Appearance
 			"bg-comic-accent-500",
-			"visited:bg-neutral-500",
+			visited && "visited:bg-neutral-500",
 			// States
 			"hover:duration-0",
 			"hover:bg-comic-accent-700",

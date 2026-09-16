@@ -1921,7 +1921,7 @@ export default function ComicPageUI({
 									{page?.next_pages?.map((n, index) =>
 										<li key={index} className={clsx(
 										)}>
-											<ComicButton as="link"
+											<ComicButton visited={true} as="link"
 												onClick={() => {
 													setNavClickType("next")
 													setFirstLoad(false)
