@@ -95,7 +95,7 @@ export default function ComicLandingPageUI({
 				)}
 			>
 				<div dangerouslySetInnerHTML={{
-					__html:
+					__html: String(
 						replaceComicVariables({
 							content: String(
 								marked.parse(
@@ -105,7 +105,7 @@ export default function ComicLandingPageUI({
 							variables: variables,
 							userVariables: userVariables,
 							html: true
-						}),
+						})),
 				}}
 					className={clsx(
 						// "py-6",
@@ -126,9 +126,11 @@ export default function ComicLandingPageUI({
 					"w-full",
 					"max-w-2xl"
 				)}>
-					<ComicButton as="link" href={`${path}1`}>
-						Start Reading &raquo;
-					</ComicButton>
+					{comic.pages_count > 0 &&
+						<ComicButton as="link" href={`${path}1`}>
+							Start Reading &raquo;
+						</ComicButton>
+					}
 				</div>
 			</article>
 		</div>
