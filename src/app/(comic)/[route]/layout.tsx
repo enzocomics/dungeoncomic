@@ -38,6 +38,9 @@ export default async function RouteLayout({
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
 	const singleComicSite = settings.single_comic_site
+	const { public_registration } = await adminClient.request(readSettings({
+		fields: ["public_registration"]
+	}))
 	// CHECK IF user is logged in
 	const session = await verifySession()
 

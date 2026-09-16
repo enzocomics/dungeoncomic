@@ -104,10 +104,7 @@ export default async function RoutePage({
 			}
 		} else {
 			// if `singleComicSite` has been selected but no comics exist (probably deleted?)
-			// TODO: UI
-			return <>
-				No comics exist!
-			</>
+			notFound()
 		}
 	}
 
@@ -178,7 +175,7 @@ export async function generateMetadata({
 	// 	return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
 	// }
 
-	if (singleComicSite) {
+	if (singleComicSite && comic) {
 		return await comicPageMetadata(comic.slug, parseInt(route))
 	}
 	/**----------------------------------- */

@@ -3,7 +3,7 @@
 // TYPES
 import { Metadata } from "next"
 // LIBRARIES
-import { redirect, RedirectType } from "next/navigation"
+import { notFound, redirect, RedirectType } from "next/navigation"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 import { getComic, getComicVariables } from "@/lib/directus/get-comics"
@@ -14,6 +14,7 @@ import ComicLandingPageUI from "./_ui/page-comic-landing"
 import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 import { getUserVarsCookie } from "./_actions/variables"
+import { FrontpageLayoutUI } from "./_ui/layout"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -41,37 +42,48 @@ export default async function Homepage() {
 	/**----------------------------------- */
 	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// - Display the comic page at the root
+	// - If no front page comic is selected, display the first comic that exists
+	// - If NO comics exist, display the homepage
 	if (singleComicSite) {
 		// FETCH COMIC DATA
 		const comic = await getComic({ slug: frontpageComic?.slug })
-		const userVariables = await getUserVarsCookie({ comic: comic })
-		// Get the comic page & variables
-		const variables = await getComicVariables(frontpageComic?.slug)
-		// CHECK `landing_page` SETTING
-		const landing_page = comic.landing_page
-		const page_count = comic.pages_count
-		switch (landing_page) {
-			// SHOW LANDING PAGE UI
-			case "cover-page":
-				return <Suspense>
-					<ComicLandingPageUI
-						comic={comic}
-						session={session}
-						variables={variables}
-						userVariables={userVariables}
-					/>
-				</Suspense>
-			// REDIRECT TO FIRST PAGE
-			case "first-page":
-				redirect(`1`, RedirectType.replace)
-			// REDIRECT TO LAST PAGE
-			case "last-page":
-				redirect(`${page_count}`, RedirectType.replace)
-			// REDIRECT TO A SPECIFIC PAGE
-			default:
-				redirect(`${landing_page}`, RedirectType.replace)
+		if (comic) {
+			const userVariables = await getUserVarsCookie({ comic: comic })
+			// Get the comic page & variables
+			const variables = await getComicVariables(frontpageComic?.slug)
+			// CHECK `landing_page` SETTING
+			const landing_page = comic.landing_page
+			const page_count = comic.pages_count
+
+			switch (landing_page) {
+				// SHOW LANDING PAGE UI
+				case "cover-page":
+					return <Suspense>
+						<ComicLandingPageUI
+							comic={comic}
+							session={session}
+							variables={variables}
+							userVariables={userVariables}
+						/>
+					</Suspense>
+				// REDIRECT TO FIRST PAGE
+				case "first-page":
+					redirect(`1`, RedirectType.replace)
+				// REDIRECT TO LAST PAGE
+				case "last-page":
+					redirect(`${page_count}`, RedirectType.replace)
+				// REDIRECT TO A SPECIFIC PAGE
+				default:
+					redirect(`${landing_page}`, RedirectType.replace)
+			}
+		} else {
+			// Display homepage if no comics exist
+			return <Suspense>
+				<HomepagePageUI session={session} />
+			</Suspense>
 		}
 	}
+	/**----------------------------------- */
 	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// - If a frontpage comic is selected, redirect to it
 	// - If a frontpage comic is not selected, display homepage
@@ -79,8 +91,11 @@ export default async function Homepage() {
 		if (frontpageComic) {
 			redirect(`/${frontpageComic.slug}`)
 		} else {
+			// notFound()
 			return <Suspense>
-				<HomepagePageUI session={session} />
+				<FrontpageLayoutUI>
+					<HomepagePageUI session={session} />
+				</FrontpageLayoutUI>
 			</Suspense>
 		}
 	}

@@ -693,7 +693,7 @@ export default function ComicPageUI({
 										"text-sm/loose",
 									)}
 										dangerouslySetInnerHTML={{
-											__html: replaceComicVariables({
+											__html: String(replaceComicVariables({
 												content: String(
 													marked.parse(
 														sanitize(comic.description)
@@ -702,7 +702,7 @@ export default function ComicPageUI({
 												variables: variables,
 												userVariables: userVariables,
 												html: true
-											}),
+											})),
 
 										}}
 									/>
@@ -1369,7 +1369,7 @@ export default function ComicPageUI({
 
 									)}
 										dangerouslySetInnerHTML={{
-											__html: replaceComicVariables({
+											__html: String(replaceComicVariables({
 												content: String(
 													marked.parse(
 														sanitize(
@@ -1380,7 +1380,7 @@ export default function ComicPageUI({
 												variables: variables,
 												userVariables: userVariables,
 												html: true
-											})
+											}))
 										}}
 									>
 									</div>

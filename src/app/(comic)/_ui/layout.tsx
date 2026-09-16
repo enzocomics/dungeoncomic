@@ -127,10 +127,68 @@ export function ComicLayoutUI({
  */
 export function FrontpageLayoutUI({
 	children,
+	session
 }: {
 	children: React.ReactNode
+	session?: Awaited<ReturnType<typeof verifySession>>
 }) {
-	return children
+	return <>
+		<div className={clsx(
+			"relative",
+			"font-platform-copy",
+			"bg-top",
+			"bg-repeat-x",
+			"bg-fixed",
+		)}>
+			<div
+				style={{
+					// backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
+					backgroundImage: `url(/img/backdrop.webp)`,
+				}}
+				className={clsx(
+					// Position
+					"-z-1",
+					"fixed",
+					"left-1/2 -translate-x-1/2 ",
+					// Size
+					"w-full",
+					"max-w-[1600px]",
+					"h-150",
+					// Appearance
+					"opacity-75",
+					// Background
+					"bg-cover",
+					"bg-center",
+					"bg-fixed",
+					"bg-blend-saturation",
+					// Background: Fade to bottom
+					"mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)",
+					"[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)]",
+					// Background: Fade to left & right (desktop)
+					"xl:mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)",
+					"xl:mask-composite:intersect",
+					"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
+					"xl:[-webkit-mask-composite:source-in]",
+				)} />
+			<NavMenu menu={false} session={session} />
+			<div className={clsx(
+				"mx-auto",
+				"max-w-6xl",
+				"md:px-6",
+			)}>
+				<header className={clsx(
+					"text-center",
+					"h-20"
+				)}>
+				</header>
+				<main className={clsx(
+					"bg-white",
+				)}>
+					{children}
+				</main>
+			</div>
+		</div>
+	</>
 }
 
 

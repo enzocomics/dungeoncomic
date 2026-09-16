@@ -153,7 +153,7 @@ export default function NavMenu({
 							}>
 								{!menu &&
 									<>
-										<Image src="img/logomark.svg" width="128" height="128" alt=""
+										<Image src="/img/logomark.svg" width="128" height="128" alt=""
 											className={
 												clsx(
 												)

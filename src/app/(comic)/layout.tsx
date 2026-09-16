@@ -64,10 +64,12 @@ export default async function HomepageLayout({
 				</ComicContextProvider>
 			</>
 		else
-			// if `singleComicSite` has been selected but no comics exist (probably deleted?)
-			// TODO: UI
+			// if `singleComicSite` has been selected but no comics exist (probably deleted?) just show the regular layout
 			return <>
-				No comics exist!
+				<AuthModal public_registration={public_registration} />
+				<FrontpageLayoutUI>
+					{children}
+				</FrontpageLayoutUI>
 			</>
 
 	}
@@ -76,8 +78,9 @@ export default async function HomepageLayout({
 	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// - Return the frontpage layout UI at the root
 	else if (!singleComicSite)
-		return <FrontpageLayoutUI>
+		return <>
 			<AuthModal public_registration={public_registration} />
 			{children}
-		</FrontpageLayoutUI>
+		</>
+
 }
