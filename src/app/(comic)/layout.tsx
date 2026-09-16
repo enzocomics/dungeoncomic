@@ -1,3 +1,4 @@
+"use server"
 /**----------------------------------- */
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"

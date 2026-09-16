@@ -1,3 +1,4 @@
+"use server"
 /**----------------------------------- */
 import "@/styles/globals.css"
 import { fonts } from "@/styles/fonts"
