@@ -130,7 +130,7 @@ export default function NavMenu({
 									"after:absolute",
 									"after:-z-1",
 									"after:w-15",
-									"after:h-10",
+									"after:h-9.5",
 									"after:bg-black/60",
 									"after:top-4.5",
 									"after:left-19",
@@ -149,11 +149,9 @@ export default function NavMenu({
 										"md:top-4.5",
 										"md:left-8.5",
 										"md:size-8",
-										menu ? [
+										menu && [
 											"hidden",
 											"md:block",
-										] : [
-
 										]
 									)
 								} />
