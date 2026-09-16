@@ -2,18 +2,15 @@
 /**----------------------------------- */
 // LIBRARIES
 import Link from "next/link"
-import { CloseButton, Popover, PopoverButton, PopoverPanel, useClose } from "@headlessui/react"
+import { CloseButton, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useTheme } from "@teispace/next-themes"
 // FUNCTIONS
 import clsx from "clsx"
 // STYLES
 import Icon from "@/styles/icons"
 import Seal from "@/styles/seal"
-import { colorVariants } from "@/styles/colors"
-import { displayFonts, copyFonts } from "@/styles/fonts"
 // DATA
 import { directusURL } from "@/data/env"
-import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
@@ -35,8 +32,6 @@ export default function NavMenu({
 	session?: Awaited<ReturnType<typeof verifySession>>
 	menu?: boolean
 }) {
-	// AuthModal Global Context
-	const { authModal, setOpenAuthModal } = useGlobalContext()
 	//Hooks
 	const router = useRouter()
 	const { theme, setTheme } = useTheme()
@@ -270,8 +265,8 @@ export default function NavMenu({
 								"before:rotate-180"
 							)}
 						>
-							<section className={
-								clsx(
+							<section
+								className={clsx(
 									// Appearance
 									"rounded-sm",
 									"md:rounded",
@@ -281,14 +276,12 @@ export default function NavMenu({
 									"dark:outline",
 									"dark:-outline-offset-1",
 									"dark:outline-base-5/50",
-								)
-							}>
+								)}>
 								{/* COMIC MENU */}
-								<section className={
-									clsx(
+								<section
+									className={clsx(
 										"space-y-1 px-2 pt-2 pb-3"
-									)
-								}>
+									)}>
 									{comicNavigation.map((item) => (
 										<CloseButton
 											as={Link}

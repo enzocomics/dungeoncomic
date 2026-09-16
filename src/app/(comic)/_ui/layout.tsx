@@ -1,21 +1,15 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import Link from "next/link"
-import { CloseButton, Popover, PopoverButton, PopoverPanel, useClose } from "@headlessui/react"
-import { useTheme } from "@teispace/next-themes"
 // FUNCTIONS
 import clsx from "clsx"
 // STYLES
-import Icon from "@/styles/icons"
-import Seal from "@/styles/seal"
 import { colorVariants } from "@/styles/colors"
 import { displayFonts, copyFonts } from "@/styles/fonts"
 // DATA
 import { directusURL } from "@/data/env"
 import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
-import { useRouter } from "next/navigation"
 import NavMenu from "./site-nav"
 import { getSettings } from "@/lib/directus/get-settings"
 import React from "react"
@@ -42,7 +36,8 @@ export function ComicLayoutUI({
 	const accentColor = comic.accent_color || "red"
 
 	// FRONTPAGE COIMC BOOLEAN
-	const isFrontpageComic = settings?.frontpage_comic
+	const singleComicSite = settings?.single_comic_site
+	console.log(singleComicSite)
 
 	// RENDER COMIC LAYOUT UI
 	return (
@@ -104,7 +99,7 @@ export function ComicLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu session={session} menu={false} />
+			<NavMenu session={session} menu={false /*singleComicSite ? false : true*/} />
 			{/* Hide the navmenu if it's the frontpagecomic
 				- #TODO: In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
 			*/}
