@@ -51,63 +51,67 @@ export async function comicMetadata(
 ) {
 	const locale: string = "en-CA" // TODO: I18N
 	// FETCH COMIC VARS
-	const comic = await getComic(comic_slug)
+	const comic = await getComic({ slug: comic_slug })
 	const url = `${settings.project_url}/${comic_slug}`
 
-	// AUTHORS w/ DEFAULTS
-	const authors = comic.authors && comic.authors.map((a) => {
-		let name
-		let url
-		if (a) {
-			// Start with the name. Fallback to username. Otherwise, don't show
-			name = a.name ?? a.username ?? undefined
-			url = a.homepage_url ?? undefined
-			return {
-				name: name,
-				url: url
+	if (comic) {
+		// AUTHORS w/ DEFAULTS
+		const authors = comic.authors && comic.authors.map((a) => {
+			let name
+			let url
+			if (a) {
+				// Start with the name. Fallback to username. Otherwise, don't show
+				name = a.name ?? a.username ?? undefined
+				url = a.homepage_url ?? undefined
+				return {
+					name: name,
+					url: url
+				}
+			} else {
+				return null
 			}
-		} else {
-			return null
-		}
-	})
-	const authorsStr = authors!.map(a => a!["name"]).join(", ")
+		})
+		const authorsStr = authors!.map(a => a!["name"]).join(", ")
 
-	// THUMBNAIL
-	const thumbnail = comic.thumbnail ? {
-		url: `${directusURL}/assets/${comic.thumbnail.filename_disk}`,
-		type: comic.thumbnail.type,
-		width: comic.thumbnail.width,
-		height: comic.thumbnail.height,
-	} : projectThumbnail || fallbackThumbnail
+		// THUMBNAIL
+		const thumbnail = comic.thumbnail ? {
+			url: `${directusURL}/assets/${comic.thumbnail.filename_disk}`,
+			type: comic.thumbnail.type,
+			width: comic.thumbnail.width,
+			height: comic.thumbnail.height,
+		} : projectThumbnail || fallbackThumbnail
 
-	// VARS
-	const title = comic.title
-	const description = comic.description ||
-		`A comic adventure series${authorsStr ? " by " + authorsStr : ""}`
+		// VARS
+		const title = comic.title
+		const description = comic.description ||
+			`A comic adventure series${authorsStr ? " by " + authorsStr : ""}`
 
-	// METADATA OBJECT
-	return {
-		title: {
-			template: `%s ∙ title`,
-			default: title,
-		},
-		description: description,
-		authors: authors as Author[],
-		openGraph: {
+		// METADATA OBJECT
+		return {
+			title: {
+				template: `%s ∙ title`,
+				default: title,
+			},
 			description: description,
-			siteName: projectName,
-			url: url,
-			locale: locale,
-			type: "website",
-			images: [thumbnail]
-		},
-		twitter: {
-			card: "summary_large_image",
-			title: title,
-			description: description,
-			creator: authorsStr,
-		},
-	} as Metadata
+			authors: authors as Author[],
+			openGraph: {
+				description: description,
+				siteName: projectName,
+				url: url,
+				locale: locale,
+				type: "website",
+				images: [thumbnail]
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: title,
+				description: description,
+				creator: authorsStr,
+			},
+		} as Metadata
+	} else {
+		return {}
+	}
 }
 
 /**-----------------------------------
@@ -120,93 +124,96 @@ export async function comicPageMetadata(
 ) {
 	const locale: string = "en-CA" // TODO: I18N
 	// FETCH COMIC VARS
-	const comic = await getComic(comic_slug)
+	const comic = await getComic({ slug: comic_slug })
 	const variables = await getComicVariables(comic_slug)
 	const userVariables = await getUserVarsCookie({ comic: comic })
 	const comicPage = await getComicPage(comic_slug, pagenum)
 	const url = `${settings.project_url}/${comic_slug}/${pagenum}`
 
-
-	// AUTHORS w/ DEFAULTS
-	const authors = comic.authors && comic.authors.map((a) => {
-		let name
-		let url
-		if (a) {
-			// Start with the name. Fallback to username. Otherwise, don't show
-			name = a.name ?? a.username ?? undefined
-			url = a.homepage_url ?? undefined
-			return {
-				name: name,
-				url: url
+	if (comic) {
+		// AUTHORS w/ DEFAULTS
+		const authors = comic.authors && comic.authors.map((a) => {
+			let name
+			let url
+			if (a) {
+				// Start with the name. Fallback to username. Otherwise, don't show
+				name = a.name ?? a.username ?? undefined
+				url = a.homepage_url ?? undefined
+				return {
+					name: name,
+					url: url
+				}
+			} else {
+				return null
 			}
-		} else {
-			return null
-		}
-	})
-	const authorsStr = authors!.map(a => a!["name"]).join(", ")
+		})
+		const authorsStr = authors!.map(a => a!["name"]).join(", ")
 
 
-	// VARS
-	const comicTitle = comic.title
-	const pageTitle = replaceComicVariables({
-		content: comicPage.title,
-		variables: variables,
-		userVariables: userVariables
-	}) || `Page ${pagenum}`
-	const description = replaceComicVariables({
-		content: comicPage.description,
-		variables: variables,
-		userVariables: userVariables
-	}) || `Page ${pagenum} of ${comicTitle}, a comic adventure series${authorsStr ? " by " + authorsStr : ""}`
+		// VARS
+		const comicTitle = comic.title
+		const pageTitle = replaceComicVariables({
+			content: comicPage.title,
+			variables: variables,
+			userVariables: userVariables
+		}) || `Page ${pagenum}`
+		const description = replaceComicVariables({
+			content: comicPage.description,
+			variables: variables,
+			userVariables: userVariables
+		}) || `Page ${pagenum} of ${comicTitle}, a comic adventure series${authorsStr ? " by " + authorsStr : ""}`
 
-	// THUMBNAIL
-	// - Shows the image from the first panel, if it exists
-	// - Falls back to the comic PAGE thumbnail, if it has been defined
-	// - Otherwise, fall back to the project thumbnail, and finally, DCC's thumbnail
-	const comicThumbnail = comic.thumbnail ? {
-		url: `${directusURL}/assets/${comic.thumbnail.filename_disk}`,
-		type: comic.thumbnail.type,
-		width: comic.thumbnail.width,
-		height: comic.thumbnail.height,
-	} : projectThumbnail || fallbackThumbnail
+		// THUMBNAIL
+		// - Shows the image from the first panel, if it exists
+		// - Falls back to the comic PAGE thumbnail, if it has been defined
+		// - Otherwise, fall back to the project thumbnail, and finally, DCC's thumbnail
+		const comicThumbnail = comic.thumbnail ? {
+			url: `${directusURL}/assets/${comic.thumbnail.filename_disk}`,
+			type: comic.thumbnail.type,
+			width: comic.thumbnail.width,
+			height: comic.thumbnail.height,
+		} : projectThumbnail || fallbackThumbnail
 
-	const pageThumbnail = comicPage.thumbnail ? {
-		url: `${directusURL}/assets/${comicPage.thumbnail.filename_disk}`,
-		type: comicPage.thumbnail.type,
-		width: comicPage.thumbnail.width,
-		height: comicPage.thumbnail.height,
-	} : comicThumbnail
+		const pageThumbnail = comicPage.thumbnail ? {
+			url: `${directusURL}/assets/${comicPage.thumbnail.filename_disk}`,
+			type: comicPage.thumbnail.type,
+			width: comicPage.thumbnail.width,
+			height: comicPage.thumbnail.height,
+		} : comicThumbnail
 
-	const thumbnail = comicPage.comic_panels && comicPage.comic_panels.length > 0 && comicPage.comic_panels[0].panel_image ? {
-		url: `${directusURL}/assets/${comicPage.comic_panels[0].panel_image.filename_disk}`,
-		type: comicPage.comic_panels[0].panel_image.type,
-		width: comicPage.comic_panels[0].panel_image.width,
-		height: comicPage.comic_panels[0].panel_image.height,
-	} : pageThumbnail
+		const thumbnail = comicPage.comic_panels && comicPage.comic_panels.length > 0 && comicPage.comic_panels[0].panel_image ? {
+			url: `${directusURL}/assets/${comicPage.comic_panels[0].panel_image.filename_disk}`,
+			type: comicPage.comic_panels[0].panel_image.type,
+			width: comicPage.comic_panels[0].panel_image.width,
+			height: comicPage.comic_panels[0].panel_image.height,
+		} : pageThumbnail
 
-	// METADATA OBJECT
-	return {
-		title: {
-			template: `%s ∙ ${pageTitle}`,
-			default: `${pageTitle} | ${comicTitle}`,
-		},
-		description: description,
-		authors: authors as Author[],
-		openGraph: {
+		// METADATA OBJECT
+		return {
+			title: {
+				template: `%s ∙ ${pageTitle}`,
+				default: `${pageTitle} | ${comicTitle}`,
+			},
 			description: description,
-			siteName: projectName,
-			url: url,
-			locale: locale,
-			type: "website",
-			images: [thumbnail]
-		},
-		twitter: {
-			card: "summary_large_image",
-			title: pageTitle,
-			description: description,
-			creator: authorsStr,
-		},
-	} as Metadata
+			authors: authors as Author[],
+			openGraph: {
+				description: description,
+				siteName: projectName,
+				url: url,
+				locale: locale,
+				type: "website",
+				images: [thumbnail]
+			},
+			twitter: {
+				card: "summary_large_image",
+				title: pageTitle,
+				description: description,
+				creator: authorsStr,
+			},
+		} as Metadata
+	} else {
+		return {}
+	}
 }
 
 

@@ -5,19 +5,26 @@ import { adminClient, publicClient } from "@/lib/directus/clients"
 import { readItems } from "@directus/sdk"
 
 /** ------------------------------------------------ **
+ * GET COMICS
+ */
+
+/** ------------------------------------------------ **
  * GET COMIC
  */
-export async function getComic(slug: string) {
+export async function getComic({ slug }: { slug?: string }) {
 	const request = await publicClient.request(
 		readItems("comics", {
-			filter: {
-				slug: { _eq: slug },
-			},
+			filter: slug
+				? {
+						slug: { _eq: slug },
+					}
+				: undefined,
 			limit: 1,
 			fields: [
 				// Details
 				"title",
 				"description",
+				"slug",
 				{
 					authors: [
 						"id",
@@ -29,7 +36,9 @@ export async function getComic(slug: string) {
 					],
 				},
 				// Appearance
-				{ logo: ["filename_disk", "type", "width", "height", "description"] },
+				{
+					logo: ["filename_disk", "type", "width", "height", "description"],
+				},
 				{
 					thumbnail: [
 						"filename_disk",
@@ -55,7 +64,7 @@ export async function getComic(slug: string) {
 			],
 		}),
 	)
-	return request[0]
+	return request?.[0]
 }
 
 /** ------------------------------------------------ **
@@ -319,37 +328,39 @@ export async function getComicPage(comic_slug: string, num: number) {
  * GET COMIC VARIABLES
  */
 
-export async function getComicVariables(slug: string) {
-	const request = await publicClient.request(
-		readItems("variables", {
-			// TODO: We should probably eventually put a limit on this
-			limit: -1,
-			fields: [
-				"name",
-				"slug",
-				"default_value",
-				"value_prefix",
-				"value_suffix",
-				// This is required if we want to apply a deep filter
-				{
-					panel_id: [{ page_id: [{ comic: ["slug"] }] }],
-				},
-			],
-			// Deep filter that goes through each relation to find the value we want to compare to (in this case, the parent comic's slug)
-			deep: {
-				panel_id: {
-					page_id: {
-						comic: {
-							_filter: {
-								slug: {
-									_eq: slug,
+export async function getComicVariables(slug?: string) {
+	const request = slug
+		? await publicClient.request(
+				readItems("variables", {
+					// TODO: We should probably eventually put a limit on this
+					limit: -1,
+					fields: [
+						"name",
+						"slug",
+						"default_value",
+						"value_prefix",
+						"value_suffix",
+						// This is required if we want to apply a deep filter
+						{
+							panel_id: [{ page_id: [{ comic: ["slug"] }] }],
+						},
+					],
+					// Deep filter that goes through each relation to find the value we want to compare to (in this case, the parent comic's slug)
+					deep: {
+						panel_id: {
+							page_id: {
+								comic: {
+									_filter: {
+										slug: {
+											_eq: slug,
+										},
+									},
 								},
 							},
 						},
 					},
-				},
-			},
-		}),
-	)
+				}),
+			)
+		: null
 	return request
 }

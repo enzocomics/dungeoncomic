@@ -31,20 +31,22 @@ import { getUserVarsCookie } from "./_actions/variables"
  * 
  */
 export default async function Homepage() {
-	// CHECK IF `frontpage_comic` HAS BEEN SET
+	// CHECK IF `singleComicSite` HAS BEEN SET
 	const settings = await getSettings()
-	const frontpage_comic = settings.frontpage_comic
+	const frontpageComic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 	//GET THE SESSION
 	const session = await verifySession()
 
-
-	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (frontpage_comic) {
+	/**----------------------------------- */
+	// LAYOUT MODE 1: SINGLE COMIC SITE
+	// - Display the comic page at the root
+	if (singleComicSite) {
 		// FETCH COMIC DATA
-		const comic = await getComic(frontpage_comic.slug)
+		const comic = await getComic({ slug: frontpageComic?.slug })
 		const userVariables = await getUserVarsCookie({ comic: comic })
 		// Get the comic page & variables
-		const variables = await getComicVariables(frontpage_comic.slug)
+		const variables = await getComicVariables(frontpageComic?.slug)
 		// CHECK `landing_page` SETTING
 		const landing_page = comic.landing_page
 		const page_count = comic.pages_count
@@ -70,11 +72,17 @@ export default async function Homepage() {
 				redirect(`${landing_page}`, RedirectType.replace)
 		}
 	}
-	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
+	// LAYOUT MODE 2: MULTI-COMIC SITE
+	// - If a frontpage comic is selected, redirect to it
+	// - If a frontpage comic is not selected, display homepage
 	else {
-		return <Suspense>
-			<HomepagePageUI session={session} />
-		</Suspense>
+		if (frontpageComic) {
+			redirect(`/${frontpageComic.slug}`)
+		} else {
+			return <Suspense>
+				<HomepagePageUI session={session} />
+			</Suspense>
+		}
 	}
 
 }
@@ -84,17 +92,18 @@ export default async function Homepage() {
  * ---
  **/
 export async function generateMetadata(): Promise<Metadata | undefined> {
-	// CHECK IF `frontpage_comic` HAS BEEN SET
+	// FETCH SETTINGS
 	const settings = await getSettings()
-	const frontpage_comic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
+	const comic = await getComic({ slug: settings.frontpage_comic?.slug })
 	/**----------------------------------- */
-	// LAYOUT MODE 1: COMIC LANDING PAGE
+	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// - Load the comic metadata
-	if (frontpage_comic)
-		return await comicMetadata(frontpage_comic.slug)
+	if (singleComicSite)
+		return comic ? await comicMetadata(comic.slug) : {}
 	/**----------------------------------- */
 	// LAYOUT MODE 2: HOMEPAGE
 	// - Don't return anything. All the metadata is already defined in the root layout
-	else if (!frontpage_comic)
+	else if (!singleComicSite)
 		return {}
 }

@@ -25,13 +25,13 @@ import { adminClient } from "@/lib/directus/clients"
  * - Generates comic single page metadata or based on the layout mode selected
  * 
  * ---
- * **Layout Mode 1 (Default)**
+	// LAYOUT MODE 1: SINGLE COMIC SITE
  * - Only available when there is only one comic
  * - Display comic at the root 
  * - Subpages would be accessible at i.e. `dungeoncomic.com/1`
  * - THIS ROUTE IS 404
  * 
- * **Layout Mode 2**
+	// LAYOUT MODE 2: MULTI-COMIC SITE
  * - All comics live in their subfolder `dungeoncomic.com/comicslug`
  * - Subpages would be accessible at i.e. `dungeoncomic.com/comicslug/1`
  * 
@@ -43,24 +43,24 @@ export default async function ComicPagenumPage({
 }) {
 	// GET THE ROUTE PARAMS
 	const { route, pagenum } = await params
-	// CHECK IF `frontpage_comic` HAS BEEN SET
+	// CHECK IF `single_comic_site` HAS BEEN SET
 	const settings = await getSettings()
-	const frontpage_comic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 
 	/**----------------------------------- */
-	// LAYOUT MODE 1: IF `frontpage_comic` EXISTS
+	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// - Throw 404
-	if (frontpage_comic) notFound()
+	if (singleComicSite) notFound()
 
 	/**----------------------------------- */
-	// LAYOUT MODE 2
+	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// Throw 404 if the pagenum param is not a number
 	if (isNaN(pagenum)) notFound()
 
 	// Get the user session
 	const session = await verifySession()
 	// Get the User Variable Cookie
-	const comic = await getComic(route)
+	const comic = await getComic({ slug: route })
 	const userVariables = await getUserVarsCookie({ comic: comic })
 	// Get the comic page IF it is published
 	const variables = await getComicVariables(route)

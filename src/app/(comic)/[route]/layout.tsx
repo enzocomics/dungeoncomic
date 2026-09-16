@@ -37,23 +37,24 @@ export default async function RouteLayout({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 	// CHECK IF user is logged in
 	const session = await verifySession()
 
 	/**----------------------------------- */
-	// LAYOUT MODE 1 - FRONTPAGE COMIC
+	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// - No additional UI. We are displaying the comic layout in the root already
-	if (frontpage_comic)
+	if (singleComicSite)
 		return <>
 			{children}
 		</>
 
 	/**----------------------------------- */
-	// LAYOUT MODE 2 - HOMEPAGE
+	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// - Display comic layout UI
-	if (!frontpage_comic) {
+	if (!singleComicSite) {
 		// FETCH COMIC BY ROUTE
-		const comic = await getComic(route)
+		const comic = await getComic({ slug: route })
 
 		// THROW 404 IF IT DOESN"T EXIST
 		if (!comic) notFound()

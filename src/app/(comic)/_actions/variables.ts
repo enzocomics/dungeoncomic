@@ -42,7 +42,7 @@ export async function saveUserVars(prevState: unknown, formData: FormData) {
 		formData.get("comicPage") as string,
 	) as unknown as Awaited<ReturnType<typeof getComicPage>>
 	const title = page.comic.title
-	const comic = await getComic(page.comic.slug)
+	const comic = await getComic({ slug: page.comic.slug })
 	// Retrieve existing vars if they exist
 	const oldCookiePayload = await getUserVarsCookie({ comic: comic })
 

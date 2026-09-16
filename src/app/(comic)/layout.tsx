@@ -18,49 +18,64 @@ import { readSettings } from "@directus/sdk"
  * - Conditionally render the comic layout UI or not, based on the layout mode
  * 
  * ---
- * **Layout Mode 1 (Default)**
- * - Only available when there is only one comic
- * - Display comic at the root 
+ * ** MODE 1: SINGLE COMIC SITE: (Default)**
+ * - Displays the selected `frontpage_comic` at the root
+ * - (if none is selected, default to the first one)
  * - Subpages would be accessible at i.e. `dungeoncomic.com/1`
+ * - 
  * 
- * **Layout Mode 2**
+ * ** MODE 2: MULTI-COMIC SITE **
  * - All comics live in their subfolder `dungeoncomic.com/comicslug`
  * - Subpages would be accessible at i.e. `dungeoncomic.com/comicslug/1`
  * 
  */
+
 export default async function HomepageLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
-	// Check if public registration is open
+	// FETCH REQUIRED DATA
+	const session = await verifySession()
+	const settings = await getSettings()
+	const frontpageComic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 	const { public_registration } = await adminClient.request(readSettings({
 		fields: ["public_registration"]
 	}))
-	// CHECK IF `frontpage_comic` HAS BEEN SET
-	const settings = await getSettings()
-	const frontpage_comic = settings.frontpage_comic
-	// CHECK IF user is logged in
-	const session = await verifySession()
 
 	/**----------------------------------- */
-	// LAYOUT MODE 1: RETURN COMIC LANDING PAGE UI
-	if (frontpage_comic) {
-		const comic = await getComic(frontpage_comic.slug)
-		return <>
-			<ComicContextProvider>
-				<AuthModal public_registration={public_registration} />
-				<ComicLayoutUI settings={settings} comic={comic} session={session}>
-					{children}
-				</ComicLayoutUI>
-			</ComicContextProvider>
-		</>
+	// LAYOUT MODE 1: SINGLE COMIC SITE
+	// - Display the comic layout UI at the root
+	if (singleComicSite) {
+		const comic = await getComic({ slug: frontpageComic?.slug })
+		// If a comic has been selected as the frontpageComic, display it.
+		// If a frontpageComic has not been selected, it will default to the first comic it finds
+		if (comic)
+			return <>
+				<ComicContextProvider>
+					<AuthModal public_registration={public_registration} />
+					<ComicLayoutUI
+						settings={settings}
+						comic={comic}
+						session={session}>
+						{children}
+					</ComicLayoutUI>
+				</ComicContextProvider>
+			</>
+		else
+			// if `singleComicSite` has been selected but no comics exist (probably deleted?)
+			// TODO: UI
+			return <>
+				No comics exist!
+			</>
 
 	}
 
 	/**----------------------------------- */
-	// LAYOUT MODE 2: RETURN HOMEPAGE PAGE
-	else if (!frontpage_comic)
+	// LAYOUT MODE 2: MULTI-COMIC SITE
+	// - Return the frontpage layout UI at the root
+	else if (!singleComicSite)
 		return <FrontpageLayoutUI>
 			<AuthModal public_registration={public_registration} />
 			{children}

@@ -45,64 +45,78 @@ export default async function RoutePage({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 	// Get the user session
 	const session = await verifySession()
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` EXISTS BUT THE ROUTE IS A STRING/NOT A NUMBER
+	// IF `singleComicSite` has been set BUT THE ROUTE IS A STRING/NOT A NUMBER
 	// - Throw a 404
-	if (frontpage_comic && isNaN(parseInt(route))) {
+	if (singleComicSite && isNaN(parseInt(route))) {
 		notFound()
 	}
 
 	/**----------------------------------- */
-	// IF `frontpage_COMIC` EXISTS AND THE ROUTE IS A NUMBER
+	// LAYOUT MODE 1: SINGLE COMIC SITE
+	// IF `singleComicSite` has been set AND THE ROUTE IS A NUMBER
 	// - It's detecting a page number. Display the comic single page UI
-	else if (frontpage_comic && !isNaN(parseInt(route))) {
-		// Get the page details
-		const page = await getComicPage(frontpage_comic.slug, parseInt(route))
-		// 404 if it does not exist
-		if (!page) notFound()
+	else if (singleComicSite && !isNaN(parseInt(route))) {
+		// Get the comic that has been defined as the frontpageComic
+		// If a frontpageComic has not been selected, it will default to the first comic it finds
+		const comic = await getComic({ slug: frontpage_comic?.slug })
 
-		// Get the User Variable Cookie
-		const comic = await getComic(frontpage_comic.slug)
-		const userVariables = await getUserVarsCookie({ comic: comic })
-		// Get the comic page & variables
-		const variables = await getComicVariables(frontpage_comic.slug)
-		const comicPage = await getComicPage(frontpage_comic.slug, parseInt(route))
+		// if the comic exists
+		if (comic) {
+			// Get the page details
+			const page = await getComicPage(comic.slug, parseInt(route))
+			// 404 if it does not exist
+			if (!page) notFound()
 
-		if (!comicPage || comicPage && comicPage.status !== "published") {
-			notFound()
+			// Get the User Variable Cookie
+			const userVariables = await getUserVarsCookie({ comic: comic })
+			// Get the comic page & variables
+			const variables = await getComicVariables(comic.slug)
+			const comicPage = await getComicPage(comic.slug, parseInt(route))
+
+			if (!comicPage || comicPage && comicPage.status !== "published") {
+				notFound()
+			} else {
+
+				// Get the comments
+				const comments = await getComments(comicPage.id as number)
+				return <>
+					<ComicPageUI
+						page={comicPage}
+						variables={variables}
+						userVariables={userVariables}
+						session={session}
+					/>
+
+					<CommentsSection
+						page={comicPage}
+						comments={comments}
+						session={session}
+						variables={variables}
+						userVariables={userVariables}
+					/>
+
+				</>
+			}
 		} else {
-
-			// Get the comments
-			const comments = await getComments(comicPage.id as number)
+			// if `singleComicSite` has been selected but no comics exist (probably deleted?)
+			// TODO: UI
 			return <>
-				<ComicPageUI
-					page={comicPage}
-					variables={variables}
-					userVariables={userVariables}
-					session={session}
-				/>
-
-				<CommentsSection
-					page={comicPage}
-					comments={comments}
-					session={session}
-					variables={variables}
-					userVariables={userVariables}
-				/>
-
+				No comics exist!
 			</>
 		}
 	}
 
 	/**----------------------------------- */
-	// IF `frontpage_comic` DOESN'T EXIST
+	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// - Display the comic landing page UI
-	else if (!frontpage_comic) {
+	else if (!singleComicSite) {
 		// Fetch the comic by route param
-		const comic = await getComic(route)
+		const comic = await getComic({ slug: route })
 		// Throw 404 if it doesn't exist
 		if (!comic) notFound()
 		const userVariables = await getUserVarsCookie({ comic: comic })
@@ -148,21 +162,29 @@ export async function generateMetadata({
 	// CHECK IF `frontpage_comic` HAS BEEN SET
 	const settings = await getSettings()
 	const frontpage_comic = settings.frontpage_comic
+	const singleComicSite = settings.single_comic_site
 
-	const comic = await getComic(frontpage_comic?.slug || route)
+	const comic = await getComic({ slug: frontpage_comic?.slug })
+
 	const frontpageComicPage = frontpage_comic && !isNaN(parseInt(route))
 		? await getComicPage(frontpage_comic.slug, parseInt(route))
 		: null
 
 	/**----------------------------------- */
+	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// IF `frontpage_comic` + comic + comic page all exist: return comic page metadata
-	if (frontpage_comic && comic && frontpageComicPage) {
-		return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
-	}
 
+	// if (frontpage_comic && comic && frontpageComicPage) {
+	// 	return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
+	// }
+
+	if (singleComicSite) {
+		return await comicPageMetadata(comic.slug, parseInt(route))
+	}
 	/**----------------------------------- */
-	// IF `frontpage_comic` DOESN'T EXIST, but the page does: return comic landing metadata
-	else if (!frontpage_comic && comic) {
+	// LAYOUT MODE 2: MULTI-COMIC SITE
+	// IF `singleComicSite` is not selected return comic landing metadata
+	else if (!singleComicSite) {
 		return await comicMetadata(route)
 	}
 
