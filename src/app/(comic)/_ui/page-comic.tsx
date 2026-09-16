@@ -261,6 +261,9 @@ export default function ComicPageUI({
 							// No Prev Page + Banner
 							"drop-shadow-xl",
 							"drop-shadow-neutral-900/45",
+							"md:bg-transparent",
+							"md:backdrop-blur-none",
+							"md:border-none",
 						] : [
 							// No Prev Page + No Banner
 						]

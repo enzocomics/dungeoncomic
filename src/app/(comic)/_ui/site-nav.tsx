@@ -17,6 +17,7 @@ import Image from "next/image"
 import { AuthModalSchema, useGlobalContext } from "@/app/_context"
 import { SetStateAction } from "react"
 import { AuthLink } from "@/components/auth"
+import { getComic } from "@/lib/directus/get-comics"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -27,10 +28,12 @@ import { AuthLink } from "@/components/auth"
  */
 export default function NavMenu({
 	session,
-	menu = false
+	menu = false,
+	comic
 }: {
 	session?: Awaited<ReturnType<typeof verifySession>>
 	menu?: boolean
+	comic?: Awaited<ReturnType<typeof getComic>>
 }) {
 	//Hooks
 	const router = useRouter()
@@ -126,16 +129,19 @@ export default function NavMenu({
 								"relative",
 								menu && [
 									"after:hidden",
-									"md:after:block",
+									comic && !comic.banner
+										? "md:after:hidden"
+										: "md:after:block",
 									"after:absolute",
 									"after:-z-1",
 									"after:w-15",
 									"after:h-9.5",
 									"after:bg-black/60",
-									"after:top-4.5",
+									"after:top-5",
 									"after:left-19",
 									"after:rounded-r"
-								]
+								],
+
 							)}>
 
 							<Image src="/img/logomark.svg" width="128" height="128" alt=""
@@ -181,7 +187,7 @@ export default function NavMenu({
 									<span
 										className={clsx(
 											"relative",
-											"md:top-0.5",
+											"md:top-1",
 											"md:left-16"
 										)}
 									>
@@ -757,7 +763,7 @@ export default function NavMenu({
 						)}
 					</PopoverPanel>
 				</Popover>
-			</nav>
+			</nav >
 		</>
 	)
 }
