@@ -1711,13 +1711,13 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 8,
+      "sort": 1,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": null,
+      "group": "content",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -4314,8 +4314,8 @@
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 8,
-      "width": "full",
+      "sort": 9,
+      "width": "half",
       "translations": null,
       "note": "Choose to have the comic live at the root of your domain (`yourwebsite.com`) instead of in a subfolder (`yourwebsite.com/yourcomic`). This is useful if you plan to only have one comic on the website. Having multiple comics will disable this setting.",
       "conditions": null,
@@ -4548,6 +4548,54 @@
       "width": "full",
       "translations": null,
       "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
+      "conditions": null,
+      "required": false,
+      "group": "project",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "single_comic_site",
+    "type": "boolean",
+    "schema": {
+      "name": "single_comic_site",
+      "table": "settings",
+      "data_type": "boolean",
+      "default_value": true,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "settings",
+      "field": "single_comic_site",
+      "special": [
+        "cast-boolean"
+      ],
+      "interface": "boolean",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 8,
+      "width": "half",
+      "translations": null,
+      "note": null,
       "conditions": null,
       "required": false,
       "group": "project",
@@ -5602,105 +5650,6 @@
   },
   {
     "collection": "comics",
-    "field": "pages",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "pages",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "template": "{{comic_pagenum}}"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "content",
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "details",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "details",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": {
-        "headerIcon": "info",
-        "headerColor": "#7C7C67"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
-    "field": "content",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "comics",
-      "field": "content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": {
-        "headerColor": "#7C7C67",
-        "headerIcon": "text_snippet"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 5,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "comics",
     "field": "meta",
     "type": "alias",
     "schema": null,
@@ -5766,25 +5715,59 @@
     }
   },
   {
-    "collection": "comic_panels",
-    "field": "content",
+    "collection": "comics",
+    "field": "pages",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "comic_panels",
-      "field": "content",
+      "collection": "comics",
+      "field": "pages",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "template": "{{comic_pagenum}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "content",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "details",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "details",
       "special": [
         "alias",
         "no-data",
         "group"
       ],
-      "interface": "group-raw",
-      "options": null,
+      "interface": "group-detail",
+      "options": {
+        "headerIcon": "info",
+        "headerColor": "#7C7C67"
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
@@ -5850,6 +5833,37 @@
       "readonly": false,
       "hidden": false,
       "sort": 4,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comic_panels",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comic_panels",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
       "width": "full",
       "translations": null,
       "note": null,
@@ -5950,6 +5964,40 @@
       "conditions": null,
       "required": false,
       "group": "user_input",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "content",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "comics",
+      "field": "content",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": {
+        "headerColor": "#7C7C67",
+        "headerIcon": "text_snippet"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -6155,99 +6203,6 @@
     }
   },
   {
-    "collection": "settings",
-    "field": "meta",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "settings",
-      "field": "meta",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "settings",
-    "field": "project",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "settings",
-      "field": "project",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-raw",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "settings",
-    "field": "icons",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "settings",
-      "field": "icons",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 3,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "pages",
     "field": "plot_suggestions",
     "type": "alias",
@@ -6317,6 +6272,37 @@
     "schema": null,
     "meta": {
       "collection": "page_branches",
+      "field": "meta",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "meta",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
       "field": "meta",
       "special": [
         "alias",
@@ -6507,35 +6493,30 @@
   },
   {
     "collection": "settings",
-    "field": "header-nqle-g",
+    "field": "project",
     "type": "alias",
     "schema": null,
     "meta": {
       "collection": "settings",
-      "field": "header-nqle-g",
+      "field": "project",
       "special": [
         "alias",
-        "no-data"
+        "no-data",
+        "group"
       ],
-      "interface": "header",
-      "options": {
-        "title": "Project Settings",
-        "icon": "settings",
-        "color": "#7C7C67",
-        "subtitle": null,
-        "help": null
-      },
+      "interface": "group-raw",
+      "options": null,
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 1,
+      "sort": 2,
       "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": "project",
+      "group": null,
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -6543,31 +6524,30 @@
   },
   {
     "collection": "settings",
-    "field": "project_authors",
+    "field": "icons",
     "type": "alias",
     "schema": null,
     "meta": {
       "collection": "settings",
-      "field": "project_authors",
+      "field": "icons",
       "special": [
-        "o2m"
+        "alias",
+        "no-data",
+        "group"
       ],
-      "interface": "list-o2m",
-      "options": {
-        "sort": null,
-        "template": "{{username}} - {{homepage_url}}"
-      },
+      "interface": "group-detail",
+      "options": null,
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 5,
-      "width": "half",
+      "sort": 3,
+      "width": "full",
       "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
-      "group": "project",
+      "group": null,
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -6638,6 +6618,42 @@
     }
   },
   {
+    "collection": "settings",
+    "field": "header-nqle-g",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
+      "field": "header-nqle-g",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Project Settings",
+        "icon": "settings",
+        "color": "#7C7C67",
+        "subtitle": null,
+        "help": null
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "project",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "directus_users",
     "field": "profile",
     "type": "alias",
@@ -6694,6 +6710,38 @@
       "conditions": null,
       "required": false,
       "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "project_authors",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
+      "field": "project_authors",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "sort": null,
+        "template": "{{username}} - {{homepage_url}}"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "project",
       "validation": null,
       "validation_message": null,
       "searchable": true

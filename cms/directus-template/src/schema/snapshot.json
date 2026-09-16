@@ -1626,7 +1626,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 2,
         "special": [
           "o2m"
         ],
@@ -2315,7 +2315,7 @@
         "display": null,
         "display_options": null,
         "field": "landing_page_content",
-        "group": null,
+        "group": "content",
         "hidden": false,
         "interface": "input-rich-text-md",
         "note": null,
@@ -2323,7 +2323,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 8,
+        "sort": 1,
         "special": null,
         "translations": null,
         "validation": null,
@@ -5562,14 +5562,14 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 8,
+        "sort": 9,
         "special": [
           "m2o"
         ],
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "frontpage_comic",
@@ -5908,6 +5908,52 @@
         "validation": null,
         "validation_message": null,
         "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "single_comic_site",
+      "type": "boolean",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "single_comic_site",
+        "group": "project",
+        "hidden": false,
+        "interface": "boolean",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "single_comic_site",
+        "table": "settings",
+        "data_type": "boolean",
+        "default_value": true,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {
