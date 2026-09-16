@@ -198,7 +198,21 @@ export default function ComicPageUI({
 			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
 		</span>
 
-		{/* COMIC PAGE HEADER - WRAPPER */}
+		{/* COMIC PAGE HEADER - WRAPPER 
+			- Header
+			  - Div
+          - var: hasBanner
+					- ComicPageHeaderTitle
+						- var: comic.title
+						- var: comic.authors
+						- var: page.comic.thumbnail
+						- var: comic.description
+						- var: comic.date_created
+						- var: comic.date_updated
+				- /div
+		  - / Header
+		
+		*/}
 		<header
 			className={clsx(
 				// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
@@ -363,8 +377,7 @@ export default function ComicPageUI({
 
 	function ComicPageHeaderTitle() {
 		// Set up the refs for the Disclosure Closer
-		const comicDetailsButtonRef = useRef<HTMLButtonElement>(null)
-		const comicDetailsPanelRef = useRef<HTMLDivElement>(null)
+
 
 		return <>
 			<div
@@ -377,7 +390,7 @@ export default function ComicPageUI({
 						"justify-center",
 					)
 				}>
-				<Popover as="div" ref={comicDetailsButtonRef} className={
+				<Popover as="div" className={
 					clsx(
 						"flex",
 						"justify-center",
@@ -529,7 +542,7 @@ export default function ComicPageUI({
 						</span>
 
 					</PopoverButton>
-					<PopoverPanel ref={comicDetailsPanelRef}
+					<PopoverPanel
 						transition className={clsx(
 							// Transitions
 							"transition-all",
@@ -680,17 +693,16 @@ export default function ComicPageUI({
 										"text-sm/loose",
 									)}
 										dangerouslySetInnerHTML={{
-											__html:
-												replaceComicVariables({
-													content: String(
-														marked.parse(
-															sanitize(comic.description)
-														),
+											__html: replaceComicVariables({
+												content: String(
+													marked.parse(
+														sanitize(comic.description)
 													),
-													variables: variables,
-													userVariables: userVariables,
-													html: true
-												}),
+												),
+												variables: variables,
+												userVariables: userVariables,
+												html: true
+											}),
 
 										}}
 									/>
@@ -806,7 +818,7 @@ export default function ComicPageUI({
 							{/* GO BACK TO START BUTTON */}
 							{(isTop || hasCoverPage) &&
 								<li>
-									<a
+									<Link
 										className={clsx(
 											"block",
 											"flex",
@@ -843,7 +855,7 @@ export default function ComicPageUI({
 
 										<span>{t("go-to-start")}</span>
 
-									</a>
+									</Link>
 								</li>
 							}
 							{/* Back Button */}
