@@ -9,7 +9,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 // UI
 import { useChangeStatus } from "@/components/status-message"
-import NavMenu from "./site-nav"
 import { verifySession } from "@/data/session"
 /**-----------------------------------
  * HOMEPAGE PAGE UI

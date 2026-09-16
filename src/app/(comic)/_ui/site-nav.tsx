@@ -92,39 +92,71 @@ export default function NavMenu({
 				<Popover>
 					<PopoverButton
 						onClick={() => !menu && router.push("/")}
-						className={
-							clsx(
-								"group",
-								// Structure
-								"relative",
-								"flex",
-								"items-center",
-								"top-0",
-								"-left-8",
-								"md:-left-4.5",
-								// Appearance
-								"text-comic-accent-500",
-								"dark:text-comic-accent-600",
-								"rounded-full",
-								// Functionality
-								"cursor-pointer",
-								"pointer-events-auto",
-								// Hover
-								"hover:duration-0",
-								"active:translate-px",
-								// Transition
-								"transition-all",
-								"ease-in-out",
+						className={clsx(
+							"group",
+							// Structure
+							"relative",
+							"flex",
+							"items-center",
+							"top-0",
+							"-left-8",
+							"md:-left-4.5",
+							// Appearance
+							"text-comic-accent-500",
+							"dark:text-comic-accent-600",
+							"rounded-full",
+							// Functionality
+							"cursor-pointer",
+							"pointer-events-auto",
+							// Hover
+							"hover:duration-0",
+							"active:translate-px",
+							// Transition
+							"transition-all",
+							"ease-in-out",
 
-								"focus:outline-4",
-								"focus:outline-offset-1",
-								"focus:outline-comic-accent-500",
-							)}>
+							"focus:outline-4",
+							"focus:outline-offset-1",
+							"focus:outline-comic-accent-500",
+						)}
+					>
 						{/* LOGO WRAPPER */}
 						<span className={
 							clsx(
-								"relative"
+								"relative",
+								menu && [
+									"after:hidden",
+									"md:after:block",
+									"after:absolute",
+									"after:-z-1",
+									"after:w-15",
+									"after:h-10",
+									"after:bg-black/60",
+									"after:top-4.5",
+									"after:left-19",
+									"after:rounded-r"
+								]
 							)}>
+
+							<Image src="/img/logomark.svg" width="128" height="128" alt=""
+								className={
+									clsx(
+										"absolute",
+										"z-5",
+										"left-9",
+										"top-5.5",
+										"size-7",
+										"md:top-4.5",
+										"md:left-8.5",
+										"md:size-8",
+										menu ? [
+											"hidden",
+											"md:block",
+										] : [
+
+										]
+									)
+								} />
 							{/* ICONS WRAPPER */}
 							<span className={
 								clsx(
@@ -146,17 +178,15 @@ export default function NavMenu({
 									],
 								)
 							}>
-								{!menu &&
-									<>
-										<Image src="/img/logomark.svg" width="128" height="128" alt=""
-											className={
-												clsx(
-												)
-											} />
-									</>
-								}
+
 								{menu &&
-									<>
+									<span
+										className={clsx(
+											"relative",
+											"md:top-0.5",
+											"md:left-16"
+										)}
+									>
 										<Icon name="bars" className={
 											clsx(
 												"rotate-0",
@@ -183,7 +213,7 @@ export default function NavMenu({
 											"ease-in-out",
 											"outline-none",
 										)} />
-									</>
+									</span>
 								}
 							</span>
 							{/* WAX SEAL SVG */}
@@ -200,7 +230,7 @@ export default function NavMenu({
 									"group-active:text-comic-accent-700",
 									"dark:group-active:text-comic-accent-800",
 									menu ? [
-										"group-data-open:rotate-12",
+										// "group-data-open:-rotate-24",
 										"group-data-open:text-comic-accent-700",
 										"dark:group-data-open:text-comic-accent-800",
 									] : [

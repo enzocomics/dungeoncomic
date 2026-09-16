@@ -98,7 +98,7 @@ export function ComicLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu session={session} menu={false /*singleComicSite ? false : true*/} />
+			<NavMenu session={session} menu={singleComicSite ? false : true} />
 			{/* Hide the navmenu if it's the frontpagecomic
 				- #TODO: In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
 			*/}
@@ -164,7 +164,7 @@ export function FrontpageLayoutUI({
 					"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
 					"xl:[-webkit-mask-composite:source-in]",
 				)} />
-			<NavMenu menu={false} session={session} />
+			<NavMenu menu={true} session={session} />
 			<div className={clsx(
 				"mx-auto",
 				"max-w-6xl",
