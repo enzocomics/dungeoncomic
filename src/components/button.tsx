@@ -111,7 +111,6 @@ export function ComicButton({
 		visited?: boolean
 	} & ComponentPropsWithoutRef<typeof Link>)
 ) {
-	console.log(visited)
 	const classes = clsx(
 		className,
 
