@@ -38,7 +38,8 @@ export function ClientComicPageContentTitle({
 			"lg:text-4xl",
 			"text-center",
 		)}
-	>
-		{title}
-	</h1>
+		dangerouslySetInnerHTML={{
+			__html: title as string
+		}}
+	/>
 }
