@@ -404,7 +404,7 @@ export function CommentsSection({
 						}>
 							{session && !userCanCreate && t("permission-no-comments")}
 							{!session && t.rich("please-login-to-comment", {
-								loginLink: (chunks) => <AuthLink modal="login" className="text-comic-accent-500">{chunks}</AuthLink>
+								loginLink: (chunks) => <AuthLink isModal={true} modal="login" className="text-comic-accent-500">{chunks}</AuthLink>
 							})}
 						</span>
 					}

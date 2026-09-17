@@ -2127,7 +2127,7 @@ export default function ComicPageUI({
 									"text-2xl"
 								)}>
 								{t.rich("please-login-to-vote", {
-									loginLink: (chunks) => <AuthLink modal="login">{chunks}</AuthLink>
+									loginLink: (chunks) => <AuthLink isModal={true} modal="login">{chunks}</AuthLink>
 								})}
 							</div>
 						}
