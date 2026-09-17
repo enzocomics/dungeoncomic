@@ -54,7 +54,11 @@ export default async function ComicPageUI({
 			session={session}
 		>
 			<ComicPageHeader page={page} >
-				<ClientComicPageHeaderTitle page={page} />
+				<ClientComicPageHeaderTitle
+					page={page}
+					variables={variables}
+					userVariables={userVariables}
+				/>
 			</ComicPageHeader>
 			<ComicPageContentWrapper />
 		</ComicPageContentUI>

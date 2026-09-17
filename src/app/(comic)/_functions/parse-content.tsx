@@ -63,8 +63,9 @@ export function prepareText({
 	const preppedText = replaceComicVariables({
 		content: parsed as string,
 		variables: variables,
-		userVariables: userVariables
+		userVariables: userVariables,
+		html: html
 	})
 
-	return preppedText
+	return preppedText as string
 }

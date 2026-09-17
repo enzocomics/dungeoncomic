@@ -7,13 +7,18 @@ import { detailedDate, relativeDate } from "@/lib/dayjs"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 // DATA
 import { directusURL } from "@/data/env"
-import { getComicPage } from "@/lib/directus/get-comics"
+import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import Icon from "@/styles/icons"
+import { prepareText } from "@/app/(comic)/_functions/parse-content"
 
 export function ClientComicPageHeaderTitle({
 	page,
+	variables,
+	userVariables,
 }: {
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
 	page: Awaited<ReturnType<typeof getComicPage>>
 }) {
 	// PRIMARY VARS
@@ -375,7 +380,12 @@ export function ClientComicPageHeaderTitle({
 									"text-sm/loose",
 								)}
 									dangerouslySetInnerHTML={{
-										__html: comic.description,
+										__html: prepareText({
+											content: comic.description,
+											variables: variables,
+											userVariables: userVariables,
+											html: true
+										}),
 
 									}}
 								/>
