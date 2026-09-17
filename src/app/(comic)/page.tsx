@@ -15,6 +15,9 @@ import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 import { getUserVarsCookie } from "./_actions/variables"
 import { FrontpageLayoutUI } from "./_ui/layout"
+import replaceComicVariables from "./_functions/replace-comic-vars"
+import { sanitize } from "@/lib/sanitize"
+import { marked } from "marked"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -51,15 +54,28 @@ export default async function Homepage() {
 			const userVariables = await getUserVarsCookie({ comic: comic })
 			// Get the comic page & variables
 			const variables = await getComicVariables(frontpageComic?.slug)
-			// CHECK `landing_page` SETTING
-			const landing_page = comic.landing_page
+			// CHECK `landingPage` SETTING
+			const landingPage = comic.landing_page
+			const landingPageContent = replaceComicVariables({
+				content:
+					String(
+						marked.parse(
+							sanitize(String(comic.landing_page_content))
+						)
+					),
+				variables: variables,
+				userVariables: userVariables,
+				html: true
+			})
 			const page_count = comic.pages_count
 
-			switch (landing_page) {
+
+			switch (landingPage) {
 				// SHOW LANDING PAGE UI
 				case "cover-page":
 					return <Suspense>
 						<ComicLandingPageUI
+							content={`${landingPageContent}`}
 							comic={comic}
 							session={session}
 							variables={variables}
@@ -74,7 +90,7 @@ export default async function Homepage() {
 					redirect(`${page_count}`, RedirectType.replace)
 				// REDIRECT TO A SPECIFIC PAGE
 				default:
-					redirect(`${landing_page}`, RedirectType.replace)
+					redirect(`${landingPage}`, RedirectType.replace)
 			}
 		} else {
 			// Display homepage if no comics exist

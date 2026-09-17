@@ -17,6 +17,9 @@ import { CommentsSection } from "../_ui/page-comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { adminClient } from "@/lib/directus/clients"
 import { readItems } from "@directus/sdk"
+import replaceComicVariables from "../_functions/replace-comic-vars"
+import { sanitize } from "@/lib/sanitize"
+import { marked } from "marked"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -78,6 +81,7 @@ export default async function RoutePage({
 			const variables = await getComicVariables(comic.slug)
 			const comicPage = await getComicPage(comic.slug, parseInt(route))
 
+
 			if (!comicPage || comicPage && comicPage.status !== "published") {
 				notFound()
 			} else {
@@ -122,11 +126,23 @@ export default async function RoutePage({
 		// Otherwise, render it
 		// CHECK `landing_page` SETTING
 		const landing_page = comic.landing_page
+		const landingPageContent = replaceComicVariables({
+			content:
+				String(
+					marked.parse(
+						sanitize(String(comic.landing_page_content))
+					)
+				),
+			variables: variables,
+			userVariables: userVariables,
+			html: true
+		})
 		const page_count = comic.pages_count
 		switch (landing_page) {
 			// SHOW LANDING PAGE UI
 			case "cover-page":
 				return <ComicLandingPageUI
+					content={`${landingPageContent}`}
 					comic={comic}
 					session={session}
 					variables={variables}

@@ -23,12 +23,14 @@ export default function ComicLandingPageUI({
 	comic,
 	session,
 	variables,
-	userVariables
+	userVariables,
+	content,
 }: {
 	comic: Awaited<ReturnType<typeof getComic>>
 	session?: Awaited<ReturnType<typeof verifySession>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
+	content: string
 }) {
 	// HOOKS
 	const pathname = usePathname()
@@ -130,19 +132,7 @@ export default function ComicLandingPageUI({
 				)}
 			>
 				<div dangerouslySetInnerHTML={{
-					__html: String(
-						replaceComicVariables({
-							content:
-								String(
-									// marked.parse(
-									sanitize(String(comic.landing_page_content))
-									// )
-								),
-							variables: variables,
-							userVariables: userVariables,
-							html: true
-						})
-					)
+					__html: content
 					,
 				}}
 					className={clsx(
