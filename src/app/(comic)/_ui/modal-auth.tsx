@@ -6,7 +6,7 @@ import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"
 import { useGlobalContext } from "@/app/_context"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 
 export default function AuthModal({
@@ -20,16 +20,19 @@ export default function AuthModal({
 	const modalRef = useRef<HTMLDivElement>(null)
 	const backgroundRef = useRef<HTMLDivElement>(null)
 
+
+
+	// Wait for the Animation to end before unmounting the modal
+	const closeModal = (e: AnimationEvent) => {
+		if (e.animationName !== "fade-out") return
+		backgroundRef?.current?.removeEventListener("animationend", closeModal)
+		backgroundRef?.current?.classList.add("hidden")
+		// Unmount
+		setOpenAuthModal(null)
+	}
+
 	// Close the modal if user clicks anywhere outside of it
 	const handleClick = (target: EventTarget) => {
-		// Wait for the Animation to end before unmounting the modal
-		const closeModal = (e: AnimationEvent) => {
-			if (e.animationName !== "fade-out") return
-			backgroundRef?.current?.removeEventListener("animationend", closeModal)
-			backgroundRef?.current?.classList.add("hidden")
-			// Unmount
-			setOpenAuthModal(null)
-		}
 
 		// Check if the click target is NOT the modal OR a descendant of it
 		if (target !== modalRef.current && !modalRef.current?.contains(target as Node)) {
@@ -39,6 +42,21 @@ export default function AuthModal({
 
 		}
 	}
+
+	// Close the modal if the escape key is pressed
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.key === "Escape") {
+			backgroundRef?.current?.classList.remove("animate-fade-in")
+			backgroundRef?.current?.classList.add("animate-fade-out")
+			backgroundRef?.current?.addEventListener("animationend", closeModal)
+		}
+	}
+
+	useEffect(() => {
+		// Add a listener for keypresses
+		document.addEventListener("keydown", handleKeyDown)
+	}, [])
+
 
 	// RENDER
 	if (authModal) {
