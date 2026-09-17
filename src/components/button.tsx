@@ -186,7 +186,7 @@ export function PlatformButton({
 			"border-y-2",
 			"border-t-white/40",
 			"border-b-black/20",
-			"border-t-comic-accent-300",
+			"border-t-primary-300",
 			// Text
 			"text-white",
 			"text-base",
@@ -199,13 +199,13 @@ export function PlatformButton({
 			] : [
 				"cursor-pointer",
 				// Appearance
-				"bg-comic-accent-500",
+				"bg-primary-500",
 				"visited:bg-neutral-500",
 				// States
 				"hover:duration-0",
-				"hover:bg-comic-accent-700",
+				"hover:bg-primary-700",
 				"active:translate-px",
-				"active:bg-comic-accent-900",
+				"active:bg-primary-900",
 				// Transition
 				"transition-all",
 				"ease-in-out",
@@ -214,7 +214,7 @@ export function PlatformButton({
 				"outline-transparent",
 				"focus:outline-4",
 				"focus:outline-offset-4",
-				"focus:outline-comic-accent-500",
+				"focus:outline-primary-500",
 			]
 		)}
 	>

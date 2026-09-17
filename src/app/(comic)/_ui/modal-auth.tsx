@@ -47,6 +47,7 @@ export default function AuthModal({
 			onClick={(e) => handleClick(e.target)}
 			className={clsx(
 				"fixed",
+				"left-0",
 				"top-0",
 				"z-55",
 				"w-screen",
@@ -73,14 +74,17 @@ export default function AuthModal({
 				)}>
 				<AuthLayout>
 					{authModal == "login" &&
-						<LoginPageUI />
+						<LoginPageUI isModal={true} />
 					}
 					{authModal == "register" &&
-						<RegisterPageUI public_registration={public_registration} />
+						<RegisterPageUI
+							isModal={true}
+							public_registration={public_registration}
+						/>
 					}
 
 					{authModal == "reset-password" &&
-						<ResetPasswordPageUI />
+						<ResetPasswordPageUI isModal={true} />
 					}
 				</AuthLayout>
 			</div>

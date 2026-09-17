@@ -16,7 +16,7 @@ export default async function LoginPage() {
 	const user = await verifySession()
 	// Show the login UI if the user is not logged in
 	if (!user) return <Suspense>
-		<LoginPageUI />
+		<LoginPageUI isModal={false} />
 	</Suspense>
 	// Otherwise, redirect them to the dashboard
 	else redirect("/dashboard")

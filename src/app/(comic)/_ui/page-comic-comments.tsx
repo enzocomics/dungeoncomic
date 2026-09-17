@@ -21,7 +21,7 @@ import { userCommentSchema } from "@/lib/zod/schemas/comic"
 // ACTIONS
 import { submitUserComment } from "../_actions/comments"
 // UI
-import { ErrorMessage } from "@/components/error-message"
+import { ErrorMessage } from "@/components/forms"
 import { ComicButton, SmallComicButton } from "@/components/button"
 import { Textarea } from "@/components/textarea"
 import Image from "next/image"
@@ -565,7 +565,7 @@ export function CommentsSection({
 						)
 					}
 						dangerouslySetInnerHTML={{
-							__html:
+							__html: String(
 								replaceComicVariables({
 									content: String(
 										marked.parse(
@@ -575,7 +575,7 @@ export function CommentsSection({
 									variables: variables,
 									userVariables: userVariables,
 									html: true
-								}),
+								})),
 
 						}} />
 

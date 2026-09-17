@@ -17,8 +17,8 @@ import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav }
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 // import { ErrorMessage, FieldGroup } from "@/components/catalyst/fieldset"
-import { ErrorMessage } from "@/components/error-message"
-import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { ErrorMessage, Input, Label } from "@/components/forms"
 import { PlatformButton } from "@/components/button"
 import Link from "next/link"
 import { AuthLink } from "@/components/auth"
@@ -27,7 +27,11 @@ import { useGlobalContext } from "@/app/_context"
 /** ------------------------------------------------ **
  * LOGIN FORM
  */
-export default function LoginPageUI() {
+export default function LoginPageUI({
+	isModal = false,
+}: {
+	isModal?: boolean
+}) {
 	// I18N
 	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
@@ -119,7 +123,11 @@ export default function LoginPageUI() {
 				action={action}
 				noValidate
 			>
-				<div>
+				<div className={clsx(
+					"flex",
+					"flex-col",
+					"gap-1",
+				)}>
 					<Field>
 						<Label htmlFor={fields.email.name}>{t("fields.email")}</Label>
 						<Input
@@ -164,7 +172,8 @@ export default function LoginPageUI() {
 			{/* NAVIGATION */}
 			<AuthNav>
 				<AuthLink
-					modal="reset-password"
+					isModal={isModal}
+					modal={"reset-password"}
 					className={clsx(
 						"text-primary-800",
 						"dark:text-primary-300",
@@ -174,7 +183,8 @@ export default function LoginPageUI() {
 				<p>
 					{t("pages.login.register-link")}&nbsp;
 					<AuthLink
-						modal="register"
+						isModal={isModal}
+						modal={"register"}
 						className={clsx(
 							"text-primary-800 dark:text-primary-300"
 						)}

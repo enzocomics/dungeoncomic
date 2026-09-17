@@ -24,7 +24,7 @@ export default async function RegisterPage() {
 	const user = await verifySession()
 	// Show the create account UI if the user is not logged in
 	if (!user) return <Suspense>
-		<RegisterPageUI public_registration={public_registration} />
+		<RegisterPageUI public_registration={public_registration} isModal={false} />
 	</Suspense>
 	// Otherwise, redirect them to the dahsboard
 	else redirect("/dashboard")

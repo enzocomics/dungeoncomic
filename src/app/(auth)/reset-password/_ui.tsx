@@ -17,7 +17,8 @@ import { requestReset, submitReset } from "./_action"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage } from "@/components/error-message"
+import { ErrorMessage } from "@/components/forms"
+
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { AuthLink } from "@/components/auth"
 import { PlatformButton } from "@/components/button"
@@ -25,20 +26,28 @@ import { PlatformButton } from "@/components/button"
 /** ------------------------------------------------ **
  * RESET PASSWORD PAGE
  */
-export default function ResetPasswordPageUI() {
+export default function ResetPasswordPageUI({
+	isModal = false
+}: {
+	isModal?: boolean
+}) {
 	// TOKEN
 	const params = useSearchParams()
 	const resetToken = params.get("token")
 	// OUTPUT
 	return <>
-		{!resetToken ? <RequestResetForm /> : <ResetPasswordForm token={resetToken} />}
+		{!resetToken ? <RequestResetForm isModal={isModal} /> : <ResetPasswordForm token={resetToken} />}
 	</>
 }
 
 /** ------------------------------------------------ **
  * FORM 1 - REQUEST A RESET LINK
  */
-function RequestResetForm() {
+function RequestResetForm({
+	isModal = false
+}: {
+	isModal?: boolean
+}) {
 	// I18N
 	const t = useTranslations("auth")
 	const n = useTranslations("navigation")
@@ -115,7 +124,7 @@ function RequestResetForm() {
 				</div>
 			</form>
 			<AuthNav>
-				<AuthLink modal="login" className="mx-auto text-primary-800 dark:text-primary-300">&laquo; {n("go-back")}</AuthLink>
+				<AuthLink isModal={isModal} modal="login" className="mx-auto text-primary-800 dark:text-primary-300">&laquo; {n("go-back")}</AuthLink>
 			</AuthNav>
 		</AuthBody >
 	</>

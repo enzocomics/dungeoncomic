@@ -19,7 +19,7 @@ import { adminContactEmail } from "@/data/env"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderTitle, AuthHeaderDescription, AuthNav } from "@/app/(auth)/_ui"
-import { ErrorMessage } from "@/components/error-message"
+import { ErrorMessage } from "@/components/forms"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { AuthLink } from "@/components/auth"
 import { PlatformButton } from "@/components/button"
@@ -27,7 +27,13 @@ import { PlatformButton } from "@/components/button"
 /** ------------------------------------------------ **
  * REGISTER FORM
  */
-export default function RegisterPageUI({ public_registration = false }: { public_registration?: Boolean }) {
+export default function RegisterPageUI({
+	public_registration = false,
+	isModal = false,
+}: {
+	public_registration?: Boolean
+	isModal?: boolean
+}) {
 	// I18N
 	const s = useTranslations("status-messages")
 	const t = useTranslations("auth")
@@ -216,6 +222,7 @@ export default function RegisterPageUI({ public_registration = false }: { public
 				<p className="grow text-center">
 					{t.rich("pages.register.login-link")}&nbsp;
 					<AuthLink
+						isModal={isModal}
 						modal="login"
 						className={clsx(
 							"text-primary-800 dark:text-primary-300"

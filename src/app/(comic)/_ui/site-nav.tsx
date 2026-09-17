@@ -612,6 +612,7 @@ export default function NavMenu({
 									))}
 									{accountMenuAuthNav?.map((item, index) => (
 										<AuthLink
+											isModal={true}
 											modal={item.modal as AuthModalSchema}
 											key={index}
 											// href={item.href}

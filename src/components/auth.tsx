@@ -10,11 +10,13 @@ import { AuthModalSchema, useGlobalContext } from "@/app/_context"
  *
  */
 export function AuthLink({
+	isModal = false,
 	modal,
 	href = `/${modal}`,
 	...props
 }: Omit<ComponentPropsWithoutRef<typeof Link>, "href"> & {
 	href?: string
+	isModal?: boolean
 	modal: AuthModalSchema
 }) {
 
@@ -26,8 +28,10 @@ export function AuthLink({
 		{...props}
 		href={href}
 		onClick={(e) => {
-			e.preventDefault()
-			setOpenAuthModal(modal)
+			if (isModal) {
+				e.preventDefault()
+				setOpenAuthModal(modal)
+			}
 			props.onClick?.(e)
 		}}
 	>

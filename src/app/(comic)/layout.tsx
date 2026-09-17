@@ -61,9 +61,9 @@ export default async function HomepageLayout({
 						comic={comic}
 						session={session}>
 						{children}
-						<Footer />
 					</ComicLayoutUI>
 				</ComicContextProvider>
+				<Footer />
 			</>
 		else
 			// if `singleComicSite` has been selected but no comics exist (probably deleted?) just show the regular layout
@@ -71,8 +71,8 @@ export default async function HomepageLayout({
 				<AuthModal public_registration={public_registration} />
 				<FrontpageLayoutUI>
 					{children}
-					<Footer />
 				</FrontpageLayoutUI>
+				<Footer />
 			</>
 
 	}
