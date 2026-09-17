@@ -47,6 +47,11 @@ export function replaceComicVariables({
 	}
 }
 
+/**
+ * 
+ * @param parseMarked boolean - enables or skips parsing markdown
+ * @param varHtml boolean - enables outputting html for the user variable replacer
+ */
 export function prepareText({
 	content,
 	variables,
