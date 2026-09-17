@@ -11,6 +11,7 @@ import React from "react"
 import AuthModal from "./_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
+import Footer from "./_ui/site-footer"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -60,6 +61,7 @@ export default async function HomepageLayout({
 						comic={comic}
 						session={session}>
 						{children}
+						<Footer />
 					</ComicLayoutUI>
 				</ComicContextProvider>
 			</>
@@ -69,6 +71,7 @@ export default async function HomepageLayout({
 				<AuthModal public_registration={public_registration} />
 				<FrontpageLayoutUI>
 					{children}
+					<Footer />
 				</FrontpageLayoutUI>
 			</>
 
@@ -81,6 +84,7 @@ export default async function HomepageLayout({
 		return <>
 			<AuthModal public_registration={public_registration} />
 			{children}
+			<Footer />
 		</>
 
 }

@@ -1,4 +1,3 @@
-"use client"
 /**----------------------------------- */
 // LIBRARIES
 import Link from "next/link"
@@ -42,10 +41,9 @@ export default function NavMenu({
 	// TODO: These are all hardcoded & should be in the dictionaries
 	const comicNavigation = [
 		{ name: 'Home', href: './', current: true },
-		{ name: 'About', href: './about', current: false },
 	]
 
-	const navigation = [
+	const platformNavigation = [
 		{ name: 'Dungeon Construction Co.', href: '/', current: false },
 	]
 
@@ -328,7 +326,8 @@ export default function NavMenu({
 								{/* COMIC MENU */}
 								<section
 									className={clsx(
-										"space-y-1 px-2 pt-2 pb-3"
+										"space-y-1 px-2 pt-2 pb-3",
+										"font-comic-header",
 									)}>
 									{comicNavigation.map((item) => (
 										<CloseButton
@@ -355,7 +354,7 @@ export default function NavMenu({
 										"dark:bg-base-2/50",
 									)
 								}>
-									{navigation.map((item) => (
+									{/* {platformNavigation.map((item) => (
 										<CloseButton
 											as={"a"}
 											key={item.name}
@@ -370,7 +369,48 @@ export default function NavMenu({
 										>
 											{item.name}
 										</CloseButton>
-									))}
+									))} */}
+									{/* <div className={clsx(
+										"px-4",
+										"py-3	",
+										"text-xs/normal",
+										"text-current/50",
+										"font-comic-header",
+										"flex",
+										"gap-x-1",
+										"items-center",
+										"sm:block",
+										"sm:text-center"
+									)}>
+										<span className="mr-auto sm:mr-0 sm:block">&copy; 2026 Dungeon Construction Co.</span>
+										<span className={clsx(
+											"inline-block",
+											"text-right",
+										)}>This site was built with <span className="inline-block"><strong className="flex items-center">DungeonComic
+											<a href=" https://github.com/enzocomics/dungeoncomic" target="_blank"
+												title="Visit DungeonComic's Github Project Repository"
+												aria-label="Visit DungeonComic's Github Project Repository"
+												className={clsx(
+													"ml-1",
+													"active:text-comic-accent-500",
+													"transition-all",
+													"duration-300",
+													"lg:hover:transition-none",
+													"lg:hover:text-comic-accent-500",
+													"lg:hover:scale-120",
+												)}
+											>
+												<Icon name="github" className={clsx(
+													"size-5",
+													"inline",
+													"items-center",
+
+												)} />
+											</a>
+										</strong>
+											</span>
+										</span>
+									</div> */}
 								</section>
 							</section>
 						</PopoverPanel>
@@ -542,7 +582,7 @@ export default function NavMenu({
 								<section className={
 									clsx(
 										"py-1",
-										"font-platform-header",
+										"font-comic-header",
 									)
 								}>
 									{accountMenuNavigation?.map((item, index) => (
