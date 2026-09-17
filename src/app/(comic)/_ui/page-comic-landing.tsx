@@ -65,7 +65,9 @@ export default function ComicLandingPageUI({
 						className={clsx(
 							"drop-shadow-black/50",
 							"drop-shadow-lg",
-							"max-h-60"
+							"max-h-60",
+							"py-20",
+							"box-content",
 						)}
 					/>
 				}
@@ -75,20 +77,22 @@ export default function ComicLandingPageUI({
 						"items-center",
 						"min-h-48",
 						"px-6",
-						"py-2",
+						"py-6",
 						"font-comic-display",
-						"text-5xl/normal",
+						"text-5xl/tight",
 						"text-center",
+						"text-pretty",
 						"font-bold",
 						"max-w-2xl",
 						"rounded",
-						"text-white",
-						"[text-stroke:16px_black",
-						"[-webkit-text-stroke:16px_black]",
-						"[paint-order:stroke_fill]",
-						"drop-shadow-black/50",
-						"drop-shadow-md",
-
+						hasBanner ? [
+							"text-white",
+							"[text-stroke:16px_black",
+							"[-webkit-text-stroke:16px_black]",
+							"[paint-order:stroke_fill]",
+							"drop-shadow-black/50",
+							"drop-shadow-md",
+						] : [],
 
 						// Appearance
 						// "bg-black/80",
