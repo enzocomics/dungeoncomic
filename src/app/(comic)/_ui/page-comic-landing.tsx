@@ -66,7 +66,7 @@ export default function ComicLandingPageUI({
 							"drop-shadow-black/50",
 							"drop-shadow-lg",
 							"max-h-60",
-							"py-20",
+							"my-20",
 							"box-content",
 						)}
 					/>
