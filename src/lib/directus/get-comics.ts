@@ -3,6 +3,7 @@
 // CMS
 import { adminClient, publicClient } from "@/lib/directus/clients"
 import { readItems } from "@directus/sdk"
+import { cache } from "react"
 
 /** ------------------------------------------------ **
  * GET COMICS
@@ -11,7 +12,7 @@ import { readItems } from "@directus/sdk"
 /** ------------------------------------------------ **
  * GET COMIC
  */
-export async function getComic({ slug }: { slug?: string }) {
+export const getComic = cache(async ({ slug }: { slug?: string }) => {
 	const request = await publicClient.request(
 		readItems("comics", {
 			filter: slug
@@ -65,12 +66,12 @@ export async function getComic({ slug }: { slug?: string }) {
 		}),
 	)
 	return request?.[0]
-}
+})
 
 /** ------------------------------------------------ **
  * GET SINGLE COMIC PAGE
  */
-export async function getComicPage(comic_slug: string, num: number) {
+export const getComicPage = cache(async (comic_slug: string, num: number) => {
 	const request = await publicClient.request(
 		readItems("pages", {
 			filter: {
@@ -325,7 +326,7 @@ export async function getComicPage(comic_slug: string, num: number) {
 		}),
 	)
 	return request[0]
-}
+})
 
 /** ------------------------------------------------ **
  * GET COMIC VARIABLES

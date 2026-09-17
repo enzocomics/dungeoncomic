@@ -3,11 +3,12 @@
 // CMS
 import { adminClient } from "@/lib/directus/clients"
 import { readSingleton } from "@directus/sdk"
+import { cache } from "react"
 
 /** ------------------------------------------------ **
  * GET SETTINGS
  */
-export async function getSettings() {
+export const getSettings = cache(async () => {
 	const request = await adminClient.request(
 		readSingleton("settings", {
 			fields: [
@@ -66,4 +67,4 @@ export async function getSettings() {
 		}),
 	)
 	return request
-}
+})
