@@ -40,6 +40,9 @@ type ContextType = {
 	userVars: userVarsSchema,
 	setUserVars: (userVars: SetStateAction<userVarsSchema>) => void,
 
+	canGoBack: boolean,
+	setCanGoBack: (canGoBack: SetStateAction<boolean>) => void,
+
 	comicPreviousPage: ComicPreviousPageSchema,
 	setComicPreviousPage: (comicPreviousPage: SetStateAction<ComicPreviousPageSchema>) => void,
 	comicPageHistory: ComicPageHistorySchema,
@@ -66,7 +69,7 @@ const comicPageHistoryDefault: ComicPageHistorySchema = []
 // CONTEXT
 export const ComicContext = createContext<ContextType | undefined>({
 	session: sessionDefault,
-	setSession: () => { },
+	setSession: (session) => { },
 	projectSettings: projectSettingsDefault,
 	setProjectSettings: (projectSettings) => { },
 	comic: comicDefault,
@@ -77,6 +80,9 @@ export const ComicContext = createContext<ContextType | undefined>({
 	setComicVars: (comicVars) => { },
 	userVars: userVarsDefault,
 	setUserVars: (userVars) => { },
+
+	canGoBack: false,
+	setCanGoBack: (canGoBack) => { },
 
 	comicPreviousPage: comicPreviousPageDefault,
 	setComicPreviousPage: (comicPreviousPage) => { },
@@ -101,6 +107,7 @@ export default function ComicContextProvider({
 	getComicVars?: comicVarsSchema
 	getUserVars?: userVarsSchema
 } & PropsWithChildren<{}>) {
+
 	const [session, setSession] = useState(getSession || sessionDefault)
 	const [projectSettings, setProjectSettings] = useState(getSettings || projectSettingsDefault)
 	const [comic, setComic] = useState(getComic || comicDefault)
@@ -109,6 +116,9 @@ export default function ComicContextProvider({
 	const [userVars, setUserVars] = useState(getUserVars || userVarsDefault)
 	const [comicPreviousPage, setComicPreviousPage] = useState(comicPreviousPageDefault)
 	const [comicPageHistory, setComicPageHistory] = useState(comicPageHistoryDefault)
+
+	// State that checks if we can go backwards, to the same site, using browser history 
+	const [canGoBack, setCanGoBack] = useState(false)
 
 	// OUTPUT
 	return <ComicContext.Provider value={{
@@ -120,6 +130,8 @@ export default function ComicContextProvider({
 		userVars, setUserVars,
 		comicPreviousPage, setComicPreviousPage,
 		comicPageHistory, setComicPageHistory,
+
+		canGoBack, setCanGoBack
 	}}>
 		{children}
 	</ComicContext.Provider>
