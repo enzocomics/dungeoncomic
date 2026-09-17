@@ -39,6 +39,7 @@ export default function ComicLandingPageUI({
 	const setStatus = useChangeStatus("")
 	// PRIMARY VARS
 	const hasBanner = !!comic.banner
+	const hasLogo = !!comic.logo
 
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
@@ -52,7 +53,6 @@ export default function ComicLandingPageUI({
 					"flex",
 					"items-center",
 					"justify-center",
-					"py-20",
 				)}
 			>
 
@@ -68,6 +68,37 @@ export default function ComicLandingPageUI({
 							"max-h-60"
 						)}
 					/>
+				}
+				{!hasLogo &&
+					<h1 className={clsx(
+						"flex",
+						"items-center",
+						"min-h-48",
+						"px-6",
+						"py-2",
+						"font-comic-display",
+						"text-5xl/normal",
+						"text-center",
+						"font-bold",
+						"max-w-2xl",
+						"rounded",
+						"text-white",
+						"[text-stroke:16px_black",
+						"[-webkit-text-stroke:16px_black]",
+						"[paint-order:stroke_fill]",
+						"drop-shadow-black/50",
+						"drop-shadow-md",
+
+
+						// Appearance
+						// "bg-black/80",
+						// "text-white",
+						// "bg-base-1/80",
+						// "dark:bg-base-2/80",
+						// "backdrop-blur-xs",
+					)}>
+						{comic.title}
+					</h1>
 				}
 			</header>
 			{/* COMIC PAGE - CONTENT BODY */}
@@ -97,15 +128,18 @@ export default function ComicLandingPageUI({
 				<div dangerouslySetInnerHTML={{
 					__html: String(
 						replaceComicVariables({
-							content: String(
-								marked.parse(
+							content:
+								String(
+									// marked.parse(
 									sanitize(String(comic.landing_page_content))
-								)
-							),
+									// )
+								),
 							variables: variables,
 							userVariables: userVariables,
 							html: true
-						})),
+						})
+					)
+					,
 				}}
 					className={clsx(
 						// "py-6",

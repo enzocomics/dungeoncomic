@@ -129,17 +129,31 @@ export default function NavMenu({
 								"relative",
 								menu && [
 									"after:hidden",
-									comic && !comic.banner
+									// black bg on the menu icon
+									// hide it on desktop only if there is 
+									// - no banner AND no logo
+									// - if it's the landing page
+									comic && ((!comic.banner && !comic.logo && !comic.landing_page))
 										? "md:after:hidden"
 										: "md:after:block",
 									"after:absolute",
 									"after:-z-1",
 									"after:w-15",
 									"after:h-9.5",
-									"after:bg-black/60",
+									"after:bg-neutral-800/80",
+									"after:dark:bg-neutral-900/80",
 									"after:top-5",
 									"after:left-19",
-									"after:rounded-r"
+									"after:rounded-r",
+									// Hover
+									"group-hover:after:duration-0",
+									"group-hover:after:bg-comic-accent-700",
+									"group-active:after:translate-px",
+									"group-active:after:bg-comic-accent-900",
+									// Transition
+									"after:transition-all",
+									"after:ease-in-out",
+									"after:duration-300",
 								],
 
 							)}>
@@ -367,7 +381,7 @@ export default function NavMenu({
 				<Popover>
 					<PopoverButton className={clsx(
 						"pointer-events-auto",
-						"mr-2.5",
+						"mr-1.5",
 						"group",
 						"relative",
 						"flex",
@@ -375,13 +389,15 @@ export default function NavMenu({
 						// Functionality
 						"cursor-pointer",
 						// Appearance
+						"bg-black/50",
+						"p-1",
 						"data-open:bg-comic-accent-600",
 						"dark:data-open:bg-comic-accent-700",
-						"rounded-lg",
+						"rounded",
 						// Hover
-						"scale-100",
+
 						"hover:duration-0",
-						"hover:scale-120",
+						"hover:bg-comic-accent-600",
 						"active:translate-px",
 						"active:bg-comic-accent-900",
 						// Transition
@@ -400,7 +416,7 @@ export default function NavMenu({
 						<span className={
 							clsx(
 								"relative",
-								"size-8",
+								"size-7",
 							)
 						}>
 							{session && session.avatar &&
@@ -411,7 +427,7 @@ export default function NavMenu({
 									height={session.avatar.height || "64"}
 									className={
 										clsx(
-											"size-8",
+											"size-6",
 											"rounded-sm",
 											// Transition
 											"transition-all",
@@ -427,8 +443,8 @@ export default function NavMenu({
 							}
 							{(!session || (session && !session.avatar)) &&
 								<Icon name="skull" className={clsx(
-									"size-8",
-									"p-1.5",
+									"size-7",
+									"p-1",
 									"rounded-sm",
 									// Transition
 									"transition-all",
@@ -445,8 +461,8 @@ export default function NavMenu({
 							}
 							<Icon name="xmark" className={clsx(
 								"text-white",
-								"size-8",
-								"p-1.5",
+								"size-7",
+								"p-1",
 								"shrink-0",
 								// Transition
 								"transition-all",

@@ -113,6 +113,7 @@ export default function ComicPageUI({
 	)
 
 	const hasBanner = !!page.comic.banner
+	const hasLogo = !!page.comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
 
 	/**----------------------------------- */
@@ -227,7 +228,8 @@ export default function ComicPageUI({
 				"min-w-xs",
 				"max-w-6xl",
 				// Spacing
-				"md:py-4",
+				!hasLogo && "md:py-4",
+				hasLogo && "h-28",
 				"md:px-6",
 				// Text
 				"text-white",
@@ -239,13 +241,14 @@ export default function ComicPageUI({
 					// 
 					// Position
 					"relative",
+					"h-full",
 					"z-1",
 					// Size
 					// Spacing
 					"mx-auto",
 					// Appearance
 					"bg-neutral-800/80",
-					"dark:bg-neutral-900/80",
+					"dark:bg-neutral-900/90",
 					"backdrop-blur-xs",
 					"border-b-6",
 					"border-comic-accent-900",
@@ -253,21 +256,20 @@ export default function ComicPageUI({
 					"dark:-outline-offset-1",
 					"dark:outline-base-5/50",
 					"md:rounded",
-					hasPrevPage ? [
-						"border-none",
-						"md:rounded-b-none",
+
+					hasBanner ? [
+						// No Prev Page + Banner
+						"drop-shadow-xl",
+						"drop-shadow-neutral-900/45",
+						"md:bg-transparent",
+						"md:backdrop-blur-none",
+						"md:border-none",
+						"dark:md:bg-transparent",
+						"dark:outline-none",
 					] : [
-						hasBanner ? [
-							// No Prev Page + Banner
-							"drop-shadow-xl",
-							"drop-shadow-neutral-900/45",
-							"md:bg-transparent",
-							"md:backdrop-blur-none",
-							"md:border-none",
-						] : [
-							// No Prev Page + No Banner
-						]
-					],
+						// No Prev Page + No Banner
+					]
+
 				)}
 			>
 				<ComicPageHeaderTitle />
@@ -379,18 +381,16 @@ export default function ComicPageUI({
 		 */
 
 	function ComicPageHeaderTitle() {
-		// Set up the refs for the Disclosure Closer
-
 
 		return <>
 			<div
 				className={
 					clsx(
-						"p-2",
+						"p-1.5",
 						"px-18",
-						"h-12",
 						"flex",
 						"justify-center",
+						"h-full"
 					)
 				}>
 				<Popover as="div" className={
@@ -402,149 +402,176 @@ export default function ComicPageUI({
 						"overflow-clip",
 					)
 				}>
-					<PopoverButton className={clsx(
-						"group",
-						// Structure
-						"relative",
-						"flex",
-						"max-w-full",
-						"justify-center",
-						// Spacing
-						"z-45",
-						"ml-5",
-						"pl-3 pr-1.5",
-						"py-1.5",
-						// Functionality
-						"cursor-pointer",
-						// Appearance
-						"data-open:bg-comic-accent-600",
-						"dark:data-open:bg-comic-accent-700",
-						"rounded-lg",
-						// Hover
-						"hover:duration-0",
-						"hover:bg-comic-accent-700",
-						"active:translate-px",
-						"active:bg-comic-accent-900",
-						// Transition
-						"transition-all",
-						"ease-in-out",
-						"duration-300",
-						// Outline
-						"outline-transparent",
-						"focus:outline-4",
-						"focus:-outline-offset-4",
-						"focus:outline-comic-accent-500",
 
-					)}>
-						<div className={clsx(
+					{!hasLogo &&
+						<PopoverButton className={clsx(
+							"group",
 							// Structure
-							"inline-block",
-							"overflow-hidden",
-							"text-nowrap",
-							"grow",
-							// Text
-							"text-sm",
-							"text-ellipsis",
+							"relative",
+							"flex",
+							"max-w-full",
+							"justify-center",
+							// Spacing
+							"z-45",
+							"ml-5",
+							"pl-3 pr-1.5",
+							"py-2",
+							// Functionality
+							"cursor-pointer",
+							// Appearance'
+							"bg-black/50",
+							"data-open:bg-comic-accent-600",
+							"dark:data-open:bg-comic-accent-700",
+							"rounded",
+							// Hover
+							"hover:duration-0",
+							"hover:bg-comic-accent-700",
+							"active:translate-px",
+							"active:bg-comic-accent-900",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+							// Outline
+							"outline-transparent",
+							"focus:outline-4",
+							"focus:-outline-offset-4",
+							"focus:outline-comic-accent-500",
+							hasBanner ? [
+								"bg-neutral-800/80",
+								"dark:bg-neutral-900/80",
+							] : []
 						)}>
-							<span className={clsx(
-								"inline",
-								"font-semibold",
+							<div className={clsx(
+								// Structure
+								"inline-block",
+								"overflow-hidden",
+								"text-nowrap",
+								"grow",
+								// Text
+								"text-sm",
+								"text-ellipsis",
 							)}>
-								{sanitize(comic.title)}
-							</span>
-
-							{comic.authors && comic.authors.length > 0 &&
 								<span className={clsx(
-									"hidden",
-									"md:inline-block",
-									"px-1",
-									"text-xs",
-									"text-neutral-500",
-									"group-hover:duration-0",
-									"group-hover:text-white/40",
-									"group-active:text-white/40",
-									"group-data-open:text-white/40",
-									"font-normal",
-									"italic",
+									"inline",
+									"font-semibold",
+								)}>
+									{sanitize(comic.title)}
+								</span>
+
+								{comic.authors && comic.authors.length > 0 &&
+									<span className={clsx(
+										"hidden",
+										"md:inline-block",
+										"px-1",
+										"text-xs",
+										"text-neutral-500",
+										"group-hover:duration-0",
+										"group-hover:text-white/40",
+										"group-active:text-white/40",
+										"group-data-open:text-white/40",
+										"font-normal",
+										"italic",
+										// Transition
+										"transition-all",
+										"ease-in-out",
+										"duration-300",
+									)}>
+										by&nbsp;
+										{comic.authors.map((a, index) => {
+											let join = comic.authors!.length > 1 ? ", " : ""
+											join = index == comic.authors!.length - 2 ? " & " : join
+											join = index == comic.authors!.length - 1 ? "" : join
+											return <span key={index}>
+												<span className={clsx(
+													"font-semibold",
+													"text-neutral-400",
+													"group-hover:duration-0",
+													"group-hover:text-white/70",
+													"group-active:text-white/70",
+													"group-data-open:text-white/70",
+													// Transition
+													"transition-all",
+													"ease-in-out",
+													"duration-300",
+												)}>
+													{a.username}
+												</span>
+												{join}
+											</span>
+										}
+										)}
+									</span>
+								}
+							</div>
+
+							<span className={clsx(
+								"relative",
+								"size-5",
+								"ml-1",
+							)}>
+								<Icon name="caretDown" className={clsx(
+									"size-5",
+									"shrink-0",
 									// Transition
 									"transition-all",
 									"ease-in-out",
 									"duration-300",
-								)}>
-									by&nbsp;
-									{comic.authors.map((a, index) => {
-										let join = comic.authors!.length > 1 ? ", " : ""
-										join = index == comic.authors!.length - 2 ? " & " : join
-										join = index == comic.authors!.length - 1 ? "" : join
-										return <span key={index}>
-											<span className={clsx(
-												"font-semibold",
-												"text-neutral-400",
-												"group-hover:duration-0",
-												"group-hover:text-white/70",
-												"group-active:text-white/70",
-												"group-data-open:text-white/70",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"duration-300",
-											)}>
-												{a.username}
-											</span>
-											{join}
-										</span>
-									}
-									)}
-								</span>
-							}
-						</div>
+									"group-hover:duration-0",
+									// Diff
+									"opacity-100",
+									"text-comic-accent-500",
+									"group-hover:text-white",
 
-						<span className={clsx(
-							"relative",
-							"size-5",
-							"ml-1",
+									"group-data-open:opacity-0",
+									"group-data-open:rotate-45",
+									// "group-data-open:hidden",
+								)} />
+								<Icon name="xmark" className={clsx(
+									"text-white",
+									"size-5",
+									"p-0.5",
+									"shrink-0",
+									// Transition
+									"transition-all",
+									"ease-in-out",
+									"duration-300",
+									//
+									"absolute",
+									"left-0",
+									"top-0",
+									"opacity-0",
+									"-rotate-45",
+									"group-hover:duration-0",
+									// Diff
+									"group-data-open:group-hover:duration-100",
+									"group-data-open:opacity-100",
+									"group-data-open:rotate-0",
+								)} />
+							</span>
+
+						</PopoverButton>
+					}
+					{comic.logo &&
+						<PopoverButton className={clsx(
+							"group",
+							"cursor-pointer"
 						)}>
-							<Icon name="caretDown" className={clsx(
-								"size-5",
-								"shrink-0",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
-								"group-hover:duration-0",
-								// Diff
-								"opacity-100",
-								"text-comic-accent-500",
-								"group-hover:text-white",
+							<Image
+								src={`${directusURL}/assets/${comic.logo.filename_disk}`}
+								alt={comic.logo.description || ""}
+								width={comic.logo.width || "160"}
+								height={comic.logo.height || "120"}
+								className={clsx(
+									"drop-shadow-black/50",
+									"drop-shadow-lg",
+									"w-auto",
+									"max-h-17",
+								)}
+							/>
+						</PopoverButton>
+					}
 
-								"group-data-open:opacity-0",
-								"group-data-open:rotate-45",
-								// "group-data-open:hidden",
-							)} />
-							<Icon name="xmark" className={clsx(
-								"text-white",
-								"size-5",
-								"p-0.5",
-								"shrink-0",
-								// Transition
-								"transition-all",
-								"ease-in-out",
-								"duration-300",
-								//
-								"absolute",
-								"left-0",
-								"top-0",
-								"opacity-0",
-								"-rotate-45",
-								"group-hover:duration-0",
-								// Diff
-								"group-data-open:group-hover:duration-100",
-								"group-data-open:opacity-100",
-								"group-data-open:rotate-0",
-							)} />
-						</span>
-
-					</PopoverButton>
 					<PopoverPanel
 						transition className={clsx(
 							// Transitions

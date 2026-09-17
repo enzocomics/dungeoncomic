@@ -262,6 +262,9 @@ export async function getComicPage(comic_slug: string, num: number) {
 						"accent_color",
 						{ authors: ["username"] },
 						{
+							logo: ["filename_disk", "type", "width", "height", "description"],
+						},
+						{
 							banner: [
 								"filename_disk",
 								"type",
