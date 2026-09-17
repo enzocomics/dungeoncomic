@@ -229,7 +229,7 @@ export default function ComicPageUI({
 				"max-w-6xl",
 				// Spacing
 				!hasLogo && "md:py-4",
-				hasLogo && "h-28",
+				hasLogo && "h-20",
 				"md:px-6",
 				// Text
 				"text-white",
@@ -247,15 +247,19 @@ export default function ComicPageUI({
 					// Spacing
 					"mx-auto",
 					// Appearance
-					"bg-neutral-800/80",
-					"dark:bg-neutral-900/90",
-					"backdrop-blur-xs",
-					"border-b-6",
-					"border-comic-accent-900",
 					"dark:outline",
 					"dark:-outline-offset-1",
 					"dark:outline-base-5/50",
 					"md:rounded",
+					hasLogo ? [
+						"bg-transparent",
+					] : [
+						"bg-neutral-800/80",
+						"dark:bg-neutral-900/90",
+						"backdrop-blur-xs",
+						"border-b-6",
+						"border-comic-accent-900",
+					],
 
 					hasBanner ? [
 						// No Prev Page + Banner
@@ -282,16 +286,18 @@ export default function ComicPageUI({
 				"relative",
 				hasBanner ? [
 					// Banner
-					"pt-28",
+					"pt-22",
 				] : [
 					// No Banner
-					"pt-20",
-					"md:pt-24",
+					hasLogo
+						? "pt-22"
+						: "pt-14",
+					"md:pt-22",
 				],
 			)
 			}
 		>
-			<ComicPageNav />
+			{/* <ComicPageNav /> */}
 			{/* COMIC PAGE - CONTENT BODY */}
 			<article
 				className={clsx(
@@ -555,7 +561,8 @@ export default function ComicPageUI({
 					{comic.logo &&
 						<PopoverButton className={clsx(
 							"group",
-							"cursor-pointer"
+							"cursor-pointer",
+							"h-full",
 						)}>
 							<Image
 								src={`${directusURL}/assets/${comic.logo.filename_disk}`}
@@ -564,9 +571,9 @@ export default function ComicPageUI({
 								height={comic.logo.height || "120"}
 								className={clsx(
 									"drop-shadow-black/50",
-									"drop-shadow-lg",
+									"drop-shadow-sm",
 									"w-auto",
-									"max-h-17",
+									"max-h-15",
 								)}
 							/>
 						</PopoverButton>
