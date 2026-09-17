@@ -89,18 +89,24 @@ export default function ComicContextProvider({
 	getSession,
 	getSettings,
 	getComic,
+	getComicPage,
+	getComicVars,
+	getUserVars,
 	children
 }: {
 	getSession?: sessionSchema
 	getSettings?: projectSettingsSchema
 	getComic?: comicSchema
+	getComicPage?: comicPageSchema
+	getComicVars?: comicVarsSchema
+	getUserVars?: userVarsSchema
 } & PropsWithChildren<{}>) {
 	const [session, setSession] = useState(getSession || sessionDefault)
 	const [projectSettings, setProjectSettings] = useState(getSettings || projectSettingsDefault)
 	const [comic, setComic] = useState(getComic || comicDefault)
-	const [comicPage, setComicPage] = useState(comicPageDefault)
-	const [comicVars, setComicVars] = useState(comicVarsDefault)
-	const [userVars, setUserVars] = useState(userVarsDefault)
+	const [comicPage, setComicPage] = useState(getComicPage || comicPageDefault)
+	const [comicVars, setComicVars] = useState(getComicVars || comicVarsDefault)
+	const [userVars, setUserVars] = useState(getUserVars || userVarsDefault)
 	const [comicPreviousPage, setComicPreviousPage] = useState(comicPreviousPageDefault)
 	const [comicPageHistory, setComicPageHistory] = useState(comicPageHistoryDefault)
 

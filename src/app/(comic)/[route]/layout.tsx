@@ -64,7 +64,12 @@ export default async function RouteLayout({
 
 		// RENDER
 		return <>
-			<ComicContextProvider>
+			<ComicContextProvider
+				getSession={session}
+				getSettings={settings}
+				getComic={comic}
+
+			>
 				<ComicLayoutUI settings={settings} comic={comic} session={session}>
 					{children}
 				</ComicLayoutUI>
