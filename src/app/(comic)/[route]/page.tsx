@@ -17,7 +17,7 @@ import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { adminClient } from "@/lib/directus/clients"
 import { readItems } from "@directus/sdk"
-import replaceComicVariables from "../_functions/replace-comic-vars"
+import { replaceComicVariables } from "../_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
 

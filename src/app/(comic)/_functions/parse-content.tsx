@@ -1,10 +1,12 @@
 import { getComicVariables } from "@/lib/directus/get-comics"
+import { sanitize } from "@/lib/sanitize"
+import { marked } from "marked"
 
 /**-----------------------------------
  * Replaces Comic Variables in a string with the User Variables
  * ---
  */
-export default function replaceComicVariables({
+export function replaceComicVariables({
 	content,
 	variables,
 	userVariables,
@@ -43,4 +45,26 @@ export default function replaceComicVariables({
 	} else {
 		return content
 	}
+}
+
+export function prepareText({
+	content,
+	variables,
+	userVariables,
+	html,
+}: {
+	content: string | null
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string> | undefined
+	html?: boolean
+}) {
+	const sanitized = sanitize(content as string)
+	const parsed = marked.parse(sanitized)
+	const preppedText = replaceComicVariables({
+		content: parsed as string,
+		variables: variables,
+		userVariables: userVariables
+	})
+
+	return preppedText
 }

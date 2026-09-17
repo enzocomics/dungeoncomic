@@ -12,7 +12,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
-import replaceComicVariables from "../../_functions/replace-comic-vars"
+import { replaceComicVariables } from "../../_functions/parse-content"
 import { ComicButton } from "@/components/button"
 
 /**-----------------------------------

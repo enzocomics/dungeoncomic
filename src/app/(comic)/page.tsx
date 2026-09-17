@@ -15,7 +15,7 @@ import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 import { getUserVarsCookie } from "./_actions/variables"
 import { FrontpageLayoutUI } from "./_ui/layout"
-import replaceComicVariables from "./_functions/replace-comic-vars"
+import { replaceComicVariables } from "./_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
 

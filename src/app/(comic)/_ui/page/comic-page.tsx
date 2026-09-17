@@ -20,7 +20,7 @@ import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import replaceComicVariables from "../../_functions/replace-comic-vars"
+import { replaceComicVariables } from "../../_functions/parse-content"
 // ACTIONS
 import { saveUserVars } from "../../_actions/variables"
 import { deleteUserPlotSuggestion, PlotSuggestionType, submitUserPlotSuggestion, voteOnPlotSuggestion } from "../../_actions/plot-suggestions"

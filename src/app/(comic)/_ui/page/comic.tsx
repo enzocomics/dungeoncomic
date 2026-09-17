@@ -1,4 +1,3 @@
-
 /**----------------------------------- */
 import clsx from "clsx"
 // LIBRARIES
@@ -10,6 +9,8 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import ComicPageContentUI from "./comic-page"
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
+import { sanitize } from "@/lib/sanitize"
+import { marked } from "marked"
 
 
 /**----------------------------------- */
@@ -37,10 +38,13 @@ export default async function ComicPageUI({
 }: ComicPageUIProps) {
 
 	const t = await getTranslations("ComicPage")
+	// COMIC VARS
 	const comic = page.comic
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
+	// PARSED MARKDOWN
+	const comicDescription = marked.parse(sanitize(comic.description))
 
 	return <>
 		<ComicPageContentUI
@@ -57,21 +61,11 @@ export default async function ComicPageUI({
 	</>
 }
 
-{/* COMIC PAGE HEADER - WRAPPER 
-			- Header
-				- Div
-					- var: hasBanner
-					- ComicPageHeaderTitle
-						- var: comic.title
-						- var: comic.authors
-						- var: page.comic.thumbnail
-						- var: comic.description
-						- var: comic.date_created
-						- var: comic.date_updated
-				- /div
-			- / Header
-		
-		*/}
+/**
+ * The header component of the Comic Page
+ * - Contains Comic Page Title (Client Component)
+ * 
+ */
 export function ComicPageHeader({
 	page,
 	className,

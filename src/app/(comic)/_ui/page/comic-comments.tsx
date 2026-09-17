@@ -28,7 +28,7 @@ import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
-import replaceComicVariables from "../../_functions/replace-comic-vars"
+import { replaceComicVariables } from "../../_functions/parse-content"
 import { AuthLink } from "@/components/auth"
 
 
