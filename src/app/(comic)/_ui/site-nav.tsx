@@ -1,3 +1,4 @@
+"use client"
 /**----------------------------------- */
 // LIBRARIES
 import Link from "next/link"

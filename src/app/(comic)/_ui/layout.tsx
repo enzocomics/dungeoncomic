@@ -1,4 +1,4 @@
-"use client"
+"use server"
 /**----------------------------------- */
 // LIBRARIES
 // FUNCTIONS
@@ -19,7 +19,7 @@ import React from "react"
  * ---
  * - Default homepage
  */
-export function ComicLayoutUI({
+export async function ComicLayoutUI({
 	children,
 	comic,
 	session,
@@ -123,7 +123,7 @@ export function ComicLayoutUI({
  * - 
  * 
  */
-export function FrontpageLayoutUI({
+export async function FrontpageLayoutUI({
 	children,
 	session
 }: {
