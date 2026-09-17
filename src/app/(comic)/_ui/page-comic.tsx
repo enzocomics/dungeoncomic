@@ -405,7 +405,7 @@ export default function ComicPageUI({
 						"justify-center",
 						"items-center",
 						"font-comic-header",
-						"overflow-clip",
+						!hasLogo && "overflow-clip",
 					)
 				}>
 
@@ -425,7 +425,6 @@ export default function ComicPageUI({
 							// Functionality
 							"cursor-pointer",
 							// Appearance'
-							"bg-black/50",
 							"data-open:bg-comic-accent-600",
 							"dark:data-open:bg-comic-accent-700",
 							"rounded",
@@ -446,7 +445,9 @@ export default function ComicPageUI({
 							hasBanner ? [
 								"bg-neutral-800/80",
 								"dark:bg-neutral-900/80",
-							] : []
+							] : [
+								"bg-black/50",
+							]
 						)}>
 							<div className={clsx(
 								// Structure
@@ -563,6 +564,17 @@ export default function ComicPageUI({
 							"group",
 							"cursor-pointer",
 							"h-full",
+							"hover:scale-105",
+							"hover:duration-0",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+							"rounded",
+							"data-open:bg-comic-accent-700/80",
+							"data-open:outline-4",
+							"data-open:outline-comic-accent-500",
+							"data-open:outline-offset-2",
 						)}>
 							<Image
 								src={`${directusURL}/assets/${comic.logo.filename_disk}`}
@@ -594,11 +606,11 @@ export default function ComicPageUI({
 							// Position
 							"absolute",
 							// "-z-1",
-							"top-11.5",
+							hasLogo ? "top-18" : "top-11.5",
 							// Size & Spacing
 							"max-w-lg",
 							"p-2",
-							"rounded-sm",
+							// "rounded-sm",
 							"drop-shadow-2xl",
 							"drop-shadow-neutral-900/45",
 						)}>
@@ -618,8 +630,8 @@ export default function ComicPageUI({
 							"text-sm",
 							"text-base-content",
 							// Appearance
-							"rounded-sm",
-							"md:rounded",
+							// "rounded-sm",
+							"rounded",
 							// Colours
 							"bg-base-1",
 							"dark:bg-base-3",
@@ -637,7 +649,7 @@ export default function ComicPageUI({
 							"before:border-l-12 before:border-r-12",
 							"before:border-t-12",
 							"before:border-l-transparent before:border-r-transparent",
-							"before:border-t-base-1 dark:before:border-t-base-3",
+							"before:border-t-neutral-100 dark:before:border-t-neutral-800",
 							"before:rotate-180"
 						)}>
 							{/* Comic Info Header */}
