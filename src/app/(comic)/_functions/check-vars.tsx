@@ -32,3 +32,34 @@ export const haveVarsBeenSubmitted = (
 		: false
 
 }
+
+export const getComicPageVars = (
+	comicPanels: Awaited<ReturnType<typeof getComicPage>>["comic_panels"]
+) => {
+	return comicPanels?.flatMap(p =>
+		p.variables && p.variables.length > 0 ?
+			p.variables : []
+	)
+}
+
+export const makeComicVarsUrl = ({
+	comicVars,
+	userVars
+}: {
+	comicVars: ReturnType<typeof getComicPageVars>
+	userVars?: Record<string, string | null>
+}) => {
+	// Build a URLSearchParams object that handles all the syntax/concatenation automatically
+	// - comicVars is possibly null, so have an empty array as fallback
+	const entries: [string, string][] = (comicVars ?? []).map(
+		({ slug, default_value }): [string, string] => [
+			slug,
+			userVars?.[slug] ?? default_value
+		]
+	)
+
+	const params = new URLSearchParams(entries)
+
+	// Return it as a string
+	return params.size === 0 ? "" : `?${params.toString()}`
+}
