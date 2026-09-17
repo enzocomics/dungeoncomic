@@ -54,7 +54,11 @@ export default async function HomepageLayout({
 		// If a frontpageComic has not been selected, it will default to the first comic it finds
 		if (comic)
 			return <>
-				<ComicContextProvider>
+				<ComicContextProvider
+					getSession={session}
+					getSettings={settings}
+					getComic={comic}
+				>
 					<AuthModal public_registration={public_registration} />
 					<ComicLayoutUI
 						settings={settings}
