@@ -18,7 +18,6 @@ import { useForm } from "@conform-to/react"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 // DATA
 import { directusURL } from "@/data/env"
-import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { prepareText, replaceComicVariables } from "../../_functions/parse-content"
 // ACTIONS
@@ -190,7 +189,7 @@ export default function ComicPageContentUI({
 			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
 		</span>
 
-		{children}
+		{/* {children} */}
 
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<div

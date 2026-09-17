@@ -12,6 +12,7 @@ import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
 import { prepareText } from "../../_functions/parse-content"
+import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 
 
 /**----------------------------------- */
@@ -44,31 +45,53 @@ export default async function ComicPageUI({
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
-	// PARSED MARKDOWN
+
+	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({
 		content: comic.description,
 		variables: variables,
 		userVariables: userVariables,
-		html: true
+		parseMarked: true,
+		varHtml: true
+	})
+	const pageTitle = prepareText({
+		content: page.title,
+		variables: variables,
+		userVariables: userVariables,
+		parseMarked: false,
+		varHtml: true
+	})
+	const pageSubmitText = prepareText({
+		content: page.variables_submit_button_text,
+		variables: variables,
+		userVariables: userVariables,
+		parseMarked: false,
+		varHtml: true
 	})
 
 	return <>
-		<ComicPageContentUI
+		{/* <ComicPageContentUI
 			page={page}
 			variables={variables}
 			userVariables={userVariables}
 			session={session}
-		>
-			<ComicPageHeader page={page} >
-				<ClientComicPageHeaderTitle
-					page={page}
-					variables={variables}
-					userVariables={userVariables}
-					comicDescription={comicDescription}
-				/>
-			</ComicPageHeader>
-			<ComicPageContentWrapper />
-		</ComicPageContentUI>
+		> */}
+		<ComicPageHeader page={page} >
+			<ClientComicPageHeaderTitle
+				page={page}
+				variables={variables}
+				userVariables={userVariables}
+				comicDescription={comicDescription}
+			/>
+		</ComicPageHeader>
+		<ComicPageContentWrapper page={page}>
+			<ClientComicPageContentTitle
+				pagePanels={page.comic_panels}
+				pageTitle={pageTitle}
+				pageSubmitText={pageSubmitText}
+			/>
+		</ComicPageContentWrapper>
+		{/* </ComicPageContentUI> */}
 	</>
 }
 
@@ -158,16 +181,52 @@ export function ComicPageHeader({
 }
 
 export function ComicPageContentWrapper({
+	page,
 	className,
 	...props
-}: ComponentPropsWithoutRef<"div">) {
+}: {
+	page: Awaited<ReturnType<typeof getComicPage>>
+} & ComponentPropsWithoutRef<"div">) {
+	const hasBanner = !!page.comic.banner
+	const hasLogo = !!page.comic.logo
 	return <div
 		{...props}
 		className={clsx(
-			className,
+			className, "relative",
+			hasBanner ? [
+				// Banner
+				"pt-22",
+			] : [
+				// No Banner
+				hasLogo
+					? "pt-22"
+					: "pt-14",
+				"md:pt-22",
+			],
 		)}
 	>
+		<article
+			className={clsx(
+				// Structure
+				"flex",
+				"flex-col",
+				"gap-6",
+				// Spacing
+				"pt-6",
+				"pb-18",
+				// Appearance
+				"md:rounded",
+				// Colours
+				"bg-base-1",
+				"dark:bg-base-2",
+				"dark:shadow-none",
+				"dark:outline",
+				"dark:-outline-offset-1",
+				"dark:outline-base-5/50",
+			)}
+		>
 
-
+			{props.children}
+		</article>
 	</div>
 }

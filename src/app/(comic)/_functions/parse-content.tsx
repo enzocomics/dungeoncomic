@@ -51,20 +51,22 @@ export function prepareText({
 	content,
 	variables,
 	userVariables,
-	html,
+	parseMarked = false,
+	varHtml = false,
 }: {
 	content: string | null
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string> | undefined
-	html?: boolean
+	parseMarked?: boolean
+	varHtml?: boolean
 }) {
 	const sanitized = sanitize(content as string)
-	const parsed = marked.parse(sanitized)
+	const parsed = parseMarked ? marked.parse(sanitized) : sanitized
 	const preppedText = replaceComicVariables({
 		content: parsed as string,
 		variables: variables,
 		userVariables: userVariables,
-		html: html
+		html: varHtml
 	})
 
 	return preppedText as string

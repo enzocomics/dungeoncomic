@@ -40,24 +40,25 @@ export async function ComicLayoutUI({
 
 	// RENDER COMIC LAYOUT UI
 	return (
-		<div style={
-			{
-				// Fonts
-				"--font-comic-copy": `var(--font-${copyFontSlug})`,
-				"--font-comic-header": `var(--font-${copyFontSlug})`,
-				"--font-comic-display": `var(--font-${displayFontSlug})`,
-				"--color-comic-accent-50": `var(${colorVariants[accentColor]["50"]})`,
-				"--color-comic-accent-100": `var(${colorVariants[accentColor]["100"]})`,
-				"--color-comic-accent-200": `var(${colorVariants[accentColor]["200"]})`,
-				"--color-comic-accent-300": `var(${colorVariants[accentColor]["300"]})`,
-				"--color-comic-accent-400": `var(${colorVariants[accentColor]["400"]})`,
-				"--color-comic-accent-500": `var(${colorVariants[accentColor]["500"]})`,
-				"--color-comic-accent-600": `var(${colorVariants[accentColor]["600"]})`,
-				"--color-comic-accent-700": `var(${colorVariants[accentColor]["700"]})`,
-				"--color-comic-accent-800": `var(${colorVariants[accentColor]["800"]})`,
-				"--color-comic-accent-900": `var(${colorVariants[accentColor]["900"]})`,
-				"--color-comic-accent-950": `var(${colorVariants[accentColor]["950"]})`,
-			} as React.CSSProperties}
+		<div
+			style={
+				{
+					// Fonts
+					"--font-comic-copy": `var(--font-${copyFontSlug})`,
+					"--font-comic-header": `var(--font-${copyFontSlug})`,
+					"--font-comic-display": `var(--font-${displayFontSlug})`,
+					"--color-comic-accent-50": `var(${colorVariants[accentColor]["50"]})`,
+					"--color-comic-accent-100": `var(${colorVariants[accentColor]["100"]})`,
+					"--color-comic-accent-200": `var(${colorVariants[accentColor]["200"]})`,
+					"--color-comic-accent-300": `var(${colorVariants[accentColor]["300"]})`,
+					"--color-comic-accent-400": `var(${colorVariants[accentColor]["400"]})`,
+					"--color-comic-accent-500": `var(${colorVariants[accentColor]["500"]})`,
+					"--color-comic-accent-600": `var(${colorVariants[accentColor]["600"]})`,
+					"--color-comic-accent-700": `var(${colorVariants[accentColor]["700"]})`,
+					"--color-comic-accent-800": `var(${colorVariants[accentColor]["800"]})`,
+					"--color-comic-accent-900": `var(${colorVariants[accentColor]["900"]})`,
+					"--color-comic-accent-950": `var(${colorVariants[accentColor]["950"]})`,
+				} as React.CSSProperties}
 			className={clsx(
 				"relative",
 				"font-comic-copy",
