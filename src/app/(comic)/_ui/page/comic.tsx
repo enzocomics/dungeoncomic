@@ -11,6 +11,7 @@ import ComicPageContentUI from "./comic-page"
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
+import { prepareText } from "../../_functions/parse-content"
 
 
 /**----------------------------------- */
@@ -44,7 +45,12 @@ export default async function ComicPageUI({
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
 	// PARSED MARKDOWN
-	const comicDescription = marked.parse(sanitize(comic.description))
+	const comicDescription = prepareText({
+		content: comic.description,
+		variables: variables,
+		userVariables: userVariables,
+		html: true
+	})
 
 	return <>
 		<ComicPageContentUI
@@ -58,6 +64,7 @@ export default async function ComicPageUI({
 					page={page}
 					variables={variables}
 					userVariables={userVariables}
+					comicDescription={comicDescription}
 				/>
 			</ComicPageHeader>
 			<ComicPageContentWrapper />

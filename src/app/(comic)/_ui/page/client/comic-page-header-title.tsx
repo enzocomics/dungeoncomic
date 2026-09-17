@@ -16,10 +16,12 @@ export function ClientComicPageHeaderTitle({
 	page,
 	variables,
 	userVariables,
+	comicDescription,
 }: {
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
 	page: Awaited<ReturnType<typeof getComicPage>>
+	comicDescription?: string
 }) {
 	// PRIMARY VARS
 	const comic = page.comic
@@ -373,19 +375,17 @@ export function ClientComicPageHeaderTitle({
 						{/* Comic Info Body */}
 						<div className={clsx(
 							"p-4",
-							"font-comic-copy"
+							"font-comic-copy",
+							"landscape:max-h-[calc(80vh-200px)]",
+							"portrait:max-h-[calc(70vh-200px)]",
+							"overflow-scroll",
 						)}>
 							{comic.description &&
 								<span className={clsx(
 									"text-sm/loose",
 								)}
 									dangerouslySetInnerHTML={{
-										__html: prepareText({
-											content: comic.description,
-											variables: variables,
-											userVariables: userVariables,
-											html: true
-										}),
+										__html: comicDescription || "",
 
 									}}
 								/>
