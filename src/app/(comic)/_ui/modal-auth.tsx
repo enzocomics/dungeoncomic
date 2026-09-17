@@ -72,7 +72,7 @@ export default function AuthModal({
 					"absolute",
 					"z-60",
 				)}>
-				<AuthLayout>
+				<AuthLayout isModal={true}>
 					{authModal == "login" &&
 						<LoginPageUI isModal={true} />
 					}

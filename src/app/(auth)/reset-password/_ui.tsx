@@ -19,8 +19,9 @@ import { useChangeStatus } from "@/components/status-message"
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthLayout, AuthNav } from "@/app/(auth)/_ui"
 import { ErrorMessage } from "@/components/forms"
 
-import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Input, Label, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
+import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { AuthLink } from "@/components/auth"
+import { Input, Label } from "@/components/forms"
 import { PlatformButton } from "@/components/button"
 
 /** ------------------------------------------------ **

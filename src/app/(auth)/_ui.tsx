@@ -6,6 +6,7 @@ import type React from "react"
 // UI
 import Image from "next/image"
 import Icon from "@/styles/icons"
+import Link from "next/link"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -18,7 +19,12 @@ import Icon from "@/styles/icons"
  *   - `AuthFooter()`
  * 
  */
-export function AuthLayout({ children }: { children: React.ReactNode }) {
+export function AuthLayout({
+	isModal,
+	children }: {
+		isModal?: boolean,
+		children: React.ReactNode
+	}) {
 	return <>
 		<div className={clsx(
 			"flex",
@@ -33,7 +39,14 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 				"w-full",
 				"max-w-120",
 			)}>
-				<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
+				{!isModal &&
+					<Link href="/">
+						<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
+					</Link>
+				}
+				{isModal &&
+					<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
+				}
 			</header>
 			{children}
 			<AuthFooter />
