@@ -108,19 +108,17 @@ export default function ComicPageContentUI({
 
 	/**----------------------------------- */
 	// State that checks if we can go backwards, to the same site, using browser history 
-	const [canGoBack, setCanGoBack] = useState(false)
 
 	// State that checks which nav button type has been clicked
 	const [navClickType, setNavClickType] = useState<"next" | "prev" | null>(null)
 
 	// Retrieve Context
 	const {
+		canGoBack, setCanGoBack,
 		comicPreviousPage, setComicPreviousPage,
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
 
-	// State that checks if the page has loaded the first time
-	const [firstLoad, setFirstLoad] = useState(false)
 
 	useEffect(() => {
 		//////////////////////////////////////////////////////////////////////
@@ -165,7 +163,6 @@ export default function ComicPageContentUI({
 		// Clear the status message
 		setStatus("")
 
-		setFirstLoad(true)
 	}, [pathname, searchParams.toString()])
 
 	/**----------------------------------- */
@@ -189,7 +186,7 @@ export default function ComicPageContentUI({
 			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
 		</span>
 
-		{/* {children} */}
+		{children}
 
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<div
@@ -208,7 +205,6 @@ export default function ComicPageContentUI({
 			)
 			}
 		>
-			{/* <ComicPageNav /> */}
 			{/* COMIC PAGE - CONTENT BODY */}
 			<article
 				className={clsx(
@@ -232,26 +228,10 @@ export default function ComicPageContentUI({
 					"md:last:rounded-b",
 				)}
 			>
-				<ComicPageTitle
-					className={clsx(
-						"px-6",
-						"lg:pt-6",
-						"max-w-prose",
-						"mx-auto",
-						"font-bold",
-						"font-comic-display",
-						"text-3xl",
-						"lg:text-4xl",
-						"text-center",
-						// firstLoad && "animate-pop-in",
-					)}
-				/>
 
-				<ComicPanels />
+				{/* <ComicPanels /> */}
 				<UserFeedbackSection />
-				<ComicPageNavigation />
 			</article >
-			<ComicPageNav where="bottom" />
 		</div >
 	</>
 
@@ -287,404 +267,6 @@ export default function ComicPageContentUI({
 
 		// Return it as a string
 		return params.size === 0 ? "" : `?${params.toString()}`
-	}
-
-	/**---------------------------------------------------------------------- */
-	// TEMPLATE FUNCTIONS
-
-	function ComicPageNav({
-		where = "top"
-	}: {
-		where?: "top" | "bottom"
-	}) {
-		const isTop = where === "top"
-		return <>
-			{
-				(hasPrevPage || where == "bottom") &&
-				<>
-					<div className={clsx(
-						// "max-w-6xl",
-						// "mx-auto",
-						"bg-comic-accent-700",
-						"dark:bg-comic-accent-900",
-						"text-xs",
-						"text-white",
-						"font-comic-header",
-						isTop ? [
-							// hasBanner && "drop-shadow-xl",
-							// hasBanner && "drop-shadow-neutral-900/45",pm 
-							// hasBanner && "md:rounded-b",
-							"top-12",
-							"md:top-16",
-							"md:rounded-t",
-						] : [
-							"md:rounded-b",
-							"bottom-0",
-						],
-						"sticky",
-					)}>
-
-						<nav className={clsx(
-							"list-none",
-							"flex",
-							"justify-center"
-							// isTop ? "justify-center" : "justify-between",
-						)}>
-							{/* GO BACK TO START BUTTON */}
-							{(isTop || hasCoverPage) &&
-								<li>
-									<Link
-										className={clsx(
-											"block",
-											"flex",
-											"items-center",
-											"py-2",
-											isTop ? "px-3" : "px-1.5",
-											// Hover
-											"duration-300",
-											"hover:bg-comic-accent-950/50",
-											"hover:duration-0",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											// Outline
-											"outline-transparent",
-											"focus:rounded",
-											"focus:outline-3",
-											"focus:-outline-offset-3",
-											"focus:outline-comic-accent-500",
-										)}
-										onClick={() => {
-											setNavClickType("prev")
-											setFirstLoad(false)
-										}}
-										href="./"
-									>
-										<Icon name="forwardStep" className={clsx(
-											"inline-block",
-											"h-4",
-											"size-3",
-											"rotate-180",
-											"mr-1",
-										)} />
-
-										<span>{t("go-to-start")}</span>
-
-									</Link>
-								</li>
-							}
-							{/* Back Button */}
-							{
-								hasPrevPage
-								&& (
-									// Submission Form
-									!canGoBack && varsSubmitted
-									// Single Previous Page Back
-									|| !varsSubmitted && page.prev_pages && page.prev_pages.length == 1
-									// Browser History + Multiple Page Back
-									|| canGoBack && page.prev_pages && page.prev_pages.length > 1
-								)
-								&&
-								<li>
-									<button
-										className={clsx(
-											"w-full",
-											"flex",
-											"items-center",
-											"p-2",
-											"cursor-pointer",
-											// Hover
-											"duration-300",
-											"hover:bg-comic-accent-950/50",
-											"hover:duration-0",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											// Outline
-											"outline-transparent",
-											"focus:rounded",
-											"focus:outline-3",
-											"focus:-outline-offset-3",
-											"focus:outline-comic-accent-500",
-										)}
-
-										onClick={() => {
-											setNavClickType("prev")
-											setFirstLoad(false)
-
-											// Variable Submission Form back
-											!canGoBack && varsSubmitted && router.push(pathname)
-											// Single Previous Page back
-											!varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && router.push(
-												`${page.prev_pages[0].pages_id.comic_pagenum}` + makeComicVarsUrl({
-													comicVars: getComicPageVars(page.prev_pages[0].pages_id.comic_panels as typeof page.comic_panels),
-													userVars: userVariables
-												})
-											)
-											// Browser history +  Multiple prev pages: 
-											canGoBack && page.prev_pages && page.prev_pages.length > 1
-												// 
-												&& router.back()
-											//
-										}}
-									>
-										<Icon name="play" className={clsx(
-											"inline-block",
-											"size-3",
-											"rotate-180",
-											"mr-1",
-										)} />
-										<span>{t("go-back")}</span>
-										{
-											// DEBUG
-											// varsSubmitted && "Variable Form Page"
-											// !varsSubmitted && page.prev_pages && page.prev_pages.length == 1 && "single prev page back"
-											// canGoBack && page.prev_pages && page.prev_pages.length > 1 && "multi prev + browser back"
-										}
-									</button>
-								</li>
-							}
-							{/* BACK BUTTON: MULTIPLE PREVIOUS PAGES DROPDOWN */}
-							{!canGoBack
-								&& page.prev_pages && page.prev_pages.length > 1 &&
-								<li className={clsx(
-									"relative"
-								)}>
-									<Menu>
-										<MenuButton
-											className={clsx(
-												"group",
-												"w-full",
-												"flex",
-												"items-center",
-												"p-2",
-												"cursor-pointer",
-												// Hover
-												"duration-300",
-												"hover:bg-comic-accent-950/50",
-												"hover:duration-0",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"bg-transparent",
-												"data-closed:duration-300",
-												"data-open:bg-comic-accent-950",
-												"data-open:duration-none",
-												isTop ? [
-													"data-open:rounded-t",
-												] : [
-												]
-											)}>
-											<Icon name="caretDown" className={clsx(
-												"relative",
-												"size-4",
-												"mr-1",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"group-data-open:duration-none",
-												"group-data-open:-rotate-180",
-												"group-data-open:top-0.5",
-												"group-data-closed:duration-300",
-											)} />
-											{t("all-prev-pages")}
-										</MenuButton>
-
-										<MenuItems transition className={clsx(
-											// Position
-											"absolute",
-											"z-10",
-											"sm:left-0",
-											"xs:left-auto",
-											// "left-0",
-											"flex",
-											"flex-col",
-											"gap-y-0.5",
-											"min-w-46",
-											"md:min-w-80",
-											// Appearance
-											"p-2",
-											"bg-comic-accent-950",
-											// Transitions
-											"transition-all",
-											"ease-in-out",
-											"scale-100",
-											"opacity-100",
-											"data-closed:opacity-0",
-											"data-closed:duration-300",
-											"data-closed:scale-90",
-											"data-open:duration-none",
-											// TOP VS BOTTOM
-											isTop ? [
-												"top-8",
-												"right-0",
-												"rounded-b",
-												"data-closed:top-6",
-												"drop-shadow-xl",
-												"drop-shadow-neutral-900/50",
-											] : [
-												"bottom-8",
-												"left-0",
-												"rounded-t",
-												"data-closed:bottom-6",
-											],
-										)}>
-											{page.prev_pages.map((n, index) =>
-												<MenuItem key={index}
-												>
-													<Link
-														className={clsx(
-															// Structure
-															"grid",
-															"grid-cols-[20px_1fr]",
-															"items-center",
-															// Appearance
-															"p-2",
-															"text-white/90",
-															"bg-comic-accent-500",
-															"visited:text-neutral-300",
-															"visited:bg-neutral-500",
-															"hover:text-white",
-															"hover:bg-comic-accent-900",
-															"active:translate-px",
-															"rounded-sm",
-															// Transition
-															"hover:duration-0",
-															"transition-all",
-															"ease-in-out",
-															"duration-300",
-														)}
-														onClick={() => {
-															setNavClickType("prev")
-															setFirstLoad(false)
-														}}
-														href={
-															`${n.pages_id.comic_pagenum}` + makeComicVarsUrl({
-																comicVars: getComicPageVars(n.pages_id.comic_panels as typeof page.comic_panels),
-																userVars: userVariables
-															})
-														}>
-														<span>&laquo;</span>
-														<span>{n.pages_id.variables_submit_button_text || n.pages_id.title}</span>
-													</Link>
-												</MenuItem>
-											)}
-										</MenuItems>
-									</Menu>
-								</li>
-							}
-							{/* ARCHIVE COMBOBOX: WIP */}
-							<li className={clsx(
-								"hidden"
-							)}>
-								{!isTop &&
-									<Combobox>
-										<ComboboxButton className={
-											clsx(
-												"group",
-												"relative",
-												"flex",
-												"items-center",
-												"px-2",
-												"cursor-pointer",
-												"hover:bg-comic-accent-800",
-												"data-closed:duration-300",
-												"data-open:bg-comic-accent-950",
-												"data-open:duration-none",
-											)
-										}>
-											<Icon name="boxArchive" className={
-												clsx(
-													"absolute",
-													"size-4",
-													"ml-2",
-													"text-comic-accent-800",
-													"dark:text-white",
-												)
-											} />
-											<ComboboxInput className={
-												clsx(
-													"my-1",
-													"pl-8",
-													"py-2",
-													"px-3",
-													"h-6",
-													"w-36",
-													"rounded-sm",
-													"bg-white",
-													"focus:text-base-content",
-													"placeholder:text-comic-accent-800",
-													"focus:placeholder:text-current/40",
-													"focus:outline-none",
-													"dark:bg-black/40",
-													"dark:placeholder:text-white"
-												)
-											}
-												placeholder="Archive" />
-
-											<Icon name="caretDown" className={clsx(
-												"relative",
-												"size-4",
-												"ml-1",
-												// Transition
-												"transition-all",
-												"ease-in-out",
-												"group-data-open:duration-none",
-												"group-data-open:-rotate-180",
-												"group-data-open:top-0.5",
-												"group-data-closed:duration-300",
-											)} />
-
-										</ComboboxButton>
-
-
-										<ComboboxOptions className={
-											clsx(
-												"absolute",
-												"min-w-46",
-												"p-2",
-												"bottom-8",
-												"right-0",
-												"bg-comic-accent-950",
-												"rounded-t",
-											)
-										}>
-											<ComboboxOption value="v">
-												Pages here
-											</ComboboxOption>
-										</ComboboxOptions>
-
-									</Combobox>
-								}
-							</li>
-
-						</nav>
-					</div>
-				</>
-			}
-		</>
-	}
-
-	/**-----------------------------------
-		 * SECTION: COMIC PAGE
-		 * ---
-		 */
-
-	function ComicPageTitle({
-		...props
-	}: ComponentPropsWithoutRef<"h1">) {
-		return <h1 {...props}>
-			{replaceComicVariables({
-				content: (
-					varsExist && varsSubmitted ?
-						sanitize(page.variables_submit_button_text as string) || `${t("next")} »` :
-						sanitize(page.title)
-				),
-				variables: variables,
-				userVariables: userVariables
-			})
-			}
-		</h1>
 	}
 
 
@@ -737,7 +319,7 @@ export default function ComicPageContentUI({
 				return parseWithZod(formData, { schema })
 			},
 			onSubmit(e, { formData }) {
-				setFirstLoad(false)
+
 				// Make a new search params object
 				const params = new URLSearchParams()
 				// Iterate through the variables and dynamically get each one based on its id
@@ -1393,91 +975,6 @@ export default function ComicPageContentUI({
 				{props.children}
 			</>
 		</Radio>
-	}
-
-	/**-----------------------------------
-	 * SECTION: COMIC PAGE NAVIGATION (BOTTOM)
-	 * ---
-	 */
-
-	function ComicPageNavigation() {
-		return <>
-			<section className={clsx(
-				"flex",
-				"flex-col",
-				"gap-y-6",
-				// firstLoad && "animate-fade-in",
-			)}>
-				{
-					/**------------------------------
-					 *	NEXT NAVIGATION
-					 * ---
-					 * - Display IF variables don't exist at all,
-					 * - OR if variables exist AND they've been submitted
-					 */
-				}
-				{(!varsExist || (varsExist && varsSubmitted)) &&
-					<div className={clsx(
-						"flex",
-						"flex-col",
-						"gap-y-2",
-						"px-6",
-						"w-full",
-						"mx-auto",
-						"max-w-2xl",
-					)}>
-						{hasNextPage &&
-							<>
-								<ul className={clsx(
-									"flex",
-									"flex-col",
-									"gap-2",
-								)}>
-									{page?.next_pages?.map((n, index) =>
-										<li key={index} className={clsx(
-										)}>
-											<ComicButton visited={true} as="link"
-												onClick={() => {
-													setNavClickType("next")
-													setFirstLoad(false)
-												}}
-												href={`./${n.linked_pages_id.comic_pagenum}`}
-											>
-												<span className={clsx(
-													"grow",
-													"text-pretty",
-												)}>
-													<span>{
-														replaceComicVariables({
-															content: sanitize(n.linked_pages_id.title),
-															variables: variables,
-															userVariables: userVariables
-														})
-													}</span><br />
-													{n.linked_pages_id.subtitle &&
-														<p>{
-															replaceComicVariables({
-																content: sanitize(n.linked_pages_id.subtitle),
-																variables: variables,
-																userVariables: userVariables
-															})
-														}</p>
-													}
-												</span>
-												<Icon name="play" className={clsx(
-													"ml-1",
-													"size-4",
-												)} />
-											</ComicButton>
-										</li>
-									)}
-								</ul>
-							</>
-						}
-					</div>
-				}
-			</section >
-		</>
 	}
 
 	/**-----------------------------------

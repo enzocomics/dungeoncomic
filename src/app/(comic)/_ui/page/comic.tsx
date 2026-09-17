@@ -9,10 +9,10 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 // UI
 import ComicPageContentUI from "./comic-page"
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
-import { sanitize } from "@/lib/sanitize"
-import { marked } from "marked"
 import { prepareText } from "../../_functions/parse-content"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
+import { ClientComicPageNextNav } from "./client/comic-page-content-nav"
+import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 
 
 /**----------------------------------- */
@@ -26,7 +26,6 @@ export type ComicPageUIProps = {
 	header?: React.ReactNode
 }
 
-
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -38,9 +37,8 @@ export default async function ComicPageUI({
 	userVariables,
 	session,
 }: ComicPageUIProps) {
-
-	const t = await getTranslations("ComicPage")
 	// COMIC VARS
+	const t = await getTranslations("ComicPage")
 	const comic = page.comic
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
@@ -68,30 +66,57 @@ export default async function ComicPageUI({
 		parseMarked: false,
 		varHtml: true
 	})
+	const nextPageTitles = page?.next_pages?.map((n, index) => {
+		return prepareText({
+			content: n.linked_pages_id.title,
+			variables: variables,
+			userVariables: userVariables,
+			parseMarked: false,
+			varHtml: false
+		})
+	})
+	const nextPageSubtitles = page?.next_pages?.map((n, index) => {
+		return prepareText({
+			content: n.linked_pages_id.subtitle,
+			variables: variables,
+			userVariables: userVariables,
+			parseMarked: false,
+			varHtml: false
+		})
+	})
 
+	// RENDER
 	return <>
-		{/* <ComicPageContentUI
+		<ComicPageContentUI
 			page={page}
 			variables={variables}
 			userVariables={userVariables}
 			session={session}
-		> */}
-		<ComicPageHeader page={page} >
-			<ClientComicPageHeaderTitle
+		>
+			<ComicPageHeader page={page} >
+				<ClientComicPageHeaderTitle
+					page={page}
+					comicDescription={comicDescription}
+				/>
+			</ComicPageHeader>
+			<ComicPageContentWrapper page={page}>
+				<ClientComicPageContentTitle
+					pagePanels={page.comic_panels}
+					pageTitle={pageTitle}
+					pageSubmitText={pageSubmitText}
+				/>
+				<ClientComicPageNextNav
+					page={page}
+					nextPageTitles={nextPageTitles}
+					nextPageSubtitles={nextPageSubtitles}
+				/>
+			</ComicPageContentWrapper>
+			<ClientComicPageNavbar
+				where="bottom"
 				page={page}
-				variables={variables}
 				userVariables={userVariables}
-				comicDescription={comicDescription}
 			/>
-		</ComicPageHeader>
-		<ComicPageContentWrapper page={page}>
-			<ClientComicPageContentTitle
-				pagePanels={page.comic_panels}
-				pageTitle={pageTitle}
-				pageSubmitText={pageSubmitText}
-			/>
-		</ComicPageContentWrapper>
-		{/* </ComicPageContentUI> */}
+		</ComicPageContentUI>
 	</>
 }
 
