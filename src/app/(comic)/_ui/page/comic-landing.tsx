@@ -14,7 +14,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
 import { replaceComicVariables } from "../../_functions/parse-content"
 import { ComicButton } from "@/components/button"
-import { LandingPageBody, LandingPageContent, LandingPageHeader, LandingPageWrapper } from "./components"
+import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, LandingPageLogo, LandingPageWrapper } from "./components"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -49,52 +49,26 @@ export default function ComicLandingPageUI({
 		<LandingPageWrapper>
 			<LandingPageHeader>
 				{comic.logo &&
-					<Image
+					<LandingPageLogo
 						src={`${directusURL}/assets/${comic.logo.filename_disk}`}
 						alt={comic.logo.description || ""}
 						width={comic.logo.width || "320"}
 						height={comic.logo.height || "240"}
-						className={clsx(
-							"drop-shadow-black/50",
-							"drop-shadow-lg",
-							"max-h-60",
-							"my-20",
-							"box-content",
-						)}
 					/>
 				}
 				{!hasLogo &&
-					<h1 className={clsx(
-						"flex",
-						"items-center",
-						"min-h-48",
-						"px-6",
-						"py-6",
-						"font-comic-display",
-						"text-5xl/tight",
-						"text-center",
-						"text-pretty",
-						"font-bold",
-						"max-w-2xl",
-						"rounded",
-						hasBanner ? [
+					<LandingPageH1 className={clsx(
+						hasBanner && [
 							"text-white",
 							"[text-stroke:16px_black",
 							"[-webkit-text-stroke:16px_black]",
 							"[paint-order:stroke_fill]",
 							"drop-shadow-black/50",
 							"drop-shadow-md",
-						] : [],
-
-						// Appearance
-						// "bg-black/80",
-						// "text-white",
-						// "bg-base-1/80",
-						// "dark:bg-base-2/80",
-						// "backdrop-blur-xs",
+						],
 					)}>
 						{comic.title}
-					</h1>
+					</LandingPageH1>
 				}
 			</LandingPageHeader>
 			{/* COMIC PAGE - CONTENT BODY */}

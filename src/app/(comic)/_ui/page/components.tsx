@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import Image from "next/image"
 import { ComponentPropsWithoutRef } from "react"
 
 export const LandingPageWrapper = ({
@@ -16,14 +17,11 @@ export const LandingPageWrapper = ({
 	</div>
 }
 
-export const LandingPageHeader = ({
-	className,
-	...props
-}: ComponentPropsWithoutRef<"header">) => {
+export const LandingPageHeader = (
+	props: ComponentPropsWithoutRef<"header">
+) => {
 	return <header
-		{...props}
 		className={clsx(
-			className,
 			"flex",
 			"items-center",
 			"justify-center",
@@ -32,6 +30,46 @@ export const LandingPageHeader = ({
 		{props.children}
 	</header>
 }
+
+export const LandingPageLogo = (
+	props: ComponentPropsWithoutRef<typeof Image>
+) => (
+	<Image
+		{...props}
+		className={clsx(
+			"drop-shadow-black/50",
+			"drop-shadow-lg",
+			"max-h-60",
+			"my-20",
+			"box-content",
+		)}
+	/>
+)
+
+export const LandingPageH1 = (
+	props: ComponentPropsWithoutRef<"h1">
+) => (
+	<h1
+		{...props}
+		className={clsx(
+			props.className,
+			"flex",
+			"items-center",
+			"min-h-48",
+			"px-6",
+			"py-6",
+			"font-comic-display",
+			"text-5xl/tight",
+			"text-center",
+			"text-pretty",
+			"font-bold",
+			"max-w-2xl",
+			"rounded",
+		)}
+	>
+
+	</h1>
+)
 
 export const LandingPageBody = ({
 	className,
