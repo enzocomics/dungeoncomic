@@ -240,22 +240,13 @@ export function ClientComicPageFeedback({
 				)
 			}>
 				<ComicInputSectionRow>
-					{!session &&
-						<div
-							className={clsx(
-								"text-2xl"
-							)}>
-							{t.rich("please-login-to-vote", {
-								loginLink: (chunks) => <AuthLink isModal={true} modal="login">{chunks}</AuthLink>
-							})}
-						</div>
-					}
 					<Fieldset
 						disabled={session ? false : true}>
 						<Legend as="legend" className={
 							clsx(
 								"pb-4",
 								"text-lg",
+								"text-center",
 								"font-comic-header",
 								"font-semibold",
 							)
@@ -443,6 +434,27 @@ export function ClientComicPageFeedback({
 						)
 					} />
 				</ComicInputSectionRow>
+
+				{!session &&
+					<div
+						className={clsx(
+							"font-base",
+							"text-xl",
+							"text-center",
+							"text-red-700",
+							"dark:text-red-900",
+							"font-comic-header",
+							"bg-red-100",
+							"dark:bg-red-300",
+							"py-2",
+							"mb-4",
+							"rounded-sm",
+						)}>
+						{t.rich("please-login-to-vote", {
+							loginLink: (chunks) => <AuthLink className={clsx("underline font-bold")} isModal={true} modal="login">{chunks}</AuthLink>
+						})}
+					</div>
+				}
 			</ComicInputSection>
 		}
 	</>
