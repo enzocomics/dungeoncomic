@@ -16,7 +16,7 @@ export default function ClientComicPageEffects({
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const setStatus = useChangeStatus("")
-	const hasPrevPage = checkHasPrevPage(page.prev_pages)
+	const hasPrevPage = checkHasPrevPage(page.prev_pages, page.comic_panels)
 	const hasNextPage = checkHasNextPage(page.next_pages)
 
 	// Retrieve Context
@@ -25,7 +25,6 @@ export default function ClientComicPageEffects({
 		comicPreviousPage, setComicPreviousPage,
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
-
 
 	useEffect(() => {
 		//////////////////////////////////////////////////////////////////////

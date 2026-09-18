@@ -34,7 +34,7 @@ export function ClientComicPageNavbar({
 	const varsExist = doVarsExist(page.comic_panels)
 	const varsSubmitted = haveVarsBeenSubmitted(page.comic_panels)
 	const hasNextPage = checkHasNextPage(page.next_pages)
-	const hasPrevPage = checkHasPrevPage(page.prev_pages)
+	const hasPrevPage = checkHasPrevPage(page.prev_pages, page.comic_panels)
 	const hasCoverPage = checkCoverPage(page.comic.landing_page)
 
 	const isTop = where === "top"
