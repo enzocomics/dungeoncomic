@@ -10,7 +10,7 @@ import { displayFonts, copyFonts } from "@/styles/fonts"
 import { directusURL } from "@/data/env"
 import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
-import NavMenu from "./site-nav"
+import SiteNav from "../../_ui/site-nav"
 import { getSettings } from "@/lib/directus/get-settings"
 import React from "react"
 
@@ -99,7 +99,7 @@ export async function ComicLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu
+			<SiteNav
 				comic={comic}
 				session={session}
 				menu={singleComicSite ? false : true}
@@ -176,7 +176,7 @@ export async function FrontpageLayoutUI({
 						"xl:[-webkit-mask-composite:source-in]",
 					)} />
 			}
-			<NavMenu
+			<SiteNav
 				menu={true}
 				session={session}
 			/>

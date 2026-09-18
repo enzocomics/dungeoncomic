@@ -26,7 +26,7 @@ import { getComic } from "@/lib/directus/get-comics"
  * - User/Account Popover Menu
  * 
  */
-export default function NavMenu({
+export default function SiteNav({
 	session,
 	menu = false,
 	comic
