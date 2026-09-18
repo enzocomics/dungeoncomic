@@ -191,6 +191,7 @@ export interface SettingsSingleton {
 	frontpage_comic: ComicsCollection | null
 	single_comic_site: boolean
 	copyright_message: string | null
+	homepage_content: Text | null
 	// Icons
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null
