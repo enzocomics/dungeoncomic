@@ -136,14 +136,11 @@ export default function ComicLandingPageUI({
 					,
 				}}
 					className={clsx(
+						"landing-page-content",
 						// "py-6",
-
-						"px-6",
 						"prose",
 						"text-base/loose",
 						"lg:text-lg/loose",
-						"max-w-2xl",
-						"mx-auto",
 						"text-left",
 						"text-pretty",
 					)}

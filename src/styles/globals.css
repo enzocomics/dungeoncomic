@@ -74,6 +74,19 @@
 		}
 	}
 
+	.landing-page-content {
+		> * {
+			@apply px-6 max-w-2xl mx-auto;
+		}
+
+		> p:has(> img) {
+			@apply px-0 max-w-full lg:py-12;
+			> img {
+				@apply mx-auto;
+			}
+		}
+	}
+
 	/* DEFAULT ACCENT COLOUR: OLIVE */
 	--color-primary-50: var(--color-red-50);
 	--color-primary-100: var(--color-red-100);
