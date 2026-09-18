@@ -39,8 +39,6 @@ export interface ComicsCollection {
 	slug: string
 	description: string
 	authors: DirectusUser[] | null
-	// Content
-	pages: number[] | PagesCollection[]
 	// Appearance
 	logo: ImageCollection | null
 	thumbnail: ImageCollection | null
@@ -48,15 +46,19 @@ export interface ComicsCollection {
 	accent_color: TailwindColors | null
 	display_font: typeof displayFonts // fetch from styles/fonts
 	copy_font: typeof copyFonts // fetch from styles/fonts
-	// Settings
+	// Options
 	landing_page: "cover-page" | "first-page" | "last-page" | number
+	// Content
+	landing_page_content: Text | null
+	start_button_text: string | null
 	// Meta
 	id: number
 	user_created: DirectusUser
 	date_created: "datetime"
 	user_updated: DirectusUser
 	date_updated: "datetime"
-	landing_page_content: Text | null
+	// Content
+	pages: number[] | PagesCollection[]
 }
 
 /** ------------------------------------------------ **/

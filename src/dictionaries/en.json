@@ -6,7 +6,8 @@
 		"title": "404 - Page Not Found"
 	},
 	"ComicProject": {
-		"under-construction": "This dungeon is under construction. Stay tuned for more."
+		"under-construction": "This dungeon is under construction. Stay tuned for more.",
+		"start-button-text": "Start Reading"
 	},
 	"ComicPage": {
 		"next": "Next",

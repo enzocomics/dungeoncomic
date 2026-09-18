@@ -56,9 +56,9 @@ export const getComic = cache(async ({ slug }: { slug?: string }) => {
 				"display_font",
 				"copy_font",
 				// Content
-				// Settings
 				"landing_page",
 				"landing_page_content",
+				"start_button_text",
 				// Meta
 				"id",
 				"count(pages)",

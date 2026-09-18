@@ -5,6 +5,8 @@ import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 import clsx from "clsx"
 import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, LandingPageLogo, LandingPageWrapper } from "./components"
 import { ClientComicPageLandingButton } from "./client/comic-page-landing-button"
+import { useTranslations } from "next-intl"
+import { sanitize } from "@/lib/sanitize"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -23,9 +25,11 @@ export default function ComicLandingPageUI({
 	userVariables?: Record<string, string>
 	content: string
 }) {
+	const t = useTranslations("ComicProject")
 	// PRIMARY VARS
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
+	const startButtonText = sanitize(`${comic.start_button_text}`) || t("start-button-text")
 
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
@@ -58,7 +62,7 @@ export default function ComicLandingPageUI({
 				<LandingPageContent content={content} />
 				{comic.pages_count > 0 &&
 					<ClientComicPageLandingButton>
-						Start Reading &raquo;
+						{startButtonText} &raquo;
 					</ClientComicPageLandingButton>
 				}
 			</LandingPageBody>
