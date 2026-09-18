@@ -4,40 +4,29 @@ import clsx from "clsx"
 // I18N
 import { useTranslations } from "next-intl"
 // LIBRARIES
-import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, HTMLElementType, Ref, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
+import React, { ComponentPropsWithoutRef, useActionState, useRef, useState } from "react"
 import Image from "next/image"
 import Form from "next/form"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { marked } from "marked"
+import { useRouter, } from "next/navigation"
 import { sanitize } from "@/lib/sanitize"
-import { detailedDate, relativeDate } from "@/lib/dayjs"
 // VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
-import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 // DATA
 import { directusURL } from "@/data/env"
-import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { replaceComicVariables } from "@/app/(comic)/_functions/parse-content"
+import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+
 // ACTIONS
 import { saveUserVars } from "@/app/(comic)/_actions/variables"
-import { deleteUserPlotSuggestion, PlotSuggestionType, submitUserPlotSuggestion, voteOnPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
+
 // HELPERS
 
 import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(comic)/_functions/check-vars"
 // UI
-import * as Headless from "@headlessui/react"
-import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
-import { useComicContext } from "../../context"
-import StatusMessage, { useChangeStatus } from "@/components/status-message"
-import { ErrorMessage } from "@/components/forms"
-import Link from "next/link"
+import { Field, } from "@headlessui/react"
 import Icon from "@/styles/icons"
-import { Textarea } from "@/components/textarea"
 import { ComicButton } from "@/components/button"
-import { AuthLink } from "@/components/auth"
-
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 
 

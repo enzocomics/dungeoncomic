@@ -63,15 +63,14 @@ export function ClientComicPageNextNav({
 												{nextPageTitles[index]}
 											</span>
 											<br />
-											{n.linked_pages_id.subtitle &&
-												// <p>{
-												// 	replaceComicVariables({
-												// 		content: sanitize(n.linked_pages_id.subtitle),
-												// 		variables: variables,
-												// 		userVariables: userVariables
-												// 	})
-												// }</p>
-												<></>
+											{nextPageSubtitles &&
+												<span className={clsx(
+													"font-normal",
+													"text-sm",
+													"italic",
+												)}>
+													{nextPageSubtitles[index]}
+												</span>
 											}
 										</span>
 										<Icon name="play" className={clsx(

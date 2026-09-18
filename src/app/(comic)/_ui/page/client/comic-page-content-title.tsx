@@ -50,7 +50,7 @@ export function ClientComicPageContentTitle({
 		{subtitle &&
 			<h2
 				className={clsx(
-					"mt-2",
+					"mt-4",
 					"px-6",
 					"max-w-prose",
 					"mx-auto",
