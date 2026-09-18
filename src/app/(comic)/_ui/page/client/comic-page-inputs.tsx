@@ -150,7 +150,7 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"text-neutral-200",
 							"size-5",
 							"dark:group-data-checked:text-comic-accent-800",
-
+							"group-data-loading:opacity-0",
 						)
 					}
 				/>
@@ -161,16 +161,14 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"left-0",
 							"top-1/2",
 							"-translate-y-1/2",
-							"text-neutral-200",
+							"text-comic-accent-500",
+							"dark:text-white",
 							"size-5",
 							"animate-spin",
 							"opacity-0",
 							"group-data-loading:opacity-100",
 							// Transition
-							"transition-all",
-							"ease-in-out",
-							"duration-300",
-							"dark:group-data-checked:text-white"
+
 						)
 					}
 
@@ -185,13 +183,14 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"text-neutral-200",
 							"size-5",
 							"opacity-0",
-							"scale-50",
+
 							"group-data-loading:opacity-0",
-							"group-data-checked:scale-100",
+							"group-data-loading:scale-150",
 							"group-data-checked:opacity-100",
+							"group-data-checked:scale-100",
 							"group-data-checked:text-comic-accent-500",
 							// Transition
-							"transition-all",
+							"transition-[scale]",
 							"ease-in-out",
 							"duration-300",
 							"dark:group-data-checked:text-white"
