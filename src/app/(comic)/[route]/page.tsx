@@ -20,6 +20,7 @@ import { readItems } from "@directus/sdk"
 import { replaceComicVariables } from "../_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
+import { getTranslations } from "next-intl/server"
 
 /**-----------------------------------
  * COMIC ROUTE **OR** SUBPAGE
@@ -116,6 +117,7 @@ export default async function RoutePage({
 	// LAYOUT MODE 2: MULTI-COMIC SITE
 	// - Display the comic landing page UI
 	else if (!singleComicSite) {
+		const t = await getTranslations("ComicProject")
 		// Fetch the comic by route param
 		const comic = await getComic({ slug: route })
 		// Throw 404 if it doesn't exist
@@ -130,7 +132,7 @@ export default async function RoutePage({
 			content:
 				String(
 					marked.parse(
-						sanitize(String(comic.landing_page_content))
+						sanitize(String(comic.landing_page_content || t("under-construction")))
 					)
 				),
 			variables: variables,
