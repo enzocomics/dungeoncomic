@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import { ComponentPropsWithoutRef } from "react";
+import clsx from "clsx"
+import { ComponentPropsWithoutRef } from "react"
 
 export const icons = {
 
@@ -152,6 +152,7 @@ export default function Icon({
 
 	return <svg
 		{...props}
+		aria-hidden="true"
 		viewBox={icon.viewBox}
 	>
 		<path d={icon.pathD}
