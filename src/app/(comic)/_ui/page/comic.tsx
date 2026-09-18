@@ -11,8 +11,10 @@ import ComicPageContentUI from "./comic-page"
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { prepareText } from "../../_functions/parse-content"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
-import { ClientComicPageNextNav } from "./client/comic-page-content-nav"
+import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
+import { ClientComicPanels } from "./client/comic-page-panels"
+import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 
 
 /**----------------------------------- */
@@ -84,6 +86,16 @@ export default async function ComicPageUI({
 			varHtml: false
 		})
 	})
+	const panelDescriptions = page?.comic_panels?.map((p, index) => {
+		return prepareText({
+			content: p.panel_description,
+			variables: variables,
+			userVariables: userVariables,
+			parseMarked: true,
+			varHtml: true
+
+		})
+	})
 
 	// RENDER
 	return <>
@@ -105,10 +117,22 @@ export default async function ComicPageUI({
 					pageTitle={pageTitle}
 					pageSubmitText={pageSubmitText}
 				/>
+				<ClientComicPanels
+					page={page}
+					userVariables={userVariables}
+					variables={variables}
+					panelDescriptions={panelDescriptions}
+				/>
 				<ClientComicPageNextNav
 					page={page}
 					nextPageTitles={nextPageTitles}
 					nextPageSubtitles={nextPageSubtitles}
+				/>
+				<ClientComicPageFeedback
+					page={page}
+					variables={variables}
+					userVariables={userVariables}
+					session={session}
 				/>
 			</ComicPageContentWrapper>
 			<ClientComicPageNavbar

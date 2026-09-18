@@ -172,7 +172,6 @@ export async function submitUserPlotSuggestion(
 				title: sanitize(userSuggestion),
 				slug: slug,
 				page: pageId,
-				votes: 1,
 				users_voted: [{ id: userId }],
 			}),
 		)
