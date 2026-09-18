@@ -3,7 +3,7 @@
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { ComicLayoutUI, FrontpageLayoutUI } from "./_ui/layout"
+import { ComicLayoutUI, PlatformLayoutUI } from "./_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import ComicContextProvider from "./_ui/context"
 import { verifySession } from "@/data/session"
@@ -73,9 +73,9 @@ export default async function HomepageLayout({
 			// if `singleComicSite` has been selected but no comics exist (probably deleted?) just show the regular layout
 			return <>
 				<AuthModal public_registration={public_registration} />
-				<FrontpageLayoutUI>
+				<PlatformLayoutUI>
 					{children}
-				</FrontpageLayoutUI>
+				</PlatformLayoutUI>
 				<SiteFooter />
 			</>
 

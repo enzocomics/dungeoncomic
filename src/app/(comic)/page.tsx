@@ -14,7 +14,7 @@ import ComicLandingPageUI from "./_ui/page/comic-landing"
 import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 import { getUserVarsCookie } from "./_actions/variables"
-import { FrontpageLayoutUI } from "./_ui/layout"
+import { PlatformLayoutUI } from "./_ui/layout"
 import { replaceComicVariables } from "./_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
@@ -111,9 +111,9 @@ export default async function Homepage() {
 		} else {
 			// notFound()
 			return <Suspense>
-				<FrontpageLayoutUI>
+				<PlatformLayoutUI>
 					<HomepagePageUI content={homePageContent} />
-				</FrontpageLayoutUI>
+				</PlatformLayoutUI>
 			</Suspense>
 		}
 	}

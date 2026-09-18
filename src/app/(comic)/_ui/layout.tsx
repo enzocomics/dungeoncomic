@@ -86,7 +86,7 @@ export function ComicLayoutUI({
  * - 
  * 
  */
-export async function FrontpageLayoutUI({
+export async function PlatformLayoutUI({
 	children,
 	session
 }: {
