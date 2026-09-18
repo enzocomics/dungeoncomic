@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { sanitize } from "@/lib/sanitize"
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
-import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1, LandingPageLogo } from "./page-landing"
+import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1, LandingPageLogo } from "../../../_ui/page-landing"
 import StatusMessage from "@/components/status-message"
 import ClientHomePageEffects from "./client/home-page-effects"
 
