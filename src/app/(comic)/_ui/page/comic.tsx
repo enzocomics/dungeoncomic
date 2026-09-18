@@ -15,6 +15,7 @@ import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 import ClientComicPageEffects from "./client/comic-page-effects"
+import { PageContentWrapper } from "@/app/_ui/site-page"
 
 /**-----------------------------------
  * Comic Page UI
@@ -239,7 +240,8 @@ export function ComicPageContentWrapper({
 	return <div
 		{...props}
 		className={clsx(
-			className, "relative",
+			className,
+			"relative",
 			hasBanner ? [
 				// Banner
 				"pt-22",
@@ -252,28 +254,8 @@ export function ComicPageContentWrapper({
 			],
 		)}
 	>
-		<article
-			className={clsx(
-				// Structure
-				"flex",
-				"flex-col",
-				"gap-6",
-				// Spacing
-				"pt-6",
-				"pb-18",
-				// Appearance
-				"md:rounded",
-				// Colours
-				"bg-base-1",
-				"dark:bg-base-2",
-				"dark:shadow-none",
-				"dark:outline",
-				"dark:-outline-offset-1",
-				"dark:outline-base-5/50",
-			)}
-		>
-
+		<PageContentWrapper>
 			{props.children}
-		</article>
+		</PageContentWrapper>
 	</div>
 }
