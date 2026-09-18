@@ -181,18 +181,21 @@ export interface SettingsSingleton {
 	id: UUID
 	user_updated: DirectusUser
 	date_updated: "datetime"
-	date_established: "datetime"
-	// Details
+	// Settings
 	project_name: string | null
 	project_url: string | null
-	project_description: string | null
-	project_banner: ImageCollection | null
-	project_thumbnail: ImageCollection | null
-	project_authors: DirectusUser[] | null
 	frontpage_comic: ComicsCollection | null
 	single_comic_site: boolean
-	copyright_message: string | null
+	// Content
+	project_logo: ImageCollection | null
+	project_banner: ImageCollection | null
 	homepage_content: Text | null
+	date_established: "datetime"
+	copyright_message: string | null
+	// Metadata
+	project_thumbnail: ImageCollection | null
+	project_description: string | null
+	project_authors: DirectusUser[] | null
 	// Icons
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null

@@ -19,6 +19,15 @@ export const getSettings = cache(async () => {
 				"project_url",
 				"project_description",
 				{
+					project_logo: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
 					project_banner: [
 						"filename_disk",
 						"type",
