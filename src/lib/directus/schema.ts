@@ -186,6 +186,7 @@ export interface SettingsSingleton {
 	project_name: string | null
 	project_url: string | null
 	project_description: string | null
+	project_banner: ImageCollection | null
 	project_thumbnail: ImageCollection | null
 	project_authors: DirectusUser[] | null
 	frontpage_comic: ComicsCollection | null

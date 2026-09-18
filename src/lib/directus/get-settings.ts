@@ -18,7 +18,15 @@ export const getSettings = cache(async () => {
 				{ project_authors: ["name", "username", "homepage_url", "email"] },
 				"project_url",
 				"project_description",
-				// "project_thumbnail",
+				{
+					project_banner: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
 				{
 					project_thumbnail: [
 						"filename_disk",
