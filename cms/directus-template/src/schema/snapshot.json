@@ -5059,52 +5059,6 @@
     },
     {
       "collection": "plot_suggestions",
-      "field": "votes",
-      "type": "integer",
-      "meta": {
-        "collection": "plot_suggestions",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "votes",
-        "group": "details",
-        "hidden": false,
-        "interface": "input",
-        "note": null,
-        "options": {
-          "min": 0
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 4,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "votes",
-        "table": "plot_suggestions",
-        "data_type": "integer",
-        "default_value": 0,
-        "max_length": null,
-        "numeric_precision": 32,
-        "numeric_scale": 0,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "plot_suggestions",
       "field": "users_voted",
       "type": "alias",
       "meta": {
@@ -5132,6 +5086,50 @@
         "validation": null,
         "validation_message": null,
         "width": "half"
+      }
+    },
+    {
+      "collection": "plot_suggestions",
+      "field": "votes",
+      "type": "integer",
+      "meta": {
+        "collection": "plot_suggestions",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "votes",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "votes",
+        "table": "plot_suggestions",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {
@@ -5166,36 +5164,6 @@
     },
     {
       "collection": "settings",
-      "field": "project",
-      "type": "alias",
-      "meta": {
-        "collection": "settings",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "project",
-        "group": null,
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "settings",
       "field": "icons",
       "type": "alias",
       "meta": {
@@ -5212,7 +5180,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 6,
         "special": [
           "alias",
           "no-data",
@@ -5376,7 +5344,7 @@
         "display": null,
         "display_options": null,
         "field": "project_description",
-        "group": "project",
+        "group": "metadata",
         "hidden": false,
         "interface": "input-multiline",
         "note": null,
@@ -5384,12 +5352,12 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 7,
+        "sort": 2,
         "special": null,
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "project_description",
@@ -5420,7 +5388,7 @@
         "display": null,
         "display_options": null,
         "field": "date_established",
-        "group": "project",
+        "group": "homepage",
         "hidden": false,
         "interface": "datetime",
         "note": null,
@@ -5464,7 +5432,7 @@
         "display": null,
         "display_options": null,
         "field": "project_url",
-        "group": "project",
+        "group": "details",
         "hidden": false,
         "interface": "input",
         "note": null,
@@ -5472,7 +5440,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 3,
+        "sort": 2,
         "special": null,
         "translations": null,
         "validation": null,
@@ -5508,7 +5476,7 @@
         "display": null,
         "display_options": null,
         "field": "project_name",
-        "group": "project",
+        "group": "details",
         "hidden": false,
         "interface": "input",
         "note": null,
@@ -5516,7 +5484,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 2,
+        "sort": 1,
         "special": null,
         "translations": null,
         "validation": null,
@@ -5552,17 +5520,17 @@
         "display": null,
         "display_options": null,
         "field": "frontpage_comic",
-        "group": "project",
+        "group": "details",
         "hidden": false,
         "interface": "select-dropdown-m2o",
-        "note": "Choose to have the comic live at the root of your domain (`yourwebsite.com`) instead of in a subfolder (`yourwebsite.com/yourcomic`). This is useful if you plan to only have one comic on the website. Having multiple comics will disable this setting.",
+        "note": "Single Comic Site: The homepage will default to your selected comic. Multi-comic site: The homepage will redirect to your selected comic.",
         "options": {
           "enableLink": true
         },
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 9,
+        "sort": 4,
         "special": [
           "m2o"
         ],
@@ -5600,7 +5568,7 @@
         "display": null,
         "display_options": null,
         "field": "project_thumbnail",
-        "group": "project",
+        "group": "metadata",
         "hidden": false,
         "interface": "file-image",
         "note": "1200x630px — `PNG | JPG | GIF | WEBP`",
@@ -5616,14 +5584,14 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 6,
+        "sort": 1,
         "special": [
           "file"
         ],
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "project_thumbnail",
@@ -5654,7 +5622,7 @@
         "display": null,
         "display_options": null,
         "field": "header-nqle-g",
-        "group": "project",
+        "group": null,
         "hidden": false,
         "interface": "header",
         "note": null,
@@ -5668,7 +5636,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 1,
+        "sort": 2,
         "special": [
           "alias",
           "no-data"
@@ -5689,7 +5657,7 @@
         "display": null,
         "display_options": null,
         "field": "project_authors",
-        "group": "project",
+        "group": "metadata",
         "hidden": false,
         "interface": "list-o2m",
         "note": null,
@@ -5700,7 +5668,7 @@
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 5,
+        "sort": 3,
         "special": [
           "o2m"
         ],
@@ -5920,15 +5888,15 @@
         "display": null,
         "display_options": null,
         "field": "single_comic_site",
-        "group": "project",
+        "group": "details",
         "hidden": false,
         "interface": "boolean",
-        "note": null,
+        "note": "Choose to have the comic live at the root of your domain (`yourwebsite.com`) instead of in a subfolder (`yourwebsite.com/yourcomic`). This is useful if you plan to only have one comic on the website. If you have multiple comic projects that already exist, this will default to the first one (unless selected in`frontpage_comic`). The other comics will be inaccessible.",
         "options": null,
         "readonly": false,
         "required": false,
         "searchable": true,
-        "sort": 8,
+        "sort": 3,
         "special": [
           "cast-boolean"
         ],
@@ -5954,6 +5922,299 @@
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "copyright_message",
+      "type": "text",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "copyright_message",
+        "group": "homepage",
+        "hidden": false,
+        "interface": "input-rich-text-md",
+        "note": null,
+        "options": {
+          "softLength": 280,
+          "toolbar": [
+            "bold",
+            "italic",
+            "strikethrough",
+            "blockquote",
+            "empty",
+            "link"
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "copyright_message",
+        "table": "settings",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "homepage_content",
+      "type": "text",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "homepage_content",
+        "group": "homepage",
+        "hidden": false,
+        "interface": "input-rich-text-md",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "homepage_content",
+        "table": "settings",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_banner",
+      "type": "uuid",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "project_banner",
+        "group": "homepage",
+        "hidden": false,
+        "interface": "file-image",
+        "note": null,
+        "options": {
+          "allowedMimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ],
+          "crop": false
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "project_banner",
+        "table": "settings",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "homepage",
+      "type": "alias",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "homepage",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "details",
+      "type": "alias",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "details",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "metadata",
+      "type": "alias",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "metadata",
+        "group": null,
+        "hidden": false,
+        "interface": "group-detail",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_logo",
+      "type": "uuid",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "project_logo",
+        "group": "homepage",
+        "hidden": false,
+        "interface": "file-image",
+        "note": null,
+        "options": {
+          "allowedMimeTypes": [
+            "image/png",
+            "image/gif",
+            "image/webp"
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "project_logo",
+        "table": "settings",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
       }
     },
     {
@@ -7811,6 +8072,56 @@
         "foreign_key_table": "directus_files",
         "foreign_key_column": "id",
         "constraint_name": "settings_project_thumbnail_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_banner",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "settings",
+        "many_field": "project_banner",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "settings",
+        "column": "project_banner",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "settings_project_banner_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "project_logo",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "settings",
+        "many_field": "project_logo",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "settings",
+        "column": "project_logo",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "settings_project_logo_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }

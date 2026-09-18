@@ -934,5 +934,57 @@
       "sort_field": "sort",
       "one_deselect_action": "nullify"
     }
+  },
+  {
+    "collection": "settings",
+    "field": "project_banner",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "settings_project_banner_foreign",
+      "table": "settings",
+      "column": "project_banner",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "settings",
+      "many_field": "project_banner",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "project_logo",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "settings_project_logo_foreign",
+      "table": "settings",
+      "column": "project_logo",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "settings",
+      "many_field": "project_logo",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
   }
 ]
