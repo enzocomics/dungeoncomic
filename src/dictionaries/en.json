@@ -109,5 +109,9 @@
 	},
 	"navigation": {
 		"go-back": "Go back"
+	},
+	"footer": {
+		"site-built-with": "This site was built with",
+		"visit-github": "Visit DungeonComic's Github Project Repository"
 	}
 }

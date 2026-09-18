@@ -190,6 +190,7 @@ export interface SettingsSingleton {
 	project_authors: DirectusUser[] | null
 	frontpage_comic: ComicsCollection | null
 	single_comic_site: boolean
+	copyright_message: string | null
 	// Icons
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null

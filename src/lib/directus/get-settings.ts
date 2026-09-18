@@ -14,6 +14,7 @@ export const getSettings = cache(async () => {
 			fields: [
 				"project_name",
 				"date_established",
+				"copyright_message",
 				{ project_authors: ["name", "username", "homepage_url", "email"] },
 				"project_url",
 				"project_description",

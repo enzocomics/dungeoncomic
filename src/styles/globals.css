@@ -87,6 +87,15 @@
 		}
 	}
 
+	#copyright-text {
+		a {
+			@apply underline hover:opacity-80;
+		}
+		img {
+			@apply inline max-h-6;
+		}
+	}
+
 	/* DEFAULT ACCENT COLOUR: OLIVE */
 	--color-primary-50: var(--color-red-50);
 	--color-primary-100: var(--color-red-100);
