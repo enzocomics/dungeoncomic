@@ -5,6 +5,9 @@
 	"404Page": {
 		"title": "404 - Page Not Found"
 	},
+	"ComicProject": {
+		"under-construction": "This dungeon is under construction. Stay tuned for more."
+	},
 	"ComicPage": {
 		"next": "Next",
 		"go-back": "Previous Page",
