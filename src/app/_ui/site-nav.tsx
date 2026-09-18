@@ -12,7 +12,7 @@ import Seal from "@/styles/seal"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import { AuthModalSchema, useGlobalContext } from "@/app/_context"
 import { SetStateAction } from "react"
@@ -37,15 +37,18 @@ export default function SiteNav({
 }) {
 	//Hooks
 	const router = useRouter()
+	const pathname = usePathname()
 	const { theme, setTheme } = useTheme()
+
 
 	// TODO: These are all hardcoded & should be in the dictionaries
 	const comicNavigation = [
-		{ name: 'Home', href: './', current: true },
+		{ name: "Home", href: "./", current: !!(pathname == "/") },
+		{ name: "List", href: "./list", current: !!(pathname == "/list") }
 	]
 
 	const platformNavigation = [
-		{ name: 'Dungeon Construction Co.', href: '/', current: false },
+		{ name: "Dungeon Construction Co.", href: "/", current: false },
 	]
 
 
