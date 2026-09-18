@@ -1,25 +1,26 @@
-"use server"
 /**----------------------------------- */
-// LIBRARIES
 // FUNCTIONS
 import clsx from "clsx"
+// LIBRARIES
+import React from "react"
 // STYLES
 import { colorVariants } from "@/styles/colors"
 import { displayFonts, copyFonts } from "@/styles/fonts"
 // DATA
 import { directusURL } from "@/data/env"
+import { getSettings } from "@/lib/directus/get-settings"
 import { getComic } from "@/lib/directus/get-comics"
 import { verifySession } from "@/data/session"
+// UI
 import SiteNav from "../../_ui/site-nav"
-import { getSettings } from "@/lib/directus/get-settings"
-import React from "react"
+import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
 
 /**-----------------------------------
  * COMIC FRONTPAGE LAYOUT
  * ---
  * - Default homepage
  */
-export async function ComicLayoutUI({
+export function ComicLayoutUI({
 	children,
 	comic,
 	session,
@@ -40,7 +41,7 @@ export async function ComicLayoutUI({
 
 	// RENDER COMIC LAYOUT UI
 	return (
-		<div
+		<SiteLayoutWrapper className={clsx("font-comic-copy")}
 			style={
 				{
 					// Fonts
@@ -59,62 +60,23 @@ export async function ComicLayoutUI({
 					"--color-comic-accent-900": `var(${colorVariants[accentColor]["900"]})`,
 					"--color-comic-accent-950": `var(${colorVariants[accentColor]["950"]})`,
 				} as React.CSSProperties}
-			className={clsx(
-				"relative",
-				"font-comic-copy",
-				"bg-top",
-				"bg-repeat-x",
-				"bg-fixed",
-			)}>
-
-			{/* Comic Banner Background Image*/}
+		>
 			{comic.banner &&
-				<div
-					style={{
-						backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
-					}}
-					className={clsx(
-						// Position
-						"-z-1",
-						"fixed",
-						"left-1/2 -translate-x-1/2 ",
-						// Size
-						"w-full",
-						"max-w-[1600px]",
-						"h-100",
-						// Appearance
-						"opacity-75",
-						// Background
-						"bg-cover",
-						"bg-center",
-						"bg-fixed",
-						"bg-blend-saturation",
-						// Background: Fade to bottom
-						"mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)",
-						"[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)]",
-						// Background: Fade to left & right (desktop)
-						"xl:mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)",
-						"xl:mask-composite:intersect",
-						"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
-						"xl:[-webkit-mask-composite:source-in]",
-					)} />
+				<SiteLayoutBackdrop style={{
+					backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
+				}} />
 			}
 			<SiteNav
 				comic={comic}
 				session={session}
 				menu={singleComicSite ? false : true}
+			// Hide the navmenu if it's a single comic site
+			// TODO:In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
 			/>
-			{/* Hide the navmenu if it's the frontpagecomic
-				- #TODO: In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
-			*/}
-			<main className={clsx(
-				"mx-auto",
-				"max-w-6xl",
-				"md:px-6",
-			)}>
+			<SiteLayoutMain>
 				{children}
-			</main>
-		</div>
+			</SiteLayoutMain>
+		</SiteLayoutWrapper>
 	)
 }
 
@@ -136,58 +98,20 @@ export async function FrontpageLayoutUI({
 	const banner = settings.project_banner
 	const hasBanner = !!banner
 	return <>
-		<div className={clsx(
-			"relative",
-			"font-platform-copy",
-			"bg-top",
-			"bg-repeat-x",
-			"bg-fixed",
-		)}>
-
-			{/* Comic Banner Background Image*/}
+		<SiteLayoutWrapper className={clsx("font-platform-copy")}>
 			{hasBanner &&
-				<div
-					style={{
-						backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
-					}}
-					className={clsx(
-						// Position
-						"-z-1",
-						"fixed",
-						"left-1/2 -translate-x-1/2 ",
-						// Size
-						"w-full",
-						"max-w-[1600px]",
-						"h-100",
-						// Appearance
-						"opacity-75",
-						// Background
-						"bg-cover",
-						"bg-center",
-						"bg-fixed",
-						"bg-blend-saturation",
-						// Background: Fade to bottom
-						"mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)",
-						"[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%)]",
-						// Background: Fade to left & right (desktop)
-						"xl:mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)",
-						"xl:mask-composite:intersect",
-						"xl:[-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_50%,transparent_100%),linear-gradient(to_right,transparent_0%,black_5%,black_95%,transparent_100%)]",
-						"xl:[-webkit-mask-composite:source-in]",
-					)} />
+				<SiteLayoutBackdrop style={{
+					backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
+				}} />
 			}
 			<SiteNav
 				menu={true}
 				session={session}
 			/>
-			<main className={clsx(
-				"mx-auto",
-				"max-w-6xl",
-				"md:px-6",
-			)}>
+			<SiteLayoutMain>
 				{children}
-			</main>
-		</div>
+			</SiteLayoutMain>
+		</SiteLayoutWrapper>
 	</>
 }
 

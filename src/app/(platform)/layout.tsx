@@ -1,5 +1,4 @@
-export default async function ContentPageLayout(props: LayoutProps<"/">) {
-
+export default async function PlatformLayout(props: LayoutProps<"/">) {
 	return <>
 		{props.children}
 	</>
