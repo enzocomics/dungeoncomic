@@ -56,6 +56,14 @@ export default async function ComicPageUI({
 		parseMarked: false,
 		varHtml: true
 	})
+	const pageSubtitle = prepareText({
+		content: page.subtitle,
+		variables: variables,
+		userVariables: userVariables,
+		parseMarked: false,
+		varHtml: true
+	})
+
 	const pageSubmitText = prepareText({
 		content: page.variables_submit_button_text,
 		variables: variables,
@@ -105,6 +113,7 @@ export default async function ComicPageUI({
 			<ClientComicPageContentTitle
 				pagePanels={page.comic_panels}
 				pageTitle={pageTitle}
+				pageSubtitle={pageSubtitle}
 				pageSubmitText={pageSubmitText}
 			/>
 			<ClientComicPanels

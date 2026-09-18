@@ -12,10 +12,12 @@ import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 export function ClientComicPageContentTitle({
 	pagePanels,
 	pageTitle,
+	pageSubtitle,
 	pageSubmitText,
 }: {
 	pagePanels: Awaited<ReturnType<typeof getComicPage>>["comic_panels"]
-	pageTitle?: string
+	pageTitle: string
+	pageSubtitle?: string
 	pageSubmitText?: string
 }) {
 	const t = useTranslations("ComicPage")
@@ -26,20 +28,43 @@ export function ClientComicPageContentTitle({
 		? pageSubmitText || `${t("next")}`
 		: pageTitle
 
-	return <h1
-		className={clsx(
-			"px-6",
-			"lg:pt-6",
-			"max-w-prose",
-			"mx-auto",
-			"font-bold",
-			"font-comic-display",
-			"text-3xl",
-			"lg:text-4xl",
-			"text-center",
-		)}
-		dangerouslySetInnerHTML={{
-			__html: title as string
-		}}
-	/>
+	const subtitle = !varsSubmitted && pageSubtitle
+
+	return <section>
+		<h1
+			className={clsx(
+				"px-6",
+				"lg:pt-6",
+				"max-w-prose",
+				"mx-auto",
+				"font-bold",
+				"font-comic-display",
+				"text-3xl",
+				"lg:text-4xl",
+				"text-center",
+			)}
+			dangerouslySetInnerHTML={{
+				__html: title as string
+			}}
+		/>
+		{subtitle &&
+			<h2
+				className={clsx(
+					"mt-2",
+					"px-6",
+					"max-w-prose",
+					"mx-auto",
+					"italic",
+					"font-normal",
+					"font-comic-display",
+					"text-lg",
+					"lg:text-xl",
+					"text-center",
+				)}
+				dangerouslySetInnerHTML={{
+					__html: subtitle as string
+				}}
+			/>
+		}
+	</section>
 }
