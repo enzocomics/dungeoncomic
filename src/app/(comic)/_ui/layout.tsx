@@ -173,22 +173,13 @@ export async function FrontpageLayoutUI({
 				menu={true}
 				session={session}
 			/>
-			<div className={clsx(
+			<main className={clsx(
 				"mx-auto",
 				"max-w-6xl",
 				"md:px-6",
 			)}>
-				<header className={clsx(
-					"text-center",
-					"h-20"
-				)}>
-				</header>
-				<main className={clsx(
-					"bg-white",
-				)}>
-					{children}
-				</main>
-			</div>
+				{children}
+			</main>
 		</div>
 	</>
 }

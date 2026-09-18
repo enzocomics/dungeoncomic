@@ -14,6 +14,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 import { useRouter } from "next/router"
 import { replaceComicVariables } from "../../_functions/parse-content"
 import { ComicButton } from "@/components/button"
+import { LandingPageBody, LandingPageContent, LandingPageHeader, LandingPageWrapper } from "./components"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -45,19 +46,8 @@ export default function ComicLandingPageUI({
 
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
-		<div
-			className={clsx(
-				"relative",
-			)}
-		>
-			<header
-				className={clsx(
-					"flex",
-					"items-center",
-					"justify-center",
-				)}
-			>
-
+		<LandingPageWrapper>
+			<LandingPageHeader>
 				{comic.logo &&
 					<Image
 						src={`${directusURL}/assets/${comic.logo.filename_disk}`}
@@ -106,44 +96,11 @@ export default function ComicLandingPageUI({
 						{comic.title}
 					</h1>
 				}
-			</header>
+			</LandingPageHeader>
 			{/* COMIC PAGE - CONTENT BODY */}
-			<article
-				className={clsx(
-
-					// Structure
-					"flex",
-					"flex-col",
-					"gap-6",
-					// Spacing
-					"pt-6",
-					"pb-18",
-					"sm:pt-12",
-					"lg:pt-18",
-					// Appearance
-					"bg-base-1",
-					"dark:bg-base-2",
-					"dark:shadow-none",
-					"dark:outline",
-					"dark:-outline-offset-1",
-					"dark:outline-base-5/50",
-					"text-center",
-					"md:rounded-t",
-				)}
-			>
-				<div dangerouslySetInnerHTML={{
-					__html: content
-					,
-				}}
-					className={clsx(
-						"landing-page-content",
-						// "py-6",
-						"prose",
-						"text-base/loose",
-						"lg:text-lg/loose",
-						"text-left",
-						"text-pretty",
-					)}
+			<LandingPageBody>
+				<LandingPageContent
+					content={content}
 				/>
 				<div className={clsx(
 					"px-6",
@@ -157,7 +114,8 @@ export default function ComicLandingPageUI({
 						</ComicButton>
 					}
 				</div>
-			</article>
-		</div>
+			</LandingPageBody>
+		</LandingPageWrapper>
 	</>
 }
+

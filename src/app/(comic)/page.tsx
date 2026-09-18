@@ -42,6 +42,8 @@ export default async function Homepage() {
 	//GET THE SESSION
 	const session = await verifySession()
 
+	const homePageContent = await marked.parse(sanitize(String(settings.homepage_content || "")))
+
 	/**----------------------------------- */
 	// LAYOUT MODE 1: SINGLE COMIC SITE
 	// - Display the comic page at the root
@@ -95,7 +97,7 @@ export default async function Homepage() {
 		} else {
 			// Display homepage if no comics exist
 			return <Suspense>
-				<HomepagePageUI session={session} />
+				<HomepagePageUI content={homePageContent} />
 			</Suspense>
 		}
 	}
@@ -110,7 +112,7 @@ export default async function Homepage() {
 			// notFound()
 			return <Suspense>
 				<FrontpageLayoutUI>
-					<HomepagePageUI session={session} />
+					<HomepagePageUI content={homePageContent} />
 				</FrontpageLayoutUI>
 			</Suspense>
 		}
