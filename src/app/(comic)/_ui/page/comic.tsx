@@ -14,6 +14,7 @@ import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
+import ClientComicPageEffects from "./client/comic-page-effects"
 
 /**-----------------------------------
  * Comic Page UI
@@ -93,6 +94,7 @@ export default async function ComicPageUI({
 
 	// RENDER
 	return <>
+		<ClientComicPageEffects page={page} />
 		<ComicPageHeader page={page} >
 			<ClientComicPageHeaderTitle
 				page={page}

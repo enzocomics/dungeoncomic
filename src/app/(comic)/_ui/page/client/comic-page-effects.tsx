@@ -1,3 +1,4 @@
+"use client"
 import { checkHasNextPage, checkHasPrevPage } from "@/app/(comic)/_functions/check-pages"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { useComicContext } from "../../context"
