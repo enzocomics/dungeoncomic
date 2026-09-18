@@ -62,7 +62,7 @@ export const getComic = cache(
 				],
 			}),
 		)
-		return request?.[0]
+		return limit == 1 || request.length == 1 ? request?.[0] : request
 	},
 )
 
