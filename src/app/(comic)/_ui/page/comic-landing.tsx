@@ -1,20 +1,10 @@
 "use client"
-import { Button, Field, } from "@headlessui/react"
-import { marked } from "marked"
-import { sanitize } from "@/lib/sanitize"
-import { useChangeStatus } from "@/components/status-message"
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 import clsx from "clsx"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
-import { useRouter } from "next/router"
-import { replaceComicVariables } from "../../_functions/parse-content"
-import { ComicButton } from "@/components/button"
 import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, LandingPageLogo, LandingPageWrapper } from "./components"
+import { ClientComicPageLandingButton } from "./client/comic-page-landing-button"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -33,13 +23,6 @@ export default function ComicLandingPageUI({
 	userVariables?: Record<string, string>
 	content: string
 }) {
-	// HOOKS
-	const pathname = usePathname()
-	const path = pathname.endsWith("/") ? pathname : `${pathname}/`
-
-	const searchParams = useSearchParams()
-	const t = useTranslations("ComicPage")
-	const setStatus = useChangeStatus("")
 	// PRIMARY VARS
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
@@ -71,25 +54,15 @@ export default function ComicLandingPageUI({
 					</LandingPageH1>
 				}
 			</LandingPageHeader>
-			{/* COMIC PAGE - CONTENT BODY */}
 			<LandingPageBody>
-				<LandingPageContent
-					content={content}
-				/>
-				<div className={clsx(
-					"px-6",
-					"mx-auto",
-					"w-full",
-					"max-w-2xl"
-				)}>
-					{comic.pages_count > 0 &&
-						<ComicButton as="link" href={`${path}1`}>
-							Start Reading &raquo;
-						</ComicButton>
-					}
-				</div>
+				<LandingPageContent content={content} />
+				{comic.pages_count > 0 &&
+					<ClientComicPageLandingButton>
+						Start Reading &raquo;
+					</ClientComicPageLandingButton>
+				}
 			</LandingPageBody>
-		</LandingPageWrapper>
+		</LandingPageWrapper >
 	</>
 }
 
