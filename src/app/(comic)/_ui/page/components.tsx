@@ -67,7 +67,7 @@ export const LandingPageH1 = (
 			"rounded",
 		)}
 	>
-
+		{props.children}
 	</h1>
 )
 
@@ -119,7 +119,7 @@ export const LandingPageContent = ({
 			"text-pretty",
 		)}
 		dangerouslySetInnerHTML={{
-			__html: content || ""
+			__html: `${content}`
 		}}
 	/>
 }
