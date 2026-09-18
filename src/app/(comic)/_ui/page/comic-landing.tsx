@@ -7,6 +7,7 @@ import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, 
 import { ClientComicPageLandingButton } from "./client/comic-page-landing-button"
 import { useTranslations } from "next-intl"
 import { sanitize } from "@/lib/sanitize"
+import StatusMessage from "@/components/status-message"
 
 /**-----------------------------------
  * Comic Landing Page UI
@@ -58,6 +59,12 @@ export default function ComicLandingPageUI({
 					</LandingPageH1>
 				}
 			</LandingPageHeader>
+			<StatusMessage
+				className={clsx(
+					"mb-2",
+					"max-w-prose",
+					"mx-auto",
+				)} />
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 				{comic.pages_count > 0 &&
