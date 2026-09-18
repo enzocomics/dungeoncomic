@@ -58,8 +58,10 @@ export default async function Footer() {
 		"flex",
 		"flex-col",
 		"md:flex-row",
-		"md:px-1",
+		"md:px-8",
 		"md:py-6",
+		"max-w-6xl",
+		"mx-auto",
 	)}>
 		<span className={clsx(
 			"block",
