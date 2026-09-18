@@ -37,7 +37,6 @@ import Icon from "@/styles/icons"
 import { Textarea } from "@/components/textarea"
 import { ComicButton } from "@/components/button"
 import { AuthLink } from "@/components/auth"
-import { ComicPageUIProps } from "../comic"
 
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 

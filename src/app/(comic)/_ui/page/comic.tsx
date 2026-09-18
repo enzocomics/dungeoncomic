@@ -4,29 +4,16 @@ import clsx from "clsx"
 import React, { ComponentPropsWithoutRef } from "react"
 import { getTranslations } from "next-intl/server"
 // DATA
+import { prepareText } from "../../_functions/parse-content"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
-import ComicPageContentUI from "./comic-page"
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
-import { prepareText } from "../../_functions/parse-content"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
-
-
-/**----------------------------------- */
-// TYPES
-export type ComicPageUIProps = {
-	page: Awaited<ReturnType<typeof getComicPage>>
-	variables: Awaited<ReturnType<typeof getComicVariables>>
-	userVariables?: Record<string, string>
-	session?: Awaited<ReturnType<typeof verifySession>>
-	children?: React.ReactNode
-	header?: React.ReactNode
-}
 
 /**-----------------------------------
  * Comic Page UI
@@ -38,7 +25,14 @@ export default async function ComicPageUI({
 	variables,
 	userVariables,
 	session,
-}: ComicPageUIProps) {
+}: {
+	page: Awaited<ReturnType<typeof getComicPage>>
+	variables: Awaited<ReturnType<typeof getComicVariables>>
+	userVariables?: Record<string, string>
+	session?: Awaited<ReturnType<typeof verifySession>>
+	children?: React.ReactNode
+	header?: React.ReactNode
+}) {
 	// COMIC VARS
 	const t = await getTranslations("ComicPage")
 	const comic = page.comic
@@ -99,48 +93,41 @@ export default async function ComicPageUI({
 
 	// RENDER
 	return <>
-		<ComicPageContentUI
-			page={page}
-			variables={variables}
-			userVariables={userVariables}
-			session={session}
-		>
-			<ComicPageHeader page={page} >
-				<ClientComicPageHeaderTitle
-					page={page}
-					comicDescription={comicDescription}
-				/>
-			</ComicPageHeader>
-			<ComicPageContentWrapper page={page}>
-				<ClientComicPageContentTitle
-					pagePanels={page.comic_panels}
-					pageTitle={pageTitle}
-					pageSubmitText={pageSubmitText}
-				/>
-				<ClientComicPanels
-					page={page}
-					userVariables={userVariables}
-					variables={variables}
-					panelDescriptions={panelDescriptions}
-				/>
-				<ClientComicPageNextNav
-					page={page}
-					nextPageTitles={nextPageTitles}
-					nextPageSubtitles={nextPageSubtitles}
-				/>
-				<ClientComicPageFeedback
-					page={page}
-					variables={variables}
-					userVariables={userVariables}
-					session={session}
-				/>
-			</ComicPageContentWrapper>
-			<ClientComicPageNavbar
-				where="bottom"
+		<ComicPageHeader page={page} >
+			<ClientComicPageHeaderTitle
+				page={page}
+				comicDescription={comicDescription}
+			/>
+		</ComicPageHeader>
+		<ComicPageContentWrapper page={page}>
+			<ClientComicPageContentTitle
+				pagePanels={page.comic_panels}
+				pageTitle={pageTitle}
+				pageSubmitText={pageSubmitText}
+			/>
+			<ClientComicPanels
 				page={page}
 				userVariables={userVariables}
+				variables={variables}
+				panelDescriptions={panelDescriptions}
 			/>
-		</ComicPageContentUI>
+			<ClientComicPageNextNav
+				page={page}
+				nextPageTitles={nextPageTitles}
+				nextPageSubtitles={nextPageSubtitles}
+			/>
+			<ClientComicPageFeedback
+				page={page}
+				variables={variables}
+				userVariables={userVariables}
+				session={session}
+			/>
+		</ComicPageContentWrapper>
+		<ClientComicPageNavbar
+			where="bottom"
+			page={page}
+			userVariables={userVariables}
+		/>
 	</>
 }
 
