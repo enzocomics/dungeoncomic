@@ -1,43 +1,13 @@
 "use client"
 /**----------------------------------- */
 import clsx from "clsx"
-// I18N
-import { useTranslations } from "next-intl"
 // LIBRARIES
 import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, HTMLElementType, Ref, useActionState, useEffect, useLayoutEffect, useRef, useState } from "react"
-import Image from "next/image"
-import Form from "next/form"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { marked } from "marked"
-import { sanitize } from "@/lib/sanitize"
-import { detailedDate, relativeDate } from "@/lib/dayjs"
-// VALIDATION
-import z from "zod"
-import { parseWithZod } from "@conform-to/zod/v4"
-import { useForm } from "@conform-to/react"
-import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
-// DATA
-import { directusURL } from "@/data/env"
-import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { replaceComicVariables } from "@/app/(comic)/_functions/parse-content"
-// ACTIONS
-import { saveUserVars } from "@/app/(comic)/_actions/variables"
-import { deleteUserPlotSuggestion, PlotSuggestionType, submitUserPlotSuggestion, voteOnPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
-// HELPERS
-
-import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(comic)/_functions/check-vars"
 // UI
 import * as Headless from "@headlessui/react"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Label, Legend, Radio, RadioGroup, Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
-import { useComicContext } from "../../context"
-import StatusMessage, { useChangeStatus } from "@/components/status-message"
 import { ErrorMessage } from "@/components/forms"
-import Link from "next/link"
 import Icon from "@/styles/icons"
-import { Textarea } from "@/components/textarea"
-import { ComicButton } from "@/components/button"
-import { AuthLink } from "@/components/auth"
-import { ComicPageUIProps } from "../comic"
 
 
 export function ComicErrorMessage({
@@ -184,6 +154,27 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 						)
 					}
 				/>
+				<Icon name="circleNotch"
+					className={
+						clsx(
+							"absolute",
+							"left-0",
+							"top-1/2",
+							"-translate-y-1/2",
+							"text-neutral-200",
+							"size-5",
+							"animate-spin",
+							"opacity-0",
+							"group-data-loading:opacity-100",
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+							"dark:group-data-checked:text-white"
+						)
+					}
+
+				/>
 				<Icon name="circleCheck"
 					className={
 						clsx(
@@ -195,6 +186,7 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"size-5",
 							"opacity-0",
 							"scale-50",
+							"group-data-loading:opacity-0",
 							"group-data-checked:scale-100",
 							"group-data-checked:opacity-100",
 							"group-data-checked:text-comic-accent-500",

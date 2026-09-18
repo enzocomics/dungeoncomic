@@ -106,11 +106,13 @@ export function ClientComicPageFeedback({
 
 		// Cast the vote
 		if (clicked == true) {
+
+			votesRef.current[selectedIndex]?.setAttribute("data-loading", "true")
 			// Only submit to CMS after a one-second delay where no more input is accepted
 			voteTimer.current && clearTimeout(voteTimer.current)
 			voteTimer.current = setTimeout(() => {
 				castVote(selectedObject) // Send the vote to the cms only
-
+				votesRef.current[selectedIndex]?.removeAttribute("data-loading")
 			}, 1000)
 
 			setUserVotedOnID(selected) // Save the suggestion this user voted on for reference
@@ -130,8 +132,6 @@ export function ClientComicPageFeedback({
 	const votesRef = useRef<(HTMLSpanElement | null)[]>([])
 
 
-	// console.log(votes)
-
 	// When a new thing is voted on:
 	// - Get the array INDEX of the item being voted on
 	// - Access the value of the VOTES array, at the same INDEX
@@ -141,11 +141,10 @@ export function ClientComicPageFeedback({
 
 	const [scoreChanged, setScoreChanged] = useState<boolean | "custom">(false)
 
-
-
 	useEffect(() => {
-
 		if (votes && scoreChanged == "custom") {
+			votesRef.current[userVotedOnIndex]?.removeAttribute("data-loading")
+			// If we're voting on a user suggestion, only remove any old vote
 			let tempArray = [...votes]
 			tempArray[userVotedOnIndex] = votes[userVotedOnIndex]! - 1
 			setVote(tempArray)
@@ -154,10 +153,11 @@ export function ClientComicPageFeedback({
 			setScoreChanged(false)
 		}
 		if (votes && scoreChanged == true) {
-			console.log("userVotedOnId (old vote): ", userVotedOnID)
-			console.log("userVotedOnIndex (old vote index): ", userVotedOnIndex)
-			console.log("selected (new vote): ", selected)
-			console.log("selectedIndex (new vote index): ", selectedIndex)
+			votesRef.current[userVotedOnIndex]?.removeAttribute("data-loading")
+			// console.log("userVotedOnId (old vote): ", userVotedOnID)
+			// console.log("userVotedOnIndex (old vote index): ", userVotedOnIndex)
+			// console.log("selected (new vote): ", selected)
+			// console.log("selectedIndex (new vote index): ", selectedIndex)
 
 			let tempArray = [...votes]
 
