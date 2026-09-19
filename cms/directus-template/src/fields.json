@@ -925,7 +925,9 @@
       "field": "description",
       "special": null,
       "interface": "input-multiline",
-      "options": null,
+      "options": {
+        "softLength": 140
+      },
       "display": null,
       "display_options": null,
       "readonly": false,

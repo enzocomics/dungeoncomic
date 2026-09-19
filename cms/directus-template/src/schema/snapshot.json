@@ -1498,7 +1498,9 @@
         "hidden": false,
         "interface": "input-multiline",
         "note": null,
-        "options": null,
+        "options": {
+          "softLength": 140
+        },
         "readonly": false,
         "required": false,
         "searchable": true,
