@@ -17,6 +17,12 @@ export const getComics = cache(async () => {
 				"description",
 				"slug",
 				{
+					logo: ["filename_disk", "type", "width", "height", "description"],
+				},
+				{
+					banner: ["filename_disk", "type", "width", "height", "description"],
+				},
+				{
 					thumbnail: [
 						"filename_disk",
 						"type",
@@ -35,6 +41,8 @@ export const getComics = cache(async () => {
 						"homepage_url",
 					],
 				},
+				"accent_color",
+				"display_font",
 				"count(pages)",
 			],
 		}),
