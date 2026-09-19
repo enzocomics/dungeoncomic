@@ -25,6 +25,10 @@ export const LandingPageHeader = (
 			"flex",
 			"items-center",
 			"justify-center",
+			"h-50",
+			"p-10",
+			"md:h-80",
+			"md:p-20",
 		)}
 	>
 		{props.children}
@@ -34,16 +38,22 @@ export const LandingPageHeader = (
 export const LandingPageLogo = (
 	props: ComponentPropsWithoutRef<typeof Image>
 ) => (
+	// <span className={clsx(
+	// 	"block"
+	// )}>
 	<Image
 		{...props}
 		className={clsx(
 			"drop-shadow-black/50",
 			"drop-shadow-lg",
-			"max-h-60",
-			"my-20",
+			"block",
+			"w-auto",
+			"h-full",
 			"box-content",
+			"object-contain",
 		)}
 	/>
+	// </span>
 )
 
 export const LandingPageH1 = (
