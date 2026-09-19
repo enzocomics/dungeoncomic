@@ -25,7 +25,7 @@ export const ListPageTitle = (
 		"text-center",
 		"md:text-left",
 	)}>
-		Viewing: <strong>All Comics</strong>
+		Viewing: <strong>All</strong>
 	</div>
 )
 
