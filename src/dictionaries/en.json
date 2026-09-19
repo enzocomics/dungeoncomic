@@ -37,6 +37,7 @@
 		"comments": "Comments"
 	},
 	"auth": {
+		"logout": "Log out",
 		"pages": {
 			"login": {
 				"title": "Log In",
@@ -112,7 +113,11 @@
 		}
 	},
 	"navigation": {
-		"go-back": "Go back"
+		"go-back": "Go back",
+		"open-main-nav": "Open main navigation",
+		"close-main-nav": "Close main navigation",
+		"open-user-nav": "Open user menu",
+		"close-user-nav": "Close user menu"
 	},
 	"footer": {
 		"site-built-with": "This site was built with",
