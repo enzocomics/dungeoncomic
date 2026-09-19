@@ -6,65 +6,101 @@ import { readItems } from "@directus/sdk"
 import { cache } from "react"
 
 /** ------------------------------------------------ **
+ * GET COMICS
+ */
+
+export const getComics = cache(async () => {
+	const request = await publicClient.request(
+		readItems("comics", {
+			fields: [
+				"title",
+				"description",
+				"slug",
+				{
+					thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					authors: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				"count(pages)",
+			],
+		}),
+	)
+
+	return request
+})
+
+/** ------------------------------------------------ **
  * GET COMIC
  */
-export const getComic = cache(
-	async ({ slug, limit = 1 }: { slug?: string; limit?: number }) => {
-		const request = await publicClient.request(
-			readItems("comics", {
-				filter: slug
-					? {
-							slug: { _eq: slug },
-						}
-					: undefined,
-				limit: limit,
-				fields: [
-					// Details
-					"title",
-					"description",
-					"slug",
-					{
-						authors: [
-							"id",
-							"email",
-							"name",
-							"username",
-							"avatar",
-							"homepage_url",
-						],
-					},
-					// Appearance
-					{
-						logo: ["filename_disk", "type", "width", "height", "description"],
-					},
-					{
-						thumbnail: [
-							"filename_disk",
-							"type",
-							"width",
-							"height",
-							"description",
-						],
-					},
-					{
-						banner: ["filename_disk", "type", "width", "height", "description"],
-					},
-					"accent_color",
-					"display_font",
-					"copy_font",
-					// Content
-					"landing_page",
-					"landing_page_content",
-					"start_button_text",
-					// Meta
-					"id",
-					"count(pages)",
-				],
-			}),
-		)
-		return limit == 1 || request.length == 1 ? request?.[0] : request
-	},
-)
+export const getComic = cache(async ({ slug }: { slug?: string }) => {
+	const request = await publicClient.request(
+		readItems("comics", {
+			filter: slug
+				? {
+						slug: { _eq: slug },
+					}
+				: undefined,
+			limit: 1,
+			fields: [
+				// Details
+				"title",
+				"description",
+				"slug",
+				{
+					authors: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				// Appearance
+				{
+					logo: ["filename_disk", "type", "width", "height", "description"],
+				},
+				{
+					thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					banner: ["filename_disk", "type", "width", "height", "description"],
+				},
+				"accent_color",
+				"display_font",
+				"copy_font",
+				// Content
+				"landing_page",
+				"landing_page_content",
+				"start_button_text",
+				// Meta
+				"id",
+				"count(pages)",
+			],
+		}),
+	)
+	return request?.[0]
+})
 
 /** ------------------------------------------------ **
  * GET SINGLE COMIC PAGE
