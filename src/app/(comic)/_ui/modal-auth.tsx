@@ -89,6 +89,9 @@ export default function AuthModal({
 					"pointer-events-auto",
 					"absolute",
 					"z-60",
+					"overflow-auto",
+					"w-screen",
+					"h-screen",
 				)}>
 				<AuthLayout isModal={true}>
 					{authModal == "login" &&
