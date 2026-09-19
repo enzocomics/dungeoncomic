@@ -395,7 +395,7 @@ export function CommentsSection({
 						<span className={
 							clsx(
 								"absolute",
-								"bottom-4",
+								"top-11.5",
 								"left-4",
 								"cursor-not-allowed",
 								"font-platform-mono",
