@@ -26,6 +26,15 @@ const nextConfig: NextConfig = {
 			} as RemotePattern,
 		],
 	},
+	async rewrites() {
+		return [
+			{
+				source: "/assets/:path*",
+				destination: `${directusURL}/assets/:path*`,
+			},
+		]
+	},
+	allowedDevOrigins: ["0.0.0.0"],
 }
 
 /**----------------------------------- */
