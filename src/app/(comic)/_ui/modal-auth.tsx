@@ -113,8 +113,6 @@ export default function AuthModal({
 			)}
 		>
 			<div
-
-				ref={modalRef}
 				role="dialog"
 				aria-modal="true"
 				onClick={(e) => {
@@ -122,14 +120,20 @@ export default function AuthModal({
 					handleClick(e.target)
 				}}
 				className={clsx(
-					"pointer-events-auto",
+					"pointer-events-none",
 					"absolute",
 					"z-60",
-					// "overflow-auto",
-					// "w-screen",
-					// "h-screen",
+					"overflow-auto",
+					"w-screen",
+					"h-screen",
+					"sm:w-auto",
+					"sm:h-auto",
 				)}>
 				<AuthLayout
+					className={clsx(
+						"pointer-events-auto",
+					)}
+					ref={modalRef}
 					isModal={true}>
 					{authModal == "login" &&
 						<LoginPageUI isModal={true} />

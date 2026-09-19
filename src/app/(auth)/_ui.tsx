@@ -7,6 +7,7 @@ import type React from "react"
 import Image from "next/image"
 import Icon from "@/styles/icons"
 import Link from "next/link"
+import { RefObject } from "react"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -20,20 +21,28 @@ import Link from "next/link"
  * 
  */
 export function AuthLayout({
+	ref,
 	isModal,
-	children }: {
-		isModal?: boolean,
-		children: React.ReactNode
-	}) {
+	children,
+	className
+}: {
+	ref?: RefObject<HTMLDivElement | null>,
+	isModal?: boolean,
+	children: React.ReactNode
+	className?: string | null
+}) {
 	return <>
-		<div className={clsx(
-			"flex",
-			"flex-col",
-			"justify-center",
-			"p-2.5",
-			"min-w-sm",
-			"min-h-full",
-		)}>
+		<div
+			ref={ref}
+			className={clsx(
+				className,
+				"flex",
+				"flex-col",
+				"justify-center",
+				"p-2.5",
+				"min-w-sm",
+				"min-h-full",
+			)}>
 			<header className={clsx(
 				"mx-auto",
 				"w-full",
