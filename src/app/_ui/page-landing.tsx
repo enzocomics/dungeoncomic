@@ -29,6 +29,7 @@ export const LandingPageHeader = (
 			"p-10",
 			"md:h-80",
 			"md:p-20",
+			"overflow-hidden"
 		)}
 	>
 		{props.children}
@@ -73,7 +74,7 @@ export const LandingPageH1 = (
 			"text-center",
 			"text-pretty",
 			"font-bold",
-			"max-w-2xl",
+			"max-w-4xl",
 			"rounded",
 		)}
 	>
