@@ -1,4 +1,3 @@
-
 import Link from "next/link"
 import { ComponentPropsWithoutRef } from "react"
 import { AuthModalSchema, useGlobalContext } from "@/app/_context"
@@ -26,6 +25,7 @@ export function AuthLink({
 	// Render
 	return <Link
 		{...props}
+		data-authlink={isModal}
 		href={href}
 		onClick={(e) => {
 			if (isModal) {

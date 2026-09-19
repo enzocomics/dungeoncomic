@@ -57,7 +57,9 @@ export function AuthLayout({
 					<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
 				}
 			</header>
-			{children}
+			<div className={clsx("relative")}>
+				{children}
+			</div>
 			<AuthFooter />
 		</div >
 	</>
@@ -160,6 +162,7 @@ function AuthFooter() {
 			aria-label="Visit DungeonComic's Github Project Repository"
 			className={clsx(
 				"active:text-primary-500",
+				"ease-in-out",
 				"transition-all",
 				"duration-300",
 				"lg:hover:transition-none",

@@ -117,7 +117,8 @@
 		"open-main-nav": "Open main navigation",
 		"close-main-nav": "Close main navigation",
 		"open-user-nav": "Open user menu",
-		"close-user-nav": "Close user menu"
+		"close-user-nav": "Close user menu",
+		"close-modal-window": "Close modal window"
 	},
 	"footer": {
 		"site-built-with": "This site was built with",

@@ -4,7 +4,9 @@ import LoginPageUI from "@/app/(auth)/login/_ui"
 import RegisterPageUI from "@/app/(auth)/register/_ui"
 import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"
 import { useGlobalContext } from "@/app/_context"
+import Icon from "@/styles/icons"
 import clsx from "clsx"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
@@ -13,10 +15,12 @@ export default function AuthModal({
 	public_registration = false
 }: { public_registration?: Boolean }
 ) {
+	const t = useTranslations()
 	// Get the authModal context
 	const { authModal, setOpenAuthModal } = useGlobalContext()
 	const [clicked, setClicked] = useState<boolean>(false)
 	const [clickTarget, setClickedTarget] = useState<EventTarget | null>(null)
+	const [clickedClose, setClickedClose] = useState<boolean>(false)
 
 	const router = useRouter()
 	const modalRef = useRef<HTMLDivElement>(null)
@@ -31,27 +35,6 @@ export default function AuthModal({
 		setOpenAuthModal(null)
 	}
 
-	// TODO: The ref is not loaded on render. it takes TWO clicks to close
-	// TODO: Make sure it's click-closable and also the modal is scrollable if it is too tall
-	// TODO: Closebutton
-	// Close the modal if user clicks anywhere outside of it
-	const handleClick = (target: EventTarget) => {
-		// if (clicked == true) {
-		// 	// Check if the click target is NOT the modal OR a descendant of it
-		// 	if (
-		// 		target !== modalRef.current // if the click is outside
-		// 		&& !modalRef.current?.contains(target as Node)
-		// 	) {
-		// 		// console.log(modalRef.current)
-		// 		backgroundRef?.current?.classList.remove("animate-fade-in")
-		// 		backgroundRef?.current?.classList.add("animate-fade-out")
-		// 		backgroundRef?.current?.addEventListener("animationend", closeModal)
-
-		// 	}
-		// 	// setClicked(false)
-		// }
-		// setClicked(false)
-	}
 
 	// Close the modal if the escape key is pressed
 	const handleKeyDown = (event: KeyboardEvent) => {
@@ -67,25 +50,56 @@ export default function AuthModal({
 		document.addEventListener("keydown", handleKeyDown)
 	}, [])
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (clicked == true) {
+
 			// Check if the click target is NOT the modal OR a descendant of it
 			if (
-				clickTarget !== modalRef.current // if the click is outside
-				&& !modalRef.current?.contains(clickTarget as Node)
+				clickTarget !== modalRef.current // if the click is NOT the modal
+				&& !modalRef.current?.contains(clickTarget as Node) // if the click target is NOT a descendant of the modal ref
+				&& !(clickTarget as HTMLElement)?.hasAttribute("data-authlink") // if the click target is NOT an auth link
 			) {
-				// console.log(modalRef.current)
 				backgroundRef?.current?.classList.remove("animate-fade-in")
 				backgroundRef?.current?.classList.add("animate-fade-out")
 				backgroundRef?.current?.addEventListener("animationend", closeModal)
 
 			}
 			// Reset clicked & click target for the next event
+			setClickedClose(false)
 			setClickedTarget(null)
 			setClicked(false)
 		}
 	}, [authModal, clicked])
 
+
+	const ModalClose = () => {
+		return <button
+			onClick={() => setClickedClose(true)}
+			className={clsx(
+				"absolute",
+				"cursor-pointer",
+				// "top-[calc(50%-300px)]",
+				"top-1",
+				"right-1",
+				"p-2",
+				"rounded-lg",
+				"bg-red-500",
+				"dark:bg-red-700",
+				"text-white",
+				"hover:duration-0",
+				"hover:bg-red-700",
+				"dark:hover:bg-red-900",
+				"active:translate-px",
+				"ease-in-out",
+				"transition-all",
+				"duration-300",
+			)}>
+			<span className="sr-only">{t("navigation.close-modal-window")}</span>
+			<Icon name="xmark" className={clsx(
+				"size-5",
+			)} />
+		</button>
+	}
 
 	// RENDER
 	if (authModal) {
@@ -93,7 +107,6 @@ export default function AuthModal({
 			ref={backgroundRef}
 			onClick={(e) => {
 				setClicked(true)
-				handleClick(e.target)
 			}}
 			className={clsx(
 				"fixed",
@@ -117,24 +130,28 @@ export default function AuthModal({
 				aria-modal="true"
 				onClick={(e) => {
 					setClickedTarget(e.target)
-					handleClick(e.target)
 				}}
 				className={clsx(
 					"pointer-events-none",
 					"absolute",
 					"z-60",
 					"overflow-auto",
-					"w-screen",
-					"h-screen",
-					"sm:w-auto",
-					"sm:h-auto",
+					// "w-screen",
+					// "h-screen",
+					// "sm:w-auto",
+					// "sm:h-auto",
 				)}>
 				<AuthLayout
 					className={clsx(
 						"pointer-events-auto",
+						"relative",
+						"mx-auto",
+						// "max-w-125",
 					)}
 					ref={modalRef}
-					isModal={true}>
+					isModal={true}
+				>
+					<ModalClose />
 					{authModal == "login" &&
 						<LoginPageUI isModal={true} />
 					}
@@ -154,4 +171,6 @@ export default function AuthModal({
 	} else {
 		return null
 	}
+
+
 }
