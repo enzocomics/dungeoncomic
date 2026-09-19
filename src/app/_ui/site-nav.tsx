@@ -7,7 +7,7 @@ import { useTheme } from "@teispace/next-themes"
 // FUNCTIONS
 import clsx from "clsx"
 // STYLES
-import Icon from "@/styles/icons"
+import Icon, { icons } from "@/styles/icons"
 import Seal from "@/styles/seal"
 // DATA
 import { directusURL } from "@/data/env"
@@ -18,6 +18,7 @@ import { AuthModalSchema, useGlobalContext } from "@/app/_context"
 import { SetStateAction } from "react"
 import { AuthLink } from "@/components/auth"
 import { getComic } from "@/lib/directus/get-comics"
+import { useTranslations } from "next-intl"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -38,14 +39,30 @@ export default function SiteNav({
 	//Hooks
 	const router = useRouter()
 	const pathname = usePathname()
+	const t = useTranslations()
 	const { theme, setTheme } = useTheme()
 
 
 	// TODO: These are all hardcoded & should be in the dictionaries
-	const comicNavigation = [
-		{ name: "Home", href: "./", current: !!(pathname == "/") },
-		{ name: "List", href: "./list", current: !!(pathname == "/list") }
-	]
+	const comicNavigation: {
+		name: string,
+		href: string,
+		current: boolean,
+		icon: keyof typeof icons
+	}[] = [
+			{
+				name: "Homepage",
+				href: "/",
+				current: !!(pathname == "/"),
+				icon: "house",
+			},
+			{
+				name: "View All",
+				href: "/list",
+				current: !!(pathname == "/list"),
+				icon: "rectangleList"
+			}
+		]
 
 	const platformNavigation = [
 		{ name: "Dungeon Construction Co.", href: "/", current: false },
@@ -265,9 +282,12 @@ export default function SiteNav({
 								)} />
 						</span>
 						{/* BUTTON LABELS (FOR SCREENREADERS) */}
-						{/* TODO: Dictionaries */}
-						<span className="sr-only group-data-open:hidden">Open Main Navigation</span>
-						<span className="hidden group-data-open:sr-only">Close Main Navigation</span>
+						<span className="sr-only group-data-open:hidden">
+							{t("navigation.open-main-nav")}
+						</span>
+						<span className="hidden group-data-open:sr-only">
+							{t("navigation.close-main-nav")}
+						</span>
 					</PopoverButton>
 					{/* MAIN MENU */}
 					{menu &&
@@ -296,7 +316,7 @@ export default function SiteNav({
 								"z-1",
 								// Size & Spacing
 								"w-full",
-								"sm:max-w-sm",
+								"max-w-72",
 								"rounded-sm",
 								"drop-shadow-2xl",
 								"drop-shadow-neutral-900/45",
@@ -315,7 +335,7 @@ export default function SiteNav({
 								"before:rotate-180"
 							)}
 						>
-							<section
+							<div
 								className={clsx(
 									// Appearance
 									"rounded-sm",
@@ -326,97 +346,49 @@ export default function SiteNav({
 									"dark:outline",
 									"dark:-outline-offset-1",
 									"dark:outline-base-5/50",
+									"py-1",
+									"font-comic-header",
 								)}>
 								{/* COMIC MENU */}
-								<section
-									className={clsx(
-										"space-y-1 px-2 pt-2 pb-3",
-										"font-comic-header",
-									)}>
-									{comicNavigation.map((item) => (
-										<CloseButton
-											as={Link}
-											key={item.name}
-											href={item.href}
-											aria-current={item.current ? 'page' : undefined}
-											className={clsx(
-												item.current
-													? "bg-comic-accent-700 text-white"
-													: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-												'block rounded-md px-3 py-2 text-base font-medium',
-											)}
-										>
-											{item.name}
-										</CloseButton>
-									))}
-								</section>
-								{/* PLATFORM MENU */}
-								{/* TODO: Unfinished for sites with no frontpage comic set */}
-								<section className={
-									clsx(
-										"bg-base-2/20",
-										"dark:bg-base-2/50",
-									)
-								}>
-									{/* {platformNavigation.map((item) => (
-										<CloseButton
-											as={"a"}
-											key={item.name}
-											href={item.href}
-											aria-current={item.current ? 'page' : undefined}
-											className={clsx(
-												item.current
-													? "bg-comic-accent-700 text-white"
-													: 'text-neutral-400 hover:bg-white/5 hover:text-white',
-												'block rounded-md px-3 py-2 text-sm',
-											)}
-										>
-											{item.name}
-										</CloseButton>
-									))} */}
-									{/* <div className={clsx(
-										"px-4",
-										"py-3	",
-										"text-xs/normal",
-										"text-current/50",
-										"font-comic-header",
-										"flex",
-										"gap-x-1",
-										"items-center",
-										"sm:block",
-										"sm:text-center"
-									)}>
-										<span className="mr-auto sm:mr-0 sm:block">&copy; 2026 Dungeon Construction Co.</span>
-										<span className={clsx(
-											"inline-block",
-											"text-right",
-										)}>This site was built with <span className="inline-block"><strong className="flex items-center">DungeonComic
-											<a href=" https://github.com/enzocomics/dungeoncomic" target="_blank"
-												title="Visit DungeonComic's Github Project Repository"
-												aria-label="Visit DungeonComic's Github Project Repository"
-												className={clsx(
-													"ml-1",
-													"active:text-comic-accent-500",
-													"transition-all",
-													"duration-300",
-													"lg:hover:transition-none",
-													"lg:hover:text-comic-accent-500",
-													"lg:hover:scale-120",
-												)}
-											>
-												<Icon name="github" className={clsx(
-													"size-5",
-													"inline",
-													"items-center",
-
-												)} />
-											</a>
-										</strong>
-											</span>
-										</span>
-									</div> */}
-								</section>
-							</section>
+								{comicNavigation.map((item) => (
+									<CloseButton
+										as={Link}
+										key={item.name}
+										href={item.href}
+										aria-current={item.current ? 'page' : undefined}
+										className={clsx(
+											"flex",
+											"items-center",
+											"px-5",
+											"py-2",
+											"text-sm",
+											"hover:bg-comic-accent-500",
+											"dark:hover:bg-comic-accent-700",
+											"hover:text-white",
+											"hover:duration-0",
+											// Transition
+											"transition-all",
+											"ease-in-out",
+											"duration-300",
+											item.current ? [
+												"text-white",
+												"bg-comic-accent-400",
+												"dark:bg-comic-accent-600/50",
+												"hover:bg-comic-accent-700",
+											] : [
+												"hover:bg-comic-accent-100",
+												"dark:hover:bg-white/5",
+											],
+										)}
+									>
+										<Icon name={item.icon} className={clsx(
+											"size-5",
+											"mr-4",
+										)} />
+										{item.name}
+									</CloseButton>
+								))}
+							</div>
 						</PopoverPanel>
 					}
 				</Popover>
@@ -454,9 +426,12 @@ export default function SiteNav({
 						"focus:outline-offset-2",
 						"focus:outline-comic-accent-500",
 					)}>
-						{/* TODO: Dictionaries */}
-						<span className="sr-only group-data-open:hidden">Open user menu</span>
-						<span className="hidden group-data-open:sr-only">Close user menu</span>
+						<span className="sr-only group-data-open:hidden">
+							{t("navigation.open-user-nav")}
+						</span>
+						<span className="hidden group-data-open:sr-only">
+							{t("navigation.close-user-nav")}
+						</span>
 						<span className={
 							clsx(
 								"relative",
@@ -661,8 +636,7 @@ export default function SiteNav({
 											)}
 
 										>
-											{/* TODO: Dictionaries */}
-											Log out
+											{t("auth.logout")}
 										</a>
 									}
 								</section>
