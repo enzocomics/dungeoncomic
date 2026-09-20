@@ -29,6 +29,7 @@ import { verifySession } from "@/data/session"
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow, ComicInputRadio } from "./comic-page-inputs"
 import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(comic)/_functions/check-vars"
+import Notice from "@/components/notices"
 
 
 export function ClientComicPageFeedback({
@@ -233,6 +234,14 @@ export function ClientComicPageFeedback({
 			 * -
 			 */
 		}
+		<ComicInputSection>
+			<Notice
+				type="alert"
+				title="You've reached the author's latest update!"
+				description="hi"
+
+			/>
+		</ComicInputSection>
 		{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 			<ComicInputSection className={
 				clsx(
