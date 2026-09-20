@@ -237,10 +237,22 @@ export function ClientComicPageFeedback({
 		<ComicInputSection>
 			<Notice
 				type="alert"
-				title="You've reached the author's latest update!"
-				description="hi"
+				title="You have reached the latest update!"
+			>
+				<p>The creator has provided a list of ideas of how they think the story should continue.</p>
+				<p>Cast your vote for the idea you like the most!</p>
+			</Notice>
+			{!session &&
+				<Notice
+					type="error"
+					title="You are not logged in."
+				>
+					{t.rich("please-login-to-vote", {
+						loginLink: (chunks) => <AuthLink className={clsx("underline font-bold")} isModal={true} modal="login">{chunks}</AuthLink>
+					})}
+				</Notice>
+			}
 
-			/>
 		</ComicInputSection>
 		{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 			<ComicInputSection className={
@@ -443,27 +455,6 @@ export function ClientComicPageFeedback({
 						)
 					} />
 				</ComicInputSectionRow>
-
-				{!session &&
-					<div
-						className={clsx(
-							"font-base",
-							"text-xl",
-							"text-center",
-							"text-red-700",
-							"dark:text-red-900",
-							"font-comic-header",
-							"bg-red-100",
-							"dark:bg-red-300",
-							"py-2",
-							"mb-4",
-							"rounded-sm",
-						)}>
-						{t.rich("please-login-to-vote", {
-							loginLink: (chunks) => <AuthLink className={clsx("underline font-bold")} isModal={true} modal="login">{chunks}</AuthLink>
-						})}
-					</div>
-				}
 			</ComicInputSection>
 		}
 	</>
