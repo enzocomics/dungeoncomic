@@ -32,7 +32,6 @@ export default function StatusMessage({
 	if (statusMessage.message !== "")
 		return <div
 			id={`status-${statusMessage.type}`}
-			data-statusmessage={true}
 			aria-live="polite"
 			className={clsx(
 				"p-4",
@@ -147,6 +146,7 @@ export default function StatusMessage({
 				<div className="ml-auto pl-3">
 					<div className="-mx-1.5 -my-1.5">
 						<button
+							data-statusmessage={true}
 							type="button"
 							onClick={() => {
 								// router.push(pathname,) // Clear the search params from the url
@@ -209,7 +209,7 @@ export default function StatusMessage({
 							)}
 						>
 							<span className="sr-only">Dismiss</span>
-							<Icon name="xmark" aria-hidden="true" className="size-5" />
+							<Icon name="xmark" aria-hidden="true" className="size-5 pointer-events-none" />
 						</button>
 					</div>
 				</div>
