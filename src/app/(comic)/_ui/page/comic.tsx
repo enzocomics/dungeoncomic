@@ -16,6 +16,7 @@ import { ClientComicPanels } from "./client/comic-page-panels"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
+import { checkHasNextPage } from "../../_functions/check-pages"
 
 /**-----------------------------------
  * Comic Page UI
@@ -41,6 +42,8 @@ export default async function ComicPageUI({
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
+
+	const hasNextPage = checkHasNextPage(page.next_pages)
 
 	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({
@@ -123,11 +126,13 @@ export default async function ComicPageUI({
 				variables={variables}
 				panelDescriptions={panelDescriptions}
 			/>
-			<ClientComicPageNextNav
-				page={page}
-				nextPageTitles={nextPageTitles}
-				nextPageSubtitles={nextPageSubtitles}
-			/>
+			{hasNextPage &&
+				<ClientComicPageNextNav
+					page={page}
+					nextPageTitles={nextPageTitles}
+					nextPageSubtitles={nextPageSubtitles}
+				/>
+			}
 			<ClientComicPageFeedback
 				page={page}
 				variables={variables}

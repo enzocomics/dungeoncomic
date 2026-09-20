@@ -1,5 +1,3 @@
-"use client"
-
 import { getComic, getComicPage } from "@/lib/directus/get-comics"
 import { haveVarsBeenSubmitted } from "./check-vars"
 
