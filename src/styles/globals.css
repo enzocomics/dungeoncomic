@@ -85,6 +85,10 @@
 				@apply mx-auto;
 			}
 		}
+
+		> p:first-of-type {
+			@apply first-letter:float-left first-letter:text-7xl first-letter:pr-1 first-letter:font-bold first-letter:font-comic-display;
+		}
 	}
 
 	#copyright-text {
