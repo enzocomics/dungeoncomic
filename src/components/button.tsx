@@ -114,7 +114,7 @@ export function ComicButton({
 	const classes = clsx(
 		className,
 
-		"p-2",
+		"p-4",
 		"w-full",
 		"flex",
 		"items-center",
@@ -125,9 +125,9 @@ export function ComicButton({
 		"lg:text-lg",
 		"font-comic-header",
 		"font-semibold",
-		"border-y-2",
-		"border-t-white/40",
-		"border-b-black/20",
+		// "border-y-2",
+		// "border-t-white/40",
+		// "border-b-black/20",
 		disabled ? [
 			"cursor-not-allowed",
 			"bg-neutral-500",
@@ -135,8 +135,8 @@ export function ComicButton({
 		] : [
 			"cursor-pointer",
 			// Appearance
-			"bg-comic-accent-500",
-			visited && "visited:bg-neutral-500",
+			"bg-comic-accent-600",
+			visited && "visited:bg-comic-accent-400",
 			// States
 			"hover:duration-0",
 			"hover:bg-comic-accent-700",
