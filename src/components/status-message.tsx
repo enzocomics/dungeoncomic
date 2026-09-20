@@ -32,6 +32,7 @@ export default function StatusMessage({
 	if (statusMessage.message !== "")
 		return <div
 			id={`status-${statusMessage.type}`}
+			data-statusmessage={true}
 			aria-live="polite"
 			className={clsx(
 				"p-4",

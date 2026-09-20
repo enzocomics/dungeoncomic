@@ -54,10 +54,12 @@ export default function AuthModal({
 		if (clicked == true) {
 
 			// Check if the click target is NOT the modal OR a descendant of it
+			// #TODO: This messy and I'm sure there's a better way to do it (but it works)
 			if (
 				clickTarget !== modalRef.current // if the click is NOT the modal
 				&& !modalRef.current?.contains(clickTarget as Node) // if the click target is NOT a descendant of the modal ref
 				&& !(clickTarget as HTMLElement)?.hasAttribute("data-authlink") // if the click target is NOT an auth link
+				&& !(clickTarget as HTMLElement)?.hasAttribute("data-statusmessage") // if the click target is NOT a statusmessage
 			) {
 				backgroundRef?.current?.classList.remove("animate-fade-in")
 				backgroundRef?.current?.classList.add("animate-fade-out")
