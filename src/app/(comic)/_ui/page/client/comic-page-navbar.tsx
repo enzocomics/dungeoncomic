@@ -51,12 +51,6 @@ export function ClientComicPageNavbar({
 		userVars: userVariables
 	})
 
-	console.log("isLastPage: ", isLastPage)
-	// console.log("lastPageVarsExist: ", lastPageVarsExist)
-
-	console.log("varsSubmitted: ", varsSubmitted)
-
-
 	return <>
 		<div className={clsx(
 			"bg-comic-accent-700",
@@ -301,20 +295,20 @@ export function ClientComicPageNavbar({
 					<NavbarButton
 						// Show the button if it's NOT the last page, OR if it IS the last page, but it has a variable form that hasn't been submitted yet
 						as={
-							(!isLastPage || (isLastPage && !varsSubmitted))
+							(!isLastPage || (varsExist && !varsSubmitted))
 								? "button"
 								: "div"
 						}
 						// If the last page has a variable submit form, build a URL that goes to the submitted part of the form
 						onClick={
 							() => {
-								(!isLastPage || (isLastPage && lastPageVarsExist))
+								(!isLastPage || (varsExist && !varsSubmitted))
 									? router.push(`./${lastPageNum}${lastPageVarsExist ? `${lastPageVarsUrl}` : ""}`)
 									: null
 							}
 						}
 						disabled={
-							(!isLastPage || (isLastPage && !varsSubmitted))
+							(!isLastPage || (varsExist && !varsSubmitted))
 								? false
 								: true
 						}
