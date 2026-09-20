@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 // DATA
 import { prepareText } from "../../_functions/parse-content"
 import { verifySession } from "@/data/session"
-import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
@@ -16,7 +16,6 @@ import { ClientComicPanels } from "./client/comic-page-panels"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
-import { checkHasNextPage, checkHasPlotSuggestions } from "../../_functions/check-pages"
 
 /**-----------------------------------
  * Comic Page UI
@@ -39,13 +38,6 @@ export default async function ComicPageUI({
 	// COMIC VARS
 	const t = await getTranslations("ComicPage")
 	const comic = page.comic
-	const hasBanner = !!comic.banner
-	const hasLogo = !!comic.logo
-	const hasAuthors = !!comic.authors && comic.authors.length > 0
-
-	// BOOLEAN
-	const hasNextPage = checkHasNextPage(page.next_pages)
-	const hasPlotSuggestions = checkHasPlotSuggestions(page.plot_suggestions)
 
 	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({

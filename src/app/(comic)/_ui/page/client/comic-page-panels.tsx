@@ -180,7 +180,6 @@ export function ClientComicPanels({
 			className={clsx(
 				"flex",
 				"flex-col",
-				"gap-y-0",
 			)}
 		>
 			{page.comic_panels &&
@@ -206,6 +205,7 @@ export function ClientComicPanels({
 									"flex-col",
 									"gap-y-6",
 									"pb-6",
+									"last:pb-0",
 								)}>
 								{p.panel_image &&
 									<Image
@@ -224,7 +224,7 @@ export function ClientComicPanels({
 								{/* PANEL TEXT */}
 								<div className={clsx(
 									// "py-6",
-									"lg:pt-6",
+									"lg:py-6",
 									"px-6",
 									"prose",
 									"text-base/loose",
@@ -245,7 +245,9 @@ export function ClientComicPanels({
 								</div>
 								{/* VARIABLES */}
 								{p.variables && p.variables.length > 0 ?
-									<ComicInputSection>
+									<ComicInputSection className={clsx(
+										"mt-4",
+									)}>
 										{p.variables.map((v, vIndex) => {
 											const vField = userVarsFields[`var${v.id}`]
 											// RENDER
@@ -472,7 +474,9 @@ export function ClientComicPanels({
 			{(varsExist && !varsSubmitted) &&
 				<>
 					<div className={clsx(
-						"px-6",
+						"pt-6",
+						"px-2",
+						"md:px-6",
 						"prose",
 						"w-full",
 						"max-w-2xl",

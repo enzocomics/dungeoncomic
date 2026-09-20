@@ -33,10 +33,10 @@ export default function Notice({
 
 
 	// OUTPUT
-	// Only display the layout if a message exists
 	return <div
 		className={clsx(
 			"p-4",
+			"pr-12",
 			// "rounded-md",
 			"border-l-4",
 			"dark:outline",
@@ -109,6 +109,7 @@ export default function Notice({
 					title && "mt-2",
 					"font-platform-copy",
 					"text-base",
+					"text-pretty",
 					"space-y-2",
 					// text-color
 					(type == "alert" ? "text-yellow-700" : ""),
