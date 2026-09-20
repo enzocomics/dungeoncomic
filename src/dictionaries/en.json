@@ -118,7 +118,8 @@
 		"close-main-nav": "Close main navigation",
 		"open-user-nav": "Open user menu",
 		"close-user-nav": "Close user menu",
-		"close-modal-window": "Close modal window"
+		"close-modal-window": "Close modal window",
+		"return-home": "Back to Homepage"
 	},
 	"footer": {
 		"site-built-with": "This site was built with",

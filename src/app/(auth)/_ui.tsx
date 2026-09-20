@@ -8,6 +8,7 @@ import Image from "next/image"
 import Icon from "@/styles/icons"
 import Link from "next/link"
 import { RefObject } from "react"
+import { useTranslations } from "next-intl"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -31,6 +32,7 @@ export function AuthLayout({
 	children: React.ReactNode
 	className?: string | null
 }) {
+	const t = useTranslations("navigation")
 	return <>
 		<div
 			ref={ref}
@@ -48,16 +50,40 @@ export function AuthLayout({
 				"w-full",
 				"max-w-120",
 			)}>
-				{!isModal &&
-					<Link href="/">
-						<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
-					</Link>
-				}
-				{isModal &&
-					<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
-				}
+				<Image src="/img/header.webp" alt="" width="990" height="260" loading="eager" />
 			</header>
-			<div className={clsx("relative")}>
+			<div className={clsx(
+				"relative",
+				"max-w-120",
+				"mx-auto",
+			)}>
+				{!isModal &&
+					<Link href="/" className={clsx(
+						"absolute",
+						"block",
+						"left-1",
+						"-top-8",
+						"px-2",
+						"py-1",
+						"rounded",
+						"bg-red-500",
+						"dark:bg-red-700",
+						"text-white",
+						"text-sm",
+						"font-semibold",
+						"font-platform-header",
+						"hover:duraiton-0",
+						"hover:bg-red-700",
+						"dark:bg-red-900",
+						"active:translate-px",
+						"ease-in-out",
+						"transition-all",
+						"duration-300",
+						"focus:outline-4",
+						"focus:outline-offset-2",
+						"focus:outline-red-500",
+					)}>&laquo; {t("return-home")}</Link>
+				}
 				{children}
 			</div>
 			<AuthFooter />
