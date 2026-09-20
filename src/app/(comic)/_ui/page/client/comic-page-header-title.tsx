@@ -373,7 +373,7 @@ export function ClientComicPageHeaderTitle({
 							"font-comic-copy",
 							"landscape:max-h-[calc(80vh-200px)]",
 							"portrait:max-h-[calc(70vh-200px)]",
-							"overflow-scroll",
+							"overflow-auto",
 						)}>
 							{comic.description &&
 								<span className={clsx(
