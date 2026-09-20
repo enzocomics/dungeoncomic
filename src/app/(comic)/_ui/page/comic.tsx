@@ -133,7 +133,6 @@ export default async function ComicPageUI({
 			/>
 		</ComicPageContentWrapper>
 		<ClientComicPageNavbar
-			where="bottom"
 			page={page}
 			userVariables={userVariables}
 		/>
