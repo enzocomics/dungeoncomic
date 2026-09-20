@@ -329,6 +329,8 @@ export const getComicPage = cache(async (comic_slug: string, num: number) => {
 						"date_created",
 						"date_updated",
 						"landing_page",
+						"pages",
+						"count(pages)",
 					],
 				},
 				{

@@ -38,6 +38,10 @@ export function ClientComicPageNavbar({
 	const hasBanner = !!page.comic.banner
 	const hasLogo = !!page.comic.logo
 	const isFirstPage = !!(page.comic_pagenum == 1)
+	const isLastPage = !!(page.comic_pagenum == page.comic.pages_count)
+	// Last Page Vars
+	const lastPageNum = page.comic.pages_count
+
 
 	return <>
 		<div className={clsx(
@@ -280,11 +284,25 @@ export function ClientComicPageNavbar({
 				}
 				{/* GO TO LATEST PAGE */}
 				<li>
-					<NavbarButton as={Link} href="/"
+					<NavbarButton as={
+						!isLastPage
+							? Link
+							: "div"
+					}
 						className={clsx(
 							"rounded-r",
-							"hover:rounded-r"
+							"hover:rounded-r",
 						)}
+						href={
+							!isLastPage
+								? `./${lastPageNum}`
+								: undefined
+						}
+						disabled={
+							!isLastPage
+								? false
+								: true
+						}
 					>
 						<span className={clsx(
 							"hidden",
