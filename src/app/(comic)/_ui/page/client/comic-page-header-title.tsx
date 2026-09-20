@@ -29,8 +29,10 @@ export function ClientComicPageHeaderTitle({
 				clsx(
 					"p-1.5",
 					"px-18",
-					"md:pr-11.5",
-					"md:pl-30.5",
+					"md:px-40",
+
+					// "md:pr-11.5",
+					// "md:pl-30.5",
 					"flex",
 					"justify-center",
 					"h-full"
@@ -200,6 +202,7 @@ export function ClientComicPageHeaderTitle({
 				{comic.logo &&
 					<PopoverButton className={clsx(
 						"group",
+						"relative",
 						"cursor-pointer",
 						"h-full",
 						"hover:scale-105",
@@ -210,9 +213,9 @@ export function ClientComicPageHeaderTitle({
 						"duration-300",
 						"rounded",
 						"data-open:bg-comic-accent-700/80",
-						"data-open:outline-4",
-						"data-open:outline-comic-accent-500",
-						"data-open:outline-offset-2",
+						"focus:outline-4",
+						"focus:outline-comic-accent-500",
+						"focus:outline-offset-2",
 					)}>
 						<Image
 							src={`${directusURL}/assets/${comic.logo.filename_disk}`}
@@ -226,6 +229,24 @@ export function ClientComicPageHeaderTitle({
 								"max-h-15",
 							)}
 						/>
+						<Icon name="xmark" className={clsx(
+							"absolute",
+							"text-white",
+							"right-0",
+							"top-0",
+							"size-4",
+							"bg-red-800",
+							"p-0.5",
+							"rounded",
+							"opacity-0",
+
+							"group-data-open:opacity-100",
+
+							// Transition
+							"transition-all",
+							"ease-in-out",
+							"duration-300",
+						)} />
 					</PopoverButton>
 				}
 
