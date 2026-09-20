@@ -30,7 +30,7 @@ export default function ComicLandingPageUI({
 	// PRIMARY VARS
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
-	const startButtonText = sanitize(`${comic.start_button_text}`) || t("start-button-text")
+	const startButtonText = comic.start_button_text ? sanitize(comic.start_button_text) : t("start-button-text")
 
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
