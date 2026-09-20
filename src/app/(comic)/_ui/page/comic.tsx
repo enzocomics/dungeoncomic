@@ -17,6 +17,7 @@ import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
 
+import { detailedDate, relativeDate } from "@/lib/dayjs"
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -132,6 +133,8 @@ export default async function ComicPageUI({
 				userVariables={userVariables}
 				session={session}
 			/>
+
+			<ComicPageMeta page={page} />
 		</ComicPageContentWrapper>
 		<ClientComicPageNavbar
 			page={page}
@@ -228,17 +231,15 @@ export function ComicPageHeader({
 
 export function ComicPageContentWrapper({
 	page,
-	className,
-	...props
+	children
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
-} & ComponentPropsWithoutRef<"div">) {
+	children: React.ReactNode
+}) {
 	const hasBanner = !!page.comic.banner
 	const hasLogo = !!page.comic.logo
 	return <div
-		{...props}
 		className={clsx(
-			className,
 			"relative",
 			hasBanner ? [
 				// Banner
@@ -253,7 +254,63 @@ export function ComicPageContentWrapper({
 		)}
 	>
 		<PageContentWrapper>
-			{props.children}
+			{children}
 		</PageContentWrapper>
+	</div>
+}
+
+const ComicPageMeta = ({
+	page,
+	...props
+}: {
+	page: Awaited<ReturnType<typeof getComicPage>>
+}) => {
+	return <div className={clsx(
+		"p-1",
+		"w-full",
+		"mx-auto",
+		"absolute",
+		"bottom-0",
+
+	)}>
+		<div className={clsx(
+			"flex",
+			"justify-center",
+			"gap-1.5",
+			"py-3",
+			"px-2",
+			"md:px-6",
+			"bg-neutral-100/50",
+			"dark:bg-neutral-800",
+			"text-xs",
+			"text-neutral-400",
+			"dark:text-neutral-500"
+		)}>
+			<span>
+				Published <time
+					dateTime={new Date(page.date_created).toISOString()}
+					title={detailedDate(new Date(page.date_created))}
+					className={
+						clsx(
+							"cursor-help"
+						)
+					}>
+					{relativeDate(new Date(page.date_created))}
+				</time>
+			</span>
+			<span>∙</span>
+			<span>
+				Last updated <time
+					dateTime={new Date(page.date_updated).toISOString()}
+					title={detailedDate(new Date(page.date_updated))}
+					className={
+						clsx(
+							"cursor-help"
+						)
+					}>
+					{relativeDate(new Date(page.date_updated))}
+				</time>
+			</span>
+		</div>
 	</div>
 }
