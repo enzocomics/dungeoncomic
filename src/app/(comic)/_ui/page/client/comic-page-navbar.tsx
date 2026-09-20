@@ -41,16 +41,21 @@ export function ClientComicPageNavbar({
 	const hasBanner = !!page.comic.banner
 	const hasLogo = !!page.comic.logo
 	const isFirstPage = !!(page.comic_pagenum == 1)
-	const isLastPage = !!(page.comic_pagenum == page.comic.pages_count)
+	const isLastPage = page.comic_pagenum == page.comic.pages_count
 	// Last Page Vars
 	const lastPageNum = page.comic.pages_count
-	const lastPageVarsExist = doVarsExist(lastPage.comic_panels)
+	const lastPageVarsExist = !!doVarsExist(lastPage.comic_panels)
 	const lastPageVars = getComicPageVars(lastPage.comic_panels)
 	const lastPageVarsUrl = makeComicVarsUrl({
 		comicVars: lastPageVars,
 		userVars: userVariables
 	})
-	const lastPageVarsSubmitted = haveVarsBeenSubmitted(lastPage.comic_panels, new URLSearchParams(lastPageVarsUrl))
+
+	console.log("isLastPage: ", isLastPage)
+	// console.log("lastPageVarsExist: ", lastPageVarsExist)
+
+	console.log("varsSubmitted: ", varsSubmitted)
+
 
 	return <>
 		<div className={clsx(
@@ -113,7 +118,7 @@ export function ClientComicPageNavbar({
 
 				{/* Back Button */}
 				{
-					(hasPrevPage || hasCoverPage && isFirstPage && !varsSubmitted)
+					(hasPrevPage || varsSubmitted || hasCoverPage && (isFirstPage && !varsSubmitted))
 					&& (
 						// Submission Form
 						!canGoBack && varsSubmitted
@@ -122,7 +127,7 @@ export function ClientComicPageNavbar({
 						// Browser History + Multiple Page Back
 						|| canGoBack && page.prev_pages && page.prev_pages.length > 1
 						// If it's the first page and a cover exists
-						|| hasCoverPage && isFirstPage && !varsSubmitted
+						|| hasCoverPage && (isFirstPage && !varsSubmitted)
 					)
 					&&
 					<li className={clsx(
@@ -293,32 +298,35 @@ export function ClientComicPageNavbar({
 				}
 				{/* GO TO LATEST PAGE */}
 				<li>
-					<NavbarButton as={
-						!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
-							? "button"
-							: "div"
-					}
-						className={clsx(
-							"rounded-r",
-							"hover:rounded-r",
-						)}
+					<NavbarButton
+						// Show the button if it's NOT the last page, OR if it IS the last page, but it has a variable form that hasn't been submitted yet
+						as={
+							(!isLastPage || (isLastPage && !varsSubmitted))
+								? "button"
+								: "div"
+						}
+						// If the last page has a variable submit form, build a URL that goes to the submitted part of the form
 						onClick={
 							() => {
-								!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
-									? router.push(`./${lastPageNum}${lastPageVarsExist && `?${lastPageVarsUrl}`}`)
+								(!isLastPage || (isLastPage && lastPageVarsExist))
+									? router.push(`./${lastPageNum}${lastPageVarsExist ? `${lastPageVarsUrl}` : ""}`)
 									: null
 							}
 						}
 						disabled={
-							!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
+							(!isLastPage || (isLastPage && !varsSubmitted))
 								? false
 								: true
 						}
+						className={clsx(
+							"rounded-r",
+							"hover:rounded-r",
+						)}
 					>
 						<span className={clsx(
 							"hidden",
 							"sm:block",
-						)}>Latest Page</span>
+						)}>{t("go-to-end")}</span>
 						<Icon name="forwardStep" className={clsx(
 							"inline-block",
 							"h-4",

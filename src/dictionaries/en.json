@@ -13,6 +13,8 @@
 		"next": "Next",
 		"go-back": "Previous Page",
 		"go-to-start": "Back to Start",
+		"go-to-end": "Latest Page",
+
 		"all-prev-pages": "Previous Pages",
 		"reset-variable-fields": "Reset fields to defaults",
 		"rich-please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
