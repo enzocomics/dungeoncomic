@@ -15,16 +15,18 @@
 		"go-to-start": "Back to Start",
 		"all-prev-pages": "Previous Pages",
 		"reset-variable-fields": "Reset fields to defaults",
-		"please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
+		"rich-please-login-to-vote": "Please <loginLink>log in</loginLink> if you want to vote!",
 		"submit-own-suggestion": "Something else...",
 		"suggestion-submitted": "Your suggestion has been submitted.",
 		"suggestion-deleted": "Your suggestion has been deleted.",
 		"edit-suggestion": "Edit",
 		"delete-suggestion": "Delete",
-		"submit-suggestion": "Submit suggestion"
+		"submit-suggestion": "Submit suggestion",
+		"reached-latest-update": "You have reached the latest update!",
+		"rich-explain-suggestion-voting": "<p>The creator has provided a list of ideas of how they think the story should continue.</p><p>Cast your vote for the idea you like the most!</p>"
 	},
 	"Comments": {
-		"please-login-to-comment": "Please <loginLink>log in</loginLink> to comment.",
+		"rich-please-login-to-comment": "Please <loginLink>log in</loginLink> to comment.",
 		"permission-no-comments": "You do not have permission to post comments.",
 		"write-comment": "Write a Comment",
 		"submit-comment": "Submit Comment",
@@ -54,7 +56,7 @@
 				"verify-account": "Please click the verification link that has been sent to your email to complete your registration.",
 				"login-link": "I already have an account.",
 				"log-in": "Log In",
-				"acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>.",
+				"rich-acknowledgement": "By continuing, you agree to our <a1>User Agreement</a1> and acknowledge that you understand the <a2>Privacy Policy</a2>.",
 				"registration-closed": "User registration is currently disabled."
 			},
 			"reset-password": {
@@ -100,10 +102,11 @@
 	},
 	"status-messages": {
 		"account-verify-success": "Your account has been verified. You may now log in.",
-		"account-verify-error": {
+		"rich-account-verify-error": {
 			"message": "We were unable to verify your account. Please try again, or <mailtoAdmin>contact an administrator</mailtoAdmin> for assistance.",
 			"mailto": "mailto:{adminEmail}"
 		},
+		"not-logged-in": "You are not logged in.",
 		"logged-out": "You have been logged out.",
 		"types": {
 			"alert": "Alert",

@@ -45,7 +45,7 @@ export function ClientComicPageFeedback({
 	session?: Awaited<ReturnType<typeof verifySession>>
 }) {
 	const router = useRouter()
-	const t = useTranslations("ComicPage")
+	const t = useTranslations()
 	const setStatus = useChangeStatus("")
 	const varsExist = doVarsExist(page.comic_panels)
 	const varsSubmitted = haveVarsBeenSubmitted(page.comic_panels)
@@ -239,23 +239,26 @@ export function ClientComicPageFeedback({
 		<ComicInputSection>
 			<Notice
 				type="alert"
-				title="You have reached the latest update!"
+				title={t("ComicPage.reached-latest-update")}
 			>
-				<p>The creator has provided a list of ideas of how they think the story should continue.</p>
-				<p>Cast your vote for the idea you like the most!</p>
+				{t.rich("ComicPage.rich-explain-suggestion-voting", {
+					p: (chunks) => <p>{chunks}</p>
+				})}
 			</Notice>
 			{!session &&
 				<Notice
 					type="error"
-					title="You are not logged in."
+					title={t("status-messages.not-logged-in")}
 				>
-					{t.rich("please-login-to-vote", {
-						loginLink: (chunks) => <AuthLink className={clsx("underline font-bold")} isModal={true} modal="login">{chunks}</AuthLink>
-					})}
+					{
+						t.rich("ComicPage.rich-please-login-to-vote", {
+							loginLink: (chunks) => <AuthLink className={clsx("underline font-bold")} isModal={true} modal="login">{chunks}</AuthLink>
+						})
+					}
 				</Notice>
 			}
 
-		</ComicInputSection>
+		</ComicInputSection >
 		{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 			<ComicInputSection className={
 				clsx(
@@ -354,7 +357,7 @@ export function ClientComicPageFeedback({
 																	)} />
 																</button> */}
 															<button
-																title={t("delete-suggestion")}
+																title={t("ComicPage.delete-suggestion")}
 																className={clsx(
 																	"p-1",
 																	"bg-red-400",
@@ -366,7 +369,7 @@ export function ClientComicPageFeedback({
 																	deleteUserPlotSuggestion(s.id)
 																	setDeleteSuggestion(s.id)
 																	setUserHasSubmitted(false)
-																	setStatus("success", t("suggestion-deleted"))
+																	setStatus("success", t("ComicPage.suggestion-deleted"))
 																	router.refresh()
 																}}
 															>
@@ -433,7 +436,7 @@ export function ClientComicPageFeedback({
 											"font-comic-copy",
 										)
 									}>
-										{t("submit-own-suggestion")}
+										{t("ComicPage.submit-own-suggestion")}
 										{page.allow_user_suggestions && selected == selectUserSuggestion &&
 											<UserSuggestionForm ref={suggestionRef} />
 										}
@@ -485,7 +488,7 @@ export function ClientComicPageFeedback({
 			if (lastResult?.status == "success") {
 				setSelected("")
 				setUserHasSubmitted(true)
-				setStatus("success", t("suggestion-submitted"))
+				setStatus("success", t("ComicPage.suggestion-submitted"))
 				router.refresh()
 			}
 		}, [lastResult])
@@ -571,7 +574,7 @@ export function ClientComicPageFeedback({
 							value={session.id}
 						/>
 					</Field>
-					<ComicButton as="button" type="submit">{t("submit-suggestion")}</ComicButton>
+					<ComicButton as="button" type="submit">{t("ComicPage.submit-suggestion")}</ComicButton>
 				</Form>
 			}
 		</>

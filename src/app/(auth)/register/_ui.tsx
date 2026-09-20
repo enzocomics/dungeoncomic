@@ -97,7 +97,7 @@ export default function RegisterPageUI({
 						// Description Message with Rich Text & Link
 						// Reference: `https://next-intl.dev/docs/usage/translations#rich-text`
 						JSON.stringify( // stringify, because we're passing it as a parameter
-							s.rich("account-verify-error.message", {
+							s.rich("rich-account-verify-error.message", {
 								// map custom Rich Text tag to React Components
 								mailtoAdmin: (chunks) => <a href={
 									// include custom attribute (that's just another translation)
@@ -127,7 +127,7 @@ export default function RegisterPageUI({
 				{public_registration &&
 					<AuthHeaderDescription>
 						<p dangerouslySetInnerHTML={{
-							__html: t.rich("pages.register.acknowledgement", {
+							__html: t.rich("pages.register.rich-acknowledgement", {
 								a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
 								a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
 							}) as string

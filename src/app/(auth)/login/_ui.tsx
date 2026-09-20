@@ -104,7 +104,7 @@ export default function LoginPageUI({
 				<AuthHeaderTitle>{t("pages.login.title")}</AuthHeaderTitle>
 				<AuthHeaderDescription>
 					<p dangerouslySetInnerHTML={{
-						__html: t.rich("pages.register.acknowledgement", {
+						__html: t.rich("pages.register.rich-acknowledgement", {
 							a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
 							a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
 						}) as string
