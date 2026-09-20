@@ -38,6 +38,7 @@ export default async function ComicPageUI({
 	// COMIC VARS
 	const t = await getTranslations("ComicPage")
 	const comic = page.comic
+	const lastPage = await getComicPage(page.comic.slug, page.comic.pages_count)
 
 	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({
@@ -134,6 +135,7 @@ export default async function ComicPageUI({
 		</ComicPageContentWrapper>
 		<ClientComicPageNavbar
 			page={page}
+			lastPage={lastPage}
 			userVariables={userVariables}
 		/>
 	</>

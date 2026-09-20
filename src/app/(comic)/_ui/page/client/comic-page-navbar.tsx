@@ -3,7 +3,7 @@
 import clsx from "clsx"
 // LIBRARIES
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 // DATA
@@ -20,13 +20,16 @@ import { ComponentPropsWithoutRef } from "react"
 
 export function ClientComicPageNavbar({
 	page,
+	lastPage,
 	userVariables,
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
+	lastPage: Awaited<ReturnType<typeof getComicPage>>
 	userVariables?: Record<string, string>
 }) {
 	const router = useRouter()
 	const pathname = usePathname()
+	const searchParams = useSearchParams()
 	const { canGoBack, setCanGoBack } = useComicContext()
 
 	const t = useTranslations("ComicPage")
@@ -41,7 +44,13 @@ export function ClientComicPageNavbar({
 	const isLastPage = !!(page.comic_pagenum == page.comic.pages_count)
 	// Last Page Vars
 	const lastPageNum = page.comic.pages_count
-
+	const lastPageVarsExist = doVarsExist(lastPage.comic_panels)
+	const lastPageVars = getComicPageVars(lastPage.comic_panels)
+	const lastPageVarsUrl = makeComicVarsUrl({
+		comicVars: lastPageVars,
+		userVars: userVariables
+	})
+	const lastPageVarsSubmitted = haveVarsBeenSubmitted(lastPage.comic_panels, new URLSearchParams(lastPageVarsUrl))
 
 	return <>
 		<div className={clsx(
@@ -285,21 +294,23 @@ export function ClientComicPageNavbar({
 				{/* GO TO LATEST PAGE */}
 				<li>
 					<NavbarButton as={
-						!isLastPage
-							? Link
+						!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
+							? "button"
 							: "div"
 					}
 						className={clsx(
 							"rounded-r",
 							"hover:rounded-r",
 						)}
-						href={
-							!isLastPage
-								? `./${lastPageNum}`
-								: undefined
+						onClick={
+							() => {
+								!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
+									? router.push(`./${lastPageNum}${lastPageVarsExist && `?${lastPageVarsUrl}`}`)
+									: null
+							}
 						}
 						disabled={
-							!isLastPage
+							!isLastPage || (isLastPage && lastPageVarsExist && !lastPageVarsSubmitted)
 								? false
 								: true
 						}

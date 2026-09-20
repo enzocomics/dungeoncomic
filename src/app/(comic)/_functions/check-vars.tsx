@@ -1,7 +1,8 @@
 "use client"
 /**----------------------------------- */
-import { useSearchParams } from "next/navigation"
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import { getComicPage } from "@/lib/directus/get-comics"
+import { SearchParams } from "next/dist/server/request/search-params"
 
 /**
  * Checks if variables exist
@@ -16,9 +17,10 @@ export const doVarsExist = (
  * Checks if every variable on a specific comic page has been submitted
  */
 export const haveVarsBeenSubmitted = (
-	comicPanels: Awaited<ReturnType<typeof getComicPage>>["comic_panels"]
+	comicPanels: Awaited<ReturnType<typeof getComicPage>>["comic_panels"],
+	params?: URLSearchParams
 ) => {
-	const searchParams = useSearchParams()
+	const searchParams = params ? new URLSearchParams(params) : useSearchParams()
 	// Get a flat map of all the variables for this specific page's comic panels
 	const varParams = comicPanels?.flatMap(p =>
 		p.variables && p.variables.length > 0 ?
