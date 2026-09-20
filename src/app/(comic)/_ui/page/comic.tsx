@@ -298,19 +298,23 @@ const ComicPageMeta = ({
 					{relativeDate(new Date(page.date_created))}
 				</time>
 			</span>
-			<span>∙</span>
-			<span>
-				Last updated <time
-					dateTime={new Date(page.date_updated).toISOString()}
-					title={detailedDate(new Date(page.date_updated))}
-					className={
-						clsx(
-							"cursor-help"
-						)
-					}>
-					{relativeDate(new Date(page.date_updated))}
-				</time>
-			</span>
+			{page.date_updated &&
+				<>
+					<span>∙</span>
+					<span>
+						Last updated <time
+							dateTime={new Date(page.date_updated).toISOString()}
+							title={detailedDate(new Date(page.date_updated))}
+							className={
+								clsx(
+									"cursor-help"
+								)
+							}>
+							{relativeDate(new Date(page.date_updated))}
+						</time>
+					</span>
+				</>
+			}
 		</div>
 	</div>
 }
