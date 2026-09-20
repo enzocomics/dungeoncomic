@@ -30,6 +30,7 @@ import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow, ComicInputRadio } from "./comic-page-inputs"
 import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(comic)/_functions/check-vars"
 import Notice from "@/components/notices"
+import { checkHasPlotSuggestions } from "@/app/(comic)/_functions/check-pages"
 
 
 export function ClientComicPageFeedback({
@@ -49,6 +50,7 @@ export function ClientComicPageFeedback({
 	const varsExist = doVarsExist(page.comic_panels)
 	const varsSubmitted = haveVarsBeenSubmitted(page.comic_panels)
 
+	const hasPlotSuggestions = checkHasPlotSuggestions(page.plot_suggestions)
 	// Get the ID of the currently logged-in user, if exists
 	const loggedInUserID = session?.id || null
 
@@ -227,7 +229,7 @@ export function ClientComicPageFeedback({
 
 	/**----------------------------------- */
 	// Render
-	return <>
+	return hasPlotSuggestions && varsSubmitted ? <>
 		{
 			/**------------------------------
 			 * FEEDBACK
@@ -457,7 +459,7 @@ export function ClientComicPageFeedback({
 				</ComicInputSectionRow>
 			</ComicInputSection>
 		}
-	</>
+	</> : null
 
 	/**----------------------------------- */
 

@@ -26,7 +26,8 @@ export function ClientComicPageNextNav({
 	const varsSubmitted = haveVarsBeenSubmitted(page.comic_panels)
 	const hasNextPage = checkHasNextPage(page.next_pages)
 
-	return <section className={clsx(
+
+	return hasNextPage ? <section className={clsx(
 		"flex",
 		"flex-col",
 		"gap-y-6",
@@ -86,4 +87,5 @@ export function ClientComicPageNextNav({
 			</div>
 		}
 	</section>
+		: null
 }

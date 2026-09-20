@@ -35,3 +35,12 @@ export const checkHasNextPage = (
 		)
 	)
 }
+
+export const checkHasPlotSuggestions = (
+	plotSuggestions: Awaited<ReturnType<typeof getComicPage>>["plot_suggestions"]
+) => {
+	return !!(
+		plotSuggestions &&
+		plotSuggestions.length > 0
+	)
+}
