@@ -138,7 +138,7 @@ export default function SiteNav({
 							"ease-in-out",
 
 							"focus:outline-4",
-							"focus:outline-offset-1",
+							"focus:outline-offset-2",
 							"focus:outline-comic-accent-500",
 						)}
 					>
@@ -158,12 +158,17 @@ export default function SiteNav({
 									"after:absolute",
 									"after:-z-1",
 									"after:w-15",
-									"after:h-9.5",
+									"after:h-9",
 									"after:bg-neutral-800/80",
 									"after:dark:bg-neutral-900/80",
-									"after:top-5",
+									"group-data-open:after:bg-comic-accent-500",
+									"group-data-open:dark:after:bg-comic-accent-600",
+									"after:top-[20.5px]",
 									"after:left-19",
 									"after:rounded-r",
+									// "group-focus:after:outline-4",
+									// "group-focus:after:outline-offset-4",
+									// "group-focus:after:outline-comic-accent-500",
 									// Hover
 									"group-hover:after:duration-0",
 									"group-hover:after:bg-comic-accent-700",
@@ -220,7 +225,7 @@ export default function SiteNav({
 									<span
 										className={clsx(
 											"relative",
-											"md:top-1",
+											"md:top-0.75",
 											"md:left-16"
 										)}
 									>

@@ -29,6 +29,8 @@ export function ClientComicPageHeaderTitle({
 				clsx(
 					"p-1.5",
 					"px-18",
+					"md:pr-11.5",
+					"md:pl-30.5",
 					"flex",
 					"justify-center",
 					"h-full"
@@ -40,7 +42,7 @@ export function ClientComicPageHeaderTitle({
 					"justify-center",
 					"items-center",
 					"font-comic-header",
-					!hasLogo && "overflow-clip",
+					!hasLogo && "overflow-hidden",
 				)
 			}>
 
@@ -54,7 +56,7 @@ export function ClientComicPageHeaderTitle({
 						"justify-center",
 						// Spacing
 						"z-45",
-						"ml-5",
+						// "ml-5",
 						"pl-3 pr-1.5",
 						"py-2",
 						// Functionality
@@ -82,7 +84,7 @@ export function ClientComicPageHeaderTitle({
 							"dark:bg-neutral-900/80",
 						] : [
 							"bg-black/50",
-						]
+						],
 					)}>
 						<div className={clsx(
 							// Structure
@@ -93,6 +95,7 @@ export function ClientComicPageHeaderTitle({
 							// Text
 							"text-sm",
 							"text-ellipsis",
+
 						)}>
 							<span className={clsx(
 								"inline",
