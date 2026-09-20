@@ -60,8 +60,6 @@ export function ClientComicPageNavbar({
 			"text-white",
 			"font-comic-header",
 			"md:rounded",
-			// "sticky",
-			// "bottom-0",
 			"md:bottom-2",
 			"mt-2",
 		)}>
@@ -70,7 +68,6 @@ export function ClientComicPageNavbar({
 				"list-none",
 				"flex",
 				"justify-between",
-				// isTop ? "justify-center" : "justify-between",
 			)}>
 				{/* GO BACK TO START BUTTON */}
 				<li>
@@ -81,8 +78,8 @@ export function ClientComicPageNavbar({
 							: "div"
 					}
 						className={clsx(
-							"rounded-l",
-							"hover:rounded-l",
+							"md:rounded-l",
+							"md:hover:rounded-l",
 						)}
 						href={
 							hasCoverPage
@@ -313,8 +310,8 @@ export function ClientComicPageNavbar({
 								: true
 						}
 						className={clsx(
-							"rounded-r",
-							"hover:rounded-r",
+							"md:rounded-r",
+							"md:hover:rounded-r",
 						)}
 					>
 						<span className={clsx(
