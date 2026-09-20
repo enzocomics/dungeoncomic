@@ -42,14 +42,14 @@ export function ClientComicPageNavbar({
 	return <>
 		<div className={clsx(
 			"bg-comic-accent-700",
-			"dark:bg-comic-accent-900",
-			"text-base",
+			"dark:bg-comic-accent-800",
+			"text-xs",
 			"sm:text-sm",
 			"text-white",
 			"font-comic-header",
 			"md:rounded",
-			"sticky",
-			"bottom-0",
+			// "sticky",
+			// "bottom-0",
 			"md:bottom-2",
 			"mt-2",
 		)}>
@@ -63,21 +63,22 @@ export function ClientComicPageNavbar({
 				{/* GO BACK TO START BUTTON */}
 				<li>
 					<NavbarButton as={
-						hasCoverPage
+						// It's a link If it has a cover page, or it ISN't the first page
+						hasCoverPage || !isFirstPage
 							? Link
 							: "div"
 					}
 						className={clsx(
 							"rounded-l",
-							"hover:rounded-l"
+							"hover:rounded-l",
 						)}
 						href={
 							hasCoverPage
 								? "./"
-								: undefined
+								: "./1"
 						}
 						disabled={
-							hasCoverPage
+							hasCoverPage || !hasCoverPage && !isFirstPage
 								? false
 								: true
 						}
@@ -112,9 +113,12 @@ export function ClientComicPageNavbar({
 					)
 					&&
 					<li className={clsx(
+						// "grow"
 					)}>
 						<PrevPageButton
 							className={clsx(
+								// "max-w-2xl",
+								// "mx-auto",
 							)}
 							onClick={() => {
 								// Variable Submission Form back
@@ -155,17 +159,20 @@ export function ClientComicPageNavbar({
 				{!canGoBack
 					&& page.prev_pages && page.prev_pages.length > 1 &&
 					<li className={clsx(
-						"relative"
+						"relative",
 					)}>
 						<Menu>
 							<MenuButton
 								as={PrevPageButton}
 								className={clsx(
 									"group",
+									"peer",
 									// "bg-transparent",
 									"data-closed:duration-300",
 									"data-open:bg-comic-accent-950",
 									"data-open:duration-none",
+									"data-open:rounded-t-none",
+									"data-focus-within:bg-red-500",
 								)}>
 								<Icon name="caretDown" className={clsx(
 									"relative",
@@ -186,30 +193,42 @@ export function ClientComicPageNavbar({
 								// Position
 								"absolute",
 								"z-10",
-								"sm:left-0",
-								"xs:left-auto",
+								"left-1/2",
+								"-translate-x-1/2",
+								// "sm:left-0",
+								// "xs:left-auto",
 								// "left-0",
 								"flex",
 								"flex-col",
-								"gap-y-0.5",
-								"min-w-46",
-								"md:min-w-80",
+
+
+								// "min-w-46",
+								// "md:min-w-80",
+								"w-[calc(100vw-24px)]",
+								"max-w-xl",
 								// Appearance
-								"p-2",
 								"bg-comic-accent-950",
 								// Transitions
 								"transition-all",
 								"ease-in-out",
+								"duration-300",
 								"scale-100",
 								"opacity-100",
 								"data-closed:opacity-0",
 								"data-closed:duration-300",
 								"data-closed:scale-90",
 								"data-open:duration-none",
-								"bottom-8",
+								"bottom-9",
 								"left-0",
-								"rounded-t",
+								"rounded",
 								"data-closed:bottom-6",
+								// Outline
+								"outline-none",
+								"ring-4",
+								"ring-comic-accent-950",
+								"-ring-offset-4",
+								"peer-hover:duration-0",
+								"peer-hover:ring-comic-accent-500",
 
 							)}>
 								{page.prev_pages.map((n, index) =>
@@ -222,20 +241,23 @@ export function ClientComicPageNavbar({
 												"grid-cols-[20px_1fr]",
 												"items-center",
 												// Appearance
-												"p-2",
+												"px-3",
+												"py-2",
+												"text-sm",
 												"text-white/90",
-												"bg-comic-accent-500",
-												"visited:text-neutral-300",
+												// "bg-comic-accent-700",
 												"visited:bg-neutral-500",
-												"hover:text-white",
-												"hover:bg-comic-accent-900",
-												"active:translate-px",
-												"rounded-sm",
+												// "hover:text-white",
+												// "hover:bg-comic-accent-900",
+
 												// Transition
 												"hover:duration-0",
 												"transition-all",
 												"ease-in-out",
 												"duration-300",
+												"data-active:outline-none",
+												"data-active:bg-comic-accent-500",
+
 											)}
 											onClick={() => {
 												// setNavClickType("prev")
@@ -384,16 +406,21 @@ const NavbarButton = ({
 			"h-full",
 			"flex",
 			"items-center",
+			"justify-center",
 			"p-2",
 			"px-3",
 			props.disabled ? [
-				"text-neutral-400",
-				"bg-neutral-500",
+				"cursor-not-allowed",
+				"text-neutral-200",
+				"bg-neutral-300",
+				"dark:text-neutral-400",
+				"dark:bg-neutral-500",
 			] : [
 				"cursor-pointer",
 				// Hover
 				"duration-300",
-				"hover:bg-black/50",
+				"hover:bg-comic-accent-500",
+				"dark:hover:bg-comic-accent-600",
 				"hover:duration-0",
 				// Transition
 				"transition-all",
@@ -419,22 +446,26 @@ const PrevPageButton = ({
 		{...props}
 		className={clsx(
 			props.className,
-			"rounded",
-			"border-4",
-			"border-t-white/10",
-			"border-b-black/10",
-			"border-l-white/5",
-			"border-r-black/5",
+			"rounded-sm",
+			// "border-4",
+			// "border-t-white/10",
+			// "border-b-black/10",
+			// "border-l-white/5",
+			// "border-r-black/5",
 
-			"bg-comic-accent-500",
-			"scale-100",
-			// "sm:scale-105",
-			"hover:bg-comic-accent-400!",
+			"bg-comic-accent-800",
+			"dark:bg-comic-accent-900",
+			"hover:bg-comic-accent-500!",
+			"dark:hover:bg-comic-accent-600!",
 			"active:translate-px",
 			"drop-shadow-lg",
 			"drop-shadow-black/20",
-			"ring-4",
-			"ring-comic-accent-700",
+			"ring-2",
+			"ring-comic-accent-800",
+			"dark:ring-comic-accent-900",
+			"hover:ring-comic-accent-500",
+			"dark:hover:ring-comic-accent-600",
+
 		)}>
 		{props.children}
 	</NavbarButton>
