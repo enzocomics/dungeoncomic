@@ -23,6 +23,7 @@ export function LogoutButton({
 		})
 
 		router.push(`/logout?${logoutParams.toString()}`)
+		router.refresh()
 	}
 
 	return <button
