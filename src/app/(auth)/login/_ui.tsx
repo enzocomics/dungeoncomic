@@ -84,6 +84,8 @@ export default function LoginPageUI({
 			// if we're in a modal, just close it
 			if (authModal) {
 				setOpenAuthModal(null)
+				// #TODO: translation
+				setStatus("success", "You are now signed in.")
 			} else {
 				// otherwise, redirect to the dashboard
 				router.push("/dashboard")
