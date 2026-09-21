@@ -277,8 +277,8 @@ export function ClientComicPageHeaderTitle({
 						"scale-100",
 						// Position
 						"absolute",
-						// "-z-1",
-						hasLogo ? "top-18" : "top-11.5",
+						"z-50",
+						hasLogo ? "top-[calc(100%+20px)]" : "top-10",
 						// Size & Spacing
 						"max-w-lg",
 						"p-2",
