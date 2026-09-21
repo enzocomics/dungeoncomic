@@ -1,3 +1,4 @@
+
 import clsx from "clsx"
 /**----------------------------------- */
 // DATA
@@ -10,6 +11,7 @@ import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Link from "next/link"
 import { PageContentWrapper } from "../_ui/site-page"
+import { verifySession } from "@/data/session"
 
 export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const { public_registration } = await adminClient.request(readSettings({
@@ -18,10 +20,12 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const settings = await getSettings()
 	const logo = settings.project_logo
 	const banner = settings.project_banner
+	const session = await verifySession()
 
+	console.log("session: ", session)
 	return <>
 		<AuthModal public_registration={public_registration} />
-		<PlatformLayoutUI>
+		<PlatformLayoutUI session={session}>
 			<header className={clsx(
 				// Structure
 				"fixed",

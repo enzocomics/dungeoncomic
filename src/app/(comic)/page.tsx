@@ -111,7 +111,7 @@ export default async function Homepage() {
 		} else {
 			// notFound()
 			return <Suspense>
-				<PlatformLayoutUI>
+				<PlatformLayoutUI session={session}>
 					<HomepagePageUI content={homePageContent} />
 				</PlatformLayoutUI>
 			</Suspense>
