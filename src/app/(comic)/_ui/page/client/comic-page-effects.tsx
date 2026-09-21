@@ -2,10 +2,11 @@
 import { checkHasNextPage, checkHasPrevPage } from "@/app/(comic)/_functions/check-pages"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { useComicContext } from "../../context"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useChangeStatus } from "@/components/status-message"
 import clsx from "clsx"
+import { useGlobalContext } from "@/app/_context"
 
 export default function ClientComicPageEffects({
 	page,
@@ -70,6 +71,14 @@ export default function ClientComicPageEffects({
 		setStatus("")
 
 	}, [pathname, searchParams.toString()])
+
+	// Update the status for when logged out
+	// TODO: maybe move this somewhere more global so we don't have to do it in multiple places
+	useEffect(() => {
+		if (searchParams.get("status") == "loggedout") {
+			setStatus("info", `${searchParams.get("status")}`)
+		}
+	}, [searchParams])
 
 	return <>
 		{/* DEBUG */}
