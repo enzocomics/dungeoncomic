@@ -27,7 +27,10 @@ export function LogoutButton({
 
 	return <button
 		{...props}
-		onClick={handleLogout}
+		onClick={(e) => {
+			handleLogout()
+			props.onClick?.(e)
+		}}
 	>
 		{props.children}
 	</button>
