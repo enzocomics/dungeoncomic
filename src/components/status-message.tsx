@@ -34,6 +34,8 @@ export default function StatusMessage({
 			id={`status-${statusMessage.type}`}
 			aria-live="polite"
 			className={clsx(
+				"sticky",
+				"top-0",
 				"p-4",
 				// "rounded-md",
 				"text-white",
