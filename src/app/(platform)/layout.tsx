@@ -22,7 +22,6 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const banner = settings.project_banner
 	const session = await verifySession()
 
-	console.log("session: ", session)
 	return <>
 		<AuthModal public_registration={public_registration} />
 		<PlatformLayoutUI session={session}>
