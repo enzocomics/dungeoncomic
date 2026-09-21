@@ -61,8 +61,17 @@ export default function ComicLandingPageUI({
 			</LandingPageHeader>
 			<StatusMessage
 				className={clsx(
-					"mb-2",
-					"max-w-prose",
+					"relative",
+					"z-1",
+					hasBanner ? [
+						"translate-y-0",
+						"md:mb-2",
+					] : [
+						"translate-y-13.75",
+						"md:translate-y-19.75",
+					],
+					// "mb-2",
+					// "max-w-prose",
 					"mx-auto",
 				)} />
 			<LandingPageBody>
