@@ -19,6 +19,7 @@ import { SetStateAction } from "react"
 import { AuthLink } from "@/components/auth"
 import { getComic } from "@/lib/directus/get-comics"
 import { useTranslations } from "next-intl"
+import { LogoutButton } from "@/components/auth-client"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -624,9 +625,12 @@ export default function SiteNav({
 									))}
 									{session &&
 										// Use a regular anchor tag instead of <Link> because we want to force a refresh
-										<a href="/logout" className={
+										<LogoutButton className={
 											clsx(
 												"block",
+												"w-full",
+												"text-left",
+												"cursor-pointer",
 												"px-4",
 												"py-2",
 												"text-sm",
@@ -639,10 +643,13 @@ export default function SiteNav({
 												"ease-in-out",
 												"duration-300",
 											)}
-
+										// onClick={() => {
+										// console.log(`/logout?r=${pathname}`)
+										// router.push(`/logout?r=${pathname}`)
+										// }}
 										>
 											{t("auth.logout")}
-										</a>
+										</LogoutButton>
 									}
 								</section>
 								{/* MODE TOGGLER */}
