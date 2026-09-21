@@ -280,6 +280,7 @@ export function ClientComicPageHeaderTitle({
 						"z-50",
 						hasLogo ? "top-[calc(100%+20px)]" : "top-10",
 						// Size & Spacing
+						"w-100",
 						"max-w-lg",
 						"p-2",
 						// "rounded-sm",
@@ -290,7 +291,7 @@ export function ClientComicPageHeaderTitle({
 						// Functionality
 						"pointer-events-auto",
 						// Structure
-						"relative",
+						"absolute",
 						"flex",
 						"flex-col",
 						"gap-2",
