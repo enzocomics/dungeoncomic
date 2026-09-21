@@ -59,7 +59,7 @@ export default function ComicLandingPageUI({
 					</LandingPageH1>
 				}
 			</LandingPageHeader>
-			<StatusMessage
+			{/* <StatusMessage
 				className={clsx(
 					"relative",
 					"z-1",
@@ -73,7 +73,7 @@ export default function ComicLandingPageUI({
 					// "mb-2",
 					// "max-w-prose",
 					"mx-auto",
-				)} />
+				)} /> */}
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 				{comic.pages_count > 0 &&

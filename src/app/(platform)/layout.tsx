@@ -112,17 +112,6 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 					</Link>
 				</div>
 			</header>
-			<StatusMessage
-				className={clsx(
-					"relative",
-					"z-1",
-					"md:mb-2",
-					"translate-y-12",
-					"md:translate-y-22",
-					// "mb-2",
-					// "max-w-prose",
-					"mx-auto",
-				)} />
 			<div className={clsx(
 				"relative",
 				"pt-12",

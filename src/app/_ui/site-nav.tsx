@@ -20,6 +20,7 @@ import { AuthLink } from "@/components/auth"
 import { getComic } from "@/lib/directus/get-comics"
 import { useTranslations } from "next-intl"
 import { LogoutButton } from "@/components/auth-client"
+import StatusMessage from "@/components/status-message"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -83,19 +84,23 @@ export default function SiteNav({
 
 	// RENDER NAV MENU
 	return (
-		<>
+		<div className={clsx(
+
+			// Structure
+			"sticky!",
+			"z-50",
+			"top-0",
+		)}>
+			<StatusMessage />
+
 			{/* MAIN MENU NAV - POPOVER WRAPPER */}
 			<nav
 				className={clsx(
-					// Structure
-					"fixed!",
-					"z-50",
-					"top-0",
 					// Position
 					// "relative",
-					"left-0",
-					"md:left-1/2",
-					"md:-translate-x-1/2",
+					// "left-1/2",
+					// "-translate-x-1/2",
+					"mx-auto",
 					// Size
 					"min-w-xs",
 					"max-w-6xl",
@@ -807,6 +812,6 @@ export default function SiteNav({
 					</PopoverPanel>
 				</Popover>
 			</nav >
-		</>
+		</div>
 	)
 }

@@ -112,13 +112,13 @@ export default async function ComicPageUI({
 				comicDescription={comicDescription}
 			/>
 		</ComicPageHeader>
-		<StatusMessage
+		{/* <StatusMessage
 			className={clsx(
 				"relative",
 				"z-1",
 				hasBanner ? [
 					"translate-y-22",
-					"md:mb-2",
+					// "md:mb-2",
 				] : [
 					"translate-y-13.75",
 					"md:translate-y-19.75",
@@ -126,7 +126,7 @@ export default async function ComicPageUI({
 				// "mb-2",
 				// "max-w-prose",
 				"mx-auto",
-			)} />
+			)} /> */}
 		<ComicPageContentWrapper page={page}>
 			<ClientComicPageContentTitle
 				pagePanels={page.comic_panels}

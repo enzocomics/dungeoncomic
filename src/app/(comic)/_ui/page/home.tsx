@@ -47,12 +47,6 @@ export async function HomepagePageUI({
 					</LandingPageH1>
 				}
 			</LandingPageHeader>
-			<StatusMessage
-				className={clsx(
-					"mb-0",
-					"max-w-prose",
-					"mx-auto",
-				)} />
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 			</LandingPageBody>

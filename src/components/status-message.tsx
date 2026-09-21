@@ -49,6 +49,7 @@ export default function StatusMessage({
 					"--color-notification-950": `var(${notificationColors[statusMessage.type]["950"]})`,
 				} as React.CSSProperties}
 			className={clsx(
+				"peer",
 				"sticky",
 				"top-0",
 				"grid",
@@ -60,8 +61,8 @@ export default function StatusMessage({
 				"overflow-hidden",
 			)}>
 				<div className={clsx(
-					"md:rounded",
-					"bg-black/20",
+					// "md:rounded",
+					"bg-notification-950/40",
 					"p-2",
 				)}>
 					<div className={clsx(
