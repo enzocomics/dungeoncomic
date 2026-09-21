@@ -169,7 +169,7 @@ export default function SiteNav({
 						className={clsx(
 							"group",
 							// Structure
-							"-translate-y-3.5",
+							"-translate-y-3.75",
 							"relative",
 							"flex",
 							"items-center",
@@ -185,7 +185,8 @@ export default function SiteNav({
 							"pointer-events-auto",
 							// Hover
 							"hover:duration-0",
-							"active:translate-px",
+							"active:-translate-y-3.5",
+							"active:translate-x-px",
 							// Transition
 							"transition-all",
 							"ease-in-out",
