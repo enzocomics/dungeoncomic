@@ -18,6 +18,7 @@ import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
 
 import { detailedDate, relativeDate } from "@/lib/dayjs"
+import StatusMessage from "@/components/status-message"
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -40,6 +41,8 @@ export default async function ComicPageUI({
 	const t = await getTranslations("ComicPage")
 	const comic = page.comic
 	const lastPage = await getComicPage(page.comic.slug, page.comic.pages_count)
+	const hasBanner = !!page.comic.banner
+	const hasLogo = !!page.comic.logo
 
 	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({
@@ -109,6 +112,21 @@ export default async function ComicPageUI({
 				comicDescription={comicDescription}
 			/>
 		</ComicPageHeader>
+		<StatusMessage
+			className={clsx(
+				"relative",
+				"z-1",
+				hasBanner ? [
+					"translate-y-22",
+					"md:mb-2",
+				] : [
+					"translate-y-13.75",
+					"md:translate-y-19.75",
+				],
+				// "mb-2",
+				// "max-w-prose",
+				"mx-auto",
+			)} />
 		<ComicPageContentWrapper page={page}>
 			<ClientComicPageContentTitle
 				pagePanels={page.comic_panels}
