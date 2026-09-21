@@ -6,6 +6,7 @@ export const PageContentWrapper = (
 ) => (
 	<article
 		className={clsx(
+			"relative",
 			// Structure
 			"flex",
 			"flex-col",
