@@ -89,7 +89,6 @@ export default function SiteNav({
 	// RENDER NAV MENU
 	return (
 		<header className={clsx(
-
 			// Structure
 			"sticky!",
 			"z-50",
@@ -124,6 +123,16 @@ export default function SiteNav({
 					"md:overflow-x-visible",
 					"grid-cols-[72px_minmax(0,1fr)_72px]",
 					"md:grid-cols-[128px_minmax(0,1fr)_128px]",
+					// COMIC PAGE SPACING
+					comic && !comic.banner && comic.logo && [
+						"mb-7",
+					],
+					comic && comic.banner && comic.logo && [
+						"mb-12",
+					],
+
+
+					// COSMETIC "FILL" BAR
 					comic && [
 						"after:pointer-events-none",
 						"after:absolute",
