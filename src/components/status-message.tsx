@@ -37,25 +37,24 @@ export default function StatusMessage({
 				"p-4",
 				// "rounded-md",
 				"text-white",
-				"bg-blue-100",
-				"border-y",
-				"border-blue-200",
-				"dark:outline",
+				"bg-blue-800",
+
+				// "dark:outline",
 				// background-color
-				(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
-				(statusMessage.type == "error" ? "bg-red-50" : ""),
-				(statusMessage.type == "success" ? "bg-green-50" : ""),
-				(statusMessage.type == "info" ? "bg-blue-50" : ""),
-				// dark: background-color
-				(statusMessage.type == "alert" ? "dark:bg-yellow-500/10" : ""),
-				(statusMessage.type == "error" ? "dark:bg-red-500/15" : ""),
-				(statusMessage.type == "success" ? "dark:bg-green-500/10" : ""),
-				(statusMessage.type == "info" ? "dark:bg-blue-500/10" : ""),
-				// dark: outline-color
-				(statusMessage.type == "alert" ? "dark:outline-yellow-500/15" : ""),
-				(statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
-				(statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
-				(statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
+				// (statusMessage.type == "alert" ? "bg-yellow-50" : ""),
+				// (statusMessage.type == "error" ? "bg-red-50" : ""),
+				// (statusMessage.type == "success" ? "bg-green-50" : ""),
+				// (statusMessage.type == "info" ? "bg-blue-50" : ""),
+				// // dark: background-color
+				// (statusMessage.type == "alert" ? "dark:bg-yellow-500/10" : ""),
+				// (statusMessage.type == "error" ? "dark:bg-red-500/15" : ""),
+				// (statusMessage.type == "success" ? "dark:bg-green-500/10" : ""),
+				// (statusMessage.type == "info" ? "dark:bg-blue-500/10" : ""),
+				// // dark: outline-color
+				// (statusMessage.type == "alert" ? "dark:outline-yellow-500/15" : ""),
+				// (statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
+				// (statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
+				// (statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
 				className
 			)}>
 			<div className="flex">
@@ -82,16 +81,17 @@ export default function StatusMessage({
 						"text-sm",
 						"text-pretty",
 						"font-medium",
+						"font-platform-labels",
 						// text-color
-						(statusMessage.type == "alert" ? "text-yellow-800" : ""),
-						(statusMessage.type == "error" ? "text-red-800" : ""),
-						(statusMessage.type == "success" ? "text-green-800" : ""),
-						(statusMessage.type == "info" ? "text-blue-800" : ""),
-						// dark: text-color
-						(statusMessage.type == "alert" ? "dark:text-yellow-400" : ""),
-						(statusMessage.type == "error" ? "dark:text-red-200" : ""),
-						(statusMessage.type == "success" ? "dark:text-green-200" : ""),
-						(statusMessage.type == "info" ? "dark:text-blue-300" : ""),
+						// (statusMessage.type == "alert" ? "text-yellow-800" : ""),
+						// (statusMessage.type == "error" ? "text-red-800" : ""),
+						// (statusMessage.type == "success" ? "text-green-800" : ""),
+						// (statusMessage.type == "info" ? "text-blue-800" : ""),
+						// // dark: text-color
+						// (statusMessage.type == "alert" ? "dark:text-yellow-400" : ""),
+						// (statusMessage.type == "error" ? "dark:text-red-200" : ""),
+						// (statusMessage.type == "success" ? "dark:text-green-200" : ""),
+						// (statusMessage.type == "info" ? "dark:text-blue-300" : ""),
 					)}>
 						{statusMessage.message}
 					</h3>
@@ -100,6 +100,7 @@ export default function StatusMessage({
 							"mt-2",
 							"text-sm",
 							"text-balance",
+							"font-platform-labels",
 							// text-color
 							(statusMessage.type == "alert" ? "text-yellow-700" : ""),
 							(statusMessage.type == "error" ? "text-red-700" : ""),
