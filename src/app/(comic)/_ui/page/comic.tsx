@@ -106,28 +106,7 @@ export default async function ComicPageUI({
 	// RENDER
 	return <>
 		<ClientComicPageEffects page={page} />
-		{/* <ComicPageHeader comic={comic} >
-			<ClientComicPageHeaderTitle
-				page={page}
-				comicDescription={comicDescription}
-			/>
-		</ComicPageHeader> */}
-		{/* <StatusMessage
-			className={clsx(
-				"relative",
-				"z-1",
-				hasBanner ? [
-					"translate-y-22",
-					// "md:mb-2",
-				] : [
-					"translate-y-13.75",
-					"md:translate-y-19.75",
-				],
-				// "mb-2",
-				// "max-w-prose",
-				"mx-auto",
-			)} /> */}
-		<ComicPageContentWrapper page={page}>
+		<PageContentWrapper>
 			<ClientComicPageContentTitle
 				pagePanels={page.comic_panels}
 				pageTitle={pageTitle}
@@ -151,9 +130,8 @@ export default async function ComicPageUI({
 				userVariables={userVariables}
 				session={session}
 			/>
-
 			<ComicPageMeta page={page} />
-		</ComicPageContentWrapper>
+		</PageContentWrapper>
 		<ClientComicPageNavbar
 			page={page}
 			lastPage={lastPage}
@@ -173,110 +151,28 @@ export function ComicPageHeader({
 	...props
 }: {
 	comic: Awaited<ReturnType<typeof getComic>>
-} & ComponentPropsWithoutRef<"header">) {
-	const hasBanner = !!comic.banner
+} & ComponentPropsWithoutRef<"div">) {
 	const hasLogo = !!comic.logo
-	const hasAuthors = !!comic.authors && comic.authors.length > 0
-	return <header
+	return <div
 		{...props}
 		className={clsx(
 			className,
-			// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
 			// Structure
 			"sticky",
 			"pointer-events-auto",
-			// "mx-auto",
 			"top-0",
 			"z-10",
 			"left-0",
-			// "md:left-1/2",
-			// "md:-translate-x-1/2",
-			// Size
-			// "w-full",
-			// "min-w-xs",
-			// "max-w-6xl",
 			// Spacing
 			!hasLogo && "md:py-4",
 			hasLogo && "h-20",
-			// "md:px-6",
 			// Text
 			"text-white",
 		)}
-	>		{/* COMIC PAGE HEADER - FILL */}
-		{/* <div
-				className={clsx(
-					// 
-					// Position
-					"relative",
-					"h-full",
-					"z-1",
-					// Size
-					// Spacing
-					"mx-auto",
-					// Appearance
-					"dark:outline",
-					"dark:-outline-offset-1",
-					"dark:outline-base-5/50",
-					"md:rounded",
-					hasLogo ? [
-						"bg-transparent",
-					] : [
-						"bg-neutral-800/80",
-						"dark:bg-neutral-900/90",
-						"backdrop-blur-xs",
-						"border-b-6",
-						"border-comic-accent-900",
-					],
-
-					hasBanner ? [
-						// No Prev Page + Banner
-						"drop-shadow-xl",
-						"drop-shadow-neutral-900/45",
-						"md:bg-transparent",
-						"md:backdrop-blur-none",
-						"md:border-none",
-						"dark:md:bg-transparent",
-						"dark:outline-none",
-					] : [
-						// No Prev Page + No Banner
-					]
-
-				)}
-			> */}
-		{props.children}
-		{/* </div> */}
-	</header>
-
-}
-
-export function ComicPageContentWrapper({
-	page,
-	children
-}: {
-	page: Awaited<ReturnType<typeof getComicPage>>
-	children: React.ReactNode
-}) {
-	const hasBanner = !!page.comic.banner
-	const hasLogo = !!page.comic.logo
-	return <div
-		className={clsx(
-			"relative",
-			hasBanner ? [
-				// Banner
-				"pt-22",
-			] : [
-				// No Banner
-				hasLogo
-					? "pt-22"
-					: "pt-14",
-				"md:pt-22",
-			],
-		)}
 	>
-		<PageContentWrapper>
-			{children}
-		</PageContentWrapper>
+		{props.children}
 	</div>
+
 }
 
 const ComicPageMeta = ({

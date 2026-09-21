@@ -88,7 +88,7 @@ export default function SiteNav({
 
 	// RENDER NAV MENU
 	return (
-		<div className={clsx(
+		<header className={clsx(
 
 			// Structure
 			"sticky!",
@@ -107,8 +107,8 @@ export default function SiteNav({
 					// Size
 					"min-w-xs",
 					"max-w-6xl",
-					"h-16",
-					"md:h-20",
+					"h-12",
+					"md:h-22",
 					// "mx-auto",
 					"w-full",
 					// Spacing
@@ -856,6 +856,6 @@ export default function SiteNav({
 					</PopoverPanel>
 				</Popover>
 			</nav >
-		</div>
+		</header>
 	)
 }
