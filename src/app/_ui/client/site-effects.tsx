@@ -3,8 +3,8 @@
 // FUNCTIONS
 import clsx from "clsx"
 // LIBRARIES
-import { useEffect } from "react"
-import { useSearchParams } from "next/navigation"
+import { useEffect, useLayoutEffect } from "react"
+import { usePathname, useSearchParams } from "next/navigation"
 // I18N
 import { useTranslations } from "next-intl"
 // UI
@@ -13,35 +13,22 @@ import { useGlobalContext } from "@/app/_context"
 
 export default function ClientSiteEffects() {
 	// STATUS MESSAGE
-	const { statusMessage } = useGlobalContext()
+	const { statusMessage, setStatusMessage } = useGlobalContext()
 	const setStatus = useChangeStatus("")
 	// I18N
 	const s = useTranslations("status-messages")
 	const t = useTranslations("HomePage")
+	const pathname = usePathname()
 	// Get the url search param
 	const params = useSearchParams()
 	const urlStatus = params.get("status")
 
 	// Display the status notification
-	useEffect(() => {
-		console.log(params, urlStatus)
+	useLayoutEffect(() => {
 		if (params.get("status") == "logged-out") {
 			setStatus("info", `${params.get("status")}`)
 		}
-		// switch (urlStatus) {
-		// 	case "logged-out":
-		// 		setStatus("info", s("logged-out"))
-		// 		break
-		// }
-		console.log('hi')
 	}, [params])
-
-	// useEffect(() => {
-	// 	if (params.get("status") == "logged-out") {
-	// 		setStatus("info", `${params.get("status")}`)
-	// 	}
-	// }, [params])
-
 
 	return <></>
 }

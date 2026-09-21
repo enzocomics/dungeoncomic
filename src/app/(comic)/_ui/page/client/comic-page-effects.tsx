@@ -67,18 +67,8 @@ export default function ClientComicPageEffects({
 			pagenum: page.comic_pagenum,
 			params: searchParams.toString() || undefined
 		})
-		// Clear the status message
-		setStatus("")
 
 	}, [pathname, searchParams.toString()])
-
-	// Update the status for when logged out
-	// TODO: maybe move this somewhere more global so we don't have to do it in multiple places
-	useEffect(() => {
-		if (searchParams.get("status") == "loggedout") {
-			setStatus("info", `${searchParams.get("status")}`)
-		}
-	}, [searchParams])
 
 	return <>
 		{/* DEBUG */}
