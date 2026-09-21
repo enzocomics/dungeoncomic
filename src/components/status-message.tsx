@@ -8,7 +8,7 @@ import clsx from "clsx"
 // UI
 import Icon from "@/styles/icons"
 import { useGlobalContext } from "@/app/_context"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
 import { notificationColors } from "@/styles/colors"
 
@@ -23,7 +23,7 @@ export default function StatusMessage({
 	// NAVIGATION HOOKS
 	const router = useRouter()
 	const pathname = usePathname()
-
+	const params = useSearchParams()
 	// STATUS MESSAGE HOOKS
 	const { statusMessage } = useGlobalContext()
 	const setStatus = useChangeStatus("")
@@ -36,7 +36,6 @@ export default function StatusMessage({
 			aria-live="polite"
 			style={
 				{
-					// Fonts
 					"--color-notification-50": `var(${notificationColors[statusMessage.type]["50"]})`,
 					"--color-notification-100": `var(${notificationColors[statusMessage.type]["100"]})`,
 					"--color-notification-200": `var(${notificationColors[statusMessage.type]["200"]})`,
@@ -51,29 +50,21 @@ export default function StatusMessage({
 				} as React.CSSProperties}
 			className={clsx(
 				"sticky",
+				"grid",
+				"grid-rows-1",
+				"animate-[expand_400ms_ease-out_forwards]",
 				"top-0",
 				"p-4",
-				// "rounded-md",
-				// "text-white",
 				"bg-notification-50",
-				"dark:bg-notification-500",
+				"dark:bg-notification-600",
+				"outline-2",
+				"outline-notification-400/10",
+				"dark:outline-notification-700/20",
+				"drop-shadow-black/10",
+				"dark:drop-shadow-black/20",
+				"drop-shadow-xl",
+				"md:rounded",
 
-				// "dark:outline",
-				// background-color
-				// (statusMessage.type == "alert" ? "bg-yellow-50" : ""),
-				// (statusMessage.type == "error" ? "bg-red-50" : ""),
-				// (statusMessage.type == "success" ? "bg-green-50" : ""),
-				// (statusMessage.type == "info" ? "bg-blue-50" : ""),
-				// // dark: background-color
-				// (statusMessage.type == "alert" ? "dark:bg-yellow-500/10" : ""),
-				// (statusMessage.type == "error" ? "dark:bg-red-500/15" : ""),
-				// (statusMessage.type == "success" ? "dark:bg-green-500/10" : ""),
-				// (statusMessage.type == "info" ? "dark:bg-blue-500/10" : ""),
-				// // dark: outline-color
-				// (statusMessage.type == "alert" ? "dark:outline-yellow-500/15" : ""),
-				// (statusMessage.type == "error" ? "dark:outline-red-500/25" : ""),
-				// (statusMessage.type == "success" ? "dark:outline-green-500/20" : ""),
-				// (statusMessage.type == "info" ? "dark:outline-blue-500/20" : ""),
 				className
 			)}>
 			<div className="flex">
@@ -99,18 +90,10 @@ export default function StatusMessage({
 					<h3 className={clsx(
 						"text-sm",
 						"text-pretty",
-						"font-medium",
 						"font-platform-labels",
-						// text-color
-						// (statusMessage.type == "alert" ? "text-yellow-800" : ""),
-						// (statusMessage.type == "error" ? "text-red-800" : ""),
-						// (statusMessage.type == "success" ? "text-green-800" : ""),
-						// (statusMessage.type == "info" ? "text-blue-800" : ""),
-						// // dark: text-color
-						// (statusMessage.type == "alert" ? "dark:text-yellow-400" : ""),
-						// (statusMessage.type == "error" ? "dark:text-red-200" : ""),
-						// (statusMessage.type == "success" ? "dark:text-green-200" : ""),
-						// (statusMessage.type == "info" ? "dark:text-blue-300" : ""),
+						"font-semibold",
+						"text-notification-800",
+						"dark:text-notification-100",
 					)}>
 						{statusMessage.message}
 					</h3>
@@ -120,16 +103,8 @@ export default function StatusMessage({
 							"text-sm",
 							"text-balance",
 							"font-platform-labels",
-							// text-color
-							(statusMessage.type == "alert" ? "text-yellow-700" : ""),
-							(statusMessage.type == "error" ? "text-red-700" : ""),
-							(statusMessage.type == "success" ? "text-green-700" : ""),
-							(statusMessage.type == "info" ? "text-blue-700" : ""),
-							// dark: text-color
-							(statusMessage.type == "alert" ? "dark:text-yellow-100/80" : ""),
-							(statusMessage.type == "error" ? "dark:text-red-200/80" : ""),
-							(statusMessage.type == "success" ? "dark:text-green-200/85" : ""),
-							(statusMessage.type == "info" ? "dark:text-blue-300" : "")
+							"text-notification-700",
+							"dark:text-notification-300",
 						)}>
 							<p dangerouslySetInnerHTML={{
 								__html: JSON.parse(statusMessage.description).map((
@@ -173,28 +148,35 @@ export default function StatusMessage({
 							data-statusmessage={true}
 							type="button"
 							onClick={() => {
-								router.push(pathname,) // Clear the search params from the url
+								// Clear the search params from the url
+								const queryString = params.toString()
+								const updatedQueryString = new URLSearchParams(queryString)
+								updatedQueryString.delete("status")
+								router.push(`${pathname}${updatedQueryString && `?${updatedQueryString}`}`)
 								setStatus("") // Clear the status message, which hides the message uI
 							}}
 							className={clsx(
 								"inline-flex",
 								"rounded-md",
+								"bg-notification-50",
+								"text-notification-500",
+								"hover:text-notification-100",
 								// bg-color
-								(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
-								(statusMessage.type == "error" ? "bg-red-50" : ""),
-								(statusMessage.type == "success" ? "bg-green-50" : ""),
-								(statusMessage.type == "info" ? "bg-blue-50" : ""),
+								// (statusMessage.type == "alert" ? "bg-yellow-50" : ""),
+								// (statusMessage.type == "error" ? "bg-red-50" : ""),
+								// (statusMessage.type == "success" ? "bg-green-50" : ""),
+								// (statusMessage.type == "info" ? "bg-blue-50" : ""),
 								"p-1.5",
 								// text-color
-								(statusMessage.type == "alert" ? "text-yellow-500" : ""),
-								(statusMessage.type == "error" ? "text-red-500" : ""),
-								(statusMessage.type == "success" ? "text-green-500" : ""),
-								(statusMessage.type == "info" ? "text-blue-500" : ""),
+								// (statusMessage.type == "alert" ? "text-yellow-500" : ""),
+								// (statusMessage.type == "error" ? "text-red-500" : ""),
+								// (statusMessage.type == "success" ? "text-green-500" : ""),
+								// (statusMessage.type == "info" ? "text-blue-500" : ""),
 								// hover:bg-color
-								(statusMessage.type == "alert" ? "hover:bg-yellow-100" : ""),
-								(statusMessage.type == "error" ? "hover:bg-red-100" : ""),
-								(statusMessage.type == "success" ? "hover:bg-green-100" : ""),
-								(statusMessage.type == "info" ? "hover:bg-blue-100" : ""),
+								// (statusMessage.type == "alert" ? "hover:bg-yellow-100" : ""),
+								// (statusMessage.type == "error" ? "hover:bg-red-100" : ""),
+								// (statusMessage.type == "success" ? "hover:bg-green-100" : ""),
+								// (statusMessage.type == "info" ? "hover:bg-blue-100" : ""),
 								"focus-visible:ring-2",
 								// focus-visible:ring-color
 								(statusMessage.type == "alert" ? "focus-visible:ring-yellow-600" : ""),

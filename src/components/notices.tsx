@@ -5,6 +5,7 @@ import clsx from "clsx"
 import Icon from "@/styles/icons"
 import { useGlobalContext } from "@/app/_context"
 import { ComponentPropsWithoutRef } from "react"
+import { notificationColors } from "@/styles/colors"
 
 type NoticeType = "alert" | "error" | "success" | "info" | ""
 
@@ -26,14 +27,17 @@ export default function Notice({
 	title,
 	children,
 	hasClose = false,
+	...props
 }: {
-	type: NoticeType
+	type: keyof typeof notificationColors
 	hasClose?: boolean
-} & NoticeProps) {
-
+} & NoticeProps
+	& ComponentPropsWithoutRef<"div">
+) {
 
 	// OUTPUT
 	return <div
+		{...props}
 		className={clsx(
 			"p-4",
 			"pr-12",
