@@ -46,6 +46,8 @@ export default function SiteNav({
 	const t = useTranslations()
 	const { theme, setTheme } = useTheme()
 
+	const hasLogo = !!(comic?.logo)
+
 
 	// TODO: These are all hardcoded & should be in the dictionaries
 	const comicNavigation: {
@@ -99,14 +101,13 @@ export default function SiteNav({
 			<nav
 				className={clsx(
 					// Position
-					// "relative",
-					// "left-1/2",
-					// "-translate-x-1/2",
 					"mx-auto",
+					"-translate-y-3.5",
+					// "md:-translate-y-",
 					// Size
 					"min-w-xs",
 					"max-w-6xl",
-					"h-12",
+					"h-16",
 					"md:h-20",
 					// "mx-auto",
 					"w-full",
@@ -115,7 +116,41 @@ export default function SiteNav({
 					"md:px-6",
 					// Functionality
 					"pointer-events-none",
-					"relative flex items-center justify-between"
+					"relative",
+					"grid",
+					"justify-between",
+					"items-center",
+					"overflow-x-clip",
+					"md:overflow-x-visible",
+					"grid-cols-[72px_minmax(0,1fr)_72px]",
+					"md:grid-cols-[128px_minmax(0,1fr)_128px]",
+					comic && [
+						"after:pointer-events-none",
+						"after:absolute",
+						"after:-z-10",
+						"after:top-0",
+						"after:left-1/2",
+						"after:-translate-x-1/2",
+						"after:md:top-8",
+						"after:w-[calc(200vw)]",
+						"after:md:w-[calc(100%-48px)]",
+						"after:md:rounded",
+						"after:left-1/2",
+						"after:-translate-x-1/2",
+						"after:h-13",
+						hasLogo ? [
+							"after:bg-transparent",
+						] : [
+							"after:translate-y-3.5",
+							"after:md:translate-y-0",
+							// "md:translate-y-",
+							"after:bg-neutral-800/80",
+							"after:dark:bg-neutral-900/90",
+							"after:backdrop-blur-xs",
+							"after:border-b-6",
+							"after:border-comic-accent-900",
+						]
+					],
 				)}
 			>
 				{/* MOBILE MENU BUTTON */}
@@ -406,12 +441,17 @@ export default function SiteNav({
 					}
 				</Popover>
 
-				{children}
+				{/* COMIC PAGE TITLE/LOGO */}
+				<div>
+					{children}
+				</div>
 
 				{/* ACCOUNT MENU POPOVER */}
 				<Popover>
 					<PopoverButton className={clsx(
+						"justify-self-end",
 						"pointer-events-auto",
+						"ml-13.5",
 						"mr-1.5",
 						"group",
 						"relative",

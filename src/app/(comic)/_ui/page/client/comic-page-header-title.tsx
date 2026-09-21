@@ -28,8 +28,8 @@ export function ClientComicPageHeaderTitle({
 			className={
 				clsx(
 					"p-1.5",
-					"px-18",
-					"md:px-40",
+					// "px-18",
+					// "md:px-40",
 
 					// "md:pr-11.5",
 					// "md:pl-30.5",

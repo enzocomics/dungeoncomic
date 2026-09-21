@@ -11,7 +11,6 @@ export default async function Page({
 	const { route, pagenum } = await params
 	const page = await getComicPage(route, pagenum)
 	return <>
-
 		<ClientComicPageHeaderTitle page={page} />
 	</>
 }

@@ -184,20 +184,21 @@ export function ComicPageHeader({
 			// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
 			// Structure
 			"sticky",
-			"mx-auto",
+			"pointer-events-auto",
+			// "mx-auto",
 			"top-0",
 			"z-10",
 			"left-0",
 			// "md:left-1/2",
 			// "md:-translate-x-1/2",
 			// Size
-			"w-full",
-			"min-w-xs",
-			"max-w-6xl",
+			// "w-full",
+			// "min-w-xs",
+			// "max-w-6xl",
 			// Spacing
 			!hasLogo && "md:py-4",
 			hasLogo && "h-20",
-			"md:px-6",
+			// "md:px-6",
 			// Text
 			"text-white",
 		)}
