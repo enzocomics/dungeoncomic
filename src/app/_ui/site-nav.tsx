@@ -131,7 +131,6 @@ export default function SiteNav({
 						"mb-12",
 					],
 
-
 					// COSMETIC "FILL" BAR
 					comic && [
 						"after:pointer-events-none",
@@ -367,10 +366,10 @@ export default function SiteNav({
 								"origin-top-left",
 								// "relative",
 								"left-0",
-								"top-13.5",
+								"top-17.5",
 								"md:left-6",
-								"md:top-17.5",
-								"z-1",
+								"md:top-20.5",
+								"z-50",
 								// Size & Spacing
 								"w-full",
 								"max-w-72",
@@ -586,9 +585,9 @@ export default function SiteNav({
 							"absolute",
 							"right-0",
 							"z-50",
-							"top-13.5",
+							"top-17.5",
 							"md:right-6",
-							"md:top-17.5",
+							"md:top-20.5",
 							// Size & Spacing
 							"max-w-lg",
 							"rounded-sm",
