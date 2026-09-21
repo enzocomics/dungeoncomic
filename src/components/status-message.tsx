@@ -35,7 +35,11 @@ export default function StatusMessage({
 			aria-live="polite"
 			className={clsx(
 				"p-4",
-				"rounded-md",
+				// "rounded-md",
+				"text-white",
+				"bg-blue-100",
+				"border-y",
+				"border-blue-200",
 				"dark:outline",
 				// background-color
 				(statusMessage.type == "alert" ? "bg-yellow-50" : ""),
@@ -149,7 +153,7 @@ export default function StatusMessage({
 							data-statusmessage={true}
 							type="button"
 							onClick={() => {
-								// router.push(pathname,) // Clear the search params from the url
+								router.push(pathname,) // Clear the search params from the url
 								setStatus("") // Clear the status message, which hides the message uI
 							}}
 							className={clsx(
