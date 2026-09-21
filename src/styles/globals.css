@@ -163,7 +163,6 @@
 	--font-platform-mono: var(--font-roboto-mono);
 
 	/* COLOR VARIABLE DEFINITIONS*/
-
 	--color-gray-100: #fefefe;
 	--color-gray-200: #d7d7d7;
 	--color-gray-300: #cccccc;
@@ -218,6 +217,66 @@
 	--color-comic-accent-800: var(--color-red-800);
 	--color-comic-accent-900: var(--color-red-900);
 	--color-comic-accent-950: var(--color-red-950);
+
+	--color-notification-alert-50: var(--color-yellow-50);
+	--color-notification-alert-100: var(--color-yellow-100);
+	--color-notification-alert-200: var(--color-yellow-200);
+	--color-notification-alert-300: var(--color-yellow-300);
+	--color-notification-alert-400: var(--color-yellow-400);
+	--color-notification-alert-500: var(--color-yellow-500);
+	--color-notification-alert-600: var(--color-yellow-600);
+	--color-notification-alert-700: var(--color-yellow-700);
+	--color-notification-alert-800: var(--color-yellow-800);
+	--color-notification-alert-900: var(--color-yellow-900);
+	--color-notification-alert-950: var(--color-yellow-950);
+
+	--color-notification-error-50: var(--color-red-50);
+	--color-notification-error-100: var(--color-red-100);
+	--color-notification-error-200: var(--color-red-200);
+	--color-notification-error-300: var(--color-red-300);
+	--color-notification-error-400: var(--color-red-400);
+	--color-notification-error-500: var(--color-red-500);
+	--color-notification-error-600: var(--color-red-600);
+	--color-notification-error-700: var(--color-red-700);
+	--color-notification-error-800: var(--color-red-800);
+	--color-notification-error-900: var(--color-red-900);
+	--color-notification-error-950: var(--color-red-950);
+
+	--color-notification-success-50: var(--color-green-50);
+	--color-notification-success-100: var(--color-green-100);
+	--color-notification-success-200: var(--color-green-200);
+	--color-notification-success-300: var(--color-green-300);
+	--color-notification-success-400: var(--color-green-400);
+	--color-notification-success-500: var(--color-green-500);
+	--color-notification-success-600: var(--color-green-600);
+	--color-notification-success-700: var(--color-green-700);
+	--color-notification-success-800: var(--color-green-800);
+	--color-notification-success-900: var(--color-green-900);
+	--color-notification-success-950: var(--color-green-950);
+
+	--color-notification-info-50: var(--color-blue-50);
+	--color-notification-info-100: var(--color-blue-100);
+	--color-notification-info-200: var(--color-blue-200);
+	--color-notification-info-300: var(--color-blue-300);
+	--color-notification-info-400: var(--color-blue-400);
+	--color-notification-info-500: var(--color-blue-500);
+	--color-notification-info-600: var(--color-blue-600);
+	--color-notification-info-700: var(--color-blue-700);
+	--color-notification-info-800: var(--color-blue-800);
+	--color-notification-info-900: var(--color-blue-900);
+	--color-notification-info-950: var(--color-blue-950);
+
+	--color-notification-50: var(--color-neutral-50);
+	--color-notification-100: var(--color-neutral-100);
+	--color-notification-200: var(--color-neutral-200);
+	--color-notification-300: var(--color-neutral-300);
+	--color-notification-400: var(--color-neutral-400);
+	--color-notification-500: var(--color-neutral-500);
+	--color-notification-600: var(--color-neutral-600);
+	--color-notification-700: var(--color-neutral-700);
+	--color-notification-800: var(--color-neutral-800);
+	--color-notification-900: var(--color-neutral-900);
+	--color-notification-950: var(--color-neutral-950);
 
 	/* ANIMATION */
 	--animate-fade-in: fade-in 300ms ease-in 1;

@@ -1,7 +1,8 @@
 "use client"
 /**----------------------------------- */
 // TYPES
-export type StatusMessageType = "alert" | "error" | "success" | "info" | ""
+export type StatusMessageType = keyof typeof notificationColors
+
 // FUNCTIONS
 import clsx from "clsx"
 // UI
@@ -9,7 +10,7 @@ import Icon from "@/styles/icons"
 import { useGlobalContext } from "@/app/_context"
 import { usePathname, useRouter } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
-
+import { notificationColors } from "@/styles/colors"
 
 /**-----------------------------------
  * Status Message UI
@@ -33,13 +34,29 @@ export default function StatusMessage({
 		return <div
 			id={`status-${statusMessage.type}`}
 			aria-live="polite"
+			style={
+				{
+					// Fonts
+					"--color-notification-50": `var(${notificationColors[statusMessage.type]["50"]})`,
+					"--color-notification-100": `var(${notificationColors[statusMessage.type]["100"]})`,
+					"--color-notification-200": `var(${notificationColors[statusMessage.type]["200"]})`,
+					"--color-notification-300": `var(${notificationColors[statusMessage.type]["300"]})`,
+					"--color-notification-400": `var(${notificationColors[statusMessage.type]["400"]})`,
+					"--color-notification-500": `var(${notificationColors[statusMessage.type]["500"]})`,
+					"--color-notification-600": `var(${notificationColors[statusMessage.type]["600"]})`,
+					"--color-notification-700": `var(${notificationColors[statusMessage.type]["700"]})`,
+					"--color-notification-800": `var(${notificationColors[statusMessage.type]["800"]})`,
+					"--color-notification-900": `var(${notificationColors[statusMessage.type]["900"]})`,
+					"--color-notification-950": `var(${notificationColors[statusMessage.type]["950"]})`,
+				} as React.CSSProperties}
 			className={clsx(
 				"sticky",
 				"top-0",
 				"p-4",
 				// "rounded-md",
-				"text-white",
-				"bg-blue-800",
+				// "text-white",
+				"bg-notification-50",
+				"dark:bg-notification-500",
 
 				// "dark:outline",
 				// background-color
@@ -234,7 +251,7 @@ export default function StatusMessage({
  * - `useChangeStatus()` returns a plain function (a callback)
  */
 export function useChangeStatus(
-	type: StatusMessageType,
+	type: keyof typeof notificationColors | "",
 	message?: string,
 	description?: string | React.ReactNode
 ) {
