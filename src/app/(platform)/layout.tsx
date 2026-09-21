@@ -116,8 +116,9 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 				className={clsx(
 					"relative",
 					"z-1",
+					"md:mb-2",
 					"translate-y-12",
-					// "md:translate-y-19.75",
+					"md:translate-y-22",
 					// "mb-2",
 					// "max-w-prose",
 					"mx-auto",
