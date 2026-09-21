@@ -26,7 +26,7 @@ export default function ClientSiteEffects() {
 	// Display the status notification
 	useLayoutEffect(() => {
 		if (params.get("status") == "logged-out") {
-			setStatus("info", `${params.get("status")}`)
+			setStatus("info", s(params.get("status") as string))
 		}
 	}, [params])
 
