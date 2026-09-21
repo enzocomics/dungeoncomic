@@ -5,7 +5,6 @@ import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
 import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1, LandingPageLogo } from "../../../_ui/page-landing"
 import StatusMessage from "@/components/status-message"
-import ClientHomePageEffects from "./client/home-page-effects"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -22,7 +21,6 @@ export async function HomepagePageUI({
 	const logo = settings.project_logo
 
 	return <>
-		<ClientHomePageEffects />
 		<LandingPageWrapper>
 			<LandingPageHeader>
 				{logo &&
@@ -51,7 +49,7 @@ export async function HomepagePageUI({
 			</LandingPageHeader>
 			<StatusMessage
 				className={clsx(
-					"mb-2",
+					"mb-0",
 					"max-w-prose",
 					"mx-auto",
 				)} />
