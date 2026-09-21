@@ -9,9 +9,11 @@ import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 // UI
 import { useChangeStatus } from "@/components/status-message"
+import { useGlobalContext } from "@/app/_context"
 
 export default function ClientHomePageEffects() {
 	// STATUS MESSAGE
+	const { statusMessage } = useGlobalContext()
 	const setStatus = useChangeStatus("")
 	// I18N
 	const s = useTranslations("status-messages")
@@ -19,16 +21,27 @@ export default function ClientHomePageEffects() {
 	// Get the url search param
 	const params = useSearchParams()
 	const urlStatus = params.get("status")
-	// Get the user session
 
 	// Display the status notification
 	useEffect(() => {
-		switch (urlStatus) {
-			case "logged-out":
-				setStatus("info", s("logged-out"))
-				break
+		console.log(params, urlStatus)
+		if (params.get("status") == "logged-out") {
+			setStatus("info", `${params.get("status")}`)
 		}
-	}, [urlStatus])
+		// switch (urlStatus) {
+		// 	case "logged-out":
+		// 		setStatus("info", s("logged-out"))
+		// 		break
+		// }
+		console.log('hi')
+	}, [params])
+
+	// useEffect(() => {
+	// 	if (params.get("status") == "logged-out") {
+	// 		setStatus("info", `${params.get("status")}`)
+	// 	}
+	// }, [params])
+
 
 	return <></>
 }
