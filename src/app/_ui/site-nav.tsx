@@ -47,6 +47,7 @@ export default function SiteNav({
 	const { theme, setTheme } = useTheme()
 
 	const hasLogo = !!(comic?.logo)
+	const isLandingPage = pathname !== `/${comic?.slug}`
 
 
 	// TODO: These are all hardcoded & should be in the dictionaries
@@ -101,7 +102,7 @@ export default function SiteNav({
 				className={clsx(
 					// Position
 					"mx-auto",
-					"-translate-y-3.5",
+					// "-translate-y-3.5",
 					// "md:-translate-y-",
 					// Size
 					"min-w-xs",
@@ -118,7 +119,7 @@ export default function SiteNav({
 					"relative",
 					"grid",
 					"justify-between",
-					"items-center",
+					// "items-center",
 					"overflow-x-clip",
 					"md:overflow-x-visible",
 					"grid-cols-[72px_minmax(0,1fr)_72px]",
@@ -132,14 +133,14 @@ export default function SiteNav({
 					],
 
 					// COSMETIC "FILL" BAR
-					comic && [
+					comic && isLandingPage && [
 						"after:pointer-events-none",
 						"after:absolute",
 						"after:-z-10",
 						"after:top-0",
 						"after:left-1/2",
 						"after:-translate-x-1/2",
-						"after:md:top-8",
+						"after:md:top-4",
 						"after:w-[calc(200vw)]",
 						"after:md:w-[calc(100%-48px)]",
 						"after:md:rounded",
@@ -149,8 +150,8 @@ export default function SiteNav({
 						hasLogo ? [
 							"after:bg-transparent",
 						] : [
-							"after:translate-y-3.5",
-							"after:md:translate-y-0",
+							// "after:translate-y-3.5",
+							// "after:md:translate-y-0",
 							// "md:translate-y-",
 							"after:bg-neutral-800/80",
 							"after:dark:bg-neutral-900/90",
@@ -168,6 +169,7 @@ export default function SiteNav({
 						className={clsx(
 							"group",
 							// Structure
+							"-translate-y-3.5",
 							"relative",
 							"flex",
 							"items-center",
@@ -459,8 +461,8 @@ export default function SiteNav({
 					<PopoverButton className={clsx(
 						"justify-self-end",
 						"pointer-events-auto",
+						"m-1.5",
 						"ml-13.5",
-						"mr-1.5",
 						"group",
 						"relative",
 						"flex",

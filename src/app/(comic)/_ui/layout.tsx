@@ -68,17 +68,8 @@ export function ComicLayoutUI({
 					backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
 				}} />
 			}
-			{/* <SiteNav
-				comic={comic}
-				session={session}
-				menu={singleComicSite ? false : true}
-			// Hide the navmenu if it's a single comic site
-			// TODO:In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
-			/>
-			<SiteLayoutMain> */}
 			{header}
 			{children}
-			{/* </SiteLayoutMain> */}
 		</SiteLayoutWrapper>
 	)
 }

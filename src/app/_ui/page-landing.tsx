@@ -11,6 +11,7 @@ export const LandingPageWrapper = ({
 		className={clsx(
 			className,
 			"relative",
+			"pt-50",
 		)}
 	>
 		{props.children}
@@ -22,12 +23,11 @@ export const LandingPageHeader = (
 ) => {
 	return <header
 		className={clsx(
+			props.className,
 			"flex",
 			"items-center",
 			"justify-center",
-			"h-50",
-			"p-10",
-			"md:h-80",
+			"h-80",
 			"md:p-20",
 			"overflow-hidden"
 		)}
@@ -39,12 +39,10 @@ export const LandingPageHeader = (
 export const LandingPageLogo = (
 	props: ComponentPropsWithoutRef<typeof Image>
 ) => (
-	// <span className={clsx(
-	// 	"block"
-	// )}>
 	<Image
 		{...props}
 		className={clsx(
+			props.className,
 			"drop-shadow-black/50",
 			"drop-shadow-lg",
 			"block",
@@ -52,9 +50,10 @@ export const LandingPageLogo = (
 			"h-full",
 			"box-content",
 			"object-contain",
+			"max-h-36",
+			"md:max-h-none",
 		)}
 	/>
-	// </span>
 )
 
 export const LandingPageH1 = (

@@ -164,8 +164,8 @@ export function ComicPageHeader({
 			"z-10",
 			"left-0",
 			// Spacing
-			!hasLogo && "md:py-4",
-			hasLogo && "h-20",
+			// !hasLogo && "md:py-4",
+			// hasLogo && "h-20",
 			// Text
 			"text-white",
 		)}

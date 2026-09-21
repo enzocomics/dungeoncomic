@@ -35,7 +35,7 @@ export default function ComicLandingPageUI({
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<LandingPageWrapper>
-			<LandingPageHeader>
+			{/* <LandingPageHeader>
 				{comic.logo &&
 					<LandingPageLogo
 						src={`${directusURL}/assets/${comic.logo.filename_disk}`}
@@ -58,22 +58,7 @@ export default function ComicLandingPageUI({
 						{comic.title}
 					</LandingPageH1>
 				}
-			</LandingPageHeader>
-			{/* <StatusMessage
-				className={clsx(
-					"relative",
-					"z-1",
-					hasBanner ? [
-						"translate-y-0",
-						"md:mb-2",
-					] : [
-						"translate-y-13.75",
-						"md:translate-y-19.75",
-					],
-					// "mb-2",
-					// "max-w-prose",
-					"mx-auto",
-				)} /> */}
+			</LandingPageHeader> */}
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 				{comic.pages_count > 0 &&
