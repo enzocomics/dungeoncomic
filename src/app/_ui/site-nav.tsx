@@ -625,7 +625,7 @@ export default function SiteNav({
 									))}
 									{session &&
 										// Use a regular anchor tag instead of <Link> because we want to force a refresh
-										<LogoutButton className={
+										<CloseButton as={LogoutButton} className={
 											clsx(
 												"block",
 												"w-full",
@@ -643,13 +643,9 @@ export default function SiteNav({
 												"ease-in-out",
 												"duration-300",
 											)}
-										// onClick={() => {
-										// console.log(`/logout?r=${pathname}`)
-										// router.push(`/logout?r=${pathname}`)
-										// }}
 										>
 											{t("auth.logout")}
-										</LogoutButton>
+										</CloseButton>
 									}
 								</section>
 								{/* MODE TOGGLER */}
