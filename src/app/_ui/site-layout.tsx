@@ -60,6 +60,7 @@ export const SiteLayoutMain = (
 		{...props}
 		className={clsx(
 			props.className,
+			"relative",
 			"mx-auto",
 			"max-w-6xl",
 			"md:px-6",

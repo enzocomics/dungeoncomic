@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 // DATA
 import { prepareText } from "../../_functions/parse-content"
 import { verifySession } from "@/data/session"
-import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
@@ -106,12 +106,12 @@ export default async function ComicPageUI({
 	// RENDER
 	return <>
 		<ClientComicPageEffects page={page} />
-		<ComicPageHeader page={page} >
+		{/* <ComicPageHeader comic={comic} >
 			<ClientComicPageHeaderTitle
 				page={page}
 				comicDescription={comicDescription}
 			/>
-		</ComicPageHeader>
+		</ComicPageHeader> */}
 		{/* <StatusMessage
 			className={clsx(
 				"relative",
@@ -168,13 +168,12 @@ export default async function ComicPageUI({
  * 
  */
 export function ComicPageHeader({
-	page,
+	comic,
 	className,
 	...props
 }: {
-	page: Awaited<ReturnType<typeof getComicPage>>
+	comic: Awaited<ReturnType<typeof getComic>>
 } & ComponentPropsWithoutRef<"header">) {
-	const comic = page.comic
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
@@ -184,11 +183,13 @@ export function ComicPageHeader({
 			className,
 			// This div wraps around the actual header, and provides some spacing on larger screens. It's full-width and transparent
 			// Structure
-			"fixed",
+			"sticky",
+			"mx-auto",
+			"top-0",
 			"z-10",
 			"left-0",
-			"md:left-1/2",
-			"md:-translate-x-1/2",
+			// "md:left-1/2",
+			// "md:-translate-x-1/2",
 			// Size
 			"w-full",
 			"min-w-xs",
@@ -201,48 +202,48 @@ export function ComicPageHeader({
 			"text-white",
 		)}
 	>		{/* COMIC PAGE HEADER - FILL */}
-		<div
-			className={clsx(
-				// 
-				// Position
-				"relative",
-				"h-full",
-				"z-1",
-				// Size
-				// Spacing
-				"mx-auto",
-				// Appearance
-				"dark:outline",
-				"dark:-outline-offset-1",
-				"dark:outline-base-5/50",
-				"md:rounded",
-				hasLogo ? [
-					"bg-transparent",
-				] : [
-					"bg-neutral-800/80",
-					"dark:bg-neutral-900/90",
-					"backdrop-blur-xs",
-					"border-b-6",
-					"border-comic-accent-900",
-				],
+		{/* <div
+				className={clsx(
+					// 
+					// Position
+					"relative",
+					"h-full",
+					"z-1",
+					// Size
+					// Spacing
+					"mx-auto",
+					// Appearance
+					"dark:outline",
+					"dark:-outline-offset-1",
+					"dark:outline-base-5/50",
+					"md:rounded",
+					hasLogo ? [
+						"bg-transparent",
+					] : [
+						"bg-neutral-800/80",
+						"dark:bg-neutral-900/90",
+						"backdrop-blur-xs",
+						"border-b-6",
+						"border-comic-accent-900",
+					],
 
-				hasBanner ? [
-					// No Prev Page + Banner
-					"drop-shadow-xl",
-					"drop-shadow-neutral-900/45",
-					"md:bg-transparent",
-					"md:backdrop-blur-none",
-					"md:border-none",
-					"dark:md:bg-transparent",
-					"dark:outline-none",
-				] : [
-					// No Prev Page + No Banner
-				]
+					hasBanner ? [
+						// No Prev Page + Banner
+						"drop-shadow-xl",
+						"drop-shadow-neutral-900/45",
+						"md:bg-transparent",
+						"md:backdrop-blur-none",
+						"md:border-none",
+						"dark:md:bg-transparent",
+						"dark:outline-none",
+					] : [
+						// No Prev Page + No Banner
+					]
 
-			)}
-		>
-			{props.children}
-		</div>
+				)}
+			> */}
+		{props.children}
+		{/* </div> */}
 	</header>
 
 }

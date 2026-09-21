@@ -22,11 +22,13 @@ import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui
  */
 export function ComicLayoutUI({
 	children,
+	header,
 	comic,
 	session,
 	settings,
 }: {
 	children: React.ReactNode
+	header: React.ReactNode
 	comic: Awaited<ReturnType<typeof getComic>>
 	session?: Awaited<ReturnType<typeof verifySession>>
 	settings?: Awaited<ReturnType<typeof getSettings>>
@@ -66,16 +68,17 @@ export function ComicLayoutUI({
 					backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
 				}} />
 			}
-			<SiteNav
+			{/* <SiteNav
 				comic={comic}
 				session={session}
 				menu={singleComicSite ? false : true}
 			// Hide the navmenu if it's a single comic site
 			// TODO:In the future, if we had subpages, add a conditional that checks if subpages exist as well before hiding
 			/>
-			<SiteLayoutMain>
-				{children}
-			</SiteLayoutMain>
+			<SiteLayoutMain> */}
+			{header}
+			{children}
+			{/* </SiteLayoutMain> */}
 		</SiteLayoutWrapper>
 	)
 }

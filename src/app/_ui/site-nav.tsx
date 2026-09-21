@@ -32,11 +32,13 @@ import StatusMessage from "@/components/status-message"
 export default function SiteNav({
 	session,
 	menu = false,
-	comic
+	comic,
+	children
 }: {
 	session?: Awaited<ReturnType<typeof verifySession>>
 	menu?: boolean
 	comic?: Awaited<ReturnType<typeof getComic>>
+	children?: React.ReactNode
 }) {
 	//Hooks
 	const router = useRouter()
@@ -403,6 +405,8 @@ export default function SiteNav({
 						</PopoverPanel>
 					}
 				</Popover>
+
+				{children}
 
 				{/* ACCOUNT MENU POPOVER */}
 				<Popover>

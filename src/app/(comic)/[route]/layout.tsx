@@ -8,6 +8,9 @@ import React from "react"
 import AuthModal from "../_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
+import SiteNav from "@/app/_ui/site-nav"
+import { ComicPageHeader } from "../_ui/page/comic"
+import { SiteLayoutMain } from "@/app/_ui/site-layout"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -28,9 +31,11 @@ import { readSettings } from "@directus/sdk"
  */
 export default async function RouteLayout({
 	children,
+	header,
 	params,
 }: {
 	children: React.ReactNode
+	header: React.ReactNode
 	params: Promise<{ route: string }>
 }) {
 	const { route } = await params
@@ -70,8 +75,22 @@ export default async function RouteLayout({
 				getComic={comic}
 
 			>
-				<ComicLayoutUI settings={settings} comic={comic} session={session}>
-					{children}
+				<ComicLayoutUI settings={settings} comic={comic} session={session}
+					header={
+						<SiteNav
+							comic={comic}
+							session={session}
+							menu={singleComicSite ? false : true}
+						>
+							<ComicPageHeader comic={comic} >
+								{header}
+							</ComicPageHeader>
+						</SiteNav>
+					}
+				>
+					<SiteLayoutMain>
+						{children}
+					</SiteLayoutMain>
 				</ComicLayoutUI>
 			</ComicContextProvider>
 		</>
