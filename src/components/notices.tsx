@@ -89,8 +89,8 @@ export default function Notice({
 					<h3 className={clsx(
 						"text-base",
 						"text-pretty",
-						"font-medium",
-						"font-platform-header",
+						"font-semibold",
+						"font-platform-labels", // TODO: hardcoded
 						// text-color
 						(type == "alert" ? "text-yellow-800" : ""),
 						(type == "error" ? "text-red-800" : ""),
@@ -107,7 +107,7 @@ export default function Notice({
 				}
 				<div className={clsx(
 					title && "mt-2",
-					"font-platform-copy",
+					"font-platform-labels", // TODO: hardcoded
 					"text-base",
 					"text-pretty",
 					"space-y-2",

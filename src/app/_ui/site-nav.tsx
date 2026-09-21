@@ -352,7 +352,7 @@ export default function SiteNav({
 									"dark:-outline-offset-1",
 									"dark:outline-base-5/50",
 									"py-1",
-									"font-comic-header",
+									"font-platform-labels",
 								)}>
 								{/* COMIC MENU */}
 								{comicNavigation.map((item) => (
@@ -566,7 +566,7 @@ export default function SiteNav({
 								<section className={
 									clsx(
 										"py-1",
-										"font-comic-header",
+										"font-platform-labels",
 									)
 								}>
 									{accountMenuNavigation?.map((item, index) => (
