@@ -12,6 +12,7 @@ import { directusURL } from "@/data/env"
 import Link from "next/link"
 import { PageContentWrapper } from "../_ui/site-page"
 import { verifySession } from "@/data/session"
+import StatusMessage from "@/components/status-message"
 
 export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const { public_registration } = await adminClient.request(readSettings({
@@ -111,6 +112,16 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 					</Link>
 				</div>
 			</header>
+			<StatusMessage
+				className={clsx(
+					"relative",
+					"z-1",
+					"translate-y-12",
+					// "md:translate-y-19.75",
+					// "mb-2",
+					// "max-w-prose",
+					"mx-auto",
+				)} />
 			<div className={clsx(
 				"relative",
 				"pt-12",
