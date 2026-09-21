@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl"
 import { useChangeStatus } from "@/components/status-message"
 import { useGlobalContext } from "@/app/_context"
 
-export default function ClientHomePageEffects() {
+export default function ClientSiteEffects() {
 	// STATUS MESSAGE
 	const { statusMessage } = useGlobalContext()
 	const setStatus = useChangeStatus("")
