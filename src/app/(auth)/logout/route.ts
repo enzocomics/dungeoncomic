@@ -28,11 +28,11 @@ export async function GET(request: NextRequest) {
 
 	await logout()
 
-	console.log("referralPath", referralPath)
+	// console.log("referralPath", referralPath)
 	// Create the redirect URL from the referral path
 	const redirectUrl = new URL(referralPath, request.url)
-	// Add the "loggedout status param
-	redirectUrl.searchParams.set("status", "loggedout")
+	// Add the "logged-out status param
+	redirectUrl.searchParams.set("status", "logged-out")
 
 	// Return
 	return NextResponse.redirect(redirectUrl)
