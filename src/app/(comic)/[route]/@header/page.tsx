@@ -8,6 +8,10 @@ import { useTranslations } from "next-intl"
 import { sanitize } from "@/lib/sanitize"
 import StatusMessage from "@/components/status-message"
 import { LandingPageH1, LandingPageHeader, LandingPageLogo } from "@/app/_ui/page-landing"
+import PageEffects from "./_effects"
+import ClientLandingPageHeader from "./_effects"
+import { getSettings } from "@/lib/directus/get-settings"
+
 
 export default async function Page({
 	params
@@ -16,33 +20,10 @@ export default async function Page({
 }) {
 	const { route } = await params
 	const comic = await getComic({ slug: route })
+	const settings = await getSettings()
 	const hasLogo = !!comic.logo
 	const hasBanner = !!comic.banner
 	return <>
-		<LandingPageHeader className={clsx(
-		)}>
-			{comic.logo &&
-				<LandingPageLogo
-					src={`${directusURL}/assets/${comic.logo.filename_disk}`}
-					alt={comic.logo.description || ""}
-					width={comic.logo.width || "320"}
-					height={comic.logo.height || "240"}
-				/>
-			}
-			{!hasLogo &&
-				<LandingPageH1 className={clsx(
-					hasBanner && [
-						"text-white",
-						"[text-stroke:16px_black",
-						"[-webkit-text-stroke:16px_black]",
-						"[paint-order:stroke_fill]",
-						"drop-shadow-black/50",
-						"drop-shadow-md",
-					],
-				)}>
-					{comic.title}
-				</LandingPageH1>
-			}
-		</LandingPageHeader>
+		<ClientLandingPageHeader comic={comic} settings={settings} />
 	</>
 }
