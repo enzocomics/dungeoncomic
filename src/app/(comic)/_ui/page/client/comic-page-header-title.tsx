@@ -27,24 +27,26 @@ export function ClientComicPageHeaderTitle({
 		<div
 			className={
 				clsx(
-					"p-1.5",
+					!hasLogo && "p-1.5",
 					"flex",
 					"justify-center",
 					"h-full",
 					"relative",
 					hasBanner && hasLogo && [
-						"top-4",
-						"md:top-3",
+						// "top-4",
+						// "md:top-3",
 					],
 					!hasBanner && hasLogo && [
-						"top-2",
-						"md:top-0",
+						// "-top-0.5",
+						// "md:top-0",
+						""
 					],
 				)
 			}>
 			<Popover as="div" className={
 				clsx(
 					"flex",
+					"h-full",
 					"justify-center",
 					"items-center",
 					"font-comic-header",
@@ -212,10 +214,12 @@ export function ClientComicPageHeaderTitle({
 						"outline-none",
 						"focus:outline-none",
 						"active:outline-none",
+						!hasBanner && "md:-top-4",
 					)}>
 						<div className={clsx(
-							"flex",
-							"py-2",
+							// "flex",
+							"h-full",
+							"p-1",
 							"group-hover:scale-105",
 							"group-hover:duration-0",
 							// Transition
@@ -239,8 +243,9 @@ export function ClientComicPageHeaderTitle({
 									"drop-shadow-black/50",
 									"drop-shadow-sm",
 									"w-auto",
-									"max-h-15",
-									"md:max-h-20",
+									"object-contain",
+									"h-16",
+									// "md:max-h-20",
 								)}
 							/>
 							<Icon name="xmark" className={clsx(

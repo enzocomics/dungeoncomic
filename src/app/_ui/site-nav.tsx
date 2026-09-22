@@ -71,15 +71,9 @@ export default function SiteNav({
 			}
 		]
 
-	const platformNavigation = [
-		{ name: "Dungeon Construction Co.", href: "/", current: false },
-	]
-
-
 	const accountMenuNavigation = session && [
 		{ name: "Edit Profile", href: "/dashboard", modal: null },
 		{ name: "Settings", href: "/dashboard/settings", modal: null },
-		// { name: "Logout", href: "/logout" },
 	]
 
 	const accountMenuAuthNav = !session ? [
@@ -96,19 +90,13 @@ export default function SiteNav({
 			"top-0",
 		)}>
 			<StatusMessage />
-
-			{/* MAIN MENU NAV - POPOVER WRAPPER */}
+			{/* MAIN MENU NAV */}
 			<nav
 				className={clsx(
 					// Position
 					"mx-auto",
-					// "-translate-y-3.5",
-					// "md:-translate-y-",
-					// Size
 					"min-w-xs",
 					"max-w-6xl",
-					"h-12",
-					"md:h-22",
 					// "mx-auto",
 					"w-full",
 					// Spacing
@@ -124,12 +112,16 @@ export default function SiteNav({
 					"md:overflow-x-visible",
 					"grid-cols-[72px_minmax(0,1fr)_72px]",
 					"md:grid-cols-[128px_minmax(0,1fr)_128px]",
-					// COMIC PAGE SPACING
-					comic && !comic.banner && comic.logo && [
-						"mb-7",
-					],
-					comic && comic.banner && comic.logo && [
-						"mb-12",
+
+					// Logo
+					comic?.logo && "h-20",
+					comic?.logo && !comic?.banner ? [
+						// Logo + NO banner
+						"md:h-20",
+					] : [
+						// Logo + Banner
+						"h-20",
+						"md:h-27",
 					],
 
 					// COSMETIC "FILL" BAR
@@ -453,7 +445,16 @@ export default function SiteNav({
 				</Popover>
 
 				{/* COMIC PAGE TITLE/LOGO */}
-				<div>
+				<div className={clsx(
+					"h-full",
+					"flex",
+					"justify-center",
+					comic?.logo ? [
+						"items-center"
+					] : [
+						"items-start",
+					],
+				)}>
 					{children}
 				</div>
 
