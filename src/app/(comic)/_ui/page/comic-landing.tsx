@@ -3,7 +3,7 @@ import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 import clsx from "clsx"
-import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, LandingPageLogo, LandingPageWrapper } from "../../../_ui/page-landing"
+import { LandingPageBody, LandingPageContent, LandingPageH1, LandingPageHeader, LandingPageWrapper } from "../../../_ui/page-landing"
 import { ClientComicPageLandingButton } from "./client/comic-page-landing-button"
 import { useTranslations } from "next-intl"
 import { sanitize } from "@/lib/sanitize"
@@ -35,30 +35,6 @@ export default function ComicLandingPageUI({
 	return <>
 		{/* COMIC PAGE - CONTENT WRAPPER */}
 		<LandingPageWrapper>
-			{/* <LandingPageHeader>
-				{comic.logo &&
-					<LandingPageLogo
-						src={`${directusURL}/assets/${comic.logo.filename_disk}`}
-						alt={comic.logo.description || ""}
-						width={comic.logo.width || "320"}
-						height={comic.logo.height || "240"}
-					/>
-				}
-				{!hasLogo &&
-					<LandingPageH1 className={clsx(
-						hasBanner && [
-							"text-white",
-							"[text-stroke:16px_black",
-							"[-webkit-text-stroke:16px_black]",
-							"[paint-order:stroke_fill]",
-							"drop-shadow-black/50",
-							"drop-shadow-md",
-						],
-					)}>
-						{comic.title}
-					</LandingPageH1>
-				}
-			</LandingPageHeader> */}
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 				{comic.pages_count > 0 &&
