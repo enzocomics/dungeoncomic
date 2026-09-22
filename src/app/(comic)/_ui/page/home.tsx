@@ -3,8 +3,10 @@ import clsx from "clsx"
 import { sanitize } from "@/lib/sanitize"
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
-import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1, LandingPageLogo } from "../../../_ui/page-landing"
+import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1 } from "../../../_ui/page-landing"
 import StatusMessage from "@/components/status-message"
+import LandingPageLogo from "../../[route]/@header/_effects"
+import ClientLandingPageHeader from "../../[route]/@header/_effects"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
@@ -22,31 +24,6 @@ export async function HomepagePageUI({
 
 	return <>
 		<LandingPageWrapper>
-			<LandingPageHeader>
-				{logo &&
-					<LandingPageLogo
-						src={`${directusURL}/assets/${logo.filename_disk}`}
-						alt={logo.description || ""}
-						width={logo.width || "320"}
-						height={logo.height || "240"}
-					/>
-				}
-				{!logo &&
-					<LandingPageH1
-						className={clsx(
-							!!banner && [
-								"text-white",
-								"[text-stroke:16px_black",
-								"[-webkit-text-stroke:16px_black]",
-								"[paint-order:stroke_fill]",
-								"drop-shadow-black/50",
-								"drop-shadow-md",
-							],
-						)}>
-						{projectName}
-					</LandingPageH1>
-				}
-			</LandingPageHeader>
 			<LandingPageBody>
 				<LandingPageContent content={content} />
 			</LandingPageBody>
