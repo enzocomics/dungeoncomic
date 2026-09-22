@@ -47,6 +47,7 @@ export default function SiteNav({
 	const { theme, setTheme } = useTheme()
 
 	const hasLogo = !!(comic?.logo)
+	const hasBanner = !!(comic?.banner)
 	const isLandingPage = pathname !== `/${comic?.slug}`
 
 
@@ -361,7 +362,23 @@ export default function SiteNav({
 								"origin-top-left",
 								"left-0",
 								"md:left-6",
-								"md:top-20.5",
+								hasBanner ? [ // BANNER
+									hasLogo ? [ // BANNER + LOGO
+										"top-13",
+										"md:top-17",
+									] : [ // BANNER + NO LOGO
+										"top-13",
+										"md:top-17",
+									],
+								] : [ // NO BANNER
+									hasLogo ? [ // NO BANNER + LOGO
+										"top-13",
+										"md:top-17",
+									] : [ // NO BANNER + NO LOGO
+										"top-13",
+										"md:top-17",
+									]
+								],
 								"z-50",
 								// Size & Spacing
 								"w-full",
@@ -587,9 +604,24 @@ export default function SiteNav({
 							"absolute",
 							"right-0",
 							"z-50",
-							"top-17.5",
 							"md:right-6",
-							"md:top-20.5",
+							hasBanner ? [ // BANNER
+								hasLogo ? [ // BANNER + LOGO
+									"top-13",
+									"md:top-17",
+								] : [ // BANNER + NO LOGO
+									"top-13",
+									"md:top-17",
+								],
+							] : [ // NO BANNER
+								hasLogo ? [ // NO BANNER + LOGO
+									"top-13",
+									"md:top-17",
+								] : [ // NO BANNER + NO LOGO
+									"top-13",
+									"md:top-17",
+								]
+							],
 							// Size & Spacing
 							"max-w-lg",
 							"rounded-sm",
