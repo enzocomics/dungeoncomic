@@ -57,7 +57,7 @@ export const LandingPageLogo = (
 )
 
 export const LandingPageH1 = (
-	props: ComponentPropsWithoutRef<"h1">
+	props: ComponentPropsWithRef<"h1">
 ) => (
 	<h1
 		{...props}
