@@ -29,23 +29,16 @@ export function ClientComicPageHeaderTitle({
 				clsx(
 					!hasLogo && "p-1.5",
 					"flex",
+					"w-full",
 					"justify-center",
 					"h-full",
 					"relative",
-					hasBanner && hasLogo && [
-						// "top-4",
-						// "md:top-3",
-					],
-					!hasBanner && hasLogo && [
-						// "-top-0.5",
-						// "md:top-0",
-						""
-					],
 				)
 			}>
 			<Popover as="div" className={
 				clsx(
 					"flex",
+					"w-full",
 					"h-full",
 					"justify-center",
 					"items-center",
@@ -60,7 +53,11 @@ export function ClientComicPageHeaderTitle({
 						// Structure
 						"relative",
 						"flex",
-						"max-w-full",
+						"w-full",
+						"min-w-55",
+						"max-w-[calc(100dvw-150px)]",
+						"md:max-w-[calc(100dvw-300px)]",
+						"lg:max-w-200",
 						"justify-center",
 						// Spacing
 						"z-45",
@@ -245,7 +242,6 @@ export function ClientComicPageHeaderTitle({
 									"w-auto",
 									"object-contain",
 									"h-16",
-									// "md:max-h-20",
 								)}
 							/>
 							<Icon name="xmark" className={clsx(
@@ -275,7 +271,8 @@ export function ClientComicPageHeaderTitle({
 						"ease-in-out",
 						"data-closed:opacity-0",
 						"data-closed:duration-300",
-						"data-closed:top-6",
+						"data-closed:top-1/2",
+						"origin-top",
 						"data-closed:scale-90",
 						"opacity-100",
 						"data-open:duration-none",
@@ -283,7 +280,19 @@ export function ClientComicPageHeaderTitle({
 						// Position
 						"absolute",
 						"z-50",
-						hasLogo ? "top-13" : "top-10",
+						hasBanner ? [ // BANNER
+							hasLogo ? [ // BANNER + LOGO
+								"top-17.25",
+							] : [ // BANNER + NO LOGO
+								"top-11",
+							],
+						] : [ // NO BANNER
+							hasLogo ? [ // NO BANNER + LOGO
+								"top-12",
+							] : [ // NO BANNER + NO LOGO
+								"top-11",
+							]
+						],
 						// Size & Spacing
 						"w-100",
 						"max-w-lg",

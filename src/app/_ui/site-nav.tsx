@@ -462,6 +462,7 @@ export default function SiteNav({
 				{/* COMIC PAGE TITLE/LOGO */}
 				<div className={clsx(
 					"h-full",
+					"w-full",
 					"flex",
 					"justify-center",
 					comic?.logo ? [
