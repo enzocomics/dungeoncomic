@@ -359,9 +359,7 @@ export default function SiteNav({
 								"scale-100",
 								// Position
 								"origin-top-left",
-								// "relative",
 								"left-0",
-								"top-17.5",
 								"md:left-6",
 								"md:top-20.5",
 								"z-50",
