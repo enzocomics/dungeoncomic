@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import Image from "next/image"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, ComponentPropsWithRef } from "react"
 
 export const LandingPageWrapper = ({
 	className,
@@ -27,7 +27,7 @@ export const LandingPageHeader = (
 			"flex",
 			"items-center",
 			"justify-center",
-			"h-80",
+			"h-70",
 			"md:p-20",
 			"overflow-hidden"
 		)}
@@ -37,7 +37,7 @@ export const LandingPageHeader = (
 }
 
 export const LandingPageLogo = (
-	props: ComponentPropsWithoutRef<typeof Image>
+	props: ComponentPropsWithRef<typeof Image>
 ) => (
 	<Image
 		{...props}
@@ -50,7 +50,7 @@ export const LandingPageLogo = (
 			"h-full",
 			"box-content",
 			"object-contain",
-			"max-h-36",
+			"max-h-30	",
 			"md:max-h-none",
 		)}
 	/>
