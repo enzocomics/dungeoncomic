@@ -79,24 +79,13 @@ export default async function Homepage() {
 				// SHOW LANDING PAGE UI
 				case "cover-page":
 					return <Suspense>
-						<ComicLayoutUI comic={comic} header={
-							<SiteNav
-								session={session}
-								menu={singleComicSite ? false : true}
-							>
-								<ClientLandingPageHeader comic={comic} settings={settings} />
-							</SiteNav>
-						}>
-							<SiteLayoutMain>
-								<ComicLandingPageUI
-									content={`${landingPageContent}`}
-									comic={comic}
-									session={session}
-									variables={variables}
-									userVariables={userVariables}
-								/>
-							</SiteLayoutMain>
-						</ComicLayoutUI>
+						<ComicLandingPageUI
+							content={`${landingPageContent}`}
+							comic={comic}
+							session={session}
+							variables={variables}
+							userVariables={userVariables}
+						/>
 					</Suspense>
 				// REDIRECT TO FIRST PAGE
 				case "first-page":
