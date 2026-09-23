@@ -213,7 +213,7 @@ export default function SiteNav({
 									"after:w-15",
 									"after:h-9",
 									"after:bg-neutral-800/80",
-									"after:dark:bg-neutral-900/80",
+									"dark:after:bg-neutral-900/80",
 									"group-data-open:after:bg-comic-accent-500",
 									"group-data-open:dark:after:bg-comic-accent-600",
 									"after:top-[20.5px]",
