@@ -19,9 +19,7 @@ export default function ClientLandingPageHeader({
 	settings: Awaited<ReturnType<typeof getSettings>>
 	children?: React.ReactNode
 }) {
-	const pathname = usePathname()
-	const isLandingPage = !!(pathname !== `/${comic?.slug}`)
-	const logo = comic ? (comic?.logo || null) : settings?.project_logo
+	const logo = comic?.logo || settings?.project_logo
 	const banner = comic?.banner || settings?.project_banner
 	const title = comic?.title || settings?.project_name
 
