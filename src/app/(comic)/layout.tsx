@@ -12,6 +12,9 @@ import AuthModal from "./_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import SiteFooter from "../_ui/site-footer"
+import SiteNav from "../_ui/site-nav"
+import ClientLandingPageHeader from "./[route]/@header/_effects"
+import { SiteLayoutMain } from "../_ui/site-layout"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -54,20 +57,9 @@ export default async function HomepageLayout({
 		// If a frontpageComic has not been selected, it will default to the first comic it finds
 		if (comic)
 			return <>
-				<ComicContextProvider
-					getSession={session}
-					getSettings={settings}
-					getComic={comic}
-				>
-					<AuthModal public_registration={public_registration} />
-					<ComicLayoutUI
-						settings={settings}
-						comic={comic}
-						session={session}>
-						{children}
-						<SiteFooter />
-					</ComicLayoutUI>
-				</ComicContextProvider>
+				<AuthModal public_registration={public_registration} />
+				{children}
+				<SiteFooter />
 			</>
 		else
 			// if `singleComicSite` has been selected but no comics exist (probably deleted?) just show the regular layout
@@ -76,7 +68,6 @@ export default async function HomepageLayout({
 				<PlatformLayoutUI>
 					{children}
 				</PlatformLayoutUI>
-				<SiteFooter />
 			</>
 
 	}
