@@ -1546,7 +1546,9 @@
         "hidden": false,
         "interface": "input",
         "note": null,
-        "options": null,
+        "options": {
+          "slug": true
+        },
         "readonly": false,
         "required": true,
         "searchable": true,
@@ -1831,6 +1833,10 @@
             {
               "text": "Lexend",
               "value": "Lexend"
+            },
+            {
+              "text": "Lora",
+              "value": "Lora"
             },
             {
               "text": "Montserrat",
@@ -6261,6 +6267,124 @@
         "has_auto_increment": false,
         "foreign_key_table": "directus_files",
         "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "appearance",
+      "type": "alias",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "appearance",
+        "group": null,
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 7,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "accent_color",
+      "type": "string",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "accent_color",
+        "group": "appearance",
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": true,
+        "searchable": true,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "accent_color",
+        "table": "settings",
+        "data_type": "character varying",
+        "default_value": "red",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "settings",
+      "field": "copy_font",
+      "type": "string",
+      "meta": {
+        "collection": "settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "copy_font",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "copy_font",
+        "table": "settings",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
       }
     },
     {

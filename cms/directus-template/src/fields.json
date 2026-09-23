@@ -973,7 +973,9 @@
       "field": "slug",
       "special": null,
       "interface": "input",
-      "options": null,
+      "options": {
+        "slug": true
+      },
       "display": "raw",
       "display_options": {
         "prefix": "dungeoncomic.com/"
@@ -1364,6 +1366,10 @@
           {
             "text": "Lexend",
             "value": "Lexend"
+          },
+          {
+            "text": "Lora",
+            "value": "Lora"
           },
           {
             "text": "Montserrat",
@@ -4862,6 +4868,98 @@
     }
   },
   {
+    "collection": "settings",
+    "field": "accent_color",
+    "type": "string",
+    "schema": {
+      "name": "accent_color",
+      "table": "settings",
+      "data_type": "character varying",
+      "default_value": "red",
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "settings",
+      "field": "accent_color",
+      "special": null,
+      "interface": "select-dropdown",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": true,
+      "group": "appearance",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "copy_font",
+    "type": "string",
+    "schema": {
+      "name": "copy_font",
+      "table": "settings",
+      "data_type": "character varying",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "settings",
+      "field": "copy_font",
+      "special": null,
+      "interface": "select-dropdown",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 8,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "tags",
     "field": "id",
     "type": "integer",
@@ -6524,37 +6622,6 @@
   },
   {
     "collection": "settings",
-    "field": "icons",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "settings",
-      "field": "icons",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-detail",
-      "options": null,
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 6,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "settings",
     "field": "meta",
     "type": "alias",
     "schema": null,
@@ -6573,6 +6640,37 @@
       "readonly": false,
       "hidden": false,
       "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "icons",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
+      "field": "icons",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-detail",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 6,
       "width": "full",
       "translations": null,
       "note": null,
@@ -6876,42 +6974,6 @@
     }
   },
   {
-    "collection": "settings",
-    "field": "header-nqle-g",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "settings",
-      "field": "header-nqle-g",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "header",
-      "options": {
-        "title": "Project Settings",
-        "icon": "settings",
-        "color": "#7C7C67",
-        "subtitle": null,
-        "help": null
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "directus_users",
     "field": "profile",
     "type": "alias",
@@ -6957,6 +7019,42 @@
       ],
       "interface": "group-raw",
       "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "header-nqle-g",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
+      "field": "header-nqle-g",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "header",
+      "options": {
+        "title": "Project Settings",
+        "icon": "settings",
+        "color": "#7C7C67",
+        "subtitle": null,
+        "help": null
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
@@ -7244,6 +7342,37 @@
       "readonly": false,
       "hidden": false,
       "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "settings",
+    "field": "appearance",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "settings",
+      "field": "appearance",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 7,
       "width": "full",
       "translations": null,
       "note": null,
