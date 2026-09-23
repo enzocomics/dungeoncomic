@@ -153,8 +153,8 @@ export default function SiteNav({
 							// "after:md:translate-y-0",
 							// "md:translate-y-",
 							"after:bg-neutral-800/80",
-							"after:dark:bg-neutral-900/90",
-							"after:backdrop-blur-xs",
+							"dark:after:bg-neutral-900/90",
+							// "after:backdrop-blur-xs",
 							"after:border-b-6",
 							"after:border-comic-accent-900",
 						]
