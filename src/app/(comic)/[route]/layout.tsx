@@ -63,7 +63,6 @@ export default async function RouteLayout({
 	if (!singleComicSite) {
 		// FETCH COMIC BY ROUTE
 		const comic = await getComic({ slug: route })
-		const hasLandingPage = !!comic.landing_page
 
 		// THROW 404 IF IT DOESN"T EXIST
 		if (!comic) notFound()

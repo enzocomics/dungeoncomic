@@ -8,7 +8,6 @@ import { prepareText } from "../../_functions/parse-content"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // UI
-import { ClientComicPageHeaderTitle } from "./client/comic-page-header-title"
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
