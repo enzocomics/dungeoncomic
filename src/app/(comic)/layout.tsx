@@ -37,8 +37,10 @@ import { ComicPageHeader } from "./_ui/page/comic"
 
 export default async function HomepageLayout({
 	children,
+	header,
 }: {
 	children: React.ReactNode
+	header?: React.ReactNode
 }) {
 	// FETCH REQUIRED DATA
 	const session = await verifySession()
@@ -72,7 +74,7 @@ export default async function HomepageLayout({
 								menu={singleComicSite ? false : true}
 							>
 								<ComicPageHeader comic={comic} >
-									{/* {header} */}
+									{header}
 								</ComicPageHeader>
 							</SiteNav>
 						}
