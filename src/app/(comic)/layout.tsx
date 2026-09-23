@@ -15,6 +15,7 @@ import SiteFooter from "../_ui/site-footer"
 import SiteNav from "../_ui/site-nav"
 import ClientLandingPageHeader from "./[route]/@header/_effects"
 import { SiteLayoutMain } from "../_ui/site-layout"
+import { ComicPageHeader } from "./_ui/page/comic"
 
 /**-----------------------------------
  * HOMEPAGE LAYOUT
@@ -58,7 +59,29 @@ export default async function HomepageLayout({
 		if (comic)
 			return <>
 				<AuthModal public_registration={public_registration} />
-				{children}
+				<ComicContextProvider
+					getSession={session}
+					getSettings={settings}
+					getComic={comic}
+				>
+					<ComicLayoutUI settings={settings} comic={comic} session={session}
+						header={
+							<SiteNav
+								comic={comic}
+								session={session}
+								menu={singleComicSite ? false : true}
+							>
+								<ComicPageHeader comic={comic} >
+									{/* {header} */}
+								</ComicPageHeader>
+							</SiteNav>
+						}
+					>
+						<SiteLayoutMain>
+							{children}
+						</SiteLayoutMain>
+					</ComicLayoutUI>
+				</ComicContextProvider>
 				<SiteFooter />
 			</>
 		else
