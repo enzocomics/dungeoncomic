@@ -19,7 +19,7 @@ export default function ClientLandingPageHeader({
 	settings: Awaited<ReturnType<typeof getSettings>>
 	children?: React.ReactNode
 }) {
-	const logo = comic?.logo || settings?.project_logo
+	const logo = comic ? (comic?.logo || null) : settings?.project_logo
 	const banner = comic?.banner || settings?.project_banner
 	const title = comic?.title || settings?.project_name
 
@@ -165,14 +165,14 @@ export default function ClientLandingPageHeader({
 				<LandingPageH1
 					ref={wrapperRef}
 					className={clsx(
-						comic?.banner && [
-							"text-white",
-							"[text-stroke:16px_black",
-							"[-webkit-text-stroke:16px_black]",
-							"[paint-order:stroke_fill]",
-							"drop-shadow-black/50",
-							"drop-shadow-md",
-						],
+						// comic?.banner && [
+						"text-white",
+						"[text-stroke:16px_black",
+						"[-webkit-text-stroke:16px_black]",
+						"[paint-order:stroke_fill]",
+						"drop-shadow-black/50",
+						"drop-shadow-md",
+						// ],
 					)}>
 					<span ref={imageRef}>{title}</span>
 				</LandingPageH1>
