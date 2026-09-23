@@ -72,6 +72,7 @@ export default async function HomepageLayout({
 								comic={comic}
 								session={session}
 								menu={singleComicSite ? false : true}
+								settings={settings}
 							>
 								<ComicPageHeader comic={comic} >
 									{header}

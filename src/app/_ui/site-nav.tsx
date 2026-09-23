@@ -21,6 +21,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { useTranslations } from "next-intl"
 import { LogoutButton } from "@/components/auth-client"
 import StatusMessage from "@/components/status-message"
+import { getSettings } from "@/lib/directus/get-settings"
 
 /**-----------------------------------
  * NAVIGATION LAYOUT
@@ -33,12 +34,14 @@ export default function SiteNav({
 	session,
 	menu = false,
 	comic,
-	children
+	children,
+	settings
 }: {
 	session?: Awaited<ReturnType<typeof verifySession>>
 	menu?: boolean
 	comic?: Awaited<ReturnType<typeof getComic>>
 	children?: React.ReactNode
+	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
 	//Hooks
 	const router = useRouter()
@@ -48,8 +51,11 @@ export default function SiteNav({
 
 	const hasLogo = !!(comic?.logo)
 	const hasBanner = !!(comic?.banner)
-	const isLandingPage = pathname !== `/${comic?.slug}`
-
+	const isSingleComicSite = !!(settings.single_comic_site)
+	const isLandingPage = (
+		!isSingleComicSite && pathname !== `/${comic?.slug}`
+		|| isSingleComicSite && pathname !== `/`
+	)
 
 	// TODO: These are all hardcoded & should be in the dictionaries
 	const comicNavigation: {

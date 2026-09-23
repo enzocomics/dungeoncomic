@@ -82,6 +82,7 @@ export default async function RouteLayout({
 							comic={comic}
 							session={session}
 							menu={singleComicSite ? false : true}
+							settings={settings}
 						>
 							<ComicPageHeader comic={comic} >
 								{header}

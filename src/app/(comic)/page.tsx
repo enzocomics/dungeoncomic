@@ -119,6 +119,7 @@ export default async function Homepage() {
 						<SiteNav
 							session={session}
 							menu={singleComicSite ? false : true}
+							settings={settings}
 						>
 							<ClientLandingPageHeader settings={settings} />
 						</SiteNav>
