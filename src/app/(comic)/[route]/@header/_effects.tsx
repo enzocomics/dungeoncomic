@@ -25,6 +25,7 @@ export default function ClientLandingPageHeader({
 
 	const wrapperRef = useRef<HTMLDivElement>(null)
 	const imageRef = useRef<HTMLImageElement>(null)
+	const textLogoRef = useRef<HTMLHeadingElement>(null)
 	const frameRef = useRef<number | null>(null)
 
 	// EFFECT: Scale down the size of the sticky landing page logo after the user scrolls up
@@ -93,7 +94,11 @@ export default function ClientLandingPageHeader({
           translateY(${translateY}px)
           scale(${scale})
         `
+			}
 
+			// Fade out title IF it's text because we can't accurately predict its height & position
+			if (textLogoRef.current) {
+				textLogoRef.current.style.opacity = `${1 - progress * 1}`
 			}
 
 			frameRef.current = null
@@ -163,9 +168,11 @@ export default function ClientLandingPageHeader({
 			}
 			{!logo &&
 				<LandingPageH1
-					ref={wrapperRef}
+					ref={textLogoRef}
 					className={clsx(
 						// comic?.banner && [
+						"opacity-1",
+						"transition-opacity",
 						"text-white",
 						"[text-stroke:16px_black",
 						"[-webkit-text-stroke:16px_black]",
