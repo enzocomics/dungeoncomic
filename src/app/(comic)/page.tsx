@@ -1,4 +1,4 @@
-"use server"
+
 /**----------------------------------- */
 // TYPES
 import { Metadata } from "next"
@@ -18,6 +18,8 @@ import { PlatformLayoutUI } from "./_ui/layout"
 import { replaceComicVariables } from "./_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
+import SiteNav from "../_ui/site-nav"
+import ClientLandingPageHeader from "./[route]/@header/_effects"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -97,6 +99,7 @@ export default async function Homepage() {
 		} else {
 			// Display homepage if no comics exist
 			return <Suspense>
+
 				<HomepagePageUI content={homePageContent} />
 			</Suspense>
 		}
@@ -111,7 +114,16 @@ export default async function Homepage() {
 		} else {
 			// notFound()
 			return <Suspense>
-				<PlatformLayoutUI session={session}>
+				<PlatformLayoutUI session={session}
+					header={
+						<SiteNav
+							session={session}
+							menu={singleComicSite ? false : true}
+						>
+							<ClientLandingPageHeader settings={settings} />
+						</SiteNav>
+					}
+				>
 					<HomepagePageUI content={homePageContent} />
 				</PlatformLayoutUI>
 			</Suspense>
