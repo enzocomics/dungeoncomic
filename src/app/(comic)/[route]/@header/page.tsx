@@ -13,7 +13,7 @@ import ClientLandingPageHeader from "./_effects"
 import { getSettings } from "@/lib/directus/get-settings"
 
 
-export default async function Page({
+export default async function ParallelHeader({
 	params
 }: {
 	params: Promise<{ route: string }>
