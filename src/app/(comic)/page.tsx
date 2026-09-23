@@ -14,7 +14,7 @@ import ComicLandingPageUI from "./_ui/page/comic-landing"
 import { Suspense } from "react"
 import { verifySession } from "@/data/session"
 import { getUserVarsCookie } from "./_actions/variables"
-import { PlatformLayoutUI } from "./_ui/layout"
+import { ComicLayoutUI, PlatformLayoutUI } from "./_ui/layout"
 import { replaceComicVariables } from "./_functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
@@ -79,13 +79,24 @@ export default async function Homepage() {
 				// SHOW LANDING PAGE UI
 				case "cover-page":
 					return <Suspense>
-						<ComicLandingPageUI
-							content={`${landingPageContent}`}
-							comic={comic}
-							session={session}
-							variables={variables}
-							userVariables={userVariables}
-						/>
+						<ComicLayoutUI comic={comic} header={
+							<SiteNav
+								session={session}
+								menu={singleComicSite ? false : true}
+							>
+								<ClientLandingPageHeader comic={comic} settings={settings} />
+							</SiteNav>
+						}>
+							<SiteLayoutMain>
+								<ComicLandingPageUI
+									content={`${landingPageContent}`}
+									comic={comic}
+									session={session}
+									variables={variables}
+									userVariables={userVariables}
+								/>
+							</SiteLayoutMain>
+						</ComicLayoutUI>
 					</Suspense>
 				// REDIRECT TO FIRST PAGE
 				case "first-page":
@@ -100,7 +111,6 @@ export default async function Homepage() {
 		} else {
 			// Display homepage if no comics exist
 			return <Suspense>
-
 				<HomepagePageUI content={homePageContent} />
 			</Suspense>
 		}
