@@ -7,6 +7,7 @@ import clsx from "clsx"
 // import { LandingPageLogoImage } from "@/app/_ui/page-landing"
 
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import React, { ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, PropsWithChildren, RefObject, useEffect, useRef, useState } from "react"
 
 export default function ClientLandingPageHeader({
@@ -18,11 +19,11 @@ export default function ClientLandingPageHeader({
 	settings: Awaited<ReturnType<typeof getSettings>>
 	children?: React.ReactNode
 }) {
-	const logo = comic?.logo || settings?.project_logo
+	const pathname = usePathname()
+	const isLandingPage = !!(pathname !== `/${comic?.slug}`)
+	const logo = comic ? (comic?.logo || null) : settings?.project_logo
 	const banner = comic?.banner || settings?.project_banner
 	const title = comic?.title || settings?.project_name
-
-	const [scale, setScale] = useState(1)
 
 	const wrapperRef = useRef<HTMLDivElement>(null)
 	const imageRef = useRef<HTMLImageElement>(null)
@@ -143,7 +144,6 @@ export default function ClientLandingPageHeader({
 						"h-full",
 						"flex",
 						"items-center",
-						// "opacity-0",
 					)}>
 					<LandingPageLogo
 						ref={imageRef}
@@ -151,12 +151,10 @@ export default function ClientLandingPageHeader({
 						alt={logo.description || ""}
 						width={logo.width || "320"}
 						height={logo.height || "240"}
-
 						className={clsx(
 							"w-auto",
 							"object-contain",
 							"h-16",
-							// "opacity-0",
 							"transition-opacity",
 							"opacity-0",
 							"duration-400",
