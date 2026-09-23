@@ -82,9 +82,10 @@ export function ComicLayoutUI({
  */
 export async function PlatformLayoutUI({
 	children,
-	session
+	header,
 }: {
 	children: React.ReactNode
+	header?: React.ReactNode
 	session?: Awaited<ReturnType<typeof verifySession>>
 }) {
 
@@ -98,13 +99,8 @@ export async function PlatformLayoutUI({
 					backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
 				}} />
 			}
-			<SiteNav
-				menu={true}
-				session={session}
-			/>
-			<SiteLayoutMain>
-				{children}
-			</SiteLayoutMain>
+			{header}
+			{children}
 		</SiteLayoutWrapper>
 	</>
 }
