@@ -1,4 +1,4 @@
-import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicPageSuggestions } from "@/lib/directus/get-comics"
 import { haveVarsBeenSubmitted } from "./check-vars"
 
 /**----------------------------------- */
@@ -37,7 +37,7 @@ export const checkHasNextPage = (
 }
 
 export const checkHasPlotSuggestions = (
-	plotSuggestions: Awaited<ReturnType<typeof getComicPage>>["plot_suggestions"]
+	plotSuggestions?: Awaited<ReturnType<typeof getComicPageSuggestions>>
 ) => {
 	return !!(
 		plotSuggestions &&
