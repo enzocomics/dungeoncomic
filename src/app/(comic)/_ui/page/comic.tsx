@@ -6,7 +6,7 @@ import { getTranslations } from "next-intl/server"
 // DATA
 import { prepareText } from "../../_functions/parse-content"
 import { verifySession } from "@/data/session"
-import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getComic, getComicPage, getComicPageSuggestions, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
@@ -42,6 +42,8 @@ export default async function ComicPageUI({
 	const lastPage = await getComicPage(page.comic.slug, page.comic.pages_count)
 	const hasBanner = !!page.comic.banner
 	const hasLogo = !!page.comic.logo
+	// Use a different, uncached fetch for the page suggestions
+	const pageSuggestions = await getComicPageSuggestions(page.id as number)
 
 	// PARSE & SANITIZE CONTENT
 	const comicDescription = prepareText({
@@ -125,6 +127,7 @@ export default async function ComicPageUI({
 			/>
 			<ClientComicPageFeedback
 				page={page}
+				suggestions={pageSuggestions}
 				variables={variables}
 				userVariables={userVariables}
 				session={session}
