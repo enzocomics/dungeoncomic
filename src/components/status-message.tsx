@@ -59,29 +59,29 @@ export default function StatusMessage({
 			<div className={clsx(
 				"min-h-0",
 				"overflow-hidden",
+				"bg-notification-800/50",
 			)}>
 				<div className={clsx(
-					// "md:rounded",
-					"bg-notification-950/40",
-					"p-2",
+					"md:p-1",
+					"md:px-6",
+					"max-w-6xl",
+					"mx-auto",
+					"transition-all",
+					"ease-in-out",
+					"duration-300",
 				)}>
 					<div className={clsx(
+						"relative",
 						"h-full",
-						"max-w-2xl",
 						"mx-auto",
 						"flex",
 						"p-4",
-						"rounded",
-						"bg-notification-50",
-						"dark:bg-notification-600",
-						"outline-2",
-						"outline-notification-400/10",
+						"pr-10",
+						"bg-notification-700",
 						"md:rounded",
-						"dark:outline-notification-700/20",
-						"drop-shadow-black/10",
-						"dark:drop-shadow-black/20",
-						"drop-shadow-xl",
+						"md:justify-center",
 					)}>
+
 						{/* ICON */}
 						<div className="shrink-0">
 							{statusMessage.type == "alert" &&
@@ -100,14 +100,15 @@ export default function StatusMessage({
 						{/* TEXT */}
 						<div className={clsx(
 							"ml-3",
+							"max-w-prose",
 						)}>
 							<h3 className={clsx(
 								"text-sm",
 								"text-pretty",
 								"font-platform-labels",
 								"font-semibold",
-								"text-notification-800",
-								"dark:text-notification-100",
+								"text-notification-100",
+
 							)}>
 								{statusMessage.message}
 							</h3>
@@ -117,8 +118,7 @@ export default function StatusMessage({
 									"text-sm",
 									"text-balance",
 									"font-platform-labels",
-									"text-notification-700",
-									"dark:text-notification-300",
+									"text-notification-300",
 								)}>
 									<p dangerouslySetInnerHTML={{
 										__html: JSON.parse(statusMessage.description).map((
@@ -155,8 +155,9 @@ export default function StatusMessage({
 								</div>
 							}
 						</div>
+
 						{/* CLOSE BUTTON */}
-						<div className="ml-auto pl-3">
+						<div className="absolute right-3 ">
 							<div className="-mx-1.5 -my-1.5">
 								<button
 									data-statusmessage={true}
@@ -172,60 +173,18 @@ export default function StatusMessage({
 									className={clsx(
 										"inline-flex",
 										"rounded-md",
-										"bg-notification-50",
-										"text-notification-500",
-										"hover:text-notification-100",
 										// bg-color
-										// (statusMessage.type == "alert" ? "bg-yellow-50" : ""),
-										// (statusMessage.type == "error" ? "bg-red-50" : ""),
-										// (statusMessage.type == "success" ? "bg-green-50" : ""),
-										// (statusMessage.type == "info" ? "bg-blue-50" : ""),
 										"p-1.5",
-										// text-color
-										// (statusMessage.type == "alert" ? "text-yellow-500" : ""),
-										// (statusMessage.type == "error" ? "text-red-500" : ""),
-										// (statusMessage.type == "success" ? "text-green-500" : ""),
-										// (statusMessage.type == "info" ? "text-blue-500" : ""),
-										// hover:bg-color
-										// (statusMessage.type == "alert" ? "hover:bg-yellow-100" : ""),
-										// (statusMessage.type == "error" ? "hover:bg-red-100" : ""),
-										// (statusMessage.type == "success" ? "hover:bg-green-100" : ""),
-										// (statusMessage.type == "info" ? "hover:bg-blue-100" : ""),
-										"focus-visible:ring-2",
-										// focus-visible:ring-color
-										(statusMessage.type == "alert" ? "focus-visible:ring-yellow-600" : ""),
-										(statusMessage.type == "error" ? "focus-visible:ring-red-600" : ""),
-										(statusMessage.type == "success" ? "focus-visible:ring-green-600" : ""),
-										(statusMessage.type == "info" ? "focus-visible:ring-blue-600" : ""),
-										"focus-visible:ring-offset-2",
-										// focus-visible:ring-offset-color
-										(statusMessage.type == "alert" ? "focus-visible:ring-offset-yellow-50" : ""),
-										(statusMessage.type == "error" ? "focus-visible:ring-offset-red-50" : ""),
-										(statusMessage.type == "success" ? "focus-visible:ring-offset-green-50" : ""),
-										(statusMessage.type == "info" ? "focus-visible:ring-offset-blue-50" : ""),
-										"focus-visible:outline-hidden",
-										"dark:bg-transparent",
-										// dark:text-color
-										(statusMessage.type == "alert" ? "text-yellow-400" : ""),
-										(statusMessage.type == "error" ? "text-red-400" : ""),
-										(statusMessage.type == "success" ? "text-green-400" : ""),
-										(statusMessage.type == "info" ? "text-blue-400" : ""),
-										// dark:hover:bg-color
-										(statusMessage.type == "alert" ? "dark:hover:bg-yellow-500/10" : ""),
-										(statusMessage.type == "error" ? "dark:hover:bg-red-500/10" : ""),
-										(statusMessage.type == "success" ? "dark:hover:bg-green-500/10" : ""),
-										(statusMessage.type == "info" ? "dark:hover:bg-blue-500/10" : ""),
-										// dark:focus-visible:ring-color
-										(statusMessage.type == "alert" ? "dark:focus-visible:ring-yellow-500" : ""),
-										(statusMessage.type == "error" ? "dark:focus-visible:ring-red-500" : ""),
-										(statusMessage.type == "success" ? "dark:focus-visible:ring-green-500" : ""),
-										(statusMessage.type == "info" ? "dark:focus-visible:ring-blue-500" : ""),
-										"dark:focus-visible:ring-offset-1",
-										// dark:focus-visible:ring-offset-color
-										(statusMessage.type == "alert" ? "dark:focus-visible:ring-offset-yellow-900" : ""),
-										(statusMessage.type == "error" ? "dark:focus-visible:ring-offset-red-900" : ""),
-										(statusMessage.type == "success" ? "dark:focus-visible:ring-offset-green-900" : ""),
-										(statusMessage.type == "info" ? "dark:focus-visible:ring-offset-blue-900" : ""),
+										"text-notification-100",
+										"cursor-pointer",
+										"hover:bg-notification-100/20",
+										"focus:outline-3",
+										"focus:outline-notification-100",
+										"ease-in-out",
+										"transition-all",
+										"duration-300",
+										"hover:duration-0",
+										"active:translate-px",
 									)}
 								>
 									<span className="sr-only">Dismiss</span>
