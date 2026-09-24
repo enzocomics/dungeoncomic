@@ -9,7 +9,7 @@ import clsx from "clsx"
 import Icon from "@/styles/icons"
 import { useGlobalContext } from "@/app/_context"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react"
 import { notificationColors } from "@/styles/colors"
 
 /**-----------------------------------
@@ -26,13 +26,46 @@ export default function StatusMessage({
 	const params = useSearchParams()
 	// STATUS MESSAGE HOOKS
 	const { statusMessage } = useGlobalContext()
+	const containerRef = useRef<HTMLDivElement>(null)
 	const setStatus = useChangeStatus("")
+
+	const [closeClicked, setCloseClicked] = useState(false)
+
+	const handleClose = () => {
+		setCloseClicked(true)
+	}
+
+	useEffect(() => {
+
+		// This function runs after the animation ends
+		const hideStatus = () => {
+			// Clear the search params from the url
+			const queryString = params.toString()
+			const updatedQueryString = new URLSearchParams(queryString)
+			updatedQueryString.delete("status")
+			router.push(`${pathname}${updatedQueryString && `?${updatedQueryString}`}`)
+			containerRef?.current?.removeEventListener("animationend", hideStatus)
+			containerRef.current = null
+			setStatus("") // Clear the status message, which hides the message 
+			setCloseClicked(false)
+		}
+
+		// If the close button was clicked and the status exists
+		if (closeClicked && containerRef.current) {
+			containerRef.current.classList.remove("animate-expand")
+			containerRef.current.classList.add("[grid-template-rows-1]")
+			containerRef.current.classList.add("animate-contract")
+			containerRef.current.addEventListener("animationend", hideStatus)
+
+		}
+	}, [closeClicked])
 
 	// OUTPUT
 	// Only display the layout if a message exists
 	if (statusMessage.message !== "")
 		return <div
 			id={`status-${statusMessage.type}`}
+			ref={containerRef}
 			aria-live="polite"
 			style={
 				{
@@ -162,14 +195,7 @@ export default function StatusMessage({
 								<button
 									data-statusmessage={true}
 									type="button"
-									onClick={() => {
-										// Clear the search params from the url
-										const queryString = params.toString()
-										const updatedQueryString = new URLSearchParams(queryString)
-										updatedQueryString.delete("status")
-										router.push(`${pathname}${updatedQueryString && `?${updatedQueryString}`}`)
-										setStatus("") // Clear the status message, which hides the message uI
-									}}
+									onClick={handleClose}
 									className={clsx(
 										"inline-flex",
 										"rounded-md",

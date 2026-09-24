@@ -323,4 +323,16 @@
 			grid-template-rows: 1fr;
 		}
 	}
+
+	--animate-contract: contract 400ms ease-out 1;
+	@keyframes contract {
+		from {
+			opacity: 1;
+			grid-template-rows: 1fr;
+		}
+		to {
+			opacity: 0;
+			grid-template-rows: 0fr;
+		}
+	}
 }
