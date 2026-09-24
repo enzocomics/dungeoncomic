@@ -26,7 +26,10 @@ export default async function RootLayoutUI({
 			Object.values(fonts).map((f) => f.font.variable),
 			// Default Colours
 			"text-base-content",
-
+			// Next.js has an issue when using a <Link> component combined with a sticky header that requires this as a fix
+			// - https://github.com/vercel/next.js/discussions/64435#discussioncomment-15734999
+			"scroll-pt-[100svh]",
+			//
 		)}
 	>
 		<body
