@@ -29,7 +29,7 @@ export const LandingPageHeader = (
 			"justify-center",
 			"h-70",
 			"md:p-20",
-			"overflow-hidden"
+			// "overflow-hidden"
 		)}
 	>
 		{props.children}

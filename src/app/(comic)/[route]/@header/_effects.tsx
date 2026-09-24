@@ -135,19 +135,19 @@ export default function ClientLandingPageHeader({
 		/>
 		<LandingPageHeader className={clsx(
 		)}>
-			{logo &&
-				<div
-					ref={wrapperRef}
-					className={clsx(
-						"origin-top",
-						"transition-[transform]",
-						"duration-400",
-						"ease-in-out",
-						"w-full",
-						"h-full",
-						"flex",
-						"items-center",
-					)}>
+			<div
+				ref={wrapperRef}
+				className={clsx(
+					"origin-top",
+					"transition-[transform]",
+					"duration-400",
+					"ease-in-out",
+					"w-full",
+					"h-full",
+					"flex",
+					"items-center",
+				)}>
+				{logo &&
 					<LandingPageLogo
 						ref={imageRef}
 						src={`${directusURL}/assets/${logo.filename_disk}`}
@@ -164,26 +164,29 @@ export default function ClientLandingPageHeader({
 							"ease-in-out",
 						)}
 					/>
-				</div>
-			}
-			{!logo &&
-				<LandingPageH1
-					ref={textLogoRef}
-					className={clsx(
-						// comic?.banner && [
-						"opacity-1",
-						"transition-opacity",
-						"text-white",
-						"[text-stroke:16px_black",
-						"[-webkit-text-stroke:16px_black]",
-						"[paint-order:stroke_fill]",
-						"drop-shadow-black/50",
-						"drop-shadow-md",
-						// ],
-					)}>
-					<span ref={imageRef}>{title}</span>
-				</LandingPageH1>
-			}
+
+				}
+
+				{!logo &&
+					<LandingPageH1
+						ref={imageRef}
+						className={clsx(
+							// comic?.banner && [
+							"h-16",
+							// "opacity-1",
+							"transition-opacity",
+							"text-white",
+							"[text-stroke:16px_black",
+							"[-webkit-text-stroke:16px_black]",
+							"[paint-order:stroke_fill]",
+							"drop-shadow-black/50",
+							"drop-shadow-md",
+							// ],
+						)}>
+						<span ref={textLogoRef}>{title}</span>
+					</LandingPageH1>
+				}
+			</div>
 		</LandingPageHeader>
 	</>
 }
