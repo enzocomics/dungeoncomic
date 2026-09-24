@@ -412,3 +412,58 @@ export async function getComicVariables(slug?: string) {
 		: null
 	return request
 }
+
+/** ------------------------------------------------ **
+ * GET COMIC PAGE SUGGESTIONS
+ */
+
+export const getComicPageSuggestions = async (page: number) => {
+	const request = await publicClient.request(
+		readItems("plot_suggestions", {
+			filter: {
+				page: {
+					_eq: page,
+				},
+			},
+			fields: [
+				"title",
+				"slug",
+				{
+					users_voted: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				"id",
+				{
+					user_created: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				"date_created",
+				{
+					user_updated: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				"date_updated",
+			],
+		}),
+	)
+
+	return request
+}
