@@ -26,7 +26,7 @@ import { Textarea } from "@/components/textarea"
 import { ComicButton } from "@/components/button"
 import { AuthLink } from "@/components/auth"
 import { verifySession } from "@/data/session"
-import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getComicPage, getComicPageSuggestions, getComicVariables } from "@/lib/directus/get-comics"
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow, ComicInputRadio } from "./comic-page-inputs"
 import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(comic)/_functions/check-vars"
 import Notice from "@/components/notices"
@@ -37,12 +37,14 @@ export function ClientComicPageFeedback({
 	page,
 	variables,
 	userVariables,
-	session
+	session,
+	suggestions
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
 	session?: Awaited<ReturnType<typeof verifySession>>
+	suggestions?: Awaited<ReturnType<typeof getComicPageSuggestions>>
 }) {
 	const router = useRouter()
 	const t = useTranslations()
@@ -50,7 +52,7 @@ export function ClientComicPageFeedback({
 	const varsExist = doVarsExist(page.comic_panels)
 	const varsSubmitted = haveVarsBeenSubmitted(page.comic_panels)
 
-	const hasPlotSuggestions = checkHasPlotSuggestions(page.plot_suggestions)
+	const hasPlotSuggestions = checkHasPlotSuggestions(suggestions)
 	// Get the ID of the currently logged-in user, if exists
 	const loggedInUserID = session?.id || null
 
@@ -58,13 +60,13 @@ export function ClientComicPageFeedback({
 	// SUGGESTIONS
 
 	// Check if the User ID exists in current suggestions, and get the ID
-	const userVotedOn = page.plot_suggestions!.find(
+	const userVotedOn = suggestions!.find(
 		s => s.users_voted!.some(
 			(v: any) => v.id === loggedInUserID
 		)
 	)
 
-	let getUserVotedOnIndex = page.plot_suggestions!.findIndex(
+	let getUserVotedOnIndex = suggestions!.findIndex(
 		(s, index) => s.users_voted!.some(
 			(v: any) => v.id === loggedInUserID
 		)
@@ -87,6 +89,11 @@ export function ClientComicPageFeedback({
 
 	// Poll Click Handler
 	function handleClick(selectedId: string) {
+		if (selectedId == "0") {
+			setScoreChanged("custom")
+		} else {
+			setScoreChanged(true)
+		}
 		setSelected(selectedId)
 	}
 
@@ -109,7 +116,6 @@ export function ClientComicPageFeedback({
 
 		// Cast the vote
 		if (clicked == true) {
-
 			votesRef.current[selectedIndex]?.setAttribute("data-loading", "true")
 			// Only submit to CMS after a one-second delay where no more input is accepted
 			voteTimer.current && clearTimeout(voteTimer.current)
@@ -126,7 +132,7 @@ export function ClientComicPageFeedback({
 	// Now we have to update the numbers on the fly
 
 	// Votes
-	const loadedVotes = page.plot_suggestions?.map((s, index) => {
+	const loadedVotes = suggestions?.map((s, index) => {
 		return s?.users_voted?.length
 	})
 	const [votes, setVote] = useState(loadedVotes)
@@ -183,30 +189,12 @@ export function ClientComicPageFeedback({
 		}
 	}, [selected])
 
-	// Handle State of the vote numbers
-	// const [votes, setVote] = useState(s?.users_voted?.length || 0)
-
-	// useEffect(() => {
-	// 	// Update the vote numbers on-the-fly
-	// 	if (clicked == true) {
-	// 		// +1 to the vote that is selected
-	// 		if (selected == `${s.id}`)
-	// 			setVote(votes + 1)
-	// 		// -1 to the vote the user previously voted on
-	// 	  if (userVotedOnID == `${s.id}`)
-	// 			setVote(votes - 1)
-	// 		
-	// 	}
-	// }, [selected])
-
-
-
 
 	/**----------------------------------- */
 	// SUBMITTED SUGGESTIONS
 
 	// Check if the user has submitted anything yet
-	const userSubmission = page.plot_suggestions!.find(
+	const userSubmission = suggestions!.find(
 		s => s.user_created.id === loggedInUserID
 	)
 
@@ -260,11 +248,7 @@ export function ClientComicPageFeedback({
 
 		</ComicInputSection >
 		{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
-			<ComicInputSection className={
-				clsx(
-					// firstLoad && "animate-fade-in",
-				)
-			}>
+			<ComicInputSection>
 				<ComicInputSectionRow>
 					<Fieldset
 						disabled={session ? false : true}>
@@ -293,7 +277,7 @@ export function ClientComicPageFeedback({
 								"gap-y-2",
 							)}>
 							{/* PLOT SUGGESTIONS */}
-							{page.plot_suggestions ? page.plot_suggestions.map((s, index) => {
+							{suggestions ? suggestions.map((s, index) => {
 
 								// RENDER
 								if (deleteSuggestion !== s.id)
@@ -307,7 +291,6 @@ export function ClientComicPageFeedback({
 											setSelectedObject(s)
 											setSelectedIndex(index)
 											setClicked(true)
-											setScoreChanged(true)
 										}}
 									>
 										<Label className={
@@ -320,7 +303,6 @@ export function ClientComicPageFeedback({
 											{/* SEPARATE AUTHOR SUGGESTIONS FROM USER SUGGESTIONS */}
 											{page.user_created.id !== s.user_created.id &&
 												<div className={clsx(
-
 													"flex",
 													"text-sm",
 													"mt-1",
@@ -365,7 +347,8 @@ export function ClientComicPageFeedback({
 																	"rounded-sm",
 																	"cursor-pointer",
 																)}
-																onClick={async () => {
+																onClick={async (e) => {
+																	e.preventDefault()
 																	deleteUserPlotSuggestion(s.id)
 																	setDeleteSuggestion(s.id)
 																	setUserHasSubmitted(false)
@@ -419,17 +402,10 @@ export function ClientComicPageFeedback({
 								!userHasSubmitted &&
 								<ComicInputRadio
 									value={selectUserSuggestion}
-									onClick={() => {
-										setSelected("")
-										setClicked(true)
-										setSelectedObject(undefined)
-										setScoreChanged("custom")
-									}}
 									className={clsx(
 										"text-left",
 										"mx-auto",
 									)}>
-									{/* <Radio value={selectUserSuggestion} /> */}
 									<Label className={
 										clsx(
 											"grow",
@@ -454,11 +430,11 @@ export function ClientComicPageFeedback({
 
 					</Fieldset>
 
-					<StatusMessage className={
+					{/* <StatusMessage className={
 						clsx(
 							"mt-2"
 						)
-					} />
+					} /> */}
 				</ComicInputSectionRow>
 			</ComicInputSection>
 		}
@@ -504,7 +480,8 @@ export function ClientComicPageFeedback({
 				<Form className={
 					clsx(
 						"mt-2",
-						"animate-fade-in"
+						"animate-fade-in",
+						props.className
 					)
 				}
 					id={form.id}
