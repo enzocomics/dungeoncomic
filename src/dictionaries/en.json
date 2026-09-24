@@ -3,7 +3,8 @@
 		"title": "Hello world!"
 	},
 	"404Page": {
-		"title": "404 - Page Not Found"
+		"title": "404 - Page Not Found",
+		"return-home": "Return Home"
 	},
 	"ComicProject": {
 		"under-construction": "This dungeon is under construction. Stay tuned for more.",
