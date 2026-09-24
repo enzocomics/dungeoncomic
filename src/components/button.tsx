@@ -1,5 +1,5 @@
 
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, ComponentPropsWithRef } from "react"
 import Link from "next/link"
 import { Button } from "@headlessui/react"
 import clsx from "clsx"
@@ -104,12 +104,12 @@ export function ComicButton({
 		as?: "button",
 		disabled?: boolean,
 		visited?: boolean
-	} & ComponentPropsWithoutRef<"button">)
+	} & ComponentPropsWithRef<"button">)
 	| ({
 		as?: "link",
 		disabled?: boolean,
 		visited?: boolean
-	} & ComponentPropsWithoutRef<typeof Link>)
+	} & ComponentPropsWithRef<typeof Link>)
 ) {
 	const classes = clsx(
 		className,
