@@ -153,7 +153,13 @@ export const ListPageItemLogo = ({
 				shortTitle && "text-4xl",
 				mediumTitle && "text-2xl",
 				longTitle && "text-base",
-				"group-active:text-comic-accent-500"
+				"group-active:text-comic-accent-500",
+				"text-white",
+				"[text-stroke:10px_black",
+				"[-webkit-text-stroke:10px_black]",
+				"[paint-order:stroke_fill]",
+				"drop-shadow-black/50",
+				"drop-shadow-md",
 			)}
 		>
 			{comicTitle}
