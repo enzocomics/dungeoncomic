@@ -11,15 +11,16 @@ import {
 // DATA
 import { verifySession } from "@/data/session"
 import { adminClient, userClient } from "@/lib/directus/clients"
-import { getComicPage } from "@/lib/directus/get-comics"
+import {
+	getComicPage,
+	getComicPageSuggestions,
+} from "@/lib/directus/get-comics"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 import { sanitize } from "@/lib/sanitize"
 
 export type PlotSuggestionType =
-	| NonNullable<
-			Awaited<ReturnType<typeof getComicPage>>["plot_suggestions"]
-	  >[number]
+	| NonNullable<Awaited<ReturnType<typeof getComicPageSuggestions>>>[number]
 	| null
 
 /**----------------------------------- */
@@ -186,4 +187,8 @@ export async function submitUserPlotSuggestion(
 	}
 	// RETURN REPLY so that its last value may be used
 	return submission.reply()
+}
+
+export const loadNewVotes = async (page: number) => {
+	return await getComicPageSuggestions(page)
 }
