@@ -43,7 +43,7 @@ export default function StatusMessage({
 			const queryString = params.toString()
 			const updatedQueryString = new URLSearchParams(queryString)
 			updatedQueryString.delete("status")
-			router.push(`${pathname}${updatedQueryString && `?${updatedQueryString}`}`)
+			router.push(`${pathname}${updatedQueryString && `?${updatedQueryString}`}`, { scroll: false })
 			containerRef?.current?.removeEventListener("animationend", hideStatus)
 			containerRef.current = null
 			setStatus("") // Clear the status message, which hides the message 
