@@ -12,12 +12,13 @@ import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
-import { ClientComicPageFeedback } from "./client/comic-page-feedback"
+import { ClientComicPageFeedback2 } from "./client/comic-page-feedback2"
 import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
 
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 import StatusMessage from "@/components/status-message"
+import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -125,12 +126,19 @@ export default async function ComicPageUI({
 				nextPageTitles={nextPageTitles}
 				nextPageSubtitles={nextPageSubtitles}
 			/>
-			<ClientComicPageFeedback
+			{/* <ClientComicPageFeedback2
 				page={page}
 				suggestions={pageSuggestions}
 				variables={variables}
 				userVariables={userVariables}
 				session={session}
+			/> */}
+			<ClientComicPageFeedback
+				page={page}
+				session={session}
+				suggestions={pageSuggestions}
+				variables={variables}
+				userVariables={userVariables}
 			/>
 			<ComicPageMeta page={page} />
 		</PageContentWrapper>
