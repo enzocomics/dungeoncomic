@@ -15,7 +15,7 @@ import {
 	getComicPage,
 	getComicPageSuggestions,
 } from "@/lib/directus/get-comics"
-import { parseWithZod } from "@conform-to/zod/v4"
+import { parseWithZod, SubmissionResult } from "@conform-to/zod/v4"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 import { sanitize } from "@/lib/sanitize"
 
@@ -151,12 +151,17 @@ export async function deleteUserPlotSuggestion(id: number) {
 		return { error }
 	}
 }
+type userSuggestionResponseType = any // TODO:  ANY
+
+type actionResult = SubmissionResult<string[]> & {
+	data?: userSuggestionResponseType
+}
 
 /**----------------------------------- */
 export async function submitUserPlotSuggestion(
-	prevState: unknown,
+	prevState: actionResult | undefined,
 	formData: FormData,
-) {
+): Promise<actionResult> {
 	// VALIDATION
 	const submission = parseWithZod(formData, { schema: userSuggestionSchema() })
 
@@ -168,7 +173,7 @@ export async function submitUserPlotSuggestion(
 
 	// SUBMIT USER SUGGESTION TO DIRECTUS
 	try {
-		const userSuggestionRequest = await userClient.request(
+		const userSuggestionResponse = await userClient.request(
 			createItem("plot_suggestions", {
 				title: sanitize(userSuggestion),
 				slug: slug,
@@ -176,6 +181,10 @@ export async function submitUserPlotSuggestion(
 				users_voted: [{ id: userId }],
 			}),
 		)
+		return {
+			...submission.reply(),
+			data: userSuggestionResponse,
+		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
@@ -185,8 +194,6 @@ export async function submitUserPlotSuggestion(
 			formErrors: [reason],
 		})
 	}
-	// RETURN REPLY so that its last value may be used
-	return submission.reply()
 }
 
 export const loadNewVotes = async (page: number) => {
