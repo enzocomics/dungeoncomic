@@ -407,6 +407,7 @@ export function ClientComicPageFeedback({
 											"font-platform-mono",
 											"dark:bg-neutral-900/40",
 											"min-w-12",
+											"text-right"
 										)
 									}>
 										{/* {s.users_voted?.length || 0} */}
