@@ -57,6 +57,7 @@ export function ClientComicPageFeedback({
 	const radioGroupRef = useRef<HTMLDivElement | null>(null)
 	const radioItemsRef = useRef<(HTMLSpanElement | null)[]>([])
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+	const voteTimer = useRef<NodeJS.Timeout | null>(null)
 
 	/**----------------------------------- */
 	// SUGGESTIONS: INITIAL DATA
@@ -93,6 +94,7 @@ export function ClientComicPageFeedback({
 	let [userHasSubmitted, setUserHasSubmitted] = useState(!!userSubmission)
 	let [voteNums, setVoteNums] = useState(loadedVotes)
 	let [oldVoteIndex, setOldVoteIndex] = useState(getOldVoteIndex)
+
 
 	// HANDLER: Suggestion Radio Item
 	const handleRadioClick = (selected: string | "custom" | null) => {
@@ -134,10 +136,10 @@ export function ClientComicPageFeedback({
 				}
 				// ACTION: Submit custom submission to CMS
 				voteOnPlotSuggestion({ vote: "custom", page: page, user: session || null })
-			} else
+			}
 			// ************************************************
 			// --- SELECT REGULAR SUGGESTION
-			{
+			else if (selected && !isNaN(parseInt(selected))) {
 				// --- OLD VOTE + NEW VOTE -------------------
 				// If an old vote actually exists + new vote 
 				if (
@@ -197,8 +199,14 @@ export function ClientComicPageFeedback({
 					setOldVoteIndex(newVoteIndex)
 				}
 
-				// ACTION: Submit votes update to CMS
-				voteOnPlotSuggestion({ vote: selected, page: page, user: session || null })
+				// Only submit to CMS after a one-second delay where no more input is accepted
+				radioItemsRef.current[parseInt(selected)]?.setAttribute("data-loading", "true")
+				voteTimer.current && clearTimeout(voteTimer.current)
+				voteTimer.current = setTimeout(() => {
+					radioItemsRef.current[parseInt(selected)]?.removeAttribute("data-loading")
+					// ACTION: Submit votes update to CMS
+					voteOnPlotSuggestion({ vote: selected, page: page, user: session || null })
+				}, 1000)
 			}
 		}
 	}
