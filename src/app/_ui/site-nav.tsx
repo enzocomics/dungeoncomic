@@ -79,7 +79,8 @@ export default function SiteNav({
 		]
 
 	const accountMenuNavigation = session && [
-		{ name: "Edit Profile", href: "/dashboard", modal: null },
+		{ name: "Dashboard", href: "/dashboard", modal: null },
+		{ name: "Edit profile", href: "/dashboard/profile", modal: null },
 		{ name: "Settings", href: "/dashboard/settings", modal: null },
 	]
 
