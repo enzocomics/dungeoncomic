@@ -25,7 +25,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { ComicErrorMessage, ComicInputRadio, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 import { Field, Fieldset, Label, Legend, RadioGroup } from "@headlessui/react"
 import { ComicButton } from "@/components/button"
-import { deleteUserPlotSuggestion, submitUserPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
+import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
 
 
 /**----------------------------------- */
@@ -82,6 +82,13 @@ export function ClientComicPageFeedback({
 
 	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
+
+		// User Suggestion
+		if (selected == "custom") {
+			voteOnPlotSuggestion({ vote: "custom", page: page, user: session || null })
+		} else {
+			voteOnPlotSuggestion({ vote: selected, page: page, user: session || null })
+		}
 	}
 
 	const handleDeleteSuggestionClick = (id: number) => {
@@ -91,11 +98,11 @@ export function ClientComicPageFeedback({
 			const toDeleteSuggestionIndex = suggestionsList.findIndex(
 				s => s.id === id
 			)
-			// Delete the suggestion from the suggestsions list
+			// Delete the suggestion from the suggestions list
 			setSuggestionsList(
 				suggestionsList.toSpliced(toDeleteSuggestionIndex, 1)
 			)
-			// Delete suggesiton from the CMS
+			// Delete suggestion from the CMS
 			deleteUserPlotSuggestion(id)
 			// Notification
 			setStatus("success", t("ComicPage.suggestion-deleted"))
