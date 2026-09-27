@@ -68,31 +68,23 @@ export function ClientComicPageFeedback({
 			(v: any) => v.id === loggedInUserID
 		)
 	)
-
 	// Vote Numbers
 	const loadedVotes = suggestions?.map((s, index) => {
 		return s?.users_voted?.length
 	})
 
+	console.log(userVotedOn?.id)
+
 	// SUGGESTIONS STATE & HANDLERS
-	type simpleSuggestionType = {
-
-	}
-
-	let [selected, setSelected] = useState<number | "custom" | null>(null)
+	let [selected, setSelected] = useState<string | "custom" | null>(userVotedOn?.id.toString() || null)
 	let [suggestionsList, setSuggestionsList] = useState<
 		Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined
 	>(suggestions)
 
-	console.log(suggestions)
-
-
-
 	let [votes, setVotes] = useState(loadedVotes)
 
-	const handleRadioClick = (selected: number | "custom" | null) => {
+	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
-		// console.log(selected)
 	}
 
 	/**----------------------------------- */
@@ -117,18 +109,19 @@ export function ClientComicPageFeedback({
 	// EFFECT: Run after the form has successfully submitted
 	useEffect(() => {
 		if (lastResult?.status == "success") {
-			// console.log(lastResult.data)
-			const s = lastResult.data
-			// Deselect the custom radio button
-			setSelected(null)
 			// Notification
 			setStatus("success", t("ComicPage.suggestion-submitted"))
 			// Add the latest suggestion to the suggestionList state (this should update what the reader sees)
-			suggestionsList && setSuggestionsList([
-				...Object.values((suggestionsList)),
-				lastResult.data as unknown as any
-			])
-
+			if (lastResult.data) {
+				suggestionsList && setSuggestionsList([
+					// The original suggestionList is an object we have to turn into an array with `Object.values`
+					...Object.values((suggestionsList)),
+					// Then we append the response data from submitting the item to directus
+					lastResult.data
+				])
+				// Set the new result as the "selected" result
+				setSelected(lastResult.data.id.toString())
+			}
 		}
 	}, [lastResult])
 
@@ -210,7 +203,7 @@ export function ClientComicPageFeedback({
 											"min-w-12",
 										)
 									}>
-										{votes ? votes[index] : 0}
+										{s.users_voted?.length || 0}
 									</div>
 								</ComicInputRadio>
 							})}
