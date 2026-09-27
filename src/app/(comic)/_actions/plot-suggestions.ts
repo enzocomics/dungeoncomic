@@ -21,9 +21,9 @@ import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 import { sanitize } from "@/lib/sanitize"
 import { getUser } from "@/lib/directus/get-users"
 
-export type PlotSuggestionType =
-	| NonNullable<Awaited<ReturnType<typeof getComicPageSuggestions>>>[number]
-	| null
+// export type PlotSuggestionType =
+// 	| NonNullable<Awaited<ReturnType<typeof getComicPageSuggestions>>>[number]
+// 	| null
 
 /**----------------------------------- */
 export async function voteOnPlotSuggestion({
@@ -32,13 +32,13 @@ export async function voteOnPlotSuggestion({
 	page,
 	user,
 }: {
-	vote?: PlotSuggestionType
+	vote: string | "custom" | null
 	// newVoteID: number
 	page: Awaited<ReturnType<typeof getComicPage>>
 	user: Awaited<ReturnType<typeof verifySession>>
 }) {
 	const newVote = vote
-	// If the newVoteID is 0, it means the user has selected to add their own suggestions.
+	// If the vote is "custom", it means the user has selected to add their own suggestions.
 	// This means we should only remove old votes without adding a new one
 	try {
 		// Get all the plot suggestions on this page
@@ -58,76 +58,54 @@ export async function voteOnPlotSuggestion({
 			user &&
 			plotSuggestions.find((object) => object.users_voted.includes(user.id))
 
-		// Get the user id from the oldvote. remove it
-		const removeUserFromOldVote = oldVote?.users_voted.filter(
-			(id) => id !== user?.id,
-		)
-
 		// Add the user id to the list of voters on the new vote
-		// - check if there's any values in the new vote, otherwise just give an empty array
-		// - spread operator includes the previous array
-		// - then add the new id at the end
-		const addUserToNewVote = [...(newVote?.users_voted || []), user?.id]
-
-		// If the vote is undefined AND there is an old vote, delete old vote only
-		if (newVote == undefined && oldVote) {
-			// console.log("user submits their own thing. delete old vote ONLY")
-			const response = await userClient.request(
-				updateItem("pages", page.id as number, {
-					plot_suggestions: [
-						...plotSuggestions, // Include all the old suggestions
-						{
-							id: oldVote.id,
-							title: oldVote.title,
-							slug: oldVote.slug,
-							users_voted: removeUserFromOldVote,
+		if (user) {
+			// If the vote is custom AND there is an old vote, delete old vote only
+			if (newVote == "custom" && oldVote) {
+				// Detailed Update Syntax:
+				// - Prevents concurrency collisions (users voting at the same time will not overwrite each other)
+				const detailedResponse = await userClient.request(
+					updateItem("plot_suggestions", oldVote.id, {
+						users_voted: {
+							delete: [user.id],
 						},
-					],
-				}),
-			)
-			// console.log(response)
-		}
-		// If there's a new AND  an old vote, make sure to delete the old one first
-		else if (newVote && oldVote) {
-			// console.log("delete previous vote and vote for ", newVote.title)
-			const response = await userClient.request(
-				updateItem("pages", page.id as number, {
-					plot_suggestions: [
-						...plotSuggestions,
-						{
-							id: oldVote.id,
-							title: oldVote.title,
-							slug: oldVote.slug,
-							users_voted: removeUserFromOldVote,
+					}),
+				)
+			}
+			// If there's a new AND  an old vote, make sure to delete the old one first
+			else if (newVote && oldVote) {
+				// console.log("delete previous vote and vote for ", newVote.title)
+				const detailedResponse = await userClient.request(
+					updateItem("pages", page.id as number, {
+						plot_suggestions: {
+							update: [
+								{
+									id: oldVote.id,
+									users_voted: {
+										delete: [user.id],
+									},
+								},
+								{
+									id: parseInt(newVote),
+									users_voted: {
+										update: [{ id: user.id }],
+									},
+								},
+							],
 						},
-						{
-							id: newVote.id,
-							title: newVote.title,
-							slug: newVote.slug,
-							users_voted: addUserToNewVote,
+					}),
+				)
+			}
+			// Otherwise, just submit the new vote
+			else if (newVote && newVote !== "custom" && !oldVote) {
+				const detailedResponse = await userClient.request(
+					updateItem("plot_suggestions", parseInt(newVote), {
+						users_voted: {
+							update: [{ id: user.id }],
 						},
-					],
-				}),
-			)
-			// console.log(response)
-		}
-		// Otherwise, just submit the new vote
-		else if (newVote && !oldVote) {
-			// console.log("only vote for", newVote.title)
-			const response = await userClient.request(
-				updateItem("pages", page.id as number, {
-					plot_suggestions: [
-						...plotSuggestions,
-						{
-							id: newVote.id,
-							title: newVote.title,
-							slug: newVote.slug,
-							users_voted: addUserToNewVote,
-						},
-					],
-				}),
-			)
-			// console.log(response)
+					}),
+				)
+			}
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
@@ -155,25 +133,6 @@ export async function deleteUserPlotSuggestion(id: number) {
 }
 
 // /**----------------------------------- */
-
-// export type userSuggestionResponseType = Awaited<typeof newPlotSuggestion>
-// export type userSuggestionResponseType = Awaited<ReturnType<typeof getComicPageSuggestions>>
-
-export type userSuggestionResponseType =
-	| {
-			title: string
-			slug: string
-			id: number
-			page: number
-			date_created: string
-			date_updated?: string
-			sort: number | null
-			user_created: string
-			user_updated: string | null
-			votes: number | null
-			users_voted: string[]
-	  }[]
-	| undefined
 
 type actionResult = SubmissionResult<string[]> & {
 	data?: Awaited<ReturnType<typeof getComicPageSuggestions>>[number]
