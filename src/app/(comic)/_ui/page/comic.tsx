@@ -12,7 +12,6 @@ import { ClientComicPageContentTitle } from "./client/comic-page-content-title"
 import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
-import { ClientComicPageFeedback2 } from "./client/comic-page-feedback2"
 import ClientComicPageEffects from "./client/comic-page-effects"
 import { PageContentWrapper } from "@/app/_ui/site-page"
 
