@@ -99,7 +99,6 @@ export function ClientComicPageFeedback({
 	// HANDLER: Suggestion Radio Item
 	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
-
 		// We can't really do anything if the suggestionsList doesn't exist & user is not logged in
 		if (suggestionsList && session) {
 			let newSuggestionsList = [...suggestionsList]
@@ -116,7 +115,6 @@ export function ClientComicPageFeedback({
 			if (selected == "custom") {
 				// Check if the old vote actually exists
 				if (oldVoteIndex !== undefined && oldVoteIndex !== -1) {
-
 					// --- REMOVE OLD VOTE -----------------------
 					// Get the old list of users who have voted
 					let old_users_voted = newSuggestionsList[oldVoteIndex].users_voted
@@ -196,7 +194,8 @@ export function ClientComicPageFeedback({
 				}
 
 				// Only submit to CMS after a one-second delay where no more input is accepted
-				radioItemsRef.current[parseInt(selected)]?.setAttribute("data-loading", "true")
+				radioItemsRef.current?.forEach((v) => v?.removeAttribute("data-loading")) // remove all  old loading icons
+				radioItemsRef.current[parseInt(selected)]?.setAttribute("data-loading", "true") // add to the current one
 				voteTimer.current && clearTimeout(voteTimer.current)
 				voteTimer.current = setTimeout(() => {
 					radioItemsRef.current[parseInt(selected)]?.removeAttribute("data-loading")
