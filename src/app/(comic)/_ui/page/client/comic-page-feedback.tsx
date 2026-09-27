@@ -25,7 +25,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { ComicErrorMessage, ComicInputRadio, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 import { Field, Fieldset, Label, Legend, RadioGroup } from "@headlessui/react"
 import { ComicButton } from "@/components/button"
-import { submitUserPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
+import { deleteUserPlotSuggestion, submitUserPlotSuggestion } from "@/app/(comic)/_actions/plot-suggestions"
 
 
 /**----------------------------------- */
@@ -68,21 +68,40 @@ export function ClientComicPageFeedback({
 			(v: any) => v.id === loggedInUserID
 		)
 	)
-	// Vote Numbers
-	const loadedVotes = suggestions?.map((s, index) => {
-		return s?.users_voted?.length
-	})
-
-	console.log(userVotedOn?.id)
+	// Check if the user has submitted anything yet
+	const userSubmission = suggestions!.find(
+		s => s.user_created.id === loggedInUserID
+	)
 
 	// SUGGESTIONS STATE & HANDLERS
 	let [selected, setSelected] = useState<string | "custom" | null>(userVotedOn?.id.toString() || null)
 	let [suggestionsList, setSuggestionsList] = useState<
 		Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined
 	>(suggestions)
+	let [userHasSubmitted, setUserHasSubmitted] = useState(!!userSubmission)
 
 	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
+	}
+
+	const handleDeleteSuggestionClick = (id: number) => {
+		// Delete suggestion from state
+		if (suggestionsList) {
+			// Get the index of the suggestion to delete
+			const toDeleteSuggestionIndex = suggestionsList.findIndex(
+				s => s.id === id
+			)
+			// Delete the suggestion from the suggestsions list
+			setSuggestionsList(
+				suggestionsList.toSpliced(toDeleteSuggestionIndex, 1)
+			)
+			// Delete suggesiton from the CMS
+			deleteUserPlotSuggestion(id)
+			// Notification
+			setStatus("success", t("ComicPage.suggestion-deleted"))
+			// Cleanup
+			setUserHasSubmitted(false)
+		}
 	}
 
 	/**----------------------------------- */
@@ -178,6 +197,64 @@ export function ClientComicPageFeedback({
 							{suggestionsList?.map((s, index) => {
 								return <ComicInputRadio key={index} value={`${s.id}`}>
 									<Label className={clsx("grow", "text-left")}>
+										{/* USER-SUBMITTED METADATA */}
+
+										{page.user_created.id !== s.user_created.id &&
+											<div
+												className={clsx(
+													"flex",
+													"text-sm",
+													"mt-1",
+													"cursor-auto",
+													"gap-x-4",
+												)}>
+												<em className={clsx("text-neutral-400", "dark:text-white/70",)}>
+													@{s.user_created.username} says:
+												</em>
+
+												{session && s.user_created.id == session.id &&
+													<span
+														className={clsx(
+															"absolute",
+															"-top-1",
+															"-right-1",
+															"flex",
+															"ml-auto",
+															"gap-x-1",
+														)}>
+														{/* <button
+															title={t("edit-suggestion")}
+															className={clsx(
+																"px-1",
+																"bg-neutral-400",
+																"text-white",
+																"rounded-sm",
+																"cursor-pointer",
+															)}>
+															<Icon name="penToSquare" className={clsx(
+																"size-4",
+															)} />
+														</button> */}
+														<button
+															title={t("ComicPage.delete-suggestion")}
+															className={clsx(
+																"p-1",
+																"bg-red-400",
+																"text-white",
+																"rounded-sm",
+																"cursor-pointer",
+															)}
+															onClick={(e) => {
+																e.preventDefault()
+																handleDeleteSuggestionClick(s.id)
+															}}
+														>
+															<Icon name="xmark" className={clsx("size-4",)} />
+														</button>
+													</span>
+												}
+											</div>
+										}
 										{/* TITLE */}
 										<div className={clsx("cursor-auto")}>
 											{replaceComicVariables({
@@ -207,73 +284,75 @@ export function ClientComicPageFeedback({
 							})}
 
 							{/* RADIO BUTTON: Custom User Suggestion */}
-							<ComicInputRadio value="custom" className={clsx("text-left", "mx-auto")}>
-								<Label className={clsx("grow", "font-comic-copy")}>
-									{t("ComicPage.submit-own-suggestion")}
-									{allowUserSuggestions && selected == "custom" && session &&
-										// FORM: Custom User Suggestion Form
-										<Form className={clsx("mt-2", "animate-fade-in",)}
-											id={form.id}
-											onSubmit={form.onSubmit}
-											action={action}
-											onAnimationEnd={() => suggestionRef.current?.focus()}
-											noValidate
-										>
-											<Field className={clsx("relative")}>
-												{/* Length Checker */}
-												<span className={clsx(
-													"absolute",
-													"-top-6.5",
-													"right-0",
-													"ml-auto",
-													"font-comic-header",
-													"font-normal",
-													"text-xs",
-													"text-current/50"
-												)}>
-													{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
-												</span>
-												<Textarea ref={suggestionRef}
-													className={clsx("outline-none!",)}
-													// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
-													// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
-													onKeyDown={
-														(e) => (e.key == " " || e.code == "Space" || e.keyCode == 32) && e.stopPropagation()
-													}
-													id={fields.userSuggestion.name}
-													name={fields.userSuggestion.name}
-													key={fields.userSuggestion.key}
-												/>
-												<ComicErrorMessage className={clsx("mb-2", "text-center")}>
-													{fields.userSuggestion.errors}
-												</ComicErrorMessage>
-												<ComicButton as="button" type="submit">
-													{t("ComicPage.submit-suggestion")}
-												</ComicButton>
-												<input
-													name={fields.pageId.name}
-													key={fields.pageId.key}
-													type="hidden"
-													value={page.id.toString()}
-												/>
-												<input
-													name={fields.slug.name}
-													key={fields.slug.key}
-													type="hidden"
-													value={`p=${page.id}&u=${session.id}`}
-												/>
-												<input
-													name={fields.userId.name}
-													key={fields.userId.key}
-													type="hidden"
-													value={session.id}
-												/>
-											</Field>
-										</Form>
-									}
-								</Label>
-								<Icon name="penToSquare" className={clsx("size-5", "mr-3.5", "group-data-checked:hidden")} />
-							</ComicInputRadio>
+							{allowUserSuggestions && !userHasSubmitted &&
+								<ComicInputRadio value="custom" className={clsx("text-left", "mx-auto")}>
+									<Label className={clsx("grow", "font-comic-copy")}>
+										{t("ComicPage.submit-own-suggestion")}
+										{allowUserSuggestions && selected == "custom" && session &&
+											// FORM: Custom User Suggestion Form
+											<Form className={clsx("mt-2", "animate-fade-in",)}
+												id={form.id}
+												onSubmit={form.onSubmit}
+												action={action}
+												onAnimationEnd={() => suggestionRef.current?.focus()}
+												noValidate
+											>
+												<Field className={clsx("relative")}>
+													{/* Length Checker */}
+													<span className={clsx(
+														"absolute",
+														"-top-6.5",
+														"right-0",
+														"ml-auto",
+														"font-comic-header",
+														"font-normal",
+														"text-xs",
+														"text-current/50"
+													)}>
+														{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
+													</span>
+													<Textarea ref={suggestionRef}
+														className={clsx("outline-none!",)}
+														// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
+														// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
+														onKeyDown={
+															(e) => (e.key == " " || e.code == "Space" || e.keyCode == 32) && e.stopPropagation()
+														}
+														id={fields.userSuggestion.name}
+														name={fields.userSuggestion.name}
+														key={fields.userSuggestion.key}
+													/>
+													<ComicErrorMessage className={clsx("mb-2", "text-center")}>
+														{fields.userSuggestion.errors}
+													</ComicErrorMessage>
+													<ComicButton as="button" type="submit">
+														{t("ComicPage.submit-suggestion")}
+													</ComicButton>
+													<input
+														name={fields.pageId.name}
+														key={fields.pageId.key}
+														type="hidden"
+														value={page.id.toString()}
+													/>
+													<input
+														name={fields.slug.name}
+														key={fields.slug.key}
+														type="hidden"
+														value={`p=${page.id}&u=${session.id}`}
+													/>
+													<input
+														name={fields.userId.name}
+														key={fields.userId.key}
+														type="hidden"
+														value={session.id}
+													/>
+												</Field>
+											</Form>
+										}
+									</Label>
+									<Icon name="penToSquare" className={clsx("size-5", "mr-3.5", "group-data-checked:hidden")} />
+								</ComicInputRadio>
+							}
 
 						</RadioGroup>
 					</Fieldset>
