@@ -100,7 +100,7 @@ export interface PlotSuggestionsCollection {
 	id: number
 	page: PagesCollection | number
 	sort: number
-	user_created: DirectusUser
+	user_created: DirectusUser | string
 	date_created: "datetime"
 	user_updated: DirectusUser
 	date_updated: "datetime"

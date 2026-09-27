@@ -151,13 +151,32 @@ export async function deleteUserPlotSuggestion(id: number) {
 		return { error }
 	}
 }
-type userSuggestionResponseType = any // TODO:  ANY
+
+// /**----------------------------------- */
+
+// export type userSuggestionResponseType = Awaited<typeof newPlotSuggestion>
+// export type userSuggestionResponseType = Awaited<ReturnType<typeof getComicPageSuggestions>>
+
+export type userSuggestionResponseType =
+	| {
+			title: string
+			slug: string
+			id: number
+			page: number
+			date_created: string
+			date_updated?: string
+			sort: number | null
+			user_created: string
+			user_updated: string | null
+			votes: number | null
+			users_voted: string[]
+	  }[]
+	| undefined
 
 type actionResult = SubmissionResult<string[]> & {
-	data?: userSuggestionResponseType
+	data?: any
 }
 
-/**----------------------------------- */
 export async function submitUserPlotSuggestion(
 	prevState: actionResult | undefined,
 	formData: FormData,

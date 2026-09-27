@@ -68,16 +68,26 @@ export function ClientComicPageFeedback({
 			(v: any) => v.id === loggedInUserID
 		)
 	)
+
 	// Vote Numbers
 	const loadedVotes = suggestions?.map((s, index) => {
 		return s?.users_voted?.length
 	})
 
 	// SUGGESTIONS STATE & HANDLERS
-	let [selected, setSelected] = useState<number | "custom" | null>(null)
-	let [suggestionsList, setSuggestionsList] = useState<Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined>(suggestions)
+	type simpleSuggestionType = {
 
-	// console.log(suggestionsList)
+	}
+
+	let [selected, setSelected] = useState<number | "custom" | null>(null)
+	let [suggestionsList, setSuggestionsList] = useState<
+		Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined
+	>(suggestions)
+
+	console.log(suggestions)
+
+
+
 	let [votes, setVotes] = useState(loadedVotes)
 
 	const handleRadioClick = (selected: number | "custom" | null) => {
@@ -107,6 +117,8 @@ export function ClientComicPageFeedback({
 	// EFFECT: Run after the form has successfully submitted
 	useEffect(() => {
 		if (lastResult?.status == "success") {
+			// console.log(lastResult.data)
+			const s = lastResult.data
 			// Deselect the custom radio button
 			setSelected(null)
 			// Notification
@@ -114,7 +126,7 @@ export function ClientComicPageFeedback({
 			// Add the latest suggestion to the suggestionList state (this should update what the reader sees)
 			suggestionsList && setSuggestionsList([
 				...Object.values((suggestionsList)),
-				lastResult?.data
+				lastResult.data as unknown as any
 			])
 
 		}
