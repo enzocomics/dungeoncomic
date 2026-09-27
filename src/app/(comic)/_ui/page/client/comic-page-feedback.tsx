@@ -451,6 +451,10 @@ export function ClientComicPageFeedback({
 														onKeyDown={
 															(e) => (e.key == " " || e.code == "Space" || e.keyCode == 32) && e.stopPropagation()
 														}
+														onChange={(e) => {
+															setInputLength(e.target.value.length)
+														}}
+														maxLength={140} // TODO: hardcoded
 														id={fields.userSuggestion.name}
 														name={fields.userSuggestion.name}
 														key={fields.userSuggestion.key}
