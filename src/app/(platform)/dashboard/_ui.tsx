@@ -1,3 +1,4 @@
+"use client"
 /**----------------------------------- */
 // I18N
 import Icon, { icons } from "@/styles/icons"
@@ -6,6 +7,7 @@ import clsx from "clsx"
 import { useTranslations } from "next-intl"
 // LIBRARIES
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
 
 /**-----------------------------------
@@ -15,6 +17,7 @@ export default function DashboardPageUI() {
 	const t = useTranslations("auth")
 	return <>
 		<h1 className="font-platform-display text-3xl">{t("pages.dashboard.title")}</h1>
+		asdf
 	</>
 }
 
@@ -38,7 +41,7 @@ export const DashboardTabList = (props: ComponentPropsWithoutRef<typeof TabList>
 			"md:px-2",
 			"flex",
 			"flex-row",
-			"gap-x-2",
+			"gap-x-1",
 			// "pt-2",
 
 			"mx-auto",
@@ -47,6 +50,8 @@ export const DashboardTabList = (props: ComponentPropsWithoutRef<typeof TabList>
 			"dark:bg-base-3/50",
 			"border-b-4",
 			"border-red-500",
+			"text-sm",
+			"md:text-base",
 
 		)}>
 			{props.children}
@@ -56,15 +61,19 @@ export const DashboardTabList = (props: ComponentPropsWithoutRef<typeof TabList>
 
 
 export const DashboardTab = ({
+	asLink = false,
 	className,
 	icon,
 	iconRight = false,
 	...props
 }: {
+	asLink?: boolean
 	icon?: keyof typeof icons
 	iconRight?: boolean
-	href?: string,
+	href?: string
 } & ComponentPropsWithoutRef<typeof Tab>) => {
+	const pathname = usePathname()
+
 	return <>
 		<Tab className={clsx(
 			"cursor-pointer",
@@ -86,6 +95,8 @@ export const DashboardTab = ({
 			"data-selected:text-white",
 			className
 		)}
+			as={asLink ? Link : undefined}
+			// data-selected={pathname == props?.href ? true : undefined}
 			{...props}
 		>
 			<>
