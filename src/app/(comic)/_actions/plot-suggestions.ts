@@ -6,6 +6,7 @@ import {
 	deleteItem,
 	readItem,
 	readItems,
+	readUser,
 	updateItem,
 } from "@directus/sdk"
 // DATA
@@ -18,6 +19,7 @@ import {
 import { parseWithZod, SubmissionResult } from "@conform-to/zod/v4"
 import { userSuggestionSchema } from "@/lib/zod/schemas/comic"
 import { sanitize } from "@/lib/sanitize"
+import { getUser } from "@/lib/directus/get-users"
 
 export type PlotSuggestionType =
 	| NonNullable<Awaited<ReturnType<typeof getComicPageSuggestions>>>[number]
@@ -174,7 +176,7 @@ export type userSuggestionResponseType =
 	| undefined
 
 type actionResult = SubmissionResult<string[]> & {
-	data?: any
+	data?: Awaited<ReturnType<typeof getComicPageSuggestions>>[number]
 }
 
 export async function submitUserPlotSuggestion(
@@ -192,7 +194,8 @@ export async function submitUserPlotSuggestion(
 
 	// SUBMIT USER SUGGESTION TO DIRECTUS
 	try {
-		const userSuggestionResponse = await userClient.request(
+		// Get the response
+		const response = await userClient.request(
 			createItem("plot_suggestions", {
 				title: sanitize(userSuggestion),
 				slug: slug,
@@ -200,9 +203,22 @@ export async function submitUserPlotSuggestion(
 				users_voted: [{ id: userId }],
 			}),
 		)
+
+		// Build the object we will need for correctly mapping to the UI
+		const userObject = await getUser(userId)
+
+		const suggestionObject = {
+			id: response.id,
+			title: response.title,
+			slug: response.slug,
+			date_created: response.date_created,
+			user_created: userObject,
+			users_voted: [userObject],
+		} as Awaited<ReturnType<typeof getComicPageSuggestions>>[number]
+
 		return {
 			...submission.reply(),
-			data: userSuggestionResponse,
+			data: suggestionObject,
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
