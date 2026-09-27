@@ -81,8 +81,6 @@ export function ClientComicPageFeedback({
 		Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined
 	>(suggestions)
 
-	let [votes, setVotes] = useState(loadedVotes)
-
 	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
 	}
@@ -218,7 +216,7 @@ export function ClientComicPageFeedback({
 											id={form.id}
 											onSubmit={form.onSubmit}
 											action={action}
-											// onAnimationEnd={() => suggestionRef.current?.focus()}
+											onAnimationEnd={() => suggestionRef.current?.focus()}
 											noValidate
 										>
 											<Field className={clsx("relative")}>
@@ -235,7 +233,8 @@ export function ClientComicPageFeedback({
 												)}>
 													{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
 												</span>
-												<Textarea className={clsx("outline-none!",)}
+												<Textarea ref={suggestionRef}
+													className={clsx("outline-none!",)}
 													// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
 													// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
 													onKeyDown={
