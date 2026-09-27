@@ -55,7 +55,8 @@ export function ClientComicPageFeedback({
 
 	// REFS
 	const radioGroupRef = useRef<HTMLDivElement | null>(null)
-	const suggestionRef = useRef<HTMLTextAreaElement | null>(null)
+	const radioItemsRef = useRef<(HTMLSpanElement | null)[]>([])
+	const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
 	/**----------------------------------- */
 	// SUGGESTIONS: INITIAL DATA
@@ -72,6 +73,17 @@ export function ClientComicPageFeedback({
 	const userSubmission = suggestions!.find(
 		s => s.user_created.id === loggedInUserID
 	)
+	// Votes
+	const loadedVotes = suggestions?.map((s, index) => {
+		return s?.users_voted?.length
+	})
+
+	// Set up the Vote Variables we will need to create conditionals
+	let getOldVoteIndex = suggestions?.findIndex(
+		s => s.users_voted!.some(
+			(v: any) => v.id === loggedInUserID
+		)
+	)
 
 	// SUGGESTIONS STATE & HANDLERS
 	let [selected, setSelected] = useState<string | "custom" | null>(userVotedOn?.id.toString() || null)
@@ -79,18 +91,119 @@ export function ClientComicPageFeedback({
 		Awaited<ReturnType<typeof getComicPageSuggestions>> | undefined
 	>(suggestions)
 	let [userHasSubmitted, setUserHasSubmitted] = useState(!!userSubmission)
+	let [voteNums, setVoteNums] = useState(loadedVotes)
+	let [oldVoteIndex, setOldVoteIndex] = useState(getOldVoteIndex)
 
+	// HANDLER: Suggestion Radio Item
 	const handleRadioClick = (selected: string | "custom" | null) => {
 		setSelected(selected)
 
-		// User Suggestion
-		if (selected == "custom") {
-			voteOnPlotSuggestion({ vote: "custom", page: page, user: session || null })
-		} else {
-			voteOnPlotSuggestion({ vote: selected, page: page, user: session || null })
+		// We can't really do anything if the suggestionsList doesn't exist & user is not logged in
+		if (suggestionsList && session) {
+			let newSuggestionsList = [...suggestionsList]
+
+			// Make sure the index exists, but that also a value of 0 is still true
+			let newVoteIndex: number | undefined = selected
+				&& suggestionsList.findIndex(s => s.id === parseInt(selected)) !== null
+				? suggestionsList.findIndex(s => s.id === parseInt(selected))
+				: 0
+
+			// ************************************************
+			// --- SELECT CUSTOM SUGGESTION
+			// If the "create your own suggestion" radio button is selected
+			if (selected == "custom") {
+				// Check if the old vote actually exists
+				if (oldVoteIndex !== undefined && oldVoteIndex !== -1) {
+
+					// --- REMOVE OLD VOTE -----------------------
+					// Get the old list of users who have voted
+					let old_users_voted = newSuggestionsList[oldVoteIndex].users_voted
+					// 		// Filter out the current user
+					let updated_users_voted = old_users_voted?.filter((o) => {
+						return o.id !== loggedInUserID
+					})
+					// Push the new users_voted list to the old vote on the mutable array
+					newSuggestionsList[oldVoteIndex].users_voted = updated_users_voted || []
+
+					// --- eo REMOVE OLD VOTE -----------------------
+
+					// Update votenums (-1 from old vote)
+					setVoteNums(newSuggestionsList.map((s) => s?.users_voted?.length))
+					setSuggestionsList(newSuggestionsList)
+					setOldVoteIndex(undefined)
+				}
+				// ACTION: Submit custom submission to CMS
+				voteOnPlotSuggestion({ vote: "custom", page: page, user: session || null })
+			} else
+			// ************************************************
+			// --- SELECT REGULAR SUGGESTION
+			{
+				// --- OLD VOTE + NEW VOTE -------------------
+				// If an old vote actually exists + new vote 
+				if (
+					oldVoteIndex !== undefined && oldVoteIndex !== -1
+					&& newVoteIndex !== undefined && newVoteIndex !== -1
+				) {
+					// --- REMOVE OLD VOTE -----------------------
+					// Get the old list of users who have voted
+					let old_users_voted = newSuggestionsList[oldVoteIndex].users_voted
+					// 		// Filter out the current user
+					let updated_users_voted = old_users_voted?.filter((o) =>
+						o.id !== loggedInUserID
+					)
+					// Push the new users_voted list to the old vote on the mutable array
+					newSuggestionsList[oldVoteIndex].users_voted = updated_users_voted || []
+					// --- eo REMOVE OLD VOTE -----------------------
+
+					// --- ADD NEW VOTE -----------------------
+					// Push the new users_voted list to the new vote on the mutable array
+					newSuggestionsList[newVoteIndex].users_voted?.push({
+						id: session.id,
+						email: session.email!,
+						username: session.username,
+						avatar: session.avatar,
+						homepage_url: session.homepage_url,
+						name: session.name,
+					} as any)
+					// --- eo ADD NEW VOTE -----------------------
+
+					// Update votenums (-1 from old vote, +1 to new vote)
+					setVoteNums(newSuggestionsList.map((s) => s?.users_voted?.length))
+					setSuggestionsList(newSuggestionsList)
+					setOldVoteIndex(newVoteIndex)
+				}
+				// --- NEW VOTE ONLY --------------
+				else {
+					// --- ADD NEW VOTE -----------------------
+					// Push the new users_voted list to the new vote on the mutable array
+					newSuggestionsList[newVoteIndex].users_voted?.push({
+						id: session.id,
+						email: session.email!,
+						username: session.username,
+						avatar: session.avatar,
+						homepage_url: session.homepage_url,
+						name: session.name,
+					} as any)
+					// TODO: ANY
+					// --- eo ADD NEW VOTE -----------------------
+
+					let newVoteNums = newSuggestionsList.map((s, index) => {
+						return s?.users_voted?.length
+					})
+
+					// Update votenums ( +1 to new vote)
+					setVoteNums(newVoteNums)
+					setSuggestionsList(newSuggestionsList)
+					setOldVoteIndex(newVoteIndex)
+				}
+
+				// ACTION: Submit votes update to CMS
+				voteOnPlotSuggestion({ vote: selected, page: page, user: session || null })
+			}
 		}
 	}
 
+	// HANDLER: Delete Suggestion Button
 	const handleDeleteSuggestionClick = (id: number) => {
 		// Delete suggestion from state
 		if (suggestionsList) {
@@ -201,8 +314,11 @@ export function ClientComicPageFeedback({
 							onChange={(selected) => handleRadioClick(selected)}
 						>
 							{/* RADIO BUTTONS: Author Suggestions */}
-							{suggestionsList?.map((s, index) => {
-								return <ComicInputRadio key={index} value={`${s.id}`}>
+							{suggestionsList?.map((s, index) =>
+								<ComicInputRadio key={index} value={`${s.id}`}
+									ref={(element: HTMLSpanElement | null) => {
+										radioItemsRef.current[s.id] = element
+									}}>
 									<Label className={clsx("grow", "text-left")}>
 										{/* USER-SUBMITTED METADATA */}
 
@@ -285,10 +401,11 @@ export function ClientComicPageFeedback({
 											"min-w-12",
 										)
 									}>
-										{s.users_voted?.length || 0}
+										{/* {s.users_voted?.length || 0} */}
+										{voteNums ? voteNums[index] : 0}
 									</div>
 								</ComicInputRadio>
-							})}
+							)}
 
 							{/* RADIO BUTTON: Custom User Suggestion */}
 							{allowUserSuggestions && !userHasSubmitted &&
@@ -301,7 +418,7 @@ export function ClientComicPageFeedback({
 												id={form.id}
 												onSubmit={form.onSubmit}
 												action={action}
-												onAnimationEnd={() => suggestionRef.current?.focus()}
+												onAnimationEnd={() => textareaRef.current?.focus()}
 												noValidate
 											>
 												<Field className={clsx("relative")}>
@@ -318,7 +435,7 @@ export function ClientComicPageFeedback({
 													)}>
 														{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
 													</span>
-													<Textarea ref={suggestionRef}
+													<Textarea ref={textareaRef}
 														className={clsx("outline-none!",)}
 														// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
 														// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
