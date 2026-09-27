@@ -189,12 +189,8 @@ export function ClientComicPageFeedback({
 					// TODO: ANY
 					// --- eo ADD NEW VOTE -----------------------
 
-					let newVoteNums = newSuggestionsList.map((s, index) => {
-						return s?.users_voted?.length
-					})
-
 					// Update votenums ( +1 to new vote)
-					setVoteNums(newVoteNums)
+					setVoteNums(newSuggestionsList.map((s) => s?.users_voted?.length))
 					setSuggestionsList(newSuggestionsList)
 					setOldVoteIndex(newVoteIndex)
 				}
@@ -229,6 +225,7 @@ export function ClientComicPageFeedback({
 			setStatus("success", t("ComicPage.suggestion-deleted"))
 			// Cleanup
 			setUserHasSubmitted(false)
+			setOldVoteIndex(undefined)
 		}
 	}
 
@@ -257,15 +254,19 @@ export function ClientComicPageFeedback({
 			// Notification
 			setStatus("success", t("ComicPage.suggestion-submitted"))
 			// Add the latest suggestion to the suggestionList state (this should update what the reader sees)
-			if (lastResult.data) {
-				suggestionsList && setSuggestionsList([
+			if (lastResult.data && suggestionsList) {
+
+				let newSuggestionsList = [
 					// The original suggestionList is an object we have to turn into an array with `Object.values`
 					...Object.values((suggestionsList)),
 					// Then we append the response data from submitting the item to directus
 					lastResult.data
-				])
-				// Set the new result as the "selected" result
+				]
+				// Update the UI state 
+				setSuggestionsList(newSuggestionsList)
+				setVoteNums(newSuggestionsList.map((s) => s?.users_voted?.length))
 				setSelected(lastResult.data.id.toString())
+				setUserHasSubmitted(true)
 			}
 		}
 	}, [lastResult])
