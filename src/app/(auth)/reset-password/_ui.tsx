@@ -90,7 +90,7 @@ function RequestResetForm({
 			</AuthHeader>
 
 			{/* STATUS MESSAGES */}
-			<StatusMessage className="mb-6" />
+			{/* <StatusMessage className="mb-6" /> */}
 
 			<form
 				id={form.id}
@@ -176,7 +176,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 			</AuthHeader>
 
 			{/* STATUS MESSAGES */}
-			<StatusMessage className="mb-6" />
+			{/* <StatusMessage className="mb-6" /> */}
 
 			<form
 				id={form.id}

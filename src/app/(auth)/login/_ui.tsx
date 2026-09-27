@@ -116,7 +116,7 @@ export default function LoginPageUI({
 			</AuthHeader>
 
 			{/* STATUS MESSAGE */}
-			<StatusMessage className="mb-6" />
+			{/* <StatusMessage className="mb-6" /> */}
 
 			{/* FORM */}
 			<form

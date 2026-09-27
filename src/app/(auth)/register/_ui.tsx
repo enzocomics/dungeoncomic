@@ -138,7 +138,7 @@ export default function RegisterPageUI({
 			</AuthHeader>
 
 			{/* STATUS MESSAGES */}
-			<StatusMessage className="mb-6" />
+			{/* <StatusMessage className="mb-6" /> */}
 
 			{/* FORM */}
 			{public_registration &&
