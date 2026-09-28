@@ -1,6 +1,5 @@
-import * as Headless from '@headlessui/react'
-import clsx from 'clsx'
-import type React from 'react'
+import * as Headless from "@headlessui/react"
+import clsx from "clsx"
 
 export function Input({
 	className,
