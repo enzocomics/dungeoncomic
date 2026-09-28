@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 // COMPONENTS
 import { verifySession } from "@/data/session"
-import DashboardPageUI from "./_ui"
+import DashboardPageUI from "./_ui/page"
 
 /**-----------------------------------
  * Dasboard PAGE ROUTE

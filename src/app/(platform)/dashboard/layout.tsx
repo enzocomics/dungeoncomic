@@ -1,26 +1,20 @@
 
 import { PropsWithChildren } from "react"
-import { DashboardNavTab, DashboardNav, DashboardTabPanel, DashboardTabPanels } from "./_ui"
-import clsx from "clsx"
-import Link from "next/link"
+import { ClientDashboardNavTab } from "./_ui/client/layout"
+import { DashboardNav, DashboardSection } from "./_ui/layout"
 
 export default function DashboardLayout({
-	// profile,
-	// settings,
 	...props
 }: {
-	// profile?: React.ReactNode
-	// settings?: React.ReactNode
 } & PropsWithChildren) {
 	return <>
-		{/* <DashboardTabGroup> */}
 		<DashboardNav>
-			<DashboardNavTab href="/dashboard" icon="dungeon">Dashboard</DashboardNavTab>
-			<DashboardNavTab href="/dashboard/profile" icon="skull">Profile</DashboardNavTab>
-			<DashboardNavTab href="/dashboard/settings" icon="gear">Account</DashboardNavTab>
+			<ClientDashboardNavTab href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
+			<ClientDashboardNavTab href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
+			<ClientDashboardNavTab href="/dashboard/settings" icon="gear">Account</ClientDashboardNavTab>
 		</DashboardNav>
-		{props.children}
-		{/* </DashboardTabGroup> */}
-
+		<DashboardSection>
+			{props.children}
+		</DashboardSection>
 	</>
 }

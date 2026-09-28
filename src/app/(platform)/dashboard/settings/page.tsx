@@ -1,5 +1,7 @@
 export default function Page() {
 	return <>
-		Settings
+		<h1 className="font-platform-display text-3xl">
+			Settings
+		</h1>
 	</>
 }
