@@ -22,25 +22,16 @@ export default function DashboardPageUI() {
 }
 
 
-export const DashboardTabGroup = (props: ComponentPropsWithoutRef<typeof TabGroup>) => {
+export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 	return <>
-		<TabGroup className={clsx(
-		)}>
-			{props.children}
-		</TabGroup>
-	</>
-}
-
-
-export const DashboardTabList = (props: ComponentPropsWithoutRef<typeof TabList>) => {
-	return <>
-		<TabList className={clsx(
+		<nav className={clsx(
 			"-mt-6",
 			"pt-2",
 			"px-0",
 			"md:px-2",
 			"flex",
 			"flex-row",
+			"w-full",
 			"gap-x-1",
 			// "pt-2",
 
@@ -55,27 +46,26 @@ export const DashboardTabList = (props: ComponentPropsWithoutRef<typeof TabList>
 
 		)}>
 			{props.children}
-		</TabList>
+		</nav>
 	</>
 }
 
 
-export const DashboardTab = ({
-	asLink = false,
+export const DashboardNavTab = ({
 	className,
 	icon,
 	iconRight = false,
 	...props
 }: {
-	asLink?: boolean
 	icon?: keyof typeof icons
 	iconRight?: boolean
 	href?: string
-} & ComponentPropsWithoutRef<typeof Tab>) => {
+} & ComponentPropsWithoutRef<typeof Link>) => {
 	const pathname = usePathname()
 
+
 	return <>
-		<Tab className={clsx(
+		<Link className={clsx(
 			"cursor-pointer",
 			"flex",
 			"flex-row",
@@ -91,12 +81,11 @@ export const DashboardTab = ({
 			"border-b-2",
 			"border-b-transparent",
 			"bg-base-2/40",
-			"data-selected:bg-red-500",
-			"data-selected:text-white",
+			"data-current:bg-red-500",
+			"data-current:text-white",
 			className
 		)}
-			as={asLink ? Link : undefined}
-			// data-selected={pathname == props?.href ? true : undefined}
+			data-current={pathname == props?.href ? true : undefined}
 			{...props}
 		>
 			<>
@@ -115,7 +104,7 @@ export const DashboardTab = ({
 
 				}
 			</>
-		</Tab>
+		</Link>
 	</>
 }
 
