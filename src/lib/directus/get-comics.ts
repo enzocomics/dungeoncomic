@@ -13,6 +13,7 @@ export const getComics = cache(async () => {
 	const request = await publicClient.request(
 		readItems("comics", {
 			fields: [
+				"id",
 				"title",
 				"description",
 				"slug",

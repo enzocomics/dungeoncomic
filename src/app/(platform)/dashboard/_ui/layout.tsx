@@ -33,7 +33,7 @@ export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 export const DashboardSection = (props: ComponentPropsWithoutRef<"section">) => {
 	return <>
 		<section className={clsx(
-			"px-3",
+			"px-6",
 		)}>
 			{props.children}
 		</section>
