@@ -24,7 +24,7 @@ export const ClientDashboardNavTab = ({
 
 		pathname == props?.href || // if the pathname is equal to the href
 		(
-			pathname.startsWith("/dashboard/edit") &&
+			pathname.startsWith("/dashboard/comic") &&
 			!props?.href.startsWith("/dashboard/profile") &&
 			!props?.href.startsWith("/dashboard/settings")
 		)
