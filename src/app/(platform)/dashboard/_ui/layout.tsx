@@ -2,19 +2,6 @@ import clsx from "clsx"
 import { ComponentPropsWithoutRef, PropsWithChildren } from "react"
 import { ClientDashboardNavTab } from "./client/layout"
 
-export const DashboardLayoutUI = (props: PropsWithChildren) => {
-	return <>
-		<DashboardNav>
-			<ClientDashboardNavTab href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
-			<ClientDashboardNavTab href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
-			<ClientDashboardNavTab href="/dashboard/settings" icon="gear">Account</ClientDashboardNavTab>
-		</DashboardNav>
-		<DashboardSection>
-			{props.children}
-		</DashboardSection>
-	</>
-}
-
 export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 	return <>
 		<nav className={clsx(

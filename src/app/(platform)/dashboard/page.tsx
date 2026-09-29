@@ -11,11 +11,7 @@ import DashboardPageUI from "./_ui/page"
  * Dasboard PAGE ROUTE
  */
 export default async function DashboardPage() {
-	// const user = await verifySession()
-	// Show the dashboard if the user is logged in
 	return <DashboardPageUI />
-	// Otherwise, redirect them to the login
-	// else redirect("/login")
 }
 
 /** ------------------------------------------------ **
