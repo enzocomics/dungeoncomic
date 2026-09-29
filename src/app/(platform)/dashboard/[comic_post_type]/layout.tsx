@@ -2,6 +2,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import Icon from "@/styles/icons"
 import clsx from "clsx"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { PropsWithChildren } from "react"
 
 export default async function DashboardComicLayout({
@@ -12,41 +13,47 @@ export default async function DashboardComicLayout({
 		comic_post_type: string,
 	}>
 } & PropsWithChildren) {
+
+	const { comic_post_type } = await params
 	const settings = await getSettings()
 
-	return <>
-		<nav>
-			<ul className={clsx(
-				"flex",
-				"items-center",
-				"space-x-2",
-				"font-bold",
-				"text-base-content/50",
-				"mb-6",
-			)}>
-				<li>
-					<Link href="/dashboard" className={clsx(
+	// Make sure the url route matches the post type definition in the project settings
+	if (settings.post_type_name_slug == comic_post_type)
+		return <>
+			<nav>
+				<ul className={clsx(
+					"flex",
+					"items-center",
+					"space-x-2",
+					"font-bold",
+					"text-base-content/50",
+					"mb-6",
+				)}>
+					<li>
+						<Link href="/dashboard" className={clsx(
+							"flex",
+							"items-center",
+						)}>
+							<Icon name="house" className={clsx("size-5")} />
+							<span className="sr-only">Dashboard Home</span>
+						</Link>
+					</li>
+					<li className={clsx(
 						"flex",
 						"items-center",
 					)}>
-						<Icon name="house" className={clsx("size-5")} />
-						<span className="sr-only">Dashboard Home</span>
-					</Link>
-				</li>
-				<li className={clsx(
-					"flex",
-					"items-center",
-				)}>
-					<Icon name="chevronRight" className={clsx(
-						"size-4",
-						"mr-2",
-					)} />
-					<span>
-						{settings.post_type_name_plural}
-					</span>
-				</li>
-			</ul>
-		</nav>
-		{props.children}
-	</>
+						<Icon name="chevronRight" className={clsx(
+							"size-4",
+							"mr-2",
+						)} />
+						<span>
+							{settings.post_type_name_plural}
+						</span>
+					</li>
+				</ul>
+			</nav>
+			{props.children}
+		</>
+	else
+		notFound()
 }
