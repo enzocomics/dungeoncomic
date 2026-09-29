@@ -7,6 +7,7 @@ import { getComics } from "@/lib/directus/get-comics"
 import clsx from "clsx"
 import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
+import Link from "next/link"
 /**-----------------------------------
  * Dasboard Page UI
  */
@@ -25,6 +26,10 @@ export default async function DashboardPageUI() {
 		<h1 className="font-platform-display text-3xl">
 			{settings.post_type_name_plural} ({comics.length})
 		</h1 >
+		<br />
+		<Link href={`/dashboard/${settings.post_type_name_slug}/create`}> + Create New {settings.post_type_name}</Link >
+		<br />
+		<br />
 		<div
 			className={clsx(
 				"gap-2",
