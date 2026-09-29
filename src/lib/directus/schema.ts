@@ -190,6 +190,8 @@ export interface SettingsSingleton {
 	single_comic_site: boolean
 	post_type_name: string
 	post_type_name_plural: string
+	post_type_name_slug: string
+	post_type_name_plural_slug: string
 	// Content
 	project_logo: ImageCollection | null
 	project_banner: ImageCollection | null

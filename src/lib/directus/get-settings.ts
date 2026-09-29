@@ -84,6 +84,8 @@ export const getSettings = cache(async () => {
 				"homepage_content",
 				"post_type_name",
 				"post_type_name_plural",
+				"post_type_name_slug",
+				"post_type_name_plural_slug",
 			],
 		}),
 	)
