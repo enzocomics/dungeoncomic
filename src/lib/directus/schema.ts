@@ -188,6 +188,8 @@ export interface SettingsSingleton {
 	project_url: string | null
 	frontpage_comic: ComicsCollection | null
 	single_comic_site: boolean
+	post_type_name: string
+	post_type_name_plural: string
 	// Content
 	project_logo: ImageCollection | null
 	project_banner: ImageCollection | null
