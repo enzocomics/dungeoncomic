@@ -6,12 +6,14 @@ import { getTranslations } from "next-intl/server"
 import { getComics } from "@/lib/directus/get-comics"
 import clsx from "clsx"
 import { verifySession } from "@/data/session"
+import { getSettings } from "@/lib/directus/get-settings"
 /**-----------------------------------
  * Dasboard Page UI
  */
 export default async function DashboardPageUI() {
 	const t = await getTranslations("auth")
 	const user = await verifySession()
+	const settings = await getSettings()
 	const comics = await getComics({
 		user_created: {
 			"id": {
@@ -21,7 +23,7 @@ export default async function DashboardPageUI() {
 	})
 	return <>
 		<h1 className="font-platform-display text-3xl">
-			Adventures ({comics.length})
+			{settings.post_type_name_plural} ({comics.length})
 		</h1 >
 		<div
 			className={clsx(
@@ -35,7 +37,7 @@ export default async function DashboardPageUI() {
 				comics?.map((c, index) => (
 					<ListPageItem
 						key={index}
-						href={`/dashboard/comic/${c.id}/`}
+						href={`/dashboard/${settings.post_type_name_slug}/${c.id}/`}
 						accentColor={c.accent_color}
 						banner={c.banner}
 						title={c.title}

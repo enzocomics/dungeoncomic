@@ -11,20 +11,21 @@ export const ClientDashboardNavTab = ({
 	className,
 	icon,
 	iconRight = false,
+	postTypeSlug,
 	...props
 }: {
 	icon?: keyof typeof icons
 	iconRight?: boolean
 	href?: string
+	postTypeSlug: string
 } & ComponentPropsWithoutRef<typeof Link>) => {
 
 	const pathname = usePathname()
 
 	const isCurrent = (
-
 		pathname == props?.href || // if the pathname is equal to the href
 		(
-			pathname.startsWith("/dashboard/comic") &&
+			pathname.startsWith(`/dashboard/${postTypeSlug}`) &&
 			!props?.href.startsWith("/dashboard/profile") &&
 			!props?.href.startsWith("/dashboard/settings")
 		)

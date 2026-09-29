@@ -1,9 +1,19 @@
+import { getSettings } from "@/lib/directus/get-settings"
 import Icon from "@/styles/icons"
 import clsx from "clsx"
 import Link from "next/link"
 import { PropsWithChildren } from "react"
 
-export default function DashboardComicLayout(props: PropsWithChildren) {
+export default async function DashboardComicLayout({
+	params,
+	...props
+}: {
+	params: Promise<{
+		comic_post_type: string,
+	}>
+} & PropsWithChildren) {
+	const settings = await getSettings()
+
 	return <>
 		<nav>
 			<ul className={clsx(
@@ -32,7 +42,7 @@ export default function DashboardComicLayout(props: PropsWithChildren) {
 						"mr-2",
 					)} />
 					<span>
-						Adventures
+						{settings.post_type_name_plural}
 					</span>
 				</li>
 			</ul>
