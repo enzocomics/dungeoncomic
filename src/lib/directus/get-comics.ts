@@ -2,55 +2,59 @@
 /**----------------------------------- */
 // CMS
 import { adminClient, publicClient } from "@/lib/directus/clients"
-import { readItems } from "@directus/sdk"
+import { type QueryFilter, readItems } from "@directus/sdk"
 import { cache } from "react"
+import { ComicsCollection, DirectusSchema } from "./schema"
 
 /** ------------------------------------------------ **
  * GET COMICS
  */
 
-export const getComics = cache(async () => {
-	const request = await publicClient.request(
-		readItems("comics", {
-			fields: [
-				"id",
-				"title",
-				"description",
-				"slug",
-				{
-					logo: ["filename_disk", "type", "width", "height", "description"],
-				},
-				{
-					banner: ["filename_disk", "type", "width", "height", "description"],
-				},
-				{
-					thumbnail: [
-						"filename_disk",
-						"type",
-						"width",
-						"height",
-						"description",
-					],
-				},
-				{
-					authors: [
-						"id",
-						"email",
-						"name",
-						"username",
-						"avatar",
-						"homepage_url",
-					],
-				},
-				"accent_color",
-				"display_font",
-				"count(pages)",
-			],
-		}),
-	)
+export const getComics = cache(
+	async (filter?: QueryFilter<DirectusSchema, ComicsCollection>) => {
+		const request = await publicClient.request(
+			readItems("comics", {
+				filter: filter,
+				fields: [
+					"id",
+					"title",
+					"description",
+					"slug",
+					{
+						logo: ["filename_disk", "type", "width", "height", "description"],
+					},
+					{
+						banner: ["filename_disk", "type", "width", "height", "description"],
+					},
+					{
+						thumbnail: [
+							"filename_disk",
+							"type",
+							"width",
+							"height",
+							"description",
+						],
+					},
+					{
+						authors: [
+							"id",
+							"email",
+							"name",
+							"username",
+							"avatar",
+							"homepage_url",
+						],
+					},
+					"accent_color",
+					"display_font",
+					"count(pages)",
+				],
+			}),
+		)
 
-	return request
-})
+		return request
+	},
+)
 
 /** ------------------------------------------------ **
  * GET COMIC
