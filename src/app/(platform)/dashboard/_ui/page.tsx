@@ -35,7 +35,7 @@ export default async function DashboardPageUI() {
 				comics?.map((c, index) => (
 					<ListPageItem
 						key={index}
-						href={`/dashboard/edit/${c.id}`}
+						href={`/dashboard/comic/${c.id}/`}
 						accentColor={c.accent_color}
 						banner={c.banner}
 						title={c.title}
