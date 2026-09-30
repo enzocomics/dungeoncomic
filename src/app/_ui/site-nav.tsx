@@ -51,7 +51,7 @@ export default function SiteNav({
 
 	const hasLogo = !!(comic?.logo)
 	const hasBanner = !!(comic?.banner)
-	const isSingleComicSite = !!(settings.single_comic_site)
+	const isSingleComicSite = !!(settings.routing_mode == "single/single")
 	const isLandingPage = (
 		!isSingleComicSite && pathname !== `/${comic?.slug}`
 		|| isSingleComicSite && pathname !== `/`

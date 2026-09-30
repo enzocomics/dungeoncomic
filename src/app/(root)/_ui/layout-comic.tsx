@@ -6,7 +6,7 @@ import { displayFonts, copyFonts } from "@/styles/fonts"
 // DATA
 import { verifySession } from "@/data/session"
 import { adminClient } from "@/lib/directus/clients"
-import { getComic } from "@/lib/directus/get-comics"
+import { getComic, getComicVariables } from "@/lib/directus/get-comics"
 // UI
 import AuthModal from "@/app/_ui/modal-auth"
 import { getSettings } from "@/lib/directus/get-settings"
@@ -14,10 +14,16 @@ import ComicContextProvider from "./context"
 import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
-import React from "react"
+import React, { Suspense } from "react"
 import SiteNav from "@/app/_ui/site-nav"
 import { ComicPageHeader } from "./page/comic"
 import SiteFooter from "@/app/_ui/site-footer"
+import { getUserVarsCookie } from "../_actions/variables"
+import { replaceComicVariables } from "../_functions/parse-content"
+import { marked } from "marked"
+import { sanitize } from "@/lib/sanitize"
+import ComicLandingPageUI from "./page/comic-landing"
+import { redirect, RedirectType } from "next/navigation"
 
 export async function ComicRootLayout({
 	children,
@@ -102,4 +108,52 @@ const ComicLayoutWrapper = ({
 			{children}
 		</SiteLayoutWrapper>
 	)
+}
+
+export const ComicLandingPage = async ({
+	comic
+}: {
+	comic: Awaited<ReturnType<typeof getComic>>
+}) => {
+	const session = await verifySession()
+	const userVariables = await getUserVarsCookie({ comic: comic })
+	// Get the comic page & variables
+	const variables = await getComicVariables(comic?.slug)
+	// CHECK `landingPage` SETTING
+	const landingPage = comic.landing_page
+	const landingPageContent = replaceComicVariables({
+		content:
+			String(
+				marked.parse(
+					sanitize(String(comic.landing_page_content))
+				)
+			),
+		variables: variables,
+		userVariables: userVariables,
+		html: true
+	})
+	const page_count = comic.pages_count
+
+	switch (landingPage) {
+		// SHOW LANDING PAGE UI
+		case "cover-page":
+			return <Suspense>
+				<ComicLandingPageUI
+					content={`${landingPageContent}`}
+					comic={comic}
+					session={session}
+					variables={variables}
+					userVariables={userVariables}
+				/>
+			</Suspense>
+		// REDIRECT TO FIRST PAGE
+		case "first-page":
+			redirect(`1`, RedirectType.replace)
+		// REDIRECT TO LAST PAGE
+		case "last-page":
+			redirect(`${page_count}`, RedirectType.replace)
+		// REDIRECT TO A SPECIFIC PAGE
+		default:
+			redirect(`${landingPage}`, RedirectType.replace)
+	}
 }
