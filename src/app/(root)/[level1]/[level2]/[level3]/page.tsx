@@ -34,7 +34,7 @@ export default async function Level3Page({
 		// - level 3: 404
 
 		case "single/single":
-			return notFound()
+			notFound()
 
 		/* ----------------------------------- */
 		// Single Creator, Multiple Comics
@@ -60,7 +60,7 @@ export default async function Level3Page({
 		// - level 3: 404
 
 		case "single/multiple":
-			return notFound()
+			notFound()
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics

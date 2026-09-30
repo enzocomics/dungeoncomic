@@ -80,7 +80,7 @@ export default async function Level1Layout({
 					</ComicRootLayout>
 				</>
 			else
-				return notFound()
+				notFound()
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics

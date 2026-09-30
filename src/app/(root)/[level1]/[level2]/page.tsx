@@ -1,11 +1,13 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { notFound } from "next/navigation"
+import { ComicPageLayout } from "../../_ui/page/comic"
 
 export default async function Level2Page({
 	params
 }: {
 	params: Promise<{ level1: string, level2: string }>
 }) {
+	const { level1, level2 } = await params
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 
@@ -34,7 +36,7 @@ export default async function Level2Page({
 		// - level 3: 404
 
 		case "single/single":
-			return notFound()
+			notFound()
 
 		/* ----------------------------------- */
 		// Single Creator, Multiple Comics
@@ -60,9 +62,11 @@ export default async function Level2Page({
 		// - level 3: 404
 
 		case "single/multiple":
-			return <>
-				"COMIC SINGLE PAGE"
-			</>
+			if (!isNaN(parseInt(level2))) {
+				return <ComicPageLayout slug={level1} pagenum={parseInt(level2)} />
+			} else {
+				notFound()
+			}
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics

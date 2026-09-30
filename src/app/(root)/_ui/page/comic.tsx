@@ -18,6 +18,10 @@ import { PageContentWrapper } from "@/app/_ui/site-page"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 import StatusMessage from "@/components/status-message"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
+import { CommentsSection } from "./comic-comments"
+import { getUserVarsCookie } from "../../_actions/variables"
+import { getComments } from "@/lib/directus/get-comments"
+import { notFound } from "next/navigation"
 /**-----------------------------------
  * Comic Page UI
  * ---
@@ -242,4 +246,38 @@ const ComicPageMeta = ({
 			}
 		</div>
 	</div>
+}
+
+export const ComicPageLayout = async ({
+	slug,
+	pagenum
+}: {
+	slug?: string
+	pagenum: number
+}) => {
+	const session = await verifySession()
+	const comic = await getComic(slug ? { slug: slug } : {})
+	const comicPage = await getComicPage(comic.slug, pagenum)
+	if (comic && comicPage) {
+		const variables = await getComicVariables(comic.slug)
+		const userVariables = await getUserVarsCookie({ comic: comic })
+		const comments = await getComments(comicPage.id as number)
+		return <>
+			<ComicPageUI
+				page={comicPage}
+				variables={variables}
+				userVariables={userVariables}
+				session={session}
+			/>
+			<CommentsSection
+				page={comicPage}
+				comments={comments}
+				session={session}
+				variables={variables}
+				userVariables={userVariables}
+			/>
+		</>
+	} else {
+		notFound()
+	}
 }

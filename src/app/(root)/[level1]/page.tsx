@@ -1,6 +1,6 @@
 import { PlatformLayoutWrapper } from "@/app/_ui/site-layout"
 import { getSettings } from "@/lib/directus/get-settings"
-import ComicPageUI from "../_ui/page/comic"
+import ComicPageUI, { ComicPageLayout } from "../_ui/page/comic"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getUserVarsCookie } from "../_actions/variables"
 import { verifySession } from "@/data/session"
@@ -46,27 +46,7 @@ export default async function Level1Page({
 		case "single/single":
 			// Only render if this route is a pagenumber
 			if (!isNaN(parseInt(level1))) {
-				const session = await verifySession()
-				const comic = await getComic(frontpageComic ? { slug: frontpageComic.slug } : {})
-				const comicPage = await getComicPage(comic.slug, parseInt(level1))
-				const variables = await getComicVariables(comic.slug)
-				const userVariables = await getUserVarsCookie({ comic: comic })
-				const comments = await getComments(comicPage.id as number)
-				return <>
-					<ComicPageUI
-						page={comicPage}
-						variables={variables}
-						userVariables={userVariables}
-						session={session}
-					/>
-					<CommentsSection
-						page={comicPage}
-						comments={comments}
-						session={session}
-						variables={variables}
-						userVariables={userVariables}
-					/>
-				</>
+				return <ComicPageLayout slug={frontpageComic ? frontpageComic.slug : undefined} pagenum={parseInt(level1)} />
 			} else {
 				notFound()
 			}
@@ -99,7 +79,7 @@ export default async function Level1Page({
 			if (comic)
 				return <ComicLandingPage comic={comic} />
 			else
-				return notFound()
+				notFound()
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics
