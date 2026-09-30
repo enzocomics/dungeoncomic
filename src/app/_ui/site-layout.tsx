@@ -1,5 +1,33 @@
+import { directusURL } from "@/data/env"
+import { verifySession } from "@/data/session"
+import { getSettings } from "@/lib/directus/get-settings"
 import clsx from "clsx"
 import { ComponentPropsWithoutRef } from "react"
+
+export async function PlatformLayoutWrapper({
+	children,
+	header,
+}: {
+	children: React.ReactNode
+	header?: React.ReactNode
+	session?: Awaited<ReturnType<typeof verifySession>>
+}) {
+
+	const settings = await getSettings()
+	const banner = settings.project_banner
+	const hasBanner = !!banner
+	return <>
+		<SiteLayoutWrapper className={clsx("font-platform-copy")}>
+			{hasBanner &&
+				<SiteLayoutBackdrop style={{
+					backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
+				}} />
+			}
+			{header}
+			{children}
+		</SiteLayoutWrapper>
+	</>
+}
 
 export const SiteLayoutWrapper = (
 	props: ComponentPropsWithoutRef<"div">
