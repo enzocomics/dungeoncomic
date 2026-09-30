@@ -1,7 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
 
-export default async function RootLayout({
+export default async function Level1Layout({
 	header,
 	...props
 }: {
