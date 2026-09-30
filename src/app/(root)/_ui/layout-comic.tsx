@@ -28,9 +28,11 @@ import { redirect, RedirectType } from "next/navigation"
 export async function ComicRootLayout({
 	children,
 	header,
+	slug
 }: {
 	children: React.ReactNode
 	header: React.ReactNode
+	slug: string
 }) {
 
 	const { public_registration } = await adminClient.request(readSettings({
@@ -43,7 +45,7 @@ export async function ComicRootLayout({
 	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
 	const isSingleSingle = routingMode === "single/single"
-	const comic = await getComic({ slug: frontpageComic?.slug })
+	const comic = await getComic({ slug: slug || frontpageComic?.slug })
 
 	return <>
 		<AuthModal public_registration={public_registration} />
