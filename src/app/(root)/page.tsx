@@ -2,6 +2,9 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { PlatformLayoutWrapper } from "../_ui/site-layout"
 import PlatformRootLayout from "./_ui/layout-platform"
 import RootParallelHeader from "./@header/page"
+import { getComic } from "@/lib/directus/get-comics"
+import { HomepagePageUI } from "./_ui/page/home"
+import { ComicLandingPage } from "./_ui/layout-comic"
 
 export default async function RootPage({
 	header
@@ -9,6 +12,7 @@ export default async function RootPage({
 	header: React.ReactNode
 }) {
 	const settings = await getSettings()
+	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
 
 	switch (routingMode) {
@@ -36,9 +40,14 @@ export default async function RootPage({
 		// - level 3: 404
 
 		case "single/single":
-			return <>
-				"COMIC HOMEPAGE
-			</>
+			const comic = await getComic({ slug: frontpageComic?.slug })
+			// Display the comic landing page at the root
+			if (comic)
+				return <ComicLandingPage comic={comic} />
+			// Display homepage if no comics exist
+			else
+				return <HomepagePageUI />
+
 
 		/* ----------------------------------- */
 		// Single Creator, Multiple Comics
