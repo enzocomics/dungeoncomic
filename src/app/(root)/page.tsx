@@ -5,6 +5,9 @@ import RootParallelHeader from "./@header/page"
 import { getComic } from "@/lib/directus/get-comics"
 import { HomepagePageUI } from "./_ui/page/home"
 import { ComicLandingPage } from "./_ui/layout-comic"
+import ClientLandingPageHeader from "./_ui/@header/effects"
+import { marked } from "marked"
+import { sanitize } from "@/lib/sanitize"
 
 export default async function RootPage({
 	header
@@ -73,9 +76,11 @@ export default async function RootPage({
 		// - level 3: 404
 
 		case "single/multiple":
+		case "multiple/multiple":
+			const homePageContent = await marked.parse(sanitize(String(settings.homepage_content || "")))
 			return <>
-				<PlatformRootLayout header={<RootParallelHeader />}>
-					PLATFORM HOMEPAGE
+				<PlatformRootLayout header={<ClientLandingPageHeader settings={settings} />}>
+					<HomepagePageUI content={homePageContent} />
 				</PlatformRootLayout>
 			</>
 
@@ -104,11 +109,8 @@ export default async function RootPage({
 		// - Level 2: Comic Landing Page
 		// - level 3: Comic Single Page
 
-		case "multiple/multiple":
-			return <>
-				<PlatformRootLayout header={<RootParallelHeader />}>
-					PLATFORM HOMEPAGE
-				</PlatformRootLayout>
-			</>
+		// case "multiple/multiple":
+		// 	return <>
+		// 	</>
 	}
 }

@@ -1,5 +1,5 @@
+import ParallelHeaderUI from "../_ui/@header/page"
+
 export default function RootParallelHeader() {
-	return <>
-		Root Parallel Header
-	</>
+	return <ParallelHeaderUI />
 }
