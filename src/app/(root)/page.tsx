@@ -1,6 +1,13 @@
 import { getSettings } from "@/lib/directus/get-settings"
+import { PlatformLayoutWrapper } from "../_ui/site-layout"
+import PlatformRootLayout from "./_ui/layout-platform"
+import RootParallelHeader from "./@header/page"
 
-export default async function RootPage() {
+export default async function RootPage({
+	header
+}: {
+	header: React.ReactNode
+}) {
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 
@@ -57,8 +64,10 @@ export default async function RootPage() {
 		// - level 3: 404
 
 		case "single/multiple":
-			return <><br />
-				PLATFORM HOMEPAGE
+			return <>
+				<PlatformRootLayout header={<RootParallelHeader />}>
+					PLATFORM HOMEPAGE
+				</PlatformRootLayout>
 			</>
 
 		/* ----------------------------------- */
@@ -88,7 +97,9 @@ export default async function RootPage() {
 
 		case "multiple/multiple":
 			return <>
-				PLATFORM HOMEPAGE
+				<PlatformRootLayout header={<RootParallelHeader />}>
+					PLATFORM HOMEPAGE
+				</PlatformRootLayout>
 			</>
 	}
 }

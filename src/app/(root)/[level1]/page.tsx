@@ -1,3 +1,4 @@
+import { PlatformLayoutWrapper } from "@/app/_ui/site-layout"
 import { getSettings } from "@/lib/directus/get-settings"
 
 export default async function Level1Page({
@@ -93,7 +94,9 @@ export default async function Level1Page({
 
 		case "multiple/multiple":
 			return <>
+
 				REDIRECT TO ALL COMICS
+
 			</>
 	}
 }

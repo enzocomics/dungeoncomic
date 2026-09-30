@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
-import { ComicRootLayout } from "../../_ui/layouts"
+import { ComicRootLayout } from "../../_ui/layout-comic"
 
 export default async function Level2Layout({
 	header,
@@ -95,10 +95,8 @@ export default async function Level2Layout({
 
 		case "multiple/multiple":
 			return <>
-				<ComicRootLayout header={header}>
-					COMIC LAYOUT<br />
-					{props.children}
-				</ComicRootLayout>
+				COMIC LAYOUT<br />
+				{props.children}
 			</>
 	}
 }

@@ -1,14 +1,19 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
-import { ComicRootLayout } from "../_ui/layouts"
+import { ComicRootLayout } from "../_ui/layout-comic"
+import PlatformRootLayout from "../_ui/layout-platform"
 
 export default async function Level1Layout({
 	header,
+	params,
 	...props
 }: {
 	header: React.ReactNode
+	params: Promise<{ level1: string }>
 } & PropsWithChildren) {
+	const { level1 } = await params
 	const settings = await getSettings()
+	const comicSlug = settings.post_type_name_slug
 	const routingMode = settings.routing_mode
 
 	switch (routingMode) {
@@ -64,11 +69,18 @@ export default async function Level1Layout({
 		// - level 3: 404
 
 		case "single/multiple":
-			return <>
-				<ComicRootLayout header={header}>
-					{props.children}
-				</ComicRootLayout>
-			</>
+			if (level1 === comicSlug)
+				return <>
+					<ComicRootLayout header={header}>
+						{props.children}
+					</ComicRootLayout>
+				</>
+			else
+				return <>
+					<PlatformRootLayout header={header}>
+						{props.children}
+					</PlatformRootLayout>
+				</>
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics
@@ -96,8 +108,18 @@ export default async function Level1Layout({
 		// - level 3: Comic Single Page
 
 		case "multiple/multiple":
-			return <>
-				{props.children}
-			</>
+
+			if (level1 === comicSlug) // Only show the comic layout on the comicSlug route
+				return <>
+					<ComicRootLayout header={header}>
+						{props.children}
+					</ComicRootLayout>
+				</>
+			else // Show the platform layout in any other instance 
+				return <>
+					<PlatformRootLayout header={header}>
+						{props.children}
+					</PlatformRootLayout>
+				</>
 	}
 }
