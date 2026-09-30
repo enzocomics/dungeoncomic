@@ -1,6 +1,11 @@
 import { getSettings } from "@/lib/directus/get-settings"
+import { notFound } from "next/navigation"
 
-export default async function RootPage() {
+export default async function Level2Page({
+	params
+}: {
+	params: Promise<{ level1: string, level2: string }>
+}) {
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 
@@ -29,9 +34,7 @@ export default async function RootPage() {
 		// - level 3: 404
 
 		case "single/single":
-			return <>
-				"COMIC HOMEPAGE
-			</>
+			return notFound()
 
 		/* ----------------------------------- */
 		// Single Creator, Multiple Comics
@@ -57,8 +60,8 @@ export default async function RootPage() {
 		// - level 3: 404
 
 		case "single/multiple":
-			return <><br />
-				PLATFORM HOMEPAGE
+			return <>
+				"COMIC SINGLE PAGE"
 			</>
 
 		/* ----------------------------------- */
@@ -88,7 +91,7 @@ export default async function RootPage() {
 
 		case "multiple/multiple":
 			return <>
-				PLATFORM HOMEPAGE
+				"mode: multiple/multiple"
 			</>
 	}
 }

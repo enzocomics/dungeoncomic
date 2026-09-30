@@ -1,5 +1,6 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
+import { ComicRootLayout } from "./_ui/layouts"
 
 export default async function RootLayout({
 	header,
@@ -36,8 +37,10 @@ export default async function RootLayout({
 
 		case "single/single":
 			return <>
-				"mode: single/single"
-				{props.children}
+				<ComicRootLayout header={header}>
+					"mode: single/single"<br />
+					{props.children}
+				</ComicRootLayout>
 			</>
 
 		/* ----------------------------------- */
@@ -65,7 +68,8 @@ export default async function RootLayout({
 
 		case "single/multiple":
 			return <>
-				"mode: single/multiple"
+				"mode: single/multiple"<br />
+				PLATFORM LAYOUT<br />
 				{props.children}
 			</>
 
@@ -96,7 +100,8 @@ export default async function RootLayout({
 
 		case "multiple/multiple":
 			return <>
-				"mode: multiple/multiple"
+				"mode: multiple/multiple"<br />
+				PLATFORM LAYOUT<br />
 				{props.children}
 			</>
 	}
