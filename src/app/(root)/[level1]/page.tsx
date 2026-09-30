@@ -7,6 +7,7 @@ import { verifySession } from "@/data/session"
 import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { notFound } from "next/navigation"
+import { ComicLandingPage } from "../_ui/layout-comic"
 
 export default async function Level1Page({
 	params
@@ -16,6 +17,7 @@ export default async function Level1Page({
 	const { level1 } = await params
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
+	const frontpageComic = settings.frontpage_comic
 
 	switch (routingMode) {
 		/* ----------------------------------- */
@@ -45,7 +47,7 @@ export default async function Level1Page({
 			// Only render if this route is a pagenumber
 			if (!isNaN(parseInt(level1))) {
 				const session = await verifySession()
-				const comic = await getComic({})
+				const comic = await getComic(frontpageComic ? { slug: frontpageComic.slug } : {})
 				const comicPage = await getComicPage(comic.slug, parseInt(level1))
 				const variables = await getComicVariables(comic.slug)
 				const userVariables = await getUserVarsCookie({ comic: comic })
@@ -93,9 +95,11 @@ export default async function Level1Page({
 		// - level 3: 404
 
 		case "single/multiple":
-			return <>
-				"COMIC LANDING PAGE"
-			</>
+			const comic = await getComic({ slug: level1 })
+			if (comic)
+				return <ComicLandingPage comic={comic} />
+			else
+				return notFound()
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics

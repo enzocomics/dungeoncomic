@@ -1,5 +1,5 @@
+import ParallelHeaderUI from "../../_ui/@header/page"
+
 export default function Level1ParallelHeader() {
-	return <>
-		Level 1 Parallel Header
-	</>
+	return <ParallelHeaderUI />
 }

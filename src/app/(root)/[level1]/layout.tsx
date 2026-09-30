@@ -2,6 +2,8 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
 import { ComicRootLayout } from "../_ui/layout-comic"
 import PlatformRootLayout from "../_ui/layout-platform"
+import { getComic } from "@/lib/directus/get-comics"
+import { notFound } from "next/navigation"
 
 export default async function Level1Layout({
 	header,
@@ -69,18 +71,16 @@ export default async function Level1Layout({
 		// - level 3: 404
 
 		case "single/multiple":
-			if (level1 === comicSlug)
+			// Display UI only if it is a valid comic
+			const comic = await getComic({ slug: level1 })
+			if (comic)
 				return <>
-					<ComicRootLayout header={header}>
+					<ComicRootLayout header={header} slug={comic.slug}>
 						{props.children}
 					</ComicRootLayout>
 				</>
 			else
-				return <>
-					<PlatformRootLayout header={header}>
-						{props.children}
-					</PlatformRootLayout>
-				</>
+				return notFound()
 
 		/* ----------------------------------- */
 		// Multiple Creators, Multiple Comics
@@ -111,7 +111,7 @@ export default async function Level1Layout({
 
 			if (level1 === comicSlug) // Only show the comic layout on the comicSlug route
 				return <>
-					<ComicRootLayout header={header}>
+					<ComicRootLayout header={header} slug={level1}>
 						{props.children}
 					</ComicRootLayout>
 				</>
