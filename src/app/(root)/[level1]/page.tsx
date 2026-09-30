@@ -1,11 +1,19 @@
 import { PlatformLayoutWrapper } from "@/app/_ui/site-layout"
 import { getSettings } from "@/lib/directus/get-settings"
+import ComicPageUI from "../_ui/page/comic"
+import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
+import { getUserVarsCookie } from "../_actions/variables"
+import { verifySession } from "@/data/session"
+import { CommentsSection } from "../_ui/page/comic-comments"
+import { getComments } from "@/lib/directus/get-comments"
+import { notFound } from "next/navigation"
 
 export default async function Level1Page({
 	params
 }: {
 	params: Promise<{ level1: string }>
 }) {
+	const { level1 } = await params
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 
@@ -34,10 +42,32 @@ export default async function Level1Page({
 		// - level 3: 404
 
 		case "single/single":
-			return <>
-				"COMIC SINGLE PAGE"
-				<br />
-			</>
+			// Only render if this route is a pagenumber
+			if (!isNaN(parseInt(level1))) {
+				const session = await verifySession()
+				const comic = await getComic({})
+				const comicPage = await getComicPage(comic.slug, parseInt(level1))
+				const variables = await getComicVariables(comic.slug)
+				const userVariables = await getUserVarsCookie({ comic: comic })
+				const comments = await getComments(comicPage.id as number)
+				return <>
+					<ComicPageUI
+						page={comicPage}
+						variables={variables}
+						userVariables={userVariables}
+						session={session}
+					/>
+					<CommentsSection
+						page={comicPage}
+						comments={comments}
+						session={session}
+						variables={variables}
+						userVariables={userVariables}
+					/>
+				</>
+			} else {
+				notFound()
+			}
 
 		/* ----------------------------------- */
 		// Single Creator, Multiple Comics
