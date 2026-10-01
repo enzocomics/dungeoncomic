@@ -31,23 +31,9 @@ export default async function NotFoundPage({
 
 	const routingMode = settings.routing_mode
 
-
 	switch (routingMode) {
 		case "single/single":
 			return <>
-				{/* <AuthModal public_registration={public_registration} />
-				<ComicLayoutWrapper comic={comic}>
-					<ClientPlatformNav
-						session={session}
-						settings={settings}
-						menu={false}
-					></ClientPlatformNav>
-					<PlatformMain>
-						<PlatformMainContent>
-							<NotFoundUI />
-						</PlatformMainContent>
-					</PlatformMain>
-				</ComicLayoutWrapper> */}
 				<ComicRootLayout header={header}>
 					<PlatformMainArticle>
 						<NotFoundUI />
@@ -55,16 +41,14 @@ export default async function NotFoundPage({
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
+		case "multiple/multiple":
 			return <>
 				<PlatformRootLayout header={header}>
 					<PlatformMainArticle>
-
 						<NotFoundUI />
-
 					</PlatformMainArticle>
 				</PlatformRootLayout>
 			</>
-
 	}
 }
 /** ------------------------------------------------ **
