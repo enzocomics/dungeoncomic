@@ -23,7 +23,7 @@ import { PlatformBackdrop, PlatformMain } from "@/ui/platform/components/main"
 import PlatformFooter from "@/ui/platform/components/footer"
 import ComicContextProvider from "@/ui/comic/context"
 
-import AuthModal from "@/app/_ui/modal-auth"
+import AuthModal from "@/ui/platform/components/modal-auth"
 import { PlatformMainWrapper } from "@/ui/platform/components/main"
 import { ComicPageHeader } from "../../app/(root)/_ui/page/comic"
 import ComicLandingPageUI from "../../app/(root)/_ui/page/comic-landing"

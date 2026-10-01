@@ -3,7 +3,7 @@ import clsx from "clsx"
 /**----------------------------------- */
 // DATA
 import { PlatformLayoutUI } from "../(comic)/_ui/layout"
-import AuthModal from "../../app/_ui/modal-auth"
+import AuthModal from "../../ui/platform/components/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
