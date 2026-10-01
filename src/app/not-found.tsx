@@ -9,7 +9,6 @@ import { getSettings } from "@/lib/directus/get-settings"
 import PlatformRootLayout from "@/ui/platform/layout"
 import { NotFoundUI } from "@/ui/platform/not-found"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
-import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { ComicRootLayout } from "@/ui/comic/layout"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 
@@ -22,18 +21,14 @@ export default async function NotFoundPage() {
 		case "single/single":
 			return <>
 				<ComicRootLayout header={<ClientComicPageHeaderTitle comic={comic} />}>
-					<PlatformMainArticle>
-						<NotFoundUI />
-					</PlatformMainArticle>
+					<NotFoundUI />
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
 		case "multiple/multiple":
 			return <>
 				<PlatformRootLayout header={<PlatformHeaderLogo />}>
-					<PlatformMainArticle>
-						<NotFoundUI />
-					</PlatformMainArticle>
+					<NotFoundUI />
 				</PlatformRootLayout>
 			</>
 	}
