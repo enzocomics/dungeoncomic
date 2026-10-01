@@ -25,7 +25,7 @@ import ComicContextProvider from "@/ui/comic/context"
 
 import AuthModal from "@/ui/platform/components/auth-modal"
 import { PlatformMainWrapper } from "@/ui/platform/components/main"
-import { ComicPageHeader } from "../../app/(root)/_ui/page/comic"
+import { ComicPageHeader } from "./pages/comic"
 import ComicLandingPageUI from "../../app/(root)/_ui/page/comic-landing"
 
 export async function ComicRootLayout({

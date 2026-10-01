@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings"
-import ComicPageUI, { ComicPageLayout } from "../_ui/page/comic"
+import ComicPageUI, { ComicPageLayout } from "../../../ui/comic/pages/comic"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getUserVarsCookie } from "../../../ui/comic/actions/variables"
 import { verifySession } from "@/data/session"
