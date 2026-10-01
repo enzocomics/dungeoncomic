@@ -6,8 +6,9 @@ import { getUserVarsCookie } from "../_actions/variables"
 import { verifySession } from "@/data/session"
 import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { ComicLandingPage } from "../_ui/layout-comic"
+import ComicsListPage from "../_ui/page/comics-list"
 
 export default async function Level1Page({
 	params
@@ -108,9 +109,10 @@ export default async function Level1Page({
 
 		case "multiple/multiple":
 			if (settings.post_type_name_slug == level1)
-				return <>
-					REDIRECT TO ALL COMICS
-				</>
+				// Redirect to all comics
+				redirect(`/${settings.post_type_name_plural_slug}`)
+			else if (settings.post_type_name_plural_slug === level1)
+				return <ComicsListPage />
 			else notFound()
 	}
 }
