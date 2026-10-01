@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PlatformLayoutWrapper } from "../_ui/site-layout"
-import PlatformRootLayout from "./_ui/layout-platform"
+import PlatformRootLayout from "../../ui/platform/layout"
 import RootParallelHeader from "./@header/page"
 import { getComic } from "@/lib/directus/get-comics"
 import { HomepagePageUI } from "./_ui/page/home"

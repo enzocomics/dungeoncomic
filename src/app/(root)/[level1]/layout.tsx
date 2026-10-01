@@ -1,7 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
 import { ComicRootLayout } from "../../../ui/comic/layout"
-import PlatformRootLayout from "../_ui/layout-platform"
+import PlatformRootLayout from "../../../ui/platform/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import { notFound } from "next/navigation"
 
