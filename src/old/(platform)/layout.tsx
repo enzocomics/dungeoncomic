@@ -15,7 +15,7 @@ import { verifySession } from "@/data/session"
 import StatusMessage from "@/components/status-message"
 import SiteNav from "../../ui/platform/components/site-nav"
 import { SiteLayoutMain } from "../../app/_ui/site-layout"
-import PlatformFooter from "../../ui/platform/components/site-footer"
+import PlatformFooter from "../../ui/platform/components/footer"
 import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
 
 export default async function PlatformLayout(props: LayoutProps<"/">) {

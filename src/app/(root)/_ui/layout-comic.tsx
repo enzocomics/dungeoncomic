@@ -22,7 +22,7 @@ import ComicContextProvider from "./context"
 import AuthModal from "@/app/_ui/modal-auth"
 import SiteNav from "@/ui/platform/components/site-nav"
 import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
-import PlatformFooter from "@/ui/platform/components/site-footer"
+import PlatformFooter from "@/ui/platform/components/footer"
 import { ComicPageHeader } from "./page/comic"
 import ComicLandingPageUI from "./page/comic-landing"
 
