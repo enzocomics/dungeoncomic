@@ -3,20 +3,20 @@ import clsx from "clsx"
 /**----------------------------------- */
 // DATA
 import { PlatformLayoutUI } from "../(comic)/_ui/layout"
-import AuthModal from "../(comic)/_ui/modal-auth"
+import AuthModal from "../../app/_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Link from "next/link"
-import { PageContentWrapper } from "../_ui/site-page"
+import { PageContentWrapper } from "../../app/_ui/site-page"
 import { verifySession } from "@/data/session"
 import StatusMessage from "@/components/status-message"
-import SiteNav from "../_ui/site-nav"
-import { SiteLayoutMain } from "../_ui/site-layout"
-import SiteFooter from "../_ui/site-footer"
-import ClientLandingPageHeader from "../(comic)/[route]/@header/_effects"
+import SiteNav from "../../app/_ui/site-nav"
+import { SiteLayoutMain } from "../../app/_ui/site-layout"
+import SiteFooter from "../../app/_ui/site-footer"
+import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
 
 export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const { public_registration } = await adminClient.request(readSettings({

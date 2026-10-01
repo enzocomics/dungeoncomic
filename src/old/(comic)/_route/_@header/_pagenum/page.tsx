@@ -1,4 +1,4 @@
-import { ClientComicPageHeaderTitle } from "@/app/(comic)/_ui/page/client/comic-page-header-title";
+import { ClientComicPageHeaderTitle } from "@/app/(root)/_ui/page/client/comic-page-header-title";
 import { getComicPage } from "@/lib/directus/get-comics";
 import { notFound } from "next/navigation";
 

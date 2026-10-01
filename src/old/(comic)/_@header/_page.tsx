@@ -1,6 +1,6 @@
 import { getComic } from "@/lib/directus/get-comics"
-import ClientLandingPageHeader from "../[route]/@header/_effects"
-import ParallelHeader from "../[route]/@header/page"
+import ClientLandingPageHeader from "../../../app/(root)/_ui/@header/effects"
+import ParallelHeader from "../_route/_@header/page"
 import { getSettings } from "@/lib/directus/get-settings"
 
 export default async function Page({
