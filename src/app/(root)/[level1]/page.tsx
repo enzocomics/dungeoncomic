@@ -7,7 +7,7 @@ import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { notFound, redirect } from "next/navigation"
 import { ComicLandingPage } from "../../../ui/comic/layout"
-import ComicsListPage from "@/ui/comic/pages/comics-list"
+import ComicsListPage from "@/ui/platform/pages/comics-list"
 
 export default async function Level1Page({
 	params
