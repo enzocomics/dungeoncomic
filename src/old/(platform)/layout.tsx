@@ -13,7 +13,7 @@ import Link from "next/link"
 import { PageContentWrapper } from "../../app/_ui/site-page"
 import { verifySession } from "@/data/session"
 import StatusMessage from "@/components/status-message"
-import PlatformNav from "../../ui/platform/components/nav"
+import ClientPlatformNav from "../../ui/platform/components/nav"
 import { SiteLayoutMain } from "../../app/_ui/site-layout"
 import PlatformFooter from "../../ui/platform/components/footer"
 import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
@@ -30,7 +30,7 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 	return <>
 		<AuthModal public_registration={public_registration} />
 		<PlatformLayoutUI session={session}>
-			<PlatformNav
+			<ClientPlatformNav
 				session={session}
 				settings={settings}
 				menu={true}
@@ -101,7 +101,7 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 						/>
 					}
 				</Link>
-			</PlatformNav>
+			</ClientPlatformNav>
 			<SiteLayoutMain>
 				{/* <div className={clsx(
 				"relative",

@@ -8,7 +8,7 @@ import React from "react"
 import AuthModal from "../../../app/_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
-import PlatformNav from "@/ui/platform/components/nav"
+import ClientPlatformNav from "@/ui/platform/components/nav"
 import { ComicPageHeader } from "../_ui/page/comic"
 import { SiteLayoutMain } from "@/app/_ui/site-layout"
 
@@ -77,7 +77,7 @@ export default async function RouteLayout({
 			>
 				<ComicLayoutUI settings={settings} comic={comic} session={session}
 					header={
-						<PlatformNav
+						<ClientPlatformNav
 							comic={comic}
 							session={session}
 							menu={singleComicSite ? false : true}
@@ -86,7 +86,7 @@ export default async function RouteLayout({
 							<ComicPageHeader comic={comic} >
 								{header}
 							</ComicPageHeader>
-						</PlatformNav>
+						</ClientPlatformNav>
 					}
 				>
 					<SiteLayoutMain>
