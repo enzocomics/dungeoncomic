@@ -107,6 +107,8 @@ export const getComic = cache(async ({ slug }: { slug?: string }) => {
 				"landing_page_content",
 				"start_button_text",
 				// Meta
+				"date_created",
+				"date_updated",
 				"id",
 				"count(pages)",
 			],

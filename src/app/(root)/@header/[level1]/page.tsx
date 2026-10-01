@@ -16,7 +16,7 @@ export default async function Level1ParallelHeader({
 
 	if (!comicPage) notFound()
 	return <>
-		<ClientComicPageHeaderTitle page={comicPage} />
+		<ClientComicPageHeaderTitle comic={comic} />
 	</>
 
 }

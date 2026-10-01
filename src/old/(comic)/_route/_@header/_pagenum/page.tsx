@@ -1,5 +1,5 @@
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title";
-import { getComicPage } from "@/lib/directus/get-comics";
+import { getComic, getComicPage } from "@/lib/directus/get-comics";
 import { notFound } from "next/navigation";
 
 export default async function Page({
@@ -10,10 +10,11 @@ export default async function Page({
 
 	// GET THE ROUTE PARAMS
 	const { route, pagenum } = await params
+	const comic = await getComic({ slug: route })
 	const page = await getComicPage(route, pagenum)
 
 	if (!page) notFound()
 	return <>
-		<ClientComicPageHeaderTitle page={page} />
+		<ClientComicPageHeaderTitle comic={comic} />
 	</>
 }

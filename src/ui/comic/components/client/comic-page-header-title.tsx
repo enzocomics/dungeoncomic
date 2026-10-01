@@ -7,19 +7,19 @@ import { detailedDate, relativeDate } from "@/lib/dayjs"
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 // DATA
 import { directusURL } from "@/data/env"
-import { getComicPage } from "@/lib/directus/get-comics"
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
 // UI
 import Icon from "@/styles/icons"
 
 export function ClientComicPageHeaderTitle({
-	page,
+	comic,
 	comicDescription,
 }: {
-	page: Awaited<ReturnType<typeof getComicPage>>
+	comic: Awaited<ReturnType<typeof getComic>>
 	comicDescription?: string
 }) {
 	// PRIMARY VARS
-	const comic = page.comic
+	// const comic = page.comic
 	const hasBanner = !!comic.banner
 	const hasLogo = !!comic.logo
 	const hasAuthors = !!comic.authors && comic.authors.length > 0
@@ -348,12 +348,12 @@ export function ClientComicPageHeaderTitle({
 							"bg-base-2/30",
 							"dark:bg-base-2/50",
 						)}>
-							{page.comic.thumbnail &&
+							{comic.thumbnail &&
 								<Image
-									src={`${directusURL}/assets/${page.comic.thumbnail.filename_disk}`}
-									alt={page.comic.thumbnail.description ?? ""}
-									width={`${page.comic.thumbnail.width}`}
-									height={`${page.comic.thumbnail.height}`}
+									src={`${directusURL}/assets/${comic.thumbnail.filename_disk}`}
+									alt={comic.thumbnail.description ?? ""}
+									width={`${comic.thumbnail.width}`}
+									height={`${comic.thumbnail.height}`}
 									className={clsx(
 										"self-center",
 										"block",
@@ -370,7 +370,7 @@ export function ClientComicPageHeaderTitle({
 								"place-content-center",
 								"flex",
 								"flex-col",
-								page.comic.thumbnail ? "text-left"
+								comic.thumbnail ? "text-left"
 									: "text-center",
 								"font-comic-header",
 							)}>

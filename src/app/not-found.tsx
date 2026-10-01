@@ -2,17 +2,18 @@
 // LIBRARIES
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import AuthModal from "../ui/platform/components/auth-modal"
-import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
-import { getSettings } from "@/lib/directus/get-settings"
+// DATA
 import { verifySession } from "@/data/session"
-import ClientPlatformNav from "@/ui/platform/components/nav"
-import { NotFoundUI } from "../ui/platform/not-found"
-import { ComicMainWrapper, ComicRootLayout } from "../ui/comic/layout"
+import { adminClient } from "@/lib/directus/clients"
 import { getComic } from "@/lib/directus/get-comics"
+import { getSettings } from "@/lib/directus/get-settings"
+// UI
 import PlatformRootLayout from "@/ui/platform/layout"
+import { NotFoundUI } from "@/ui/platform/not-found"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
+import { ComicRootLayout } from "@/ui/comic/layout"
+import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 
 /**----------------------------------- */
 export default async function NotFoundPage({
@@ -34,7 +35,7 @@ export default async function NotFoundPage({
 	switch (routingMode) {
 		case "single/single":
 			return <>
-				<ComicRootLayout header={header}>
+				<ComicRootLayout header={<ClientComicPageHeaderTitle comic={comic} />}>
 					<PlatformMainArticle>
 						<NotFoundUI />
 					</PlatformMainArticle>

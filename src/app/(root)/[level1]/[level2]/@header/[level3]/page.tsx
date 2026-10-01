@@ -20,7 +20,7 @@ export default async function Level3ParallelHeader({
 
 		if (!comicPage) notFound()
 		return <>
-			<ClientComicPageHeaderTitle page={comicPage} />
+			<ClientComicPageHeaderTitle comic={comic} />
 		</>
 	}
 }

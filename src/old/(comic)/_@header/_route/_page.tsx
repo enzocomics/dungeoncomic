@@ -18,6 +18,6 @@ export default async function Page({
 
 	if (!page) notFound()
 	return <>
-		<ClientComicPageHeaderTitle page={page} />
+		<ClientComicPageHeaderTitle comic={comic} />
 	</>
 }
