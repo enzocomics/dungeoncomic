@@ -5,7 +5,7 @@ import clsx from "clsx"
 import { marked } from "marked"
 import { getTranslations } from "next-intl/server"
 
-export default async function SiteFooter() {
+export default async function PlatformFooter() {
 	const t = await getTranslations("footer")
 	const settings = await getSettings()
 

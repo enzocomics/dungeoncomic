@@ -17,7 +17,7 @@ import { directusURL } from "@/data/env"
 import React from "react"
 import SiteNav from "@/ui/platform/components/site-nav"
 import { ComicPageHeader } from "./page/comic"
-import SiteFooter from "@/ui/platform/components/site-footer"
+import PlatformFooter from "@/ui/platform/components/site-footer"
 
 
 export default async function PlatformRootLayout({
@@ -48,6 +48,6 @@ export default async function PlatformRootLayout({
 				{children}
 			</SiteLayoutMain>
 		</PlatformLayoutWrapper>
-		<SiteFooter />
+		<PlatformFooter />
 	</>
 }
