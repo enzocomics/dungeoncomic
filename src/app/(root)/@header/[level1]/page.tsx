@@ -1,5 +1,5 @@
 import { getComic, getComicPage } from "@/lib/directus/get-comics";
-import { ClientComicPageHeaderTitle } from "../../_ui/page/client/comic-page-header-title";
+import { ClientComicPageHeaderTitle } from "../../../../ui/comic/components/client/comic-page-header-title";
 import { getSettings } from "@/lib/directus/get-settings";
 import { notFound } from "next/navigation";
 
