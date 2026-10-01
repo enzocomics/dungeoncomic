@@ -2,9 +2,9 @@
 /**----------------------------------- */
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
-import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(root)/_functions/check-vars"
+import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/_functions/check-vars"
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { checkHasNextPage } from "@/app/(root)/_functions/check-pages"
+import { checkHasNextPage } from "@/ui/comic/_functions/check-pages"
 import Icon from "@/styles/icons"
 import { ComicButton } from "@/components/button"
 

@@ -1,5 +1,5 @@
 "use client"
-import { checkHasNextPage, checkHasPrevPage } from "@/app/(root)/_functions/check-pages"
+import { checkHasNextPage, checkHasPrevPage } from "@/ui/comic/_functions/check-pages"
 import { getComicPage } from "@/lib/directus/get-comics"
 import { useComicContext } from "@/ui/comic/context"
 import { useContext, useEffect } from "react"

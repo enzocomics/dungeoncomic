@@ -9,8 +9,8 @@ import { Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOption
 // DATA
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 // HELPERS
-import { doVarsExist, getComicPageVars, haveVarsBeenSubmitted, makeComicVarsUrl } from "@/app/(root)/_functions/check-vars"
-import { checkCoverPage, checkHasNextPage, checkHasPrevPage } from "@/app/(root)/_functions/check-pages"
+import { doVarsExist, getComicPageVars, haveVarsBeenSubmitted, makeComicVarsUrl } from "@/ui/comic/_functions/check-vars"
+import { checkCoverPage, checkHasNextPage, checkHasPrevPage } from "@/ui/comic/_functions/check-pages"
 // UI
 import { useComicContext } from "@/ui/comic/context"
 import Icon from "@/styles/icons"

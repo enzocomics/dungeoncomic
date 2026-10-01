@@ -13,9 +13,9 @@ import { getComicPage, getComicPageSuggestions, getComicVariables } from "@/lib/
 import { verifySession } from "@/data/session"
 // FUNCTIONS
 import { sanitize } from "@/lib/sanitize"
-import { doVarsExist, haveVarsBeenSubmitted } from "@/app/(root)/_functions/check-vars"
-import { checkHasPlotSuggestions } from "@/app/(root)/_functions/check-pages"
-import { replaceComicVariables } from "@/app/(root)/_functions/parse-content"
+import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/_functions/check-vars"
+import { checkHasPlotSuggestions } from "@/ui/comic/_functions/check-pages"
+import { replaceComicVariables } from "@/ui/comic/_functions/parse-content"
 // UI
 import Icon from "@/styles/icons"
 import Notice from "@/components/notices"
