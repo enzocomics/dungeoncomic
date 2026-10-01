@@ -17,7 +17,7 @@ import clsx from "clsx"
 import { directusURL } from "@/data/env"
 import React, { ComponentPropsWithoutRef } from "react"
 import ClientPlatformNav from "@/ui/platform/components/nav"
-import { ComicPageHeader } from "../comic/pages/comic"
+import { ComicPageHeader } from "../comic/pages/single"
 import PlatformFooter from "@/ui/platform/components/footer"
 
 
