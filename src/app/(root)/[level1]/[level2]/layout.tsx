@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
-import { ComicRootLayout } from "../../_ui/layout-comic"
+import { ComicRootLayout } from "../../../../ui/comic/layout"
 import { notFound } from "next/navigation"
 
 export default async function Level2Layout({

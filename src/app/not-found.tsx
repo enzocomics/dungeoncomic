@@ -11,7 +11,7 @@ import ClientPlatformNav from "@/ui/platform/components/nav"
 import { PlatformLayoutWrapper, SiteLayoutMain } from "./_ui/site-layout"
 import { PageContentWrapper } from "./_ui/site-page"
 import { NotFoundUI } from "./_ui/not-found"
-import { ComicLayoutWrapper, ComicRootLayout } from "./(root)/_ui/layout-comic"
+import { ComicLayoutWrapper, ComicRootLayout } from "../ui/comic/layout"
 import { getComic } from "@/lib/directus/get-comics"
 
 /**----------------------------------- */

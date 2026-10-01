@@ -2,7 +2,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { notFound } from "next/navigation"
 import { ComicPageLayout } from "../../_ui/page/comic"
 import { getComic } from "@/lib/directus/get-comics"
-import { ComicLandingPage } from "../../_ui/layout-comic"
+import { ComicLandingPage } from "../../../../ui/comic/layout"
 
 export default async function Level2Page({
 	params

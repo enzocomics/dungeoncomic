@@ -7,7 +7,7 @@ import { verifySession } from "@/data/session"
 import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { notFound, redirect } from "next/navigation"
-import { ComicLandingPage } from "../_ui/layout-comic"
+import { ComicLandingPage } from "../../../ui/comic/layout"
 import ComicsListPage from "../_ui/page/comics-list"
 
 export default async function Level1Page({

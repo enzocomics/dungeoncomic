@@ -15,16 +15,16 @@ import { getSettings } from "@/lib/directus/get-settings"
 // FUNCTIONS
 import clsx from "clsx"
 import { sanitize } from "@/lib/sanitize"
-import { getUserVarsCookie } from "../_actions/variables"
-import { replaceComicVariables } from "../_functions/parse-content"
+import { getUserVarsCookie } from "../../app/(root)/_actions/variables"
+import { replaceComicVariables } from "../../app/(root)/_functions/parse-content"
 // UI
-import ComicContextProvider from "./context"
+import ComicContextProvider from "../../app/(root)/_ui/context"
 import AuthModal from "@/app/_ui/modal-auth"
 import ClientPlatformNav from "@/ui/platform/components/nav"
 import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
 import PlatformFooter from "@/ui/platform/components/footer"
-import { ComicPageHeader } from "./page/comic"
-import ComicLandingPageUI from "./page/comic-landing"
+import { ComicPageHeader } from "../../app/(root)/_ui/page/comic"
+import ComicLandingPageUI from "../../app/(root)/_ui/page/comic-landing"
 
 export async function ComicRootLayout({
 	children,

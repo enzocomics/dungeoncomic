@@ -1,6 +1,6 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
-import { ComicRootLayout } from "./_ui/layout-comic"
+import { ComicRootLayout } from "../../ui/comic/layout"
 
 export default async function RootLayout({
 	header,
