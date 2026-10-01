@@ -1,4 +1,4 @@
-import { LandingPageBody, LandingPageContent } from "@/app/_ui/page-landing"
+import { LandingPageBody, LandingPageContent } from "@/ui/platform/components/page-landing"
 import { getSettings } from "@/lib/directus/get-settings"
 import { notFound } from "next/navigation"
 import { ListPageItem, ListPageItemDescription, ListPageItemDetails, ListPageItemLogo, ListPageItemThumb, ListPageItemTitle, ListPageList, ListPageTitle } from "./_ui"

@@ -1,5 +1,5 @@
 "use client"
-import { LandingPageH1, LandingPageHeader } from "@/app/_ui/page-landing"
+import { LandingPageH1, LandingPageHeader } from "@/ui/platform/components/page-landing"
 import { directusURL } from "@/data/env"
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
