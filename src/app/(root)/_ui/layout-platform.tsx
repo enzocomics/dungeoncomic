@@ -15,7 +15,7 @@ import { PlatformLayoutWrapper, SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWr
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
 import React from "react"
-import SiteNav from "@/app/_ui/site-nav"
+import SiteNav from "@/ui/platform/components/site-nav"
 import { ComicPageHeader } from "./page/comic"
 import SiteFooter from "@/ui/platform/components/site-footer"
 

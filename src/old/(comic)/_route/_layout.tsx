@@ -8,7 +8,7 @@ import React from "react"
 import AuthModal from "../../../app/_ui/modal-auth"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
-import SiteNav from "@/app/_ui/site-nav"
+import SiteNav from "@/ui/platform/components/site-nav"
 import { ComicPageHeader } from "../_ui/page/comic"
 import { SiteLayoutMain } from "@/app/_ui/site-layout"
 
