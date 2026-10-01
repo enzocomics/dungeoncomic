@@ -20,7 +20,7 @@ import { replaceComicVariables } from "../_functions/parse-content"
 // UI
 import ComicContextProvider from "./context"
 import AuthModal from "@/app/_ui/modal-auth"
-import SiteNav from "@/ui/platform/components/site-nav"
+import PlatformNav from "@/ui/platform/components/nav"
 import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
 import PlatformFooter from "@/ui/platform/components/footer"
 import { ComicPageHeader } from "./page/comic"
@@ -54,13 +54,13 @@ export async function ComicRootLayout({
 		<AuthModal public_registration={public_registration} />
 		<ComicContextProvider getComic={comic} getSession={session} getSettings={settings}>
 			<ComicLayoutWrapper comic={comic}>
-				<SiteNav comic={comic} session={session} settings={settings}
+				<PlatformNav comic={comic} session={session} settings={settings}
 					menu={isRoutingModeSingleSingle ? false : true}
 				>
 					<ComicPageHeader comic={comic}>
 						{header}
 					</ComicPageHeader>
-				</SiteNav>
+				</PlatformNav>
 				<SiteLayoutMain>
 					{children}
 				</SiteLayoutMain>

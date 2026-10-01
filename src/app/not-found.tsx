@@ -7,7 +7,7 @@ import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
 import { verifySession } from "@/data/session"
-import SiteNav from "@/ui/platform/components/site-nav"
+import PlatformNav from "@/ui/platform/components/nav"
 import { PlatformLayoutWrapper, SiteLayoutMain } from "./_ui/site-layout"
 import { PageContentWrapper } from "./_ui/site-page"
 import { NotFoundUI } from "./_ui/not-found"
@@ -37,11 +37,11 @@ export default async function NotFoundPage({
 			return <>
 				<AuthModal public_registration={public_registration} />
 				<ComicLayoutWrapper comic={comic}>
-					<SiteNav
+					<PlatformNav
 						session={session}
 						settings={settings}
 						menu={false}
-					></SiteNav>
+					></PlatformNav>
 					<SiteLayoutMain>
 						<PageContentWrapper>
 							<NotFoundUI />

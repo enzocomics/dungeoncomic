@@ -30,7 +30,7 @@ import { getSettings } from "@/lib/directus/get-settings"
  * - User/Account Popover Menu
  * 
  */
-export default function SiteNav({
+export default function PlatformNav({
 	session,
 	menu = false,
 	comic,

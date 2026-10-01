@@ -15,7 +15,7 @@ import { PlatformLayoutWrapper, SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWr
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
 import React from "react"
-import SiteNav from "@/ui/platform/components/site-nav"
+import PlatformNav from "@/ui/platform/components/nav"
 import { ComicPageHeader } from "./page/comic"
 import PlatformFooter from "@/ui/platform/components/footer"
 
@@ -41,9 +41,9 @@ export default async function PlatformRootLayout({
 	return <>
 		<AuthModal public_registration={public_registration} />
 		<PlatformLayoutWrapper>
-			<SiteNav session={session} settings={settings} menu={isSingleSingle ? false : true}>
+			<PlatformNav session={session} settings={settings} menu={isSingleSingle ? false : true}>
 				{header}
-			</SiteNav>
+			</PlatformNav>
 			<SiteLayoutMain>
 				{children}
 			</SiteLayoutMain>
