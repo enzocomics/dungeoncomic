@@ -1,5 +1,5 @@
 export default function Level3ParallelHeader() {
 	return <>
-		Level 3 Parallel Header
+		root &raquo; Level 3 Parallel Header
 	</>
 }

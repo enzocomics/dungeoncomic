@@ -19,7 +19,8 @@ export default async function Level1ParallelHeader({
 
 	if (!comicPage) notFound()
 	return <>
-		<ClientComicPageHeaderTitle comic={comic} />
+		root &raquo; level 1 parallel header
+		{/* <ClientComicPageHeaderTitle comic={comic} /> */}
 	</>
 
 }

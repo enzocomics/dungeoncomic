@@ -8,19 +8,22 @@ export default async function Level3ParallelHeader({
 }: {
 	params: Promise<{ level1: string, level2: string, level3: string }>
 }) {
-	const { level1, level2, level3 } = await params
-	const settings = await getSettings()
-	if (
-		level1 === settings.post_type_name_slug
-		&& typeof level2 === "string"
-		&& !isNaN(parseInt(level3))
-	) {
-		const comic = await getComic({ slug: level2 })
-		const comicPage = await getComicPage(comic.slug, parseInt(level3))
+	// const { level1, level2, level3 } = await params
+	// const settings = await getSettings()
+	// if (
+	// 	level1 === settings.post_type_name_slug
+	// 	&& typeof level2 === "string"
+	// 	&& !isNaN(parseInt(level3))
+	// ) {
+	// 	const comic = await getComic({ slug: level2 })
+	// 	const comicPage = await getComicPage(comic.slug, parseInt(level3))
 
-		if (!comicPage) notFound()
-		return <>
-			<ClientComicPageHeaderTitle comic={comic} />
-		</>
-	}
+	// 	if (!comicPage) notFound()
+	// 	return <>
+	// 		<ClientComicPageHeaderTitle comic={comic} />
+	// 	</>
+	// }
+	return <>
+		level 2 &raquo; level 3 parallel header
+	</>
 }

@@ -12,9 +12,10 @@ export default async function Level2ParallelHeader({
 		const comic = await getComic({ slug: level1 })
 		const comicPage = await getComicPage(comic.slug, parseInt(level2))
 
-		if (!comicPage) notFound()
+		// if (!comicPage) notFound()
 		return <>
-			<ClientComicPageHeaderTitle comic={comic} />
+			{/* <ClientComicPageHeaderTitle comic={comic} /> */}
+			level 1 &raquo; level 2 parallel header
 		</>
 	}
 }
