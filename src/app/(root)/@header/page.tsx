@@ -1,4 +1,4 @@
-import ParallelHeaderUI from "../_ui/@header/page"
+import ParallelHeaderUI from "../../../ui/comic/components/@header/page"
 
 export default function RootParallelHeader() {
 	return <ParallelHeaderUI />

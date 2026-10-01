@@ -1,4 +1,4 @@
-import ParallelHeaderUI from "@/app/(root)/_ui/@header/page";
+import ParallelHeaderUI from "@/ui/comic/components/@header/page";
 import { getSettings } from "@/lib/directus/get-settings";
 
 export default async function Level2ParallelHeader({

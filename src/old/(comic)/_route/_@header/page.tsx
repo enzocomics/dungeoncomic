@@ -8,8 +8,8 @@ import { useTranslations } from "next-intl"
 import { sanitize } from "@/lib/sanitize"
 import StatusMessage from "@/components/status-message"
 import { LandingPageH1, LandingPageHeader, LandingPageLogo } from "@/ui/platform/components/page-landing"
-import PageEffects from "../../../../app/(root)/_ui/@header/effects"
-import ClientLandingPageHeader from "../../../../app/(root)/_ui/@header/effects"
+import PageEffects from "../../../../ui/comic/components/@header/effects"
+import ClientLandingPageHeader from "../../../../ui/comic/components/@header/effects"
 import { getSettings } from "@/lib/directus/get-settings"
 
 

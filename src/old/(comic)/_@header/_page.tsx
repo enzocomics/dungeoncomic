@@ -1,5 +1,5 @@
 import { getComic } from "@/lib/directus/get-comics"
-import ClientLandingPageHeader from "../../../app/(root)/_ui/@header/effects"
+import ClientLandingPageHeader from "../../../ui/comic/components/@header/effects"
 import ParallelHeader from "../_route/_@header/page"
 import { getSettings } from "@/lib/directus/get-settings"
 

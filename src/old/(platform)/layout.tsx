@@ -16,7 +16,7 @@ import StatusMessage from "@/components/status-message"
 import ClientPlatformNav from "../../ui/platform/components/nav"
 import { PlatformMain } from "../../app/_ui/site-layout"
 import PlatformFooter from "../../ui/platform/components/footer"
-import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
+import ClientLandingPageHeader from "../../ui/comic/components/@header/effects"
 
 export default async function PlatformLayout(props: LayoutProps<"/">) {
 	const { public_registration } = await adminClient.request(readSettings({

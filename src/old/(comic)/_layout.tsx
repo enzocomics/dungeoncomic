@@ -13,7 +13,7 @@ import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import SiteFooter from "../_ui/site-footer"
 import SiteNav from "../_ui/site-nav"
-import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
+import ClientLandingPageHeader from "../../ui/comic/components/@header/effects"
 import { PlatformMain } from "../_ui/site-layout"
 import { ComicPageHeader } from "./_ui/page/comic"
 

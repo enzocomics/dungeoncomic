@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings"
-import ParallelHeaderUI from "../../_ui/@header/page"
+import ParallelHeaderUI from "../../../../ui/comic/components/@header/page"
 
 export default async function Level1ParallelHeader({
 	params

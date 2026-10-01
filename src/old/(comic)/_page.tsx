@@ -19,7 +19,7 @@ import { replaceComicVariables } from "../../ui/comic/functions/parse-content"
 import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
 import SiteNav from "../_ui/site-nav"
-import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
+import ClientLandingPageHeader from "../../ui/comic/components/@header/effects"
 import { PlatformMain } from "../_ui/site-layout"
 
 /**-----------------------------------

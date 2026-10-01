@@ -3,7 +3,7 @@ import PlatformRootLayout from "../../ui/platform/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import { HomepagePageUI } from "../../ui/platform/pages/home"
 import { ComicLandingPage } from "../../ui/comic/layout"
-import ClientLandingPageHeader from "./_ui/@header/effects"
+import ClientLandingPageHeader from "../../ui/comic/components/@header/effects"
 import { marked } from "marked"
 import { sanitize } from "@/lib/sanitize"
 
