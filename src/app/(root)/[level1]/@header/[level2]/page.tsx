@@ -1,6 +1,6 @@
-import { ClientComicPageHeaderTitle } from "@/app/(root)/_ui/page/client/comic-page-header-title";
-import { getComic, getComicPage } from "@/lib/directus/get-comics";
-import { notFound } from "next/navigation";
+import { ClientComicPageHeaderTitle } from "@/app/(root)/_ui/page/client/comic-page-header-title"
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { notFound } from "next/navigation"
 
 export default async function Level2ParallelHeader({
 	params

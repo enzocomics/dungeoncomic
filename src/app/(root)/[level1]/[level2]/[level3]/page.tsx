@@ -1,3 +1,5 @@
+import { ComicPageLayout } from "@/app/(root)/_ui/page/comic"
+import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
 import { notFound } from "next/navigation"
 
@@ -6,6 +8,7 @@ export default async function Level3Page({
 }: {
 	params: Promise<{ level1: string, level2: string, level3: string }>
 }) {
+	const { level1, level2, level3 } = await params
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 
@@ -88,8 +91,14 @@ export default async function Level3Page({
 		// - level 3: Comic Single Page
 
 		case "multiple/multiple":
-			return <>
-				COMIC SINGLE PAGE
-			</>
+			const comic = await getComic({ slug: level2 })
+
+			if (
+				settings.post_type_name_slug == level1
+				&& !isNaN(parseInt(level3))
+			)
+				return <ComicPageLayout slug={level2} pagenum={parseInt(level3)} />
+			else
+				notFound()
 	}
 }
