@@ -6,6 +6,8 @@ import { ComicLandingPage } from "../../ui/comic/layout"
 import ClientLandingPageHeader from "../../ui/comic/components/@header/effects"
 import { marked } from "marked"
 import { sanitize } from "@/lib/sanitize"
+import { Metadata } from "next"
+import { comicMetadata } from "@/ui/comic/metadata"
 
 export default async function RootPage({
 	header
@@ -110,5 +112,27 @@ export default async function RootPage({
 		// case "multiple/multiple":
 		// 	return <>
 		// 	</>
+	}
+}
+
+
+/**-----------------------------------
+ * Generate Homepage Metadata
+ * ---
+ **/
+export async function generateMetadata(): Promise<Metadata | undefined> {
+	// FETCH SETTINGS
+	const settings = await getSettings()
+	const routingMode = settings.routing_mode
+	const comic = await getComic({ slug: settings.frontpage_comic?.slug })
+
+	switch (routingMode) {
+		case "single/single":
+			// On a single creator + comic site, display the metadata for the frontpage comic 
+			return comic ? await comicMetadata(comic.slug) : {}
+		case "single/multiple":
+		case "multiple/multiple":
+			// Fallback to the platform metadata when multiple comics are present 
+			return {}
 	}
 }
