@@ -19,7 +19,7 @@ import { detailedDate, relativeDate } from "@/lib/dayjs"
 import StatusMessage from "@/components/status-message"
 import { ClientComicPageFeedback } from "./client/comic-page-feedback"
 import { CommentsSection } from "./comic-comments"
-import { getUserVarsCookie } from "../../_actions/variables"
+import { getUserVarsCookie } from "../../../../ui/comic/actions/variables"
 import { getComments } from "@/lib/directus/get-comments"
 import { notFound } from "next/navigation"
 /**-----------------------------------

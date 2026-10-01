@@ -12,7 +12,7 @@ import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-co
 import ComicPageUI from "../_ui/page/comic"
 import ComicLandingPageUI from "../_ui/page/comic-landing"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "../_ui/metadata"
-import { getUserVarsCookie } from "../../../app/(root)/_actions/variables"
+import { getUserVarsCookie } from "../../../ui/comic/actions/variables"
 import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { adminClient } from "@/lib/directus/clients"

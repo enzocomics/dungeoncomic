@@ -18,7 +18,7 @@ import { directusURL } from "@/data/env"
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 
 // ACTIONS
-import { saveUserVars } from "@/app/(root)/_actions/variables"
+import { saveUserVars } from "@/ui/comic/actions/variables"
 
 // HELPERS
 

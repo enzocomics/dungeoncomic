@@ -10,7 +10,7 @@ import { directusURL } from "@/data/env"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
 import { replaceComicVariables } from "../../../ui/comic/functions/parse-content"
-import { getUserVarsCookie } from "../_actions/variables"
+import { getUserVarsCookie } from "../../../ui/comic/actions/variables"
 
 
 

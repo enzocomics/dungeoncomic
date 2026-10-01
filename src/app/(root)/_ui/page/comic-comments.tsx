@@ -19,7 +19,7 @@ import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
 // ACTIONS
-import { submitUserComment } from "../../_actions/comments"
+import { submitUserComment } from "../../../../ui/comic/actions/comments"
 // UI
 import { ErrorMessage } from "@/components/forms"
 import { ComicButton, SmallComicButton } from "@/components/button"

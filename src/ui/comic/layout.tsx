@@ -15,7 +15,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // FUNCTIONS
 import clsx from "clsx"
 import { sanitize } from "@/lib/sanitize"
-import { getUserVarsCookie } from "../../app/(root)/_actions/variables"
+import { getUserVarsCookie } from "./actions/variables"
 import { replaceComicVariables } from "./functions/parse-content"
 // UI
 import ClientPlatformNav from "@/ui/platform/components/nav"

@@ -1,7 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import ComicPageUI, { ComicPageLayout } from "../_ui/page/comic"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
-import { getUserVarsCookie } from "../_actions/variables"
+import { getUserVarsCookie } from "../../../ui/comic/actions/variables"
 import { verifySession } from "@/data/session"
 import { CommentsSection } from "../_ui/page/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
