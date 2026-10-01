@@ -8,7 +8,7 @@ import { verifySession } from "@/data/session"
 import { adminClient } from "@/lib/directus/clients"
 import { getComic } from "@/lib/directus/get-comics"
 // UI
-import AuthModal from "@/ui/platform/components/modal-auth"
+import AuthModal from "@/ui/platform/components/auth-modal"
 import { getSettings } from "@/lib/directus/get-settings"
 import ComicContextProvider from "@/ui/comic/context"
 

@@ -2,7 +2,7 @@
 // LIBRARIES
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import AuthModal from "../ui/platform/components/modal-auth"
+import AuthModal from "../ui/platform/components/auth-modal"
 import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
