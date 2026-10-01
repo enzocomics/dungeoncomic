@@ -70,7 +70,7 @@ export async function ComicRootLayout({
 	</>
 }
 
-const ComicLayoutWrapper = ({
+export const ComicLayoutWrapper = ({
 	children,
 	comic,
 }: {
