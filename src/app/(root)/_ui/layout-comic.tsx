@@ -1,29 +1,30 @@
 // LIBRARIES
+import React, { Suspense } from "react"
+import { redirect, RedirectType } from "next/navigation"
+import { marked } from "marked"
 import { readSettings } from "@directus/sdk"
 // STYLES
 import { colorVariants } from "@/styles/colors"
 import { displayFonts, copyFonts } from "@/styles/fonts"
 // DATA
+import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
 import { adminClient } from "@/lib/directus/clients"
 import { getComic, getComicVariables } from "@/lib/directus/get-comics"
-// UI
-import AuthModal from "@/app/_ui/modal-auth"
 import { getSettings } from "@/lib/directus/get-settings"
-import ComicContextProvider from "./context"
-import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
+// FUNCTIONS
 import clsx from "clsx"
-import { directusURL } from "@/data/env"
-import React, { Suspense } from "react"
-import SiteNav from "@/app/_ui/site-nav"
-import { ComicPageHeader } from "./page/comic"
-import SiteFooter from "@/app/_ui/site-footer"
+import { sanitize } from "@/lib/sanitize"
 import { getUserVarsCookie } from "../_actions/variables"
 import { replaceComicVariables } from "../_functions/parse-content"
-import { marked } from "marked"
-import { sanitize } from "@/lib/sanitize"
+// UI
+import ComicContextProvider from "./context"
+import AuthModal from "@/app/_ui/modal-auth"
+import SiteNav from "@/app/_ui/site-nav"
+import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
+import SiteFooter from "@/app/_ui/site-footer"
+import { ComicPageHeader } from "./page/comic"
 import ComicLandingPageUI from "./page/comic-landing"
-import { redirect, RedirectType } from "next/navigation"
 
 export async function ComicRootLayout({
 	children,
@@ -32,7 +33,7 @@ export async function ComicRootLayout({
 }: {
 	children: React.ReactNode
 	header: React.ReactNode
-	slug: string
+	slug?: string
 }) {
 
 	const { public_registration } = await adminClient.request(readSettings({
@@ -44,7 +45,9 @@ export async function ComicRootLayout({
 
 	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
-	const isSingleSingle = routingMode === "single/single"
+	const isRoutingModeSingleSingle = routingMode === "single/single"
+	// If a slug has been provided, fetch that comic
+	// Otherwise, fall back to the frontpage comic
 	const comic = await getComic({ slug: slug || frontpageComic?.slug })
 
 	return <>
@@ -52,8 +55,7 @@ export async function ComicRootLayout({
 		<ComicContextProvider getComic={comic} getSession={session} getSettings={settings}>
 			<ComicLayoutWrapper comic={comic}>
 				<SiteNav comic={comic} session={session} settings={settings}
-
-					menu={isSingleSingle ? false : true}
+					menu={isRoutingModeSingleSingle ? false : true}
 				>
 					<ComicPageHeader comic={comic}>
 						{header}
