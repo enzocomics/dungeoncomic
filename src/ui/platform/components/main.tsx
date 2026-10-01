@@ -89,7 +89,7 @@ export const PlatformMain = (
 )
 
 /**----------------------------------- */
-export const PlatformMainContent = (
+export const PlatformMainArticle = (
 	props: ComponentPropsWithoutRef<"article">
 ) => (
 	<article

@@ -12,7 +12,7 @@ import { NotFoundUI } from "./_ui/not-found"
 import { ComicMainWrapper, ComicRootLayout } from "../ui/comic/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import PlatformRootLayout from "@/ui/platform/layout"
-import { PlatformMainContent } from "@/ui/platform/components/main"
+import { PlatformMainArticle } from "@/ui/platform/components/main"
 
 /**----------------------------------- */
 export default async function NotFoundPage({
@@ -49,19 +49,19 @@ export default async function NotFoundPage({
 					</PlatformMain>
 				</ComicLayoutWrapper> */}
 				<ComicRootLayout header={header}>
-					<PlatformMainContent>
+					<PlatformMainArticle>
 						<NotFoundUI />
-					</PlatformMainContent>
+					</PlatformMainArticle>
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
 			return <>
 				<PlatformRootLayout header={header}>
-					<PlatformMainContent>
+					<PlatformMainArticle>
 
 						<NotFoundUI />
 
-					</PlatformMainContent>
+					</PlatformMainArticle>
 				</PlatformRootLayout>
 			</>
 

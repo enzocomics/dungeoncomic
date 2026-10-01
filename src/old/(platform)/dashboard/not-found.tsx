@@ -1,10 +1,10 @@
 import { NotFoundUI } from "@/app/_ui/not-found"
-import { PlatformMainContent } from "@/ui/platform/components/main"
+import { PlatformMainArticle } from "@/ui/platform/components/main"
 
 export default function NotFound() {
 	return <>
-		<PlatformMainContent>
+		<PlatformMainArticle>
 			<NotFoundUI />
-		</PlatformMainContent>
+		</PlatformMainArticle>
 	</>
 }
