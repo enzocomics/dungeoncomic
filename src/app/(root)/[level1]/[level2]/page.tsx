@@ -1,6 +1,8 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { notFound } from "next/navigation"
 import { ComicPageLayout } from "../../_ui/page/comic"
+import { getComic } from "@/lib/directus/get-comics"
+import { ComicLandingPage } from "../../_ui/layout-comic"
 
 export default async function Level2Page({
 	params
@@ -94,8 +96,10 @@ export default async function Level2Page({
 		// - level 3: Comic Single Page
 
 		case "multiple/multiple":
-			return <>
-				"mode: multiple/multiple"
-			</>
+			const comic = await getComic({ slug: level2 })
+			if (comic)
+				return <ComicLandingPage comic={comic} />
+			else
+				notFound()
 	}
 }

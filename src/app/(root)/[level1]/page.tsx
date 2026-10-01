@@ -107,10 +107,10 @@ export default async function Level1Page({
 		// - level 3: Comic Single Page
 
 		case "multiple/multiple":
-			return <>
-
-				REDIRECT TO ALL COMICS
-
-			</>
+			if (settings.post_type_name_slug == level1)
+				return <>
+					REDIRECT TO ALL COMICS
+				</>
+			else notFound()
 	}
 }

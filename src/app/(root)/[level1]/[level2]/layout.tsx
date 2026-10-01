@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import { PropsWithChildren } from "react"
 import { ComicRootLayout } from "../../_ui/layout-comic"
+import { notFound } from "next/navigation"
 
 export default async function Level2Layout({
 	header,
@@ -97,9 +98,12 @@ export default async function Level2Layout({
 		// - level 3: Comic Single Page
 
 		case "multiple/multiple":
-			return <>
-				COMIC LAYOUT<br />
-				{props.children}
-			</>
+			if (settings.post_type_name_slug == level1)
+				return <>
+					<ComicRootLayout header={header} slug={level2}>
+						{props.children}
+					</ComicRootLayout>
+				</>
+			else notFound()
 	}
 }
