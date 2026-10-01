@@ -3,10 +3,11 @@
 import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
 import { Metadata, Viewport } from "next"
-// UI
-import PlatformRootLayout from "@/ui/platform/layout"
+// DATA
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import PlatformRootLayout from "@/ui/platform/layout"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
