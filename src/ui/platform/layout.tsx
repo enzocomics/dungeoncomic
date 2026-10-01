@@ -11,7 +11,7 @@ import { getTheme } from "@teispace/next-themes/server"
 
 // UI
 import GlobalContextProvider from "@/ui/platform/context"
-import ClientSiteEffects from "@/ui/platform/effects"
+import ClientPlatformEffects from "@/ui/platform/effects"
 
 export default async function PlatformRootLayout({
 	children
@@ -57,7 +57,7 @@ export default async function PlatformRootLayout({
 					disableTransitionOnChange={true}
 				>
 					<NextIntlClientProvider>
-						<ClientSiteEffects />
+						<ClientPlatformEffects />
 						{children}
 					</NextIntlClientProvider>
 				</ThemeProvider>
