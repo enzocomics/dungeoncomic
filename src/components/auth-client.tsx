@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { ComponentPropsWithoutRef } from "react"
-import { AuthModalSchema, useGlobalContext } from "@/app/_context"
+import { AuthModalSchema, useGlobalContext } from "@/ui/platform/context"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 export function LogoutButton({

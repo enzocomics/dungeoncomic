@@ -22,7 +22,7 @@ import { ErrorMessage, Input, Label } from "@/components/forms"
 import { PlatformButton } from "@/components/button"
 import Link from "next/link"
 import { AuthLink } from "@/components/auth"
-import { useGlobalContext } from "@/app/_context"
+import { useGlobalContext } from "@/ui/platform/context"
 
 /** ------------------------------------------------ **
  * LOGIN FORM

@@ -3,7 +3,7 @@
 import clsx from "clsx"
 // UI
 import Icon from "@/styles/icons"
-import { useGlobalContext } from "@/app/_context"
+import { useGlobalContext } from "@/ui/platform/context"
 import { ComponentPropsWithoutRef } from "react"
 import { notificationColors } from "@/styles/colors"
 

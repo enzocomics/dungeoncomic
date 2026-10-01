@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ComponentPropsWithoutRef } from "react"
-import { AuthModalSchema, useGlobalContext } from "@/app/_context"
+import { AuthModalSchema, useGlobalContext } from "@/ui/platform/context"
 
 /** ---
  * A reusable link to the login/register/reset-password pages.

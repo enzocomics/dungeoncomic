@@ -7,7 +7,7 @@ export type StatusMessageType = keyof typeof notificationColors
 import clsx from "clsx"
 // UI
 import Icon from "@/styles/icons"
-import { useGlobalContext } from "@/app/_context"
+import { useGlobalContext } from "@/ui/platform/context"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react"
 import { notificationColors } from "@/styles/colors"

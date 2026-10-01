@@ -5,16 +5,15 @@ import { fonts } from "@/styles/fonts"
 // FUNCTIONS
 import clsx from "clsx"
 // LIBRARIES
-import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "@teispace/next-themes"
 import { getTheme } from "@teispace/next-themes/server"
 
 // UI
-import GlobalContextProvider from "./_context"
-import ClientSiteEffects from "./_ui/client/site-effects"
+import GlobalContextProvider from "@/ui/platform/context"
+import ClientSiteEffects from "@/ui/platform/effects"
 
-export default async function RootLayoutUI({
+export default async function PlatformRootLayout({
 	children
 }: {
 	children: React.ReactNode | null

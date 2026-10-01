@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useChangeStatus } from "@/components/status-message"
 import clsx from "clsx"
-import { useGlobalContext } from "@/app/_context"
+import { useGlobalContext } from "@/ui/platform/context"
 
 export default function ClientComicPageEffects({
 	page,

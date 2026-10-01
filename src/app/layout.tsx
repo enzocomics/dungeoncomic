@@ -4,7 +4,7 @@ import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
 import { Metadata, Viewport } from "next"
 // UI
-import RootLayoutUI from "./_ui"
+import PlatformRootLayout from "@/ui/platform/layout"
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
 
@@ -12,9 +12,9 @@ import { getSettings } from "@/lib/directus/get-settings"
  * APP - ROOT LAYOUT
  */
 export default async function RootLayout(props: LayoutProps<"/">) {
-	return <RootLayoutUI>
+	return <PlatformRootLayout>
 		{props.children}
-	</RootLayoutUI>
+	</PlatformRootLayout>
 }
 
 /** ------------------------------------------------ **
