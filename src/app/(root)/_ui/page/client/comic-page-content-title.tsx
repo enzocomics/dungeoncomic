@@ -2,7 +2,7 @@
 /**----------------------------------- */
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
-import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/_functions/check-vars"
+import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/functions/check-vars"
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 
 /**

@@ -22,7 +22,7 @@ import { saveUserVars } from "@/app/(root)/_actions/variables"
 
 // HELPERS
 
-import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/_functions/check-vars"
+import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/functions/check-vars"
 // UI
 import { Field, } from "@headlessui/react"
 import Icon from "@/styles/icons"

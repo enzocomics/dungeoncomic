@@ -4,7 +4,7 @@ import clsx from "clsx"
 import React, { ComponentPropsWithoutRef } from "react"
 import { getTranslations } from "next-intl/server"
 // DATA
-import { prepareText } from "../../../../ui/comic/_functions/parse-content"
+import { prepareText } from "../../../../ui/comic/functions/parse-content"
 import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicPageSuggestions, getComicVariables } from "@/lib/directus/get-comics"
 // UI
