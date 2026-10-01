@@ -4,10 +4,10 @@ import { fonts } from "@/styles/fonts"
 // TYPES
 import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
-import { Metadata, Viewport } from "next"
-import { NextIntlClientProvider } from "next-intl"
 import { ThemeProvider } from "@teispace/next-themes"
 import { getTheme } from "@teispace/next-themes/server"
+import { Metadata, Viewport } from "next"
+import { NextIntlClientProvider } from "next-intl"
 // DATA
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
