@@ -13,7 +13,7 @@ import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
 import ClientComicPageEffects from "./client/comic-page-effects"
-import { PageContentWrapper } from "@/ui/platform/components/site-page"
+import { PlatformMainContent } from "@/ui/platform/components/main"
 
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 import StatusMessage from "@/components/status-message"
@@ -111,7 +111,7 @@ export default async function ComicPageUI({
 	// RENDER
 	return <>
 		<ClientComicPageEffects page={page} />
-		<PageContentWrapper>
+		<PlatformMainContent>
 			<ClientComicPageContentTitle
 				pagePanels={page.comic_panels}
 				pageTitle={pageTitle}
@@ -144,7 +144,7 @@ export default async function ComicPageUI({
 				userVariables={userVariables}
 			/>
 			<ComicPageMeta page={page} />
-		</PageContentWrapper>
+		</PlatformMainContent>
 		<ClientComicPageNavbar
 			page={page}
 			lastPage={lastPage}

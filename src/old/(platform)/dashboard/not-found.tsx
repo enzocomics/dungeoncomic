@@ -1,10 +1,10 @@
 import { NotFoundUI } from "@/app/_ui/not-found"
-import { PageContentWrapper } from "@/ui/platform/components/site-page"
+import { PlatformMainContent } from "@/ui/platform/components/main"
 
 export default function NotFound() {
 	return <>
-		<PageContentWrapper>
+		<PlatformMainContent>
 			<NotFoundUI />
-		</PageContentWrapper>
+		</PlatformMainContent>
 	</>
 }

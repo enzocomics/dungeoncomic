@@ -8,11 +8,11 @@ import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
 import { verifySession } from "@/data/session"
 import ClientPlatformNav from "@/ui/platform/components/nav"
-import { PageContentWrapper } from "../ui/platform/components/site-page"
 import { NotFoundUI } from "./_ui/not-found"
 import { ComicMainWrapper, ComicRootLayout } from "../ui/comic/layout"
 import { getComic } from "@/lib/directus/get-comics"
 import PlatformRootLayout from "@/ui/platform/layout"
+import { PlatformMainContent } from "@/ui/platform/components/main"
 
 /**----------------------------------- */
 export default async function NotFoundPage({
@@ -43,21 +43,25 @@ export default async function NotFoundPage({
 						menu={false}
 					></ClientPlatformNav>
 					<PlatformMain>
-						<PageContentWrapper>
+						<PlatformMainContent>
 							<NotFoundUI />
-						</PageContentWrapper>
+						</PlatformMainContent>
 					</PlatformMain>
 				</ComicLayoutWrapper> */}
 				<ComicRootLayout header={header}>
-					<PageContentWrapper>
+					<PlatformMainContent>
 						<NotFoundUI />
-					</PageContentWrapper>
+					</PlatformMainContent>
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
 			return <>
 				<PlatformRootLayout header={header}>
-					<NotFoundUI />
+					<PlatformMainContent>
+
+						<NotFoundUI />
+
+					</PlatformMainContent>
 				</PlatformRootLayout>
 			</>
 
