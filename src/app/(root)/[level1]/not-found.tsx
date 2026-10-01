@@ -1,4 +1,4 @@
-import { NotFoundUI } from "@/app/_ui/not-found"
+import { NotFoundUI } from "@/ui/platform/not-found"
 
 /**----------------------------------- */
 export default async function NotFoundPage() {

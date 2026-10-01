@@ -1,4 +1,4 @@
-import { NotFoundUI } from "@/app/_ui/not-found"
+import { NotFoundUI } from "@/ui/platform/not-found"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 
 export default function NotFound() {
