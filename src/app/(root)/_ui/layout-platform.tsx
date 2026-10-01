@@ -10,7 +10,7 @@ import { getComic } from "@/lib/directus/get-comics"
 // UI
 import AuthModal from "@/app/_ui/modal-auth"
 import { getSettings } from "@/lib/directus/get-settings"
-import ComicContextProvider from "./context"
+import ComicContextProvider from "@/ui/comic/context"
 import { PlatformLayoutWrapper, SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
 import clsx from "clsx"
 import { directusURL } from "@/data/env"

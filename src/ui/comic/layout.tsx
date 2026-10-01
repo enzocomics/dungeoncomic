@@ -18,7 +18,7 @@ import { sanitize } from "@/lib/sanitize"
 import { getUserVarsCookie } from "../../app/(root)/_actions/variables"
 import { replaceComicVariables } from "../../app/(root)/_functions/parse-content"
 // UI
-import ComicContextProvider from "../../app/(root)/_ui/context"
+import ComicContextProvider from "@/ui/comic/context"
 import AuthModal from "@/app/_ui/modal-auth"
 import ClientPlatformNav from "@/ui/platform/components/nav"
 import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"

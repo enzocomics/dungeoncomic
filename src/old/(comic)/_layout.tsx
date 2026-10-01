@@ -5,7 +5,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicLayoutUI, PlatformLayoutUI } from "./_ui/layout"
 import { getComic } from "@/lib/directus/get-comics"
-import ComicContextProvider from "../../app/(root)/_ui/context"
+import ComicContextProvider from "../../ui/comic/context"
 import { verifySession } from "@/data/session"
 import React from "react"
 import AuthModal from "../../app/_ui/modal-auth"
