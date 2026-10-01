@@ -13,7 +13,7 @@ import { ClientComicPageNextNav } from "./client/comic-page-next-nav"
 import { ClientComicPageNavbar } from "./client/comic-page-navbar"
 import { ClientComicPanels } from "./client/comic-page-panels"
 import ClientComicPageEffects from "./client/comic-page-effects"
-import { PageContentWrapper } from "@/app/_ui/site-page"
+import { PageContentWrapper } from "@/ui/platform/components/site-page"
 
 import { detailedDate, relativeDate } from "@/lib/dayjs"
 import StatusMessage from "@/components/status-message"
