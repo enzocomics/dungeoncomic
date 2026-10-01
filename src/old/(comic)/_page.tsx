@@ -20,7 +20,7 @@ import { sanitize } from "@/lib/sanitize"
 import { marked } from "marked"
 import SiteNav from "../_ui/site-nav"
 import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
-import { SiteLayoutMain } from "../_ui/site-layout"
+import { PlatformMain } from "../_ui/site-layout"
 
 /**-----------------------------------
  * HOMEPAGE PAGE
@@ -125,9 +125,9 @@ export default async function Homepage() {
 						</SiteNav>
 					}
 				>
-					<SiteLayoutMain>
+					<PlatformMain>
 						<HomepagePageUI content={homePageContent} />
-					</SiteLayoutMain>
+					</PlatformMain>
 				</PlatformLayoutUI>
 			</Suspense>
 		}

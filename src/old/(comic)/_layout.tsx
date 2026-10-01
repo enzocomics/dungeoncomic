@@ -14,7 +14,7 @@ import { readSettings } from "@directus/sdk"
 import SiteFooter from "../_ui/site-footer"
 import SiteNav from "../_ui/site-nav"
 import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
-import { SiteLayoutMain } from "../_ui/site-layout"
+import { PlatformMain } from "../_ui/site-layout"
 import { ComicPageHeader } from "./_ui/page/comic"
 
 /**-----------------------------------
@@ -80,9 +80,9 @@ export default async function HomepageLayout({
 							</SiteNav>
 						}
 					>
-						<SiteLayoutMain>
+						<PlatformMain>
 							{children}
-						</SiteLayoutMain>
+						</PlatformMain>
 					</ComicLayoutUI>
 				</ComicContextProvider>
 				<SiteFooter />

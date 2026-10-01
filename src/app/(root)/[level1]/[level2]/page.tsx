@@ -26,7 +26,7 @@ export default async function Level2Page({
 		// - `root/[level1]/[level2]/[level3]`: 404
 
 		// Layouts:
-		// - Root: Comic Root Layout (AuthModal, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, SiteLayoutMain, SiteFooter)
+		// - Root: Comic Root Layout (AuthModal, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, PlatformMain, SiteFooter)
 		// - Level 1: None
 		// - Level 2: 404
 		// - level 3: 404
@@ -53,7 +53,7 @@ export default async function Level2Page({
 
 		// Layouts:
 		// - Root: Platform Root Layout
-		// - Level 1: Comic Root Layout (Auth, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, SiteLayoutMain, SiteFooter)
+		// - Level 1: Comic Root Layout (Auth, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, PlatformMain, SiteFooter)
 		// - Level 2: None
 		// - level 3: 404
 
@@ -86,7 +86,7 @@ export default async function Level2Page({
 		// Layouts:
 		// - Root: Platform Root Layout
 		// - Level 1: 
-		// - Level 2: Comic Root Layout (Auth, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, SiteLayoutMain, SiteFooter)
+		// - Level 2: Comic Root Layout (Auth, ComicContext, ComicLayoutUI, SiteNav, ComicPageHeader, PlatformMain, SiteFooter)
 		// - level 3: None
 
 		// Pages:

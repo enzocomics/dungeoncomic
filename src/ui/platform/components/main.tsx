@@ -1,35 +1,22 @@
-import { directusURL } from "@/data/env"
-import { verifySession } from "@/data/session"
-import { getSettings } from "@/lib/directus/get-settings"
-import clsx from "clsx"
+/**----------------------------------- */
+// LIBRARIES
 import { ComponentPropsWithoutRef } from "react"
+// FUNCTIONS
+import clsx from "clsx"
 
-export async function PlatformLayoutWrapper({
-	children,
-	header,
-}: {
-	children: React.ReactNode
-	header?: React.ReactNode
-	session?: Awaited<ReturnType<typeof verifySession>>
-}) {
-
-	const settings = await getSettings()
-	const banner = settings.project_banner
-	const hasBanner = !!banner
-	return <>
-		<SiteLayoutWrapper className={clsx("font-platform-copy")}>
-			{hasBanner &&
-				<SiteLayoutBackdrop style={{
-					backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
-				}} />
-			}
-			{header}
-			{children}
-		</SiteLayoutWrapper>
-	</>
-}
-
-export const SiteLayoutWrapper = (
+/**
+ * PLATFORM STRUCTURE:
+ * - Auth Modal
+ * - Platform Main Wrapper
+ *   - Platform Backdrop
+ *   - Platform Nav
+ *     - Header Logo/Title
+ *   - Platform Main
+ *     - Content
+ * - Platform Footer
+ */
+/**----------------------------------- */
+export const PlatformMainWrapper = (
 	props: ComponentPropsWithoutRef<"div">
 ) => (
 	<div
@@ -46,7 +33,8 @@ export const SiteLayoutWrapper = (
 	</div>
 )
 
-export const SiteLayoutBackdrop = (
+/**----------------------------------- */
+export const PlatformBackdrop = (
 	props: ComponentPropsWithoutRef<"div">
 ) => (
 	<div
@@ -81,7 +69,8 @@ export const SiteLayoutBackdrop = (
 	</div>
 )
 
-export const SiteLayoutMain = (
+/**----------------------------------- */
+export const PlatformMain = (
 	props: ComponentPropsWithoutRef<"main">
 ) => (
 	<main

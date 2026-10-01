@@ -8,11 +8,11 @@ import { readSettings } from "@directus/sdk"
 import { getSettings } from "@/lib/directus/get-settings"
 import { verifySession } from "@/data/session"
 import ClientPlatformNav from "@/ui/platform/components/nav"
-import { PlatformLayoutWrapper, SiteLayoutMain } from "./_ui/site-layout"
 import { PageContentWrapper } from "./_ui/site-page"
 import { NotFoundUI } from "./_ui/not-found"
-import { ComicLayoutWrapper, ComicRootLayout } from "../ui/comic/layout"
+import { ComicMainWrapper, ComicRootLayout } from "../ui/comic/layout"
 import { getComic } from "@/lib/directus/get-comics"
+import PlatformRootLayout from "@/ui/platform/layout"
 
 /**----------------------------------- */
 export default async function NotFoundPage({
@@ -35,21 +35,31 @@ export default async function NotFoundPage({
 	switch (routingMode) {
 		case "single/single":
 			return <>
-				<AuthModal public_registration={public_registration} />
+				{/* <AuthModal public_registration={public_registration} />
 				<ComicLayoutWrapper comic={comic}>
 					<ClientPlatformNav
 						session={session}
 						settings={settings}
 						menu={false}
 					></ClientPlatformNav>
-					<SiteLayoutMain>
+					<PlatformMain>
 						<PageContentWrapper>
 							<NotFoundUI />
 						</PageContentWrapper>
-					</SiteLayoutMain>
-				</ComicLayoutWrapper>
+					</PlatformMain>
+				</ComicLayoutWrapper> */}
+				<ComicRootLayout header={header}>
+					<PageContentWrapper>
+						<NotFoundUI />
+					</PageContentWrapper>
+				</ComicRootLayout>
 			</>
-			break
+		case "single/multiple":
+			return <>
+				<PlatformRootLayout header={header}>
+					<NotFoundUI />
+				</PlatformRootLayout>
+			</>
 
 	}
 }

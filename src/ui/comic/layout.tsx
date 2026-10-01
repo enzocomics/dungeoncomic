@@ -18,11 +18,13 @@ import { sanitize } from "@/lib/sanitize"
 import { getUserVarsCookie } from "../../app/(root)/_actions/variables"
 import { replaceComicVariables } from "../../app/(root)/_functions/parse-content"
 // UI
-import ComicContextProvider from "@/ui/comic/context"
-import AuthModal from "@/app/_ui/modal-auth"
 import ClientPlatformNav from "@/ui/platform/components/nav"
-import { SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
+import { PlatformBackdrop, PlatformMain } from "@/ui/platform/components/main"
 import PlatformFooter from "@/ui/platform/components/footer"
+import ComicContextProvider from "@/ui/comic/context"
+
+import AuthModal from "@/app/_ui/modal-auth"
+import { PlatformMainWrapper } from "@/ui/platform/components/main"
 import { ComicPageHeader } from "../../app/(root)/_ui/page/comic"
 import ComicLandingPageUI from "../../app/(root)/_ui/page/comic-landing"
 
@@ -53,7 +55,7 @@ export async function ComicRootLayout({
 	return <>
 		<AuthModal public_registration={public_registration} />
 		<ComicContextProvider getComic={comic} getSession={session} getSettings={settings}>
-			<ComicLayoutWrapper comic={comic}>
+			<ComicMainWrapper comic={comic}>
 				<ClientPlatformNav comic={comic} session={session} settings={settings}
 					menu={isRoutingModeSingleSingle ? false : true}
 				>
@@ -61,16 +63,16 @@ export async function ComicRootLayout({
 						{header}
 					</ComicPageHeader>
 				</ClientPlatformNav>
-				<SiteLayoutMain>
+				<PlatformMain>
 					{children}
-				</SiteLayoutMain>
-			</ComicLayoutWrapper>
+				</PlatformMain>
+			</ComicMainWrapper>
 		</ComicContextProvider>
 		<PlatformFooter />
 	</>
 }
 
-export const ComicLayoutWrapper = ({
+export const ComicMainWrapper = ({
 	children,
 	comic,
 }: {
@@ -84,7 +86,7 @@ export const ComicLayoutWrapper = ({
 
 	// RENDER COMIC LAYOUT UI
 	return (
-		<SiteLayoutWrapper className={clsx("font-comic-copy")}
+		<PlatformMainWrapper className={clsx("font-comic-copy")}
 			style={
 				{
 					// Fonts
@@ -105,12 +107,12 @@ export const ComicLayoutWrapper = ({
 				} as React.CSSProperties}
 		>
 			{comic.banner &&
-				<SiteLayoutBackdrop style={{
+				<PlatformBackdrop style={{
 					backgroundImage: `url(${directusURL}/assets/${comic.banner?.filename_disk})`,
 				}} />
 			}
 			{children}
-		</SiteLayoutWrapper>
+		</PlatformMainWrapper>
 	)
 }
 

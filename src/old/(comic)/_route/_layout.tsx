@@ -10,7 +10,7 @@ import { adminClient } from "@/lib/directus/clients"
 import { readSettings } from "@directus/sdk"
 import ClientPlatformNav from "@/ui/platform/components/nav"
 import { ComicPageHeader } from "../_ui/page/comic"
-import { SiteLayoutMain } from "@/app/_ui/site-layout"
+import { PlatformMain } from "@/app/_ui/site-layout"
 
 /**-----------------------------------
  * ROUTE LAYOUT
@@ -89,9 +89,9 @@ export default async function RouteLayout({
 						</ClientPlatformNav>
 					}
 				>
-					<SiteLayoutMain>
+					<PlatformMain>
 						{children}
-					</SiteLayoutMain>
+					</PlatformMain>
 				</ComicLayoutUI>
 			</ComicContextProvider>
 		</>

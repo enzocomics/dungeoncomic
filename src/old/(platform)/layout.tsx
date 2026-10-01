@@ -14,7 +14,7 @@ import { PageContentWrapper } from "../../app/_ui/site-page"
 import { verifySession } from "@/data/session"
 import StatusMessage from "@/components/status-message"
 import ClientPlatformNav from "../../ui/platform/components/nav"
-import { SiteLayoutMain } from "../../app/_ui/site-layout"
+import { PlatformMain } from "../../app/_ui/site-layout"
 import PlatformFooter from "../../ui/platform/components/footer"
 import ClientLandingPageHeader from "../../app/(root)/_ui/@header/effects"
 
@@ -102,7 +102,7 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 					}
 				</Link>
 			</ClientPlatformNav>
-			<SiteLayoutMain>
+			<PlatformMain>
 				{/* <div className={clsx(
 				"relative",
 				"pt-12",
@@ -112,7 +112,7 @@ export default async function PlatformLayout(props: LayoutProps<"/">) {
 					{props.children}
 				</PageContentWrapper>
 				{/* </div> */}
-			</SiteLayoutMain>
+			</PlatformMain>
 			<PlatformFooter />
 		</PlatformLayoutUI >
 	</>

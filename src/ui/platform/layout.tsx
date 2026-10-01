@@ -11,10 +11,11 @@ import { getComic } from "@/lib/directus/get-comics"
 import AuthModal from "@/app/_ui/modal-auth"
 import { getSettings } from "@/lib/directus/get-settings"
 import ComicContextProvider from "@/ui/comic/context"
-import { PlatformLayoutWrapper, SiteLayoutBackdrop, SiteLayoutMain, SiteLayoutWrapper } from "@/app/_ui/site-layout"
+
+import { PlatformMainWrapper, PlatformBackdrop, PlatformMain } from "@/ui/platform/components/main"
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
-import React from "react"
+import React, { ComponentPropsWithoutRef } from "react"
 import ClientPlatformNav from "@/ui/platform/components/nav"
 import { ComicPageHeader } from "../../app/(root)/_ui/page/comic"
 import PlatformFooter from "@/ui/platform/components/footer"
@@ -34,20 +35,27 @@ export default async function PlatformRootLayout({
 	const settings = await getSettings()
 	const session = await verifySession()
 
+	const banner = settings.project_banner
+	const hasBanner = !!banner
 	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
 	const isSingleSingle = routingMode === "single/single"
 
 	return <>
 		<AuthModal public_registration={public_registration} />
-		<PlatformLayoutWrapper>
+		<PlatformMainWrapper>
+			{hasBanner &&
+				<PlatformBackdrop style={{
+					backgroundImage: `url(${directusURL}/assets/${banner?.filename_disk})`,
+				}} />
+			}
 			<ClientPlatformNav session={session} settings={settings} menu={isSingleSingle ? false : true}>
 				{header}
 			</ClientPlatformNav>
-			<SiteLayoutMain>
+			<PlatformMain>
 				{children}
-			</SiteLayoutMain>
-		</PlatformLayoutWrapper>
+			</PlatformMain>
+		</PlatformMainWrapper>
 		<PlatformFooter />
 	</>
 }
