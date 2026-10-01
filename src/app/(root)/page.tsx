@@ -1,7 +1,7 @@
 import { getSettings } from "@/lib/directus/get-settings"
 import PlatformRootLayout from "../../ui/platform/layout"
 import { getComic } from "@/lib/directus/get-comics"
-import { HomepagePageUI } from "./_ui/page/home"
+import { HomepagePageUI } from "../../ui/platform/pages/home"
 import { ComicLandingPage } from "../../ui/comic/layout"
 import ClientLandingPageHeader from "./_ui/@header/effects"
 import { marked } from "marked"

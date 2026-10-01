@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { sanitize } from "@/lib/sanitize"
 import { directusURL } from "@/data/env"
 import { getSettings } from "@/lib/directus/get-settings"
-import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1 } from "../../../../ui/platform/components/page-landing"
+import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageContent, LandingPageH1 } from "../components/page-landing"
 
 /**-----------------------------------
  * HOMEPAGE PAGE UI
