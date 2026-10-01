@@ -4,10 +4,13 @@ import { ComicRootLayout } from "../../_ui/layout-comic"
 
 export default async function Level2Layout({
 	header,
+	params,
 	...props
 }: {
 	header: React.ReactNode
+	params: Promise<{ level1: string, level2: string }>
 } & PropsWithChildren) {
+	const { level1, level2 } = await params
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 

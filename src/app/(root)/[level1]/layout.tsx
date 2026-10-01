@@ -16,6 +16,7 @@ export default async function Level1Layout({
 	const { level1 } = await params
 	const settings = await getSettings()
 	const comicSlug = settings.post_type_name_slug
+	const comicSlugPlural = settings.post_type_name_plural_slug
 	const routingMode = settings.routing_mode
 
 	switch (routingMode) {
@@ -111,9 +112,9 @@ export default async function Level1Layout({
 
 			if (level1 === comicSlug) // Only show the comic layout on the comicSlug route
 				return <>
-					<ComicRootLayout header={header} slug={level1}>
-						{props.children}
-					</ComicRootLayout>
+					{/* <ComicRootLayout header={header} slug={level1}> */}
+					{props.children}
+					{/* </ComicRootLayout> */}
 				</>
 			else // Show the platform layout in any other instance 
 				return <>
