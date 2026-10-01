@@ -1,7 +1,10 @@
-import { getComic, getComicPage } from "@/lib/directus/get-comics";
-import { ClientComicPageHeaderTitle } from "../../../../ui/comic/components/client/comic-page-header-title";
-import { getSettings } from "@/lib/directus/get-settings";
-import { notFound } from "next/navigation";
+// LIBRARIES
+import { notFound } from "next/navigation"
+// DATA
+import { getComic, getComicPage } from "@/lib/directus/get-comics"
+import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 
 export default async function Level1ParallelHeader({
 	params

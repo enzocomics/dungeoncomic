@@ -11,7 +11,7 @@ import ClientLandingPageHeader from "./effects"
  * - `ClientLandingPageHeader falls back to the project logo/title if nothing is found
  * 
  */
-export default async function ParallelHeaderUI({
+export default async function ParallelLandingPageHeader({
 	slug
 }: {
 	slug?: string

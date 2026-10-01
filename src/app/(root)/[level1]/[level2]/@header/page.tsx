@@ -1,4 +1,4 @@
-import ParallelHeaderUI from "@/ui/comic/components/@header/page";
+import ParallelLandingPageHeader from "@/ui/comic/components/@header/page";
 import { getSettings } from "@/lib/directus/get-settings";
 
 export default async function Level2ParallelHeader({
@@ -19,7 +19,7 @@ export default async function Level2ParallelHeader({
 		case "multiple/multiple":
 			if (settings.post_type_name_slug == level1)
 				return <>
-					<ParallelHeaderUI slug={level2} />
+					<ParallelLandingPageHeader slug={level2} />
 				</>
 	}
 }
