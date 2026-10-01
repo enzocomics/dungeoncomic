@@ -19,7 +19,7 @@ import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getComments } from "@/lib/directus/get-comments"
 import { userCommentSchema } from "@/lib/zod/schemas/comic"
 // ACTIONS
-import { submitUserComment } from "../../../../ui/comic/actions/comments"
+import { submitUserComment } from "../actions/comments"
 // UI
 import { ErrorMessage } from "@/components/forms"
 import { ComicButton, SmallComicButton } from "@/components/button"
@@ -28,7 +28,7 @@ import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
 import { detailedDate, relativeDate } from "@/lib/dayjs"
-import { replaceComicVariables } from "../../../../ui/comic/functions/parse-content"
+import { replaceComicVariables } from "../functions/parse-content"
 import { AuthLink } from "@/components/auth"
 
 
