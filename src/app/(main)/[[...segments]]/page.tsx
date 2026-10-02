@@ -10,7 +10,7 @@ export default async function MainPage({
 	const { segments = [] } = await params
 	const settings = await getSettings()
 
-	const route = resolveRoute(
+	const route = await resolveRoute(
 		segments,
 		settings.routing_mode
 	)
@@ -18,8 +18,22 @@ export default async function MainPage({
 	if (!route) notFound()
 
 	switch (route.type) {
-		case "main":
-			return <>Main Content</>
+		case "comic-landing-page":
+			return <>
+				{route.type}
+			</>
+		case "comic-action":
+			return <>
+				{route.type}
+			</>
+		case "comic-single-page":
+			return <>
+				{route.type}
+			</>
+		case "comic-single-page-action":
+			return <>
+				{route.type}
+			</>
 	}
 
 }
