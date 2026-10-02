@@ -32,7 +32,7 @@ export type ResolvedRoute =
 	| {
 			type: "comic-landing-page"
 			postTypeSlug?: string
-			comicSlug?: Awaited<ReturnType<typeof getComic>>["slug"]
+			comicSlug: Awaited<ReturnType<typeof getComic>>["slug"]
 	  }
 	| {
 			type: "comic-action"
@@ -42,20 +42,20 @@ export type ResolvedRoute =
 	| {
 			type: "comic-single-page"
 			postTypeSlug?: string
-			comicSlug?: Awaited<ReturnType<typeof getComic>>["slug"]
+			comicSlug: Awaited<ReturnType<typeof getComic>>["slug"]
 			pageNum: number
 	  }
 	| {
 			type: "comic-single-page-action"
 			postTypeSlug?: string
-			comicSlug?: Awaited<ReturnType<typeof getComic>>["slug"]
+			comicSlug: Awaited<ReturnType<typeof getComic>>["slug"]
 			pageNum: number
 			pageAction: PageAction
 	  }
 	| {
 			type: "comic-named-page"
 			postTypeSlug?: string
-			comicSlug?: Awaited<ReturnType<typeof getComic>>["slug"]
+			comicSlug: Awaited<ReturnType<typeof getComic>>["slug"]
 			pageSlug: ComicNamedPage
 	  }
 
@@ -65,7 +65,8 @@ export async function resolveRoute(
 	routingMode: Awaited<ReturnType<typeof getSettings>>["routing_mode"],
 ): Promise<ResolvedRoute | null> {
 	const settings = await getSettings()
-	const frontpageComicSlug = settings.frontpage_comic?.slug
+	// Comic slug is the selected frontpage comic, falling back to the first existing comic
+	const comicSlug = settings.frontpage_comic?.slug || (await getComic({})).slug
 
 	// ROUTE RESOLVER
 	switch (routingMode) {
@@ -95,7 +96,7 @@ export async function resolveRoute(
 			if (!comicPageOrComicAction)
 				return {
 					type: "comic-landing-page",
-					comicSlug: frontpageComicSlug,
+					comicSlug: comicSlug,
 				}
 
 			// If the level 1 route is a defined comic action
@@ -111,7 +112,7 @@ export async function resolveRoute(
 			if (/^\d+$/.test(comicPageOrComicAction) && !pageAction)
 				return {
 					type: "comic-single-page",
-					comicSlug: frontpageComicSlug,
+					comicSlug: comicSlug,
 					pageNum: Number(comicPageOrComicAction),
 				}
 
@@ -120,7 +121,7 @@ export async function resolveRoute(
 			if (/^\d+$/.test(comicPageOrComicAction) && isPageAction(pageAction))
 				return {
 					type: "comic-single-page-action",
-					comicSlug: frontpageComicSlug,
+					comicSlug: comicSlug,
 					pageNum: Number(comicPageOrComicAction),
 					pageAction: pageAction,
 				}
@@ -133,7 +134,7 @@ export async function resolveRoute(
 			)
 				return {
 					type: "comic-named-page",
-					comicSlug: frontpageComicSlug,
+					comicSlug: comicSlug,
 					pageSlug: comicPageOrComicAction,
 				}
 
