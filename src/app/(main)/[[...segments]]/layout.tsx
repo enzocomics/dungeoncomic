@@ -12,6 +12,7 @@ import PlatformRootLayout from "@/ui/platform/layout"
 import ClientLandingPageHeader from "@/ui/comic/components/@header/effects"
 import { getComic } from "@/lib/directus/get-comics"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
+import { PlatformMainArticle } from "@/ui/platform/components/main"
 
 /**----------------------------------- */
 export default async function Layout({
@@ -26,10 +27,8 @@ export default async function Layout({
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
 
-
 	if (!route) notFound()
 
-	console.log(route.type)
 	switch (route.type) {
 		/**----------------------------------- */
 		case "platform-homepage": {
@@ -63,6 +62,21 @@ export default async function Layout({
 				</ComicRootLayout>
 			</>
 		}
+		case "comic-named-page":
+		case "comic-single-page-action":
+			{
+				// TODO:
+				const comic = await getComic({ slug: route.comicSlug })
+				return <>
+					<ComicRootLayout header={
+						<ClientComicPageHeaderTitle comic={comic} />
+					}>
+						<PlatformMainArticle>
+							{children}
+						</PlatformMainArticle>
+					</ComicRootLayout>
+				</>
+			}
 	}
 
 }

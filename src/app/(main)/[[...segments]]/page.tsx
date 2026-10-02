@@ -30,7 +30,6 @@ export default async function MainPage({
 
 	if (!route) notFound()
 
-	console.log(route.type)
 	switch (route.type) {
 		/**----------------------------------- */
 		case "platform-homepage": {
@@ -46,22 +45,23 @@ export default async function MainPage({
 			if (comic) return <>
 				<ComicLandingPage comic={comic} />
 			</>
+			else notFound()
 		}
-
 		/**----------------------------------- */
-		case "comic-action": {
+		case "comic-named-page": {
 			return <>
 				{/* TODO: */}
-				{route.type}
+				{route.type}: {route.pageSlug}
 			</>
 		}
+
 		/**----------------------------------- */
 		case "comic-single-page": {
 			const comic = await getComic({ slug: route.comicSlug! })
 			const comicPage = await getComicPage(route.comicSlug!, route.pageNum)
 			const variables = await getComicVariables(route.comicSlug!)
 			const userVariables = await getUserVarsCookie({ comic: comic })
-			return <>
+			if (comicPage) return <>
 				<ComicPageUI
 					page={comicPage}
 					variables={variables}
@@ -69,6 +69,7 @@ export default async function MainPage({
 					session={session}
 				/>
 			</>
+			else notFound()
 		}
 		/**----------------------------------- */
 		case "comic-single-page-action":
