@@ -4,24 +4,29 @@ import PlatformRootLayout from "@/ui/platform/layout"
 import { PropsWithChildren } from "react"
 
 export default async function MainLayout({
+	headerComic,
+	headerPlatform,
 	...props
-}: PropsWithChildren
+}: {
+	headerComic: React.ReactNode
+	headerPlatform: React.ReactNode
+} & PropsWithChildren
 ) {
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 	switch (routingMode) {
 		case "single/single":
 			return <>
-				<ComicRootLayout header={<>header</>}>
+				<ComicRootLayout header={headerComic}>
 					{props.children}
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
 		case "multiple/multiple":
 			return <>
-				<PlatformRootLayout header={<>header</>}>
+				<PlatformRootLayout header={headerPlatform}>
 					{props.children}
 				</PlatformRootLayout>
 			</>
 	}
-}
+}	
