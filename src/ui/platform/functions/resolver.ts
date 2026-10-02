@@ -15,6 +15,14 @@ type ComicAction = "settings"
 function isComicAction(value: unknown) {
 	return value === "settings"
 }
+
+// #TODO: in the future this should dynamically fetch any pages created by the user (i.e. archive, about, cast, etc)
+type ComicNamedPage = "archive"
+
+function isComicNamedPage(value: unknown) {
+	return value === "archive"
+}
+
 /**----------------------------------- */
 // RESOLVED ROUTE TYPES
 export type ResolvedRoute =
@@ -48,7 +56,7 @@ export type ResolvedRoute =
 			type: "comic-named-page"
 			postTypeSlug?: string
 			comicSlug?: Awaited<ReturnType<typeof getComic>>["slug"]
-			pageSlug: string
+			pageSlug: ComicNamedPage
 	  }
 
 /**----------------------------------- */
@@ -83,6 +91,7 @@ export async function resolveRoute(
 			if (invalid) return null
 
 			// If no level 1 route is defined
+			// - `dungeoncomic.com`
 			if (!comicPageOrComicAction)
 				return {
 					type: "comic-landing-page",
@@ -90,6 +99,7 @@ export async function resolveRoute(
 				}
 
 			// If the level 1 route is a defined comic action
+			// - `dungeoncomic.com/settings`
 			if (isComicAction(comicPageOrComicAction))
 				return {
 					type: "comic-action",
@@ -97,6 +107,7 @@ export async function resolveRoute(
 				}
 
 			// If the level 1 route is a number + no subroute
+			// - `dungeoncomic.com/1`
 			if (/^\d+$/.test(comicPageOrComicAction) && !pageAction)
 				return {
 					type: "comic-single-page",
@@ -105,6 +116,7 @@ export async function resolveRoute(
 				}
 
 			// If the level 1 route is a number + valid pageAction subroute
+			// - `dungeoncomic.com/1/edit`
 			if (/^\d+$/.test(comicPageOrComicAction) && isPageAction(pageAction))
 				return {
 					type: "comic-single-page-action",
@@ -113,13 +125,20 @@ export async function resolveRoute(
 					pageAction: pageAction,
 				}
 
-			// If the level 1 route is NOT a number
-			if (/^\d+$/.test(comicPageOrComicAction))
+			// If the level 1 route is NOT a number, and is a valid named page
+			// - `dungeoncomic.com/archive`
+			if (
+				!/^\d+$/.test(comicPageOrComicAction) &&
+				isComicNamedPage(comicPageOrComicAction)
+			)
 				return {
 					type: "comic-named-page",
 					comicSlug: frontpageComicSlug,
 					pageSlug: comicPageOrComicAction,
 				}
+
+			// All other cases-- return nothing (404)
+			return null
 		}
 
 		/**----------------------------------- */
@@ -175,7 +194,12 @@ export async function resolveRoute(
 				pageAction,
 				invalid,
 			] = segments
+
+			return {
+				type: "platform-homepage",
+			}
 		}
+
 		default: {
 			return null
 		}
