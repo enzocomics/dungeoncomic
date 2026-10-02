@@ -1,5 +1,5 @@
 import { getSettings } from "@/lib/directus/get-settings"
-import { resolveRoute } from "@/lib/resolver"
+import { resolveRoute } from "@/ui/platform/functions/resolver"
 import { notFound } from "next/navigation"
 
 export default async function MainPage({
