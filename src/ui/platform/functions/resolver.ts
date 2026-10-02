@@ -70,8 +70,8 @@ export async function resolveRoute(
 
 	// ROUTE RESOLVER
 	switch (routingMode) {
-		/**----------------------------------- */
 		case "single/single": {
+			/**---------------------------------------------------------------------- */
 			// Single Creator, Single Comic
 			// - Comic lives at root: `dungeoncomic.com`
 			// - Pages live at first-level route: `dungeoncomic.com/1`, `dungeoncomic.com/settings`
@@ -92,6 +92,7 @@ export async function resolveRoute(
 			// Any routes deeper than pageAction are invalid
 			if (invalid) return null
 
+			/**----------------------------------- */
 			// If no level 1 route is defined
 			// - `dungeoncomic.com`
 			if (!comicPageOrComicAction) {
@@ -104,10 +105,10 @@ export async function resolveRoute(
 					}
 				else
 					// fallback to platform homepage if no comic exists
-					return {
-						type: "platform-homepage",
-					}
+					return { type: "platform-homepage" }
 			}
+
+			/**----------------------------------- */
 			// If the level 1 route is a defined comic action
 			// - `dungeoncomic.com/settings`
 			if (isComicAction(comicPageOrComicAction))
@@ -116,6 +117,7 @@ export async function resolveRoute(
 					comicAction: comicPageOrComicAction,
 				}
 
+			/**----------------------------------- */
 			// If the level 1 route is a number + no subroute
 			// - `dungeoncomic.com/1`
 			if (/^\d+$/.test(comicPageOrComicAction) && !pageAction)
@@ -125,6 +127,7 @@ export async function resolveRoute(
 					pageNum: Number(comicPageOrComicAction),
 				}
 
+			/**----------------------------------- */
 			// If the level 1 route is a number + valid pageAction subroute
 			// - `dungeoncomic.com/1/edit`
 			if (/^\d+$/.test(comicPageOrComicAction) && isPageAction(pageAction))
@@ -135,6 +138,7 @@ export async function resolveRoute(
 					pageAction: pageAction,
 				}
 
+			/**----------------------------------- */
 			// If the level 1 route is NOT a number, and is a valid named page
 			// - `dungeoncomic.com/archive`
 			if (
@@ -147,12 +151,13 @@ export async function resolveRoute(
 					pageSlug: comicPageOrComicAction,
 				}
 
+			/**----------------------------------- */
 			// All other cases-- return nothing (404)
 			return null
 		}
 
-		/**----------------------------------- */
 		case "single/multiple": {
+			/**---------------------------------------------------------------------- */
 			// Single Creator, Multiple Comics
 			// - Comics live at first-level route: `dungeoncomic.com/comicname`
 			// - Pages live at second-level nested route: `dungeoncomic.com/comicname/1`, `dungeoncomic.com/comicname/settings`
@@ -162,43 +167,71 @@ export async function resolveRoute(
 			//       platform homepage
 			// - `root/[comicSlug]`:
 			//       comic landing page, platform page
-			// - `root/[comicSlug]/[pageNumOrComicAction]`:
+			// - `root/[comicSlug]/[comicPageOrComicAction]`:
 			//       comic single/content page, comic action (settings)
-			// - `root/[comicSlug]/[pageNumOrComicAction]/[pageAction]`:
+			// - `root/[comicSlug]/[comicPageOrComicAction]/[pageAction]`:
 			//       comic single/content page edit/preview
-			// - `root/[comicSlug]/[pageNumOrComicAction]/[pageAction][invalid]`:
+			// - `root/[comicSlug]/[comicPageOrComicAction]/[pageAction][invalid]`:
 			//       404
 
 			// Get the possible segments
-			const [comicSlug, pageNumOrComicAction, pageAction, invalid] = segments
+			const [comicSlug, comicPageOrComicAction, pageAction, invalid] = segments
 
-			return {
-				type: "platform-homepage",
+			// Any routes deeper than pageAction are invalid
+			if (invalid) return null
+
+			/**----------------------------------- */
+			// If no level 1 route is defined: platform homepage
+			// - `dungeoncomic.com`
+			if (!comicSlug) {
+				return { type: "platform-homepage" }
 			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number, with no subroute: comic landing page
+			// - `dungeoncomic.com/comictitle`
+			if (!/^\d+$/.test(comicSlug)) {
+				return {
+					type: "comic-landing-page",
+					comicSlug: comicSlug,
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined
+			// - `dungeoncomic.com/comictitle`
+
+			// return {
+			// 	type: "platform-homepage",
+			// }
+			/**----------------------------------- */
+			// All other cases-- return nothing (404)
+			return null
 		}
 
-		/**----------------------------------- */
-		// Multiple Creators, Multiple Comics
-		// - Comics live in a nested route with type prefix: `dungeoncomic.com/d/comicname`
-		// - Pages live in a nested route with type & comic prefix:
-		//   `dungeoncomic.com/d/comicname/1`, `dungeoncomic.com/d/comicname/settings`
-		// - Users live in a nested route with type prefix: `dungeoncomic.com/u/username`
-
-		// Structure:
-		// - `root`:
-		//      platform homepage
-		// - `root/[postTypeSlug]`:
-		//       comic type prefix, platform page
-		// - `root/[postTypeSlug]/[postNameSlug]`:
-		//       comic landing page, user profile page
-		// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]`:
-		//       comic single/content page, comic action (settings)
-		// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]`:
-		//       comic single/content page edit/preview
-		// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]/[invalid]`:
-		//       404
-
 		case "multiple/multiple": {
+			/**---------------------------------------------------------------------- */
+			// Multiple Creators, Multiple Comics
+			// - Comics live in a nested route with type prefix: `dungeoncomic.com/d/comicname`
+			// - Pages live in a nested route with type & comic prefix:
+			//   `dungeoncomic.com/d/comicname/1`, `dungeoncomic.com/d/comicname/settings`
+			// - Users live in a nested route with type prefix: `dungeoncomic.com/u/username`
+
+			// Structure:
+			// - `root`:
+			//      platform homepage
+			// - `root/[postTypeSlug]`:
+			//       comic type prefix, platform page
+			// - `root/[postTypeSlug]/[postNameSlug]`:
+			//       comic landing page, user profile page
+			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]`:
+			//       comic single/content page, comic action (settings)
+			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]`:
+			//       comic single/content page edit/preview
+			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]/[invalid]`:
+			//       404
+
+			// Get the possible segments
 			const [
 				postTypeSlug,
 				postNameSlug,
@@ -207,9 +240,15 @@ export async function resolveRoute(
 				invalid,
 			] = segments
 
-			return {
-				type: "platform-homepage",
-			}
+			// Any routes deeper than pageAction are invalid
+			if (invalid) return null
+
+			// return {
+			// 	type: "platform-homepage",
+			// }
+			/**----------------------------------- */
+			// All other cases-- return nothing (404)
+			return null
 		}
 
 		default: {

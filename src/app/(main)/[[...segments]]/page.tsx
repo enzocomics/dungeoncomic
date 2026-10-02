@@ -13,6 +13,7 @@ import { sanitize } from "@/lib/sanitize"
 import ComicPageUI from "@/ui/comic/pages/single"
 import { getUserVarsCookie } from "@/ui/comic/actions/variables"
 import { verifySession } from "@/data/session"
+import PlatformRootLayout from "@/ui/platform/layout"
 
 /**----------------------------------- */
 export default async function MainPage({
@@ -29,6 +30,7 @@ export default async function MainPage({
 
 	if (!route) notFound()
 
+	console.log(route.type)
 	switch (route.type) {
 		/**----------------------------------- */
 		case "platform-homepage": {
@@ -39,16 +41,17 @@ export default async function MainPage({
 
 		/**----------------------------------- */
 		case "comic-landing-page": {
-			const comic = await getComic(settings.frontpage_comic ? { slug: settings.frontpage_comic.slug } : {})
-			if (comic)
-				return <>
-					<ComicLandingPage comic={comic} />
-				</>
+			console.log(route.comicSlug)
+			const comic = await getComic({ slug: route.comicSlug })
+			if (comic) return <>
+				<ComicLandingPage comic={comic} />
+			</>
 		}
 
 		/**----------------------------------- */
 		case "comic-action": {
 			return <>
+				{/* TODO: */}
 				{route.type}
 			</>
 		}
@@ -70,6 +73,7 @@ export default async function MainPage({
 		/**----------------------------------- */
 		case "comic-single-page-action":
 			return <>
+				{/* TODO: */}
 				{route.type}
 			</>
 
