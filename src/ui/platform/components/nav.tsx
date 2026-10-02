@@ -57,7 +57,11 @@ export default function ClientPlatformNav({
 		|| isSingleComicSite && pathname !== `/`
 	)
 
-	// TODO: These are all hardcoded & should be in the dictionaries
+	const comicsListTitle = settings.post_type_name_plural
+	const comicsListSlug = settings.post_type_name_plural_slug
+	const usersListTitle = settings.user_type_name_plural
+	const userListSlug = settings.user_type_name_plural_slug
+
 	const comicNavigation: {
 		name: string,
 		href: string,
@@ -65,16 +69,23 @@ export default function ClientPlatformNav({
 		icon: keyof typeof icons
 	}[] = [
 			{
-				name: "Homepage",
+				name: "Homepage", // TODO: DICTIONARY
 				href: "/",
 				current: !!(pathname == "/"),
 				icon: "house",
 			},
 			{
-				name: "View All",
-				href: "/list",
-				current: !!(pathname == "/list"),
+				name: `${comicsListTitle}`,
+				href: `/${comicsListSlug}`,
+				current: !!(pathname == `/${comicsListSlug}`),
 				icon: "rectangleList"
+			},
+			// #TODO: Add option to show/hide users
+			{
+				name: `${usersListTitle}`,
+				href: `/${userListSlug}`,
+				current: !!(pathname == `/${userListSlug}`),
+				icon: "user"
 			}
 		]
 
