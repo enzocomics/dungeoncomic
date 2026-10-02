@@ -83,10 +83,15 @@ export const getSettings = cache(async () => {
 				"single_comic_site",
 				"routing_mode",
 				"homepage_content",
+				// POST TYPES
 				"post_type_name",
 				"post_type_name_plural",
 				"post_type_name_slug",
 				"post_type_name_plural_slug",
+				"user_type_name",
+				"user_type_name_plural",
+				"user_type_name_slug",
+				"user_type_name_plural_slug",
 			],
 		}),
 	)

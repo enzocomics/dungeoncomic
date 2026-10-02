@@ -13,6 +13,7 @@ import ClientLandingPageHeader from "@/ui/comic/components/@header/effects"
 import { getComic } from "@/lib/directus/get-comics"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
+import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 
 /**----------------------------------- */
 export default async function Layout({
@@ -40,6 +41,18 @@ export default async function Layout({
 				</PlatformRootLayout>
 			</>
 		}
+
+		/**----------------------------------- */
+		case "platform-category-page": {
+			return <>
+				<PlatformRootLayout header={
+					<PlatformHeaderLogo />
+				}>
+					{children}
+				</PlatformRootLayout>
+			</>
+		}
+
 		/**----------------------------------- */
 		case "comic-landing-page": {
 			const comic = await getComic({ slug: route.comicSlug })
