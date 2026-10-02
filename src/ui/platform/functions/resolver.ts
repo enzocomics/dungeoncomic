@@ -100,6 +100,9 @@ export async function resolveRoute(
 		}
 		case "single/multiple": {
 			const [comicSlug, pageNum] = segments
+			return {
+				type: "platform-homepage",
+			}
 		}
 		case "multiple/multiple": {
 		}

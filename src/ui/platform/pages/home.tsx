@@ -9,7 +9,7 @@ import { LandingPageBody, LandingPageHeader, LandingPageWrapper, LandingPageCont
  * HOMEPAGE PAGE UI
  * ---
  */
-export async function HomepagePageUI({
+export async function PlatformHomepage({
 	content
 }: {
 	content?: string
