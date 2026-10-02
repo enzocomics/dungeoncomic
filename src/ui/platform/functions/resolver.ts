@@ -24,6 +24,10 @@ export type ResolvedRoute =
 			type: "platform-homepage"
 	  }
 	| {
+			type: "platform-category-page"
+			postTypeSlug?: string
+	  }
+	| {
 			type: "comic-landing-page"
 			postTypeSlug?: string
 			comicSlug: Awaited<ReturnType<typeof getComic>>["slug"]
@@ -245,18 +249,18 @@ export async function resolveRoute(
 			//       comic type prefix, platform page
 			// - `root/[postTypeSlug]/[postNameSlug]`:
 			//       comic landing page, user profile page
-			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]`:
+			// - `root/[postTypeSlug]/[postNameSlug]/[comicPageNumOrName]`:
 			//       comic single/content page, comic action (settings)
-			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]`:
+			// - `root/[postTypeSlug]/[postNameSlug]/[comicPageNumOrName]/[pageAction]`:
 			//       comic single/content page edit/preview
-			// - `root/[postTypeSlug]/[postNameSlug]/[pageNumOrComicAction]/[pageAction]/[invalid]`:
+			// - `root/[postTypeSlug]/[postNameSlug]/[comicPageNumOrName]/[pageAction]/[invalid]`:
 			//       404
 
 			// Get the possible segments
 			const [
 				postTypeSlug,
 				postNameSlug,
-				pageNumOrComicAction,
+				comicPageNumOrName,
 				pageAction,
 				invalid,
 			] = segments
@@ -264,9 +268,98 @@ export async function resolveRoute(
 			// Any routes deeper than pageAction are invalid
 			if (invalid) return null
 
-			// return {
-			// 	type: "platform-homepage",
-			// }
+			/**----------------------------------- */
+			// If no level 1 route is defined: platform homepage
+			// - `dungeoncomic.com`
+			if (!postTypeSlug) {
+				return { type: "platform-homepage" }
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number, with no subroute: category page
+			// - `dungeoncomic.com/d`
+			if (!/^\d+$/.test(postTypeSlug) && !postNameSlug) {
+				return {
+					type: "platform-category-page",
+					postTypeSlug: postTypeSlug,
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is undefined: comic landing page
+			// - `dungeoncomic.com/d/tutorial`
+			if (
+				!/^\d+$/.test(postTypeSlug) &&
+				!/^\d+$/.test(postNameSlug) &&
+				!comicPageNumOrName
+			) {
+				return {
+					type: "comic-landing-page",
+					postTypeSlug: postTypeSlug,
+					comicSlug: postNameSlug,
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is a valid named page: comic named page
+			// - `dungeoncomic.com/d/tutorial/settings`
+			if (
+				!/^\d+$/.test(postTypeSlug) &&
+				!/^\d+$/.test(postNameSlug) &&
+				isComicNamedPage(comicPageNumOrName)
+			) {
+				return {
+					type: "comic-named-page",
+					postTypeSlug: postTypeSlug,
+					comicSlug: postNameSlug,
+					pageSlug: comicPageNumOrName,
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is a number, with no subroute
+			// - `dungeoncomic.com/d/tutorial/1`
+			if (
+				!/^\d+$/.test(postTypeSlug) &&
+				!/^\d+$/.test(postNameSlug) &&
+				/^\d+$/.test(comicPageNumOrName) &&
+				!pageAction
+			) {
+				return {
+					type: "comic-single-page",
+					postTypeSlug: postTypeSlug,
+					comicSlug: comicSlug,
+					pageNum: Number(comicPageNumOrName),
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is a number,
+			// and level 4 is a valid page action
+			// - `dungeoncomic.com/d/tutorial/1/edit`
+			if (
+				!/^\d+$/.test(postTypeSlug) &&
+				!/^\d+$/.test(postNameSlug) &&
+				/^\d+$/.test(comicPageNumOrName) &&
+				isPageAction(pageAction)
+			) {
+				return {
+					type: "comic-single-page-action",
+					postTypeSlug: postTypeSlug,
+					comicSlug: comicSlug,
+					pageNum: Number(comicPageNumOrName),
+					pageAction: pageAction,
+				}
+			}
+
 			/**----------------------------------- */
 			// All other cases-- return nothing (404)
 			return null
