@@ -4,7 +4,6 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { resolveRoute } from "@/lib/resolver"
 
 const excludedPaths = [
-	// "/main",
 	"/login",
 	"/logout",
 	"/register",
@@ -13,7 +12,6 @@ const excludedPaths = [
 
 function isExcludedPath(pathname: string) {
 	return (
-		// pathname.startsWith("/main") ||
 		excludedPaths.some(
 			(path) =>
 				pathname === path ||

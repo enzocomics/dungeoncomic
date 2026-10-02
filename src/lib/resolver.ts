@@ -10,7 +10,7 @@ export function resolveRoute(
 	switch (routingMode) {
 		case "single/single":
 			// const [pagenum] = segments
-			return "/main"
+			return "/---"
 		// return null
 		case "single/multiple":
 			const [title, page] = segments
