@@ -86,6 +86,7 @@ export async function resolveRoute(
 			// - `root/[comicPageOrComicAction]/[pageAction]/[invalid]`:
 			//       404
 
+			// Get the possible segments
 			const [comicPageOrComicAction, pageAction, invalid] = segments
 
 			// Any routes deeper than pageAction are invalid
@@ -93,12 +94,20 @@ export async function resolveRoute(
 
 			// If no level 1 route is defined
 			// - `dungeoncomic.com`
-			if (!comicPageOrComicAction)
-				return {
-					type: "comic-landing-page",
-					comicSlug: comicSlug,
-				}
-
+			if (!comicPageOrComicAction) {
+				const comic = await getComic({})
+				if (comic)
+					// If any comic exists, return the landing page
+					return {
+						type: "comic-landing-page",
+						comicSlug: comicSlug,
+					}
+				else
+					// fallback to platform homepage if no comic exists
+					return {
+						type: "platform-homepage",
+					}
+			}
 			// If the level 1 route is a defined comic action
 			// - `dungeoncomic.com/settings`
 			if (isComicAction(comicPageOrComicAction))
@@ -160,7 +169,9 @@ export async function resolveRoute(
 			// - `root/[comicSlug]/[pageNumOrComicAction]/[pageAction][invalid]`:
 			//       404
 
+			// Get the possible segments
 			const [comicSlug, pageNumOrComicAction, pageAction, invalid] = segments
+
 			return {
 				type: "platform-homepage",
 			}
