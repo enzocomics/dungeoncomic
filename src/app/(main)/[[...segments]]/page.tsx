@@ -1,10 +1,17 @@
+/**----------------------------------- */
+// LIBRARIES
+import { notFound } from "next/navigation"
+// DATA
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
+// UI
 import { ComicLandingPage } from "@/ui/comic/layout"
 import { resolveRoute } from "@/ui/platform/functions/resolver"
 import { PlatformHomepage } from "@/ui/platform/pages/home"
-import { notFound } from "next/navigation"
+import { marked } from "marked"
+import { sanitize } from "@/lib/sanitize"
 
+/**----------------------------------- */
 export default async function MainPage({
 	params
 }: {
@@ -12,21 +19,21 @@ export default async function MainPage({
 }) {
 	const { segments = [] } = await params
 	const settings = await getSettings()
+	const route = await resolveRoute(segments, settings.routing_mode)
 
-	const route = await resolveRoute(
-		segments,
-		settings.routing_mode
-	)
+	const homePageContent = await marked.parse(sanitize(String(settings.homepage_content || "")))
 
 	if (!route) notFound()
 
 	switch (route.type) {
+		/**----------------------------------- */
 		case "platform-homepage": {
 			return <>
-				<PlatformHomepage />
+				<PlatformHomepage content={homePageContent} />
 			</>
 		}
 
+		/**----------------------------------- */
 		case "comic-landing-page": {
 			const comic = await getComic(settings.frontpage_comic ? { slug: settings.frontpage_comic.slug } : {})
 
@@ -34,26 +41,26 @@ export default async function MainPage({
 				return <>
 					<ComicLandingPage comic={comic} />
 				</>
-			else
-				return <>
-					<PlatformHomepage />
-				</>
 		}
 
+		/**----------------------------------- */
 		case "comic-action":
 			return <>
 				{route.type}
 			</>
 
+		/**----------------------------------- */
 		case "comic-single-page":
 			return <>
 				{route.type}
 			</>
 
+		/**----------------------------------- */
 		case "comic-single-page-action":
 			return <>
 				{route.type}
 			</>
-	}
 
+		/**----------------------------------- */
+	}
 }
