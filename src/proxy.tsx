@@ -4,38 +4,42 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { resolveRoute } from "@/lib/resolver"
 
 const excludedPaths = [
+	// "/main",
 	"/login",
 	"/logout",
 	"/register",
 	"/reset-password"
 ]
 
+function isExcludedPath(pathname: string) {
+	return (
+		// pathname.startsWith("/main") ||
+		excludedPaths.some(
+			(path) =>
+				pathname === path ||
+				pathname.startsWith(`${path}/`)
+		)
+	)
+}
+
 export async function proxy(request: NextRequest) {
 	const pathname = request.nextUrl.pathname
-	const settings = await getSettings()
-	const routingMode = settings.routing_mode
 
 	// Do not resolve excluded paths
-	if (excludedPaths.includes(pathname))
+	if (isExcludedPath(pathname)) {
 		return NextResponse.next()
+	}
 
-	// Skip descendants, such as /login/reset, etc
-	if (excludedPaths.some(
-		(path) => pathname.startsWith(`${path}/`)
-	))
-		return NextResponse.next()
-
-	// Check if the routing mode requires an internal path
+	// Get the routing mode
+	const routingMode = (await getSettings()).routing_mode
 	const internalPath = resolveRoute(pathname, routingMode)
 
-	// console.log(internalPath)
 	if (!internalPath)
 		return NextResponse.next()
 
 	return NextResponse.rewrite(
 		new URL(internalPath, request.url)
 	)
-
 }
 
 
@@ -49,11 +53,7 @@ export const config = {
 		 * - /_next/image/*
 		 * - /favicon.ico
 		 * - /manifest.webmanifest
-		 * - /login and its descendants
-		 * - /logout and its descendants
-		 * - /register and its descendants
-		 * - /reset-password and its descendants
 		 */
-		"/((?!api|img|_next/static|_next/image|manifest.webmanifest|favicon\\.ico|login(?:/|$)|register(?:/|$)|logout(?:/|$)|reset-password(?:/|$)).*)",
+		"/((?!api|img|_next/static|_next/image|manifest\\.webmanifest|favicon\\.ico).*)",
 	],
 }

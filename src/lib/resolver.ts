@@ -6,16 +6,15 @@ export function resolveRoute(
 ): string | null {
 	// Get the segments divided by /
 	const segments = pathname.split("/").filter(Boolean)
-	// console.log(segments)
+
 	switch (routingMode) {
 		case "single/single":
-			const [pagenum] = segments
-			return "/__main"
+			// const [pagenum] = segments
+			return "/main"
 		// return null
-
 		case "single/multiple":
 			const [title, page] = segments
-			return `/__main/${title}`
+			return `/main/${title}`
 		case "multiple/multiple":
 		default:
 			return null
