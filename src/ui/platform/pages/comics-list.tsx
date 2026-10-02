@@ -1,5 +1,6 @@
 import { directusURL } from "@/data/env"
 import { getComics } from "@/lib/directus/get-comics"
+import { getSettings } from "@/lib/directus/get-settings"
 import { TailwindColors } from "@/lib/directus/schema"
 import { sanitize } from "@/lib/sanitize"
 import { colorVariants } from "@/styles/colors"
@@ -15,13 +16,15 @@ import { ComponentPropsWithoutRef } from "react"
 
 export default async function ComicsListPage() {
 	const comics = await getComics()
+	const settings = await getSettings()
+	const comicTypeSlug = settings.post_type_name_slug
 	return <>
 		<ListPageTitle />
 		<ListPageList>
 			{comics?.map((c, index) => (
 				<ListPageItem
 					key={index}
-					href={`/${c.slug}`}
+					href={`/${comicTypeSlug}/${c.slug}`}
 					accentColor={c.accent_color}
 					banner={c.banner}
 					title={c.title}

@@ -59,7 +59,9 @@ export default async function Layout({
 			return <>
 				<ComicRootLayout header={
 					<ClientLandingPageHeader comic={comic} settings={settings} />
-				}>
+				}
+					slug={comic.slug}
+				>
 					{children}
 				</ComicRootLayout>
 			</>
@@ -70,7 +72,9 @@ export default async function Layout({
 			return <>
 				<ComicRootLayout header={
 					<ClientComicPageHeaderTitle comic={comic} />
-				}>
+				}
+					slug={comic.slug}
+				>
 					{children}
 				</ComicRootLayout>
 			</>
@@ -83,7 +87,9 @@ export default async function Layout({
 				return <>
 					<ComicRootLayout header={
 						<ClientComicPageHeaderTitle comic={comic} />
-					}>
+					}
+						slug={comic.slug}
+					>
 						<PlatformMainArticle>
 							{children}
 						</PlatformMainArticle>

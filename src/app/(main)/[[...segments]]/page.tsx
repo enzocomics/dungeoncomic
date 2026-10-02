@@ -82,6 +82,7 @@ export default async function MainPage({
 		/**----------------------------------- */
 		case "comic-landing-page": {
 			const comic = await getComic({ slug: route.comicSlug })
+			// console.log(comic)
 			if (comic) return <>
 				<ComicLandingPage comic={comic} />
 			</>
