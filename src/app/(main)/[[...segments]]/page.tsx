@@ -1,19 +1,19 @@
 /**----------------------------------- */
 // LIBRARIES
 import { notFound } from "next/navigation"
+import { marked } from "marked"
 // DATA
+import { verifySession } from "@/data/session"
 import { getComic, getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
-// UI
-import { ComicLandingPage } from "@/ui/comic/layout"
+// FUNCTIONS
 import { resolveRoute } from "@/ui/platform/functions/resolver"
-import { PlatformHomepage } from "@/ui/platform/pages/home"
-import { marked } from "marked"
 import { sanitize } from "@/lib/sanitize"
-import ComicPageUI from "@/ui/comic/pages/single"
 import { getUserVarsCookie } from "@/ui/comic/actions/variables"
-import { verifySession } from "@/data/session"
-import PlatformRootLayout from "@/ui/platform/layout"
+// UI
+import ComicPageUI from "@/ui/comic/pages/single"
+import { ComicLandingPage } from "@/ui/comic/layout"
+import { PlatformHomepage } from "@/ui/platform/pages/home"
 
 /**----------------------------------- */
 export default async function MainPage({
