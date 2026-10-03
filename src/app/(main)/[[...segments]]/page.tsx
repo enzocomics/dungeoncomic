@@ -41,7 +41,7 @@ export default async function MainPage({
 		}
 
 		/**----------------------------------- */
-		case "platform-category-page": {
+		case "platform-content-type-page": {
 			// TODO:
 			// - Only display content if the post type slug matches what is defined in the cms
 			// i.e. dungeoncomic.com/d/ for dungeons

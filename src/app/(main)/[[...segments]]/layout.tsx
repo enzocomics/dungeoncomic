@@ -43,7 +43,7 @@ export default async function Layout({
 		}
 
 		/**----------------------------------- */
-		case "platform-category-page": {
+		case "platform-content-type-page": {
 			return <>
 				<PlatformRootLayout header={
 					<PlatformHeaderLogo />
@@ -55,46 +55,52 @@ export default async function Layout({
 
 		/**----------------------------------- */
 		case "comic-landing-page": {
-			const comic = await getComic({ slug: route.comicSlug })
-			return <>
-				<ComicRootLayout header={
-					<ClientLandingPageHeader comic={comic} settings={settings} />
-				}
-					slug={comic.slug}
-				>
-					{children}
-				</ComicRootLayout>
-			</>
+			let comic = await getComic({ slug: route.comicSlug })
+			if (comic)
+				return <>
+					<ComicRootLayout header={
+						<ClientLandingPageHeader comic={comic} settings={settings} />
+					}
+						slug={comic.slug}
+					>
+						{children}
+					</ComicRootLayout>
+				</>
+			notFound()
 		}
 		/**----------------------------------- */
 		case "comic-single-page": {
-			const comic = await getComic({ slug: route.comicSlug })
-			return <>
-				<ComicRootLayout header={
-					<ClientComicPageHeaderTitle comic={comic} />
-				}
-					slug={comic.slug}
-				>
-					{children}
-				</ComicRootLayout>
-			</>
-		}
-		case "comic-named-page":
-		case "comic-single-page-action":
-			{
-				// TODO:
-				const comic = await getComic({ slug: route.comicSlug })
+			let comic = await getComic({ slug: route.comicSlug })
+			if (comic)
 				return <>
 					<ComicRootLayout header={
 						<ClientComicPageHeaderTitle comic={comic} />
 					}
 						slug={comic.slug}
 					>
-						<PlatformMainArticle>
-							{children}
-						</PlatformMainArticle>
+						{children}
 					</ComicRootLayout>
 				</>
+			notFound()
+		}
+		case "comic-named-page":
+		case "comic-single-page-action":
+			{
+				// TODO:
+				let comic = await getComic({ slug: route.comicSlug })
+				if (comic)
+					return <>
+						<ComicRootLayout header={
+							<ClientComicPageHeaderTitle comic={comic} />
+						}
+							slug={comic.slug}
+						>
+							<PlatformMainArticle>
+								{children}
+							</PlatformMainArticle>
+						</ComicRootLayout>
+					</>
+				notFound()
 			}
 	}
 
