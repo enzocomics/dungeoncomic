@@ -188,7 +188,7 @@ export interface SettingsSingleton {
 	project_url: string | null
 	frontpage_comic: ComicsCollection | null
 	routing_mode: "single/single" | "single/multiple" | "multiple/multiple"
-	single_comic_site: boolean
+	// single_comic_site: boolean
 	// POST TYPES
 	post_type_name: string
 	post_type_name_plural: string

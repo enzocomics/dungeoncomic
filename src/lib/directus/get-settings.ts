@@ -80,7 +80,7 @@ export const getSettings = cache(async () => {
 						{ authors: ["name", "username", "email"] },
 					],
 				},
-				"single_comic_site",
+				// "single_comic_site",
 				"routing_mode",
 				"homepage_content",
 				// POST TYPES
