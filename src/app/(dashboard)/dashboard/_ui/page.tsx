@@ -1,7 +1,7 @@
 /**----------------------------------- */
 // I18N
 import { useTranslations } from "next-intl"
-import { ListPageItem, ListPageItemLogo, ListPageList } from "../../list/_ui"
+import { ListPageItem, ListPageItemLogo, ListPageList } from "@/ui/platform/pages/comics-list"
 import { getTranslations } from "next-intl/server"
 import { getComics } from "@/lib/directus/get-comics"
 import clsx from "clsx"
