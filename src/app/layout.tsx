@@ -16,6 +16,7 @@ import clsx from "clsx"
 // UI
 import GlobalContextProvider from "@/ui/platform/context"
 import ClientPlatformEffects from "@/ui/platform/effects"
+import { Suspense } from "react"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
@@ -60,8 +61,11 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 					disableTransitionOnChange={true}
 				>
 					<NextIntlClientProvider>
-						<ClientPlatformEffects />
-						{props.children}
+						<Suspense>
+							<ClientPlatformEffects />
+
+							{props.children}
+						</Suspense>
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>

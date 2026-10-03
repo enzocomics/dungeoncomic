@@ -11,6 +11,7 @@ import { NotFoundUI } from "@/ui/platform/not-found"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 import { ComicRootLayout } from "@/ui/comic/layout"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
+import { Suspense } from "react"
 
 /**----------------------------------- */
 export default async function NotFoundPage() {
@@ -21,14 +22,18 @@ export default async function NotFoundPage() {
 		case "single/single":
 			return <>
 				<ComicRootLayout header={<ClientComicPageHeaderTitle comic={comic} />}>
-					<NotFoundUI />
+					<Suspense>
+						<NotFoundUI />
+					</Suspense>
 				</ComicRootLayout>
 			</>
 		case "single/multiple":
 		case "multiple/multiple":
 			return <>
 				<PlatformRootLayout header={<PlatformHeaderLogo />}>
-					<NotFoundUI />
+					<Suspense>
+						<NotFoundUI />
+					</Suspense>
 				</PlatformRootLayout>
 			</>
 	}

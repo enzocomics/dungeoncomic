@@ -8,7 +8,8 @@ import Icon from "@/styles/icons"
 import clsx from "clsx"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { SUSE } from "next/font/google"
 
 
 export default function AuthModal({
@@ -142,31 +143,40 @@ export default function AuthModal({
 					// "sm:w-auto",
 					// "sm:h-auto",
 				)}>
-				<AuthLayout
-					className={clsx(
-						"pointer-events-auto",
-						"relative",
-						"mx-auto",
-						// "max-w-125",
-					)}
-					ref={modalRef}
-					isModal={true}
-				>
-					<ModalClose />
-					{authModal == "login" &&
-						<LoginPageUI isModal={true} />
-					}
-					{authModal == "register" &&
-						<RegisterPageUI
-							isModal={true}
-							public_registration={public_registration}
-						/>
-					}
+				<Suspense>
+					<AuthLayout
+						className={clsx(
+							"pointer-events-auto",
+							"relative",
+							"mx-auto",
+							// "max-w-125",
+						)}
+						ref={modalRef}
+						isModal={true}
+					>
+						<ModalClose />
+						{authModal == "login" &&
+							<Suspense>
+								<LoginPageUI isModal={true} />
+							</Suspense>
+						}
+						{authModal == "register" &&
+							<Suspense>
+								<RegisterPageUI
+									isModal={true}
+									public_registration={public_registration}
+								/>
+							</Suspense>
 
-					{authModal == "reset-password" &&
-						<ResetPasswordPageUI isModal={true} />
-					}
-				</AuthLayout>
+						}
+
+						{authModal == "reset-password" &&
+							<Suspense>
+								<ResetPasswordPageUI isModal={true} />
+							</Suspense>
+						}
+					</AuthLayout>
+				</Suspense>
 			</div>
 		</div >
 	} else {
