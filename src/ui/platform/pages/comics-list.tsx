@@ -18,13 +18,15 @@ export default async function ComicsListPage() {
 	const comics = await getComics()
 	const settings = await getSettings()
 	const comicTypeSlug = settings.post_type_name_slug
+	const routingMode = settings.routing_mode
+
 	return <>
 		<ListPageTitle />
 		<ListPageList>
 			{comics?.map((c, index) => (
 				<ListPageItem
 					key={index}
-					href={`/${comicTypeSlug}/${c.slug}`}
+					href={`${routingMode === "multiple/multiple" ? `/${comicTypeSlug}` : ""}/${c.slug}`}
 					accentColor={c.accent_color}
 					banner={c.banner}
 					title={c.title}
