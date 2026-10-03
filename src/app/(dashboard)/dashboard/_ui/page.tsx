@@ -23,7 +23,7 @@ export default async function DashboardPageUI() {
 		}
 	})
 	return <>
-		<h1 className="font-platform-display text-3xl">
+		<h1 className="font-comic-display text-3xl">
 			{settings.post_type_name_plural} ({comics.length})
 		</h1 >
 		<br />

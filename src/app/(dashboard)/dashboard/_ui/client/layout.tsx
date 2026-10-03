@@ -43,10 +43,10 @@ export const ClientDashboardNavTab = ({
 			"border-b-2",
 			"border-b-transparent",
 			"bg-base-2/40",
-			"data-current:bg-red-500",
+			"data-current:bg-comic-accent-500",
 			"data-current:text-white",
-			"hover:bg-red-700",
-			"hover:text-red-100",
+			"hover:bg-comic-accent-700",
+			"hover:text-comic-accent-100",
 			// Transition
 			"hover:duration-0",
 			"transition-all",
@@ -54,8 +54,8 @@ export const ClientDashboardNavTab = ({
 			"duration-300",
 			"outline-transparent",
 			"outline-4",
-			// "data-current:focus:bg-red-600",
-			// "data-current:focus:text-red-500",
+			// "data-current:focus:bg-comic-accent-600",
+			// "data-current:focus:text-comic-accent-500",
 			"data-current:focus:duration-0",
 			className
 		)}
