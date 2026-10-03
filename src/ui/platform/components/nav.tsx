@@ -51,7 +51,9 @@ export default function ClientPlatformNav({
 
 	const hasLogo = !!(comic?.logo)
 	const hasBanner = !!(comic?.banner)
-	const isSingleComicSite = !!(settings.routing_mode == "single/single")
+	const routingMode = settings.routing_mode
+	const isSingleComicSite = !!(routingMode == "single/single")
+	const isMultiUserMultiComicSite = !!(routingMode == "multiple/multiple")
 	const isLandingPage = (
 		!isSingleComicSite && pathname !== `/${comic?.slug}`
 		|| isSingleComicSite && pathname !== `/`
@@ -60,9 +62,9 @@ export default function ClientPlatformNav({
 	const comicsListTitle = settings.post_type_name_plural
 	const comicsListSlug = settings.post_type_name_plural_slug
 	const usersListTitle = settings.user_type_name_plural
-	const userListSlug = settings.user_type_name_plural_slug
+	const usersListSlug = settings.user_type_name_plural_slug
 
-	const comicNavigation: {
+	let comicNavigation: {
 		name: string,
 		href: string,
 		current: boolean,
@@ -80,14 +82,15 @@ export default function ClientPlatformNav({
 				current: !!(pathname == `/${comicsListSlug}`),
 				icon: "rectangleList"
 			},
-			// #TODO: Add option to show/hide users
-			{
-				name: `${usersListTitle}`,
-				href: `/${userListSlug}`,
-				current: !!(pathname == `/${userListSlug}`),
-				icon: "user"
-			}
 		]
+
+	/// Add user list to multiple/multiple routing mode menu only
+	isMultiUserMultiComicSite && comicNavigation.push({
+		name: `${usersListTitle}`,
+		href: `/${usersListSlug}`,
+		current: !!(pathname == `/${usersListSlug}`),
+		icon: "user"
+	})
 
 	const accountMenuNavigation = session && [
 		{ name: "Dashboard", href: "/dashboard", modal: null },
