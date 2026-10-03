@@ -17,6 +17,27 @@ function isComicNamedPage(value: unknown) {
 	return value === "archive" || value === "settings"
 }
 
+type ContentTypePage =
+	| Awaited<ReturnType<typeof getSettings>>["post_type_name_slug"]
+	| Awaited<ReturnType<typeof getSettings>>["post_type_name_plural_slug"]
+	| Awaited<ReturnType<typeof getSettings>>["user_type_name_slug"]
+	| Awaited<ReturnType<typeof getSettings>>["user_type_name_plural_slug"]
+
+async function isContentTypePage(value: unknown) {
+	const settings = await getSettings()
+	const postTypeNameSlug = settings.post_type_name_slug
+	const postTypeNamePluralSlug = settings.post_type_name_plural_slug
+	const userTypeNameSlug = settings.user_type_name_slug
+	const userTypeNamePluralSlug = settings.user_type_name_plural_slug
+
+	return (
+		value === postTypeNameSlug ||
+		value === postTypeNamePluralSlug ||
+		value === userTypeNameSlug ||
+		value === userTypeNamePluralSlug
+	)
+}
+
 /**----------------------------------- */
 // RESOLVED ROUTE TYPES
 export type ResolvedRoute =
@@ -24,8 +45,8 @@ export type ResolvedRoute =
 			type: "platform-homepage"
 	  }
 	| {
-			type: "platform-category-page"
-			postTypeSlug?: string
+			type: "platform-content-type-page"
+			postTypeSlug?: ContentTypePage
 	  }
 	| {
 			type: "comic-landing-page"
@@ -58,8 +79,6 @@ export async function resolveRoute(
 	routingMode: Awaited<ReturnType<typeof getSettings>>["routing_mode"],
 ): Promise<ResolvedRoute | null> {
 	const settings = await getSettings()
-	// Comic slug is the selected frontpage comic, falling back to the first existing comic
-	const comicSlug = settings.frontpage_comic?.slug || (await getComic({})).slug
 
 	// ROUTE RESOLVER
 	switch (routingMode) {
@@ -82,6 +101,9 @@ export async function resolveRoute(
 			// Get the possible segments
 			const [comicPageNumOrName, pageAction, invalid] = segments
 
+			// Comic slug is the selected frontpage comic, falling back to the first existing comic
+			let comic = settings.frontpage_comic || (await getComic({}))
+
 			// Any routes deeper than pageAction are invalid
 			if (invalid) return null
 
@@ -89,12 +111,11 @@ export async function resolveRoute(
 			// If no level 1 route is defined
 			// - `dungeoncomic.com`
 			if (!comicPageNumOrName) {
-				const comic = await getComic({})
 				if (comic)
 					// If any comic exists, return the landing page
 					return {
 						type: "comic-landing-page",
-						comicSlug: comicSlug,
+						comicSlug: comic.slug,
 					}
 				else
 					// fallback to platform homepage if no comic exists
@@ -110,7 +131,7 @@ export async function resolveRoute(
 			)
 				return {
 					type: "comic-named-page",
-					comicSlug: comicSlug,
+					comicSlug: comic.slug,
 					pageSlug: comicPageNumOrName,
 				}
 
@@ -120,7 +141,7 @@ export async function resolveRoute(
 			if (/^\d+$/.test(comicPageNumOrName) && !pageAction)
 				return {
 					type: "comic-single-page",
-					comicSlug: comicSlug,
+					comicSlug: comic.slug,
 					pageNum: Number(comicPageNumOrName),
 				}
 
@@ -130,7 +151,7 @@ export async function resolveRoute(
 			if (/^\d+$/.test(comicPageNumOrName) && isPageAction(pageAction))
 				return {
 					type: "comic-single-page-action",
-					comicSlug: comicSlug,
+					comicSlug: comic.slug,
 					pageNum: Number(comicPageNumOrName),
 					pageAction: pageAction,
 				}
@@ -149,17 +170,18 @@ export async function resolveRoute(
 			// Structure:
 			// - `root`:
 			//       platform homepage
-			// - `root/[comicSlug]`:
+			// - `root/[comicSlugOrContentType]`:
 			//       comic landing page, platform page
-			// - `root/[comicSlug]/[comicPageNumOrName]`:
+			// - `root/[comicSlugOrContentType]/[comicPageNumOrName]`:
 			//       comic single/content page, comic action (settings)
-			// - `root/[comicSlug]/[comicPageNumOrName]/[pageAction]`:
+			// - `root/[comicSlugOrContentType]/[comicPageNumOrName]/[pageAction]`:
 			//       comic single/content page edit/preview
-			// - `root/[comicSlug]/[comicPageNumOrName]/[pageAction][invalid]`:
+			// - `root/[comicSlugOrContentType]/[comicPageNumOrName]/[pageAction][invalid]`:
 			//       404
 
 			// Get the possible segments
-			const [comicSlug, comicPageNumOrName, pageAction, invalid] = segments
+			const [comicSlugOrContentType, comicPageNumOrName, pageAction, invalid] =
+				segments
 
 			// Any routes deeper than pageAction are invalid
 			if (invalid) return null
@@ -167,17 +189,31 @@ export async function resolveRoute(
 			/**----------------------------------- */
 			// If no level 1 route is defined: platform homepage
 			// - `dungeoncomic.com`
-			if (!comicSlug) {
+			if (!comicSlugOrContentType) {
 				return { type: "platform-homepage" }
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is a contentTypePage,
+			//  with no subroute: comic landing page
+			// - `dungeoncomic.com/comictitle`
+			if (
+				(await isContentTypePage(comicSlugOrContentType)) &&
+				!comicPageNumOrName
+			) {
+				return {
+					type: "platform-content-type-page",
+					postTypeSlug: comicSlugOrContentType,
+				}
 			}
 
 			/**----------------------------------- */
 			// If level 1 route is defined and not a number, with no subroute: comic landing page
 			// - `dungeoncomic.com/comictitle`
-			if (!/^\d+$/.test(comicSlug) && !comicPageNumOrName) {
+			if (!/^\d+$/.test(comicSlugOrContentType) && !comicPageNumOrName) {
 				return {
 					type: "comic-landing-page",
-					comicSlug: comicSlug,
+					comicSlug: comicSlugOrContentType,
 				}
 			}
 
@@ -185,10 +221,13 @@ export async function resolveRoute(
 			// If level 1 route is defined and not a number,
 			// with a subroute that is a valid named page
 			// - `dungeoncomic.com/comictitle/archive`
-			if (!/^\d+$/.test(comicSlug) && isComicNamedPage(comicPageNumOrName)) {
+			if (
+				!/^\d+$/.test(comicSlugOrContentType) &&
+				isComicNamedPage(comicPageNumOrName)
+			) {
 				return {
 					type: "comic-named-page",
-					comicSlug: comicSlug,
+					comicSlug: comicSlugOrContentType,
 					pageSlug: comicPageNumOrName,
 				}
 			}
@@ -199,13 +238,13 @@ export async function resolveRoute(
 			// with no page action: comic single page
 			// - `dungeoncomic.com/comictitle/1`
 			if (
-				!/^\d+$/.test(comicSlug) &&
+				!/^\d+$/.test(comicSlugOrContentType) &&
 				/^\d+$/.test(comicPageNumOrName) &&
 				!pageAction
 			) {
 				return {
 					type: "comic-single-page",
-					comicSlug: comicSlug,
+					comicSlug: comicSlugOrContentType,
 					pageNum: Number(comicPageNumOrName),
 				}
 			}
@@ -217,13 +256,13 @@ export async function resolveRoute(
 			// : comic single page action
 			// - `dungeoncomic.com/comictitle/1/edit`
 			if (
-				!/^\d+$/.test(comicSlug) &&
+				!/^\d+$/.test(comicSlugOrContentType) &&
 				/^\d+$/.test(comicPageNumOrName) &&
 				isPageAction(pageAction)
 			) {
 				return {
 					type: "comic-single-page-action",
-					comicSlug: comicSlug,
+					comicSlug: comicSlugOrContentType,
 					pageNum: Number(comicPageNumOrName),
 					pageAction: pageAction,
 				}
@@ -265,6 +304,8 @@ export async function resolveRoute(
 				invalid,
 			] = segments
 
+			let comic = await getComic({ slug: postNameSlug })
+
 			// Any routes deeper than pageAction are invalid
 			if (invalid) return null
 
@@ -280,7 +321,7 @@ export async function resolveRoute(
 			// - `dungeoncomic.com/d`
 			if (!/^\d+$/.test(postTypeSlug) && !postNameSlug) {
 				return {
-					type: "platform-category-page",
+					type: "platform-content-type-page",
 					postTypeSlug: postTypeSlug,
 				}
 			}
@@ -298,7 +339,7 @@ export async function resolveRoute(
 				return {
 					type: "comic-landing-page",
 					postTypeSlug: postTypeSlug,
-					comicSlug: postNameSlug,
+					comicSlug: comic.slug,
 				}
 			}
 
@@ -315,7 +356,7 @@ export async function resolveRoute(
 				return {
 					type: "comic-named-page",
 					postTypeSlug: postTypeSlug,
-					comicSlug: postNameSlug,
+					comicSlug: comic.slug,
 					pageSlug: comicPageNumOrName,
 				}
 			}
@@ -334,7 +375,7 @@ export async function resolveRoute(
 				return {
 					type: "comic-single-page",
 					postTypeSlug: postTypeSlug,
-					comicSlug: comicSlug,
+					comicSlug: comic.slug,
 					pageNum: Number(comicPageNumOrName),
 				}
 			}
@@ -354,7 +395,7 @@ export async function resolveRoute(
 				return {
 					type: "comic-single-page-action",
 					postTypeSlug: postTypeSlug,
-					comicSlug: comicSlug,
+					comicSlug: comic.slug,
 					pageNum: Number(comicPageNumOrName),
 					pageAction: pageAction,
 				}
