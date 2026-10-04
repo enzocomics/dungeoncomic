@@ -121,6 +121,9 @@ export const ComicLandingPage = async ({
 }: {
 	comic: Awaited<ReturnType<typeof getComic>>
 }) => {
+	const settings = await getSettings()
+	const routingMode = settings.routing_mode
+	const comicPrefixSlug = settings.post_type_name_slug
 	const session = await verifySession()
 	const userVariables = await getUserVarsCookie({ comic: comic })
 	// Get the comic page & variables
@@ -140,6 +143,12 @@ export const ComicLandingPage = async ({
 	})
 	const page_count = comic.pages_count
 
+	let urlPrefix
+
+	if (routingMode === "single/single") urlPrefix = ""
+	if (routingMode === "single/multiple") urlPrefix = `${comic.slug}/`
+	if (routingMode === "multiple/multiple") urlPrefix = `${comicPrefixSlug}/${comic.slug}/`
+
 	switch (landingPage) {
 		// SHOW LANDING PAGE UI
 		case "cover-page":
@@ -154,12 +163,12 @@ export const ComicLandingPage = async ({
 			</Suspense>
 		// REDIRECT TO FIRST PAGE
 		case "first-page":
-			redirect(`1`, RedirectType.replace)
+			redirect(`/${urlPrefix}1`)
 		// REDIRECT TO LAST PAGE
 		case "last-page":
-			redirect(`${page_count}`, RedirectType.replace)
+			redirect(`/${urlPrefix}${page_count}`, RedirectType.replace)
 		// REDIRECT TO A SPECIFIC PAGE
 		default:
-			redirect(`${landingPage}`, RedirectType.replace)
+			redirect(`/${urlPrefix}`, RedirectType.replace)
 	}
 }
