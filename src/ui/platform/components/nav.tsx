@@ -52,12 +52,25 @@ export default function ClientPlatformNav({
 	const hasLogo = !!(comic?.logo)
 	const hasBanner = !!(comic?.banner)
 	const routingMode = settings.routing_mode
+	const comicPostTypeSlug = settings.post_type_name_slug
 	const isSingleComicSite = !!(routingMode == "single/single")
 	const isMultiUserMultiComicSite = !!(routingMode == "multiple/multiple")
-	const isLandingPage = (
-		!isSingleComicSite && pathname !== `/${comic?.slug}`
-		|| isSingleComicSite && pathname !== `/`
-	)
+
+	let isLandingPage
+	if (routingMode === "single/single") {
+		isLandingPage = !!(pathname === `/`)
+	}
+	if (routingMode === "single/multiple") {
+		isLandingPage = !!(pathname === `/${comic?.slug}`)
+	}
+	if (routingMode === "multiple/multiple") {
+		isLandingPage = !!(pathname === `/${comicPostTypeSlug}/${comic?.slug}`)
+	}
+
+	// const isLandingPage = (
+	// 	!isSingleComicSite && pathname !== `/${comic?.slug}`
+	// 	|| isSingleComicSite && pathname !== `/`
+	// )
 
 	const comicsListTitle = settings.post_type_name_plural
 	const comicsListSlug = settings.post_type_name_plural_slug
@@ -147,7 +160,7 @@ export default function ClientPlatformNav({
 					],
 
 					// COSMETIC "FILL" BAR
-					comic && isLandingPage && [
+					comic && !isLandingPage && [
 						"after:pointer-events-none",
 						"after:absolute",
 						"after:-z-10",
