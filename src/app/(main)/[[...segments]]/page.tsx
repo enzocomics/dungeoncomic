@@ -18,6 +18,8 @@ import ComicsListPage from "@/ui/platform/pages/comics-list"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { comicMetadata, comicPageMetadata, notFoundMetadata } from "@/ui/comic/metadata"
 import { Metadata } from "next"
+import { CommentsSection } from "@/ui/comic/components/comic-comments"
+import { getComments } from "@/lib/directus/get-comments"
 
 /**----------------------------------- */
 export default async function MainPage({
@@ -102,14 +104,22 @@ export default async function MainPage({
 		case "comic-single-page": {
 			const comic = await getComic({ slug: route.comicSlug! })
 			const comicPage = await getComicPage(route.comicSlug!, route.pageNum)
+			const comments = await getComments(comicPage.id as number)
 			const variables = await getComicVariables(route.comicSlug!)
 			const userVariables = await getUserVarsCookie({ comic: comic })
-			if (comicPage) return <>
+			if (comic && comicPage) return <>
 				<ComicPageUI
 					page={comicPage}
 					variables={variables}
 					userVariables={userVariables}
 					session={session}
+				/>
+				<CommentsSection
+					page={comicPage}
+					comments={comments}
+					session={session}
+					variables={variables}
+					userVariables={userVariables}
 				/>
 			</>
 			else notFound()
