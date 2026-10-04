@@ -122,16 +122,16 @@ export default function ComicContextProvider({
 
 	// OUTPUT
 	return <ComicContext.Provider value={{
-		session, setSession,
-		projectSettings, setProjectSettings,
-		comic, setComic,
-		comicPage, setComicPage,
-		comicVars, setComicVars,
-		userVars, setUserVars,
-		comicPreviousPage, setComicPreviousPage,
-		comicPageHistory, setComicPageHistory,
+		session, setSession, // unused
+		projectSettings, setProjectSettings, // unused
+		comic, setComic, // unused
+		comicPage, setComicPage, // unused
+		comicVars, setComicVars, // unused
+		userVars, setUserVars, // unused
+		comicPageHistory, setComicPageHistory, // unused (history WIP)
 
-		canGoBack, setCanGoBack
+		comicPreviousPage, setComicPreviousPage, // used for prevPage checking
+		canGoBack, setCanGoBack // used for prevPage checking
 	}}>
 		{children}
 	</ComicContext.Provider>

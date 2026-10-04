@@ -54,20 +54,20 @@ export async function ComicRootLayout({
 
 	return <>
 		<AuthModal public_registration={public_registration} />
-		<ComicContextProvider getComic={comic} getSession={session} getSettings={settings}>
-			<ComicMainWrapper comic={comic}>
-				<ClientPlatformNav comic={comic} session={session} settings={settings}
-					menu={isRoutingModeSingleSingle ? false : true}
-				>
-					<ComicPageHeader comic={comic}>
-						{header}
-					</ComicPageHeader>
-				</ClientPlatformNav>
-				<PlatformMain>
-					{children}
-				</PlatformMain>
-			</ComicMainWrapper>
-		</ComicContextProvider>
+		{/* <ComicContextProvider key={comic.slug} getComic={comic} getSession={session} getSettings={settings}> */}
+		<ComicMainWrapper comic={comic}>
+			<ClientPlatformNav comic={comic} session={session} settings={settings}
+				menu={isRoutingModeSingleSingle ? false : true}
+			>
+				<ComicPageHeader comic={comic}>
+					{header}
+				</ComicPageHeader>
+			</ClientPlatformNav>
+			<PlatformMain>
+				{children}
+			</PlatformMain>
+		</ComicMainWrapper>
+		{/* </ComicContextProvider> */}
 		<PlatformFooter />
 	</>
 }

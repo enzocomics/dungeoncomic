@@ -27,46 +27,60 @@ export default function ClientComicPageEffects({
 		comicPageHistory, setComicPageHistory
 	} = useComicContext()
 
+
 	useEffect(() => {
 		//////////////////////////////////////////////////////////////////////
 		// TODO: WIP: COMIC PAGE HISTORY
 		// CURRENTLY NOT WORKING, LEAVING FOR NOW
-		let isHistorySet = false
+		// let isHistorySet = false
 
-		if (
-			!isHistorySet
-			// && !varsSubmitted
-			// && `${comicPreviousPage.pagenum}` !== comicPageHistory.at(-1)
-		) {
-			comicPreviousPage.pagenum !== undefined &&
-				setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
-			isHistorySet = true
-		}
+		// if (
+		// 	!isHistorySet
+		// 	// && !varsSubmitted
+		// 	// && `${comicPreviousPage.pagenum}` !== comicPageHistory.at(-1)
+		// ) {
+		// 	comicPreviousPage.pagenum !== undefined &&
+		// 		setComicPageHistory([...comicPageHistory, `${comicPreviousPage.pagenum}`])
+		// 	isHistorySet = true
+		// }
 		//////////////////////////////////////////////////////////////////////
 
 		let prevUrl
 		let prevPageMatches
+		// console.log(comicPreviousPage.pagenum !== undefined)
 		// Get the PREVIOUS url, including anything with params
+
+		// console.log("==========================================")
+		// console.log("canGoBack: ", canGoBack)
+		// console.log("comicPreviousPage: ", comicPreviousPage)
+		// console.log("hasPrevPage: ", hasPrevPage)
+		// console.log("page.comic_pagenum: ", page.comic_pagenum)
+		// console.log("- - - - - - - - - - - - - - - - - - - - - ")
+
 		if (comicPreviousPage.pagenum !== undefined) {
 			prevUrl = comicPreviousPage.params !== undefined ?
 				comicPreviousPage.pagenum + "?" + comicPreviousPage.params :
 				comicPreviousPage.pagenum
 			// outputs: `1?name=Steve&othervar=value` or just `1`
-
 			// Check if the pagenum exists in the list of this page's "prevpages"
 			prevPageMatches = hasPrevPage && page.prev_pages!.some(p =>
 				p.pages_id?.comic_pagenum === comicPreviousPage.pagenum
 			)
 
+
 			// Allow the history back button only when the browser's previous page matches a page in the prevpages list
 			setCanGoBack(prevPageMatches)
 		}
+
+
+		// console.log("comicPreviousPage: ", comicPreviousPage)
 
 		// Set the current page as the "previous page", this value will be used on the next page update (whenever pathname/searchparams is changed)
 		setComicPreviousPage({
 			pagenum: page.comic_pagenum,
 			params: searchParams.toString() || undefined
 		})
+
 
 	}, [pathname, searchParams.toString()])
 
@@ -78,15 +92,20 @@ export default function ClientComicPageEffects({
 				"fixed",
 				"w-full",
 				"z-100",
-				"bottom-0",
+				"top-0",
 				"bg-green-900/50",
 				"backdrop-blur-xl",
 				"text-green-500",
 				"p-4",
 				"font-platform-mono",
 			)}>
+			<p>canGoBack: {canGoBack}</p>
 			<p><strong>prevpage in state:</strong> {comicPreviousPage.pagenum}</p>
-			<p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p>
+			<p><strong>prevurl in state:</strong> {comicPreviousPage.params !== undefined ?
+				comicPreviousPage.pagenum + "?" + comicPreviousPage.params :
+				comicPreviousPage.pagenum}</p>
+			<p><strong>prevpagematches:</strong> { }</p>
+			{/* <p><strong>page history:</strong> {comicPageHistory.map(h => `${h}, `)}</p> */}
 		</span>
 	</>
 }
