@@ -52,7 +52,7 @@ export function Listbox<T>({
 						<div>hi</div>
 					</Headless.ListboxSelectedOption>
 				</Headless.ListboxButton>
-				<Headless.ListboxOptions>
+				<Headless.ListboxOptions anchor="bottom" transition>
 					{options}
 				</Headless.ListboxOptions>
 			</Headless.Listbox>
@@ -90,7 +90,11 @@ export function ListboxOption<T>({
 			}
 
 			return (
-				<div>{children}</div>
+				<div className={clsx(
+
+				)}>
+					{children}
+				</div>
 			)
 		}}
 	</Headless.ListboxOption>
