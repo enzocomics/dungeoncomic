@@ -1,4 +1,4 @@
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 import { Field, Fieldset, Input, Label, Description } from "@/components/input/fieldset"
 import { Select } from "@/components/input/dropdown"
 import Icon from "@/styles/icons"

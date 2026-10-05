@@ -26,7 +26,7 @@ import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/functions/check-v
 // UI
 import { Field, } from "@headlessui/react"
 import Icon from "@/styles/icons"
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 import { ComicErrorMessage, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 
 

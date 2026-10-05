@@ -1,6 +1,6 @@
 "use client"
 
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 import clsx from "clsx"
 import { usePathname } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"

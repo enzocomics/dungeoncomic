@@ -22,7 +22,7 @@ import { userCommentSchema } from "@/lib/zod/schemas/comic"
 import { submitUserComment } from "../actions/comments"
 // UI
 import { ErrorMessage } from "@/components/input/fieldset"
-import { ComicButton, SmallComicButton } from "@/components/button"
+import { ComicButton, SmallComicButton } from "@/components/input/button"
 import { Textarea } from "@/components/textarea"
 import Image from "next/image"
 import { directusURL } from "@/data/env"

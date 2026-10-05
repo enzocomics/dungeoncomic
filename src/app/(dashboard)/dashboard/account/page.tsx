@@ -1,4 +1,4 @@
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 import { Input, Label } from "@/components/input/fieldset"
 import Icon from "@/styles/icons"
 import { Checkbox, Field, Fieldset, Legend } from "@headlessui/react"

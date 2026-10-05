@@ -6,7 +6,7 @@ import { doVarsExist, haveVarsBeenSubmitted } from "@/ui/comic/functions/check-v
 import { getComicPage, getComicVariables } from "@/lib/directus/get-comics"
 import { checkHasNextPage } from "@/ui/comic/functions/check-pages"
 import Icon from "@/styles/icons"
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 
 /**
  * Display the button to go to the next page.

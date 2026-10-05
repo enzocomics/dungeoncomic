@@ -24,7 +24,7 @@ import { AuthLink } from "@/components/auth"
 import { useChangeStatus } from "@/components/status-message"
 import { ComicErrorMessage, ComicInputRadio, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
 import { Field, Fieldset, Label, Legend, RadioGroup } from "@headlessui/react"
-import { ComicButton } from "@/components/button"
+import { ComicButton } from "@/components/input/button"
 import { deleteUserPlotSuggestion, submitUserPlotSuggestion, voteOnPlotSuggestion } from "@/ui/comic/actions/plot-suggestions"
 
 

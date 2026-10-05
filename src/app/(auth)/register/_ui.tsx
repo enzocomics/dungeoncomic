@@ -23,7 +23,7 @@ import { ErrorMessage } from "@/components/input/fieldset"
 import { Button, Combobox, ComboboxInput, ComboboxButton, ComboboxOption, ComboboxOptions, Field, Fieldset, Legend, Radio, RadioGroup, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { Input, Label } from "@/components/input/fieldset"
 import { AuthLink } from "@/components/auth"
-import { PlatformButton } from "@/components/button"
+import { PlatformButton } from "@/components/input/button"
 
 /** ------------------------------------------------ **
  * REGISTER FORM
