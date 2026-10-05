@@ -9,7 +9,7 @@ import Image from "next/image"
 export default function Page() {
 	return <>
 		<h1 className="font-comic-display text-3xl">
-			Settings
+			Account
 		</h1>
 		<Fieldset>
 			{/* <Legend>Your profile</Legend> */}

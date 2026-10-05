@@ -1,10 +1,11 @@
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
+// UI
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 import { ComicRootLayout } from "@/ui/comic/layout"
+import PlatformRootLayout from "@/ui/platform/layout"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
-import PlatformRootLayout from "@/ui/platform/layout"
 
 export default async function Layout(props: LayoutProps<"/">) {
 	const settings = await getSettings()
