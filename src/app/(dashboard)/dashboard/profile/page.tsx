@@ -1,5 +1,5 @@
 import { ComicButton } from "@/components/button"
-import { Input, Label } from "@/components/forms"
+import { Input, Label } from "@/components/input/fieldset"
 import { Textarea } from "@/components/textarea"
 import { Field, Fieldset, Legend } from "@headlessui/react"
 import Image from "next/image"

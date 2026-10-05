@@ -1,5 +1,44 @@
+import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
+
+
+export function Fieldset({
+	className,
+	...props
+}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+	return <>
+		<Headless.Fieldset
+			{...props}
+			className={clsx(
+				className,
+				"space-y-8",
+			)}
+		>
+			{props.children}
+		</Headless.Fieldset>
+	</>
+}
+
+export function Field({
+	className,
+	...props
+}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+	return <>
+		<Headless.Field
+			{...props}
+			className={clsx(
+				className,
+
+			)}
+		>
+			{props.children}
+		</Headless.Field>
+	</>
+}
+
+
+
 
 export function Input({
 	className,
@@ -10,7 +49,8 @@ export function Input({
 			{...props}
 			className={clsx(
 				className,
-				"mb-2",
+				"mt-3",
+				"mb-3",
 				"py-2",
 				"px-4",
 				"w-full",
@@ -43,6 +83,25 @@ export function Label({
 		>
 			{props.children}
 		</Headless.Label>
+	</>
+}
+
+export function Description({
+	className,
+	...props
+}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+	return <>
+		<Headless.Description
+			{...props}
+			className={clsx(
+				className,
+				"font-platform-copy",
+				"font-normal",
+				"text-sm",
+			)}
+		>
+			{props.children}
+		</Headless.Description>
 	</>
 }
 
