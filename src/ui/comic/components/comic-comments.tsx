@@ -23,7 +23,7 @@ import { submitUserComment } from "../actions/comments"
 // UI
 import { ErrorMessage } from "@/components/input/fieldset"
 import { ComicButton, SmallComicButton } from "@/components/input/button"
-import { Textarea } from "@/components/textarea"
+import { Textarea } from "@/components/input/textarea"
 import Image from "next/image"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"

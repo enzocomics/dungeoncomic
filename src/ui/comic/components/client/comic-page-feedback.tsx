@@ -19,7 +19,7 @@ import { replaceComicVariables } from "@/ui/comic/functions/parse-content"
 // UI
 import Icon from "@/styles/icons"
 import Notice from "@/components/notices"
-import { Textarea } from "@/components/textarea"
+import { Textarea } from "@/components/input/textarea"
 import { AuthLink } from "@/components/auth"
 import { useChangeStatus } from "@/components/status-message"
 import { ComicErrorMessage, ComicInputRadio, ComicInputSection, ComicInputSectionRow } from "./comic-page-inputs"
