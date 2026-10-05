@@ -5,13 +5,20 @@ export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 	return <>
 		<nav className={clsx(
 			"-mt-6",
-			"pt-2",
-			"px-0",
+			"px-2",
+			"py-2",
+			"md:pt-2",
+			"md:pb-0",
+			"md:px-0",
 			"md:px-2",
 			"flex",
 			"flex-row",
+			"flex-wrap",
+			"justify-center",
+			"md:justify-start",
 			"w-full",
-			"gap-x-1",
+			"gap-1",
+			"md:gap-x-1",
 			// "pt-2",
 
 			"mx-auto",
