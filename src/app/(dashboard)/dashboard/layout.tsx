@@ -1,9 +1,8 @@
 import { PropsWithChildren } from "react"
-import { DashboardNav, DashboardSection } from "./_ui/layout"
 import { verifySession } from "@/data/session"
 import { redirect } from "next/navigation"
-import { ClientDashboardNavTab } from "./_ui/client/layout"
 import { getSettings } from "@/lib/directus/get-settings"
+import DashboardRootLayoutUI from "@/ui/dashboard/layout"
 
 export default async function DashboardLayout({
 	...props
@@ -13,15 +12,8 @@ export default async function DashboardLayout({
 	const user = await verifySession()
 	// Only show this route if the user is logged in
 	if (user)
-		return <>
-			<DashboardNav>
-				<ClientDashboardNavTab postTypeSlug={settings.post_type_name_slug} href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
-				<ClientDashboardNavTab postTypeSlug={settings.post_type_name_slug} href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
-				<ClientDashboardNavTab postTypeSlug={settings.post_type_name_slug} href="/dashboard/settings" icon="gear">Account</ClientDashboardNavTab>
-			</DashboardNav>
-			<DashboardSection>
-				{props.children}
-			</DashboardSection>
-		</>
+		return <DashboardRootLayoutUI>
+			{props.children}
+		</DashboardRootLayoutUI>
 	else redirect("/login")
 }

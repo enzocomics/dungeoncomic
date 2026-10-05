@@ -11,7 +11,7 @@ import Link from "next/link"
 /**-----------------------------------
  * Dasboard Page UI
  */
-export default async function DashboardPageUI() {
+export default async function DashboardHomePageUI() {
 	const t = await getTranslations("auth")
 	const user = await verifySession()
 	const settings = await getSettings()

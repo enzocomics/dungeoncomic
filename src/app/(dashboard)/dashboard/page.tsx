@@ -5,13 +5,13 @@ import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 // COMPONENTS
 import { verifySession } from "@/data/session"
-import DashboardPageUI from "./_ui/page"
+import DashboardHomePageUI from "@/ui/dashboard/pages/home"
 
 /**-----------------------------------
  * Dasboard PAGE ROUTE
  */
 export default async function DashboardPage() {
-	return <DashboardPageUI />
+	return <DashboardHomePageUI />
 }
 
 /** ------------------------------------------------ **

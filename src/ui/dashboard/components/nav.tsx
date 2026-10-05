@@ -1,6 +1,5 @@
 import clsx from "clsx"
 import { ComponentPropsWithoutRef, PropsWithChildren } from "react"
-import { ClientDashboardNavTab } from "./client/layout"
 
 export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 	return <>
