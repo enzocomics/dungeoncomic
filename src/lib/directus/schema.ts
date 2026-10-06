@@ -212,6 +212,11 @@ export interface SettingsSingleton {
 	project_svg_icon: ImageCollection | null
 	project_apple_icon: ImageCollection | null
 	project_pwa_icon: ImageCollection | null
+	// Appearance
+	project_display_font: string
+	project_header_font: string
+	project_copy_font: string
+	project_mono_font: string
 }
 
 /** ------------------------------------------------ **/
