@@ -76,7 +76,12 @@ export default function SettingsPageUI({
 					value: "sup"
 				}
 			],
-			width: "half"
+			width: "half",
+			conditions: {
+				fieldKey: "routing_mode",
+				value: "single/single",
+				action: "enable",
+			}
 		},
 		// // Post Types
 		// post_type: {},
@@ -100,7 +105,7 @@ export default function SettingsPageUI({
 	const appearanceFields = {
 		project_display_font: {
 			title: "Display Font",
-			description: "Display font",
+			description: "Page titles will appear in this font. If your website does not have an logo image uploaded, your website title will also appear in this font.",
 			type: "selectFont",
 			value: settings.project_display_font,
 			options:
@@ -118,7 +123,7 @@ export default function SettingsPageUI({
 
 		project_header_font: {
 			title: "Header Font",
-			description: "Header font",
+			description: "Headings, input labels, and buttons will appear in this font.",
 			type: "selectFont",
 			value: settings.project_header_font,
 			options:
@@ -134,8 +139,8 @@ export default function SettingsPageUI({
 		},
 
 		project_copy_font: {
-			title: "Copy Font",
-			description: "Body copy font",
+			title: "Text Font",
+			description: "Descriptions, captions, and body text will appear in this font",
 			type: "selectFont",
 			value: settings.project_copy_font,
 			options:
@@ -152,7 +157,7 @@ export default function SettingsPageUI({
 
 		project_mono_font: {
 			title: "Mono Font",
-			description: "Mono font",
+			description: "Input fields and story variables will appear in this font.",
 			type: "selectFont",
 			value: settings.project_mono_font,
 			options:

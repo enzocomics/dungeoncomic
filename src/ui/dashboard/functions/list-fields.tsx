@@ -17,7 +17,12 @@ type FieldBase = {
 	description?: string,
 	condition?: boolean,
 	value?: string,
-	width?: "half" | "full"
+	width?: "half" | "full",
+	conditions?: {
+		fieldKey: string,
+		value: any,
+		action: "enable" | "disable"
+	}
 }
 
 type FieldProperties = {
@@ -68,8 +73,24 @@ export function ListFields({
 	return <>
 		{Object.entries(fieldsList).map(([name, singleField], index) => {
 			let value = collection ? collection[name as keyof typeof collection] : null
+			let disabled = false
+			// Check if the field has any conditions
+			if (singleField.conditions) {
+				// Check the value of another field in the same list
+				let conditionSetting = collection && collection[
+					singleField.conditions.fieldKey as keyof typeof collection
+				]
 
-			return <Field key={index} className={clsx(
+				if (conditionSetting !== singleField.conditions.value) {
+					disabled = true
+					// console.log("hi")
+					// console.log(singleField.conditions.fieldKey)
+					// console.log(singleField.conditions.value)
+					// console.log(singleField.conditions.action)
+				}
+			}
+
+			return <Field key={index} disabled={disabled} className={clsx(
 				singleField.width == "half" && [
 					// "w-1/2",
 				]

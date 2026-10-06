@@ -23,13 +23,14 @@ export function Fieldset({
 export function Field({
 	className,
 	...props
-}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+}: { className?: string } & Omit<Headless.FieldProps, "className">) {
 	return <>
 		<Headless.Field
 			{...props}
 			className={clsx(
 				className,
-
+				"data-disabled:opacity-25",
+				"pointer-events-none",
 			)}
 		>
 			{props.children}
