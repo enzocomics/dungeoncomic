@@ -1,29 +1,31 @@
 "use client"
-import { ComicButton } from "@/components/input/button"
-import { Field, Fieldset, Legend, Input, Label, Description } from "@/components/input/fieldset"
-import { Select } from "@/components/input/dropdown"
-import { Listbox, ListboxOption } from "@/components/input/listbox"
-import Icon from "@/styles/icons"
-import { Checkbox, ListboxButton, ListboxOptions } from "@headlessui/react"
-import clsx from "clsx"
-import Image from "next/image"
-import { fonts } from "@/styles/fonts"
-import { getSettings } from "@/lib/directus/get-settings"
-import { useForm } from "@conform-to/react"
+/**----------------------------------- */
+// LIBRARIES
 import { useActionState } from "react"
-import { saveSettings } from "@/ui/dashboard/actions/settings"
+import Image from "next/image"
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { ListFields, ListFieldsField } from "../functions/list-fields"
+import { useForm } from "@conform-to/react"
+// FUNCTIONS
+import clsx from "clsx"
+// DATA
+import { fonts } from "@/styles/fonts"
+import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import { ComicButton } from "@/components/input/button"
+import { Select } from "@/components/input/dropdown"
+import { Field, Fieldset, Legend, Input, Label, Description } from "@/components/input/fieldset"
+import { saveSettings } from "@/ui/dashboard/actions/settings"
+import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 
-
+/**----------------------------------- */
 // VALIDATION SCHEMA
 export const settingsSchema = z.object({
 
 })
 
 
-
+/**----------------------------------- */
 export default function SettingsPageUI({
 	settings
 }: {
