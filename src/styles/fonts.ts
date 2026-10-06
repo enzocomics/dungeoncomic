@@ -181,6 +181,7 @@ export const fonts = {
 		font: atkinsonHyperlegible,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Bebas_Neue: {
@@ -189,6 +190,7 @@ export const fonts = {
 		font: bebasNeue,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Chicle: {
@@ -197,6 +199,7 @@ export const fonts = {
 		font: chicle,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Caesar_Dressing: {
@@ -205,6 +208,7 @@ export const fonts = {
 		font: caesarDressing,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Comic_Neue: {
@@ -213,6 +217,7 @@ export const fonts = {
 		font: comicNeue,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Germania_One: {
@@ -221,6 +226,7 @@ export const fonts = {
 		font: germaniaOne,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Google_Sans_Code: {
@@ -229,6 +235,7 @@ export const fonts = {
 		font: googleSansCode,
 		copy: true,
 		display: false,
+		header: true,
 		mono: true,
 	},
 	Great_Vibes: {
@@ -237,6 +244,7 @@ export const fonts = {
 		font: greatVibes,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Inter: {
@@ -245,6 +253,7 @@ export const fonts = {
 		font: inter,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Lexend: {
@@ -253,6 +262,7 @@ export const fonts = {
 		font: lexend,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Lora: {
@@ -261,6 +271,7 @@ export const fonts = {
 		font: lora,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Manufacturing_Consent: {
@@ -269,6 +280,7 @@ export const fonts = {
 		font: manufacturingConsent,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Montserrat: {
@@ -277,6 +289,7 @@ export const fonts = {
 		font: montserrat,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Press_Start_2P: {
@@ -285,6 +298,7 @@ export const fonts = {
 		font: pressStart2P,
 		copy: true,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Roboto_Mono: {
@@ -293,6 +307,7 @@ export const fonts = {
 		font: robotoMono,
 		copy: true,
 		display: false,
+		header: true,
 		mono: true,
 	},
 	Sancreek: {
@@ -301,6 +316,7 @@ export const fonts = {
 		font: sancreek,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 	Uncial_Antiqua: {
@@ -309,6 +325,7 @@ export const fonts = {
 		font: uncialAntiqua,
 		copy: false,
 		display: true,
+		header: true,
 		mono: false,
 	},
 }
