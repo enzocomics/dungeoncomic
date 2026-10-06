@@ -30,7 +30,7 @@ export function Field({
 			className={clsx(
 				className,
 				"data-disabled:opacity-25",
-				"pointer-events-none",
+				"data-disabled:pointer-events-none",
 			)}
 		>
 			{props.children}
