@@ -1,69 +1,55 @@
+"use client"
 import { ComicButton } from "@/components/input/button"
-import { Field, Fieldset, Input, Label, Description } from "@/components/input/fieldset"
+import { Field, Fieldset, Legend, Input, Label, Description } from "@/components/input/fieldset"
 import { Select } from "@/components/input/dropdown"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
 import Icon from "@/styles/icons"
-import { Checkbox, Legend, ListboxButton, ListboxOptions } from "@headlessui/react"
+import { Checkbox, ListboxButton, ListboxOptions } from "@headlessui/react"
 import clsx from "clsx"
 import Image from "next/image"
 import { fonts } from "@/styles/fonts"
+import { getSettings } from "@/lib/directus/get-settings"
+import { useForm } from "@conform-to/react"
+import { useActionState } from "react"
+import { saveSettings } from "@/ui/dashboard/actions/settings"
+import z from "zod"
+import { parseWithZod } from "@conform-to/zod/v4"
+import { ListFields, ListFieldsField } from "../functions/list-fields"
 
-type FieldBase = {
-	title: string,
-	description?: string,
-	condition?: boolean
-}
 
-type FieldProperties = {
-	text: {},
-	url: {},
-	select: {
-		options: {
-			name: string
-			value: string
-		}[]
-	},
-	image: {
-	}
-}
+// VALIDATION SCHEMA
+export const settingsSchema = z.object({
 
-// Create a union of all the possible field shapes from `FieldProperties`
-type Field = {
-	// Loop through the keys of `FieldProperties` and create an intermediate object with this shape:
-	// {
-	//   text: BaseField & {
-	//     type: "text";
-	//   } & FieldProperties["text"];
-	// }
-	[T in keyof FieldProperties]: FieldBase & {
-		type: T
-	} & FieldProperties[T]
-	// Index the intermediate object with all its keys, which produces a union of the corresponding property types
-	// I.E. TextField | UrlField | DropdownField | ImageField
-}[keyof FieldProperties] | {}
+})
 
 
 
+export default function SettingsPageUI({
+	settings
+}: {
+	settings: Awaited<ReturnType<typeof getSettings>>
+}) {
 
-export default function SettingsPageUI() {
 
-
-	const fields = {
+	const detailFields = {
 		// Details
 		project_name: {
 			title: "Website Name",
 			description: "The name of your project.",
-			type: "text"
+			type: "text",
+			value: settings.project_name,
 		},
 		project_url: {
 			title: "Website URL",
 			description: "The publicly-accessible URL of your project.",
-			type: "url"
+			type: "url",
+			value: settings.project_url || ""
 		},
 		routing_mode: {
 			title: "Routing Mode",
 			description: "Choose whether your platform will have a single creator with a single comic, a single creator with multiple comics, or multiple creators with multiple comics.",
 			type: "select",
+			value: settings.routing_mode,
 			options: [
 				{
 					name: "Single Creator, Single Comic",
@@ -83,6 +69,7 @@ export default function SettingsPageUI() {
 			title: "Frontpage Comic",
 			description: "(Single creator/single comic only) Choose which comic will live at the root of the domain. If you only have one comic, it will be selected by default. If you have multiple comics, it will default to very first one by creation date -- the other comics will be inaccessible.",
 			type: "select",
+			value: settings.frontpage_comic ? settings.frontpage_comic.title : "",
 			options: [
 				{
 					name: "sup",
@@ -106,10 +93,14 @@ export default function SettingsPageUI() {
 		// // Appearance
 		// accent_color: {},
 
+	} satisfies Record<string, ListFieldsField>
+
+
+	const appearanceFields = {
 		project_display_font: {
 			title: "Display Font",
 			description: "Display font",
-			type: "select-font",
+			type: "selectFont",
 			options:
 				Object.values(fonts)
 					.filter((f) => f.display) // only filter copy fonts
@@ -124,7 +115,7 @@ export default function SettingsPageUI() {
 		project_copy_font: {
 			title: "Copy Font",
 			description: "Body copy font",
-			type: "select-font",
+			type: "selectFont",
 			options:
 				Object.values(fonts)
 					.filter((f) => f.copy) // only filter copy fonts
@@ -139,7 +130,7 @@ export default function SettingsPageUI() {
 		project_mono_font: {
 			title: "Mono Font",
 			description: "Input fields",
-			type: "select-font",
+			type: "selectFont",
 			options:
 				Object.values(fonts)
 					.filter((f) => f.mono) // only filter mono fonts
@@ -151,57 +142,37 @@ export default function SettingsPageUI() {
 					)),
 		},
 
-	} satisfies Record<string, Field>
+	} satisfies Record<string, ListFieldsField>
 
+	// VALIDATION
+	const [lastResult, action] = useActionState(saveSettings, undefined)
+	const [form, fields] = useForm({
+		lastResult,
+		// onValidate({ formData }) {
+		// 	return parseWithZod(formData, { settingsSchema })
+		// },
+		shouldValidate: "onBlur",
+		shouldRevalidate: "onInput"
+	})
 
-	console.log(fields)
 
 	return <>
 		<h1 className="font-comic-display text-3xl mb-6">
 			Site Settings
 		</h1>
 		<Fieldset>
-			{/* <Legend>Your profile</Legend> */}
+			<Legend>Details</Legend>
+			<ListFields fieldsList={detailFields} collection={settings} />
 
-			{Object.entries(fields).map(([name, field], index) => (
-				<Field key={index}>
-					<Label>{field.title}</Label>
-					<Description>{field.description}</Description>
-					{field.type === "text" &&
-						<Input type="text" />
-					}
-					{field.type === "url" &&
-						<Input type="text" />
-					}
-					{field.type === "select" &&
-						<>
-							<Select name={name}>
-								{field.options.map((o, i) => (
-									<option key={i} value={o.value}>
-										{o.name}
-									</option>
-								))}
-							</Select>
-						</>
-					}
-					{field.type === "select-font" &&
-						<>
-							<Listbox name={name}>
-								{field.options.map((o, i) => (
-									<ListboxOption key={i} value={o.value}>
-										{o.name}
-									</ListboxOption>
-								))}
-
-							</Listbox>
-						</>
-					}
-				</Field>
-			))}
-
-			<ComicButton as="button">Save</ComicButton>
 
 		</Fieldset>
+
+		<Fieldset>
+			<Legend>Appearance</Legend>
+			<ListFields fieldsList={appearanceFields} collection={settings} />
+		</Fieldset>
+
+		<ComicButton as="button">Save</ComicButton>
 
 	</>
 }
