@@ -39,7 +39,7 @@ export function Select({
 					"rounded",
 					//
 					"focus:outline-4",
-					"focus:outline-offset-4",
+					"focus:-outline-offset-2",
 					"focus:outline-comic-accent-500",
 				)}
 			>

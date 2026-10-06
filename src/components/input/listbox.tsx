@@ -44,7 +44,7 @@ export function Listbox<T>({
 						"rounded",
 						//
 						"focus:outline-4",
-						"focus:outline-offset-4",
+						"focus:-outline-offset-2",
 						"focus:outline-comic-accent-500",
 					)}
 				>
