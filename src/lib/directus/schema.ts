@@ -184,7 +184,7 @@ export interface SettingsSingleton {
 	user_updated: DirectusUser
 	date_updated: "datetime"
 	// Settings
-	project_name: string | null
+	project_name: string
 	project_url: string | null
 	frontpage_comic: ComicsCollection | null
 	routing_mode: "single/single" | "single/multiple" | "multiple/multiple"
