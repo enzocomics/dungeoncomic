@@ -105,6 +105,24 @@ export function Description({
 	</>
 }
 
+export function Legend({
+	className,
+	...props
+}: { className?: string } & Omit<Headless.LegendProps, "className">) {
+	return <>
+		<Headless.Legend
+			{...props}
+			className={clsx(
+				className,
+				"font-header",
+			)}
+		>
+			{props.children}
+		</Headless.Legend>
+	</>
+}
+
+
 export function ErrorMessage({
 	className,
 	...props
