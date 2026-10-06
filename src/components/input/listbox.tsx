@@ -67,7 +67,7 @@ export function Listbox<T>({
 				"col-start-1",
 				"row-start-1",
 				"justify-self-end",
-				"text-red-500",
+				"text-comic-accent-500",
 			)} />
 		</div>
 	</>

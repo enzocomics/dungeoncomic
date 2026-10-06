@@ -194,6 +194,7 @@ export default function SettingsPageUI({
 			"md:grid",
 			"md:grid-cols-2",
 			"md:space-x-6",
+			"pb-24",
 		)}>
 			<Legend className="col-span-2">Details</Legend>
 			<ListFields fieldsList={detailFields} collection={settings} />
@@ -203,6 +204,7 @@ export default function SettingsPageUI({
 			"md:grid",
 			"md:grid-cols-2",
 			"md:space-x-6",
+			"pb-24",
 		)}>
 			<Legend className="col-span-2">Appearance</Legend>
 			<ListFields fieldsList={appearanceFields} collection={settings} />

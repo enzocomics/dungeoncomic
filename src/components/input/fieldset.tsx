@@ -115,15 +115,43 @@ export function Legend({
 	...props
 }: { className?: string } & Omit<Headless.LegendProps, "className">) {
 	return <>
-		<Headless.Legend
-			{...props}
+		<div
 			className={clsx(
 				className,
-				"font-header",
-			)}
-		>
-			{props.children}
-		</Headless.Legend>
+				"font-comic-display",
+				"font-semibold",
+				"text-2xl",
+				"flex",
+				"items-center",
+			)}>
+			<div
+				className={clsx(
+					className,
+					"relative",
+					"flex",
+					"justify-start",
+				)}>
+				<Headless.Legend
+					{...props} className={clsx(
+						"bg-white",
+						"dark:bg-base-2",
+						"pr-3",
+						"text-comic-accent-900",
+						"dark:text-comic-accent-400"
+					)}
+				>
+					{props.children}
+				</Headless.Legend>
+			</div>
+
+			<div aria-hidden={true} className={clsx(
+				"w-full",
+				"border-t",
+				"border-dashed",
+				"border-comic-accent-900",
+				"dark:border-comic-accent-400",
+			)} />
+		</div>
 	</>
 }
 
