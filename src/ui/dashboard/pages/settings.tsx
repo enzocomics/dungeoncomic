@@ -18,11 +18,6 @@ import { Field, Fieldset, Legend, Input, Label, Description } from "@/components
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 
-/**----------------------------------- */
-// VALIDATION SCHEMA
-export const settingsSchema = z.object({
-
-})
 
 
 /**----------------------------------- */
@@ -40,12 +35,14 @@ export default function SettingsPageUI({
 			description: "The name of your project.",
 			type: "text",
 			value: settings.project_name,
+			width: "half"
 		},
 		project_url: {
 			title: "Website URL",
 			description: "The publicly-accessible URL of your project.",
 			type: "url",
-			value: settings.project_url || ""
+			value: settings.project_url || "",
+			width: "half"
 		},
 		routing_mode: {
 			title: "Routing Mode",
@@ -65,7 +62,8 @@ export default function SettingsPageUI({
 					name: "Multiple Creators, Multiple Comics",
 					value: "multiple/multiple"
 				}
-			]
+			],
+			width: "half"
 		},
 		frontpage_comic: {
 			title: "Frontpage Comic",
@@ -77,7 +75,8 @@ export default function SettingsPageUI({
 					name: "sup",
 					value: "sup"
 				}
-			]
+			],
+			width: "half"
 		},
 		// // Post Types
 		// post_type: {},
@@ -103,6 +102,7 @@ export default function SettingsPageUI({
 			title: "Display Font",
 			description: "Display font",
 			type: "selectFont",
+			value: settings.project_display_font,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.display) // only filter copy fonts
@@ -112,12 +112,32 @@ export default function SettingsPageUI({
 							value: f.slug
 						}
 					)),
+			width: "half"
+		},
+
+
+		project_header_font: {
+			title: "Header Font",
+			description: "Header font",
+			type: "selectFont",
+			value: settings.project_header_font,
+			options:
+				Object.values(fonts)
+					.filter((f) => f.header) // only filter copy fonts
+					.map((f) => (
+						{
+							name: f.name,
+							value: f.slug
+						}
+					)),
+			width: "half"
 		},
 
 		project_copy_font: {
 			title: "Copy Font",
 			description: "Body copy font",
 			type: "selectFont",
+			value: settings.project_copy_font,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.copy) // only filter copy fonts
@@ -127,12 +147,14 @@ export default function SettingsPageUI({
 							value: f.slug
 						}
 					)),
+			width: "half"
 		},
 
 		project_mono_font: {
 			title: "Mono Font",
-			description: "Input fields",
+			description: "Mono font",
 			type: "selectFont",
+			value: settings.project_mono_font,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.mono) // only filter mono fonts
@@ -142,6 +164,7 @@ export default function SettingsPageUI({
 							value: f.slug
 						}
 					)),
+			width: "half"
 		},
 
 	} satisfies Record<string, ListFieldsField>
@@ -162,15 +185,21 @@ export default function SettingsPageUI({
 		<h1 className="font-comic-display text-3xl mb-6">
 			Site Settings
 		</h1>
-		<Fieldset>
-			<Legend>Details</Legend>
+		<Fieldset className={clsx(
+			"md:grid",
+			"md:grid-cols-2",
+			"md:space-x-6",
+		)}>
+			<Legend className="col-span-2">Details</Legend>
 			<ListFields fieldsList={detailFields} collection={settings} />
-
-
 		</Fieldset>
 
-		<Fieldset>
-			<Legend>Appearance</Legend>
+		<Fieldset className={clsx(
+			"md:grid",
+			"md:grid-cols-2",
+			"md:space-x-6",
+		)}>
+			<Legend className="col-span-2">Appearance</Legend>
 			<ListFields fieldsList={appearanceFields} collection={settings} />
 		</Fieldset>
 
@@ -178,3 +207,10 @@ export default function SettingsPageUI({
 
 	</>
 }
+
+
+/**----------------------------------- */
+// VALIDATION SCHEMA
+export const settingsSchema = z.object({
+
+})
