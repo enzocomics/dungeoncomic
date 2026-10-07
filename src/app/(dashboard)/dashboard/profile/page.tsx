@@ -1,14 +1,15 @@
 import { ComicButton } from "@/components/input/button"
 import { Input, Label } from "@/components/input/fieldset"
 import { Textarea } from "@/components/input/textarea"
+import { PageTitleH1 } from "@/components/page"
 import { Field, Fieldset, Legend } from "@headlessui/react"
 import Image from "next/image"
 
 export default function Page() {
 	return <>
-		<h1 className="font-comic-display text-3xl">
+		<PageTitleH1>
 			Profile
-		</h1>
+		</PageTitleH1>
 		<Fieldset>
 			{/* <Legend>Your profile</Legend> */}
 			<Field>

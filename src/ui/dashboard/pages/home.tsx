@@ -8,6 +8,7 @@ import clsx from "clsx"
 import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
 import Link from "next/link"
+import { PageTitleH1 } from "@/components/page"
 /**-----------------------------------
  * Dasboard Page UI
  */
@@ -23,9 +24,9 @@ export default async function DashboardHomePageUI() {
 		}
 	})
 	return <>
-		<h1 className="font-comic-display text-3xl">
+		<PageTitleH1>
 			{settings.post_type_name_plural} ({comics.length})
-		</h1 >
+		</PageTitleH1>
 		<br />
 		<Link href={`/dashboard/${settings.post_type_name_slug}/create`}> + Create New {settings.post_type_name}</Link >
 		<br />
