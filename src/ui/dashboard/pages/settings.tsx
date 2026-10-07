@@ -104,11 +104,11 @@ export default function SettingsPageUI({
 
 
 	const appearanceFields = {
-		project_display_font: {
-			title: "Display Font",
+		font_headers: {
+			title: "Headers Font",
 			description: "Page titles will appear in this font. If your website does not have an logo image uploaded, your website title will also appear in this font.",
 			type: "selectFont",
-			value: settings.project_display_font,
+			value: settings.font_headers,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.display) // only filter copy fonts
@@ -122,11 +122,11 @@ export default function SettingsPageUI({
 		},
 
 
-		project_header_font: {
-			title: "Header Font",
-			description: "Headings, input labels, and buttons will appear in this font.",
+		font_labels: {
+			title: "Labels Font",
+			description: "Input labels, input descriptions, and buttons will appear in this font.",
 			type: "selectFont",
-			value: settings.project_header_font,
+			value: settings.font_labels,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.header) // only filter copy fonts
@@ -139,11 +139,11 @@ export default function SettingsPageUI({
 			width: "half"
 		},
 
-		project_copy_font: {
+		font_copy: {
 			title: "Text Font",
-			description: "Descriptions, captions, and body text will appear in this font",
+			description: "Story text, image captions, and body copy will appear in this font",
 			type: "selectFont",
-			value: settings.project_copy_font,
+			value: settings.font_copy,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.copy) // only filter copy fonts
@@ -156,11 +156,11 @@ export default function SettingsPageUI({
 			width: "half"
 		},
 
-		project_mono_font: {
+		font_mono: {
 			title: "Mono Font",
 			description: "Input fields and story variables will appear in this font.",
 			type: "selectFont",
-			value: settings.project_mono_font,
+			value: settings.font_mono,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.mono) // only filter mono fonts
