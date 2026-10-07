@@ -123,7 +123,7 @@ export function ComicButton({
 		"text-white",
 		"text-base",
 		"lg:text-lg",
-		"font-comic-header",
+		"font-comic-labels",
 		"font-semibold",
 		// "border-y-2",
 		// "border-t-white/40",

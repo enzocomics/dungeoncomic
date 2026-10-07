@@ -2,7 +2,7 @@
 // TYPES
 import { Settings, User } from "@directus/types"
 import { UUID } from "crypto"
-import { copyFonts, displayFonts } from "@/styles/fonts"
+import { copyFonts, headersFonts, labelsFonts, monoFonts } from "@/styles/fonts"
 
 /** ------------------------------------------------ **/
 // MAIN SCHEMA
@@ -44,7 +44,7 @@ export interface ComicsCollection {
 	thumbnail: ImageCollection | null
 	banner: ImageCollection | null
 	accent_color: TailwindColors | null
-	display_font: typeof displayFonts // fetch from styles/fonts
+	display_font: typeof headersFonts // fetch from styles/fonts
 	copy_font: typeof copyFonts // fetch from styles/fonts
 	// Options
 	landing_page: "cover-page" | "first-page" | "last-page" | number

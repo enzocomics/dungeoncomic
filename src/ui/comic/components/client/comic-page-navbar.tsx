@@ -58,7 +58,7 @@ export function ClientComicPageNavbar({
 			"text-xs",
 			"sm:text-sm",
 			"text-white",
-			"font-comic-header",
+			"font-comic-labels",
 			"md:rounded",
 			"md:bottom-2",
 			"mt-2",

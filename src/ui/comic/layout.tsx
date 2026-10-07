@@ -5,7 +5,7 @@ import { marked } from "marked"
 import { readSettings } from "@directus/sdk"
 // STYLES
 import { colorVariants } from "@/styles/colors"
-import { displayFonts, copyFonts } from "@/styles/fonts"
+import { headersFonts, labelsFonts, copyFonts, monoFonts } from "@/styles/fonts"
 // DATA
 import { directusURL } from "@/data/env"
 import { verifySession } from "@/data/session"
@@ -80,7 +80,7 @@ export const ComicMainWrapper = ({
 	comic: Awaited<ReturnType<typeof getComic>>
 }) => {
 	// FETCH COMIC APPEARANCE VARS
-	const displayFontSlug = displayFonts[comic.display_font.toString()].slug
+	const displayFontSlug = headersFonts[comic.display_font.toString()].slug
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
 	const accentColor = comic.accent_color || "red"
 
@@ -91,8 +91,8 @@ export const ComicMainWrapper = ({
 				{
 					// Fonts
 					"--font-comic-copy": `var(--font-${copyFontSlug})`,
-					"--font-comic-header": `var(--font-${copyFontSlug})`,
-					"--font-comic-display": `var(--font-${displayFontSlug})`,
+					"--font-comic-labels": `var(--font-${copyFontSlug})`,
+					"--font-comic-headers": `var(--font-${displayFontSlug})`,
 					"--color-comic-accent-50": `var(${colorVariants[accentColor]["50"]})`,
 					"--color-comic-accent-100": `var(${colorVariants[accentColor]["100"]})`,
 					"--color-comic-accent-200": `var(${colorVariants[accentColor]["200"]})`,

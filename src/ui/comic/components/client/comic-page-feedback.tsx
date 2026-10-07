@@ -305,7 +305,7 @@ export function ClientComicPageFeedback({
 								"pb-4",
 								"text-lg",
 								"text-center",
-								"font-comic-header",
+								"font-comic-labels",
 								"font-semibold",
 							)}>
 							{replaceComicVariables({
@@ -437,7 +437,7 @@ export function ClientComicPageFeedback({
 														"-top-6.5",
 														"right-0",
 														"ml-auto",
-														"font-comic-header",
+														"font-comic-labels",
 														"font-normal",
 														"text-xs",
 														"text-current/50"

@@ -180,8 +180,8 @@ export const fonts = {
 		slug: "atkinson-hyperlegible",
 		font: atkinsonHyperlegible,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Bebas_Neue: {
@@ -189,8 +189,8 @@ export const fonts = {
 		slug: "bebas-neue",
 		font: bebasNeue,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Chicle: {
@@ -198,8 +198,8 @@ export const fonts = {
 		slug: "chicle",
 		font: chicle,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Caesar_Dressing: {
@@ -207,8 +207,8 @@ export const fonts = {
 		slug: "caesar-dressing",
 		font: caesarDressing,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Comic_Neue: {
@@ -216,8 +216,8 @@ export const fonts = {
 		slug: "comic-neue",
 		font: comicNeue,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Germania_One: {
@@ -225,8 +225,8 @@ export const fonts = {
 		slug: "germania-one",
 		font: germaniaOne,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Google_Sans_Code: {
@@ -234,8 +234,8 @@ export const fonts = {
 		slug: "google-sans-code",
 		font: googleSansCode,
 		copy: true,
-		display: false,
-		header: true,
+		headers: false,
+		labels: true,
 		mono: true,
 	},
 	Great_Vibes: {
@@ -243,8 +243,8 @@ export const fonts = {
 		slug: "great-vibes",
 		font: greatVibes,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Inter: {
@@ -252,8 +252,8 @@ export const fonts = {
 		slug: "inter",
 		font: inter,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Lexend: {
@@ -261,8 +261,8 @@ export const fonts = {
 		slug: "lexend",
 		font: lexend,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Lora: {
@@ -270,8 +270,8 @@ export const fonts = {
 		slug: "lora",
 		font: lora,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Manufacturing_Consent: {
@@ -279,8 +279,8 @@ export const fonts = {
 		slug: "manufacturing-consent",
 		font: manufacturingConsent,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Montserrat: {
@@ -288,8 +288,8 @@ export const fonts = {
 		slug: "montserrat",
 		font: montserrat,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Press_Start_2P: {
@@ -297,8 +297,8 @@ export const fonts = {
 		slug: "press-start-2p",
 		font: pressStart2P,
 		copy: true,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Roboto_Mono: {
@@ -306,8 +306,8 @@ export const fonts = {
 		slug: "roboto-mono",
 		font: robotoMono,
 		copy: true,
-		display: false,
-		header: true,
+		headers: false,
+		labels: true,
 		mono: true,
 	},
 	Sancreek: {
@@ -315,8 +315,8 @@ export const fonts = {
 		slug: "sancreek",
 		font: sancreek,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 	Uncial_Antiqua: {
@@ -324,8 +324,8 @@ export const fonts = {
 		slug: "uncial-antiqua",
 		font: uncialAntiqua,
 		copy: false,
-		display: true,
-		header: true,
+		headers: true,
+		labels: true,
 		mono: false,
 	},
 }
@@ -337,8 +337,12 @@ export const copyFonts = Object.fromEntries(
 	Object.entries(fonts).filter(([key, font]) => font.copy === true),
 )
 
-export const displayFonts = Object.fromEntries(
-	Object.entries(fonts).filter(([key, font]) => font.display === true),
+export const headersFonts = Object.fromEntries(
+	Object.entries(fonts).filter(([key, font]) => font.headers === true),
+)
+
+export const labelsFonts = Object.fromEntries(
+	Object.entries(fonts).filter(([key, font]) => font.labels === true),
 )
 
 export const monoFonts = Object.fromEntries(

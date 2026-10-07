@@ -294,7 +294,7 @@ export function ClientComicPanels({
 														className={clsx(
 															"pb-2",
 															"text-sm",
-															"font-comic-header",
+															"font-comic-labels",
 															"flex",
 															"items-center",
 															"gap-x-1",
@@ -304,7 +304,7 @@ export function ClientComicPanels({
 															className={clsx(
 																"text-base",
 																"lg:text-lg",
-																"font-comic-header",
+																"font-comic-labels",
 																"font-semibold",
 																vField.errors && "text-red-500",
 															)}>
@@ -316,7 +316,7 @@ export function ClientComicPanels({
 															"font-normal",
 															"text-xs",
 															"lg:text-sm",
-															"font-comic-header",
+															"font-comic-labels",
 															vField.errors
 																? "text-red-500/50"
 																: "text-current/50"

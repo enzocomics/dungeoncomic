@@ -53,7 +53,7 @@ export default async function PlatformFooter() {
 		"py-6",
 		"text-xs/normal",
 		"text-current/50",
-		"font-comic-header",
+		"font-comic-labels",
 		"text-center",
 		"flex",
 		"flex-col",

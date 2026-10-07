@@ -30,7 +30,7 @@
 		h4,
 		h5,
 		h6 {
-			@apply font-semibold font-comic-header;
+			@apply font-semibold font-comic-labels;
 		}
 		h1 {
 			@apply text-3xl;
@@ -87,7 +87,7 @@
 		}
 
 		> p:first-of-type {
-			@apply first-letter:float-left first-letter:text-7xl first-letter:pr-1 first-letter:font-bold first-letter:font-comic-display;
+			@apply first-letter:float-left first-letter:text-7xl first-letter:pr-1 first-letter:font-bold first-letter:font-comic-headers;
 		}
 	}
 
@@ -152,8 +152,8 @@
 	/** --------------------------------------
 	/* Fonts */
 
-	--font-comic-display: var(--font-germania-one);
-	--font-comic-header: var(--font-inter);
+	--font-comic-headers: var(--font-germania-one);
+	--font-comic-labels: var(--font-inter);
 	--font-comic-copy: var(--font-lora);
 
 	--font-platform-mono: var(--font-roboto-mono);

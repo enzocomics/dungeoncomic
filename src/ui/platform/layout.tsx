@@ -2,7 +2,7 @@
 import { readSettings } from "@directus/sdk"
 // STYLES
 import { colorVariants } from "@/styles/colors"
-import { displayFonts, copyFonts } from "@/styles/fonts"
+import { headersFonts, copyFonts } from "@/styles/fonts"
 // DATA
 import { verifySession } from "@/data/session"
 import { adminClient } from "@/lib/directus/clients"

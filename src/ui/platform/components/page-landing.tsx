@@ -68,7 +68,7 @@ export const LandingPageH1 = (
 			"min-h-48",
 			"px-6",
 			"py-6",
-			"font-comic-display",
+			"font-comic-headers",
 			"text-lg/tight",
 			"lg:text-3xl/tight",
 			"text-center",

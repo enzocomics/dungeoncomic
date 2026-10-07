@@ -42,7 +42,7 @@ export function ClientComicPageHeaderTitle({
 					"h-full",
 					"justify-center",
 					"items-center",
-					"font-comic-header",
+					"font-comic-labels",
 					!hasLogo && "overflow-hidden",
 				)
 			}>
@@ -372,12 +372,12 @@ export function ClientComicPageHeaderTitle({
 								"flex-col",
 								comic.thumbnail ? "text-left"
 									: "text-center",
-								"font-comic-header",
+								"font-comic-labels",
 							)}>
 								<h2 className={clsx(
 									"w-full",
 									"font-semibold",
-									"font-comic-display",
+									"font-comic-headers",
 									"text-xl/normal",
 									"lg:text-2xl/normal",
 									"mb-2",

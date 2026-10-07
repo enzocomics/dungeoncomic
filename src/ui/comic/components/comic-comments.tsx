@@ -136,7 +136,7 @@ export function CommentsSection({
 						"px-6",
 						"sm:px-0",
 						"text-xl",
-						"font-comic-header",
+						"font-comic-labels",
 						"font-semibold",
 						"w-full",
 						"pb-2",
@@ -365,7 +365,7 @@ export function CommentsSection({
 						className={clsx(
 							"relative",
 							"block",
-							"font-comic-header",
+							"font-comic-labels",
 							"font-semibold",
 							isReplying
 								? "text-base"
@@ -382,7 +382,7 @@ export function CommentsSection({
 						"top-2.5",
 						"right-0",
 						"ml-auto",
-						"font-comic-header",
+						"font-comic-labels",
 						"font-normal",
 						"text-xs",
 						"text-current/50"

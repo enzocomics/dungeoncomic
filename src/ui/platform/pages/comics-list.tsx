@@ -4,7 +4,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { TailwindColors } from "@/lib/directus/schema"
 import { sanitize } from "@/lib/sanitize"
 import { colorVariants } from "@/styles/colors"
-import { displayFonts } from "@/styles/fonts"
+import { headersFonts } from "@/styles/fonts"
 import Icon from "@/styles/icons"
 import clsx from "clsx"
 import { marked } from "marked"
@@ -144,7 +144,7 @@ export const ListPageItemLogo = ({
 	comic: Awaited<ReturnType<typeof getComics>>[number]
 }) => {
 
-	const comicDisplayFont = displayFonts[comic.display_font.toString()].slug
+	const comicDisplayFont = headersFonts[comic.display_font.toString()].slug
 
 	const comicTitle = sanitize(comic.title)
 	const shortTitle = !!(comicTitle.length < 25)
