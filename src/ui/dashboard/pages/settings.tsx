@@ -165,78 +165,6 @@ export default function SettingsPageUI({
 		},
 	} satisfies Record<string, ListFieldsField>
 
-	const appearanceFields = {
-		font_headers: {
-			title: "Headers Font",
-			description: "Page titles will appear in this font. If your website does not have an logo image uploaded, your website title will also appear in this font.",
-			type: "selectFont",
-			value: settings.font_headers,
-			options:
-				Object.values(fonts)
-					.filter((f) => f.headers) // only filter headers fonts
-					.map((f) => (
-						{
-							name: f.name,
-							value: f.slug
-						}
-					)),
-			width: "half"
-		},
-
-
-		font_labels: {
-			title: "Labels Font",
-			description: "Input labels, input descriptions, and buttons will appear in this font.",
-			type: "selectFont",
-			value: settings.font_labels,
-			options:
-				Object.values(fonts)
-					.filter((f) => f.labels) // only filter labels fonts
-					.map((f) => (
-						{
-							name: f.name,
-							value: f.slug
-						}
-					)),
-			width: "half"
-		},
-
-		font_copy: {
-			title: "Text Font",
-			description: "Story text, image captions, and body copy will appear in this font",
-			type: "selectFont",
-			value: settings.font_copy,
-			options:
-				Object.values(fonts)
-					.filter((f) => f.copy) // only filter copy fonts
-					.map((f) => (
-						{
-							name: f.name,
-							value: f.slug
-						}
-					)),
-			width: "half"
-		},
-
-		font_mono: {
-			title: "Mono Font",
-			description: "Input fields and story variables will appear in this font.",
-			type: "selectFont",
-			value: settings.font_mono,
-			options:
-				Object.values(fonts)
-					.filter((f) => f.mono) // only filter mono fonts
-					.map((f) => (
-						{
-							name: f.name,
-							value: f.slug
-						}
-					)),
-			width: "half"
-		},
-
-	} satisfies Record<string, ListFieldsField>
-
 	// VALIDATION
 	const [lastResult, action] = useActionState(saveSettings, undefined)
 	const [form, fields] = useForm({
@@ -247,7 +175,6 @@ export default function SettingsPageUI({
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput"
 	})
-
 
 	return <>
 		<PageTitleH1>
