@@ -133,7 +133,6 @@ export default function SettingsPageUI({
 		},
 	} satisfies Record<string, ListFieldsField>
 
-
 	const userTypeFields = {
 		// Post Types
 		user_type_name: {
@@ -159,13 +158,12 @@ export default function SettingsPageUI({
 		},
 		user_type_name_plural_slug: {
 			title: "User Type Slug - Plural",
-			description: "The URL-friendly slug for multiple users, and links to the view all useres page: `dungeoncomic.com/users`",
+			description: "The URL-friendly slug for multiple users, and links to the view all users page: `dungeoncomic.com/users`",
 			type: "text",
 			value: settings.user_type_name_plural_slug,
 			width: "half",
 		},
 	} satisfies Record<string, ListFieldsField>
-
 
 	const appearanceFields = {
 		font_headers: {
@@ -287,13 +285,6 @@ export default function SettingsPageUI({
 				</FieldsetSection>
 			</>
 		}
-
-		<FieldsetSection>
-			<Legend>Appearance</Legend>
-			<FieldGroup2Columns>
-				<ListFields fieldsList={appearanceFields} collection={settings} />
-			</FieldGroup2Columns>
-		</FieldsetSection>
 
 		<ComicButton as="button">Save</ComicButton>
 
