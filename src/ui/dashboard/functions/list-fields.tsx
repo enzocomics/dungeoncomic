@@ -7,7 +7,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Input, Label, Description } from "@/components/input/fieldset"
+import { Field, Fieldset, Input, Label, Description, ErrorMessage } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
 import z from "zod"
 
@@ -30,7 +30,9 @@ type FieldProperties = {
 	text: {
 		validate?: z.ZodString
 	},
-	url: {},
+	url: {
+		validate?: z.ZodURL
+	},
 	select: {
 		options: {
 			name: string
@@ -67,11 +69,17 @@ export type ListFieldsField = {
 /**----------------------------------- */
 export function ListFields({
 	fieldsList,
-	collection
+	collection,
+	fieldset,
 }: {
 	fieldsList: Record<string, ListFieldsField>,
-	collection?: Awaited<ReturnType<typeof getSettings>>
+	collection?: Awaited<ReturnType<typeof getSettings>>,
+	fieldset?: any
+
 }) {
+
+	// const fields = zodFields?.settings.getFieldList()
+	// console.log(zodFields?.name)
 	// Loop through a fieldsList object and output UI depending on what kind of field it is
 	return <>
 		{Object.entries(fieldsList).map(([name, singleField], index) => {
@@ -99,22 +107,37 @@ export function ListFields({
 				]
 
 			)}>
-				<Label>{singleField.title}</Label>
+				<Label
+					htmlFor={fieldset ? fieldset[name].name : name}>{singleField.title}</Label>
 
 				{/**----------------------------------- */}
 				{singleField.type === "text" &&
-					<Input type="text" defaultValue={String(singleField.value)} />
+					<Input
+						id={fieldset ? fieldset[name].name : name}
+						name={fieldset ? fieldset[name].name : name}
+						key={fieldset && fieldset[name].key}
+						type="text"
+						defaultValue={String(singleField.value)} />
 				}
 
 				{/**----------------------------------- */}
 				{singleField.type === "url" &&
-					<Input type="text" defaultValue={String(singleField.value)} />
+					<Input
+						id={fieldset ? fieldset[name].name : name}
+						name={fieldset ? fieldset[name].name : name}
+						key={fieldset && fieldset[name].key}
+						type="text"
+						defaultValue={String(singleField.value)} />
 				}
 
 				{/**----------------------------------- */}
 				{singleField.type === "select" &&
 					<>
-						<Select name={name} defaultValue={String(singleField.value)}>
+						<Select
+							id={fieldset ? fieldset[name].name : name}
+							name={fieldset ? fieldset[name].name : name}
+							key={fieldset && fieldset[name].key}
+							defaultValue={String(singleField.value)}>
 							{singleField.options.map((o, i) => (
 								<option key={i} value={o.value}>
 									{o.name}
@@ -127,7 +150,10 @@ export function ListFields({
 				{/**----------------------------------- */}
 				{singleField.type === "selectFont" &&
 					<>
-						<Listbox name={name} defaultValue={String(singleField.value)}>
+						<Listbox
+							name={fieldset ? fieldset[name].name : name}
+							key={fieldset && fieldset[name].key}
+							defaultValue={String(singleField.value)}>
 							{singleField.options.map((o, i) => (
 								<ListboxOption key={i} value={o.value}
 									style={{
@@ -143,7 +169,9 @@ export function ListFields({
 						</Listbox>
 					</>
 				}
-
+				{fieldset &&
+					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
+				}
 				<Description>{singleField.description}</Description>
 				{/**----------------------------------- */}
 			</Field>
