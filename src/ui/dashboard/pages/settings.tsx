@@ -3,6 +3,7 @@
 // LIBRARIES
 import { useActionState, useEffect } from "react"
 import Image from "next/image"
+// VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
@@ -23,12 +24,31 @@ import { useChangeStatus } from "@/components/status-message"
 
 
 /**----------------------------------- */
+// VALIDATION SCHEMA
+export const settingsSchema = (
+	fieldLists?: Record<string, ListFieldsField>[]
+) => {
+	// Make a zod object with the provided fieldsLists
+	const zObject = Object.fromEntries( // Turn the remaining pairs back into an object
+		(fieldLists ?? []).flatMap((data) => // Iterate through the array
+			Object.entries(data).flatMap(([key, field]) => // Turn the fieldsList object into [key,value] pairs
+				"validate" in field ? [[key, field.validate] as const] : [] // Check if the pair has a validate property
+			)
+		).filter((item) => Object.keys(item).length > 0) // Remove any objects with 0 keys
+	)
+
+	return z.object({
+		settings: z.object(zObject)
+	})
+}
+
+/**----------------------------------- */
 export default function SettingsPageUI({
 	settings
 }: {
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
-
+	const routingMode = settings.routing_mode
 
 	const detailFields = {
 		// Details
@@ -37,14 +57,16 @@ export default function SettingsPageUI({
 			description: "The name of your project.",
 			type: "text",
 			value: settings.project_name,
-			width: "half"
+			width: "half",
+			validate: z.string().max(128)
 		},
 		project_url: {
 			title: "Website URL",
 			description: "The publicly-accessible URL of your project.",
 			type: "url",
 			value: settings.project_url || "",
-			width: "half"
+			width: "half",
+			validate: z.httpUrl()
 		},
 		routing_mode: {
 			title: "Routing Mode",
@@ -110,6 +132,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.comic_type_name,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		comic_type_name_plural: {
 			title: "Comic Type Name Plural",
@@ -117,6 +140,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.comic_type_name_plural,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		comic_type_name_slug: {
 			title: "Comic Type Slug - Singular",
@@ -124,6 +148,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.comic_type_name_slug,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		comic_type_name_plural_slug: {
 			title: "Comic Type Slug - Plural",
@@ -131,6 +156,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.comic_type_name_plural_slug,
 			width: "half",
+			validate: z.string().max(128)
 		},
 	} satisfies Record<string, ListFieldsField>
 
@@ -142,6 +168,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.user_type_name,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		user_type_name_plural: {
 			title: "User Type Name Plural",
@@ -149,6 +176,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.user_type_name_plural,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		user_type_name_slug: {
 			title: "User Type Slug - Singular",
@@ -156,6 +184,7 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.user_type_name_slug,
 			width: "half",
+			validate: z.string().max(128)
 		},
 		user_type_name_plural_slug: {
 			title: "User Type Slug - Plural",
@@ -163,23 +192,32 @@ export default function SettingsPageUI({
 			type: "text",
 			value: settings.user_type_name_plural_slug,
 			width: "half",
+			validate: z.string().max(128)
 		},
 	} satisfies Record<string, ListFieldsField>
 
 	// VALIDATION
 
+
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
-
 	const [lastResult, action] = useActionState(saveSettings, undefined)
+
 	const [form, fields] = useForm({
 		lastResult,
-		// onValidate({ formData }) {
-		// 	return parseWithZod(formData, { settingsSchema })
-		// },
+		onValidate({ formData }) {
+			return parseWithZod(formData, {
+				schema:
+					routingMode == "multiple/multiple"
+						? settingsSchema([detailFields, comicTypeFields, userTypeFields])
+						: settingsSchema([detailFields])
+			})
+		},
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput"
 	})
+
+	const settingsFieldset = fields.settings.getFieldset()
 
 	useEffect(() => {
 		if (lastResult?.status == "success") {
@@ -202,7 +240,11 @@ export default function SettingsPageUI({
 			<FieldsetSection>
 				<Legend>Details</Legend>
 				<FieldGroup2Columns>
-					<ListFields fieldsList={detailFields} collection={settings} />
+					<ListFields
+						fieldsList={detailFields}
+						fieldset={settingsFieldset}
+						collection={settings}
+					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>
 
@@ -215,7 +257,11 @@ export default function SettingsPageUI({
 							If you're not making comics, or want to name your series type something else, you may change it here.
 						</FieldsetDescription>
 						<FieldGroup2Columns>
-							<ListFields fieldsList={comicTypeFields} collection={settings} />
+							<ListFields
+								fieldsList={comicTypeFields}
+								fieldset={settingsFieldset}
+								collection={settings}
+							/>
 						</FieldGroup2Columns>
 					</FieldsetSection>
 
@@ -226,7 +272,11 @@ export default function SettingsPageUI({
 							You can change what you call your users here.
 						</FieldsetDescription>
 						<FieldGroup2Columns>
-							<ListFields fieldsList={userTypeFields} collection={settings} />
+							<ListFields
+								fieldsList={userTypeFields}
+								fieldset={settingsFieldset}
+								collection={settings}
+							/>
 						</FieldGroup2Columns>
 					</FieldsetSection>
 				</>
@@ -236,10 +286,3 @@ export default function SettingsPageUI({
 
 	</>
 }
-
-
-/**----------------------------------- */
-// VALIDATION SCHEMA
-export const settingsSchema = z.object({
-
-})
