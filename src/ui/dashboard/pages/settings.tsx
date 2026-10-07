@@ -111,7 +111,7 @@ export default function SettingsPageUI({
 			value: settings.font_headers,
 			options:
 				Object.values(fonts)
-					.filter((f) => f.display) // only filter copy fonts
+					.filter((f) => f.headers) // only filter headers fonts
 					.map((f) => (
 						{
 							name: f.name,
@@ -129,7 +129,7 @@ export default function SettingsPageUI({
 			value: settings.font_labels,
 			options:
 				Object.values(fonts)
-					.filter((f) => f.header) // only filter copy fonts
+					.filter((f) => f.labels) // only filter labels fonts
 					.map((f) => (
 						{
 							name: f.name,
