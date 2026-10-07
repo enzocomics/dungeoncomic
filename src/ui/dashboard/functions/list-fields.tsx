@@ -20,7 +20,7 @@ type FieldBase = {
 	width?: "half" | "full",
 	conditions?: {
 		fieldKey: string,
-		value: any,
+		value: string | string[],
 		action: "enable" | "disable"
 	}
 }
@@ -81,12 +81,14 @@ export function ListFields({
 					singleField.conditions.fieldKey as keyof typeof collection
 				]
 
-				if (conditionSetting !== singleField.conditions.value) {
+				const values = Array.isArray(singleField.conditions.value)
+					? singleField.conditions.value
+					: [singleField.conditions.value]
+
+				console.log(conditionSetting)
+				console.log(values)
+				if (!values.includes(String(conditionSetting))) {
 					disabled = true
-					// console.log("hi")
-					// console.log(singleField.conditions.fieldKey)
-					// console.log(singleField.conditions.value)
-					// console.log(singleField.conditions.action)
 				}
 			}
 
