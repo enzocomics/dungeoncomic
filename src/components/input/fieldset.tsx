@@ -1,6 +1,7 @@
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
+import { ComponentPropsWithoutRef } from "react"
 
 
 export function Fieldset({
@@ -12,11 +13,25 @@ export function Fieldset({
 			{...props}
 			className={clsx(
 				className,
-				"space-y-8",
 			)}
 		>
 			{props.children}
 		</Headless.Fieldset>
+	</>
+}
+
+export function FieldGroup({
+	className,
+	...props
+}: { classsName?: string } & ComponentPropsWithoutRef<"div">) {
+	return <>
+		<div {...props} className={clsx(
+			className,
+			"py-8",
+			"space-y-8",
+		)}>
+			{props.children}
+		</div>
 	</>
 }
 
@@ -55,14 +70,17 @@ export function Input({
 				"py-2",
 				"px-4",
 				"w-full",
-				"bg-white",
 				"border-2",
-				"border-neutral-200",
-				"dark:border-white",
-				"text-black",
 				"text-left",
-				"font-platform-mono",
+				"font-platform-copy",
 				"rounded",
+				// Colors
+				"bg-white",
+				"border-neutral-200",
+				"text-neutral-900",
+				"dark:border-white/10",
+				"dark:bg-white/5",
+				"dark:text-white",
 				//
 				"focus:outline-4",
 				"focus:-outline-offset-2",
@@ -103,6 +121,8 @@ export function Description({
 				"font-platform-copy",
 				"font-normal",
 				"text-sm",
+				"text-base-content/60",
+				"dark:text-white/50",
 			)}
 		>
 			{props.children}
@@ -115,43 +135,20 @@ export function Legend({
 	...props
 }: { className?: string } & Omit<Headless.LegendProps, "className">) {
 	return <>
-		<div
-			className={clsx(
+		<Headless.Legend
+			{...props} className={clsx(
 				className,
+				"w-full",
 				"font-comic-display",
-				"font-semibold",
+				"font-bold",
 				"text-2xl",
 				"flex",
 				"items-center",
-			)}>
-			<div
-				className={clsx(
-					className,
-					"relative",
-					"flex",
-					"justify-start",
-				)}>
-				<Headless.Legend
-					{...props} className={clsx(
-						"bg-white",
-						"dark:bg-base-2",
-						"pr-3",
-						"text-comic-accent-900",
-						"dark:text-comic-accent-400"
-					)}
-				>
-					{props.children}
-				</Headless.Legend>
-			</div>
-
-			<div aria-hidden={true} className={clsx(
-				"w-full",
-				"border-t",
-				"border-dashed",
-				"border-comic-accent-900",
-				"dark:border-comic-accent-400",
-			)} />
-		</div>
+				"pr-3",
+			)}
+		>
+			{props.children}
+		</Headless.Legend>
 	</>
 }
 

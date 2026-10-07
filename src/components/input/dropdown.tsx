@@ -30,13 +30,16 @@ export function Select({
 					"my-3",
 					// Appearance
 					"border-2",
-					"border-neutral-200",
-					"dark:border-white",
-					"bg-white",
-					"text-black",
 					// "text-left",
 					"font-platform-mono",
 					"rounded",
+					// Colors
+					"bg-white",
+					"border-neutral-200",
+					"text-neutral-900",
+					"dark:border-white/10",
+					"dark:bg-white/5",
+					"dark:text-white",
 					//
 					"focus:outline-4",
 					"focus:-outline-offset-2",
