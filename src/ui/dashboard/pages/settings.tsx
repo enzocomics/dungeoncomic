@@ -85,8 +85,54 @@ export default function SettingsPageUI({
 			}
 		},
 		// Post Types
-		// post_type_name: {},
-		// post_type_name_plural: {},
+		comic_type_name: {
+			title: "Comic Type Name",
+			description: "",
+			type: "text",
+			value: settings.comic_type_name,
+			width: "half",
+			conditions: {
+				fieldKey: "routing_mode",
+				value: ["single/multiple", "multiple/multiple"],
+				action: "enable"
+			}
+		},
+		comic_type_name_plural: {
+			title: "Comic Type Name Plural",
+			description: "",
+			type: "text",
+			value: settings.comic_type_name_plural,
+			width: "half",
+			conditions: {
+				fieldKey: "routing_mode",
+				value: ["single/multiple", "multiple/multiple"],
+				action: "enable"
+			}
+		},
+		comic_type_name_slug: {
+			title: "Comic Type Slug",
+			description: "",
+			type: "text",
+			value: settings.comic_type_name_slug,
+			width: "half",
+			conditions: {
+				fieldKey: "routing_mode",
+				value: ["single/multiple", "multiple/multiple"],
+				action: "enable"
+			}
+		},
+		comic_type_name_plural_slug: {
+			title: "Comic Type Plural Slug",
+			description: "",
+			type: "text",
+			value: settings.comic_type_name_plural_slug,
+			width: "half",
+			conditions: {
+				fieldKey: "routing_mode",
+				value: ["single/multiple", "multiple/multiple"],
+				action: "enable"
+			}
+		},
 		// post_type: {},
 		// user_post_type: {},
 		// // Homepage
