@@ -5,6 +5,7 @@ export const PageTitleH1 = (props: ComponentPropsWithoutRef<"h1">) => {
 	return <h1 className={clsx(
 		props.className,
 		"font-platform-headers",
+		"font-bold",
 		"text-3xl/16",
 		"mb-6",
 		"border-b",
