@@ -17,6 +17,7 @@ import { Select } from "@/components/input/dropdown"
 import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { PageTitleH1 } from "@/components/page"
 
 
 
@@ -187,17 +188,9 @@ export default function SettingsPageUI({
 
 
 	return <>
-		<h1 className={clsx(
-			"font-platform-display",
-			"text-3xl/16",
-			"mb-6",
-			"border-b",
-			"border-dashed",
-			"border-base-5/20",
-			"dark:border-base-5",
-		)}>
+		<PageTitleH1>
 			Site Settings
-		</h1>
+		</PageTitleH1>
 		<Fieldset className={clsx(
 			"mb-6",
 			"bg-neutral-100",
