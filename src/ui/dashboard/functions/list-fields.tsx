@@ -28,7 +28,7 @@ type FieldBase = {
 
 type FieldProperties = {
 	text: {
-		validate?: typeof z.object
+		validate?: z.ZodString
 	},
 	url: {},
 	select: {
@@ -88,8 +88,6 @@ export function ListFields({
 					? singleField.conditions.value
 					: [singleField.conditions.value]
 
-				console.log(conditionSetting)
-				console.log(values)
 				if (!values.includes(String(conditionSetting))) {
 					disabled = true
 				}
