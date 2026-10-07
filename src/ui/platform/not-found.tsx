@@ -18,7 +18,7 @@ export const NotFoundUI = async () => {
 				"lg:pt-6",
 				"max-w-prose",
 				"mx-auto",
-				"font-platform-display",
+				"font-platform-header",
 				"text-center",
 				"text-4xl",
 			)}>{t("title")}</h1>

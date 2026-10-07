@@ -139,7 +139,7 @@ export function Legend({
 			{...props} className={clsx(
 				className,
 				"w-full",
-				"font-comic-display",
+				"font-platform-header",
 				"font-bold",
 				"text-2xl",
 				"flex",

@@ -103,7 +103,7 @@ export function AuthHeader({ children }: { children: React.ReactNode }) {
 
 export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
 	return <h1 className={clsx(
-		"font-platform-display",
+		"font-platform-header",
 		"text-center",
 		"text-3xl/16",
 		"mb-4",
