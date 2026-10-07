@@ -93,10 +93,10 @@ export const getSettings = cache(async () => {
 				"user_type_name_slug",
 				"user_type_name_plural_slug",
 				// FONTS
-				"project_display_font",
-				"project_header_font",
-				"project_copy_font",
-				"project_mono_font",
+				"font_headers",
+				"font_labels",
+				"font_copy",
+				"font_mono",
 			],
 		}),
 	)
