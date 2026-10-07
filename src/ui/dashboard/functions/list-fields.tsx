@@ -9,6 +9,7 @@ import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
 import { Field, Fieldset, Input, Label, Description } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
+import z from "zod"
 
 /**----------------------------------- */
 // TYPES
@@ -22,11 +23,13 @@ type FieldBase = {
 		fieldKey: string,
 		value: string | string[],
 		action: "enable" | "disable"
-	}
+	},
 }
 
 type FieldProperties = {
-	text: {},
+	text: {
+		validate?: typeof z.object
+	},
 	url: {},
 	select: {
 		options: {

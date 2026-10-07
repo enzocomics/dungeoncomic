@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import Image from "next/image"
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
@@ -18,6 +18,7 @@ import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGr
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
+import { useChangeStatus } from "@/components/status-message"
 
 
 
@@ -166,6 +167,10 @@ export default function SettingsPageUI({
 	} satisfies Record<string, ListFieldsField>
 
 	// VALIDATION
+
+	// STATUS MESSAGES
+	const setStatus = useChangeStatus("")
+
 	const [lastResult, action] = useActionState(saveSettings, undefined)
 	const [form, fields] = useForm({
 		lastResult,
@@ -176,44 +181,58 @@ export default function SettingsPageUI({
 		shouldRevalidate: "onInput"
 	})
 
+	useEffect(() => {
+		if (lastResult?.status == "success") {
+			setStatus("success", "Your settings have been saved.")
+		}
+	}, [lastResult])
+
+
 	return <>
 		<PageTitleH1>
 			Site Settings
 		</PageTitleH1>
-		<FieldsetSection>
-			<Legend>Details</Legend>
-			<FieldGroup2Columns>
-				<ListFields fieldsList={detailFields} collection={settings} />
-			</FieldGroup2Columns>
-		</FieldsetSection>
+		<form
+			id={form.id}
+			onSubmit={form.onSubmit}
+			action={action}
+			noValidate
 
-		{(settings.routing_mode === "multiple/multiple") &&
-			<>
-				<FieldsetSection>
-					<Legend>Series Type</Legend>
-					<FieldsetDescription>
-						<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-						If you're not making comics, or want to name your series type something else, you may change it here.
-					</FieldsetDescription>
-					<FieldGroup2Columns>
-						<ListFields fieldsList={comicTypeFields} collection={settings} />
-					</FieldGroup2Columns>
-				</FieldsetSection>
+		>
+			<FieldsetSection>
+				<Legend>Details</Legend>
+				<FieldGroup2Columns>
+					<ListFields fieldsList={detailFields} collection={settings} />
+				</FieldGroup2Columns>
+			</FieldsetSection>
 
-				<FieldsetSection>
-					<Legend>User Type</Legend>
-					<FieldsetDescription>
-						<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-						You can change what you call your users here.
-					</FieldsetDescription>
-					<FieldGroup2Columns>
-						<ListFields fieldsList={userTypeFields} collection={settings} />
-					</FieldGroup2Columns>
-				</FieldsetSection>
-			</>
-		}
+			{(settings.routing_mode === "multiple/multiple") &&
+				<>
+					<FieldsetSection>
+						<Legend>Series Type</Legend>
+						<FieldsetDescription>
+							<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+							If you're not making comics, or want to name your series type something else, you may change it here.
+						</FieldsetDescription>
+						<FieldGroup2Columns>
+							<ListFields fieldsList={comicTypeFields} collection={settings} />
+						</FieldGroup2Columns>
+					</FieldsetSection>
 
-		<ComicButton as="button">Save</ComicButton>
+					<FieldsetSection>
+						<Legend>User Type</Legend>
+						<FieldsetDescription>
+							<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+							You can change what you call your users here.
+						</FieldsetDescription>
+						<FieldGroup2Columns>
+							<ListFields fieldsList={userTypeFields} collection={settings} />
+						</FieldGroup2Columns>
+					</FieldsetSection>
+				</>
+			}
+			<ComicButton as="button" type="submit">Save</ComicButton>
+		</form>
 
 	</>
 }
