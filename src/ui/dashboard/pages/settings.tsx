@@ -14,7 +14,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Legend, Input, Label, Description } from "@/components/input/fieldset"
+import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 
@@ -187,27 +187,53 @@ export default function SettingsPageUI({
 
 
 	return <>
-		<h1 className="font-comic-display text-3xl mb-6">
+		<h1 className={clsx(
+			"font-platform-display",
+			"text-3xl/16",
+			"mb-6",
+			"border-b",
+			"border-dashed",
+			"border-base-5/20",
+			"dark:border-base-5",
+		)}>
 			Site Settings
 		</h1>
 		<Fieldset className={clsx(
-			"md:grid",
-			"md:grid-cols-2",
-			"md:space-x-6",
-			"pb-24",
+			"mb-6",
+			"bg-neutral-100",
+			"dark:bg-neutral-950",
+			"p-4",
+			"rounded",
 		)}>
-			<Legend className="col-span-2">Details</Legend>
-			<ListFields fieldsList={detailFields} collection={settings} />
+			<Legend>Details</Legend>
+			<FieldGroup className={clsx(
+				"grid",
+				"gap-y-6",
+				"md:grid",
+				"md:grid-cols-2",
+				"md:gap-x-12",
+			)}>
+				<ListFields fieldsList={detailFields} collection={settings} />
+			</FieldGroup>
 		</Fieldset>
 
 		<Fieldset className={clsx(
-			"md:grid",
-			"md:grid-cols-2",
-			"md:space-x-6",
-			"pb-24",
+			"mb-6",
+			"bg-neutral-100",
+			"dark:bg-neutral-950",
+			"p-4",
+			"rounded",
 		)}>
 			<Legend className="col-span-2">Appearance</Legend>
-			<ListFields fieldsList={appearanceFields} collection={settings} />
+			<FieldGroup className={clsx(
+				"grid",
+				"gap-y-6",
+				"md:grid",
+				"md:grid-cols-2",
+				"md:gap-x-12",
+			)}>
+				<ListFields fieldsList={appearanceFields} collection={settings} />
+			</FieldGroup>
 		</Fieldset>
 
 		<ComicButton as="button">Save</ComicButton>
