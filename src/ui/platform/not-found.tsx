@@ -7,21 +7,19 @@ import { getTranslations } from "next-intl/server"
 import clsx from "clsx"
 // UI
 import { PlatformMainArticle } from "@/ui/platform/components/main"
+import { PageTitleH1 } from "@/components/page"
 
 /**----------------------------------- */
 export const NotFoundUI = async () => {
 	const t = await getTranslations("404Page")
 	return <>
 		<PlatformMainArticle>
-			<h1 className={clsx(
-				"px-6",
-				"lg:pt-6",
-				"max-w-prose",
-				"mx-auto",
-				"font-platform-header",
+			<PageTitleH1 className={clsx(
+				"mx-6",
 				"text-center",
-				"text-4xl",
-			)}>{t("title")}</h1>
+			)}>
+				{t("title")}
+			</PageTitleH1>
 			<p className={clsx(
 				"px-6",
 				"lg:pt-6",
