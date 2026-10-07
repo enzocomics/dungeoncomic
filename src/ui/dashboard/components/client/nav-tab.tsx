@@ -27,6 +27,8 @@ export const ClientDashboardNavTab = ({
 		(
 			pathname.startsWith(`/dashboard/${postTypeSlug}`) &&
 			!props?.href.startsWith("/dashboard/profile") &&
+			!props?.href.startsWith("/dashboard/account") &&
+			!props?.href.startsWith("/dashboard/theme") &&
 			!props?.href.startsWith("/dashboard/settings")
 		)
 	) || undefined

@@ -16,6 +16,7 @@ export default async function DashboardRootLayoutUI({
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/account" icon="user">Account</ClientDashboardNavTab>
+			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/theme" icon="gear">Theme</ClientDashboardNavTab>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/settings" icon="gear">Settings</ClientDashboardNavTab>
 		</DashboardNav>
 		<DashboardSection>
