@@ -152,8 +152,8 @@
 	/** --------------------------------------
 	/* Fonts */
 	--font-platform-display: var(--font-germania-one);
-	--font-platform-header: var(--font-lora);
-	--font-platform-copy: var(--font-lora);
+	--font-platform-header: var(--font-inter);
+	--font-platform-copy: var(--font-inter);
 	--font-platform-labels: var(--font-inter);
 
 	--font-comic-display: var(--font-germania-one);
