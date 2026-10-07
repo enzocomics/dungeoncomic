@@ -25,10 +25,10 @@ export default async function DashboardHomePageUI() {
 	})
 	return <>
 		<PageTitleH1>
-			{settings.post_type_name_plural} ({comics.length})
+			{settings.comic_type_name_plural} ({comics.length})
 		</PageTitleH1>
 		<br />
-		<Link href={`/dashboard/${settings.post_type_name_slug}/create`}> + Create New {settings.post_type_name}</Link >
+		<Link href={`/dashboard/${settings.comic_type_name_slug}/create`}> + Create New {settings.comic_type_name}</Link >
 		<br />
 		<br />
 		<div
@@ -43,7 +43,7 @@ export default async function DashboardHomePageUI() {
 				comics?.map((c, index) => (
 					<ListPageItem
 						key={index}
-						href={`/dashboard/${settings.post_type_name_slug}/${c.id}/`}
+						href={`/dashboard/${settings.comic_type_name_slug}/${c.id}/`}
 						accentColor={c.accent_color}
 						banner={c.banner}
 						title={c.title}

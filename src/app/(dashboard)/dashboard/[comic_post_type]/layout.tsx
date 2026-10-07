@@ -18,7 +18,7 @@ export default async function DashboardComicLayout({
 	const settings = await getSettings()
 
 	// Make sure the url route matches the post type definition in the project settings
-	if (settings.post_type_name_slug == comic_post_type)
+	if (settings.comic_type_name_slug == comic_post_type)
 		return <>
 			<nav>
 				<ul className={clsx(
@@ -47,7 +47,7 @@ export default async function DashboardComicLayout({
 							"mr-2",
 						)} />
 						<span>
-							{settings.post_type_name_plural}
+							{settings.comic_type_name_plural}
 						</span>
 					</li>
 				</ul>

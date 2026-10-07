@@ -123,7 +123,7 @@ export const ComicLandingPage = async ({
 }) => {
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
-	const comicPrefixSlug = settings.post_type_name_slug
+	const comicPrefixSlug = settings.comic_type_name_slug
 	const session = await verifySession()
 	const userVariables = await getUserVarsCookie({ comic: comic })
 	// Get the comic page & variables

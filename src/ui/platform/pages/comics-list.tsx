@@ -17,7 +17,7 @@ import { ComponentPropsWithoutRef } from "react"
 export default async function ComicsListPage() {
 	const comics = await getComics()
 	const settings = await getSettings()
-	const comicTypeSlug = settings.post_type_name_slug
+	const comicTypeSlug = settings.comic_type_name_slug
 	const routingMode = settings.routing_mode
 
 	return <>

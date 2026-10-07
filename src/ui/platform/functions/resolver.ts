@@ -18,15 +18,15 @@ function isComicNamedPage(value: unknown) {
 }
 
 type ContentTypePage =
-	| Awaited<ReturnType<typeof getSettings>>["post_type_name_slug"]
-	| Awaited<ReturnType<typeof getSettings>>["post_type_name_plural_slug"]
+	| Awaited<ReturnType<typeof getSettings>>["comic_type_name_slug"]
+	| Awaited<ReturnType<typeof getSettings>>["comic_type_name_plural_slug"]
 	| Awaited<ReturnType<typeof getSettings>>["user_type_name_slug"]
 	| Awaited<ReturnType<typeof getSettings>>["user_type_name_plural_slug"]
 
 async function isContentTypePage(value: unknown) {
 	const settings = await getSettings()
-	const postTypeNameSlug = settings.post_type_name_slug
-	const postTypeNamePluralSlug = settings.post_type_name_plural_slug
+	const postTypeNameSlug = settings.comic_type_name_slug
+	const postTypeNamePluralSlug = settings.comic_type_name_plural_slug
 	const userTypeNameSlug = settings.user_type_name_slug
 	const userTypeNamePluralSlug = settings.user_type_name_plural_slug
 

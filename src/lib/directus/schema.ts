@@ -190,10 +190,10 @@ export interface SettingsSingleton {
 	routing_mode: "single/single" | "single/multiple" | "multiple/multiple"
 	// single_comic_site: boolean
 	// POST TYPES
-	post_type_name: string
-	post_type_name_plural: string
-	post_type_name_slug: string
-	post_type_name_plural_slug: string
+	comic_type_name: string
+	comic_type_name_plural: string
+	comic_type_name_slug: string
+	comic_type_name_plural_slug: string
 	user_type_name: string
 	user_type_name_plural: string
 	user_type_name_slug: string

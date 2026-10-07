@@ -84,7 +84,9 @@ export default function SettingsPageUI({
 				action: "enable",
 			}
 		},
-		// // Post Types
+		// Post Types
+		// post_type_name: {},
+		// post_type_name_plural: {},
 		// post_type: {},
 		// user_post_type: {},
 		// // Homepage

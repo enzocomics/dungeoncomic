@@ -53,13 +53,13 @@ export default async function MainPage({
 
 			// If the singular post type slug is different from the plural slug, redirect to it
 			if (
-				route.postTypeSlug === settings.post_type_name_slug
-				&& settings.post_type_name_slug !== settings.post_type_name_plural_slug
+				route.postTypeSlug === settings.comic_type_name_slug
+				&& settings.comic_type_name_slug !== settings.comic_type_name_plural_slug
 			)
-				redirect(`/${settings.post_type_name_plural_slug}`)
+				redirect(`/${settings.comic_type_name_plural_slug}`)
 
 			// List all comics
-			if (route.postTypeSlug === settings.post_type_name_plural_slug)
+			if (route.postTypeSlug === settings.comic_type_name_plural_slug)
 				return <>
 					<PlatformMainArticle>
 						<ComicsListPage />

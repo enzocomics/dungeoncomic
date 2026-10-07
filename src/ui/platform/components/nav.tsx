@@ -52,7 +52,7 @@ export default function ClientPlatformNav({
 	const hasLogo = !!(comic?.logo)
 	const hasBanner = !!(comic?.banner)
 	const routingMode = settings.routing_mode
-	const comicPostTypeSlug = settings.post_type_name_slug
+	const comicPostTypeSlug = settings.comic_type_name_slug
 	const isMultiUserMultiComicSite = !!(routingMode == "multiple/multiple")
 
 	let isLandingPage
@@ -66,8 +66,8 @@ export default function ClientPlatformNav({
 		isLandingPage = !!(pathname === `/${comicPostTypeSlug}/${comic?.slug}`)
 	}
 
-	const comicsListTitle = settings.post_type_name_plural
-	const comicsListSlug = settings.post_type_name_plural_slug
+	const comicsListTitle = settings.comic_type_name_plural
+	const comicsListSlug = settings.comic_type_name_plural_slug
 	const usersListTitle = settings.user_type_name_plural
 	const usersListSlug = settings.user_type_name_plural_slug
 
