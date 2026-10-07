@@ -20,6 +20,27 @@ export function Fieldset({
 	</>
 }
 
+export function FieldsetSection({
+	className,
+	...props
+}: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
+	return <>
+		<Headless.Fieldset
+			{...props}
+			className={clsx(
+				className,
+				"mb-6",
+				"bg-neutral-100",
+				"dark:bg-neutral-950",
+				"p-4",
+				"rounded",
+			)}
+		>
+			{props.children}
+		</Headless.Fieldset>
+	</>
+}
+
 export function FieldGroup({
 	className,
 	...props
@@ -34,6 +55,28 @@ export function FieldGroup({
 		</div>
 	</>
 }
+
+
+export function FieldGroup2Columns({
+	className,
+	...props
+}: { classsName?: string } & ComponentPropsWithoutRef<"div">) {
+	return <>
+		<div {...props} className={clsx(
+			className,
+			"py-8",
+			"space-y-8",
+			"grid",
+			"gap-y-6",
+			"md:grid",
+			"md:grid-cols-2",
+			"md:gap-x-12",
+		)}>
+			{props.children}
+		</div>
+	</>
+}
+
 
 export function Field({
 	className,
@@ -130,6 +173,7 @@ export function Description({
 	</>
 }
 
+
 export function Legend({
 	className,
 	...props
@@ -149,6 +193,32 @@ export function Legend({
 		>
 			{props.children}
 		</Headless.Legend>
+	</>
+}
+
+
+export function FieldsetDescription({
+	className,
+	...props
+}: { className?: string } & ComponentPropsWithoutRef<"div">) {
+	return <>
+		<div
+			{...props}
+			className={clsx(
+				className,
+				"mt-1",
+				"mb-2",
+				"font-platform-copy",
+				"font-normal",
+				"text-base",
+				"text-base-content/60",
+				"dark:text-white/50",
+				"max-w-prose",
+				"text-balance",
+			)}
+		>
+			{props.children}
+		</div>
 	</>
 }
 
