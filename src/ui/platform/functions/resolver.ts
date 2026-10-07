@@ -336,11 +336,13 @@ export async function resolveRoute(
 				!/^\d+$/.test(postNameSlug) &&
 				!comicPageNumOrName
 			) {
-				return {
-					type: "comic-landing-page",
-					postTypeSlug: postTypeSlug,
-					comicSlug: comic.slug,
-				}
+				return (
+					comic && {
+						type: "comic-landing-page",
+						postTypeSlug: postTypeSlug,
+						comicSlug: comic.slug,
+					}
+				)
 			}
 
 			/**----------------------------------- */
@@ -353,12 +355,14 @@ export async function resolveRoute(
 				!/^\d+$/.test(postNameSlug) &&
 				isComicNamedPage(comicPageNumOrName)
 			) {
-				return {
-					type: "comic-named-page",
-					postTypeSlug: postTypeSlug,
-					comicSlug: comic.slug,
-					pageSlug: comicPageNumOrName,
-				}
+				return (
+					comic && {
+						type: "comic-named-page",
+						postTypeSlug: postTypeSlug,
+						comicSlug: comic.slug,
+						pageSlug: comicPageNumOrName,
+					}
+				)
 			}
 
 			/**----------------------------------- */
@@ -372,12 +376,14 @@ export async function resolveRoute(
 				/^\d+$/.test(comicPageNumOrName) &&
 				!pageAction
 			) {
-				return {
-					type: "comic-single-page",
-					postTypeSlug: postTypeSlug,
-					comicSlug: comic.slug,
-					pageNum: Number(comicPageNumOrName),
-				}
+				return (
+					comic && {
+						type: "comic-single-page",
+						postTypeSlug: postTypeSlug,
+						comicSlug: comic.slug,
+						pageNum: Number(comicPageNumOrName),
+					}
+				)
 			}
 
 			/**----------------------------------- */
@@ -392,13 +398,15 @@ export async function resolveRoute(
 				/^\d+$/.test(comicPageNumOrName) &&
 				isPageAction(pageAction)
 			) {
-				return {
-					type: "comic-single-page-action",
-					postTypeSlug: postTypeSlug,
-					comicSlug: comic.slug,
-					pageNum: Number(comicPageNumOrName),
-					pageAction: pageAction,
-				}
+				return (
+					comic && {
+						type: "comic-single-page-action",
+						postTypeSlug: postTypeSlug,
+						comicSlug: comic.slug,
+						pageNum: Number(comicPageNumOrName),
+						pageAction: pageAction,
+					}
+				)
 			}
 
 			/**----------------------------------- */
