@@ -14,7 +14,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup } from "@/components/input/fieldset"
+import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
@@ -84,55 +84,6 @@ export default function SettingsPageUI({
 				action: "enable",
 			}
 		},
-		// Post Types
-		comic_type_name: {
-			title: "Comic Type Name",
-			description: "",
-			type: "text",
-			value: settings.comic_type_name,
-			width: "half",
-			conditions: {
-				fieldKey: "routing_mode",
-				value: ["single/multiple", "multiple/multiple"],
-				action: "enable"
-			}
-		},
-		comic_type_name_plural: {
-			title: "Comic Type Name Plural",
-			description: "",
-			type: "text",
-			value: settings.comic_type_name_plural,
-			width: "half",
-			conditions: {
-				fieldKey: "routing_mode",
-				value: ["single/multiple", "multiple/multiple"],
-				action: "enable"
-			}
-		},
-		comic_type_name_slug: {
-			title: "Comic Type Slug",
-			description: "",
-			type: "text",
-			value: settings.comic_type_name_slug,
-			width: "half",
-			conditions: {
-				fieldKey: "routing_mode",
-				value: ["single/multiple", "multiple/multiple"],
-				action: "enable"
-			}
-		},
-		comic_type_name_plural_slug: {
-			title: "Comic Type Plural Slug",
-			description: "",
-			type: "text",
-			value: settings.comic_type_name_plural_slug,
-			width: "half",
-			conditions: {
-				fieldKey: "routing_mode",
-				value: ["single/multiple", "multiple/multiple"],
-				action: "enable"
-			}
-		},
 		// post_type: {},
 		// user_post_type: {},
 		// // Homepage
@@ -148,6 +99,71 @@ export default function SettingsPageUI({
 		// // Appearance
 		// accent_color: {},
 
+	} satisfies Record<string, ListFieldsField>
+
+	const comicTypeFields = {
+		// Post Types
+		comic_type_name: {
+			title: "Series Type Name - Singular",
+			description: 'i.e. `Create a new Comic` / `Subscribe to this Comic`',
+			type: "text",
+			value: settings.comic_type_name,
+			width: "half",
+		},
+		comic_type_name_plural: {
+			title: "Comic Type Name Plural",
+			description: 'i.e. `View all Comics`	',
+			type: "text",
+			value: settings.comic_type_name_plural,
+			width: "half",
+		},
+		comic_type_name_slug: {
+			title: "Comic Type Slug - Singular",
+			description: 'The URL-friendly slug for a single series. It appears in the URL before the series title: `dungeoncomic.com/comic/tutorial`',
+			type: "text",
+			value: settings.comic_type_name_slug,
+			width: "half",
+		},
+		comic_type_name_plural_slug: {
+			title: "Comic Type Slug - Plural",
+			description: "The URL-friendly slug for multiple series, and links to the view all page: `dungeoncomic.com/comics`",
+			type: "text",
+			value: settings.comic_type_name_plural_slug,
+			width: "half",
+		},
+	} satisfies Record<string, ListFieldsField>
+
+
+	const userTypeFields = {
+		// Post Types
+		user_type_name: {
+			title: "User Type Name - Singular",
+			description: 'i.e. `Create a new User` / `Follow this User`',
+			type: "text",
+			value: settings.user_type_name,
+			width: "half",
+		},
+		user_type_name_plural: {
+			title: "User Type Name Plural",
+			description: 'i.e. `View all Users`	',
+			type: "text",
+			value: settings.user_type_name_plural,
+			width: "half",
+		},
+		user_type_name_slug: {
+			title: "User Type Slug - Singular",
+			description: 'The URL-friendly slug for a single user. It appears in the URL before the series title: `dungeoncomic.com/user/enzo`',
+			type: "text",
+			value: settings.user_type_name_slug,
+			width: "half",
+		},
+		user_type_name_plural_slug: {
+			title: "User Type Slug - Plural",
+			description: "The URL-friendly slug for multiple users, and links to the view all useres page: `dungeoncomic.com/users`",
+			type: "text",
+			value: settings.user_type_name_plural_slug,
+			width: "half",
+		},
 	} satisfies Record<string, ListFieldsField>
 
 
@@ -239,43 +255,45 @@ export default function SettingsPageUI({
 		<PageTitleH1>
 			Site Settings
 		</PageTitleH1>
-		<Fieldset className={clsx(
-			"mb-6",
-			"bg-neutral-100",
-			"dark:bg-neutral-950",
-			"p-4",
-			"rounded",
-		)}>
+		<FieldsetSection>
 			<Legend>Details</Legend>
-			<FieldGroup className={clsx(
-				"grid",
-				"gap-y-6",
-				"md:grid",
-				"md:grid-cols-2",
-				"md:gap-x-12",
-			)}>
+			<FieldGroup2Columns>
 				<ListFields fieldsList={detailFields} collection={settings} />
-			</FieldGroup>
-		</Fieldset>
+			</FieldGroup2Columns>
+		</FieldsetSection>
 
-		<Fieldset className={clsx(
-			"mb-6",
-			"bg-neutral-100",
-			"dark:bg-neutral-950",
-			"p-4",
-			"rounded",
-		)}>
-			<Legend className="col-span-2">Appearance</Legend>
-			<FieldGroup className={clsx(
-				"grid",
-				"gap-y-6",
-				"md:grid",
-				"md:grid-cols-2",
-				"md:gap-x-12",
-			)}>
+		{(settings.routing_mode === "multiple/multiple") &&
+			<>
+				<FieldsetSection>
+					<Legend>Series Type</Legend>
+					<FieldsetDescription>
+						<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+						If you're not making comics, or want to name your series type something else, you may change it here.
+					</FieldsetDescription>
+					<FieldGroup2Columns>
+						<ListFields fieldsList={comicTypeFields} collection={settings} />
+					</FieldGroup2Columns>
+				</FieldsetSection>
+
+				<FieldsetSection>
+					<Legend>User Type</Legend>
+					<FieldsetDescription>
+						<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+						You can change what you call your users here.
+					</FieldsetDescription>
+					<FieldGroup2Columns>
+						<ListFields fieldsList={userTypeFields} collection={settings} />
+					</FieldGroup2Columns>
+				</FieldsetSection>
+			</>
+		}
+
+		<FieldsetSection>
+			<Legend>Appearance</Legend>
+			<FieldGroup2Columns>
 				<ListFields fieldsList={appearanceFields} collection={settings} />
-			</FieldGroup>
-		</Fieldset>
+			</FieldGroup2Columns>
+		</FieldsetSection>
 
 		<ComicButton as="button">Save</ComicButton>
 
