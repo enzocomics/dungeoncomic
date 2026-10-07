@@ -11,13 +11,19 @@ export default async function DashboardRootLayoutUI({
 	children: React.ReactNode
 }) {
 	const settings = await getSettings()
+	const session = await verifySession()
+	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
 	return <>
 		<DashboardNav>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/account" icon="user">Account</ClientDashboardNavTab>
-			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/theme" icon="gear">Theme</ClientDashboardNavTab>
-			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/settings" icon="gear">Settings</ClientDashboardNavTab>
+			{userCanUpdateSettings &&
+				<>
+					<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/theme" icon="gear">Theme</ClientDashboardNavTab>
+					<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/settings" icon="gear">Settings</ClientDashboardNavTab>
+				</>
+			}
 		</DashboardNav>
 		<DashboardSection>
 			{children}
