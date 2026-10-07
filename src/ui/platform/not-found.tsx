@@ -38,7 +38,7 @@ export const NotFoundUI = async () => {
 				"max-w-prose",
 				"mx-auto",
 				"font-semibold",
-				"font-platform-header",
+				"font-platform-headers",
 				"text-comic-accent-700",
 				"hover:duration-0",
 				"hover:text-comic-accent-800",

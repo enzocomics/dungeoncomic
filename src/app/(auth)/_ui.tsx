@@ -71,7 +71,7 @@ export function AuthLayout({
 						"text-white",
 						"text-sm",
 						"font-semibold",
-						"font-platform-header",
+						"font-platform-headers",
 						"hover:duration-0",
 						"hover:bg-red-700",
 						"dark:bg-red-900",
@@ -103,7 +103,7 @@ export function AuthHeader({ children }: { children: React.ReactNode }) {
 
 export function AuthHeaderTitle({ children }: { children: React.ReactNode }) {
 	return <h1 className={clsx(
-		"font-platform-header",
+		"font-platform-headers",
 		"text-center",
 		"text-3xl/16",
 		"mb-4",

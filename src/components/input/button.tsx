@@ -190,7 +190,7 @@ export function PlatformButton({
 			// Text
 			"text-white",
 			"text-base",
-			"font-platform-header",
+			"font-platform-headers",
 			// States
 			props.disabled ? [
 				"cursor-not-allowed",

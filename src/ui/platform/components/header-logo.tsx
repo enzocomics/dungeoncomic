@@ -40,7 +40,7 @@ export const PlatformHeaderLogo = async () => {
 			{!logo &&
 				<span className={clsx(
 					"inline-block",
-					"font-platform-header",
+					"font-platform-headers",
 					"text-xl",
 					"md:text-4xl",
 					"text-center",

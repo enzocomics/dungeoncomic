@@ -100,7 +100,7 @@ export function Label({
 			className={clsx(
 				className,
 				"cursor-pointer",
-				"font-platform-header",
+				"font-platform-headers",
 				"font-semibold",
 			)}
 		>
@@ -139,7 +139,7 @@ export function Legend({
 			{...props} className={clsx(
 				className,
 				"w-full",
-				"font-platform-header",
+				"font-platform-headers",
 				"font-bold",
 				"text-2xl",
 				"flex",

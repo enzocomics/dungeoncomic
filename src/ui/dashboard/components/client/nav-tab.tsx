@@ -36,7 +36,7 @@ export const ClientDashboardNavTab = ({
 			"group",
 			"cursor-pointer",
 			"font-semibold",
-			"font-platform-headers",
+			"font-platform-headerss",
 			"text-md",
 			"text-base-content/30",
 			"rounded",

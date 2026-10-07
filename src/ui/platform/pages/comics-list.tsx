@@ -50,7 +50,7 @@ export const ListPageTitle = (
 		"px-6",
 		"mx-auto",
 		"font-normal",
-		"font-platform-header",
+		"font-platform-headers",
 		"text-xl",
 		"text-center",
 		"md:text-left",
@@ -267,7 +267,7 @@ export const ListPageItemTitle = ({
 			"bg-base-2/20",
 			"dark:bg-base-3/50",
 			// Text
-			"font-platform-header",
+			"font-platform-headers",
 			"font-semibold",
 			"text-lg",
 		)}
