@@ -20,27 +20,9 @@ import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
 import { useChangeStatus } from "@/components/status-message"
+import { useRouter } from "next/navigation"
 
-
-
-/**----------------------------------- */
-// VALIDATION SCHEMA
-export const settingsSchema = (
-	fieldLists?: Record<string, ListFieldsField>[]
-) => {
-	// Make a zod object with the provided fieldsLists
-	const zObject = Object.fromEntries( // Turn the remaining pairs back into an object
-		(fieldLists ?? []).flatMap((data) => // Iterate through the array
-			Object.entries(data).flatMap(([key, field]) => // Turn the fieldsList object into [key,value] pairs
-				"validate" in field ? [[key, field.validate] as const] : [] // Check if the pair has a validate property
-			)
-		).filter((item) => Object.keys(item).length > 0) // Remove any objects with 0 keys
-	)
-
-	return z.object({
-		settings: z.object(zObject)
-	})
-}
+import { settingsSchema } from "../functions/settings-schema"
 
 /**----------------------------------- */
 export default function SettingsPageUI({
@@ -48,8 +30,8 @@ export default function SettingsPageUI({
 }: {
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
-	const routingMode = settings.routing_mode
 
+	// Field Lists
 	const detailFields = {
 		// Details
 		project_name: {
@@ -66,7 +48,10 @@ export default function SettingsPageUI({
 			type: "url",
 			value: settings.project_url || "",
 			width: "half",
-			validate: z.httpUrl()
+			validate: z.union([
+				z.httpUrl(),
+				z.url({ hostname: /^localhost$/ })
+			])
 		},
 		routing_mode: {
 			title: "Routing Mode",
@@ -196,11 +181,13 @@ export default function SettingsPageUI({
 		},
 	} satisfies Record<string, ListFieldsField>
 
-	// VALIDATION
 
-
+	const router = useRouter()
+	const routingMode = settings.routing_mode
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
+
+	// VALIDATION
 	const [lastResult, action] = useActionState(saveSettings, undefined)
 
 	const [form, fields] = useForm({
@@ -213,6 +200,9 @@ export default function SettingsPageUI({
 						: settingsSchema([detailFields])
 			})
 		},
+		onSubmit() {
+			// router.refresh()
+		},
 		shouldValidate: "onBlur",
 		shouldRevalidate: "onInput"
 	})
@@ -222,10 +212,11 @@ export default function SettingsPageUI({
 	useEffect(() => {
 		if (lastResult?.status == "success") {
 			setStatus("success", "Your settings have been saved.")
+			router.refresh()
 		}
 	}, [lastResult])
 
-
+	// RENDER
 	return <>
 		<PageTitleH1>
 			Site Settings
@@ -243,7 +234,9 @@ export default function SettingsPageUI({
 					<ListFields
 						fieldsList={detailFields}
 						fieldset={settingsFieldset}
+						lastResult={lastResult}
 						collection={settings}
+						collectionName="settings"
 					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>
@@ -260,7 +253,9 @@ export default function SettingsPageUI({
 							<ListFields
 								fieldsList={comicTypeFields}
 								fieldset={settingsFieldset}
+								lastResult={lastResult}
 								collection={settings}
+								collectionName="settings"
 							/>
 						</FieldGroup2Columns>
 					</FieldsetSection>
@@ -275,7 +270,9 @@ export default function SettingsPageUI({
 							<ListFields
 								fieldsList={userTypeFields}
 								fieldset={settingsFieldset}
+								lastResult={lastResult}
 								collection={settings}
+								collectionName="settings"
 							/>
 						</FieldGroup2Columns>
 					</FieldsetSection>
