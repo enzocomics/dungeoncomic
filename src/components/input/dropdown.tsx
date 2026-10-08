@@ -1,18 +1,22 @@
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
 import Icon from "@/styles/icons"
-import { Fragment } from "react"
+import { forwardRef, Fragment } from "react"
 
-export function Select({
+export const Select = forwardRef(function Select({
 	className,
 	...props
-}: { className?: string } & Omit<Headless.SelectProps, "className">) {
+}: { className?: string } & Omit<Headless.SelectProps, "className">,
+
+	ref: React.ForwardedRef<HTMLInputElement>
+) {
 	return <>
 		<div className={clsx(
 			"grid",
 			"grid-cols-1",
 		)}>
 			<Headless.Select
+				ref={ref}
 				{...props}
 				className={clsx(
 					className,
@@ -62,5 +66,5 @@ export function Select({
 			)} />
 		</div>
 	</>
-}
+})
 
