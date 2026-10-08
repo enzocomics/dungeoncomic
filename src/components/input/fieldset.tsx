@@ -1,7 +1,7 @@
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, forwardRef } from "react"
 
 
 export function Fieldset({
@@ -99,12 +99,16 @@ export function Field({
 
 
 
-export function Input({
+export const Input = forwardRef(function Input({
 	className,
 	...props
-}: { className?: string } & Omit<Headless.InputProps, "className">) {
+}: {
+	className?: string,
+} & Omit<Headless.InputProps, "className">,
+	ref: React.ForwardedRef<HTMLInputElement>) {
 	return <>
 		<Headless.Input
+			ref={ref}
 			{...props}
 			className={clsx(
 				className,
@@ -131,7 +135,7 @@ export function Input({
 			)}
 		/>
 	</>
-}
+})
 
 export function Label({
 	className,
