@@ -47,7 +47,7 @@ export async function ComicRootLayout({
 
 	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
-	const isRoutingModeSingleSingle = routingMode === "single/single"
+	const isRoutingModeSingleSingle = routingMode === "single-single"
 	// If a slug has been provided, fetch that comic
 	// Otherwise, fall back to the frontpage comic
 	const comic = await getComic({ slug: slug || frontpageComic?.slug })
@@ -145,9 +145,9 @@ export const ComicLandingPage = async ({
 
 	let urlPrefix
 
-	if (routingMode === "single/single") urlPrefix = ""
-	if (routingMode === "single/multiple") urlPrefix = `${comic.slug}/`
-	if (routingMode === "multiple/multiple") urlPrefix = `${comicPrefixSlug}/${comic.slug}/`
+	if (routingMode === "single-single") urlPrefix = ""
+	if (routingMode === "single-multiple") urlPrefix = `${comic.slug}/`
+	if (routingMode === "multiple-multiple") urlPrefix = `${comicPrefixSlug}/${comic.slug}/`
 
 	switch (landingPage) {
 		// SHOW LANDING PAGE UI

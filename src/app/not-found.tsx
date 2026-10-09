@@ -19,7 +19,7 @@ export default async function NotFoundPage() {
 	const comic = await getComic({ slug: settings.frontpage_comic?.slug })
 	const routingMode = settings.routing_mode
 	switch (routingMode) {
-		case "single/single":
+		case "single-single":
 			return <>
 				<ComicRootLayout header={<ClientComicPageHeaderTitle comic={comic} />}>
 					<Suspense>
@@ -27,8 +27,8 @@ export default async function NotFoundPage() {
 					</Suspense>
 				</ComicRootLayout>
 			</>
-		case "single/multiple":
-		case "multiple/multiple":
+		case "single-multiple":
+		case "multiple-multiple":
 			return <>
 				<PlatformRootLayout header={<PlatformHeaderLogo />}>
 					<Suspense>

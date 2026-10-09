@@ -14,7 +14,7 @@ export default async function Layout(props: LayoutProps<"/">) {
 
 	switch (routingMode) {
 
-		case "single/single": {
+		case "single-single": {
 			let comic = await getComic(frontpageComic ? { slug: frontpageComic.slug } : {})
 			if (comic)
 				return <>
@@ -37,8 +37,8 @@ export default async function Layout(props: LayoutProps<"/">) {
 					</PlatformRootLayout>
 				</>
 		}
-		case "single/multiple":
-		case "multiple/multiple": {
+		case "single-multiple":
+		case "multiple-multiple": {
 			return <>
 				<PlatformRootLayout header={
 					<PlatformHeaderLogo />

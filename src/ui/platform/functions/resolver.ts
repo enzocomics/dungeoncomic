@@ -82,7 +82,7 @@ export async function resolveRoute(
 
 	// ROUTE RESOLVER
 	switch (routingMode) {
-		case "single/single": {
+		case "single-single": {
 			/**---------------------------------------------------------------------- */
 			// Single Creator, Single Comic
 			// - Comic lives at root: `dungeoncomic.com`
@@ -161,7 +161,7 @@ export async function resolveRoute(
 			return null
 		}
 
-		case "single/multiple": {
+		case "single-multiple": {
 			/**---------------------------------------------------------------------- */
 			// Single Creator, Multiple Comics
 			// - Comics live at first-level route: `dungeoncomic.com/comicname`
@@ -273,7 +273,7 @@ export async function resolveRoute(
 			return null
 		}
 
-		case "multiple/multiple": {
+		case "multiple-multiple": {
 			/**---------------------------------------------------------------------- */
 			// Multiple Creators, Multiple Comics
 			// - Comics live in a nested route with type prefix: `dungeoncomic.com/d/comicname`

@@ -39,7 +39,7 @@ export default async function PlatformRootLayout({
 	const hasBanner = !!banner
 	const frontpageComic = settings.frontpage_comic
 	const routingMode = settings.routing_mode
-	const isSingleSingle = routingMode === "single/single"
+	const isSingleSingle = routingMode === "single-single"
 
 	return <>
 		<AuthModal public_registration={public_registration} />

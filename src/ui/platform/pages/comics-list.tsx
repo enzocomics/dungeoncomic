@@ -26,7 +26,7 @@ export default async function ComicsListPage() {
 			{comics?.map((c, index) => (
 				<ListPageItem
 					key={index}
-					href={`${routingMode === "multiple/multiple" ? `/${comicTypeSlug}` : ""}/${c.slug}`}
+					href={`${routingMode === "multiple-multiple" ? `/${comicTypeSlug}` : ""}/${c.slug}`}
 					accentColor={c.accent_color}
 					banner={c.banner}
 					title={c.title}
