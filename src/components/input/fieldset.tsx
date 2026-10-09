@@ -1,6 +1,7 @@
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
+import { marked } from "marked"
 import { ComponentPropsWithoutRef, forwardRef } from "react"
 
 
@@ -268,4 +269,14 @@ export function ErrorMessage({
 			</Headless.Description>
 		}
 	</>
+}
+
+export const MarkedText = ({
+	children
+}: {
+	children?: string
+}) => {
+	return <span dangerouslySetInnerHTML={{
+		__html: String(children && marked.parse(children))
+	}} />
 }

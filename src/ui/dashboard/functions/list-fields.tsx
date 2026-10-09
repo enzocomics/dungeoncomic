@@ -7,7 +7,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Input, Label, Description, ErrorMessage } from "@/components/input/fieldset"
+import { Field, Fieldset, Input, Label, Description, ErrorMessage, MarkedText } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
 import z, { ZodURL } from "zod"
 import { SubmissionResult } from "@conform-to/react"
@@ -30,10 +30,11 @@ type FieldBase = {
 
 type FieldProperties = {
 	text: {
-		validate?: z.ZodString
+		validate?: boolean
+		maxLength?: number
 	},
 	url: {
-		validate?: z.ZodUnion<readonly [ZodURL, ZodURL]>
+		validate?: boolean
 	},
 	select: {
 		options: {
@@ -117,7 +118,9 @@ export function ListFields({
 				// ]
 			)}>
 				<Label
-					htmlFor={fieldset ? fieldset[name].name : name}>{singleField.title}</Label>
+					htmlFor={fieldset ? fieldset[name].name : name}>
+					{singleField.title}
+				</Label>
 
 				{/**----------------------------------- */}
 				{
@@ -191,7 +194,9 @@ export function ListFields({
 					fieldset &&
 					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
 				}
-				<Description>{singleField.description}</Description>
+				<Description>
+					{singleField.description}
+				</Description>
 				{/**----------------------------------- */}
 			</Field >
 		})}

@@ -5,11 +5,10 @@ import { notFound } from "next/navigation"
 
 export const instant = false
 export default async function Page() {
-	const settings = await getSettings()
 	const session = await verifySession()
 	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
 	if (userCanUpdateSettings)
-		return <SettingsPageUI settings={settings} />
+		return <SettingsPageUI />
 	else
 		notFound()
 }
