@@ -1,17 +1,16 @@
 /**----------------------------------- */
 // LIBRARIES
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 // COMPONENTS
-import { verifySession } from "@/data/session"
 import DashboardHomePageUI from "@/ui/dashboard/pages/home"
+import { Suspense } from "react"
 
 /**-----------------------------------
  * Dasboard PAGE ROUTE
  */
 export default async function DashboardPage() {
-	return <DashboardHomePageUI />
+	return <Suspense><DashboardHomePageUI /></Suspense>
 }
 
 /** ------------------------------------------------ **
