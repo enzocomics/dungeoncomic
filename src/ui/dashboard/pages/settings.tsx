@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState, useEffect, useRef } from "react"
+import { useActionState, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 // VALIDATION
 import z from "zod"
@@ -216,10 +216,67 @@ export default function SettingsPageUI({
 		}
 	}, [lastResult])
 
-
 	const inputRefs = useRef<Record<string, HTMLSelectElement | null>>({})
+	const [hideTypes, setHideTypes] = useState(!(settings.routing_mode === "multiple-multiple"))
 
-	// console.log("parent lastResult:", lastResult)
+	// Show/Hide additional UI depending on the routing mode selection
+	useEffect(() => {
+		// Grab the select menu refs we need
+		const routingModeSelect = inputRefs.current["settings.routing_mode"]
+		const frontpageSelect = inputRefs.current["settings.frontpage_comic"]
+		if (!routingModeSelect || !frontpageSelect) return
+
+		// Get the parent FIELD element of the frontpage comic select
+		const frontpageSelectField = frontpageSelect.parentElement?.parentElement
+
+		// Hide the TYPES section unless `multiple-multiple` is selected
+		// Hide the FRONTPAGE COMIC select menu unless `single-single` is selected
+		const handleRoutingMode = () => {
+			// TODO: It's probably better to target the field's `disabled` prop but I honestly can't deal with that right now sorry for this mess
+			if (routingModeSelect.value === "multiple-multiple") {
+				frontpageSelectField?.setAttribute("data-disabled", "true")
+				frontpageSelectField?.setAttribute("disabled", "true")
+				frontpageSelectField?.setAttribute("aria-disabled", "true")
+				frontpageSelectField?.setAttribute("data-headlessui-state", "disabled")
+				frontpageSelect?.setAttribute("data-disabled", "true")
+				frontpageSelect?.setAttribute("disabled", "true")
+				frontpageSelect?.setAttribute("aria-disabled", "true")
+				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+				setHideTypes(false)
+			}
+			else if (routingModeSelect.value === "single-single") {
+				frontpageSelectField?.removeAttribute("data-disabled")
+				frontpageSelectField?.removeAttribute("disabled")
+				frontpageSelectField?.setAttribute("aria-disabled", "false")
+				frontpageSelectField?.setAttribute("data-headlessui-state", "")
+				frontpageSelect?.removeAttribute("data-disabled")
+				frontpageSelect?.removeAttribute("disabled")
+				frontpageSelect?.setAttribute("aria-disabled", "false")
+				frontpageSelect?.setAttribute("data-headlessui-state", "")
+				setHideTypes(true)
+			} else {
+				frontpageSelectField?.setAttribute("data-disabled", "true")
+				frontpageSelectField?.setAttribute("disabled", "true")
+				frontpageSelectField?.setAttribute("aria-disabled", "true")
+				frontpageSelectField?.setAttribute("data-headlessui-state", "disabled")
+				frontpageSelect?.setAttribute("data-disabled", "true")
+				frontpageSelect?.setAttribute("disabled", "true")
+				frontpageSelect?.setAttribute("aria-disabled", "true")
+				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+				setHideTypes(true)
+			}
+		}
+
+		// Listener for the routing mode select menu
+		routingModeSelect.addEventListener("change", handleRoutingMode)
+
+		handleRoutingMode()
+
+		// Cleanup
+		return () => {
+			routingModeSelect.removeEventListener("change", handleRoutingMode)
+		}
+	}, [])
 
 	// RENDER
 	return <>
@@ -243,14 +300,12 @@ export default function SettingsPageUI({
 						fieldsList={detailFields}
 						fieldset={settingsFieldset}
 						collection={settings}
-
+						inputRefs={inputRefs}
 					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>
 
-
-
-			<FieldsetSection>
+			<FieldsetSection >
 				<Legend>Series Type</Legend>
 				<FieldsetDescription>
 					<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
@@ -261,6 +316,7 @@ export default function SettingsPageUI({
 						fieldsList={comicTypeFields}
 						fieldset={settingsFieldset}
 						collection={settings}
+						disableAll={hideTypes}
 					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>
@@ -276,6 +332,7 @@ export default function SettingsPageUI({
 						fieldsList={userTypeFields}
 						fieldset={settingsFieldset}
 						collection={settings}
+						disableAll={hideTypes}
 					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>

@@ -70,14 +70,19 @@ export type ListFieldsField = {
 
 /**----------------------------------- */
 export function ListFields({
-	fieldsList,
 	collection,
+	disableAll = false,
+	fieldsList,
 	fieldset,
+	inputRefs
 }: {
 	fieldsList: Record<string, ListFieldsField>
+	disableAll?: boolean
 	collection?: Awaited<ReturnType<typeof getSettings>>
-
 	fieldset?: any // TODO
+	inputRefs?: React.RefObject<
+		Record<string, HTMLSelectElement | null>
+	>
 
 }) {
 	// Loop through a fieldsList object and output UI depending on what kind of field it is
@@ -106,7 +111,7 @@ export function ListFields({
 			}
 
 
-			return <Field key={index} className={clsx(
+			return <Field key={index} disabled={disableAll || disabled} className={clsx(
 				// singleField.width == "half" && [
 				// 	// "w-1/2",
 				// ]
@@ -144,6 +149,7 @@ export function ListFields({
 							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							defaultValue={singleField.value}
+							inputRefs={inputRefs}
 						>
 							{singleField.options.map((o, i) => (
 								<option key={i}
