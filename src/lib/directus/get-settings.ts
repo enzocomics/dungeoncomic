@@ -3,12 +3,15 @@
 // CMS
 import { adminClient } from "@/lib/directus/clients"
 import { readSingleton } from "@directus/sdk"
-import { cache } from "react"
+import { cacheTag } from "next/cache"
+// import { cache } from "react"
 
 /** ------------------------------------------------ **
  * GET SETTINGS
  */
-export const getSettings = cache(async () => {
+export const getSettings = async () => {
+	"use cache"
+	cacheTag("settings")
 	const request = await adminClient.request(
 		readSingleton("settings", {
 			fields: [
@@ -101,4 +104,4 @@ export const getSettings = cache(async () => {
 		}),
 	)
 	return request
-})
+}
