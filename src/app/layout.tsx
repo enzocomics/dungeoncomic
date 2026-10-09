@@ -74,8 +74,9 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 					<NextIntlClientProvider>
 						<Suspense>
 							<ClientPlatformEffects />
-							{props.children}
 						</Suspense>
+						{props.children}
+
 					</NextIntlClientProvider>
 				</ThemeProvider>
 			</GlobalContextProvider>
