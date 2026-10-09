@@ -3,6 +3,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import SettingsPageUI from "@/ui/dashboard/pages/settings"
 import { notFound } from "next/navigation"
 
+export const instant = false
 export default async function Page() {
 	const settings = await getSettings()
 	const session = await verifySession()
