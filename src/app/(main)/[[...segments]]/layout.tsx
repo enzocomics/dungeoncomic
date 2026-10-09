@@ -2,7 +2,6 @@
 // LIBRARIES
 import { notFound } from "next/navigation"
 // DATA
-import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
 // FUNCTIONS
 import { resolveRoute } from "@/ui/platform/functions/resolver"
@@ -14,7 +13,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
-
+export const instant = false
 /**----------------------------------- */
 export default async function Layout({
 	children,
@@ -24,7 +23,6 @@ export default async function Layout({
 	params: Promise<{ segments?: string[] }>
 }) {
 	const { segments = [] } = await params
-	const session = await verifySession()
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
 
