@@ -12,9 +12,8 @@ export const settingsSchema = (
 
 				// "validate" in field ? [[key, field.validate] as const] : [] // Check if the pair has a validate property
 				if (!("validate" in field) || !field.validate) return []
-				// Runs for each field that has a validator
-				console.log(`Adding validator for ${key}`)
 
+				// Runs for each field that has a validator
 				let thing
 
 				if (field.validate) {
@@ -26,11 +25,7 @@ export const settingsSchema = (
 							z.httpUrl(),
 							z.url({ hostname: /^localhost$/ })
 						])
-
-
 				}
-
-
 				return [[key, thing] as const]
 
 			})
