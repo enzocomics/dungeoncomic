@@ -20,7 +20,7 @@ import { comicMetadata, comicPageMetadata, notFoundMetadata } from "@/ui/comic/m
 import { Metadata } from "next"
 import { CommentsSection } from "@/ui/comic/components/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
-
+export const instant = false
 /**----------------------------------- */
 export default async function MainPage({
 	params
