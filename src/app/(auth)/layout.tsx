@@ -9,12 +9,9 @@ import { Suspense } from "react"
  */
 export default async function AuthRootLayout(props: LayoutProps<"/">) {
 	return <>
-		<Suspense>
-			<StatusMessage />
-
-			<AuthLayout>
-				{props.children}
-			</AuthLayout>
-		</Suspense>
+		<StatusMessage />
+		<AuthLayout>
+			{props.children}
+		</AuthLayout>
 	</>
 }
