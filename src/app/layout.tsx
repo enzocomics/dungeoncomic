@@ -5,7 +5,6 @@ import { fonts } from "@/styles/fonts"
 import { Author } from "next/dist/lib/metadata/types/metadata-types"
 // LIBRARIES
 import { ThemeProvider } from "@teispace/next-themes"
-import { getTheme } from "@teispace/next-themes/server"
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 // DATA
@@ -22,7 +21,7 @@ import { Suspense } from "react"
  * APP - ROOT LAYOUT
  */
 export default async function RootLayout(props: LayoutProps<"/">) {
-	const initialTheme = await getTheme()
+
 	const settings = await getSettings()
 	const fontHeaders = settings.font_headers
 	const fontLabels = settings.font_labels
@@ -33,7 +32,6 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 	return <html lang="en" suppressHydrationWarning
 		className={clsx(
 			"h-full",
-
 			Object.values(fonts).map((f) => f.font.variable),
 			// Default Colours
 			"text-base-content",
@@ -70,7 +68,6 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 				<ThemeProvider
 					defaultTheme="light"
 					attribute={['class', 'data-theme']}
-					initialTheme={initialTheme ?? undefined}
 					themes={["system", "light", "dark"]}
 					disableTransitionOnChange={true}
 				>
