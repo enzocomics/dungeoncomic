@@ -20,27 +20,6 @@ import { getUserVarsCookie } from "./actions/variables"
  */
 
 
-// FALLBACK IMAGES
-const fallbackThumbnail = {
-	url: "/img/og-image.webp",
-	type: "image/webp",
-	width: "1600",
-	height: "630",
-	alt: "Dungeon Construction Co."
-}
-
-// METADATA VARS
-const settings = await getSettings()
-const fallbackProjectName = "Dungeon Construction Co."
-const projectName = settings.project_name || fallbackProjectName
-
-// PROJECT IMAGES & ICONS + FALLBACKS
-const projectThumbnail = settings.project_thumbnail ? {
-	url: `${directusURL}/assets/${settings.project_thumbnail.filename_disk}`,
-	type: settings.project_thumbnail.type,
-	width: settings.project_thumbnail.width,
-	height: settings.project_thumbnail.height,
-} : fallbackThumbnail
 
 /**-----------------------------------
  * METADATA - COMIC PROJECT
@@ -49,6 +28,30 @@ const projectThumbnail = settings.project_thumbnail ? {
 export async function comicMetadata(
 	comic_slug: string
 ) {
+	// FALLBACK IMAGES
+	const fallbackThumbnail = {
+		url: "/img/og-image.webp",
+		type: "image/webp",
+		width: "1600",
+		height: "630",
+		alt: "Dungeon Construction Co."
+	}
+
+	// METADATA VARS
+	const settings = await getSettings()
+	const fallbackProjectName = "Dungeon Construction Co."
+	const projectName = settings.project_name || fallbackProjectName
+
+	// PROJECT IMAGES & ICONS + FALLBACKS
+	const projectThumbnail = settings.project_thumbnail ? {
+		url: `${directusURL}/assets/${settings.project_thumbnail.filename_disk}`,
+		type: settings.project_thumbnail.type,
+		width: settings.project_thumbnail.width,
+		height: settings.project_thumbnail.height,
+	} : fallbackThumbnail
+
+
+
 	const locale: string = "en-CA" // TODO: I18N
 	// FETCH COMIC VARS
 	const comic = await getComic({ slug: comic_slug })
@@ -122,6 +125,31 @@ export async function comicPageMetadata(
 	comic_slug: string,
 	pagenum: number
 ) {
+
+	// FALLBACK IMAGES
+	const fallbackThumbnail = {
+		url: "/img/og-image.webp",
+		type: "image/webp",
+		width: "1600",
+		height: "630",
+		alt: "Dungeon Construction Co."
+	}
+
+	// METADATA VARS
+	const settings = await getSettings()
+	const fallbackProjectName = "Dungeon Construction Co."
+	const projectName = settings.project_name || fallbackProjectName
+
+	// PROJECT IMAGES & ICONS + FALLBACKS
+	const projectThumbnail = settings.project_thumbnail ? {
+		url: `${directusURL}/assets/${settings.project_thumbnail.filename_disk}`,
+		type: settings.project_thumbnail.type,
+		width: settings.project_thumbnail.width,
+		height: settings.project_thumbnail.height,
+	} : fallbackThumbnail
+
+
+
 	const locale: string = "en-CA" // TODO: I18N
 	// FETCH COMIC VARS
 	const comic = await getComic({ slug: comic_slug })
