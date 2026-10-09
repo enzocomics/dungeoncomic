@@ -72,73 +72,22 @@ export type ListFieldsField = {
 export function ListFields({
 	fieldsList,
 	collection,
-	collectionName,
 	fieldset,
-	lastResult,
 }: {
 	fieldsList: Record<string, ListFieldsField>
 	collection?: Awaited<ReturnType<typeof getSettings>>
-	collectionName?: string
+
 	fieldset?: any // TODO
-	lastResult?: SubmissionResult<string[]>
 
 }) {
-
-	const initialValues = Object.entries(fieldsList).map(([name, singleField], index) => {
-		return { name: name, value: singleField.value }
-	})
-
-	const [fieldValues, setFieldValues] = useState(initialValues)
-	const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
-
-	function handleSelect(e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>, index: number) {
-		const tempArray = [...fieldValues]
-		tempArray[index].value = e.target.value
-		// console.log(tempArray)
-		// inputRefs.current[index]
-		// console.log(inputRefs.current)
-		setFieldValues(tempArray)
-		// console.log(tempArray)
-		// console.log(index, e.target.value)
-	}
-
-	useEffect(() => {
-		if (lastResult?.status === "success") {
-			// console.log(lastResult)
-			// console.log(inputRefs.current[0]?.value)
-			// console.log(inputRefs.current[2]?.value)
-		}
-	}, [lastResult])
-
-
-	// console.log(lastResult)
 	// Loop through a fieldsList object and output UI depending on what kind of field it is
 	return <>
 		{Object.entries(fieldsList).map(([name, singleField], index) => {
-			// let value = collection ? collection[name as keyof typeof collection] : null
+
+			// let value = collection ? collection[name as keyof typeof collect7ion] : null
 			let disabled = false
 
-			let value = lastResult && lastResult.status == "success" && collectionName
-				? lastResult?.initialValue?.[collectionName][name as keyof typeof collection]
-				: singleField.value
-			// console.log(String(lastResult?.initialValue?.[collectionName][name as keyof typeof collection]))
-
-			// const [value, setValue] = useState(initialValue)
-
-			useEffect(() => {
-				if (lastResult && lastResult.status === "success" && collectionName) {
-					// const thisthing = lastResult.initialValue?.[collectionName][name as keyof typeof collection]
-					// console.log(thisthing)
-					// setValue(thisthing)
-				}
-			}, [lastResult])
-
-
-			// singleField.type === "select" &&
-			// 	console.log({
-			// 		value,
-			// 		options: singleField.options.map((option) => option.value),
-			// 	});
+			let value = singleField.value
 
 			// Check if the field has any conditions
 			if (singleField.conditions) {
@@ -156,8 +105,8 @@ export function ListFields({
 				}
 			}
 
-			// console.log(String(lastResult && lastResult.initialValue && lastResult.initialValue))
-			return <Field key={index} disabled={disabled} className={clsx(
+
+			return <Field key={index} className={clsx(
 				// singleField.width == "half" && [
 				// 	// "w-1/2",
 				// ]
@@ -173,24 +122,18 @@ export function ListFields({
 						name={fieldset ? fieldset[name].name : name}
 						key={fieldset && fieldset[name].key}
 						type="text"
-						ref={(i) => {
-							inputRefs.current[index] = i
-						}}
-						defaultValue={value} />
+						defaultValue={singleField.value} />
 				}
 
 				{/**----------------------------------- */}
 				{
 					singleField.type === "url" &&
 					<Input
-						ref={(i) => {
-							inputRefs.current[index] = i
-						}}
 						id={fieldset ? fieldset[name].name : name}
 						name={fieldset ? fieldset[name].name : name}
 						key={fieldset && fieldset[name].key}
 						type="text"
-						defaultValue={value} />
+						defaultValue={singleField.value} />
 				}
 
 				{/**----------------------------------- */}
@@ -198,21 +141,13 @@ export function ListFields({
 					singleField.type === "select" &&
 					<>
 						<Select
-							ref={(i) => {
-								inputRefs.current[index] = i
-							}}
 							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
-							key={fieldset && fieldset[name].key}
-							// defaultValue={value}
-							value={fieldValues[index].value}
-							onChange={(e) => handleSelect(e, index)}
-						// value={value}
-						// onChange={(e) => setValue(e.target.value)}
+							defaultValue={singleField.value}
 						>
 							{singleField.options.map((o, i) => (
 								<option key={i}
-									value={o.value}
+									value={(o.value)}
 								>
 									{o.name}
 								</option>
@@ -228,7 +163,7 @@ export function ListFields({
 						<Listbox
 							name={fieldset ? fieldset[name].name : name}
 							key={fieldset && fieldset[name].key}
-							defaultValue={value}
+							defaultValue={singleField.value}
 						>
 
 							{singleField.options.map((o, i) => (

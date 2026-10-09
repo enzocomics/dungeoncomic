@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState, useEffect } from "react"
+import { useActionState, useEffect, useRef } from "react"
 import Image from "next/image"
 // VALIDATION
 import z from "zod"
@@ -61,15 +61,15 @@ export default function SettingsPageUI({
 			options: [
 				{
 					name: "Single Creator, Single Comic",
-					value: "single/single"
+					value: "single-single"
 				},
 				{
 					name: "Single Creator, Multiple Comics",
-					value: "single/multiple"
+					value: "single-multiple"
 				},
 				{
 					name: "Multiple Creators, Multiple Comics",
-					value: "multiple/multiple"
+					value: "multiple-multiple"
 				}
 			],
 			width: "half"
@@ -88,7 +88,7 @@ export default function SettingsPageUI({
 			width: "half",
 			conditions: {
 				fieldKey: "routing_mode",
-				value: "single/single",
+				value: "single-single",
 				action: "enable",
 			}
 		},
@@ -194,10 +194,10 @@ export default function SettingsPageUI({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema:
-					routingMode == "multiple/multiple"
-						? settingsSchema([detailFields, comicTypeFields, userTypeFields])
-						: settingsSchema([detailFields])
+				schema: settingsSchema([detailFields, /*comicTypeFields, userTypeFields*/])
+				// routingMode == "multiple/multiple"
+				// 	? settingsSchema([detailFields, comicTypeFields, userTypeFields])
+				// 	: settingsSchema([detailFields])
 			})
 		},
 		onSubmit() {
@@ -212,9 +212,14 @@ export default function SettingsPageUI({
 	useEffect(() => {
 		if (lastResult?.status == "success") {
 			setStatus("success", "Your settings have been saved.")
-			router.refresh()
+			// router.refresh()
 		}
 	}, [lastResult])
+
+
+	const inputRefs = useRef<Record<string, HTMLSelectElement | null>>({})
+
+	// console.log("parent lastResult:", lastResult)
 
 	// RENDER
 	return <>
@@ -226,6 +231,9 @@ export default function SettingsPageUI({
 			onSubmit={form.onSubmit}
 			action={action}
 			noValidate
+			onReset={(e) => {
+				e.preventDefault()
+			}}
 
 		>
 			<FieldsetSection>
@@ -234,50 +242,45 @@ export default function SettingsPageUI({
 					<ListFields
 						fieldsList={detailFields}
 						fieldset={settingsFieldset}
-						lastResult={lastResult}
 						collection={settings}
-						collectionName="settings"
+
 					/>
 				</FieldGroup2Columns>
 			</FieldsetSection>
 
-			{(settings.routing_mode === "multiple/multiple") &&
-				<>
-					<FieldsetSection>
-						<Legend>Series Type</Legend>
-						<FieldsetDescription>
-							<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-							If you're not making comics, or want to name your series type something else, you may change it here.
-						</FieldsetDescription>
-						<FieldGroup2Columns>
-							<ListFields
-								fieldsList={comicTypeFields}
-								fieldset={settingsFieldset}
-								lastResult={lastResult}
-								collection={settings}
-								collectionName="settings"
-							/>
-						</FieldGroup2Columns>
-					</FieldsetSection>
 
-					<FieldsetSection>
-						<Legend>User Type</Legend>
-						<FieldsetDescription>
-							<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-							You can change what you call your users here.
-						</FieldsetDescription>
-						<FieldGroup2Columns>
-							<ListFields
-								fieldsList={userTypeFields}
-								fieldset={settingsFieldset}
-								lastResult={lastResult}
-								collection={settings}
-								collectionName="settings"
-							/>
-						</FieldGroup2Columns>
-					</FieldsetSection>
-				</>
-			}
+
+			<FieldsetSection>
+				<Legend>Series Type</Legend>
+				<FieldsetDescription>
+					<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+					If you're not making comics, or want to name your series type something else, you may change it here.
+				</FieldsetDescription>
+				<FieldGroup2Columns>
+					<ListFields
+						fieldsList={comicTypeFields}
+						fieldset={settingsFieldset}
+						collection={settings}
+					/>
+				</FieldGroup2Columns>
+			</FieldsetSection>
+
+			<FieldsetSection>
+				<Legend>User Type</Legend>
+				<FieldsetDescription>
+					<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
+					You can change what you call your users here.
+				</FieldsetDescription>
+				<FieldGroup2Columns>
+					<ListFields
+						fieldsList={userTypeFields}
+						fieldset={settingsFieldset}
+						collection={settings}
+					/>
+				</FieldGroup2Columns>
+			</FieldsetSection>
+
+
 			<ComicButton as="button" type="submit">Save</ComicButton>
 		</form>
 

@@ -23,7 +23,7 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 			}),
 		)
 		updateTag("settings")
-		console.log(updateSettings)
+		// console.log(updateSettings)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
