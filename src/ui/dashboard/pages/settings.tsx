@@ -1,11 +1,7 @@
 // VALIDATION
-import z from "zod"
-import { parseWithZod } from "@conform-to/zod/v4"
-import { useForm } from "@conform-to/react"
-
 import { PageTitleH1 } from "@/components/page"
 import { getSettings } from "@/lib/directus/get-settings"
-import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import SettingsPageForm from "./settings-client"
 
 export default async function SettingsPageUI() {
@@ -14,6 +10,7 @@ export default async function SettingsPageUI() {
 		<PageTitleH1>
 			Site Settings
 		</PageTitleH1>
+
 		<SettingsPageForm
 			fieldsLists={{
 				detailFields: await getDetailFields(),
@@ -106,7 +103,6 @@ const getDetailFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-
 export const comicTypeFields = async () => {
 	const settings = await getSettings()
 	return {
@@ -149,7 +145,6 @@ export const comicTypeFields = async () => {
 		},
 	} satisfies Record<string, ListFieldsField>
 }
-
 
 export const userTypeFields = async () => {
 	const settings = await getSettings()

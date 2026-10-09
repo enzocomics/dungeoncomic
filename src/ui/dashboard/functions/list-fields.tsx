@@ -1,17 +1,12 @@
-"use client"
 /**----------------------------------- */
 // FUNCTIONS
 import clsx from "clsx"
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Input, Label, Description, ErrorMessage, MarkedText } from "@/components/input/fieldset"
+import { Field, Input, Label, Description, ErrorMessage } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
-import z, { ZodURL } from "zod"
-import { SubmissionResult } from "@conform-to/react"
-import { ChangeEvent, useEffect, useRef, useState } from "react"
 
 /**----------------------------------- */
 // TYPES

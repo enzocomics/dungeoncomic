@@ -34,11 +34,6 @@ export default function SettingsPageForm({
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
 
-	// Field Lists
-
-
-	const router = useRouter()
-	const routingMode = settings.routing_mode
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
 
