@@ -89,7 +89,7 @@ export function Field({
 			className={clsx(
 				className,
 				"data-disabled:opacity-25",
-				"data-disabled:pointer-events-none",
+				// "data-disabled:pointer-events-none",
 			)}
 		>
 			{props.children}
@@ -133,6 +133,7 @@ export const Input = forwardRef(function Input({
 				"focus:outline-4",
 				"focus:-outline-offset-2",
 				"focus:outline-comic-accent-500",
+				"data-disabled:cursor-not-allowed"
 			)}
 		/>
 	</>
@@ -150,6 +151,7 @@ export function Label({
 				"cursor-pointer",
 				"font-platform-headers",
 				"font-semibold",
+				"data-disabled:cursor-auto",
 			)}
 		>
 			{props.children}
