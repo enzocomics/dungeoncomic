@@ -10,6 +10,13 @@ import { Listbox, ListboxOption } from "@/components/input/listbox"
 
 /**----------------------------------- */
 // TYPES
+
+export type SettingsSection = Record<string, {
+	legend: string,
+	description: string | null,
+	fields: Record<string, ListFieldsField>
+}>
+
 type FieldBase = {
 	title: string,
 	description?: string,
@@ -46,6 +53,7 @@ type FieldProperties = {
 	image: {
 	}
 }
+
 
 /**----------------------------------- */
 // Create a union of all the possible field shapes from `FieldProperties`

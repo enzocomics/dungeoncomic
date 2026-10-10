@@ -1,31 +1,29 @@
-// VALIDATION
-import { PageTitleH1 } from "@/components/page"
+/**----------------------------------- */
+// LIBRARIES
+import { marked } from "marked"
+// DATA
 import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import { PageTitleH1 } from "@/components/page"
 import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
-import SettingsPageForm from "./settings-client"
+import SettingsPageForm from "@/ui/dashboard/pages/client/settings-form"
 
+/**----------------------------------- */
 export default async function SettingsPageUI() {
 	const settings = await getSettings()
+	const sections = await getSections()
 	return <>
 		<PageTitleH1>
 			Site Settings
 		</PageTitleH1>
-
 		<SettingsPageForm
-			fieldsLists={{
-				detailFields: await getDetailFields(),
-				comicTypeFields: await comicTypeFields(),
-				userTypeFields: await userTypeFields()
-			}}
+			sections={sections}
 			settings={settings}
-		>
-
-
-		</SettingsPageForm>
+		/>
 	</>
 }
 
-
+/**----------------------------------- */
 const getDetailFields = async () => {
 	const settings = await getSettings()
 	return {
@@ -103,7 +101,7 @@ const getDetailFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-export const comicTypeFields = async () => {
+const getComicTypeFields = async () => {
 	const settings = await getSettings()
 	return {
 		// Post Types
@@ -146,7 +144,7 @@ export const comicTypeFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-export const userTypeFields = async () => {
+const getUserTypeFields = async () => {
 	const settings = await getSettings()
 	return {
 		// Post Types
@@ -187,4 +185,28 @@ export const userTypeFields = async () => {
 			maxLength: 128
 		},
 	} satisfies Record<string, ListFieldsField>
+}
+
+const getSections = async () => {
+	return {
+		details: {
+			legend: "Details",
+			description: null,
+			fields: await getDetailFields()
+		},
+		comicType: {
+			legend: "Series Type",
+			description: await marked.parse(`*(Multiple Creators/Multiple Comics Routing Mode only)*
+
+If you're not making comics, or want to name your series type something else, you may change it here.`),
+			fields: await getComicTypeFields()
+		},
+		userType: {
+			legend: "User Type",
+			description: await marked.parse(`*(Multiple Creators/Multiple Comics Routing Mode only)*
+				
+You can change what you call your users here.`),
+			fields: await getUserTypeFields()
+		}
+	}
 }

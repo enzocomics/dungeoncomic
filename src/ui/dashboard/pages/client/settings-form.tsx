@@ -17,20 +17,22 @@ import { ComicButton } from "@/components/input/button"
 import { Select } from "@/components/input/dropdown"
 import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
-import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
 import { useChangeStatus } from "@/components/status-message"
 import { useRouter } from "next/navigation"
 
-import { settingsSchema } from "../functions/settings-schema"
+import { settingsSchema } from "../../functions/settings-schema"
 
 
 /**----------------------------------- */
 export default function SettingsPageForm({
-	fieldsLists,
+	// fieldsLists,
+	sections,
 	settings
 }: {
-	fieldsLists: Record<string, Record<string, ListFieldsField>>
+	// fieldsLists: Record<string, Record<string, ListFieldsField>>
+	sections: SettingsSection
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
 
@@ -44,10 +46,7 @@ export default function SettingsPageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: settingsSchema([fieldsLists.detailFields, /*comicTypeFields, userTypeFields*/])
-				// routingMode == "multiple/multiple"
-				// 	? settingsSchema([detailFields, comicTypeFields, userTypeFields])
-				// 	: settingsSchema([detailFields])
+				schema: settingsSchema([sections.details.fields, /*comicTypeFields, userTypeFields*/])
 			})
 		},
 		onSubmit() {
@@ -138,52 +137,28 @@ export default function SettingsPageForm({
 			onReset={(e) => {
 				e.preventDefault()
 			}}
-
 		>
-			<FieldsetSection>
-				<Legend>Details</Legend>
-				<FieldGroup2Columns>
-					<ListFields
-						fieldsList={fieldsLists.detailFields}
-						fieldset={settingsFieldset}
-						collection={settings}
-						inputRefs={inputRefs}
-					/>
-				</FieldGroup2Columns>
-			</FieldsetSection>
-
-			<FieldsetSection >
-				<Legend>Series Type</Legend>
-				<FieldsetDescription>
-					<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-					If you're not making comics, or want to name your series type something else, you may change it here.
-				</FieldsetDescription>
-				<FieldGroup2Columns>
-					<ListFields
-						fieldsList={fieldsLists.comicTypeFields}
-						fieldset={settingsFieldset}
-						collection={settings}
-						disableAll={hideTypes}
-					/>
-				</FieldGroup2Columns>
-			</FieldsetSection>
-
-			<FieldsetSection>
-				<Legend>User Type</Legend>
-				<FieldsetDescription>
-					<em>Multiple Creators/Multiple Comics Routing Mode only &mdash; </em>
-					You can change what you call your users here.
-				</FieldsetDescription>
-				<FieldGroup2Columns>
-					<ListFields
-						fieldsList={fieldsLists.userTypeFields}
-						fieldset={settingsFieldset}
-						collection={settings}
-						disableAll={hideTypes}
-					/>
-				</FieldGroup2Columns>
-			</FieldsetSection>
-
+			{Object.entries(sections).map(([name, section], index) => {
+				return <FieldsetSection key={index}>
+					<Legend>{section.legend}</Legend>
+					{section.description &&
+						<FieldsetDescription
+							dangerouslySetInnerHTML={{
+								__html: section.description
+							}}
+						/>
+					}
+					<FieldGroup2Columns>
+						<ListFields
+							fieldsList={section.fields}
+							fieldset={settingsFieldset}
+							collection={settings}
+							inputRefs={inputRefs}
+							disableAll={name !== "details" && hideTypes}
+						/>
+					</FieldGroup2Columns>
+				</FieldsetSection>
+			})}
 
 			<ComicButton as="button" type="submit">Save</ComicButton>
 		</form>
