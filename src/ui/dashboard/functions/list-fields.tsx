@@ -8,6 +8,7 @@ import { Select } from "@/components/input/dropdown"
 import { Field, Input, Label, Description, ErrorMessage, FieldDescription } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
 import { FieldMetadata } from "@conform-to/react"
+import { marked } from "marked"
 
 /**----------------------------------- */
 // TYPES
@@ -55,7 +56,6 @@ type FieldProperties = {
 	}
 }
 
-
 /**----------------------------------- */
 // Create a union of all the possible field shapes from `FieldProperties`
 export type ListFieldsField = {
@@ -72,7 +72,44 @@ export type ListFieldsField = {
 	// I.E. TextField | UrlField | DropdownField | ImageField
 }[keyof FieldProperties]
 
-
+/** 
+ * This function create a nested object that awaits the description of each field in each section with the following shape:
+ * {
+ * 		sectionName: {
+ * 			fields: {
+ * 				fieldName: {
+ * 					descripton: "markdown-parsed description"
+ * 				}
+ * 			}
+ * 		}
+ * }
+ * This shape matches the shape of the sections object so that it can be mapped in the same way
+ */
+export async function getFieldDescriptions(sections: Record<
+	string,
+	{ fields: Record<string, { description: string }> }
+>) {
+	const resolvedSections = sections
+	return Object.fromEntries(
+		await Promise.all(
+			Object.entries(resolvedSections).map(async ([name, section]) => [
+				name,
+				{
+					fields: Object.fromEntries(
+						await Promise.all(
+							Object.entries(section.fields).map(async ([fName, field]) => [
+								fName,
+								{
+									description: await marked.parse(field.description)
+								}
+							])
+						)
+					)
+				}
+			])
+		)
+	)
+}
 /**----------------------------------- */
 export function ListFields({
 	collection,

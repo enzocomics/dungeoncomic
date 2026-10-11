@@ -5,49 +5,14 @@ import { marked } from "marked"
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { PageTitleH1 } from "@/components/page"
-import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { getFieldDescriptions, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import SettingsPageForm from "@/ui/dashboard/pages/client/settings-form"
 
 /**----------------------------------- */
 export default async function SettingsPageUI() {
 	const settings = await getSettings()
 	const sections = await getSections()
-	/** 
-	 * Create a nested object that awaits the description of each field in each section with the following shape:
-	 * {
-	 * 		sectionName: {
-	 * 			fields: {
-	 * 				fieldName: {
-	 * 					descripton: "markdown-parsed description"
-	 * 				}
-	 * 			}
-	 * 		}
-	 * }
-	 * This shape matches the shape of the sections object so that it can be mapped in the same way
-	 */
-	const fieldDescriptions = Object.fromEntries(
-		await Promise.all(
-			Object.entries(sections).map(
-				async ([name, section], index) => [
-					name, {
-						fields: Object.fromEntries(
-							await Promise.all(
-								Object.entries(section.fields).map(
-									async ([fName, field], fIndex) => [
-										fName, {
-											description: await marked.parse(field.description)
-										}
-									]
-								)
-							)
-						)
-					}
-				]
-			)
-		)
-	)
-
-	// console.log(fieldDescriptions)
+	const fieldDescriptions = await getFieldDescriptions(sections)
 	return <>
 		<PageTitleH1>
 			Site Settings
