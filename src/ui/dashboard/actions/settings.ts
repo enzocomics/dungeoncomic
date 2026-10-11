@@ -19,6 +19,10 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 		"comic_type_name_plural",
 		"comic_type_name_slug",
 		"comic_type_name_plural_slug",
+		"user_type_name",
+		"user_type_name_plural",
+		"user_type_name_slug",
+		"user_type_name_plural_slug",
 	] as const
 
 	try {
