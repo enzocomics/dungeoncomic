@@ -16,6 +16,7 @@ import clsx from "clsx"
 import GlobalContextProvider from "@/ui/platform/context"
 import ClientPlatformEffects from "@/ui/platform/effects"
 import { Suspense } from "react"
+import { getComic } from "@/lib/directus/get-comics"
 
 /**-----------------------------------
  * APP - ROOT LAYOUT
@@ -23,10 +24,15 @@ import { Suspense } from "react"
 export default async function RootLayout(props: LayoutProps<"/">) {
 
 	const settings = await getSettings()
-	const fontHeaders = settings.font_headers
-	const fontLabels = settings.font_labels
-	const fontCopy = settings.font_copy
-	const fontMono = settings.font_mono
+	const routingMode = settings.routing_mode
+	const isSingleSingleMode = routingMode === "single-single"
+	const frontpageComic = await getComic({ slug: settings.frontpage_comic?.slug })
+	const fontHeaders = isSingleSingleMode ? frontpageComic.font_headers : settings.font_headers
+	const fontLabels = isSingleSingleMode ? frontpageComic.font_labels : settings.font_labels
+	const fontCopy = isSingleSingleMode ? frontpageComic.copy_font : settings.font_copy
+	const fontMono = isSingleSingleMode ? frontpageComic.font_mono : settings.font_mono
+
+	console.log(fontCopy)
 	// Fonts
 	// const platformDisplay = settings.
 	return <html lang="en" suppressHydrationWarning
