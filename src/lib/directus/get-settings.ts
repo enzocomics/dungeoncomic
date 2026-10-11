@@ -82,6 +82,11 @@ export const getSettings = async () => {
 						"slug",
 						"description",
 						{ authors: ["name", "username", "email"] },
+						// FONTS
+						"font_headers",
+						"font_labels",
+						"font_copy",
+						"font_mono",
 					],
 				},
 				// "single_comic_site",

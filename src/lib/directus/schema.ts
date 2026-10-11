@@ -59,6 +59,11 @@ export interface ComicsCollection {
 	date_updated: "datetime"
 	// Content
 	pages: number[] | PagesCollection[]
+	// Fonts
+	font_headers: string
+	font_labels: string
+	font_copy: string
+	font_mono: string
 }
 
 /** ------------------------------------------------ **/

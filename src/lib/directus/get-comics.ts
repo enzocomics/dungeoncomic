@@ -52,6 +52,11 @@ export const getComics = async (
 				"accent_color",
 				"display_font",
 				"count(pages)",
+				// FONTS
+				"font_headers",
+				"font_labels",
+				"font_copy",
+				"font_mono",
 			],
 		}),
 	)
@@ -116,6 +121,11 @@ export const getComic = async ({ slug }: { slug?: string }) => {
 				"date_updated",
 				"id",
 				"count(pages)",
+				// FONTS
+				"font_headers",
+				"font_labels",
+				"font_copy",
+				"font_mono",
 			],
 		}),
 	)
