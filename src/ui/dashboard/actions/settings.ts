@@ -26,13 +26,24 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 	] as const
 
 	try {
-		// Iterate through the fields and create an object that only get the formdata from fields that have been submitted (not null)
-		const updates = Object.fromEntries(
-			fields.flatMap((field) => {
-				const value = formData.get(`settings.${field}`)
-				return value === null ? [] : [[field, value]]
-			}),
-		)
+		// Create a type from the names in the `fields` array
+		type SettingField = (typeof fields)[number]
+
+		// Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
+		const updates: Partial<Record<SettingField, string | null>> = {}
+
+		// Iterate through the fieldsArray
+		for (const field of fields) {
+			// Get each formdatad field by its name
+			const value = formData.get(`settings.${field}`)
+
+			// skip the field if its value is null (not submitted)
+			if (value === null) continue
+			if (typeof value !== "string") continue // Ignore File values
+
+			// if the submitted value is __CLEAR__ then send null to directus
+			updates[field] = value === "__CLEAR__" ? null : value
+		}
 
 		// Update CMS and pass the object
 		const updateSettings = await userClient.request(

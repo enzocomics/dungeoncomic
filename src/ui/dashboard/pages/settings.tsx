@@ -75,8 +75,13 @@ const getDetailFields = async () => {
 			description: "(Single creator/single comic only) Choose which comic will live at the root of the domain. If you only have one comic, it will be selected by default. If you have multiple comics, it will default to very first one by creation date -- the other comics will be inaccessible.",
 			type: "select",
 			value: settings.frontpage_comic ? String(settings.frontpage_comic.id) : "",
-			options:
-				(await getComics()).map(({ title, id }) => ({ name: title, value: String(id) }))
+			options: [
+				{
+					name: "No selection",
+					value: "__CLEAR__"
+				},
+				...(await getComics()).map(({ title, id }) => ({ name: title, value: String(id) }))
+			]
 			,
 			width: "half",
 			conditions: {
