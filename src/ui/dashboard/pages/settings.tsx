@@ -14,7 +14,6 @@ export default async function SettingsPageUI() {
 	const settings = await getSettings()
 	const sections = await getSections()
 	const fieldDescriptions = await getFieldDescriptions(sections)
-	console.log(await getComics())
 	return <>
 		<PageTitleH1>
 			Site Settings
