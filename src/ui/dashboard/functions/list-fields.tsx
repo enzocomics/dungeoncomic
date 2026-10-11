@@ -204,9 +204,11 @@ export function ListFields({
 					fieldset &&
 					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
 				}
-				<FieldDescription dangerouslySetInnerHTML={{
-					__html: String(fieldDescriptions?.[name].description)
-				}} />
+				{fieldDescriptions?.[name].description &&
+					<FieldDescription dangerouslySetInnerHTML={{
+						__html: fieldDescriptions?.[name].description
+					}} />
+				}
 				{/**----------------------------------- */}
 			</Field >
 		})}
