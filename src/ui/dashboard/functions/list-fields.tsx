@@ -43,7 +43,7 @@ type FieldProperties = {
 	select: {
 		options: {
 			name: string
-			value: string
+			value: string | number
 		}[]
 	},
 	selectFont: {
@@ -136,7 +136,6 @@ export function ListFields({
 	// Loop through a fieldsList object and output UI depending on what kind of field it is
 	return <>
 		{Object.entries(fieldsList).map(([name, singleField], index) => {
-
 			// let value = collection ? collection[name as keyof typeof collect7ion] : null
 			let disabled = false
 
@@ -157,7 +156,6 @@ export function ListFields({
 					disabled = true
 				}
 			}
-
 
 			return <Field key={index} disabled={disableAll || disabled} className={clsx(
 				// singleField.width == "half" && [
