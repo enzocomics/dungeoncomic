@@ -8,31 +8,23 @@ import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
 // FUNCTIONS
-import clsx from "clsx"
 // DATA
-import { fonts } from "@/styles/fonts"
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
-import { Select } from "@/components/input/dropdown"
-import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
+import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
-import { ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
-import { PageTitleH1 } from "@/components/page"
+import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
-import { useRouter } from "next/navigation"
-
-import { settingsSchema } from "../../functions/settings-schema"
+import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
 
 
 /**----------------------------------- */
 export default function SettingsPageForm({
-	// fieldsLists,
 	descriptions,
 	sections,
 	settings
 }: {
-	// fieldsLists: Record<string, Record<string, ListFieldsField>>
 	descriptions: any
 	sections: SettingsSection
 	settings: Awaited<ReturnType<typeof getSettings>>
