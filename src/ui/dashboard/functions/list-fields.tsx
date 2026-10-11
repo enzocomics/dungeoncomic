@@ -5,8 +5,9 @@ import clsx from "clsx"
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { Select } from "@/components/input/dropdown"
-import { Field, Input, Label, Description, ErrorMessage } from "@/components/input/fieldset"
+import { Field, Input, Label, Description, ErrorMessage, FieldDescription } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
+import { FieldMetadata } from "@conform-to/react"
 
 /**----------------------------------- */
 // TYPES
@@ -78,12 +79,18 @@ export function ListFields({
 	disableAll = false,
 	fieldsList,
 	fieldset,
+	fieldDescriptions,
 	inputRefs
 }: {
 	fieldsList: Record<string, ListFieldsField>
 	disableAll?: boolean
 	collection?: Awaited<ReturnType<typeof getSettings>>
-	fieldset?: any // TODO
+	fieldset?: Required<{
+		[x: string]: FieldMetadata<unknown, Record<
+			string, Record<string, unknown>
+		>, string[]>;
+	}>
+	fieldDescriptions?: Record<string, Record<string, string>>
 	inputRefs?: React.RefObject<
 		Record<string, HTMLSelectElement | null>
 	>
@@ -197,9 +204,9 @@ export function ListFields({
 					fieldset &&
 					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
 				}
-				<Description>
-					{singleField.description}
-				</Description>
+				<FieldDescription dangerouslySetInnerHTML={{
+					__html: String(fieldDescriptions?.[name].description)
+				}} />
 				{/**----------------------------------- */}
 			</Field >
 		})}

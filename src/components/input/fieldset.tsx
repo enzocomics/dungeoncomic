@@ -180,6 +180,27 @@ export function Description({
 	</>
 }
 
+export function FieldDescription({
+	className,
+	...props
+}: { className?: string } & ComponentPropsWithoutRef<"div">) {
+	return <>
+		<div
+			{...props}
+			className={clsx(
+				className,
+				"font-platform-copy",
+				"font-normal",
+				"text-sm",
+				"text-base-content/60",
+				"dark:text-white/50",
+			)}
+		>
+			{props.children}
+		</div>
+	</>
+}
+
 
 export function Legend({
 	className,

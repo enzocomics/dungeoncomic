@@ -28,10 +28,12 @@ import { settingsSchema } from "../../functions/settings-schema"
 /**----------------------------------- */
 export default function SettingsPageForm({
 	// fieldsLists,
+	descriptions,
 	sections,
 	settings
 }: {
 	// fieldsLists: Record<string, Record<string, ListFieldsField>>
+	descriptions: any
 	sections: SettingsSection
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
@@ -126,7 +128,6 @@ export default function SettingsPageForm({
 			routingModeSelect.removeEventListener("change", handleRoutingMode)
 		}
 	}, [])
-
 	// RENDER
 	return <>
 		<form
@@ -139,7 +140,9 @@ export default function SettingsPageForm({
 			}}
 		>
 			{Object.entries(sections).map(([name, section], index) => {
+
 				return <FieldsetSection key={index}>
+					<></>
 					<Legend>{section.legend}</Legend>
 					{section.description &&
 						<FieldsetDescription
@@ -152,6 +155,7 @@ export default function SettingsPageForm({
 						<ListFields
 							fieldsList={section.fields}
 							fieldset={settingsFieldset}
+							fieldDescriptions={descriptions[name].fields}
 							collection={settings}
 							inputRefs={inputRefs}
 							disableAll={name !== "details" && hideTypes}
