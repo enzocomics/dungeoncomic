@@ -1778,6 +1778,198 @@
     }
   },
   {
+    "collection": "comics",
+    "field": "font_headers",
+    "type": "string",
+    "schema": {
+      "name": "font_headers",
+      "table": "comics",
+      "data_type": "character varying",
+      "default_value": "inter",
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "comics",
+      "field": "font_headers",
+      "special": null,
+      "interface": "input",
+      "options": {
+        "slug": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 8,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": true,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "font_labels",
+    "type": "string",
+    "schema": {
+      "name": "font_labels",
+      "table": "comics",
+      "data_type": "character varying",
+      "default_value": "inter",
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "comics",
+      "field": "font_labels",
+      "special": null,
+      "interface": "input",
+      "options": {
+        "slug": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 9,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": true,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "font_copy",
+    "type": "string",
+    "schema": {
+      "name": "font_copy",
+      "table": "comics",
+      "data_type": "character varying",
+      "default_value": "inter",
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "comics",
+      "field": "font_copy",
+      "special": null,
+      "interface": "input",
+      "options": {
+        "slug": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 10,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": true,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "comics",
+    "field": "font_mono",
+    "type": "string",
+    "schema": {
+      "name": "font_mono",
+      "table": "comics",
+      "data_type": "character varying",
+      "default_value": "google-sans-code",
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "comics",
+      "field": "font_mono",
+      "special": null,
+      "interface": "input",
+      "options": {
+        "slug": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 11,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": true,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
     "collection": "comments",
     "field": "id",
     "type": "integer",
@@ -4827,7 +5019,7 @@
       "name": "routing_mode",
       "table": "settings",
       "data_type": "character varying",
-      "default_value": "single/single",
+      "default_value": "single-single",
       "generation_expression": null,
       "max_length": 255,
       "numeric_precision": null,
@@ -4852,15 +5044,15 @@
         "choices": [
           {
             "text": "Single Creator, Single Comic",
-            "value": "single/single"
+            "value": "single-single"
           },
           {
             "text": "Single Creator, Multiple Comics",
-            "value": "single/multiple"
+            "value": "single-multiple"
           },
           {
             "text": "Multiple Creators, Multiple Comics",
-            "value": "multiple/multiple"
+            "value": "multiple-multiple"
           }
         ]
       },
