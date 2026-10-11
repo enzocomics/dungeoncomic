@@ -7,12 +7,14 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import SettingsPageForm from "@/ui/dashboard/pages/client/settings-form"
+import { getComics } from "@/lib/directus/get-comics"
 
 /**----------------------------------- */
 export default async function SettingsPageUI() {
 	const settings = await getSettings()
 	const sections = await getSections()
 	const fieldDescriptions = await getFieldDescriptions(sections)
+	console.log(await getComics())
 	return <>
 		<PageTitleH1>
 			Site Settings
@@ -72,13 +74,10 @@ const getDetailFields = async () => {
 			title: "Frontpage Comic",
 			description: "(Single creator/single comic only) Choose which comic will live at the root of the domain. If you only have one comic, it will be selected by default. If you have multiple comics, it will default to very first one by creation date -- the other comics will be inaccessible.",
 			type: "select",
-			value: settings.frontpage_comic ? settings.frontpage_comic.title : "",
-			options: [
-				{
-					name: "sup",
-					value: "sup"
-				}
-			],
+			value: settings.frontpage_comic ? String(settings.frontpage_comic.id) : "",
+			options:
+				(await getComics()).map(({ title, id }) => ({ name: title, value: String(id) }))
+			,
 			width: "half",
 			conditions: {
 				fieldKey: "routing_mode",
