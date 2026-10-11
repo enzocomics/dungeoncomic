@@ -1,11 +1,5 @@
-"use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState } from "react"
-import Image from "next/image"
-import z from "zod"
-import { parseWithZod } from "@conform-to/zod/v4"
-import { useForm } from "@conform-to/react"
 // FUNCTIONS
 import clsx from "clsx"
 // DATA
@@ -13,22 +7,35 @@ import { fonts } from "@/styles/fonts"
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
-import { Select } from "@/components/input/dropdown"
 import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
-import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { getFieldDescriptions, ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
+import ThemePageForm from "./client/theme-form"
 
 
 
 /**----------------------------------- */
-export default function ThemePageUI({
-	settings
-}: {
-	settings: Awaited<ReturnType<typeof getSettings>>
-}) {
+export default async function ThemePageUI() {
+	const settings = await getSettings()
+	const sections = await getSections()
+	const fieldDescriptions = await getFieldDescriptions(sections)
+	return <>
+		<PageTitleH1>
+			Theme
+		</PageTitleH1>
+		<ThemePageForm
+			sections={sections}
+			descriptions={fieldDescriptions}
+			settings={settings}
+		/>
+	</>
+}
 
-	const appearanceFields = {
+
+const getAppearanceFields = async () => {
+	const settings = await getSettings()
+	return {
 		font_headers: {
 			title: "Headers Font",
 			description: "Page titles will appear in this font. If your website does not have an logo image uploaded, your website title will also appear in this font.",
@@ -45,7 +52,6 @@ export default function ThemePageUI({
 					)),
 			width: "half"
 		},
-
 
 		font_labels: {
 			title: "Labels Font",
@@ -99,39 +105,14 @@ export default function ThemePageUI({
 		},
 
 	} satisfies Record<string, ListFieldsField>
-
-	// VALIDATION
-	const [lastResult, action] = useActionState(saveSettings, undefined)
-	const [form, fields] = useForm({
-		lastResult,
-		// onValidate({ formData }) {
-		// 	return parseWithZod(formData, { settingsSchema })
-		// },
-		shouldValidate: "onBlur",
-		shouldRevalidate: "onInput"
-	})
-
-
-	return <>
-		<PageTitleH1>
-			Theme
-		</PageTitleH1>
-
-		<FieldsetSection>
-			<Legend>Fonts</Legend>
-			<FieldGroup2Columns>
-				<ListFields fieldsList={appearanceFields} collection={settings} />
-			</FieldGroup2Columns>
-		</FieldsetSection>
-
-		<ComicButton as="button">Save</ComicButton>
-
-	</>
 }
 
-
-/**----------------------------------- */
-// VALIDATION SCHEMA
-export const settingsSchema = z.object({
-
-})
+const getSections = async () => {
+	return {
+		details: {
+			legend: "",
+			description: null,
+			fields: await getAppearanceFields()
+		},
+	}
+}
