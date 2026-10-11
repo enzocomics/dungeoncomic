@@ -77,6 +77,7 @@ export const getSettings = async () => {
 				},
 				{
 					frontpage_comic: [
+						"id",
 						"title",
 						"slug",
 						"description",
