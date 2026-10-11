@@ -12,7 +12,7 @@ const url = new URL(directusURL)
 // NEXT.JS CONFIGURATION
 const nextConfig: NextConfig = {
 	cacheComponents: true,
-	// partialPrefetching: true,
+	partialPrefetching: true,
 	output: "standalone",
 
 	staticPageGenerationTimeout: 1000,
