@@ -5,61 +5,66 @@ import { adminClient, publicClient } from "@/lib/directus/clients"
 import { type QueryFilter, readItems } from "@directus/sdk"
 import { cache } from "react"
 import { ComicsCollection, DirectusSchema } from "./schema"
+import { cacheTag } from "next/cache"
 
 /** ------------------------------------------------ **
  * GET COMICS
  */
 
-export const getComics = cache(
-	async (filter?: QueryFilter<DirectusSchema, ComicsCollection>) => {
-		const request = await publicClient.request(
-			readItems("comics", {
-				filter: filter,
-				fields: [
-					"id",
-					"title",
-					"description",
-					"slug",
-					{
-						logo: ["filename_disk", "type", "width", "height", "description"],
-					},
-					{
-						banner: ["filename_disk", "type", "width", "height", "description"],
-					},
-					{
-						thumbnail: [
-							"filename_disk",
-							"type",
-							"width",
-							"height",
-							"description",
-						],
-					},
-					{
-						authors: [
-							"id",
-							"email",
-							"name",
-							"username",
-							"avatar",
-							"homepage_url",
-						],
-					},
-					"accent_color",
-					"display_font",
-					"count(pages)",
-				],
-			}),
-		)
+export const getComics = async (
+	filter?: QueryFilter<DirectusSchema, ComicsCollection>,
+) => {
+	"use cache"
+	cacheTag("comics")
+	const request = await publicClient.request(
+		readItems("comics", {
+			filter: filter,
+			fields: [
+				"id",
+				"title",
+				"description",
+				"slug",
+				{
+					logo: ["filename_disk", "type", "width", "height", "description"],
+				},
+				{
+					banner: ["filename_disk", "type", "width", "height", "description"],
+				},
+				{
+					thumbnail: [
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
+				},
+				{
+					authors: [
+						"id",
+						"email",
+						"name",
+						"username",
+						"avatar",
+						"homepage_url",
+					],
+				},
+				"accent_color",
+				"display_font",
+				"count(pages)",
+			],
+		}),
+	)
 
-		return request
-	},
-)
+	return request
+}
 
 /** ------------------------------------------------ **
  * GET COMIC
  */
-export const getComic = cache(async ({ slug }: { slug?: string }) => {
+export const getComic = async ({ slug }: { slug?: string }) => {
+	"use cache"
+	cacheTag("comic")
 	const request = await publicClient.request(
 		readItems("comics", {
 			filter: slug
@@ -115,12 +120,14 @@ export const getComic = cache(async ({ slug }: { slug?: string }) => {
 		}),
 	)
 	return request?.[0]
-})
+}
 
 /** ------------------------------------------------ **
  * GET SINGLE COMIC PAGE
  */
-export const getComicPage = cache(async (comic_slug: string, num: number) => {
+export const getComicPage = async (comic_slug: string, num: number) => {
+	"use cache"
+	cacheTag("comicPage")
 	const request = await publicClient.request(
 		readItems("pages", {
 			filter: {
@@ -377,7 +384,7 @@ export const getComicPage = cache(async (comic_slug: string, num: number) => {
 		}),
 	)
 	return request[0]
-})
+}
 
 /** ------------------------------------------------ **
  * GET COMIC VARIABLES
