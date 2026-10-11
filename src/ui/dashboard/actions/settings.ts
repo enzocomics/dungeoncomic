@@ -14,6 +14,7 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 		"project_name",
 		"project_url",
 		"routing_mode",
+		"frontpage_comic",
 		"comic_type_name",
 		"comic_type_name_plural",
 		"comic_type_name_slug",
