@@ -214,25 +214,25 @@ export function ListFields({
 				{
 					singleField.type === "selectFont" &&
 					<>
-						<Listbox
-							name={fieldset ? fieldset[name].name : name}
-							key={fieldset && fieldset[name].key}
+						<Select
+							id={fieldset && fieldset[name].name}
+							name={fieldset && fieldset[name].name}
 							defaultValue={singleField.value}
 						>
 
 							{singleField.options.map((o, i) => (
-								<ListboxOption key={i} value={o.value}
-									style={{
-										fontFamily: `var(--font-${o.value})`
-									}}
-									className={clsx(
-										"text-2xl"
-									)}
+								<option key={i} value={o.value}
+								// style={{
+								// 	fontFamily: `var(--font-${o.value})`
+								// }}
+								// className={clsx(
+								// 	"text-2xl"
+								// )}
 								>
 									{o.name}
-								</ListboxOption>
+								</option>
 							))}
-						</Listbox>
+						</Select>
 					</>
 				}
 				{
