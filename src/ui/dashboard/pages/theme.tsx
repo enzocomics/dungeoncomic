@@ -32,8 +32,33 @@ export default async function ThemePageUI() {
 	</>
 }
 
+const getLookFeelSettings = async () => {
+	const settings = await getSettings()
+	return {
+		project_logo: { //TODO: image upload
+			title: "Website Logo",
+			description: "",
+			type: "text",
+			value: settings.project_logo?.filename_disk,
+		},
+		project_banner: { // TODO: image upload
+			title: "Website Background",
+			description: "",
+			type: "text",
+			value: settings.project_logo?.filename_disk,
+		},
+		color_accent: { // TODO: tailwind color dropdown
+			title: "Website Accent Color",
+			description: "",
+			type: "text",
+			value: settings.color_accent
+		},
 
-const getAppearanceFields = async () => {
+
+	} satisfies Record<string, ListFieldsField>
+}
+
+const getFontFields = async () => {
 	const settings = await getSettings()
 	return {
 		font_headers: {
@@ -109,10 +134,15 @@ const getAppearanceFields = async () => {
 
 const getSections = async () => {
 	return {
-		details: {
+		lookFeel: {
+			legend: "Look & Feel",
+			description: null,
+			fields: await getLookFeelSettings()
+		},
+		fonts: {
 			legend: "Fonts",
 			description: null,
-			fields: await getAppearanceFields()
+			fields: await getFontFields()
 		},
 	}
 }

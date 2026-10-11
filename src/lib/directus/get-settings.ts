@@ -101,6 +101,8 @@ export const getSettings = async () => {
 				"user_type_name_plural",
 				"user_type_name_slug",
 				"user_type_name_plural_slug",
+				// APPEARANCE
+				"color_accent",
 				// FONTS
 				"font_headers",
 				"font_labels",

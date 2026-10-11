@@ -40,7 +40,9 @@ export default function ThemePageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: settingsSchema([sections.details.fields])
+				schema: settingsSchema([
+					sections.lookFeel.fields,
+					sections.fonts.fields])
 			})
 		},
 		onSubmit() {

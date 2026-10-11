@@ -218,6 +218,7 @@ export interface SettingsSingleton {
 	project_apple_icon: ImageCollection | null
 	project_pwa_icon: ImageCollection | null
 	// Appearance
+	color_accent: string
 	// Fonts
 	font_headers: string
 	font_labels: string

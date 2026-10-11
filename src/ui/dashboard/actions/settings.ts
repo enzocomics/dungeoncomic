@@ -11,10 +11,12 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 
 	// Createa a list of the fields we want to fetch from formdata
 	const fields = [
+		// DETAILS
 		"project_name",
 		"project_url",
 		"routing_mode",
 		"frontpage_comic",
+		// TYPES
 		"comic_type_name",
 		"comic_type_name_plural",
 		"comic_type_name_slug",
@@ -23,10 +25,19 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 		"user_type_name_plural",
 		"user_type_name_slug",
 		"user_type_name_plural_slug",
+		// APPEARANCE
+		"color_accent",
+		// "project_logo",
+		// "project_banner",
+		// FONTS
 		"font_headers",
 		"font_labels",
 		"font_copy",
 		"font_mono",
+		// CONTENT
+		"homepage_content",
+		"date_established",
+		"copyright_message",
 	] as const
 
 	try {
