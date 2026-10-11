@@ -120,7 +120,7 @@ export const Input = forwardRef(function Input({
 				"w-full",
 				"border-2",
 				"text-left",
-				"font-platform-copy",
+				"font-platform-mono",
 				"rounded",
 				// Colors
 				"bg-white",
@@ -149,7 +149,7 @@ export function Label({
 			className={clsx(
 				className,
 				"cursor-pointer",
-				"font-platform-headers",
+				"font-platform-labels",
 				"font-semibold",
 				"data-disabled:cursor-auto",
 			)}
@@ -168,7 +168,7 @@ export function Description({
 			{...props}
 			className={clsx(
 				className,
-				"font-platform-copy",
+				"font-platform-labels",
 				"font-normal",
 				"text-sm",
 				"text-base-content/60",
@@ -189,7 +189,7 @@ export function FieldDescription({
 			{...props}
 			className={clsx(
 				className,
-				"font-platform-copy",
+				"font-platform-labels",
 				"font-normal",
 				"text-sm",
 				"text-base-content/60",
@@ -236,7 +236,7 @@ export function FieldsetDescription({
 				className,
 				"mt-1",
 				"mb-2",
-				"font-platform-copy",
+				"font-platform-labels",
 				"font-normal",
 				"text-base",
 				"text-base-content/60",
@@ -262,6 +262,7 @@ export function ErrorMessage({
 				data-slot="error"
 				{...props}
 				className={clsx(className, clsx(
+					"font-platform-labels",
 					"block",
 					"mb-2",
 					"py-2",
