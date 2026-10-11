@@ -32,7 +32,6 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 	const fontCopy = isSingleSingleMode ? frontpageComic.copy_font : settings.font_copy
 	const fontMono = isSingleSingleMode ? frontpageComic.font_mono : settings.font_mono
 
-	console.log(fontCopy)
 	// Fonts
 	// const platformDisplay = settings.
 	return <html lang="en" suppressHydrationWarning
