@@ -42,13 +42,17 @@ export default function SettingsPageForm({
 	const setStatus = useChangeStatus("")
 
 	// VALIDATION
+	const initialSchemaState = settings.routing_mode === "multiple-multiple"
+		? [sections.details.fields, sections.comicType.fields, sections.userType.fields]
+		: [sections.details.fields]
+	const [schemaState, setSchemaState] = useState(initialSchemaState)
 	const [lastResult, action] = useActionState(saveSettings, undefined)
 
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: settingsSchema([sections.details.fields, /*comicTypeFields, userTypeFields*/])
+				schema: settingsSchema(schemaState)
 			})
 		},
 		onSubmit() {
@@ -93,6 +97,7 @@ export default function SettingsPageForm({
 				frontpageSelect?.setAttribute("disabled", "true")
 				frontpageSelect?.setAttribute("aria-disabled", "true")
 				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+				setSchemaState([sections.details.fields, sections.comicType.fields, sections.userType.fields])
 				setHideTypes(false)
 			}
 			else if (routingModeSelect.value === "single-single") {
@@ -104,6 +109,7 @@ export default function SettingsPageForm({
 				frontpageSelect?.removeAttribute("disabled")
 				frontpageSelect?.setAttribute("aria-disabled", "false")
 				frontpageSelect?.setAttribute("data-headlessui-state", "")
+				setSchemaState([sections.details.fields])
 				setHideTypes(true)
 			} else {
 				frontpageSelectField?.setAttribute("data-disabled", "true")
@@ -114,8 +120,10 @@ export default function SettingsPageForm({
 				frontpageSelect?.setAttribute("disabled", "true")
 				frontpageSelect?.setAttribute("aria-disabled", "true")
 				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+				setSchemaState([sections.details.fields])
 				setHideTypes(true)
 			}
+
 		}
 
 		// Listener for the routing mode select menu

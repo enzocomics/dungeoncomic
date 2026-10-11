@@ -9,21 +9,31 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 	// VALIDATION
 	const submission = parseWithZod(formData, { schema: settingsSchema() })
 
-	const projectName = formData.get("settings.project_name")
-	const projectUrl = formData.get("settings.project_url")
-	const routingMode = formData.get("settings.routing_mode")
+	// Createa a list of the fields we want to fetch from formdata
+	const fields = [
+		"project_name",
+		"project_url",
+		"routing_mode",
+		"comic_type_name",
+		"comic_type_name_plural",
+		"comic_type_name_slug",
+		"comic_type_name_plural_slug",
+	] as const
 
-	// console.log(projectName, projectUrl, routingMode)
 	try {
-		const updateSettings = await userClient.request(
-			updateSingleton("settings", {
-				project_name: projectName,
-				project_url: projectUrl,
-				routing_mode: routingMode,
+		// Iterate through the fields and create an object that only get the formdata from fields that have been submitted (not null)
+		const updates = Object.fromEntries(
+			fields.flatMap((field) => {
+				const value = formData.get(`settings.${field}`)
+				return value === null ? [] : [[field, value]]
 			}),
 		)
+
+		// Update CMS and pass the object
+		const updateSettings = await userClient.request(
+			updateSingleton("settings", updates),
+		)
 		updateTag("settings")
-		// console.log(updateSettings)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
