@@ -23,6 +23,10 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 		"user_type_name_plural",
 		"user_type_name_slug",
 		"user_type_name_plural_slug",
+		"font_headers",
+		"font_labels",
+		"font_copy",
+		"font_mono",
 	] as const
 
 	try {
