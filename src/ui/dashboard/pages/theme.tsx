@@ -110,7 +110,7 @@ const getAppearanceFields = async () => {
 const getSections = async () => {
 	return {
 		details: {
-			legend: "",
+			legend: "Fonts",
 			description: null,
 			fields: await getAppearanceFields()
 		},
