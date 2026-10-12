@@ -64,6 +64,7 @@ export function Listbox({
 					data-slot="control"
 					className={clsx(
 						className,
+						"peer",
 						"cursor-pointer",
 						"appearance-none",
 						// Grid
@@ -106,7 +107,16 @@ export function Listbox({
 						"z-100",
 						"data-open:outline-4",
 						"data-open:-outline-offset-2",
-						"data-open:outline-platform-accent-500"
+						"data-open:outline-platform-accent-500",
+						// Transitions
+						"transition-[opacity,colors]",
+						"ease-in-out",
+						"data-closed:opacity-0",
+						"data-closed:duration-300",
+						"opacity-100",
+						"data-open:duration-none",
+						"drop-shadow-lg",
+						"drop-shadow-neutral-900/45",
 					)}>
 					{options}
 				</Headless.ListboxOptions>
@@ -123,6 +133,12 @@ export function Listbox({
 				"row-start-1",
 				"justify-self-end",
 				"text-platform-accent-500",
+				"peer-data-open:rotate-180",
+				"transition-all",
+				"ease-in-out",
+				"data-closed:duration-300",
+				"data-open:duration-none",
+
 			)} />
 		</div>
 	</>
@@ -164,9 +180,13 @@ export function ListboxOption<T>({
 					"gap-x-2",
 					// COLORS LISTBOX
 					"data-[select=color]:hover:text-black!",
-					"data-[select=color]:hover:bg-white!",
+					"data-[select=color]:hover:bg-neutral-200!",
 					"data-[select=color]:data-focus:text-black!",
-					"data-[select=color]:data-focus:bg-white!",
+					"data-[select=color]:data-focus:bg-neutral-200!",
+					"dark:data-[select=color]:hover:text-black!",
+					"dark:data-[select=color]:hover:bg-white!",
+					"dark:data-[select=color]:data-focus:text-black!",
+					"dark:data-[select=color]:data-focus:bg-white!",
 				)}
 				>
 					{children}

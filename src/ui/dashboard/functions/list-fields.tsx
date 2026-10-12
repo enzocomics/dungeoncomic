@@ -271,9 +271,6 @@ export function ListFields({
 										className={clsx(
 											"size-4",
 											"rounded-full",
-											"group-data-focus:outline-4",
-											"group-data-focus:-outline-offset-2",
-											"group-data-focus:outline-white",
 										)}
 										style={{
 											color: `var(--color-${o.value}-500)`
