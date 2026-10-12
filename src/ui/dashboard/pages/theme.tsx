@@ -12,6 +12,7 @@ import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { getFieldDescriptions, ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
 import ThemePageForm from "./client/theme-form"
+import { colorVariants } from "@/styles/colors"
 
 
 
@@ -34,6 +35,12 @@ export default async function ThemePageUI() {
 
 const getLookFeelSettings = async () => {
 	const settings = await getSettings()
+	// Make an array of name: value pairs of all the tailwind colors so we can use them for the seelct menu options
+	const colors = Object.entries(colorVariants).map(([name]) => ({
+		name: name.charAt(0).toUpperCase() + name.slice(1),
+		value: name
+	})
+	)
 	return {
 		project_logo: { //TODO: image upload
 			title: "Website Logo",
@@ -50,7 +57,8 @@ const getLookFeelSettings = async () => {
 		color_accent: { // TODO: tailwind color dropdown
 			title: "Website Accent Color",
 			description: "",
-			type: "text",
+			type: "selectColor",
+			options: colors,
 			value: settings.color_accent
 		},
 
