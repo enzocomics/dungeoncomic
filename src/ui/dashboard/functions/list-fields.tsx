@@ -163,8 +163,7 @@ export function ListFields({
 				// 	// "w-1/2",
 				// ]
 			)}>
-				<Label
-					htmlFor={fieldset ? fieldset[name].name : name}>
+				<Label>
 					{singleField.title}
 				</Label>
 
@@ -172,8 +171,8 @@ export function ListFields({
 				{
 					singleField.type === "text" &&
 					<Input
-						id={fieldset ? fieldset[name].name : name}
-						name={fieldset ? fieldset[name].name : name}
+						id={fieldset && fieldset[name].name}
+						name={fieldset && fieldset[name].name}
 						key={fieldset && fieldset[name].key}
 						type="text"
 						defaultValue={singleField.value} />
@@ -183,8 +182,8 @@ export function ListFields({
 				{
 					singleField.type === "url" &&
 					<Input
-						id={fieldset ? fieldset[name].name : name}
-						name={fieldset ? fieldset[name].name : name}
+						id={fieldset && fieldset[name].name}
+						name={fieldset && fieldset[name].name}
 						key={fieldset && fieldset[name].key}
 						type="text"
 						defaultValue={singleField.value} />
@@ -242,7 +241,7 @@ export function ListFields({
 					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
 				}
 				{fieldDescriptions?.[name].description &&
-					<FieldDescription dangerouslySetInnerHTML={{
+					<Description dangerouslySetInnerHTML={{
 						__html: fieldDescriptions?.[name].description
 					}} />
 				}
