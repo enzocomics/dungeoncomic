@@ -207,6 +207,18 @@
 	--color-base-content: var(--color-base-content);
 	--color-base-content-inverted: var(--color-base-content-inverted);
 
+	--color-platform-accent-50: var(--color-platform-accent-50);
+	--color-platform-accent-100: var(--color-platform-accent-100);
+	--color-platform-accent-200: var(--color-platform-accent-200);
+	--color-platform-accent-300: var(--color-platform-accent-300);
+	--color-platform-accent-400: var(--color-platform-accent-400);
+	--color-platform-accent-500: var(--color-platform-accent-500);
+	--color-platform-accent-600: var(--color-platform-accent-600);
+	--color-platform-accent-700: var(--color-platform-accent-700);
+	--color-platform-accent-800: var(--color-platform-accent-800);
+	--color-platform-accent-900: var(--color-platform-accent-900);
+	--color-platform-accent-950: var(--color-platform-accent-950);
+
 	--color-comic-accent-50: var(--color-red-50);
 	--color-comic-accent-100: var(--color-red-100);
 	--color-comic-accent-200: var(--color-red-200);
