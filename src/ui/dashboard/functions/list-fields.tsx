@@ -7,7 +7,6 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { Select } from "@/components/input/dropdown"
 import { Field, Input, Label, Description, ErrorMessage, FieldDescription } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
-// import { Listbox, ListboxOption } from "@headlessui/react"
 import { FieldMetadata } from "@conform-to/react"
 import { marked } from "marked"
 import Icon from "@/styles/icons"
@@ -229,7 +228,8 @@ export function ListFields({
 						>
 
 							{singleField.options.map((o, i) => (
-								<ListboxOption key={i} value={o.value}
+
+								<ListboxOption key={o.value} value={o.value}
 									style={{
 										fontFamily: `var(--font-${o.value})`
 									}}
@@ -255,7 +255,7 @@ export function ListFields({
 						>
 
 							{singleField.options.map((o, i) => (
-								<ListboxOption key={i} value={o.value}
+								<ListboxOption key={o.value} value={o.value}
 									style={{
 										fontFamily: `var(--font-${o.value})`
 									}}

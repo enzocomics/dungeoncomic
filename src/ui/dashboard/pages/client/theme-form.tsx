@@ -60,19 +60,9 @@ export default function ThemePageForm({
 	useEffect(() => {
 		if (lastResult?.status == "success") {
 			setStatus("success", "Your settings have been saved.")
-			// router.refresh()
 		}
 	}, [lastResult])
 
-	// const inputRefs = useRef<Record<string, HTMLSelectElement | null>>({})
-	useEffect(() => {
-		const logClick = (event: MouseEvent) => {
-			console.log("document click:", event.target)
-		}
-
-		document.addEventListener("click", logClick, true)
-		return () => document.removeEventListener("click", logClick, true)
-	}, [])
 	// RENDER
 	return <>
 		<form

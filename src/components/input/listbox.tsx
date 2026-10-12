@@ -4,6 +4,7 @@ import clsx from "clsx"
 import Icon from "@/styles/icons"
 import { Fragment } from "react"
 import { FieldMetadata, useInputControl } from "@conform-to/react"
+import { usePathname } from "next/navigation"
 
 export function Listbox({
 	className,
@@ -25,14 +26,19 @@ export function Listbox({
 	 * - Conform's adapter for a custom React control
 	 * - Gives the listbox a value & change handler that stays connected to Conform's form state
 	 */
-	const thisField = useInputControl({
-		name: conformField?.name || "",
-		formId: conformField?.formId || "",
+	let thisField
+	thisField = conformField && useInputControl({
+		name: conformField.name,
+		formId: conformField.formId,
 		initialValue:
-			typeof conformField?.initialValue === "string"
+			typeof conformField.initialValue === "string"
 				? conformField.initialValue
 				: loadedValue
 	})
+
+
+	const pathname = usePathname()
+
 
 	return <>
 		<div className={clsx(
@@ -40,14 +46,19 @@ export function Listbox({
 			"grid-cols-1",
 		)}>
 			<Headless.Listbox
+				// as="div"
+				key={pathname}
 				{...props}
 				multiple={false}
 				// Makes conform control this value
-				value={thisField.value}
+				value={thisField?.value}
 				// Report changes back to conform 
-				onChange={thisField.change}
-				// Associate with the correct form
-				form={conformField?.id}
+				// onChange={thisField?.change}
+				onChange={(value) => {
+					thisField?.change(value)
+				}}
+			// Associate with the correct form
+			// form={conformField?.id}
 			>
 				<Headless.ListboxButton
 					data-slot="control"
@@ -86,12 +97,13 @@ export function Listbox({
 				</Headless.ListboxButton>
 				<Headless.ListboxOptions
 					anchor="bottom start"
-					transition className={clsx(
+					transition
+					className={clsx(
 						"bg-base-1",
 						"w-(--button-width)",
 						"[--anchor-padding:40px]",
 						"rounded",
-
+						"z-100",
 						"data-open:outline-4",
 						"data-open:-outline-offset-2",
 						"data-open:outline-platform-accent-500"
@@ -126,7 +138,9 @@ export function ListboxOption<T>({
 	Headless.ListboxOptionProps<'div', T>,
 	'as' | 'className'
 >) {
-	return <Headless.ListboxOption as={Fragment} {...props}>
+
+	return <Headless.ListboxOption as={Fragment} {...props}
+	>
 		{({ selectedOption }) => {
 			if (selectedOption) {
 				return <div className={clsx(className)}>{children}</div>
@@ -153,7 +167,8 @@ export function ListboxOption<T>({
 					"data-[select=color]:hover:bg-white!",
 					"data-[select=color]:data-focus:text-black!",
 					"data-[select=color]:data-focus:bg-white!",
-				)}>
+				)}
+				>
 					{children}
 				</div>
 			)
