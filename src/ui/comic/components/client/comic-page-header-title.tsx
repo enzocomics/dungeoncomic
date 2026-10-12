@@ -67,14 +67,14 @@ export function ClientComicPageHeaderTitle({
 						// Functionality
 						"cursor-pointer",
 						// Appearance'
-						"data-open:bg-comic-accent-600",
-						"dark:data-open:bg-comic-accent-700",
+						"data-open:bg-platform-accent-600",
+						"dark:data-open:bg-platform-accent-700",
 						"rounded",
 						// Hover
 						"hover:duration-0",
-						"hover:bg-comic-accent-700",
+						"hover:bg-platform-accent-700",
 						"active:translate-px",
-						"active:bg-comic-accent-900",
+						"active:bg-platform-accent-900",
 						// Transition
 						"transition-all",
 						"ease-in-out",
@@ -83,7 +83,7 @@ export function ClientComicPageHeaderTitle({
 						"outline-transparent",
 						"focus:outline-4",
 						"focus:-outline-offset-4",
-						"focus:outline-comic-accent-500",
+						"focus:outline-platform-accent-500",
 						hasBanner ? [
 							"bg-neutral-800/80",
 							"dark:bg-neutral-900/80",
@@ -170,7 +170,7 @@ export function ClientComicPageHeaderTitle({
 								"group-hover:duration-0",
 								// Diff
 								"opacity-100",
-								"text-comic-accent-500",
+								"text-platform-accent-500",
 								"group-hover:text-white",
 
 								"group-data-open:opacity-0",
@@ -226,9 +226,9 @@ export function ClientComicPageHeaderTitle({
 							"rounded",
 							"bg-transparent",
 							"outline-transparent",
-							"group-data-open:bg-comic-accent-700/80",
+							"group-data-open:bg-platform-accent-700/80",
 							"group-focus:outline-4",
-							"group-focus:outline-comic-accent-500",
+							"group-focus:outline-platform-accent-500",
 							"group-focus:outline-offset-2",
 						)}>
 							<Image
@@ -403,7 +403,7 @@ export function ClientComicPageHeaderTitle({
 													return <span key={index}>
 														<span className={clsx(
 															"font-semibold",
-															"text-comic-accent-500",
+															"text-platform-accent-500",
 														)}>
 															{a.username}
 														</span>

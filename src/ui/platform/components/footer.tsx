@@ -95,11 +95,11 @@ export default async function PlatformFooter() {
 						aria-label={t("visit-github")}
 						className={clsx(
 							"ml-1",
-							"active:text-comic-accent-500",
+							"active:text-platform-accent-500",
 							"transition-all",
 							"duration-300",
 							"hover:transition-none",
-							"hover:text-comic-accent-500",
+							"hover:text-platform-accent-500",
 							"hover:scale-120",
 						)}
 					>

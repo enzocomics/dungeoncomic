@@ -60,12 +60,12 @@ export function SmallComicButton({
 					"hover:border-t-red-500",
 					"hover:border-b-red-700",
 				] : [
-					"bg-comic-accent-500",
-					"border-t-comic-accent-400",
-					"border-b-comic-accent-600",
-					"hover:bg-comic-accent-600",
-					"hover:border-t-comic-accent-500",
-					"hover:border-b-comic-accent-700",
+					"bg-platform-accent-500",
+					"border-t-platform-accent-400",
+					"border-b-platform-accent-600",
+					"hover:bg-platform-accent-600",
+					"hover:border-t-platform-accent-500",
+					"hover:border-b-platform-accent-700",
 				]
 			)
 		}
@@ -135,13 +135,13 @@ export function ComicButton({
 		] : [
 			"cursor-pointer",
 			// Appearance
-			"bg-comic-accent-600",
-			visited && "visited:bg-comic-accent-400",
+			"bg-platform-accent-600",
+			visited && "visited:bg-platform-accent-400",
 			// States
 			"hover:duration-0",
-			"hover:bg-comic-accent-700",
+			"hover:bg-platform-accent-700",
 			"active:translate-px",
-			"active:bg-comic-accent-900",
+			"active:bg-platform-accent-900",
 			// Transition
 			"transition-all",
 			"ease-in-out",
@@ -150,7 +150,7 @@ export function ComicButton({
 			"outline-transparent",
 			"focus:outline-4",
 			"focus:outline-offset-4",
-			"focus:outline-comic-accent-500",
+			"focus:outline-platform-accent-500",
 		]
 	)
 

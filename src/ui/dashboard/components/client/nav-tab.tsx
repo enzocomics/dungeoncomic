@@ -46,10 +46,10 @@ export const ClientDashboardNavTab = ({
 			"md:border-b-2",
 			"md:border-b-transparent",
 			"bg-base-2/40",
-			"data-current:bg-comic-accent-500",
+			"data-current:bg-platform-accent-500",
 			"data-current:text-white",
-			"hover:bg-comic-accent-700",
-			"hover:text-comic-accent-100",
+			"hover:bg-platform-accent-700",
+			"hover:text-platform-accent-100",
 			// Transition
 			"hover:duration-0",
 			"transition-all",
@@ -57,8 +57,8 @@ export const ClientDashboardNavTab = ({
 			"duration-300",
 			"outline-transparent",
 			"outline-4",
-			// "data-current:focus:bg-comic-accent-600",
-			// "data-current:focus:text-comic-accent-500",
+			// "data-current:focus:bg-platform-accent-600",
+			// "data-current:focus:text-platform-accent-500",
 			"data-current:focus:duration-0",
 			className
 		)}
@@ -78,7 +78,7 @@ export const ClientDashboardNavTab = ({
 				"group-active:translate-px",
 				"group-focus:outline-offset-2",
 				"group-focus:outline-4",
-				"group-focus:outline-comic-accent-500",
+				"group-focus:outline-platform-accent-500",
 			)}>
 				{icon && !iconRight &&
 					<Icon name={icon} className={clsx(

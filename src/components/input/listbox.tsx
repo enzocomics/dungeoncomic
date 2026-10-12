@@ -79,14 +79,23 @@ export function Listbox({
 						//
 						"focus:outline-4",
 						"focus:-outline-offset-2",
-						"focus:outline-comic-accent-500",
+						"focus:outline-platform-accent-500",
 					)}
 				>
-					<Headless.ListboxSelectedOption options={options}>
-						<div>hi</div>
-					</Headless.ListboxSelectedOption>
+					<Headless.ListboxSelectedOption options={options} />
 				</Headless.ListboxButton>
-				<Headless.ListboxOptions anchor="bottom" transition>
+				<Headless.ListboxOptions
+					anchor="bottom start"
+					transition className={clsx(
+						"bg-base-1",
+						"w-(--button-width)",
+						"[--anchor-padding:40px]",
+						"rounded",
+
+						"data-open:outline-4",
+						"data-open:-outline-offset-2",
+						"data-open:outline-platform-accent-500"
+					)}>
 					{options}
 				</Headless.ListboxOptions>
 			</Headless.Listbox>
@@ -101,7 +110,7 @@ export function Listbox({
 				"col-start-1",
 				"row-start-1",
 				"justify-self-end",
-				"text-comic-accent-500",
+				"text-platform-accent-500",
 			)} />
 		</div>
 	</>
@@ -125,6 +134,15 @@ export function ListboxOption<T>({
 
 			return (
 				<div className={clsx(
+					"z-100",
+					"cursor-pointer",
+					"px-3",
+					"py-1.5",
+					"text-lg",
+					"hover:text-white",
+					"hover:bg-platform-accent-500/50",
+					"data-focus:text-white",
+					"data-focus:bg-platform-accent-500",
 
 				)}>
 					{children}

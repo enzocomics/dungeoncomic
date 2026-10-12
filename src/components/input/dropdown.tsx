@@ -54,7 +54,7 @@ export const Select = function Select({
 					//
 					"focus:outline-4",
 					"focus:-outline-offset-2",
-					"focus:outline-comic-accent-500",
+					"focus:outline-platform-accent-500",
 				)}
 			>
 				{props.children}
@@ -69,7 +69,7 @@ export const Select = function Select({
 				"col-start-1",
 				"row-start-1",
 				"justify-self-end",
-				"text-comic-accent-500",
+				"text-platform-accent-500",
 			)} />
 		</div>
 	</>

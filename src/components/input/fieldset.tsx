@@ -132,7 +132,7 @@ export const Input = forwardRef(function Input({
 				//
 				"focus:outline-4",
 				"focus:-outline-offset-2",
-				"focus:outline-comic-accent-500",
+				"focus:outline-platform-accent-500",
 				"data-disabled:cursor-not-allowed"
 			)}
 		/>

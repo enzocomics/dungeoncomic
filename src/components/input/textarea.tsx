@@ -57,7 +57,7 @@ export const Textarea = forwardRef(function Textarea({
 				"outline-transparent",
 				"focus:outline-4",
 				"focus:-outline-offset-4",
-				"focus:outline-comic-accent-500",
+				"focus:outline-platform-accent-500",
 				props.disabled == true ? [
 					"cursor-not-allowed",
 				] : [

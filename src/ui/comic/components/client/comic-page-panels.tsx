@@ -259,12 +259,12 @@ export function ClientComicPanels({
 														"cursor-pointer",
 														"flex",
 														"flex-col",
-														"hover:bg-comic-accent-100/50",
+														"hover:bg-platform-accent-100/50",
 														"outline-transparent",
 														"outline-4",
 														"focus-within:-outline-offset-4",
 														"focus-within:outline-4",
-														"focus-within:outline-comic-accent-500",
+														"focus-within:outline-platform-accent-500",
 														// 
 														vField.errors ? [
 															"focus-within:outline-red-500",
@@ -277,12 +277,12 @@ export function ClientComicPanels({
 															"dark:focus-within:outline-red-500",
 														] : [
 															"dark:bg-neutral-800/40",
-															"dark:hover:bg-comic-accent-500/10",
-															"dark:hover:focus-within:bg-comic-accent-800",
-															"outline-comic-accent-500/0",
+															"dark:hover:bg-platform-accent-500/10",
+															"dark:hover:focus-within:bg-platform-accent-800",
+															"outline-platform-accent-500/0",
 														],
 
-														// "dark:hover:bg-comic-accent-500",
+														// "dark:hover:bg-platform-accent-500",
 														// Transition
 														"hover:duration-0",
 														"transition-all",
@@ -354,7 +354,7 @@ export function ClientComicPanels({
 																	"text-red-500",
 																] : [
 																	"text-neutral-400",
-																	"group-focus-within:text-comic-accent-500",
+																	"group-focus-within:text-platform-accent-500",
 																],
 																// Transition
 																"transition-all",
@@ -381,9 +381,9 @@ export function ClientComicPanels({
 																"max-w-full",
 																// Appearance
 																(v.value_prefix || v.value_suffix) && "border-b-2",
-																"focus:border-b-comic-accent-800",
+																"focus:border-b-platform-accent-800",
 																"focus:outline-none",
-																"dark:selection:bg-comic-accent-300",
+																"dark:selection:bg-platform-accent-300",
 																"dark:selection:text-white",
 																"text-black",
 																// ERRORS w/ PREFIX/SUFFIX
@@ -403,7 +403,7 @@ export function ClientComicPanels({
 																vField.errors ? [
 																	"focus:text-red-500",
 																] : [
-																	"focus:text-comic-accent-500",
+																	"focus:text-platform-accent-500",
 																],
 																"transition-all",
 																"scale-100",
@@ -510,8 +510,8 @@ export function ClientComicPanels({
 								"gap-x-1",
 								"items-center",
 								"p-1",
-								"text-comic-accent-800",
-								"dark:text-comic-accent-300/90",
+								"text-platform-accent-800",
+								"dark:text-platform-accent-300/90",
 								"hover:text-current/50",
 								"hover:duration-0",
 								"active:translate-px",
@@ -524,7 +524,7 @@ export function ClientComicPanels({
 								"outline-transparent",
 								"focus:outline-2",
 								"focus:outline-offset-1",
-								"focus:outline-comic-accent-500",
+								"focus:outline-platform-accent-500",
 							)}
 
 							type="button"

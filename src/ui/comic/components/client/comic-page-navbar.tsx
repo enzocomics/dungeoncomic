@@ -53,8 +53,8 @@ export function ClientComicPageNavbar({
 
 	return <>
 		<div className={clsx(
-			"bg-comic-accent-700",
-			"dark:bg-comic-accent-800",
+			"bg-platform-accent-700",
+			"dark:bg-platform-accent-800",
 			"text-xs",
 			"sm:text-sm",
 			"text-white",
@@ -178,7 +178,7 @@ export function ClientComicPageNavbar({
 									"peer",
 									// "bg-transparent",
 									"data-closed:duration-300",
-									"data-open:bg-comic-accent-950",
+									"data-open:bg-platform-accent-900",
 									"data-open:duration-none",
 									"data-open:rounded-t-none",
 									"data-focus-within:bg-red-500",
@@ -216,7 +216,7 @@ export function ClientComicPageNavbar({
 								"w-[calc(100vw-24px)]",
 								"max-w-xl",
 								// Appearance
-								"bg-comic-accent-950",
+								"bg-platform-accent-900",
 								// Transitions
 								"transition-all",
 								"ease-in-out",
@@ -234,10 +234,10 @@ export function ClientComicPageNavbar({
 								// Outline
 								"outline-none",
 								"ring-4",
-								"ring-comic-accent-950",
+								"ring-platform-accent-900",
 								"-ring-offset-4",
 								"peer-hover:duration-0",
-								"peer-hover:ring-comic-accent-500",
+								"peer-hover:ring-platform-accent-500",
 
 							)}>
 								{page.prev_pages.map((n, index) =>
@@ -254,10 +254,10 @@ export function ClientComicPageNavbar({
 												"py-2",
 												"text-sm",
 												"text-white/90",
-												// "bg-comic-accent-700",
+												// "bg-platform-accent-700",
 												"visited:bg-neutral-500",
 												// "hover:text-white",
-												// "hover:bg-comic-accent-900",
+												// "hover:bg-platform-accent-900",
 
 												// Transition
 												"hover:duration-0",
@@ -265,7 +265,7 @@ export function ClientComicPageNavbar({
 												"ease-in-out",
 												"duration-300",
 												"data-active:outline-none",
-												"data-active:bg-comic-accent-500",
+												"data-active:bg-platform-accent-500",
 
 											)}
 											onClick={() => {
@@ -343,9 +343,9 @@ export function ClientComicPageNavbar({
 											"items-center",
 											"px-2",
 											"cursor-pointer",
-											"hover:bg-comic-accent-800",
+											"hover:bg-platform-accent-800",
 											"data-closed:duration-300",
-											"data-open:bg-comic-accent-950",
+											"data-open:bg-platform-accent-900",
 											"data-open:duration-none",
 										)
 									}>
@@ -354,7 +354,7 @@ export function ClientComicPageNavbar({
 												"absolute",
 												"size-4",
 												"ml-2",
-												"text-comic-accent-800",
+												"text-platform-accent-800",
 												"dark:text-white",
 											)
 										} />
@@ -369,7 +369,7 @@ export function ClientComicPageNavbar({
 												"rounded-sm",
 												"bg-white",
 												"focus:text-base-content",
-												"placeholder:text-comic-accent-800",
+												"placeholder:text-platform-accent-800",
 												"focus:placeholder:text-current/40",
 												"focus:outline-none",
 												"dark:bg-black/40",
@@ -401,7 +401,7 @@ export function ClientComicPageNavbar({
 											"p-2",
 											"bottom-8",
 											"right-0",
-											"bg-comic-accent-950",
+											"bg-platform-accent-900",
 											"rounded-t",
 										)
 									}>
@@ -447,8 +447,8 @@ const NavbarButton = ({
 				"cursor-pointer",
 				// Hover
 				"duration-300",
-				"hover:bg-comic-accent-500",
-				"dark:hover:bg-comic-accent-600",
+				"hover:bg-platform-accent-500",
+				"dark:hover:bg-platform-accent-600",
 				"hover:duration-0",
 				// Transition
 				"transition-all",
@@ -458,7 +458,7 @@ const NavbarButton = ({
 				"focus:rounded",
 				"focus:outline-3",
 				"focus:-outline-offset-3",
-				"focus:outline-comic-accent-500",
+				"focus:outline-platform-accent-500",
 
 			],
 		)}>
@@ -481,18 +481,18 @@ const PrevPageButton = ({
 			// "border-l-white/5",
 			// "border-r-black/5",
 
-			"bg-comic-accent-800",
-			"dark:bg-comic-accent-900",
-			"hover:bg-comic-accent-500!",
-			"dark:hover:bg-comic-accent-600!",
+			"bg-platform-accent-800",
+			"dark:bg-platform-accent-900",
+			"hover:bg-platform-accent-500!",
+			"dark:hover:bg-platform-accent-600!",
 			"active:translate-px",
 			"drop-shadow-lg",
 			"drop-shadow-black/20",
 			"ring-2",
-			"ring-comic-accent-800",
-			"dark:ring-comic-accent-900",
-			"hover:ring-comic-accent-500",
-			"dark:hover:ring-comic-accent-600",
+			"ring-platform-accent-800",
+			"dark:ring-platform-accent-900",
+			"hover:ring-platform-accent-500",
+			"dark:hover:ring-platform-accent-600",
 
 		)}>
 		{props.children}

@@ -26,7 +26,7 @@ export const DashboardNav = (props: ComponentPropsWithoutRef<"nav">) => {
 			"rounded-t",
 			"dark:bg-base-3/50",
 			"border-b-4",
-			"border-comic-accent-500",
+			"border-platform-accent-500",
 			"text-sm",
 			"md:text-base",
 

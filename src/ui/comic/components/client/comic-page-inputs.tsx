@@ -123,16 +123,16 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 			"transition-all",
 			"ease-in-out",
 			"duration-300",
-			"dark:data-checked:bg-comic-accent-800/60",
-			"dark:hover:data-checked:bg-comic-accent-800",
+			"dark:data-checked:bg-platform-accent-800/60",
+			"dark:hover:data-checked:bg-platform-accent-800",
 			// Outline
 			"outline-transparent",
 			"focus:outline-4",
 			"focus:-outline-offset-4",
-			"focus:outline-comic-accent-500",
+			"focus:outline-platform-accent-500",
 			"focus-within:outline-4",
 			"focus-within:-outline-offset-4",
-			"focus-within:outline-comic-accent-500",
+			"focus-within:outline-platform-accent-500",
 			"data-disabled:outline-none",
 		)}
 	>
@@ -149,7 +149,7 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 						clsx(
 							"text-neutral-200",
 							"size-5",
-							"dark:group-data-checked:text-comic-accent-800",
+							"dark:group-data-checked:text-platform-accent-800",
 							"group-data-loading:opacity-0",
 						)
 					}
@@ -161,7 +161,7 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"left-0",
 							"top-1/2",
 							"-translate-y-1/2",
-							"text-comic-accent-500",
+							"text-platform-accent-500",
 							"dark:text-white",
 							"size-5",
 							"animate-spin",
@@ -188,7 +188,7 @@ export const ComicInputRadio = forwardRef<HTMLSpanElement, Headless.RadioProps>(
 							"group-data-loading:scale-150",
 							"group-data-checked:opacity-100",
 							"group-data-checked:scale-100",
-							"group-data-checked:text-comic-accent-500",
+							"group-data-checked:text-platform-accent-500",
 							// Transition
 							"transition-[scale]",
 							"ease-in-out",

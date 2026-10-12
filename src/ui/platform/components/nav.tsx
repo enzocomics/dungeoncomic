@@ -178,7 +178,7 @@ export default function ClientPlatformNav({
 							"dark:after:bg-neutral-900/90",
 							// "after:backdrop-blur-xs",
 							"after:border-b-6",
-							"after:border-comic-accent-900",
+							"after:border-platform-accent-900",
 						]
 					],
 				)}
@@ -198,8 +198,8 @@ export default function ClientPlatformNav({
 							"-left-8",
 							"md:-left-4.5",
 							// Appearance
-							"text-comic-accent-500",
-							"dark:text-comic-accent-600",
+							"text-platform-accent-500",
+							"dark:text-platform-accent-600",
 							"rounded-full",
 							// Functionality
 							"cursor-pointer",
@@ -214,7 +214,7 @@ export default function ClientPlatformNav({
 
 							"focus:outline-4",
 							"focus:outline-offset-2",
-							"focus:outline-comic-accent-500",
+							"focus:outline-platform-accent-500",
 						)}
 					>
 						{/* LOGO WRAPPER */}
@@ -236,19 +236,19 @@ export default function ClientPlatformNav({
 									"after:h-9",
 									"after:bg-neutral-800/80",
 									"dark:after:bg-neutral-900/80",
-									"group-data-open:after:bg-comic-accent-500",
-									"group-data-open:dark:after:bg-comic-accent-600",
+									"group-data-open:after:bg-platform-accent-500",
+									"group-data-open:dark:after:bg-platform-accent-600",
 									"after:top-[20.5px]",
 									"after:left-19",
 									"after:rounded-r",
 									// "group-focus:after:outline-4",
 									// "group-focus:after:outline-offset-4",
-									// "group-focus:after:outline-comic-accent-500",
+									// "group-focus:after:outline-platform-accent-500",
 									// Hover
 									"group-hover:after:duration-0",
-									"group-hover:after:bg-comic-accent-700",
+									"group-hover:after:bg-platform-accent-700",
 									"group-active:after:translate-px",
-									"group-active:after:bg-comic-accent-900",
+									"group-active:after:bg-platform-accent-900",
 									// Transition
 									"after:transition-all",
 									"after:ease-in-out",
@@ -342,14 +342,14 @@ export default function ClientPlatformNav({
 									"rounded-full",
 									"outline-transparent",
 									"rotate-0",
-									"group-hover:text-comic-accent-600",
-									"dark:group-hover:text-comic-accent-700",
-									"group-active:text-comic-accent-700",
-									"dark:group-active:text-comic-accent-800",
+									"group-hover:text-platform-accent-600",
+									"dark:group-hover:text-platform-accent-700",
+									"group-active:text-platform-accent-700",
+									"dark:group-active:text-platform-accent-800",
 									menu ? [
 										// "group-data-open:-rotate-24",
-										"group-data-open:text-comic-accent-700",
-										"dark:group-data-open:text-comic-accent-800",
+										"group-data-open:text-platform-accent-700",
+										"dark:group-data-open:text-platform-accent-800",
 									] : [
 
 										"drop-shadow-lg",
@@ -456,8 +456,8 @@ export default function ClientPlatformNav({
 											"px-5",
 											"py-2",
 											"text-sm",
-											"hover:bg-comic-accent-500",
-											"dark:hover:bg-comic-accent-700",
+											"hover:bg-platform-accent-500",
+											"dark:hover:bg-platform-accent-700",
 											"hover:text-white",
 											"hover:duration-0",
 											// Transition
@@ -466,11 +466,11 @@ export default function ClientPlatformNav({
 											"duration-300",
 											item.current ? [
 												"text-white",
-												"bg-comic-accent-400",
-												"dark:bg-comic-accent-600/50",
-												"hover:bg-comic-accent-700",
+												"bg-platform-accent-400",
+												"dark:bg-platform-accent-600/50",
+												"hover:bg-platform-accent-700",
 											] : [
-												"hover:bg-comic-accent-100",
+												"hover:bg-platform-accent-100",
 												"dark:hover:bg-white/5",
 											],
 										)}
@@ -518,15 +518,15 @@ export default function ClientPlatformNav({
 						// Appearance
 						"bg-black/50",
 						"p-1",
-						"data-open:bg-comic-accent-600",
-						"dark:data-open:bg-comic-accent-700",
+						"data-open:bg-platform-accent-600",
+						"dark:data-open:bg-platform-accent-700",
 						"rounded",
 						// Hover
 
 						"hover:duration-0",
-						"hover:bg-comic-accent-600",
+						"hover:bg-platform-accent-600",
 						"active:translate-px",
-						"active:bg-comic-accent-900",
+						"active:bg-platform-accent-900",
 						// Transition
 						"transition-all",
 						"ease-in-out",
@@ -535,7 +535,7 @@ export default function ClientPlatformNav({
 						"outline-transparent",
 						"focus:outline-4",
 						"focus:outline-offset-2",
-						"focus:outline-comic-accent-500",
+						"focus:outline-platform-accent-500",
 					)}>
 						<span className="sr-only group-data-open:hidden">
 							{t("navigation.open-user-nav")}
@@ -565,7 +565,7 @@ export default function ClientPlatformNav({
 											"duration-300",
 											// Diff
 											"opacity-100",
-											"bg-comic-accent-700",
+											"bg-platform-accent-700",
 											"group-data-open:opacity-0",
 										)
 									}
@@ -584,7 +584,7 @@ export default function ClientPlatformNav({
 									// Diff
 									"opacity-100",
 									"text-white",
-									"bg-comic-accent-700",
+									"bg-platform-accent-700",
 									"group-data-open:opacity-0",
 									"group-data-open:rotate-45",
 								)} />
@@ -701,8 +701,8 @@ export default function ClientPlatformNav({
 													"px-4",
 													"py-2",
 													"text-sm",
-													"hover:bg-comic-accent-500",
-													"dark:hover:bg-comic-accent-700",
+													"hover:bg-platform-accent-500",
+													"dark:hover:bg-platform-accent-700",
 													"hover:text-white",
 													"hover:duration-0",
 													// Transition
@@ -727,8 +727,8 @@ export default function ClientPlatformNav({
 													"px-4",
 													"py-2",
 													"text-sm",
-													"hover:bg-comic-accent-500",
-													"dark:hover:bg-comic-accent-700",
+													"hover:bg-platform-accent-500",
+													"dark:hover:bg-platform-accent-700",
 													"hover:text-white",
 													"hover:duration-0",
 													// Transition
@@ -754,8 +754,8 @@ export default function ClientPlatformNav({
 												"px-4",
 												"py-2",
 												"text-sm",
-												"hover:bg-comic-accent-500",
-												"dark:hover:bg-comic-accent-700",
+												"hover:bg-platform-accent-500",
+												"dark:hover:bg-platform-accent-700",
 												"hover:text-white",
 												"hover:duration-0",
 												// Transition
@@ -900,13 +900,13 @@ export default function ClientPlatformNav({
 													"top-1/2",
 													"-translate-1/2",
 													"size-7",
-													"bg-comic-accent-500",
-													"dark:bg-comic-accent-500/50",
+													"bg-platform-accent-500",
+													"dark:bg-platform-accent-500/50",
 													"rounded-full",
 													// "-z-1",
 													"scale-100",
 													"peer-hover:scale-120",
-													"dark:peer-hover:bg-comic-accent-500/90",
+													"dark:peer-hover:bg-platform-accent-500/90",
 													"peer-hover/system:left-4.5",
 													"peer-hover/light:left-13.5",
 													"peer-hover/dark:left-22.5",
