@@ -19,6 +19,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
 import { Listbox, ListboxButton, ListboxOptions, ListboxSelectedOption } from "@headlessui/react"
 import { ListboxOption } from "@/components/catalyst/listbox"
+import clsx from "clsx"
 
 
 /**----------------------------------- */
@@ -64,7 +65,14 @@ export default function ThemePageForm({
 	}, [lastResult])
 
 	// const inputRefs = useRef<Record<string, HTMLSelectElement | null>>({})
+	useEffect(() => {
+		const logClick = (event: MouseEvent) => {
+			console.log("document click:", event.target)
+		}
 
+		document.addEventListener("click", logClick, true)
+		return () => document.removeEventListener("click", logClick, true)
+	}, [])
 	// RENDER
 	return <>
 		<form
@@ -99,7 +107,12 @@ export default function ThemePageForm({
 				</FieldsetSection>
 			})}
 
-			<ComicButton as="button" type="submit">Save</ComicButton>
+			<ComicButton as="button" type="submit"
+				className={clsx(
+					"sticky",
+					"bottom-4",
+				)}
+			>Save</ComicButton>
 		</form>
 
 	</>

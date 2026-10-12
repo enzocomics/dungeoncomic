@@ -17,6 +17,7 @@ import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
 import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
+import clsx from "clsx"
 
 
 /**----------------------------------- */
@@ -164,7 +165,12 @@ export default function SettingsPageForm({
 				</FieldsetSection>
 			})}
 
-			<ComicButton as="button" type="submit">Save</ComicButton>
+			<ComicButton as="button" type="submit"
+				className={clsx(
+					"sticky",
+					"bottom-4",
+				)}
+			>Save</ComicButton>
 		</form>
 
 	</>
