@@ -69,17 +69,17 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 				"--font-platform-copy": `var(--font-${fontCopy})`,
 				"--font-platform-mono": `var(--font-${fontMono})`,
 				// Colors
-				"--color-platform-accent-50": `var(${colorVariants[accentColor as keyof typeof colorVariants]["50"]})`,
-				"--color-platform-accent-100": `var(${colorVariants[accentColor as keyof typeof colorVariants]["100"]})`,
-				"--color-platform-accent-200": `var(${colorVariants[accentColor as keyof typeof colorVariants]["200"]})`,
-				"--color-platform-accent-300": `var(${colorVariants[accentColor as keyof typeof colorVariants]["300"]})`,
-				"--color-platform-accent-400": `var(${colorVariants[accentColor as keyof typeof colorVariants]["400"]})`,
-				"--color-platform-accent-500": `var(${colorVariants[accentColor as keyof typeof colorVariants]["500"]})`,
-				"--color-platform-accent-600": `var(${colorVariants[accentColor as keyof typeof colorVariants]["600"]})`,
-				"--color-platform-accent-700": `var(${colorVariants[accentColor as keyof typeof colorVariants]["700"]})`,
-				"--color-platform-accent-800": `var(${colorVariants[accentColor as keyof typeof colorVariants]["800"]})`,
-				"--color-platform-accent-900": `var(${colorVariants[accentColor as keyof typeof colorVariants]["900"]})`,
-				"--color-platform-accent-950": `var(${colorVariants[accentColor as keyof typeof colorVariants]["950"]})`,
+				"--color-platform-accent-50": `var(${colorVariants[accentColor]["50"]})`,
+				"--color-platform-accent-100": `var(${colorVariants[accentColor]["100"]})`,
+				"--color-platform-accent-200": `var(${colorVariants[accentColor]["200"]})`,
+				"--color-platform-accent-300": `var(${colorVariants[accentColor]["300"]})`,
+				"--color-platform-accent-400": `var(${colorVariants[accentColor]["400"]})`,
+				"--color-platform-accent-500": `var(${colorVariants[accentColor]["500"]})`,
+				"--color-platform-accent-600": `var(${colorVariants[accentColor]["600"]})`,
+				"--color-platform-accent-700": `var(${colorVariants[accentColor]["700"]})`,
+				"--color-platform-accent-800": `var(${colorVariants[accentColor]["800"]})`,
+				"--color-platform-accent-900": `var(${colorVariants[accentColor]["900"]})`,
+				"--color-platform-accent-950": `var(${colorVariants[accentColor]["950"]})`,
 			} as React.CSSProperties}
 		// style={{
 		// 	// https://heropatterns.com/
