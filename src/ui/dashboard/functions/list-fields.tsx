@@ -7,6 +7,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { Select } from "@/components/input/dropdown"
 import { Field, Input, Label, Description, ErrorMessage, FieldDescription } from "@/components/input/fieldset"
 import { Listbox, ListboxOption } from "@/components/input/listbox"
+// import { Listbox, ListboxOption } from "@headlessui/react"
 import { FieldMetadata } from "@conform-to/react"
 import { marked } from "marked"
 
@@ -125,7 +126,7 @@ export function ListFields({
 	fieldset?: Required<{
 		[x: string]: FieldMetadata<unknown, Record<
 			string, Record<string, unknown>
-		>, string[]>;
+		>, string[]>
 	}>
 	fieldDescriptions?: Record<string, Record<string, string>>
 	inputRefs?: React.RefObject<
@@ -214,25 +215,26 @@ export function ListFields({
 				{
 					singleField.type === "selectFont" &&
 					<>
-						<Select
-							id={fieldset && fieldset[name].name}
+						<Listbox
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
-							defaultValue={singleField.value}
+							loadedValue={singleField.value}
+							conformField={fieldset && fieldset[name]}
 						>
 
 							{singleField.options.map((o, i) => (
-								<option key={i} value={o.value}
-								// style={{
-								// 	fontFamily: `var(--font-${o.value})`
-								// }}
-								// className={clsx(
-								// 	"text-2xl"
-								// )}
+								<ListboxOption key={i} value={o.value}
+									style={{
+										fontFamily: `var(--font-${o.value})`
+									}}
+									className={clsx(
+										"text-2xl"
+									)}
 								>
 									{o.name}
-								</option>
+								</ListboxOption>
 							))}
-						</Select>
+						</Listbox>
 					</>
 				}
 				{

@@ -3,21 +3,52 @@ import * as Headless from "@headlessui/react"
 import clsx from "clsx"
 import Icon from "@/styles/icons"
 import { Fragment } from "react"
+import { FieldMetadata, useInputControl } from "@conform-to/react"
 
-export function Listbox<T>({
+export function Listbox({
 	className,
 	children: options,
+	conformField,
+	loadedValue,
 	...props
 }: {
 	className?: string
 	children?: React.ReactNode
-} & Omit<Headless.ListboxProps<typeof Fragment, T>, 'as' | 'multiple'>) {
+	conformField?: FieldMetadata<unknown, Record<
+		string, Record<string, unknown>
+	>, string[]>
+	loadedValue?: string
+} & Omit<Headless.ListboxProps<typeof Fragment>, 'as' | 'multiple'>) {
+
+	/**
+	 * useInputControl
+	 * - Conform's adapter for a custom React control
+	 * - Gives the listbox a value & change handler that stays connected to Conform's form state
+	 */
+	const thisField = useInputControl({
+		name: conformField?.name || "",
+		formId: conformField?.formId || "",
+		initialValue:
+			typeof conformField?.initialValue === "string"
+				? conformField.initialValue
+				: loadedValue
+	})
+
 	return <>
 		<div className={clsx(
 			"grid",
 			"grid-cols-1",
 		)}>
-			<Headless.Listbox	{...props} multiple={false} >
+			<Headless.Listbox
+				{...props}
+				multiple={false}
+				// Makes conform control this value
+				value={thisField.value}
+				// Report changes back to conform 
+				onChange={thisField.change}
+				// Associate with the correct form
+				form={conformField?.id}
+			>
 				<Headless.ListboxButton
 					data-slot="control"
 					className={clsx(

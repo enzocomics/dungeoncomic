@@ -6,7 +6,7 @@ import Image from "next/image"
 // VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { useForm } from "@conform-to/react"
+import { useForm, useInputControl } from "@conform-to/react"
 // FUNCTIONS
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
@@ -17,6 +17,8 @@ import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
 import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
+import { Listbox, ListboxButton, ListboxOptions, ListboxSelectedOption } from "@headlessui/react"
+import { ListboxOption } from "@/components/catalyst/listbox"
 
 
 /**----------------------------------- */
@@ -53,6 +55,7 @@ export default function ThemePageForm({
 	})
 
 	const settingsFieldset = fields.settings.getFieldset()
+
 	useEffect(() => {
 		if (lastResult?.status == "success") {
 			setStatus("success", "Your settings have been saved.")
@@ -91,8 +94,6 @@ export default function ThemePageForm({
 							fieldset={settingsFieldset}
 							fieldDescriptions={descriptions[name].fields}
 							collection={settings}
-						// inputRefs={inputRefs}
-						// disableAll={name !== "details" && hideTypes}
 						/>
 					</FieldGroup2Columns>
 				</FieldsetSection>
