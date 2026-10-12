@@ -129,11 +129,13 @@ export function ListboxOption<T>({
 	return <Headless.ListboxOption as={Fragment} {...props}>
 		{({ selectedOption }) => {
 			if (selectedOption) {
-				return <div className={clsx(className,)}>{children}</div>
+				return <div className={clsx(className)}>{children}</div>
 			}
 
 			return (
 				<div className={clsx(
+					// className,
+					"group",
 					"z-100",
 					"cursor-pointer",
 					"px-3",
@@ -143,7 +145,14 @@ export function ListboxOption<T>({
 					"hover:bg-platform-accent-500/50",
 					"data-focus:text-white",
 					"data-focus:bg-platform-accent-500",
-
+					"flex",
+					"items-center",
+					"gap-x-2",
+					// COLORS LISTBOX
+					"data-[select=color]:hover:text-black!",
+					"data-[select=color]:hover:bg-white!",
+					"data-[select=color]:data-focus:text-black!",
+					"data-[select=color]:data-focus:bg-white!",
 				)}>
 					{children}
 				</div>

@@ -10,6 +10,7 @@ import { Listbox, ListboxOption } from "@/components/input/listbox"
 // import { Listbox, ListboxOption } from "@headlessui/react"
 import { FieldMetadata } from "@conform-to/react"
 import { marked } from "marked"
+import Icon from "@/styles/icons"
 
 /**----------------------------------- */
 // TYPES
@@ -45,9 +46,15 @@ type FieldProperties = {
 		options: {
 			name: string
 			value: string | number
-		}[]
+		}[],
 	},
 	selectFont: {
+		options: {
+			name: string
+			value: string
+		}[]
+	},
+	selectColor: {
 		options: {
 			name: string
 			value: string
@@ -230,6 +237,48 @@ export function ListFields({
 										"text-2xl"
 									)}
 								>
+									{o.name}
+								</ListboxOption>
+							))}
+						</Listbox>
+					</>
+				}
+				{/**----------------------------------- */}
+				{
+					singleField.type === "selectColor" &&
+					<>
+						<Listbox
+							// id={fieldset && fieldset[name].name}
+							name={fieldset && fieldset[name].name}
+							loadedValue={singleField.value}
+							conformField={fieldset && fieldset[name]}
+						>
+
+							{singleField.options.map((o, i) => (
+								<ListboxOption key={i} value={o.value}
+									style={{
+										fontFamily: `var(--font-${o.value})`
+									}}
+
+									data-select="color"
+									className={clsx(
+										"flex",
+										"items-center",
+										"gap-x-2",
+									)}
+								>
+									<Icon name="circleSolid"
+										className={clsx(
+											"size-4",
+											"rounded-full",
+											"group-data-focus:outline-4",
+											"group-data-focus:-outline-offset-2",
+											"group-data-focus:outline-white",
+										)}
+										style={{
+											color: `var(--color-${o.value}-500)`
+										}}
+									/>
 									{o.name}
 								</ListboxOption>
 							))}
