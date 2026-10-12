@@ -165,6 +165,7 @@ export function Description({
 }: { className?: string } & Omit<Headless.DescriptionProps, "className">) {
 	return <>
 		<Headless.Description
+			as="div"
 			{...props}
 			className={clsx(
 				className,
