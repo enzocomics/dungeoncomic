@@ -18,6 +18,7 @@ export type SettingsSection = Record<string, {
 	legend: string,
 	description: string | null,
 	fields: Record<string, ListFieldsField>
+	type?: string
 }>
 
 type FieldBase = {
@@ -60,7 +61,8 @@ type FieldProperties = {
 		}[]
 	},
 	image: {
-	}
+	},
+	custom: {}
 }
 
 /**----------------------------------- */
