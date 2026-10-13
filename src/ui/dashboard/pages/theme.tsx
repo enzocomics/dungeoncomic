@@ -9,7 +9,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 import { ComicButton } from "@/components/input/button"
 import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
 import { saveSettings } from "@/ui/dashboard/actions/settings"
-import { getFieldDescriptions, ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { getFieldDescriptions, ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { PageTitleH1 } from "@/components/page"
 import ThemePageForm from "./client/theme-form"
 import { colorVariants } from "@/styles/colors"
@@ -33,6 +33,24 @@ export default async function ThemePageUI() {
 	</>
 }
 
+export const getLogoBackdropSettings = async () => {
+	const settings = await getSettings()
+	return {
+		project_logo: {
+			title: "Website Logo",
+			description: "",
+			type: "text",
+			value: settings.project_logo?.filename_disk
+		},
+		project_banner: {
+			title: "Website Background",
+			description: "",
+			type: "text",
+			value: settings.project_banner?.filename_disk,
+		},
+	} satisfies Record<string, ListFieldsField>
+}
+
 const getLookFeelSettings = async () => {
 	const settings = await getSettings()
 	// Make an array of name: value pairs of all the tailwind colors so we can use them for the seelct menu options
@@ -42,18 +60,6 @@ const getLookFeelSettings = async () => {
 	})
 	)
 	return {
-		project_logo: { //TODO: image upload
-			title: "Website Logo",
-			description: "",
-			type: "text",
-			value: settings.project_logo?.filename_disk,
-		},
-		project_banner: { // TODO: image upload
-			title: "Website Background",
-			description: "",
-			type: "text",
-			value: settings.project_logo?.filename_disk,
-		},
 		color_accent: { // TODO: tailwind color dropdown
 			title: "Website Accent Color",
 			description: "",
@@ -142,6 +148,13 @@ const getFontFields = async () => {
 
 const getSections = async () => {
 	return {
+
+		logoBackdrop: {
+			legend: "Logo & Backdrop",
+			description: null,
+			fields: await getLogoBackdropSettings(),
+			type: "logoBackdrop"
+		},
 		lookFeel: {
 			legend: "Look & Feel",
 			description: null,
@@ -152,5 +165,5 @@ const getSections = async () => {
 			description: null,
 			fields: await getFontFields()
 		},
-	}
+	} satisfies SettingsSection
 }
