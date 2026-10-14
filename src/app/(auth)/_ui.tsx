@@ -73,7 +73,7 @@ export function AuthLayout({
 						"text-white",
 						"text-sm",
 						"font-semibold",
-						"font-platform-headers",
+						"font-platform-labels",
 						"hover:duration-0",
 						"hover:bg-red-700",
 						"dark:bg-red-900",
