@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState, useEffect, useRef, useState } from "react"
+import { ChangeEvent, useActionState, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 // VALIDATION
 import z from "zod"
@@ -13,10 +13,7 @@ import { getSettings } from "@/lib/directus/get-settings"
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, FieldGroup, Fieldset, Input, Field, Label, Description } from "@/components/input/fieldset"
-import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
-import { useChangeStatus } from "@/components/status-message"
-import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
 // import { Input, Listbox, ListboxButton, ListboxOptions, ListboxSelectedOption } from "@headlessui/react"
 import { ListboxOption } from "@/components/catalyst/listbox"
 import clsx from "clsx"
@@ -41,9 +38,31 @@ export function ListLogoBackdropFields({
 	const logoObject = logo.type === "image" && logo.object ? logo.object : undefined
 	const hasLogo = logo.type === "image" && logo.object && logoObject
 
-
 	const backdropObject = backdrop.type === "image" && backdrop.object ? backdrop.object : undefined
 	const hasBackdrop = backdrop.type === "image" && backdrop.object && backdropObject
+
+	const [logoPreview, setLogoPreview] = useState(
+		`${directusURL}/assets/${logoObject?.filename_disk}`
+	)
+	const [isLogoPreviewing, setLogoPreviewing] = useState(false)
+
+	const handleLogoPreview = (e: ChangeEvent<HTMLInputElement>) => {
+		setLogoPreviewing(true)
+		console.log(e.currentTarget.files?.[0])
+		console.log(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
+		setLogoPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
+	}
+
+	const [backdropPreview, setBackdropPreview] = useState(
+		`${directusURL}/assets/${backdropObject?.filename_disk}`
+	)
+
+	const [isBackdropPreviewing, setBackdropPreviewing] = useState(false)
+
+	// useEffect(() => {
+	// 	setLogoPreviewing(false)
+	// 	setBackdropPreviewing(false)
+	// }, [])
 
 	return <Fieldset className={clsx(
 		"rounded",
@@ -56,25 +75,45 @@ export function ListLogoBackdropFields({
 		<div className={clsx(
 			"relative",
 		)}>
-			{hasLogo ?
-				<Image
-					src={`${directusURL}/assets/${logoObject.filename_disk}`}
-					alt={logoObject.description || ""}
-					width={logoObject.width || "320"}
-					height={logoObject.height || "240"}
-					className={clsx(
-						"w-auto",
-						"h-12",
-						"md:h-30",
+			{(hasLogo || (!hasLogo && isLogoPreviewing)) ?
+				<div className={clsx(
+					"absolute",
+					"left-1/2",
+					"top-1/2",
+					"-translate-1/2",
+				)
+				}>
+					<Image
+						src={logoPreview}
+						alt={logoObject?.description || ""}
+						width={logoObject?.width || "320"}
+						height={logoObject?.height || "240"}
+						className={clsx(
+							"w-auto",
+							"h-12",
+							"md:h-30",
+							"object-contain",
+							"drop-shadow-black/50",
+							"drop-shadow-sm",
+						)}
+					/>
+					<button type="button" className={clsx(
 						"absolute",
-						"left-1/2",
-						"top-1/2",
-						"-translate-1/2",
-						"drop-shadow-black/50",
-						"drop-shadow-sm"
-					)
-					}
-				/>
+						"top-0",
+						"right-0",
+						"size-5",
+						"bg-red-500",
+						"flex",
+						"items-center",
+						"justify-center",
+						"rounded-full",
+					)}>
+						<Icon name="xmark" className={clsx(
+							"size-3",
+							"text-white",
+						)} />
+					</button>
+				</div>
 				:
 				<div className={clsx(
 					"w-48",
@@ -84,11 +123,19 @@ export function ListLogoBackdropFields({
 					"left-1/2",
 					"top-1/2",
 					"-translate-1/2",
-					"bg-black/5",
-					"dark:bg-white/15",
+					hasBackdrop ? [
+						"text-white",
+						"bg-black/50",
+						"dark:text-black",
+						"dark:bg-white/50",
+						"backdrop-blur-sm",
+						// "backdrop-saturate-0",
+					] : [
+						"text-neutral-500",
+						"bg-black/5",
+						"dark:bg-white/15",],
 					"border-2",
 					"border-neutral-400",
-					"text-neutral-500",
 					"border-dashed",
 					// "flex",
 					// "items-center",
@@ -137,21 +184,42 @@ export function ListLogoBackdropFields({
 						: undefined
 				}}
 			>
-				<div className={clsx(
-					"p-2",
-					"font-platform-labels",
-					"flex",
-					"items-center",
-					"gap-2",
+				{!hasBackdrop && !isBackdropPreviewing &&
+					<div className={clsx(
+						"p-2",
+						"font-platform-labels",
+						"flex",
+						"items-center",
+						"gap-2",
 
-				)}>
-					<Icon name="image" className={clsx(
+					)}>
+						<Icon name="image" className={clsx(
+							"size-5",
+						)} />
+						<span>
+							Backdrop
+						</span>
+
+					</div>
+				}
+				{(hasBackdrop || hasBackdrop && isBackdropPreviewing) &&
+					<button type="button" className={clsx(
+						"absolute",
+						"-top-1.5",
+						"-right-1.5",
 						"size-5",
-					)} />
-					<span>
-						Backdrop
-					</span>
-				</div>
+						"bg-red-500",
+						"flex",
+						"items-center",
+						"justify-center",
+						"rounded-full",
+					)}>
+						<Icon name="xmark" className={clsx(
+							"size-3",
+							"text-white",
+						)} />
+					</button>
+				}
 			</div>
 
 
@@ -175,6 +243,7 @@ export function ListLogoBackdropFields({
 							"font-platform-labels",
 							"w-full"
 						)}
+						onChange={(e) => handleLogoPreview(e)}
 					/>
 
 					<Description>Logo Recommendations:<br />
