@@ -13,6 +13,7 @@ import { getFieldDescriptions, ListFields, ListFieldsField, SettingsSection } fr
 import { PageTitleH1 } from "@/components/page"
 import ThemePageForm from "./client/theme-form"
 import { colorVariants } from "@/styles/colors"
+import { ImageCollection } from "@/lib/directus/schema"
 
 
 
@@ -39,14 +40,14 @@ export const getLogoBackdropSettings = async () => {
 		project_logo: {
 			title: "Website Logo",
 			description: "",
-			type: "text",
-			value: settings.project_logo?.filename_disk
+			type: "image",
+			object: settings.project_logo as ImageCollection
 		},
 		project_banner: {
 			title: "Website Background",
 			description: "",
-			type: "text",
-			value: settings.project_banner?.filename_disk,
+			type: "image",
+			object: settings.project_banner as ImageCollection,
 		},
 	} satisfies Record<string, ListFieldsField>
 }

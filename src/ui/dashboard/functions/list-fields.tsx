@@ -10,6 +10,7 @@ import { Listbox, ListboxOption } from "@/components/input/listbox"
 import { FieldMetadata } from "@conform-to/react"
 import { marked } from "marked"
 import Icon from "@/styles/icons"
+import { ImageCollection } from "@/lib/directus/schema"
 
 /**----------------------------------- */
 // TYPES
@@ -61,6 +62,7 @@ type FieldProperties = {
 		}[]
 	},
 	image: {
+		object: ImageCollection | null
 	},
 	custom: {}
 }
