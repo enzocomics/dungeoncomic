@@ -11,13 +11,16 @@ import {
 	readUserPermissions,
 } from "@directus/sdk"
 import { adminClient, userClient } from "@/lib/directus/clients"
+import { cacheTag } from "next/cache"
 
 /** ------------------------------------------------ **
  * VERIFY SESSION
  * - We verify if a session exists by checking if the user can access their own account details
  * - Returns the user object if successful, or `false` if not
  */
-export const verifySession = cache(async () => {
+export const verifySession = async () => {
+	"use cache"
+	cacheTag("session")
 	try {
 		// Get the logged-in user object
 		const readMeResponse = await userClient.request(
@@ -63,4 +66,4 @@ export const verifySession = cache(async () => {
 	} catch {
 		return null
 	}
-})
+}

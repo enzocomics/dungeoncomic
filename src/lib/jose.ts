@@ -3,6 +3,7 @@ import "server-only"
 // LIBRARIES
 import { SignJWT, jwtVerify } from "jose"
 import { sessionSecret } from "@/data/env"
+import { cacheTag } from "next/cache"
 
 // ENCODE THE SESSION SECRET KEY
 const encodedKey = new TextEncoder().encode(sessionSecret)
@@ -18,6 +19,8 @@ export type SessionPayload = {
 export async function encrypt(
 	payload: SessionPayload | Record<string, string | null>,
 ): Promise<string> {
+	"use cache"
+	cacheTag("session")
 	return new SignJWT({ ...payload })
 		.setProtectedHeader({ alg: "HS256" })
 		.setIssuedAt()
@@ -29,6 +32,8 @@ export async function encrypt(
 export async function decrypt(
 	token: string,
 ): Promise<SessionPayload | Record<string, string | null> | null> {
+	"use cache"
+	cacheTag("session")
 	try {
 		const { payload } = await jwtVerify(token, encodedKey, {
 			algorithms: ["HS256"],
