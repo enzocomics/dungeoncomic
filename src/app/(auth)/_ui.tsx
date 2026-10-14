@@ -9,6 +9,8 @@ import Icon from "@/styles/icons"
 import Link from "next/link"
 import { RefObject } from "react"
 import { useTranslations } from "next-intl"
+import { getSettings } from "@/lib/directus/get-settings"
+import { getFullYear } from "@/ui/platform/functions/timestamp"
 
 /**-----------------------------------
  * AUTH - UI LAYOUTS
@@ -169,7 +171,21 @@ export function AuthNav({ children }: { children: React.ReactNode }) {
 	</>
 }
 
-function AuthFooter() {
+async function AuthFooter() {
+	const settings = await getSettings()
+	const platformEstYear = 2026
+	const projectEstYear = settings.date_established
+		? await getFullYear(settings.date_established)
+		: platformEstYear
+
+	const years = projectEstYear > platformEstYear
+		// If the platform year is younger than the project year, show a range. Fallback to platform year
+		? `${platformEstYear}—${projectEstYear}`
+		: platformEstYear
+
+	// Variable: Platform Name
+	const platformName = settings.project_name || "Dungeon Construction Co."
+
 	return <footer className={clsx(
 		"flex",
 		"justify-center",
@@ -182,7 +198,9 @@ function AuthFooter() {
 		"sm:w-full",
 		"sm:max-w-120"
 	)}>
-		<span>&copy; {new Date().getFullYear().toString()} Dungeon Construction Co.</span>
+		<span className="inline-block">
+			&copy; {years} {platformName}
+		</span>
 		<a href="https://github.com/enzocomics/dungeoncomic" target="_blank"
 			title="Visit DungeonComic's Github Project Repository"
 			aria-label="Visit DungeonComic's Github Project Repository"

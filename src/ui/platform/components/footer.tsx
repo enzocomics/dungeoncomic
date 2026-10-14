@@ -4,15 +4,17 @@ import Icon from "@/styles/icons"
 import clsx from "clsx"
 import { marked } from "marked"
 import { getTranslations } from "next-intl/server"
+import { getFullYear } from "../functions/timestamp"
 
 export default async function PlatformFooter() {
+	"use cache"
 	const t = await getTranslations("footer")
 	const settings = await getSettings()
 
 	// Variable: Copyright Year
 	const platformEstYear = 2026
 	const projectEstYear = settings.date_established
-		? new Date(settings.date_established).getFullYear()
+		? await getFullYear(settings.date_established)
 		: platformEstYear
 
 	const years = projectEstYear > platformEstYear
