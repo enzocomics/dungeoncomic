@@ -7,7 +7,7 @@ import type React from "react"
 import Image from "next/image"
 import Icon from "@/styles/icons"
 import Link from "next/link"
-import { RefObject } from "react"
+import { ComponentPropsWithoutRef, RefObject } from "react"
 import { useTranslations } from "next-intl"
 import { getSettings } from "@/lib/directus/get-settings"
 import { getFullYear } from "@/ui/platform/functions/timestamp"
@@ -106,7 +106,11 @@ export function AuthLayout({
 				}
 				{children}
 			</div>
-			{/* <AuthFooter /> */}
+			{!isModal &&
+				<AuthFooter className={clsx(
+					"lg:mt-8",
+				)} />
+			}
 		</div >
 	</>
 }
@@ -189,7 +193,7 @@ export function AuthNav({ children }: { children: React.ReactNode }) {
 	</>
 }
 
-async function AuthFooter() {
+export async function AuthFooter(props: ComponentPropsWithoutRef<"footer">) {
 	const settings = await getSettings()
 	const platformEstYear = 2026
 	const projectEstYear = settings.date_established
@@ -205,11 +209,12 @@ async function AuthFooter() {
 	const platformName = settings.project_name || "Dungeon Construction Co."
 
 	return <footer className={clsx(
+		props.className,
 		"flex",
 		"justify-center",
 		"gap-2",
 		"my-4",
-		"lg:mt-10",
+		// "lg:mt-10",
 		"text-xs",
 		"text-current/40",
 		"sm:mx-auto",
