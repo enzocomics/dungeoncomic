@@ -6230,6 +6230,7 @@
           "allowedMimeTypes": [
             "image/jpeg",
             "image/png",
+            "image/gif",
             "image/webp"
           ],
           "crop": false
@@ -6371,6 +6372,7 @@
         "note": null,
         "options": {
           "allowedMimeTypes": [
+            "image/jpeg",
             "image/png",
             "image/gif",
             "image/webp"
@@ -6811,7 +6813,7 @@
         "interface": "input",
         "note": null,
         "options": null,
-        "readonly": false,
+        "readonly": true,
         "required": true,
         "searchable": true,
         "sort": 1,
@@ -6855,7 +6857,7 @@
         "interface": "input",
         "note": null,
         "options": null,
-        "readonly": false,
+        "readonly": true,
         "required": true,
         "searchable": true,
         "sort": 2,
@@ -6899,7 +6901,7 @@
         "interface": "input",
         "note": null,
         "options": null,
-        "readonly": false,
+        "readonly": true,
         "required": true,
         "searchable": true,
         "sort": 3,
@@ -6945,7 +6947,7 @@
         "options": {
           "slug": true
         },
-        "readonly": false,
+        "readonly": true,
         "required": true,
         "searchable": true,
         "sort": 4,
@@ -6989,7 +6991,7 @@
         "interface": "input",
         "note": null,
         "options": null,
-        "readonly": false,
+        "readonly": true,
         "required": true,
         "searchable": true,
         "sort": 1,
@@ -6997,7 +6999,7 @@
         "translations": null,
         "validation": null,
         "validation_message": null,
-        "width": "full"
+        "width": "half"
       },
       "schema": {
         "name": "color_accent",

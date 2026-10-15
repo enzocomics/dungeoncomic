@@ -4938,6 +4938,7 @@
         "allowedMimeTypes": [
           "image/jpeg",
           "image/png",
+          "image/gif",
           "image/webp"
         ]
       },
@@ -4990,6 +4991,7 @@
       "interface": "file-image",
       "options": {
         "allowedMimeTypes": [
+          "image/jpeg",
           "image/png",
           "image/gif",
           "image/webp"
@@ -5292,7 +5294,7 @@
       "options": null,
       "display": null,
       "display_options": null,
-      "readonly": false,
+      "readonly": true,
       "hidden": false,
       "sort": 1,
       "width": "half",
@@ -5338,7 +5340,7 @@
       "options": null,
       "display": null,
       "display_options": null,
-      "readonly": false,
+      "readonly": true,
       "hidden": false,
       "sort": 2,
       "width": "half",
@@ -5384,7 +5386,7 @@
       "options": null,
       "display": null,
       "display_options": null,
-      "readonly": false,
+      "readonly": true,
       "hidden": false,
       "sort": 3,
       "width": "half",
@@ -5432,7 +5434,7 @@
       },
       "display": null,
       "display_options": null,
-      "readonly": false,
+      "readonly": true,
       "hidden": false,
       "sort": 4,
       "width": "half",
@@ -5478,10 +5480,10 @@
       "options": null,
       "display": null,
       "display_options": null,
-      "readonly": false,
+      "readonly": true,
       "hidden": false,
       "sort": 1,
-      "width": "full",
+      "width": "half",
       "translations": null,
       "note": null,
       "conditions": null,
