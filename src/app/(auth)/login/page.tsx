@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 // COMPONENTS
 import { verifySession } from "@/data/session"
-import LoginPageUI from "./_ui"
+import LoginPageUI from "../../../ui/auth/pages/login"
 
 /**-----------------------------------
  * LOGIN PAGE ROUTE

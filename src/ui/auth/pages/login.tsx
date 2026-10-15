@@ -11,7 +11,7 @@ import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
-import { login } from "./_action"
+import { login } from "../../../app/(auth)/login/_action"
 // UI
 import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/ui/auth/layout"
 import StatusMessage from "@/components/status-message"
