@@ -1,6 +1,6 @@
 /**----------------------------------- */
 import { NextRequest, NextResponse } from "next/server"
-import { logout } from "./_action"
+import { logout } from "@/ui/auth/actions/logout"
 /** ------------------------------------------------ **
  * LOGOUT ROUTE
  */
