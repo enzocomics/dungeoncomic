@@ -1,5 +1,5 @@
 "use client"
-import { AuthLayout } from "@/app/(auth)/_ui"
+import { AuthLayout } from "@/ui/auth/layout"
 import LoginPageUI from "@/app/(auth)/login/_ui"
 import RegisterPageUI from "@/app/(auth)/register/_ui"
 import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"

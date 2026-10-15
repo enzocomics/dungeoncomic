@@ -13,7 +13,7 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { loginSchema } from "@/lib/zod/schemas/pages"
 import { login } from "./_action"
 // UI
-import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/app/(auth)/_ui"
+import { AuthBody, AuthHeader, AuthHeaderDescription, AuthHeaderTitle, AuthNav } from "@/ui/auth/layout"
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
 // import { ErrorMessage, FieldGroup } from "@/components/catalyst/fieldset"
