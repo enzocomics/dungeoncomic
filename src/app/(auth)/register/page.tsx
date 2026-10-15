@@ -8,22 +8,29 @@ import { getTranslations } from "next-intl/server"
 import { readSettings } from "@directus/sdk"
 // COMPONENTS
 import { verifySession } from "@/data/session"
-import RegisterPageUI from "../../../ui/auth/pages/register"
+import RegisterPageUI from "@/ui/auth/pages/register"
 import { adminClient } from "@/lib/directus/clients"
+import { cacheTag } from "next/cache"
 
 /**-----------------------------------
  * REGISTER PAGE ROUTE
  */
 export default async function RegisterPage() {
+	return <Suspense>
+		<RegisterContent />
+	</Suspense>
+}
+
+async function RegisterContent() {
+	"use cache"
+	cacheTag("settings")
 	// Check if public registration is open
 	const { public_registration } = await adminClient.request(readSettings({
 		fields: ["public_registration"]
 	}))
-
-	return <Suspense>
-		<RegisterPageUI public_registration={public_registration} isModal={false} />
-	</Suspense>
+	return <RegisterPageUI public_registration={public_registration} isModal={false} />
 }
+
 /** ------------------------------------------------ **
  * Page Metadata
  * - Will override the global site metadata
