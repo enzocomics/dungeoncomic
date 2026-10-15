@@ -12,7 +12,7 @@ import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { resetPasswordRequestSchema, resetPasswordSubmitSchema } from "@/lib/zod/schemas/pages"
-import { requestReset, submitReset } from "./_action"
+import { requestReset, submitReset } from "../actions/reset-password"
 // UI
 import StatusMessage from "@/components/status-message"
 import { useChangeStatus } from "@/components/status-message"
