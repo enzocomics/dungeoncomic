@@ -1,4 +1,4 @@
-"use server"
+
 import StatusMessage from "@/components/status-message"
 /**----------------------------------- */
 import { AuthLayout } from "./_ui"
@@ -12,8 +12,10 @@ export default async function AuthRootLayout(props: LayoutProps<"/">) {
 		<Suspense>
 			<StatusMessage />
 		</Suspense>
-		<AuthLayout>
-			{props.children}
-		</AuthLayout>
+		<Suspense>
+			<AuthLayout>
+				{props.children}
+			</AuthLayout>
+		</Suspense>
 	</>
 }
