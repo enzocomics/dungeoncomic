@@ -2,11 +2,9 @@
 // LIBRARIES
 import { Suspense } from "react"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 // COMPONENTS
-import { verifySession } from "@/data/session"
-import LoginPageUI from "../../../ui/auth/pages/login"
+import LoginPageUI from "@/ui/auth/pages/login"
 
 /**-----------------------------------
  * LOGIN PAGE ROUTE
