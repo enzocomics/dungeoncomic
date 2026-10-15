@@ -3,22 +3,16 @@ import "server-only"
 // LIBRARIES
 import { cache } from "react"
 // CMS
-import {
-	readFile,
-	readMe,
-	readRole,
-	readUser,
-	readUserPermissions,
-} from "@directus/sdk"
-import { adminClient, userClient } from "@/lib/directus/clients"
-import { cacheTag } from "next/cache"
+import { readFile, readMe, readUserPermissions } from "@directus/sdk"
+import { userClient } from "@/lib/directus/clients"
 
 /** ------------------------------------------------ **
  * VERIFY SESSION
  * - We verify if a session exists by checking if the user can access their own account details
  * - Returns the user object if successful, or `false` if not
+ * - React `cache()`: deduplicates repeated calls during  a single server render
  */
-export const verifySession = async () => {
+export const verifySession = cache(async () => {
 	try {
 		// Get the logged-in user object
 		const readMeResponse = await userClient.request(
@@ -64,4 +58,4 @@ export const verifySession = async () => {
 	} catch {
 		return null
 	}
-}
+})
