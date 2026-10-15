@@ -1,7 +1,7 @@
 "use client"
 import { AuthLayout } from "@/ui/auth/layout"
 import LoginPageUI from "@/ui/auth/pages/login"
-import RegisterPageUI from "@/app/(auth)/register/_ui"
+import RegisterPageUI from "@/ui/auth/pages/register"
 import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"
 import { useGlobalContext } from "@/ui/platform/context"
 import Icon from "@/styles/icons"

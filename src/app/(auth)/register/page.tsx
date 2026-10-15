@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 import { readSettings } from "@directus/sdk"
 // COMPONENTS
 import { verifySession } from "@/data/session"
-import RegisterPageUI from "./_ui"
+import RegisterPageUI from "../../../ui/auth/pages/register"
 import { adminClient } from "@/lib/directus/clients"
 
 /**-----------------------------------

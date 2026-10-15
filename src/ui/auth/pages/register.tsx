@@ -12,7 +12,7 @@ import { useActionState, useEffect } from "react"
 import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { registerSchema } from "@/lib/zod/schemas/pages"
-import { register, verify } from "./_action"
+import { register, verify } from "../actions/register"
 // DATA
 import { adminContactEmail } from "@/data/env"
 // UI
