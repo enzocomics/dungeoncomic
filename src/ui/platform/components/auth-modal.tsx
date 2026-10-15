@@ -2,7 +2,7 @@
 import { AuthLayout } from "@/ui/auth/layout"
 import LoginPageUI from "@/ui/auth/pages/login"
 import RegisterPageUI from "@/ui/auth/pages/register"
-import ResetPasswordPageUI from "@/app/(auth)/reset-password/_ui"
+import ResetPasswordPageUI from "@/ui/auth/pages/reset-password"
 import { useGlobalContext } from "@/ui/platform/context"
 import Icon from "@/styles/icons"
 import clsx from "clsx"

@@ -6,7 +6,7 @@ import { Suspense } from "react"
 import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
 // UI
-import ResetPasswordPageUI from "./_ui"
+import ResetPasswordPageUI from "@/ui/auth/pages/reset-password"
 
 /**----------------------------------- */
 export default function ResetPasswordPage() {
