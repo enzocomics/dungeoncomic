@@ -19,8 +19,6 @@ import { cacheTag } from "next/cache"
  * - Returns the user object if successful, or `false` if not
  */
 export const verifySession = async () => {
-	"use cache"
-	cacheTag("session")
 	try {
 		// Get the logged-in user object
 		const readMeResponse = await userClient.request(
