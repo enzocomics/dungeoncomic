@@ -1,4 +1,3 @@
-"use server"
 /**----------------------------------- */
 // LIBRARIES
 import { Suspense } from "react"
