@@ -1,7 +1,9 @@
 /**----------------------------------- */
+// LIBRARIES
+import { Suspense } from "react"
+// UI
 import RedirectIfAuthenticated from "@/ui/auth/functions/auth-redirect"
 import AuthRootLayoutUI from "@/ui/auth/layout"
-import { Suspense } from "react"
 
 /**-----------------------------------
  * AUTH - ROOT LAYOUT
