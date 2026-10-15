@@ -106,7 +106,7 @@ export function AuthLayout({
 				}
 				{children}
 			</div>
-			<AuthFooter />
+			{/* <AuthFooter /> */}
 		</div >
 	</>
 }
