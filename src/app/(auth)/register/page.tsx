@@ -19,14 +19,10 @@ export default async function RegisterPage() {
 	const { public_registration } = await adminClient.request(readSettings({
 		fields: ["public_registration"]
 	}))
-	// Check if the user session exists
-	const user = await verifySession()
-	// Show the create account UI if the user is not logged in
-	if (!user) return <Suspense>
+
+	return <Suspense>
 		<RegisterPageUI public_registration={public_registration} isModal={false} />
 	</Suspense>
-	// Otherwise, redirect them to the dahsboard
-	else redirect("/dashboard")
 }
 /** ------------------------------------------------ **
  * Page Metadata

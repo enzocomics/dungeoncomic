@@ -12,13 +12,10 @@ import LoginPageUI from "./_ui"
  * LOGIN PAGE ROUTE
  */
 export default async function LoginPage() {
-	const user = await verifySession()
 	// Show the login UI if the user is not logged in
-	if (!user) return <Suspense>
+	return <Suspense>
 		<LoginPageUI isModal={false} />
 	</Suspense>
-	// Otherwise, redirect them to the dashboard
-	else redirect("/dashboard")
 }
 /** ------------------------------------------------ **
  * Page Metadata
