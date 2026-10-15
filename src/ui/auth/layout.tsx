@@ -21,9 +21,7 @@ export default async function AuthRootLayoutUI({
 	children: React.ReactNode
 }) {
 	return <>
-		<Suspense>
-			<StatusMessage />
-		</Suspense>
+		<StatusMessage />
 		<Suspense>
 			<AuthLayout>
 				{children}
