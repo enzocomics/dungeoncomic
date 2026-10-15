@@ -18,8 +18,12 @@ import { ImageCollection } from "@/lib/directus/schema"
 
 
 /**----------------------------------- */
-export default async function ThemePageUI() {
-	const settings = await getSettings()
+export default async function ThemePageUI({
+	settings
+}: {
+	settings: Awaited<ReturnType<typeof getSettings>>
+}) {
+	// const settings = await getSettings()
 	const sections = await getSections()
 	const fieldDescriptions = await getFieldDescriptions(sections)
 	return <>
