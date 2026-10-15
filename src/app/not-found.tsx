@@ -15,6 +15,12 @@ import { Suspense } from "react"
 
 /**----------------------------------- */
 export default async function NotFoundPage() {
+	return <Suspense>
+		<NotFoundPageContent />
+	</Suspense>
+}
+
+async function NotFoundPageContent() {
 	const settings = await getSettings()
 	const comic = await getComic({ slug: settings.frontpage_comic?.slug })
 	const routingMode = settings.routing_mode
