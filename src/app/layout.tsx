@@ -28,12 +28,12 @@ export default async function RootLayout(props: LayoutProps<"/">) {
 	const settings = await getSettings()
 	const routingMode = settings.routing_mode
 	const isSingleSingleMode = routingMode === "single-single"
-	const frontpageComic = await getComic({ slug: settings.frontpage_comic?.slug })
-	const fontHeaders = isSingleSingleMode ? frontpageComic.font_headers : settings.font_headers
-	const fontLabels = isSingleSingleMode ? frontpageComic.font_labels : settings.font_labels
-	const fontCopy = isSingleSingleMode ? frontpageComic.copy_font : settings.font_copy
-	const fontMono = isSingleSingleMode ? frontpageComic.font_mono : settings.font_mono
-	const accentColor = isSingleSingleMode ? (frontpageComic.accent_color && frontpageComic.accent_color || settings.color_accent) : settings.color_accent
+	const frontpageComic = isSingleSingleMode ? await getComic({ slug: settings.frontpage_comic?.slug }) : undefined
+	const fontHeaders = isSingleSingleMode ? frontpageComic?.font_headers : settings.font_headers
+	const fontLabels = isSingleSingleMode ? frontpageComic?.font_labels : settings.font_labels
+	const fontCopy = isSingleSingleMode ? frontpageComic?.copy_font : settings.font_copy
+	const fontMono = isSingleSingleMode ? frontpageComic?.font_mono : settings.font_mono
+	const accentColor = isSingleSingleMode ? (frontpageComic?.accent_color && frontpageComic?.accent_color || settings.color_accent) : settings.color_accent
 
 
 
