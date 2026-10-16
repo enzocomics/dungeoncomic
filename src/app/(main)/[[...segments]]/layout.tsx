@@ -13,8 +13,7 @@ import { getComic } from "@/lib/directus/get-comics"
 import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-page-header-title"
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
-export const instant = false
-/**----------------------------------- */
+import { Suspense } from "react"
 export default async function Layout({
 	children,
 	params
@@ -22,6 +21,24 @@ export default async function Layout({
 	children: React.ReactNode
 	params: Promise<{ segments?: string[] }>
 }) {
+	return <>
+		<Suspense>
+			<LayoutContent params={params}>
+				{children}
+			</LayoutContent>
+		</Suspense>
+	</>
+}
+
+/**----------------------------------- */
+async function LayoutContent({
+	children,
+	params
+}: {
+	children: React.ReactNode
+	params: Promise<{ segments?: string[] }>
+}) {
+
 	const { segments = [] } = await params
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
