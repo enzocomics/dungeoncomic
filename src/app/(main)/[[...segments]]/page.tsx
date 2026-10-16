@@ -21,8 +21,9 @@ import { Metadata } from "next"
 import { CommentsSection } from "@/ui/comic/components/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
 import { Suspense } from "react"
+import { connection } from "next/server"
 /**----------------------------------- */
-export default function MainPage({
+export default async function MainPage({
 	params
 }: {
 	params: Promise<{ segments?: string[] }>
@@ -39,6 +40,7 @@ export async function MainPageContent({
 }: {
 	params: Promise<{ segments?: string[] }>
 }) {
+	await connection()
 	const { segments = [] } = await params
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
@@ -157,6 +159,7 @@ export async function generateMetadata({
 }: {
 	params: Promise<{ segments?: string[] }>
 }): Promise<Metadata | undefined> {
+	"use cache"
 	const { segments = [] } = await params
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
