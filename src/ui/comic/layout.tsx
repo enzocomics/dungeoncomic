@@ -66,7 +66,9 @@ export async function ComicRootLayout({
 			<PlatformMain>
 				{children}
 			</PlatformMain>
-			<PlatformFooter />
+			<Suspense>
+				<PlatformFooter />
+			</Suspense>
 		</ComicMainWrapper>
 		{/* </ComicContextProvider> */}
 	</>
