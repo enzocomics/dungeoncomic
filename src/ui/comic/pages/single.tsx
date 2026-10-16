@@ -31,15 +31,16 @@ export default async function ComicPageUI({
 	page,
 	variables,
 	userVariables,
-	session,
+	// session,
 }: {
 	page: Awaited<ReturnType<typeof getComicPage>>
 	variables: Awaited<ReturnType<typeof getComicVariables>>
 	userVariables?: Record<string, string>
-	session?: Awaited<ReturnType<typeof verifySession>>
+	// session?: Awaited<ReturnType<typeof verifySession>>
 	children?: React.ReactNode
 	header?: React.ReactNode
 }) {
+	const session = await verifySession()
 	// COMIC VARS
 	const t = await getTranslations("ComicPage")
 	const comic = page.comic
