@@ -15,7 +15,7 @@ import ComicContextProvider from "@/ui/comic/context"
 import { PlatformMainWrapper, PlatformBackdrop, PlatformMain } from "@/ui/platform/components/main"
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
-import React, { ComponentPropsWithoutRef } from "react"
+import React, { ComponentPropsWithoutRef, Suspense } from "react"
 import ClientPlatformNav from "@/ui/platform/components/nav"
 import { ComicPageHeader } from "../comic/pages/single"
 import PlatformFooter from "@/ui/platform/components/footer"
@@ -56,6 +56,8 @@ export default async function PlatformRootLayout({
 				{children}
 			</PlatformMain>
 		</PlatformMainWrapper>
-		<PlatformFooter />
+		<Suspense>
+			<PlatformFooter />
+		</Suspense>
 	</>
 }
