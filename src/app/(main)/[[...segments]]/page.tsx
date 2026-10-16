@@ -20,15 +20,26 @@ import { comicMetadata, comicPageMetadata, notFoundMetadata } from "@/ui/comic/m
 import { Metadata } from "next"
 import { CommentsSection } from "@/ui/comic/components/comic-comments"
 import { getComments } from "@/lib/directus/get-comments"
-export const instant = false
+import { Suspense } from "react"
 /**----------------------------------- */
-export default async function MainPage({
+export default function MainPage({
+	params
+}: {
+	params: Promise<{ segments?: string[] }>
+}) {
+	return <>
+		<Suspense>
+			<MainPageContent params={params} />
+		</Suspense>
+	</>
+}
+
+export async function MainPageContent({
 	params
 }: {
 	params: Promise<{ segments?: string[] }>
 }) {
 	const { segments = [] } = await params
-	const session = await verifySession()
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
 
@@ -112,15 +123,15 @@ export default async function MainPage({
 					page={comicPage}
 					variables={variables}
 					userVariables={userVariables}
-					session={session}
+				// session={session}
 				/>
-				<CommentsSection
+				{/* <CommentsSection
 					page={comicPage}
 					comments={comments}
-					session={session}
+					// session={session}
 					variables={variables}
 					userVariables={userVariables}
-				/>
+				/> */}
 			</>
 			else notFound()
 		}
@@ -136,6 +147,7 @@ export default async function MainPage({
 }
 
 
+
 /**-----------------------------------
  * Generate Metadata
  * ---
@@ -146,7 +158,6 @@ export async function generateMetadata({
 	params: Promise<{ segments?: string[] }>
 }): Promise<Metadata | undefined> {
 	const { segments = [] } = await params
-	const session = await verifySession()
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
 
@@ -176,42 +187,6 @@ export async function generateMetadata({
 			return await notFoundMetadata()
 		}
 	}
-
-	// GET THE ROUTE PARAMS
-	// const { route } = await params
-	// // CHECK IF `frontpage_comic` HAS BEEN SET
-	// const settings = await getSettings()
-	// const frontpage_comic = settings.frontpage_comic
-	// // const singleComicSite = settings.single_comic_site
-	// const singleComicSite = settings.routing_mode === "single/single"
-
-	// const comic = await getComic({ slug: frontpage_comic?.slug })
-
-	// const frontpageComicPage = frontpage_comic && !isNaN(parseInt(route))
-	// 	? await getComicPage(frontpage_comic.slug, parseInt(route))
-	// 	: null
-
-	/**----------------------------------- */
-	// LAYOUT MODE 1: SINGLE COMIC SITE
-	// IF `frontpage_comic` + comic + comic page all exist: return comic page metadata
-
-	// if (frontpage_comic && comic && frontpageComicPage) {
-	// 	return await comicPageMetadata(frontpage_comic.slug, parseInt(route))
-	// }
-
-	// if (singleComicSite && comic) {
-	// 	return await comicPageMetadata(comic.slug, parseInt(route))
-	// }
-	/**----------------------------------- */
-	// LAYOUT MODE 2: MULTI-COMIC SITE
-	// IF `singleComicSite` is not selected return comic landing metadata
-	// else if (!singleComicSite) {
-	// 	return await comicMetadata(route)
-	// }
-
-	/**----------------------------------- */
-	// ELSE - 404
-	// return await notFoundMetadata()
 
 }
 
