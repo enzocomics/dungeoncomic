@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { userClient } from "@/lib/directus/clients"
 import { deleteUserCookie, getUserCookie } from "@/data/cookies"
-import { updateTag } from "next/cache"
+import { revalidatePath, updateTag } from "next/cache"
 
 /** ------------------------------------------------ **
  * LOGOUT ACTION
@@ -15,7 +15,7 @@ export async function logout() {
 	const cookie = await getUserCookie()
 	// Only attempt logout if cookie exists
 	if (cookie) {
-		updateTag("session")
+		revalidatePath("session")
 		const refresh_token = cookie.refresh_token as string
 		// Log out of Directus
 		await userClient.logout({ refresh_token: refresh_token })
