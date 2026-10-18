@@ -30,10 +30,13 @@ export default async function MainPage({
 	params: Promise<{ segments?: string[] }>
 }) {
 	return <>
-		<Suspense>
-			<MainPageContent params={params} />
-		</Suspense>
+		homepage
 	</>
+	// return <>
+	// 	<Suspense>
+	// 		<MainPageContent params={params} />
+	// 	</Suspense>
+	// </>
 }
 
 export async function MainPageContent({
@@ -155,45 +158,44 @@ export async function MainPageContent({
  * Generate Metadata
  * ---
  **/
-export async function generateMetadata({
-	params
-}: {
-	params: Promise<{ segments?: string[] }>
-}): Promise<Metadata | undefined> {
+// export async function generateMetadata({
+// 	params
+// }: {
+// 	params: Promise<{ segments?: string[] }>
+// }): Promise<Metadata | undefined> {
 
 
-	const { segments = [] } = await params
-	const settings = await getSettings()
-	const route = await resolveRoute(segments, settings.routing_mode)
+// 	const { segments = [] } = await params
+// 	const settings = await getSettings()
+// 	const route = await resolveRoute(segments, settings.routing_mode)
 
-	if (!route) return await notFoundMetadata()
+// 	if (!route) return await notFoundMetadata()
 
-	switch (route.type) {
-		case "platform-homepage": {
-			return {}
-		}
-		case "platform-content-type-page": {
-			return {}
-		}
-		case "comic-landing-page": {
-			return await comicMetadata(route.comicSlug)
-		}
-		case "comic-named-page": {
-			return {}
-		}
-		case "comic-single-page": {
-			return await comicPageMetadata(route.comicSlug, route.pageNum)
-		}
-		case "comic-single-page-action": {
-			return {}
-		}
-		// 404
-		default: {
-			return await notFoundMetadata()
-		}
-	}
-
-}
+// 	switch (route.type) {
+// 		case "platform-homepage": {
+// 			return {}
+// 		}
+// 		case "platform-content-type-page": {
+// 			return {}
+// 		}
+// 		case "comic-landing-page": {
+// 			return await comicMetadata(route.comicSlug)
+// 		}
+// 		case "comic-named-page": {
+// 			return {}
+// 		}
+// 		case "comic-single-page": {
+// 			return await comicPageMetadata(route.comicSlug, route.pageNum)
+// 		}
+// 		case "comic-single-page-action": {
+// 			return {}
+// 		}
+// 		// 404
+// 		default: {
+// 			return await notFoundMetadata()
+// 		}
+// 	}
+// }
 
 
 /**-----------------------------------
