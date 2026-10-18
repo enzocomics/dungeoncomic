@@ -14,6 +14,9 @@ import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-p
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 import { Suspense } from "react"
+
+export const instant = false
+
 export default async function Layout({
 	children,
 	params
@@ -21,12 +24,15 @@ export default async function Layout({
 	children: React.ReactNode
 	params: Promise<{ segments?: string[] }>
 }) {
+	const { segments = [] } = await params
+	const settings = await getSettings()
+	const route = await resolveRoute(segments, settings.routing_mode)
+
 	return <>
-		<Suspense>
-			<LayoutContent params={params}>
-				{children}
-			</LayoutContent>
-		</Suspense>
+		<LayoutContent params={params}>
+			{children}
+		</LayoutContent>
+
 	</>
 }
 
@@ -38,7 +44,7 @@ async function LayoutContent({
 	children: React.ReactNode
 	params: Promise<{ segments?: string[] }>
 }) {
-
+	"use cache: private"
 	const { segments = [] } = await params
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
@@ -50,7 +56,9 @@ async function LayoutContent({
 		case "platform-homepage": {
 			return <>
 				<PlatformRootLayout header={
-					<ClientLandingPageHeader settings={settings} />
+					<Suspense>
+						<ClientLandingPageHeader settings={settings} />
+					</Suspense>
 				}>
 					{children}
 				</PlatformRootLayout>
@@ -118,5 +126,4 @@ async function LayoutContent({
 				notFound()
 			}
 	}
-
 }

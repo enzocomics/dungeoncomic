@@ -29,14 +29,14 @@ export default async function MainPage({
 }: {
 	params: Promise<{ segments?: string[] }>
 }) {
-	return <>
-		homepage
-	</>
 	// return <>
-	// 	<Suspense>
-	// 		<MainPageContent params={params} />
-	// 	</Suspense>
+	// 	homepage
 	// </>
+	return <>
+		<Suspense>
+			<MainPageContent params={params} />
+		</Suspense>
+	</>
 }
 
 export async function MainPageContent({
