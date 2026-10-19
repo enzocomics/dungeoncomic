@@ -9,10 +9,12 @@ import { verifySession } from "@/data/session"
 import { getSettings } from "@/lib/directus/get-settings"
 import Link from "next/link"
 import { PageTitleH1 } from "@/components/page"
+import { connection } from "next/server"
 /**-----------------------------------
  * Dasboard Page UI
  */
 export default async function DashboardHomePageUI() {
+	await connection()
 	const t = await getTranslations("auth")
 	const user = await verifySession()
 	const settings = await getSettings()
