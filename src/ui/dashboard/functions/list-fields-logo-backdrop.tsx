@@ -237,7 +237,7 @@ export function ListLogoBackdropFields({
 				)}>
 					<Label>Logo</Label>
 					<input type="file" name={logoFieldName}
-						defaultValue={hasLogo ? logoObject.filename_disk : undefined}
+						// defaultValue={hasLogo ? logoObject.filename_disk : ""}
 						className={clsx(
 							"mb-0",
 							"font-platform-labels",
@@ -255,7 +255,7 @@ export function ListLogoBackdropFields({
 				<Field>
 					<Label>Banner</Label>
 					<input type="file" name={backdropFieldName}
-						defaultValue={hasBackdrop ? backdropObject.filename_disk : undefined}
+						// defaultValue={hasBackdrop ? backdropObject.filename_disk : ""}
 						className={clsx(
 							"mb-0",
 							"font-platform-labels",
