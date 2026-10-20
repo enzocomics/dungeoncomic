@@ -127,6 +127,7 @@ export function ListLogoBackdropFields({
 							"drop-shadow-black/50",
 							"drop-shadow-sm",
 						)}
+						loading="eager"
 					/>
 					<button type="button" className={clsx(
 						"cursor-pointer",
@@ -160,7 +161,7 @@ export function ListLogoBackdropFields({
 					"left-1/2",
 					"top-1/2",
 					"-translate-1/2",
-					hasBackdrop ? [
+					(hasBackdrop || (!hasBackdrop && isBackdropPreviewing)) && backdropPreview !== null ? [
 						"text-white",
 						"bg-black/50",
 						"dark:text-black",
@@ -318,12 +319,26 @@ export function ListLogoBackdropFields({
 							"font-platform-labels",
 							"w-full"
 						)}
+						onChange={(e) => handleBackdropPreview(e)}
 					/>
 					<Description>Backdrop Recommendations:<br />
 						- 1600x400px (4:1 aspect ratio)<br />
 						- JPEG | PNG | GIF | WEBP
 					</Description>
 				</Field>
+				{clearBackdrop &&
+					<>
+
+						<input type="hidden"
+							name={backdropClearFieldName}
+							value="true"
+						/>
+						<input type="hidden"
+							name={backdropIDName}
+							defaultValue={backdropObject?.id}
+						/>
+					</>
+				}
 			</div>
 		</div>
 	</Fieldset>
