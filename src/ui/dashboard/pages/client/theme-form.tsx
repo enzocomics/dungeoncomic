@@ -85,6 +85,7 @@ export default function ThemePageForm({
 						key={index}
 						logo={section.fields["project_logo"]}
 						backdrop={section.fields["project_banner"]}
+						fieldset={settingsFieldset}
 						type="settings"
 					/>
 				else
