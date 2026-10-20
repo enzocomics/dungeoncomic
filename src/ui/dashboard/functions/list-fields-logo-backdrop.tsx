@@ -45,8 +45,8 @@ export function ListLogoBackdropFields({
 	const logoClearFieldName = type == "settings" ? "settings.project_logo_file_clear" : "logo_clear"
 	const backdropClearFieldName = type == "settings" ? "settings.project_banner_file_clear" : "banner_clear"
 
-	const logoIDName = type == "settings" ? "project_logo_id" : "logo_id"
-	const backdropIDName = type == "settings" ? "project_banner_id" : "banner_id"
+	const logoIDName = type == "settings" ? "settings.project_logo_id" : "logo_id"
+	const backdropIDName = type == "settings" ? "settings.project_banner_id" : "banner_id"
 
 	const logoObject = logo.type === "image" && logo.object ? logo.object : undefined
 	const hasLogo = logo.type === "image" && logo.object && logoObject
