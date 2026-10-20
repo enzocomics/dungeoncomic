@@ -25,6 +25,9 @@ export const settingsSchema = (
 							z.httpUrl(),
 							z.url({ hostname: /^localhost$/ })
 						])
+
+					if (field.type == "image")
+						thing = z.file().min(1).max(1_000_000).mime(["image/png", "image/gif", "image/jpeg", "image/webp"])
 				}
 				return [[key, thing] as const]
 
