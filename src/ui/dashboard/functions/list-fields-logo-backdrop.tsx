@@ -48,20 +48,16 @@ export function ListLogoBackdropFields({
 	const hasBackdrop = backdrop.type === "image" && backdrop.object && backdropObject
 
 	// Logo States & Handler
-
 	const logoInputRef = useRef<HTMLInputElement>(null)
 
 	const [logoPreview, setLogoPreview] = useState<string | null>(
 		`${directusURL}/assets/${logoObject?.filename_disk}`
 	)
 	const [isLogoPreviewing, setLogoPreviewing] = useState(false)
-
 	const [clearLogo, setClearLogo] = useState(false)
 
 	const handleLogoPreview = (e: ChangeEvent<HTMLInputElement>) => {
 		setLogoPreviewing(true)
-		// console.log(e.currentTarget.files?.[0])
-		// console.log(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 		setLogoPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 	}
 
@@ -72,17 +68,30 @@ export function ListLogoBackdropFields({
 	}
 
 	// Backdrop States & Handler
+	const backdropInputRef = useRef<HTMLInputElement>(null)
 
-	const [backdropPreview, setBackdropPreview] = useState(
+	const [backdropPreview, setBackdropPreview] = useState<string | null>(
 		`${directusURL}/assets/${backdropObject?.filename_disk}`
 	)
-
 	const [isBackdropPreviewing, setBackdropPreviewing] = useState(false)
+	const [clearBackdrop, setClearBackdrop] = useState(false)
+
+	const handleBackdropPreview = (e: ChangeEvent<HTMLInputElement>) => {
+		setBackdropPreviewing(true)
+		setBackdropPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
+	}
+
+	const handleBackdropDelete = () => {
+		setBackdropPreviewing(false)
+		setClearBackdrop(true)
+		setBackdropPreview(null)
+	}
 
 	useEffect(() => {
 		setClearLogo(false)
-		// 	setLogoPreviewing(false)
-		// 	setBackdropPreviewing(false)
+		setClearBackdrop(false)
+		setLogoPreviewing(false)
+		setBackdropPreviewing(false)
 	}, [])
 
 
@@ -193,7 +202,7 @@ export function ListLogoBackdropFields({
 				"aspect-60/16",
 				"w-full",
 				"h-auto",
-				hasBackdrop ? [
+				((hasBackdrop || (!hasBackdrop && isBackdropPreviewing)) && backdropPreview !== null) ? [
 					"bg-cover",
 					"bg-top",
 					"bg-local",
@@ -209,11 +218,11 @@ export function ListLogoBackdropFields({
 			)}
 				style={{
 					backgroundImage: hasBackdrop ?
-						`url(${directusURL}/assets/${backdropObject.filename_disk})`
+						`url(${backdropPreview})`
 						: undefined
 				}}
 			>
-				{!hasBackdrop && !isBackdropPreviewing &&
+				{!((hasBackdrop || (!hasBackdrop && isBackdropPreviewing)) && backdropPreview !== null) &&
 					<div className={clsx(
 						"p-2",
 						"font-platform-labels",
@@ -231,8 +240,10 @@ export function ListLogoBackdropFields({
 
 					</div>
 				}
-				{(hasBackdrop || hasBackdrop && isBackdropPreviewing) &&
+				{(hasBackdrop || (!hasBackdrop && isBackdropPreviewing)) && backdropPreview !== null &&
 					<button type="button" className={clsx(
+						"cursor-pointer",
+						"active:translate-px",
 						"absolute",
 						"-top-1.5",
 						"-right-1.5",
@@ -242,7 +253,10 @@ export function ListLogoBackdropFields({
 						"items-center",
 						"justify-center",
 						"rounded-full",
-					)}>
+					)}
+
+						onClick={(e) => handleBackdropDelete()}
+					>
 						<Icon name="xmark" className={clsx(
 							"size-3",
 							"text-white",
