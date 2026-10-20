@@ -45,12 +45,14 @@ export const getLogoBackdropSettings = async () => {
 			title: "Website Logo",
 			description: "",
 			type: "image",
+			validate: true,
 			object: settings.project_logo as ImageCollection
 		},
 		project_banner: {
 			title: "Website Background",
 			description: "",
 			type: "image",
+			validate: true,
 			object: settings.project_banner as ImageCollection,
 		},
 	} satisfies Record<string, ListFieldsField>
