@@ -62,6 +62,7 @@ type FieldProperties = {
 		}[]
 	},
 	image: {
+		validate?: boolean
 		object: ImageCollection | null
 	},
 	custom: {}
