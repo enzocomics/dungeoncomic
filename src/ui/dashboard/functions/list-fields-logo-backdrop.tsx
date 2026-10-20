@@ -64,6 +64,7 @@ export function ListLogoBackdropFields({
 	const [clearLogo, setClearLogo] = useState(false)
 
 	const handleLogoPreview = (e: ChangeEvent<HTMLInputElement>) => {
+		setClearLogo(false)
 		setLogoPreviewing(true)
 		setLogoPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 	}
@@ -84,6 +85,7 @@ export function ListLogoBackdropFields({
 	const [clearBackdrop, setClearBackdrop] = useState(false)
 
 	const handleBackdropPreview = (e: ChangeEvent<HTMLInputElement>) => {
+		setClearBackdrop(false)
 		setBackdropPreviewing(true)
 		setBackdropPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 	}
