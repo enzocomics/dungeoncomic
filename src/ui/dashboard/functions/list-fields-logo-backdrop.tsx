@@ -332,7 +332,9 @@ export function ListLogoBackdropFields({
 						- Landscape aspect ratio (max 3:1)<br />
 						- Transparency<br />
 						- Solid colour stroke<br />
-						- JPEG | PNG | GIF | WEBP</Description>
+						- JPEG | PNG | GIF | WEBP
+						- 1MB max
+					</Description>
 				</Field>
 				{clearLogo &&
 					<>
@@ -383,6 +385,7 @@ export function ListLogoBackdropFields({
 					<Description>Backdrop Recommendations:<br />
 						- 1600x400px (4:1 aspect ratio)<br />
 						- JPEG | PNG | GIF | WEBP
+						- 1MB max
 					</Description>
 				</Field>
 				{clearBackdrop &&
