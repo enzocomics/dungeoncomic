@@ -80,7 +80,7 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 
 			// If the clear field is not set:
 			// Get the file
-			const value = formData.get(`settings.${field}_file`)
+			const value = formData.get(`settings.${field}`)
 
 			// skip unless the value is an actual File and has filesize
 			if (!(value instanceof File) || value.size === 0) continue

@@ -6,40 +6,47 @@ import Image from "next/image"
 // VALIDATION
 import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { useForm, useInputControl } from "@conform-to/react"
+import { FieldMetadata, useForm, useInputControl } from "@conform-to/react"
 // FUNCTIONS
 // DATA
 import { getSettings } from "@/lib/directus/get-settings"
 // UI
-import { ComicButton } from "@/components/input/button"
-import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, FieldGroup, Fieldset, Input, Field, Label, Description } from "@/components/input/fieldset"
+import { ComicButton, SmallComicButton } from "@/components/input/button"
+import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, FieldGroup, Fieldset, Input, Field, Label, Description, ErrorMessage } from "@/components/input/fieldset"
 import { ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
-// import { Input, Listbox, ListboxButton, ListboxOptions, ListboxSelectedOption } from "@headlessui/react"
-import { ListboxOption } from "@/components/catalyst/listbox"
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
-import { getComic } from "@/lib/directus/get-comics"
 
 
 export function ListLogoBackdropFields({
 	logo,
 	backdrop,
-	type
+	type,
+	fieldset
 }: {
 	logo: ListFieldsField
 	backdrop: ListFieldsField
 	type: "settings" | "comic"
+	fieldset?: Required<{
+		[x: string]: FieldMetadata<unknown, Record<
+			string, Record<string, unknown>
+		>, string[]>
+	}>
 }) {
 	// Initial Values
-	const logoFileFieldName = type == "settings" ? "settings.project_logo_file" : "logo"
-	const backdropFileFieldName = type == "settings" ? "settings.project_banner_file" : "banner"
+
+	const logoFieldName = type == "settings" ? "project_logo" : "logo"
+	const backdropFieldName = type == "settings" ? "project_banner" : "banner"
+
+	// const logoFileFieldName = type == "settings" ? "project_logo_file" : "logo"
+	// const backdropFileFieldName = type == "settings" ? "project_banner_file" : "banner"
 
 	const logoClearFieldName = type == "settings" ? "settings.project_logo_file_clear" : "logo_clear"
 	const backdropClearFieldName = type == "settings" ? "settings.project_banner_file_clear" : "banner_clear"
 
-	const logoIDName = type == "settings" ? "settings.project_logo_id" : "logo_id"
-	const backdropIDName = type == "settings" ? "settings.project_banner_id" : "banner_id"
+	const logoIDName = type == "settings" ? "project_logo_id" : "logo_id"
+	const backdropIDName = type == "settings" ? "project_banner_id" : "banner_id"
 
 	const logoObject = logo.type === "image" && logo.object ? logo.object : undefined
 	const hasLogo = logo.type === "image" && logo.object && logoObject
@@ -62,7 +69,7 @@ export function ListLogoBackdropFields({
 	}
 
 	const handleLogoDelete = () => {
-		// TODO: image removal doesn't persist
+		setLogoPreviewing(false)
 		setClearLogo(true)
 		setLogoPreview(null)
 	}
@@ -143,6 +150,11 @@ export function ListLogoBackdropFields({
 						"items-center",
 						"justify-center",
 						"rounded-full",
+						"hover:bg-red-700",
+						"hover:duration-0",
+						"transition-all",
+						"duration-300",
+						"ease-in-out",
 					)}
 						onClick={(e) => handleLogoDelete()}
 					>
@@ -166,7 +178,7 @@ export function ListLogoBackdropFields({
 						"bg-black/50",
 						"dark:text-black",
 						"dark:bg-white/50",
-						"backdrop-blur-sm",
+						// "backdrop-blur-sm",
 						// "backdrop-saturate-0",
 					] : [
 						"text-neutral-500",
@@ -254,6 +266,11 @@ export function ListLogoBackdropFields({
 						"items-center",
 						"justify-center",
 						"rounded-full",
+						"hover:bg-red-700",
+						"hover:duration-0",
+						"transition-all",
+						"duration-300",
+						"ease-in-out",
 					)}
 
 						onClick={(e) => handleBackdropDelete()}
@@ -274,17 +291,33 @@ export function ListLogoBackdropFields({
 			<div className={clsx(
 				"grid",
 				"grid-cols-2",
-				"space-x-8",
+				"gap-x-8",
 				"pb-4",
 			)}>
 				<Field className={clsx(
 				)}>
-					<Label>Logo</Label>
-					<input type="file"
-						name={logoFileFieldName}
-						ref={logoInputRef}
+					<Label className={clsx(
+						"sr-only",
+					)}>Logo</Label>
 
+					<SmallComicButton
+						onClick={() => logoInputRef.current?.click()}
 						className={clsx(
+							"text-base",
+							"w-full",
+							"justify-center",
+							"mb-3",
+						)}
+					>
+						Change Logo
+					</SmallComicButton>
+					<input type="file"
+						id={fieldset && fieldset[logoFieldName].name}
+						name={fieldset && fieldset[logoFieldName].name}
+						key={fieldset && fieldset[logoFieldName].key}
+						ref={logoInputRef}
+						className={clsx(
+							"hidden",
 							"mb-0",
 							"font-platform-labels",
 							"w-full"
@@ -292,6 +325,7 @@ export function ListLogoBackdropFields({
 						onChange={(e) => handleLogoPreview(e)}
 					/>
 
+					<ErrorMessage>{fieldset?.[logoFieldName].errors}</ErrorMessage>
 					<Description>Logo Recommendations:<br />
 						- Landscape aspect ratio (max 3:1)<br />
 						- Transparency<br />
@@ -311,16 +345,39 @@ export function ListLogoBackdropFields({
 					</>
 				}
 				<Field>
-					<Label>Banner</Label>
-					<input type="file" name={backdropFileFieldName}
+					<Label className={clsx(
+						"sr-only",
+					)}>Banner</Label>
+
+
+					<SmallComicButton
+						onClick={() => backdropInputRef.current?.click()}
+						className={clsx(
+							"text-base",
+							"w-full",
+							"justify-center",
+							"mb-3",
+							"px-6",
+						)}
+					>
+						Change Backdrop
+					</SmallComicButton>
+
+					<input type="file"
+						id={fieldset && fieldset[backdropFieldName].name}
+						name={fieldset && fieldset[backdropFieldName].name}
+						key={fieldset && fieldset[backdropFieldName].key}
+						ref={backdropInputRef}
 						// defaultValue={hasBackdrop ? backdropObject.filename_disk : ""}
 						className={clsx(
+							"hidden",
 							"mb-0",
 							"font-platform-labels",
 							"w-full"
 						)}
 						onChange={(e) => handleBackdropPreview(e)}
 					/>
+					<ErrorMessage>{fieldset?.[backdropFieldName].errors}</ErrorMessage>
 					<Description>Backdrop Recommendations:<br />
 						- 1600x400px (4:1 aspect ratio)<br />
 						- JPEG | PNG | GIF | WEBP
