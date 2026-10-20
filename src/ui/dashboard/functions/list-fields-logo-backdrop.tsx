@@ -217,7 +217,7 @@ export function ListLogoBackdropFields({
 				]
 			)}
 				style={{
-					backgroundImage: hasBackdrop ?
+					backgroundImage: ((hasBackdrop || (!hasBackdrop && isBackdropPreviewing)) && backdropPreview !== null) ?
 						`url(${backdropPreview})`
 						: undefined
 				}}
