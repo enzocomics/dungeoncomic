@@ -27,7 +27,15 @@ export const settingsSchema = (
 						])
 
 					if (field.type == "image")
-						thing = z.file().min(1).max(1_000_000).mime(["image/png", "image/gif", "image/jpeg", "image/webp"])
+						thing = z.instanceof(File)
+							.optional()
+							.refine((file) => {
+								return !file || file.size <= 1024 * 1024
+							}, "File size must be less than 1mb")
+							.refine((file) => {
+								return !file || ["image/png", "image/gif", "image/jpeg", "image/webp"].includes(file.type)
+							}, "Filetype not accepted")
+					// .max(1_000_000).mime(["image/png", "image/gif", "image/jpeg", "image/webp"])
 				}
 				return [[key, thing] as const]
 
