@@ -36,8 +36,6 @@ export function SmallComicButton({
 					"pr-1",
 				],
 				!icon && "px-2",
-				// Text
-				"text-xs",
 				// Appearance
 				"rounded-sm",
 				"border-y-2",
@@ -48,8 +46,6 @@ export function SmallComicButton({
 				"transition-all",
 				"ease-in-out",
 				"duration-300",
-				// Media Queries
-				"lg:text-sm",
 				// Colors
 				"text-white",
 				color == "red" ? [
