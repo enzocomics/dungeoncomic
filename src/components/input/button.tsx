@@ -39,6 +39,7 @@ export function SmallComicButton({
 				// Appearance
 				"rounded-sm",
 				"border-y-2",
+				"font-platform-labels",
 				// States
 				"hover:duration-0",
 				"active:translate-px",
