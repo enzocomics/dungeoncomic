@@ -23,6 +23,7 @@ export const getSettings = async () => {
 				"project_description",
 				{
 					project_logo: [
+						"id",
 						"filename_disk",
 						"type",
 						"width",
@@ -32,6 +33,7 @@ export const getSettings = async () => {
 				},
 				{
 					project_banner: [
+						"id",
 						"filename_disk",
 						"type",
 						"width",

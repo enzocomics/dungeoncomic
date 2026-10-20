@@ -2,7 +2,7 @@
 import { parseWithZod } from "@conform-to/zod/v4"
 import { settingsSchema } from "../functions/settings-schema"
 import { userClient } from "@/lib/directus/clients"
-import { updateSingleton, uploadFiles } from "@directus/sdk"
+import { deleteFile, updateSingleton, uploadFiles } from "@directus/sdk"
 import { updateTag } from "next/cache"
 
 export async function saveSettings(prevState: unknown, formData: FormData) {
@@ -27,8 +27,8 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 		"user_type_name_plural_slug",
 		// APPEARANCE
 		"color_accent",
-		"project_logo",
-		"project_banner",
+		// "project_logo",
+		// "project_banner",
 		// FONTS
 		"font_headers",
 		"font_labels",
@@ -44,7 +44,7 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 
 	try {
 		// Create a type from the names in the `fields` array
-		type SettingField = (typeof fields)[number]
+		type SettingField = (typeof fields | typeof imageFields)[number]
 
 		// Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
 		const updates: Partial<Record<SettingField, string | null>> = {}
@@ -57,29 +57,39 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 			// skip the field if its value is null (not submitted)
 			if (value === null) continue
 
-			// handle image uploads
-			if (
-				// check if the current field is an imageField
-				imageFields.includes(
-					// type assertion: treat `field` as on of the exact strings of `imageFields`
-					field as (typeof imageFields)[number],
-				)
-			) {
-				// skip unless the value is an actual File and has filesize
-				if (!(value instanceof File) || value.size === 0) continue
-
-				// create a new FormData object to send the file to Directus
-				const uploadData = new FormData()
-				uploadData.append("file", value)
-				const uploaded = await userClient.request(uploadFiles(uploadData))
-				updates[field] = uploaded.id
-			}
-
 			if (typeof value !== "string") continue // Ignore File values
-			// if (typeof value !== "string") continue // Ignore File values
 
 			// if the submitted value is __CLEAR__ then send null to directus
 			updates[field] = value === "__CLEAR__" ? null : value
+		}
+
+		// Iterate through the imageFields
+		for (const field of imageFields) {
+			// Check if the clear field has been filled out
+			const shouldClear = formData.get(`settings.${field}_file_clear`)
+
+			// If the clear field is true:
+			if (shouldClear) {
+				updates[field] = null // set the relational field in the singleton to empty
+				const imageID = formData.get(`settings.${field}_id`)
+				const deleteImage = imageID // Delete actual file from the cms
+					? await userClient.request(deleteFile(String(imageID)))
+					: null
+				continue
+			}
+
+			// If the clear field is not set:
+			// Get the file
+			const value = formData.get(`settings.${field}_file`)
+
+			// skip unless the value is an actual File and has filesize
+			if (!(value instanceof File) || value.size === 0) continue
+
+			// create a new FormData object to send the file to Directus
+			const uploadData = new FormData()
+			uploadData.append("file", value)
+			const uploaded = await userClient.request(uploadFiles(uploadData))
+			updates[field] = uploaded.id
 		}
 
 		// Update CMS and pass the object
@@ -87,7 +97,6 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 			updateSingleton("settings", updates),
 		)
 		updateTag("settings")
-		// console.log(updateSettings)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

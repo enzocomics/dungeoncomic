@@ -31,9 +31,15 @@ export function ListLogoBackdropFields({
 	backdrop: ListFieldsField
 	type: "settings" | "comic"
 }) {
+	// Initial Values
+	const logoFileFieldName = type == "settings" ? "settings.project_logo_file" : "logo"
+	const backdropFileFieldName = type == "settings" ? "settings.project_banner_file" : "banner"
 
-	const logoFieldName = type == "settings" ? "settings.project_logo" : "logo"
-	const backdropFieldName = type == "settings" ? "settings.project_banner" : "banner"
+	const logoClearFieldName = type == "settings" ? "settings.project_logo_file_clear" : "logo_clear"
+	const backdropClearFieldName = type == "settings" ? "settings.project_banner_file_clear" : "banner_clear"
+
+	const logoIDName = type == "settings" ? "settings.project_logo_id" : "logo_id"
+	const backdropIDName = type == "settings" ? "settings.project_banner_id" : "banner_id"
 
 	const logoObject = logo.type === "image" && logo.object ? logo.object : undefined
 	const hasLogo = logo.type === "image" && logo.object && logoObject
@@ -41,17 +47,31 @@ export function ListLogoBackdropFields({
 	const backdropObject = backdrop.type === "image" && backdrop.object ? backdrop.object : undefined
 	const hasBackdrop = backdrop.type === "image" && backdrop.object && backdropObject
 
-	const [logoPreview, setLogoPreview] = useState(
+	// Logo States & Handler
+
+	const logoInputRef = useRef<HTMLInputElement>(null)
+
+	const [logoPreview, setLogoPreview] = useState<string | null>(
 		`${directusURL}/assets/${logoObject?.filename_disk}`
 	)
 	const [isLogoPreviewing, setLogoPreviewing] = useState(false)
 
+	const [clearLogo, setClearLogo] = useState(false)
+
 	const handleLogoPreview = (e: ChangeEvent<HTMLInputElement>) => {
 		setLogoPreviewing(true)
-		console.log(e.currentTarget.files?.[0])
-		console.log(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
+		// console.log(e.currentTarget.files?.[0])
+		// console.log(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 		setLogoPreview(URL.createObjectURL(e.currentTarget.files?.[0] as Blob))
 	}
+
+	const handleLogoDelete = () => {
+		// TODO: image removal doesn't persist
+		setClearLogo(true)
+		setLogoPreview(null)
+	}
+
+	// Backdrop States & Handler
 
 	const [backdropPreview, setBackdropPreview] = useState(
 		`${directusURL}/assets/${backdropObject?.filename_disk}`
@@ -59,10 +79,12 @@ export function ListLogoBackdropFields({
 
 	const [isBackdropPreviewing, setBackdropPreviewing] = useState(false)
 
-	// useEffect(() => {
-	// 	setLogoPreviewing(false)
-	// 	setBackdropPreviewing(false)
-	// }, [])
+	useEffect(() => {
+		setClearLogo(false)
+		// 	setLogoPreviewing(false)
+		// 	setBackdropPreviewing(false)
+	}, [])
+
 
 	return <Fieldset className={clsx(
 		"rounded",
@@ -75,7 +97,7 @@ export function ListLogoBackdropFields({
 		<div className={clsx(
 			"relative",
 		)}>
-			{(hasLogo || (!hasLogo && isLogoPreviewing)) ?
+			{(hasLogo || (!hasLogo && isLogoPreviewing)) && logoPreview !== null ?
 				<div className={clsx(
 					"absolute",
 					"left-1/2",
@@ -98,16 +120,22 @@ export function ListLogoBackdropFields({
 						)}
 					/>
 					<button type="button" className={clsx(
+						"cursor-pointer",
+						"active:translate-px",
 						"absolute",
-						"top-0",
-						"right-0",
+						"-top-2",
+						"-right-2",
+						"drop-shadow-black/50",
+						"drop-shadow-sm",
 						"size-5",
 						"bg-red-500",
 						"flex",
 						"items-center",
 						"justify-center",
 						"rounded-full",
-					)}>
+					)}
+						onClick={(e) => handleLogoDelete()}
+					>
 						<Icon name="xmark" className={clsx(
 							"size-3",
 							"text-white",
@@ -180,7 +208,8 @@ export function ListLogoBackdropFields({
 				]
 			)}
 				style={{
-					backgroundImage: hasBackdrop ? `url(${directusURL}/assets/${backdropObject.filename_disk})`
+					backgroundImage: hasBackdrop ?
+						`url(${directusURL}/assets/${backdropObject.filename_disk})`
 						: undefined
 				}}
 			>
@@ -236,8 +265,10 @@ export function ListLogoBackdropFields({
 				<Field className={clsx(
 				)}>
 					<Label>Logo</Label>
-					<input type="file" name={logoFieldName}
-						// defaultValue={hasLogo ? logoObject.filename_disk : ""}
+					<input type="file"
+						name={logoFileFieldName}
+						ref={logoInputRef}
+
 						className={clsx(
 							"mb-0",
 							"font-platform-labels",
@@ -252,9 +283,21 @@ export function ListLogoBackdropFields({
 						- Solid colour stroke<br />
 						- JPEG | PNG | GIF | WEBP</Description>
 				</Field>
+				{clearLogo &&
+					<>
+						<input type="hidden"
+							name={logoClearFieldName}
+							value="true"
+						/>
+						<input type="hidden"
+							name={logoIDName}
+							defaultValue={logoObject?.id}
+						/>
+					</>
+				}
 				<Field>
 					<Label>Banner</Label>
-					<input type="file" name={backdropFieldName}
+					<input type="file" name={backdropFileFieldName}
 						// defaultValue={hasBackdrop ? backdropObject.filename_disk : ""}
 						className={clsx(
 							"mb-0",
