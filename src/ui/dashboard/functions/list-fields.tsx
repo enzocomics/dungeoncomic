@@ -40,6 +40,14 @@ type FieldProperties = {
 		validate?: boolean
 		maxLength?: number
 	},
+	email: {
+		validate?: boolean
+		maxLength?: number
+	},
+	password: {
+		validate?: boolean
+		maxLength?: number
+	},
 	url: {
 		validate?: boolean
 	},
@@ -65,7 +73,8 @@ type FieldProperties = {
 		validate?: boolean
 		object: ImageCollection | null
 	},
-	custom: {}
+	custom: {},
+	blank: {}
 }
 
 /**----------------------------------- */
@@ -169,135 +178,165 @@ export function ListFields({
 				}
 			}
 
-			return <Field key={index} disabled={disableAll || disabled} className={clsx(
-				// singleField.width == "half" && [
-				// 	// "w-1/2",
-				// ]
-			)}>
-				<Label>
-					{singleField.title}
-				</Label>
+			if (singleField.type !== "blank")
+				return <Field key={index} disabled={disableAll || disabled} className={clsx(
+					// singleField.width == "half" && [
+					// 	// "w-1/2",
+					// ]
+				)}>
+					<Label>
+						{singleField.title}
+					</Label>
 
-				{/**----------------------------------- */}
-				{
-					singleField.type === "text" &&
-					<Input
-						id={fieldset && fieldset[name].name}
-						name={fieldset && fieldset[name].name}
-						key={fieldset && fieldset[name].key}
-						type="text"
-						defaultValue={singleField.value} />
-				}
-
-				{/**----------------------------------- */}
-				{
-					singleField.type === "url" &&
-					<Input
-						id={fieldset && fieldset[name].name}
-						name={fieldset && fieldset[name].name}
-						key={fieldset && fieldset[name].key}
-						type="text"
-						defaultValue={singleField.value} />
-				}
-
-				{/**----------------------------------- */}
-				{
-					singleField.type === "select" &&
-					<>
-						<Select
+					{/**----------------------------------- */}
+					{
+						singleField.type === "text" &&
+						<Input
 							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
+							key={fieldset && fieldset[name].key}
+							type="text"
+							defaultValue={singleField.value} />
+					}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "password" &&
+						<Input
+							id={fieldset && fieldset[name].name}
+							name={fieldset && fieldset[name].name}
+							key={fieldset && fieldset[name].key}
+							type="password"
 							defaultValue={singleField.value}
-							inputRefs={inputRefs}
-						>
-							{singleField.options.map((o, i) => (
-								<option key={i}
-									value={(o.value)}
-								>
-									{o.name}
-								</option>
-							))}
-						</Select>
-					</>
-				}
-
-				{/**----------------------------------- */}
-				{
-					singleField.type === "selectFont" &&
-					<>
-						<Listbox
-							// id={fieldset && fieldset[name].name}
+							autoComplete="password"
+						/>
+					}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "email" &&
+						<Input
+							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
-							loadedValue={singleField.value}
-							conformField={fieldset && fieldset[name]}
-						>
+							key={fieldset && fieldset[name].key}
+							type="email"
+							defaultValue={singleField.value}
+							autoComplete="email"
+						/>
+					}
 
-							{singleField.options.map((o, i) => (
-
-								<ListboxOption key={o.value} value={o.value}
-									style={{
-										fontFamily: `var(--font-${o.value})`
-									}}
-									className={clsx(
-										"text-2xl"
-									)}
-								>
-									{o.name}
-								</ListboxOption>
-							))}
-						</Listbox>
-					</>
-				}
-				{/**----------------------------------- */}
-				{
-					singleField.type === "selectColor" &&
-					<>
-						<Listbox
-							// id={fieldset && fieldset[name].name}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "url" &&
+						<Input
+							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
-							loadedValue={singleField.value}
-							conformField={fieldset && fieldset[name]}
-						>
+							key={fieldset && fieldset[name].key}
+							type="text"
+							defaultValue={singleField.value} />
+					}
 
-							{singleField.options.map((o, i) => (
-								<ListboxOption key={o.value} value={o.value}
-									style={{
-										fontFamily: `var(--font-${o.value})`
-									}}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "select" &&
+						<>
+							<Select
+								id={fieldset && fieldset[name].name}
+								name={fieldset && fieldset[name].name}
+								defaultValue={singleField.value}
+								inputRefs={inputRefs}
+							>
+								{singleField.options.map((o, i) => (
+									<option key={i}
+										value={(o.value)}
+									>
+										{o.name}
+									</option>
+								))}
+							</Select>
+						</>
+					}
 
-									data-select="color"
-									className={clsx(
-										"flex",
-										"items-center",
-										"gap-x-2",
-									)}
-								>
-									<Icon name="circleSolid"
-										className={clsx(
-											"size-4",
-											"rounded-full",
-										)}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "selectFont" &&
+						<>
+							<Listbox
+								// id={fieldset && fieldset[name].name}
+								name={fieldset && fieldset[name].name}
+								loadedValue={singleField.value}
+								conformField={fieldset && fieldset[name]}
+							>
+
+								{singleField.options.map((o, i) => (
+
+									<ListboxOption key={o.value} value={o.value}
 										style={{
-											color: `var(--color-${o.value}-500)`
+											fontFamily: `var(--font-${o.value})`
 										}}
-									/>
-									{o.name}
-								</ListboxOption>
-							))}
-						</Listbox>
-					</>
-				}
-				{
-					fieldset &&
-					<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
-				}
-				{fieldDescriptions?.[name].description &&
-					<Description dangerouslySetInnerHTML={{
-						__html: fieldDescriptions?.[name].description
-					}} />
-				}
-				{/**----------------------------------- */}
-			</Field >
+										className={clsx(
+											"text-2xl"
+										)}
+									>
+										{o.name}
+									</ListboxOption>
+								))}
+							</Listbox>
+						</>
+					}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "selectColor" &&
+						<>
+							<Listbox
+								// id={fieldset && fieldset[name].name}
+								name={fieldset && fieldset[name].name}
+								loadedValue={singleField.value}
+								conformField={fieldset && fieldset[name]}
+							>
+
+								{singleField.options.map((o, i) => (
+									<ListboxOption key={o.value} value={o.value}
+										style={{
+											fontFamily: `var(--font-${o.value})`
+										}}
+
+										data-select="color"
+										className={clsx(
+											"flex",
+											"items-center",
+											"gap-x-2",
+										)}
+									>
+										<Icon name="circleSolid"
+											className={clsx(
+												"size-4",
+												"rounded-full",
+											)}
+											style={{
+												color: `var(--color-${o.value}-500)`
+											}}
+										/>
+										{o.name}
+									</ListboxOption>
+								))}
+							</Listbox>
+						</>
+					}
+					{
+						fieldset &&
+						<ErrorMessage>{fieldset[name].errors}</ErrorMessage>
+					}
+					{fieldDescriptions?.[name].description &&
+						<Description dangerouslySetInnerHTML={{
+							__html: fieldDescriptions?.[name].description
+						}} />
+					}
+					{/**----------------------------------- */}
+				</Field >
+			else
+				return <div key={index} className={clsx(
+					"hidden",
+					"md:block",
+				)} />
 		})}
 	</>
 }
