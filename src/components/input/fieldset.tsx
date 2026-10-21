@@ -50,7 +50,7 @@ export function FieldGroup({
 		<div {...props} className={clsx(
 			className,
 			"py-8",
-			"space-y-8",
+			"gap-y-8",
 		)}>
 			{props.children}
 		</div>
@@ -66,7 +66,7 @@ export function FieldGroup2Columns({
 		<div {...props} className={clsx(
 			className,
 			"py-8",
-			"space-y-8",
+			"gap-y-8",
 			"grid",
 			"gap-y-6",
 			"md:grid",
