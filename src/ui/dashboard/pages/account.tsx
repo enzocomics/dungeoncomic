@@ -9,8 +9,10 @@ import Image from "next/image"
 import AccountPageForm from "./client/account-form"
 import { verifySession } from "@/data/session"
 import { ListFieldsField } from "../functions/list-fields"
+import { getSettings } from "@/lib/directus/get-settings"
 
 export default async function AccountPageUI() {
+	const settings = await getSettings()
 	const sections = await getSections()
 	return <>
 		<PageTitleH1>
@@ -18,7 +20,7 @@ export default async function AccountPageUI() {
 		</PageTitleH1>
 		<AccountPageForm
 			sections={sections}
-
+			settings={settings}
 		/>
 	</>
 
@@ -28,18 +30,50 @@ const getDetailFields = async () => {
 	const session = await verifySession()
 	return {
 		// Details
-		email: {
-			title: "Email",
-			description: "",
-			type: "text",
-			value: session?.email || "",
-			validate: true,
-		},
 		username: {
 			title: "Username",
 			description: "",
 			type: "text",
 			value: session?.username || "",
+			validate: true,
+			maxLength: 32
+		},
+		email: {
+			title: "Email",
+			description: "",
+			type: "email",
+			value: session?.email || "",
+			validate: true,
+		},
+	} satisfies Record<string, ListFieldsField>
+}
+
+const getPasswordFields = async () => {
+	const session = await verifySession()
+	return {
+		password_current: {
+			title: "Current Password",
+			description: "",
+			type: "password",
+			// value: session?.email || "",
+			validate: true,
+		},
+		spacer: {
+			title: "",
+			type: "blank"
+		},
+		password_new: {
+			title: "New Password",
+			description: "",
+			type: "password",
+			// value: session?.email || "",
+			validate: true,
+		},
+		password_new_confirm: {
+			title: "Confirm New Password",
+			description: "",
+			type: "password",
+			// value: session?.email || "",
 			validate: true,
 		},
 	} satisfies Record<string, ListFieldsField>
@@ -48,10 +82,15 @@ const getDetailFields = async () => {
 const getSections = async () => {
 	return {
 		details: {
-			legend: "Details",
+			legend: "Settings",
 			description: null,
 			fields: await getDetailFields()
 		},
+		// password: {
+		// 	legend: "Change Password",
+		// 	description: "",
+		// 	fields: await getPasswordFields()
+		// }
 	}
 }
 // return <>
@@ -67,15 +106,6 @@ const getSections = async () => {
 // 			</Checkbox>
 // 			<Label>Email Visible</Label>
 // 		</Field>
-// 		<Field>
-// 			<Label>Password</Label>
-// 			<Input type="text" />
-// 		</Field>
-// 		<Field>
-// 			<Label>Confirm Password</Label>
-// 			<Input type="text" />
-// 		</Field>
-// 		<ComicButton as="button">Save</ComicButton>
 
 // 	</Fieldset>
 
