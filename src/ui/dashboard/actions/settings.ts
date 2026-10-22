@@ -7,7 +7,9 @@ import { updateTag } from "next/cache"
 
 export async function saveSettings(prevState: unknown, formData: FormData) {
 	// VALIDATION
-	const submission = parseWithZod(formData, { schema: settingsSchema() })
+	const submission = parseWithZod(formData, {
+		schema: settingsSchema("settings"),
+	})
 
 	// Create a list of the fields we want to fetch from formdata
 	const fields = [
