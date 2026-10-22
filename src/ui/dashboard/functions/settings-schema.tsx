@@ -3,7 +3,8 @@ import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-field
 /**----------------------------------- */
 // VALIDATION SCHEMA
 export const settingsSchema = (
-	fieldLists?: Record<string, ListFieldsField>[]
+	name: string,
+	fieldLists?: Record<string, ListFieldsField>[],
 ) => {
 	// Make a zod object with the provided fieldsLists
 	const zObject = Object.fromEntries( // Turn the remaining pairs back into an object
@@ -26,6 +27,9 @@ export const settingsSchema = (
 							z.url({ hostname: /^localhost$/ })
 						])
 
+					if (field.type == "email")
+						thing = z.email()
+
 					if (field.type == "image")
 						thing = z.instanceof(File)
 							.optional()
@@ -44,6 +48,6 @@ export const settingsSchema = (
 	)
 
 	return z.object({
-		settings: z.object(zObject)
+		[name]: z.object(zObject)
 	})
 }
