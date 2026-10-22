@@ -1,6 +1,6 @@
 "use server"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { dashboardSchema } from "../functions/settings-schema"
+import { dashboardSchema } from "../functions/schema"
 import { userClient } from "@/lib/directus/clients"
 import { deleteFile, updateSingleton, uploadFiles } from "@directus/sdk"
 import { updateTag } from "next/cache"

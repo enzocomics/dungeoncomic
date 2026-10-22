@@ -16,7 +16,7 @@ import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, Field
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
-import { dashboardSchema } from "@/ui/dashboard/functions/settings-schema"
+import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 // import { Input, Listbox, ListboxButton, ListboxOptions, ListboxSelectedOption } from "@headlessui/react"
 import { ListboxOption } from "@/components/catalyst/listbox"
 import clsx from "clsx"

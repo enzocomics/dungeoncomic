@@ -16,7 +16,7 @@ import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
-import { dashboardSchema } from "@/ui/dashboard/functions/settings-schema"
+import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 import clsx from "clsx"
 
 
