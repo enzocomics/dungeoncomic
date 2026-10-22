@@ -2,7 +2,7 @@ import z from "zod"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 /**----------------------------------- */
 // VALIDATION SCHEMA
-export const settingsSchema = (
+export const dashboardSchema = (
 	name: string,
 	fieldLists?: Record<string, ListFieldsField>[],
 ) => {

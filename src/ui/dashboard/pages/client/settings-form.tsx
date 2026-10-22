@@ -16,7 +16,7 @@ import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
-import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
+import { dashboardSchema } from "@/ui/dashboard/functions/settings-schema"
 import clsx from "clsx"
 
 
@@ -45,7 +45,7 @@ export default function SettingsPageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: settingsSchema(schemaState)
+				schema: dashboardSchema(schemaState)
 			})
 		},
 		onSubmit() {

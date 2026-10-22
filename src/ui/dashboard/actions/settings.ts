@@ -1,6 +1,6 @@
 "use server"
 import { parseWithZod } from "@conform-to/zod/v4"
-import { settingsSchema } from "../functions/settings-schema"
+import { dashboardSchema } from "../functions/settings-schema"
 import { userClient } from "@/lib/directus/clients"
 import { deleteFile, updateSingleton, uploadFiles } from "@directus/sdk"
 import { updateTag } from "next/cache"
@@ -8,7 +8,7 @@ import { updateTag } from "next/cache"
 export async function saveSettings(prevState: unknown, formData: FormData) {
 	// VALIDATION
 	const submission = parseWithZod(formData, {
-		schema: settingsSchema("settings"),
+		schema: dashboardSchema("settings"),
 	})
 
 	// Create a list of the fields we want to fetch from formdata

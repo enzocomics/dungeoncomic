@@ -13,7 +13,7 @@ import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from
 import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
-import { settingsSchema } from "@/ui/dashboard/functions/settings-schema"
+import { dashboardSchema } from "@/ui/dashboard/functions/settings-schema"
 
 import clsx from "clsx"
 import type { getSettings } from "@/lib/directus/get-settings"
@@ -35,7 +35,7 @@ export default function AccountPageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: settingsSchema(
+				schema: dashboardSchema(
 					"settings", [
 					sections.details.fields,
 					// sections.password.fields,
