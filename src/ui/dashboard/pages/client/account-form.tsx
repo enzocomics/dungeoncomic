@@ -17,26 +17,32 @@ import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 
 import clsx from "clsx"
 import type { getSettings } from "@/lib/directus/get-settings"
+import { saveAccount } from "../../actions/account"
+import type { verifySession } from "@/data/session"
 
 export default function AccountPageForm({
 	sections,
-	settings,
+	// settings,
+	session,
+
 }: {
 	sections: SettingsSection
-	settings: Awaited<ReturnType<typeof getSettings>>
+	// settings: Awaited<ReturnType<typeof getSettings>>
+	session: Awaited<ReturnType<typeof verifySession>>
+
 }) {
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
 
 	// VALIDATION
-	const [lastResult, action] = useActionState(saveSettings, undefined)
+	const [lastResult, action] = useActionState(saveAccount, undefined)
 
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: dashboardSchema(
-					"settings", [
+				schema: (intent) => dashboardSchema(
+					"directus_users", [
 					sections.details.fields,
 					// sections.password.fields,
 				])
@@ -49,11 +55,11 @@ export default function AccountPageForm({
 		shouldRevalidate: "onInput"
 	})
 
-	const settingsFieldset = fields.settings.getFieldset()
+	const settingsFieldset = fields.directus_users.getFieldset()
 
 	useEffect(() => {
 		if (lastResult?.status == "success") {
-			setStatus("success", "Your settings have been saved.")
+			setStatus("success", "Your account has been updated")
 		}
 	}, [lastResult])
 
@@ -82,7 +88,7 @@ export default function AccountPageForm({
 							fieldsList={section.fields}
 							fieldset={settingsFieldset}
 							// fieldDescriptions={descriptions[name].fields}
-							collection={settings}
+							collection={session}
 						// inputRefs={inputRefs}
 						// disableAll={name !== "details" && hideTypes}
 						/>
