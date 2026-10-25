@@ -12,7 +12,8 @@ import { ListFieldsField } from "../functions/list-fields"
 import { getSettings } from "@/lib/directus/get-settings"
 
 export default async function AccountPageUI() {
-	const settings = await getSettings()
+	// const settings = await getSettings()
+	const session = await verifySession()
 	const sections = await getSections()
 	return <>
 		<PageTitleH1>
@@ -20,7 +21,8 @@ export default async function AccountPageUI() {
 		</PageTitleH1>
 		<AccountPageForm
 			sections={sections}
-			settings={settings}
+			// settings={settings}
+			session={session}
 		/>
 	</>
 
