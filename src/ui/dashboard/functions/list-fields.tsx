@@ -11,6 +11,7 @@ import { FieldMetadata } from "@conform-to/react"
 import { marked } from "marked"
 import Icon from "@/styles/icons"
 import { ImageCollection } from "@/lib/directus/schema"
+import { verifySession } from "@/data/session"
 
 /**----------------------------------- */
 // TYPES
@@ -142,7 +143,7 @@ export function ListFields({
 }: {
 	fieldsList: Record<string, ListFieldsField>
 	disableAll?: boolean
-	collection?: Awaited<ReturnType<typeof getSettings>>
+	collection?: Awaited<ReturnType<typeof getSettings | typeof verifySession>>
 	fieldset?: Required<{
 		[x: string]: FieldMetadata<unknown, Record<
 			string, Record<string, unknown>
