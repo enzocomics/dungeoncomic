@@ -2,10 +2,13 @@ import z from "zod"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 /**----------------------------------- */
 // VALIDATION SCHEMA
-export const dashboardSchema = (
+export const dashboardSchema = ({
+	name,
+	fieldLists,
+}: {
 	name: string,
 	fieldLists?: Record<string, ListFieldsField>[],
-) => {
+}) => {
 	// Make a zod object with the provided fieldsLists
 	const zObject = Object.fromEntries( // Turn the remaining pairs back into an object
 		(fieldLists ?? []).flatMap((data) => // Iterate through the array

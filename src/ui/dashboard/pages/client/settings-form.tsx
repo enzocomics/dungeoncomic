@@ -45,7 +45,10 @@ export default function SettingsPageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: dashboardSchema("settings", schemaState)
+				schema: dashboardSchema({
+					name: "settings",
+					fieldLists: schemaState
+				})
 			})
 		},
 		onSubmit() {

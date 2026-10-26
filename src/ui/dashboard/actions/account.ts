@@ -9,7 +9,7 @@ import { updateMe } from "@directus/sdk"
 export async function saveAccount(prevState: unknown, formData: FormData) {
 	// VALIDATION
 	const submission = parseWithZod(formData, {
-		schema: dashboardSchema("directus_users"),
+		schema: dashboardSchema({ name: "directus_users" }),
 	})
 
 	// Create a list of the fields we want to fetch from formdata

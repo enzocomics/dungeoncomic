@@ -46,11 +46,14 @@ export default function ThemePageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: dashboardSchema("settings", [
-					sections.logoBackdrop.fields,
-					sections.lookFeel.fields,
-					sections.fonts.fields
-				])
+				schema: dashboardSchema({
+					name: "settings",
+					fieldLists: [
+						sections.logoBackdrop.fields,
+						sections.lookFeel.fields,
+						sections.fonts.fields
+					]
+				})
 			})
 		},
 		onSubmit() {

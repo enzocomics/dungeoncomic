@@ -41,11 +41,13 @@ export default function AccountPageForm({
 		lastResult,
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
-				schema: (intent) => dashboardSchema(
-					"directus_users", [
-					sections.details.fields,
-					// sections.password.fields,
-				])
+				schema: (intent) => dashboardSchema({
+					name: "directus_users",
+					fieldLists: [
+						sections.details.fields,
+						// sections.password.fields,
+					]
+				})
 			})
 		},
 		onSubmit() {
