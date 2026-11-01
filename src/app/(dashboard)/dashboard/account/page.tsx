@@ -6,6 +6,6 @@ export const instant = false
 
 export default async function Page() {
 	await connection()
-	const session = await verifySession()
+	// const session = await verifySession()
 	return <AccountPageUI />
 }
