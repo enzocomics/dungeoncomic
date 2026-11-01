@@ -44,7 +44,7 @@ export default function AccountPageForm({
 				schema: (intent) => dashboardSchema({
 					name: "directus_users",
 					fieldLists: [
-						sections.details.fields,
+						// sections.details.fields,
 						// sections.password.fields,
 					]
 				})
@@ -91,6 +91,7 @@ export default function AccountPageForm({
 							fieldset={settingsFieldset}
 							// fieldDescriptions={descriptions[name].fields}
 							collection={session}
+							disableAll={true}
 						// inputRefs={inputRefs}
 						// disableAll={name !== "details" && hideTypes}
 						/>
