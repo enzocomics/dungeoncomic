@@ -5,12 +5,14 @@ import ProfilePageForm from "./client/profile-form"
 
 export default async function ProfilePageUI() {
 	const sections = await getSections()
+	const session = await verifySession()
 	return <>
 		<PageTitleH1>
 			My Profile
 		</PageTitleH1>
 		<ProfilePageForm
 			sections={sections}
+			session={session}
 		/>
 	</>
 }
