@@ -25,7 +25,7 @@
 		"@teispace/next-themes": "^3.1.1",
 		"clsx": "^2.1.1",
 		"dayjs": "^1.11.23",
-		"isomorphic-dompurify": "^4.2.0",
+		"isomorphic-dompurify": "^4.7.0",
 		"jose": "^6.2.10",
 		"marked": "^18.0.13",
 		"motion": "^14.1.0",
