@@ -80,6 +80,8 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 				continue
 			}
 
+			// TODO: we need logic here that deletes the old image when it is being replaced with a new image
+
 			// If the clear field is not set:
 			// Get the file
 			const value = formData.get(`settings.${field}`)
