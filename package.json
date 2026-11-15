@@ -11,8 +11,8 @@
 		"init": "./scripts/init.sh"
 	},
 	"dependencies": {
-		"@conform-to/react": "^1.21.1",
-		"@conform-to/zod": "^1.21.1",
+		"@conform-to/react": "^1.21.3",
+		"@conform-to/zod": "^1.21.3",
 		"@directus/sdk": "^27.0.0",
 		"@directus/types": "^18.0.0",
 		"@fortawesome/fontawesome-svg-core": "^7.3.1",
