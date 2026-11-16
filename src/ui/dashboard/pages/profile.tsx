@@ -1,7 +1,10 @@
-import { PageTitleH1 } from "@/components/page"
+/**----------------------------------- */
+// DATA
 import { verifySession } from "@/data/session"
+// UI
+import { PageTitleH1 } from "@/components/page"
+import ProfilePageForm from "@/ui/dashboard/pages/client/profile-form"
 import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
-import ProfilePageForm from "./client/profile-form"
 
 export default async function ProfilePageUI() {
 	const sections = await getSections()

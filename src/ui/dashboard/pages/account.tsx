@@ -1,15 +1,10 @@
-import { ComicButton } from "@/components/input/button"
-import { Input, Label } from "@/components/input/fieldset"
-import { PageTitleH1 } from "@/components/page"
-
-import Icon from "@/styles/icons"
-import { Checkbox, Field, Fieldset, Legend } from "@headlessui/react"
-import clsx from "clsx"
-import Image from "next/image"
-import AccountPageForm from "./client/account-form"
+/**----------------------------------- */
+// DATA
 import { verifySession } from "@/data/session"
-import { ListFieldsField } from "../functions/list-fields"
-import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import { PageTitleH1 } from "@/components/page"
+import AccountPageForm from "@/ui/dashboard/pages/client/account-form"
+import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 
 export default async function AccountPageUI() {
 	// const settings = await getSettings()
