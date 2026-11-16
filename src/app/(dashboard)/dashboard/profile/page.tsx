@@ -1,10 +1,4 @@
-import { ComicButton } from "@/components/input/button"
-import { Input, Label } from "@/components/input/fieldset"
-import { Textarea } from "@/components/input/textarea"
-import { PageTitleH1 } from "@/components/page"
 import ProfilePageUI from "@/ui/dashboard/pages/profile"
-import { Field, Fieldset, Legend } from "@headlessui/react"
-import Image from "next/image"
 import { connection } from "next/server"
 
 export const instant = false
