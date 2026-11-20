@@ -205,7 +205,7 @@ export function ListFields({
 
 					{/**----------------------------------- */}
 					{
-						singleField.type === "text" &&
+						(singleField.type === "text" || singleField.type === "username") &&
 						<Input
 							id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
