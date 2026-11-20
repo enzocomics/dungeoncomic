@@ -2,13 +2,15 @@
 
 import { parseWithZod } from "@conform-to/zod/v4"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
+import { userClient } from "@/lib/directus/clients"
+import { updateMe } from "@directus/sdk"
+import { updateTag } from "next/cache"
 
 export async function saveProfile(prevState: unknown, formData: FormData) {
 	// VALIDATION
 	const submission = parseWithZod(formData, {
 		schema: dashboardSchema({ name: "directus_users" }),
 	})
-	console.log("submit")
 	// Create a list of the fields we want to fetch from FormData
 	const fields = ["name"]
 
@@ -35,6 +37,8 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 		// Update CMS and pass the object
 
 		console.log(updates)
+		const updateProfile = await userClient.request(updateMe(updates))
+		updateTag("user")
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESSFUL
 		const error = err.errors?.[0]
