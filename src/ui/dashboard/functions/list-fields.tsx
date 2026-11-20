@@ -39,18 +39,22 @@ type FieldBase = {
 type FieldProperties = {
 	text: {
 		validate?: boolean
+		optional?: boolean
 		maxLength?: number
 	},
 	email: {
 		validate?: boolean
+		optional?: boolean
 		maxLength?: number
 	},
 	password: {
 		validate?: boolean
+		optional?: boolean
 		maxLength?: number
 	},
 	url: {
 		validate?: boolean
+		optional?: boolean
 	},
 	select: {
 		options: {
