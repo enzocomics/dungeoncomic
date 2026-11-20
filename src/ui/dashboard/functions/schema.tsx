@@ -21,18 +21,34 @@ export const dashboardSchema = ({
 				let thing
 
 				if (field.validate) {
-					if (field.type == "text")
+					// ----------------------------
+					if (field.type == "text" && !field.optional)
 						thing = z.string().max(field.maxLength || 64)
 
-					if (field.type == "url")
+					if (field.type == "text" && field.optional)
+						thing = z.string().max(field.maxLength || 64).optional()
+
+					// ----------------------------
+					if (field.type == "url" && !field.optional)
 						thing = z.union([
 							z.httpUrl(),
 							z.url({ hostname: /^localhost$/ })
 						])
 
-					if (field.type == "email")
+					if (field.type == "url" && field.optional)
+						thing = z.union([
+							z.httpUrl(),
+							z.url({ hostname: /^localhost$/ })
+						]).optional()
+
+					// ----------------------------
+					if (field.type == "email" && !field.optional)
 						thing = z.email()
 
+					if (field.type == "email" && field.optional)
+						thing = z.email().optional()
+
+					// ----------------------------
 					if (field.type == "image")
 						thing = z.instanceof(File)
 							.optional()
