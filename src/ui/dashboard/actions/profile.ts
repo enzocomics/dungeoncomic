@@ -12,7 +12,7 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 		schema: dashboardSchema({ name: "directus_users" }),
 	})
 	// Create a list of the fields we want to fetch from FormData
-	const fields = ["name"]
+	const fields = ["name", "location", "description"]
 
 	try {
 		// Create a type from the names in the `fields` array
