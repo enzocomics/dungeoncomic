@@ -29,6 +29,13 @@ export const dashboardSchema = ({
 						thing = z.string().max(field.maxLength || 64).optional()
 
 					// ----------------------------
+					if (field.type == "textarea" && !field.optional)
+						thing = z.string().max(field.maxLength || 1280)
+
+					if (field.type == "textarea" && field.optional)
+						thing = z.string().max(field.maxLength || 1280).optional()
+
+					// ----------------------------
 					if (field.type == "url" && !field.optional)
 						thing = z.union([
 							z.httpUrl(),
