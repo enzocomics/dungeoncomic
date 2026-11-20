@@ -31,6 +31,22 @@ const getDetailFields = async () => {
 			value: session?.name || "",
 			validate: true,
 			maxLength: 128
+		},
+		location: {
+			title: "Location",
+			description: "",
+			type: "text",
+			value: session?.location || "",
+			validate: true,
+			maxLength: 64
+		},
+		description: {
+			title: "About me",
+			description: "",
+			type: "text",
+			value: session?.description || "",
+			validate: true,
+			maxLength: 64
 		}
 	} satisfies Record<string, ListFieldsField>
 }
