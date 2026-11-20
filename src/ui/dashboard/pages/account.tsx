@@ -7,7 +7,6 @@ import AccountPageForm from "@/ui/dashboard/pages/client/account-form"
 import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 
 export default async function AccountPageUI() {
-	// const settings = await getSettings()
 	const session = await verifySession()
 	const sections = await getSections()
 	return <>
@@ -16,7 +15,6 @@ export default async function AccountPageUI() {
 		</PageTitleH1>
 		<AccountPageForm
 			sections={sections}
-			// settings={settings}
 			session={session}
 		/>
 	</>
