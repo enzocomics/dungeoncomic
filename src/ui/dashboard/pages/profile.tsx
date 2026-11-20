@@ -24,20 +24,24 @@ const getDetailFields = async () => {
 	const session = await verifySession()
 	return {
 		// Details
+		// TODO: Avatar
 		name: {
 			title: "Name",
 			description: "",
 			type: "text",
 			value: session?.name || "",
 			validate: true,
+			optional: true,
 			maxLength: 128
 		},
+		// TODO: Pronouns
 		location: {
 			title: "Location",
 			description: "",
 			type: "text",
 			value: session?.location || "",
 			validate: true,
+			optional: true,
 			maxLength: 64
 		},
 		description: {
@@ -46,10 +50,26 @@ const getDetailFields = async () => {
 			type: "text",
 			value: session?.description || "",
 			validate: true,
+			optional: true,
 			maxLength: 64
 		}
 	} satisfies Record<string, ListFieldsField>
 }
+
+const getSocialFields = async () => {
+	const session = await verifySession()
+	return {
+		homepage_url: {
+			title: "Homepage",
+			description: "",
+			type: "url",
+			value: session?.homepage_url || "",
+			validate: true,
+			optional: true,
+		}
+	} satisfies Record<string, ListFieldsField>
+}
+
 
 const getSections = async () => {
 	return {
@@ -57,6 +77,11 @@ const getSections = async () => {
 			legend: "Details",
 			description: null,
 			fields: await getDetailFields()
+		},
+		socials: {
+			legend: "Socials",
+			description: null,
+			fields: await getSocialFields()
 		}
 	}
 }
