@@ -12,6 +12,7 @@ import { marked } from "marked"
 import Icon from "@/styles/icons"
 import { ImageCollection } from "@/lib/directus/schema"
 import { verifySession } from "@/data/session"
+import { Textarea } from "@/components/input/textarea"
 
 /**----------------------------------- */
 // TYPES
@@ -38,6 +39,11 @@ type FieldBase = {
 
 type FieldProperties = {
 	text: {
+		validate?: boolean
+		optional?: boolean
+		maxLength?: number
+	},
+	textarea: {
 		validate?: boolean
 		optional?: boolean
 		maxLength?: number
@@ -185,9 +191,9 @@ export function ListFields({
 
 			if (singleField.type !== "blank")
 				return <Field key={index} disabled={disableAll || disabled} className={clsx(
-					// singleField.width == "half" && [
-					// 	// "w-1/2",
-					// ]
+					singleField.width == "full" && [
+						"md:col-span-2",
+					]
 				)}>
 					<Label>
 						{singleField.title}
@@ -201,6 +207,21 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
+							defaultValue={singleField.value} />
+					}
+					{/**----------------------------------- */}
+					{
+						singleField.type === "textarea" &&
+						<Textarea
+							className={clsx(
+								"block",
+								"max-w-prose"
+							)}
+							id={fieldset && fieldset[name].name}
+							name={fieldset && fieldset[name].name}
+							key={fieldset && fieldset[name].key}
+							rows={3}
+							maxLength={singleField.maxLength}
 							defaultValue={singleField.value} />
 					}
 					{/**----------------------------------- */}
