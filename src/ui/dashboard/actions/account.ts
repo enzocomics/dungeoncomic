@@ -39,7 +39,7 @@ export async function saveAccount(prevState: unknown, formData: FormData) {
 		const updateSettings = await userClient.request(updateMe(updates))
 		updateTag("user")
 
-		console.log(updateSettings)
+		// console.log(updateSettings)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]
