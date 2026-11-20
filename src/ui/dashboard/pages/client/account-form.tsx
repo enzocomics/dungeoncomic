@@ -39,9 +39,10 @@ export default function AccountPageForm({
 				schema: (intent) => dashboardSchema({
 					name: "directus_users",
 					fieldLists: [
-						// sections.details.fields,
+						sections.details.fields,
 						// sections.password.fields,
-					]
+					],
+					intent: intent
 				})
 			})
 		},
@@ -85,7 +86,7 @@ export default function AccountPageForm({
 							fieldsList={section.fields}
 							fieldset={settingsFieldset}
 							collection={session}
-							disableAll={true}
+						// disableAll={true}
 						/>
 					</FieldGroup2Columns>
 				</FieldsetSection>

@@ -1,13 +1,16 @@
 import z from "zod"
 import { ListFields, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import { Intent } from "@conform-to/react"
 /**----------------------------------- */
 // VALIDATION SCHEMA
 export const dashboardSchema = ({
 	name,
 	fieldLists,
+	intent = null
 }: {
 	name: string,
 	fieldLists?: Record<string, ListFieldsField>[],
+	intent?: Intent | null
 }) => {
 	// Make a zod object with the provided fieldsLists
 	const zObject = Object.fromEntries( // Turn the remaining pairs back into an object
@@ -66,6 +69,13 @@ export const dashboardSchema = ({
 								return !file || ["image/png", "image/gif", "image/jpeg", "image/webp"].includes(file.type)
 							}, "Filetype not accepted")
 					// .max(1_000_000).mime(["image/png", "image/gif", "image/jpeg", "image/webp"])
+
+
+					// ----------------------------
+					if (field.type == "username")
+						thing = z
+							.string()
+
 				}
 				return [[key, thing] as const]
 
