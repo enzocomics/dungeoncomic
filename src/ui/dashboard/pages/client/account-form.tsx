@@ -54,6 +54,7 @@ export default function AccountPageForm({
 		},
 		onSubmit() {
 			// router.refresh()
+			console.log(lastResult)
 		},
 		// shouldValidate: "onBlur",
 		// shouldRevalidate: "onInput"
@@ -101,6 +102,7 @@ export default function AccountPageForm({
 							/>
 							<ErrorMessage>{fields.username.errors}</ErrorMessage>
 						</Field>
+
 						<Field>
 							<Label>
 								Email
@@ -113,6 +115,32 @@ export default function AccountPageForm({
 								defaultValue={sections.details.fields.email.value}
 							/>
 							<ErrorMessage>{fields.email.errors}</ErrorMessage>
+						</Field>
+						<Field>
+							<Label>
+								Password
+							</Label>
+							<Input
+								id={fields.password.id}
+								name={fields.password.name}
+								key={fields.password.key}
+								type="password"
+
+							/>
+							<ErrorMessage>{fields.password.errors}</ErrorMessage>
+						</Field>
+						<Field>
+							<Label>
+								Confirm Password
+							</Label>
+							<Input
+								id={fields.passwordConfirm.id}
+								name={fields.passwordConfirm.name}
+								key={fields.passwordConfirm.key}
+								type="password"
+
+							/>
+							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 						</Field>
 					</FieldGroup2Columns>
 				</FieldsetSection>

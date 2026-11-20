@@ -63,33 +63,34 @@ export async function saveAccount(prevState: unknown, formData: FormData) {
 	})
 
 	// Create a list of the fields we want to fetch from formdata
-	// const fields = ["username", "email"]
+	const fields = ["username", "email", "password"]
 
 	try {
 		// // Create a type from the names in the `fields` array
-		// type SettingField = (typeof fields)[number]
+		type SettingField = (typeof fields)[number]
 		// // Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
-		// const updates: Partial<Record<SettingField, string | null>> = {}
+		const updates: Partial<Record<SettingField, string | null>> = {}
 
 		// // Iterate through the fieldsArray
-		// for (const field of fields) {
-		// 	// Get each formdatad field by its name
-		// 	const value = formData.get(`directus_users.${field}`)
+		for (const field of fields) {
+			// Get each formdatad field by its name
+			const value = formData.get(`${field}`)
 
-		// 	// skip the field if its value is null (not submitted)
-		// 	if (value === null) continue
+			// skip the field if its value is null or empty (not submitted)
+			if (value === null || value === "") continue
 
-		// 	if (typeof value !== "string") continue // Ignore File values
+			if (typeof value !== "string") continue // Ignore File values
 
-		// 	// if the submitted value is __CLEAR__ then send null to directus
-		// 	updates[field] = value === "__CLEAR__" ? null : value
-		// }
-
-		const updates = {
-			username: formData.get("username") as string,
-			email: formData.get("email") as string,
+			// if the submitted value is __CLEAR__ then send null to directus
+			updates[field] = value === "__CLEAR__" ? null : value
 		}
 
+		// const updates = {
+		// 	username: formData.get("username") as string,
+		// 	email: formData.get("email") as string,
+		// }
+
+		// console.log(updates)
 		// Update CMS and pass the object
 		const updateSettings = await userClient.request(updateMe(updates))
 		updateTag("user")
