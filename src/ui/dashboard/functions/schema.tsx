@@ -22,7 +22,7 @@ export const dashboardSchema = ({
 
 				if (field.validate) {
 					if (field.type == "text")
-						thing = z.string().max(field.maxLength || -1)
+						thing = z.string().max(field.maxLength || 64)
 
 					if (field.type == "url")
 						thing = z.union([
