@@ -1,33 +1,28 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState, useEffect, useRef, useState } from "react"
+import { useActionState, useEffect } from "react"
 // VALIDATION
-import z from "zod"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm, useInputControl } from "@conform-to/react"
 // FUNCTIONS
 // UI
 import { ComicButton } from "@/components/input/button"
 import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
-import { saveSettings } from "@/ui/dashboard/actions/settings"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 
 import clsx from "clsx"
-import type { getSettings } from "@/lib/directus/get-settings"
-import { saveAccount } from "../../actions/account"
+import { saveAccount } from "@/ui/dashboard/actions/account"
 import type { verifySession } from "@/data/session"
 
 export default function AccountPageForm({
 	sections,
-	// settings,
 	session,
 
 }: {
 	sections: SettingsSection
-	// settings: Awaited<ReturnType<typeof getSettings>>
 	session: Awaited<ReturnType<typeof verifySession>>
 
 }) {
@@ -89,11 +84,8 @@ export default function AccountPageForm({
 						<ListFields
 							fieldsList={section.fields}
 							fieldset={settingsFieldset}
-							// fieldDescriptions={descriptions[name].fields}
 							collection={session}
 							disableAll={true}
-						// inputRefs={inputRefs}
-						// disableAll={name !== "details" && hideTypes}
 						/>
 					</FieldGroup2Columns>
 				</FieldsetSection>
