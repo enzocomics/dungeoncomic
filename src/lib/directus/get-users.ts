@@ -5,7 +5,20 @@ import { readUser } from "@directus/sdk"
 export const getUser = cache(async (userId: string) => {
 	const response = await userClient.request(
 		readUser(userId, {
-			fields: ["avatar", "email", "homepage_url", "id", "name", "username"],
+			fields: [
+				// Profile
+				"name",
+				"description",
+				"location",
+				"homepage_url",
+				"description",
+				// Account
+				"id",
+				"email",
+				"username",
+				"avatar",
+				"status",
+			],
 		}),
 	)
 

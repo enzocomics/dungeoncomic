@@ -169,11 +169,15 @@ export interface CommentsCollection {
 
 /** ------------------------------------------------ **/
 export interface DirectusUser extends User {
+	// Profile
+	name: string | null
+	description: string | null
+	location: string | null
+	homepage_url: string | null
+	// Account
 	id: string
 	email: string
-	name: string | null
 	username: string | null
-	homepage_url: string | null
 	avatar: ImageCollection
 }
 

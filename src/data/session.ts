@@ -18,11 +18,16 @@ export const verifySession = cache(async () => {
 		const readMeResponse = await userClient.request(
 			readMe({
 				fields: [
+					// Profile
+					"name",
+					"description",
+					"location",
+					"homepage_url",
+					"description",
+					// Account
 					"id",
 					"email",
-					"name",
 					"username",
-					"homepage_url",
 					"avatar",
 					"status",
 				],
