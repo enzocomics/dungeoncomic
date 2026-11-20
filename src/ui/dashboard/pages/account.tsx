@@ -28,7 +28,7 @@ const getDetailFields = async () => {
 		username: {
 			title: "Username",
 			description: "",
-			type: "text",
+			type: "username",
 			value: session?.username || "",
 			validate: true,
 			maxLength: 32
