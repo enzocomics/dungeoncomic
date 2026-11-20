@@ -87,12 +87,12 @@ export default function ProfilePageForm({
 				</FieldsetSection>
 			})}
 
+			<ComicButton as="button" type="submit"
+				className={clsx(
+					"sticky",
+					"bottom-4",
+				)}
+			>Save</ComicButton>
 		</form>
-		<ComicButton as="button" type="submit"
-			className={clsx(
-				"sticky",
-				"bottom-4",
-			)}
-		>Save</ComicButton>
 	</>
 }
