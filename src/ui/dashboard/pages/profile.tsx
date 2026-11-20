@@ -47,11 +47,12 @@ const getDetailFields = async () => {
 		description: {
 			title: "About me",
 			description: "",
-			type: "text",
+			width: "full",
+			type: "textarea",
 			value: session?.description || "",
 			validate: true,
 			optional: true,
-			maxLength: 64
+			maxLength: 1000
 		}
 	} satisfies Record<string, ListFieldsField>
 }
