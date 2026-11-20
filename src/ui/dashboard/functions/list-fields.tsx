@@ -53,6 +53,10 @@ type FieldProperties = {
 		optional?: boolean
 		maxLength?: number
 	},
+	username: {
+		validate?: boolean,
+		maxLength?: number
+	}
 	password: {
 		validate?: boolean
 		optional?: boolean
