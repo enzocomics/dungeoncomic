@@ -13,31 +13,6 @@ export default async function Page() {
 	// 	<Fieldset>
 	// 		{/* <Legend>Your profile</Legend> */}
 	// 		<Field>
-	// 			<Label>Avatar</Label>
-	// 			<Image src="/apple-touch-icon.png" width="64" height="64" alt="" />
-	// 		</Field>
-	// 		<Field>
-	// 			<Label>Name</Label>
-	// 			<Input type="text" />
-	// 		</Field>
-	// 		<Field>
-	// 			<Label>Pronouns</Label>
-	// 			<Input type="text" />
-	// 		</Field>
-	// 		<Field>
-	// 			<Label>Location</Label>
-	// 			<Input type="text" />
-	// 		</Field>
-
-	// 		<Field>
-	// 			<Label>Homepage</Label>
-	// 			<Input type="text" />
-	// 		</Field>
-	// 		<Field>
-	// 			<Label>About Me</Label>
-	// 			<Textarea />
-	// 		</Field>
-	// 		<Field>
 	// 			<Label>Social Links</Label>
 	// 			<Input type="text" />
 	// 		</Field>
