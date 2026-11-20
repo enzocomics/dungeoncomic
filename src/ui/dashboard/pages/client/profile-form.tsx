@@ -36,7 +36,8 @@ export default function ProfilePageForm({
 				schema: dashboardSchema({
 					name: "directus_users",
 					fieldLists: [
-						// sections.details.fields
+						sections.details.fields,
+						sections.socials.fields
 					]
 				})
 			})
