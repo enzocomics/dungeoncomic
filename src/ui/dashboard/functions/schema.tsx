@@ -41,8 +41,8 @@ export const dashboardSchema = ({
 					// ----------------------------
 					if (field.type == "url" && !field.optional)
 						thing = z.union([
-							z.httpUrl(),
-							z.url({ hostname: /^localhost$/ })
+							z.httpUrl().max(field.maxLength || 140),
+							z.url({ hostname: /^localhost$/ }).max(field.maxLength || 140)
 						])
 
 					if (field.type == "url" && field.optional)
