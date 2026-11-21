@@ -31,7 +31,7 @@ const getDetailFields = async () => {
 			type: "username",
 			value: session?.username || "",
 			validate: true,
-			maxLength: 32
+			maxLength: 24
 		},
 		email: {
 			title: "Email",
