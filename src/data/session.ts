@@ -42,6 +42,7 @@ export const verifySession = cache(async () => {
 				? await userClient.request(
 						readFile(String(readMeResponse.avatar), {
 							fields: [
+								"id",
 								"filename_disk",
 								"height",
 								"width",
