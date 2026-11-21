@@ -100,6 +100,7 @@ export default function AccountPageForm({
 								key={fields.username.key}
 								type="text"
 								defaultValue={sections.details.fields.username.value}
+								maxLength={24}
 								required={true}
 								aria-required={true}
 							/>
@@ -132,14 +133,14 @@ export default function AccountPageForm({
 						</Field>
 						<Field>
 							<Label optional={true}>
-								New Password
+								Change Password
 							</Label>
 							<Input
 								// id={fields.password.id}
 								name={fields.password.name}
 								key={fields.password.key}
 								type="password"
-
+								maxLength={128}
 							/>
 							<ErrorMessage>{fields.password.errors}</ErrorMessage>
 
@@ -161,6 +162,7 @@ export default function AccountPageForm({
 								name={fields.passwordConfirm.name}
 								key={fields.passwordConfirm.key}
 								type="password"
+								maxLength={128}
 							/>
 							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 						</Field>
