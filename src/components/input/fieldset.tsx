@@ -1,8 +1,10 @@
+"use client"
+
 import Icon from "@/styles/icons"
 import * as Headless from "@headlessui/react"
 import clsx from "clsx"
 import { marked } from "marked"
-import { ComponentPropsWithoutRef, forwardRef } from "react"
+import { ComponentPropsWithoutRef, forwardRef, useState } from "react"
 import { Badge } from "../elements/badge"
 
 
@@ -89,6 +91,7 @@ export function Field({
 			{...props}
 			className={clsx(
 				className,
+				"relative",
 				"data-disabled:opacity-25",
 				// "data-disabled:pointer-events-none",
 			)}
@@ -103,12 +106,33 @@ export function Field({
 
 export const Input = forwardRef(function Input({
 	className,
+	checkLengthOff,
 	...props
 }: {
 	className?: string,
+	checkLengthOff?: boolean
 } & Omit<Headless.InputProps, "className">,
 	ref: React.ForwardedRef<HTMLInputElement>) {
+	const [inputLength, setInputLength] = useState((props.defaultValue as string | undefined)?.length ?? 0)
+
+	const maxLength = props.maxLength || 64
+
 	return <>
+		{/* Length Checker */}
+		{!checkLengthOff &&
+			<span className={clsx(
+				"absolute",
+				"top-2",
+				"right-0",
+				"ml-auto",
+				"font-comic-labels",
+				"font-normal",
+				"text-xs",
+				"text-current/50"
+			)}>
+				{`${inputLength}/${maxLength}`}{/* TODO: should this be hardcoded? */}
+			</span>
+		}
 		<Headless.Input
 			ref={ref}
 			{...props}
@@ -136,6 +160,10 @@ export const Input = forwardRef(function Input({
 				"focus:outline-platform-accent-500",
 				"data-disabled:cursor-not-allowed"
 			)}
+
+			onChange={(e) => {
+				setInputLength(e.target.value.length)
+			}}
 		/>
 	</>
 })
