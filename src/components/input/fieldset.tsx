@@ -158,6 +158,7 @@ export function Label({
 				"font-platform-labels",
 				"font-semibold",
 				"data-disabled:cursor-auto",
+				"flex"
 			)}
 		>
 			<>
