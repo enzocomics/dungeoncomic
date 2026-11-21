@@ -15,7 +15,7 @@
 
 	.marked {
 		ul {
-			@apply pl-4 list-disc list-inside;
+			@apply pl-4 list-disc;
 		}
 		code {
 			@apply px-1 py-px bg-black/5 dark:bg-white/10 rounded-sm font-platform-mono;
