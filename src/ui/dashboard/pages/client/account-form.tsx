@@ -8,7 +8,7 @@ import { useForm, useInputControl } from "@conform-to/react"
 // FUNCTIONS
 // UI
 import { ComicButton } from "@/components/input/button"
-import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, Input, ErrorMessage, Field, Label } from "@/components/input/fieldset"
+import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, Input, ErrorMessage, Field, Label, Description } from "@/components/input/fieldset"
 import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { useChangeStatus } from "@/components/status-message"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
@@ -19,6 +19,7 @@ import type { verifySession } from "@/data/session"
 import { registerSchema } from "@/lib/zod/schemas/pages"
 import { useTranslations } from "next-intl"
 import { accountSchema } from "../../functions/schema-account"
+import { marked } from "marked"
 
 export default function AccountPageForm({
 	sections,
@@ -99,8 +100,19 @@ export default function AccountPageForm({
 								key={fields.username.key}
 								type="text"
 								defaultValue={sections.details.fields.username.value}
+								required={true}
+								aria-required={true}
 							/>
 							<ErrorMessage>{fields.username.errors}</ErrorMessage>
+							<Description dangerouslySetInnerHTML={{
+								__html: marked.parse(
+									"**Requirements**:\n" +
+									" - 2 - 24 characters long\n" +
+									" - Alphanumeric characters and `-`, `_`, and `.` only\n" +
+									" - Cannot start or end with `-`, `_`, or `.`\n" +
+									" - `-`, `_`, or `.` characters cannot be next to each other\n"
+								)
+							}}></Description>
 						</Field>
 
 						<Field>
@@ -111,14 +123,16 @@ export default function AccountPageForm({
 								id={fields.email.id}
 								name={fields.email.name}
 								key={fields.email.key}
-								type="text"
+								type="email"
 								defaultValue={sections.details.fields.email.value}
+								required={true}
+								aria-required={true}
 							/>
 							<ErrorMessage>{fields.email.errors}</ErrorMessage>
 						</Field>
 						<Field>
-							<Label>
-								Password
+							<Label optional={true}>
+								New Password
 							</Label>
 							<Input
 								id={fields.password.id}
@@ -128,17 +142,25 @@ export default function AccountPageForm({
 
 							/>
 							<ErrorMessage>{fields.password.errors}</ErrorMessage>
+
+							<Description dangerouslySetInnerHTML={{
+								__html: marked.parse(
+									"**Requirements**:\n" +
+									" - At least 7 characters long\n" +
+									" - At least 1 lowercase and 1 uppercase letter\n" +
+									" - At least 1 number and 1 special character\n"
+								)
+							}}></Description>
 						</Field>
 						<Field>
-							<Label>
-								Confirm Password
+							<Label optional={true}>
+								Confirm New Password
 							</Label>
 							<Input
 								id={fields.passwordConfirm.id}
 								name={fields.passwordConfirm.name}
 								key={fields.passwordConfirm.key}
 								type="password"
-
 							/>
 							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 						</Field>
@@ -152,6 +174,6 @@ export default function AccountPageForm({
 					"bottom-4",
 				)}
 			>Save</ComicButton>
-		</form>
+		</form >
 	</>
 }
