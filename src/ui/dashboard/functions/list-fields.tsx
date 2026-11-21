@@ -195,7 +195,7 @@ export function ListFields({
 						"md:col-span-2",
 					]
 				)}>
-					<Label>
+					<Label optional={!!singleField.optional}>
 						{singleField.title}
 					</Label>
 
