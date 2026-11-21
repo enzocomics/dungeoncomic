@@ -35,22 +35,20 @@ type FieldBase = {
 		value: string | string[],
 		action: "enable" | "disable"
 	},
+	optional?: boolean
 }
 
 type FieldProperties = {
 	text: {
 		validate?: boolean
-		optional?: boolean
 		maxLength?: number
 	},
 	textarea: {
 		validate?: boolean
-		optional?: boolean
 		maxLength?: number
 	},
 	email: {
 		validate?: boolean
-		optional?: boolean
 		maxLength?: number
 	},
 	username: {
@@ -59,12 +57,10 @@ type FieldProperties = {
 	}
 	password: {
 		validate?: boolean
-		optional?: boolean
 		maxLength?: number
 	},
 	url: {
 		validate?: boolean
-		optional?: boolean
 	},
 	select: {
 		options: {
@@ -211,7 +207,10 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
-							defaultValue={singleField.value} />
+							defaultValue={singleField.value}
+							required={!singleField.optional}
+							aria-required={!singleField.optional}
+						/>
 					}
 					{/**----------------------------------- */}
 					{
@@ -226,7 +225,10 @@ export function ListFields({
 							key={fieldset && fieldset[name].key}
 							rows={3}
 							maxLength={singleField.maxLength}
-							defaultValue={singleField.value} />
+							defaultValue={singleField.value}
+							required={!singleField.optional}
+							aria-required={!singleField.optional}
+						/>
 					}
 					{/**----------------------------------- */}
 					{
@@ -238,6 +240,8 @@ export function ListFields({
 							type="password"
 							defaultValue={singleField.value}
 							autoComplete="password"
+							required={!singleField.optional}
+							aria-required={!singleField.optional}
 						/>
 					}
 					{/**----------------------------------- */}
@@ -250,6 +254,8 @@ export function ListFields({
 							type="email"
 							defaultValue={singleField.value}
 							autoComplete="email"
+							required={!singleField.optional}
+							aria-required={!singleField.optional}
 						/>
 					}
 
@@ -261,7 +267,10 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
-							defaultValue={singleField.value} />
+							defaultValue={singleField.value}
+							required={!singleField.optional}
+							aria-required={!singleField.optional}
+						/>
 					}
 
 					{/**----------------------------------- */}
@@ -273,6 +282,8 @@ export function ListFields({
 								name={fieldset && fieldset[name].name}
 								defaultValue={singleField.value}
 								inputRefs={inputRefs}
+								required={!singleField.optional}
+								aria-required={!singleField.optional}
 							>
 								{singleField.options.map((o, i) => (
 									<option key={i}
@@ -294,6 +305,7 @@ export function ListFields({
 								name={fieldset && fieldset[name].name}
 								loadedValue={singleField.value}
 								conformField={fieldset && fieldset[name]}
+
 							>
 
 								{singleField.options.map((o, i) => (
