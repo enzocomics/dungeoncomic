@@ -70,7 +70,9 @@ export default function ProfilePageForm({
 		>
 			{Object.entries(sections).map(([name, section], index) => {
 				return <FieldsetSection key={index}>
-					<Legend>{section.legend}</Legend>
+					{section.legend &&
+						<Legend>{section.legend}</Legend>
+					}
 					{section.description &&
 						<FieldsetDescription
 							dangerouslySetInnerHTML={{

@@ -52,13 +52,18 @@ export default function SingleAvatarField({
 			<div className={clsx(
 				"my-3",
 				"flex",
-				"flex-row",
+				"flex-col",
+				"sm:flex-row",
+				"sm:place-content-center",
 				"gap-4"
 			)}>
 
 				{(hasAvatar || (!hasAvatar && isAvatarPreviewing)) && avatarPreview !== null ?
 					<div className={clsx(
-						"relative"
+						"relative",
+						"w-32",
+						"mx-auto",
+						"sm:mx-0",
 					)}>
 						<Image
 							src={avatarPreview}

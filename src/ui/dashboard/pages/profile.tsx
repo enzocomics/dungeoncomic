@@ -48,12 +48,16 @@ const getDetailFields = async () => {
 		description: {
 			title: "Bio",
 			description: "",
-			width: "full",
+			// width: "full",
 			type: "textarea",
 			value: session?.description || "",
 			validate: true,
 			optional: true,
 			maxLength: 1000
+		},
+		spacer2: {
+			title: "",
+			type: "blank"
 		},
 		// location: {
 		// 	title: "Location",
@@ -85,7 +89,7 @@ const getSocialFields = async () => {
 const getSections = async () => {
 	return {
 		details: {
-			legend: "Details",
+			legend: "",
 			description: null,
 			fields: await getDetailFields()
 		},
