@@ -61,6 +61,7 @@ type FieldProperties = {
 	},
 	url: {
 		validate?: boolean
+		maxLength?: number
 	},
 	select: {
 		options: {
@@ -193,6 +194,7 @@ export function ListFields({
 				return <Field key={index} disabled={disableAll || disabled} className={clsx(
 					singleField.width == "full" && [
 						"md:col-span-2",
+						"max-w-prose",
 					]
 				)}>
 					<Label optional={!!singleField.optional}>
@@ -207,6 +209,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
+							maxLength={singleField.maxLength}
 							defaultValue={singleField.value}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
@@ -218,7 +221,6 @@ export function ListFields({
 						<Textarea
 							className={clsx(
 								"block",
-								"max-w-prose"
 							)}
 							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
@@ -252,6 +254,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="email"
+							maxLength={singleField.maxLength}
 							defaultValue={singleField.value}
 							autoComplete="email"
 							required={!singleField.optional}
@@ -268,6 +271,7 @@ export function ListFields({
 							key={fieldset && fieldset[name].key}
 							type="text"
 							defaultValue={singleField.value}
+							maxLength={singleField.maxLength || 128}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
 						/>
