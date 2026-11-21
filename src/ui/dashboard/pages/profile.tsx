@@ -5,6 +5,7 @@ import { verifySession } from "@/data/session"
 import { PageTitleH1 } from "@/components/page"
 import ProfilePageForm from "@/ui/dashboard/pages/client/profile-form"
 import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
+import type { ImageCollection } from "@/lib/directus/schema"
 
 export default async function ProfilePageUI() {
 	const sections = await getSections()
@@ -25,6 +26,13 @@ const getDetailFields = async () => {
 	return {
 		// Details
 		// TODO: Avatar
+		avatar: {
+			title: "Avatar",
+			description: "",
+			type: "avatar",
+			object: session?.avatar as ImageCollection || null,
+
+		},
 		name: {
 			title: "Name",
 			description: "",

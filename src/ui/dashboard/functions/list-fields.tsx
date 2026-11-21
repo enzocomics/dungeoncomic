@@ -13,6 +13,7 @@ import Icon from "@/styles/icons"
 import { ImageCollection } from "@/lib/directus/schema"
 import { verifySession } from "@/data/session"
 import { Textarea } from "@/components/input/textarea"
+import SingleAvatarField from "./list-field-avatar"
 
 /**----------------------------------- */
 // TYPES
@@ -83,6 +84,9 @@ type FieldProperties = {
 	},
 	image: {
 		validate?: boolean
+		object: ImageCollection | null
+	},
+	avatar: {
 		object: ImageCollection | null
 	},
 	custom: {},
@@ -189,8 +193,9 @@ export function ListFields({
 					disabled = true
 				}
 			}
-
-			if (singleField.type !== "blank")
+			if (singleField.type === "avatar")
+				return <SingleAvatarField key={index} />
+			else if (singleField.type !== "blank")
 				return <Field key={index} disabled={disableAll || disabled} className={clsx(
 					singleField.width == "full" && [
 						"md:col-span-2",
