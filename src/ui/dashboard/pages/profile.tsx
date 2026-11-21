@@ -32,7 +32,11 @@ const getDetailFields = async () => {
 			value: session?.name || "",
 			validate: true,
 			optional: true,
-			maxLength: 128
+			maxLength: 64
+		},
+		spacer: {
+			title: "",
+			type: "blank"
 		},
 		description: {
 			title: "Bio",
