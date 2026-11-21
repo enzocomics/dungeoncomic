@@ -69,13 +69,15 @@ export async function saveUserVars(prevState: unknown, formData: FormData) {
 
 	// SAVE USER VARIABLES TO COOKIES
 	try {
-		cookieStore.set({
-			name: name,
-			value: encryptedPayload,
-			httpOnly: true,
-			sameSite: "strict",
-			maxAge: 60 * 60 * 24 * 30 * 3, // 3 months
-		})
+		if (submission.status === "success") {
+			cookieStore.set({
+				name: name,
+				value: encryptedPayload,
+				httpOnly: true,
+				sameSite: "strict",
+				maxAge: 60 * 60 * 24 * 30 * 3, // 3 months
+			})
+		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

@@ -23,11 +23,13 @@ export async function requestReset(prevState: unknown, formData: FormData) {
 	})
 	// SUBMIT TO DIRECTUS
 	try {
-		const email = formData.get("email") as string
-		// Request a password reset email from Directus
-		const response = await publicClient.request(
-			passwordRequest(email, passwordResetURL),
-		)
+		if (submission.status === "success") {
+			const email = formData.get("email") as string
+			// Request a password reset email from Directus
+			const response = await publicClient.request(
+				passwordRequest(email, passwordResetURL),
+			)
+		}
 	} catch (err: any) {
 		// return error if unsuccessful
 		const error = err.errors?.[0]
@@ -51,10 +53,12 @@ export async function submitReset(prevState: unknown, formData: FormData) {
 
 	// SUBMIT TO DIRECTUS
 	try {
-		const password = formData.get("password") as string
-		const token = formData.get("token") as string
-		// Submit the password reset request
-		await publicClient.request(passwordReset(token, password))
+		if (submission.status === "success") {
+			const password = formData.get("password") as string
+			const token = formData.get("token") as string
+			// Submit the password reset request
+			await publicClient.request(passwordReset(token, password))
+		}
 	} catch (err: any) {
 		// return error if unsuccessful
 		const error = err.errors?.[0]

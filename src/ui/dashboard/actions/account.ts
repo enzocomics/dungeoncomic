@@ -66,36 +66,38 @@ export async function saveAccount(prevState: unknown, formData: FormData) {
 	const fields = ["username", "email", "password"]
 
 	try {
-		// // Create a type from the names in the `fields` array
-		type SettingField = (typeof fields)[number]
-		// // Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
-		const updates: Partial<Record<SettingField, string | null>> = {}
+		if (submission.status === "success") {
+			// // Create a type from the names in the `fields` array
+			type SettingField = (typeof fields)[number]
+			// // Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
+			const updates: Partial<Record<SettingField, string | null>> = {}
 
-		// // Iterate through the fieldsArray
-		for (const field of fields) {
-			// Get each formdatad field by its name
-			const value = formData.get(`${field}`)
+			// // Iterate through the fieldsArray
+			for (const field of fields) {
+				// Get each formdatad field by its name
+				const value = formData.get(`${field}`)
 
-			// skip the field if its value is null or empty (not submitted)
-			if (value === null || value === "") continue
+				// skip the field if its value is null or empty (not submitted)
+				if (value === null || value === "") continue
 
-			if (typeof value !== "string") continue // Ignore File values
+				if (typeof value !== "string") continue // Ignore File values
 
-			// if the submitted value is __CLEAR__ then send null to directus
-			updates[field] = value === "__CLEAR__" ? null : value
+				// if the submitted value is __CLEAR__ then send null to directus
+				updates[field] = value === "__CLEAR__" ? null : value
+			}
+
+			// const updates = {
+			// 	username: formData.get("username") as string,
+			// 	email: formData.get("email") as string,
+			// }
+
+			// console.log(updates)
+			// Update CMS and pass the object
+			const updateSettings = await userClient.request(updateMe(updates))
+			updateTag("user")
+
+			// console.log(updateSettings)
 		}
-
-		// const updates = {
-		// 	username: formData.get("username") as string,
-		// 	email: formData.get("email") as string,
-		// }
-
-		// console.log(updates)
-		// Update CMS and pass the object
-		const updateSettings = await userClient.request(updateMe(updates))
-		updateTag("user")
-
-		// console.log(updateSettings)
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

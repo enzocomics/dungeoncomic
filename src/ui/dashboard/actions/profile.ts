@@ -15,30 +15,32 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 	const fields = ["name", "location", "description", "homepage_url"]
 
 	try {
-		// Create a type from the names in the `fields` array
-		type ProfileField = (typeof fields)[number]
-		// Create an empty object for the update, whose keys can be any of hte fields in ProfileField, but they're all optional. Each included value must be `string | null`
-		const updates: Partial<Record<ProfileField, string | null>> = {}
+		if (submission.status === "success") {
+			// Create a type from the names in the `fields` array
+			type ProfileField = (typeof fields)[number]
+			// Create an empty object for the update, whose keys can be any of hte fields in ProfileField, but they're all optional. Each included value must be `string | null`
+			const updates: Partial<Record<ProfileField, string | null>> = {}
 
-		// Iterate through the fieldsArray
-		for (const field of fields) {
-			// Get each formdatad field by its name
-			const value = formData.get(`directus_users.${field}`)
+			// Iterate through the fieldsArray
+			for (const field of fields) {
+				// Get each formdatad field by its name
+				const value = formData.get(`directus_users.${field}`)
 
-			// skip the field if its value is null (not submitted)
-			if (value === null) continue
+				// skip the field if its value is null (not submitted)
+				if (value === null) continue
 
-			if (typeof value !== "string") continue // Ignore File values
+				if (typeof value !== "string") continue // Ignore File values
 
-			// if the submitted value is __CLEAR__ then send null to directus
-			updates[field] = value === "__CLEAR__" ? null : value
+				// if the submitted value is __CLEAR__ then send null to directus
+				updates[field] = value === "__CLEAR__" ? null : value
+			}
+
+			// Update CMS and pass the object
+
+			// console.log(updates)
+			const updateProfile = await userClient.request(updateMe(updates))
+			updateTag("user")
 		}
-
-		// Update CMS and pass the object
-
-		console.log(updates)
-		const updateProfile = await userClient.request(updateMe(updates))
-		updateTag("user")
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESSFUL
 		const error = err.errors?.[0]

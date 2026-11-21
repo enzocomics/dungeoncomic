@@ -20,13 +20,15 @@ export async function submitUserComment(
 
 	// SUBMIT USER SUGGESTION TO DIRECTUS
 	try {
-		const addComment = await userClient.request(
-			createItem("comments", {
-				content: sanitize(content),
-				parent_page: !parentCommentId ? pageId : null,
-				parent_comment: parentCommentId ?? null,
-			}),
-		)
+		if (submission.status === "success") {
+			const addComment = await userClient.request(
+				createItem("comments", {
+					content: sanitize(content),
+					parent_page: !parentCommentId ? pageId : null,
+					parent_comment: parentCommentId ?? null,
+				}),
+			)
+		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

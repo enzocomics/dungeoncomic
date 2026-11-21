@@ -45,62 +45,64 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 	const imageFields = ["project_logo", "project_banner"] as const
 
 	try {
-		// Create a type from the names in the `fields` array
-		type SettingField = (typeof fields | typeof imageFields)[number]
+		if (submission.status === "success") {
+			// Create a type from the names in the `fields` array
+			type SettingField = (typeof fields | typeof imageFields)[number]
 
-		// Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
-		const updates: Partial<Record<SettingField, string | null>> = {}
+			// Create an empty object for the update, whose keys can be any of the fields in SettingField, but thery're all optional. Each included value must be `string | null`
+			const updates: Partial<Record<SettingField, string | null>> = {}
 
-		// Iterate through the fieldsArray
-		for (const field of fields) {
-			// Get each formdatad field by its name
-			const value = formData.get(`settings.${field}`)
+			// Iterate through the fieldsArray
+			for (const field of fields) {
+				// Get each formdatad field by its name
+				const value = formData.get(`settings.${field}`)
 
-			// skip the field if its value is null (not submitted)
-			if (value === null) continue
+				// skip the field if its value is null (not submitted)
+				if (value === null) continue
 
-			if (typeof value !== "string") continue // Ignore File values
+				if (typeof value !== "string") continue // Ignore File values
 
-			// if the submitted value is __CLEAR__ then send null to directus
-			updates[field] = value === "__CLEAR__" ? null : value
-		}
-
-		// Iterate through the imageFields
-		for (const field of imageFields) {
-			// Check if the clear field has been filled out
-			const shouldClear = formData.get(`settings.${field}_file_clear`)
-
-			// If the clear field is true:
-			if (shouldClear) {
-				updates[field] = null // set the relational field in the singleton to empty
-				const imageID = formData.get(`settings.${field}_id`)
-				const deleteImage = imageID // Delete actual file from the cms
-					? await userClient.request(deleteFile(String(imageID)))
-					: null
-				continue
+				// if the submitted value is __CLEAR__ then send null to directus
+				updates[field] = value === "__CLEAR__" ? null : value
 			}
 
-			// TODO: we need logic here that deletes the old image when it is being replaced with a new image
+			// Iterate through the imageFields
+			for (const field of imageFields) {
+				// Check if the clear field has been filled out
+				const shouldClear = formData.get(`settings.${field}_file_clear`)
 
-			// If the clear field is not set:
-			// Get the file
-			const value = formData.get(`settings.${field}`)
+				// If the clear field is true:
+				if (shouldClear) {
+					updates[field] = null // set the relational field in the singleton to empty
+					const imageID = formData.get(`settings.${field}_id`)
+					const deleteImage = imageID // Delete actual file from the cms
+						? await userClient.request(deleteFile(String(imageID)))
+						: null
+					continue
+				}
 
-			// skip unless the value is an actual File and has filesize
-			if (!(value instanceof File) || value.size === 0) continue
+				// TODO: we need logic here that deletes the old image when it is being replaced with a new image
 
-			// create a new FormData object to send the file to Directus
-			const uploadData = new FormData()
-			uploadData.append("file", value)
-			const uploaded = await userClient.request(uploadFiles(uploadData))
-			updates[field] = uploaded.id
+				// If the clear field is not set:
+				// Get the file
+				const value = formData.get(`settings.${field}`)
+
+				// skip unless the value is an actual File and has filesize
+				if (!(value instanceof File) || value.size === 0) continue
+
+				// create a new FormData object to send the file to Directus
+				const uploadData = new FormData()
+				uploadData.append("file", value)
+				const uploaded = await userClient.request(uploadFiles(uploadData))
+				updates[field] = uploaded.id
+			}
+
+			// Update CMS and pass the object
+			const updateSettings = await userClient.request(
+				updateSingleton("settings", updates),
+			)
+			updateTag("settings")
 		}
-
-		// Update CMS and pass the object
-		const updateSettings = await userClient.request(
-			updateSingleton("settings", updates),
-		)
-		updateTag("settings")
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

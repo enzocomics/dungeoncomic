@@ -25,13 +25,15 @@ export async function login(prevState: unknown, formData: FormData) {
 
 	// SUBMIT LOGIN TO DIRECTUS
 	try {
-		const response = await userClient.login(
-			{ email, password },
-			{ mode: "json" },
-		)
-		// SAVE THE USER COOKIE
-		const cookieStore = await cookies()
-		await saveUserCookie(cookieStore, response)
+		if (submission.status === "success") {
+			const response = await userClient.login(
+				{ email, password },
+				{ mode: "json" },
+			)
+			// SAVE THE USER COOKIE
+			const cookieStore = await cookies()
+			await saveUserCookie(cookieStore, response)
+		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
 		const error = err.errors?.[0]

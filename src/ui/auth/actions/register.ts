@@ -61,28 +61,30 @@ export async function register(prevState: unknown, formData: FormData) {
 
 	// SUBMIT TO DIRECTUS
 	try {
-		// Get the form variables
-		const email = formData.get("email") as string
-		const password = formData.get("password") as string
-		// const username = formData.get("username") as string
-		// Create the user
-		const response = await publicClient.request(
-			registerUser(email, password, {
-				verification_url: registerVerifyURL,
-			}),
-		)
-		// Get the new user's ID
-		// const getUserID = await adminClient.request(
-		// 	readUsers({
-		// 		filter: { email: { _eq: email } },
-		// 		fields: ["id"],
-		// 		limit: 1,
-		// 	}),
-		// )
-		// // update the user's username
-		// await adminClient.request(
-		// 	updateUser(getUserID[0].id, { username: username }),
-		// )
+		if (submission.status === "success") {
+			// Get the form variables
+			const email = formData.get("email") as string
+			const password = formData.get("password") as string
+			// const username = formData.get("username") as string
+			// Create the user
+			const response = await publicClient.request(
+				registerUser(email, password, {
+					verification_url: registerVerifyURL,
+				}),
+			)
+			// Get the new user's ID
+			// const getUserID = await adminClient.request(
+			// 	readUsers({
+			// 		filter: { email: { _eq: email } },
+			// 		fields: ["id"],
+			// 		limit: 1,
+			// 	}),
+			// )
+			// // update the user's username
+			// await adminClient.request(
+			// 	updateUser(getUserID[0].id, { username: username }),
+			// )
+		}
 	} catch (err: any) {
 		// return error if unsuccessful
 		const error = err.errors?.[0]
