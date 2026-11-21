@@ -117,7 +117,7 @@ const getComicTypeFields = async () => {
 			value: settings.comic_type_name,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		comic_type_name_plural: {
 			title: "Comic Type Name Plural",
@@ -126,7 +126,7 @@ const getComicTypeFields = async () => {
 			value: settings.comic_type_name_plural,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		comic_type_name_slug: {
 			title: "Comic Type Slug - Singular",
@@ -135,7 +135,7 @@ const getComicTypeFields = async () => {
 			value: settings.comic_type_name_slug,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		comic_type_name_plural_slug: {
 			title: "Comic Type Slug - Plural",
@@ -144,7 +144,7 @@ const getComicTypeFields = async () => {
 			value: settings.comic_type_name_plural_slug,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 	} satisfies Record<string, ListFieldsField>
 }
@@ -160,7 +160,7 @@ const getUserTypeFields = async () => {
 			value: settings.user_type_name,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		user_type_name_plural: {
 			title: "User Type Name Plural",
@@ -169,7 +169,7 @@ const getUserTypeFields = async () => {
 			value: settings.user_type_name_plural,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		user_type_name_slug: {
 			title: "User Type Slug - Singular",
@@ -178,7 +178,7 @@ const getUserTypeFields = async () => {
 			value: settings.user_type_name_slug,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 		user_type_name_plural_slug: {
 			title: "User Type Slug - Plural",
@@ -187,7 +187,7 @@ const getUserTypeFields = async () => {
 			value: settings.user_type_name_plural_slug,
 			width: "half",
 			validate: true,
-			maxLength: 128
+			maxLength: 32
 		},
 	} satisfies Record<string, ListFieldsField>
 }
