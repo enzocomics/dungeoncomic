@@ -61,15 +61,21 @@ export const Textarea = forwardRef(function Textarea({
 			className={clsx(
 				className,
 				// SPACING & SIZE
-				"p-2",
+				"mt-3",
+				"mb-3",
+				"px-4",
+				"py-2",
 				"w-full",
 				// APPEARANCE
 				"rounded",
 				"border-2",
-				"border-neutral-200",
-				"dark:border-white",
+				// Colors
 				"bg-white",
-				"text-black",
+				"border-neutral-200",
+				"text-neutral-900",
+				"dark:border-white/10",
+				"dark:bg-white/5",
+				"dark:text-white",
 				// TEXT
 				"font-platform-mono",
 				"text-base",
