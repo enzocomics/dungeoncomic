@@ -3,7 +3,7 @@
 import { parseWithZod } from "@conform-to/zod/v4"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 import { userClient } from "@/lib/directus/clients"
-import { updateMe } from "@directus/sdk"
+import { deleteFile, updateMe, uploadFiles } from "@directus/sdk"
 import { updateTag } from "next/cache"
 
 export async function saveProfile(prevState: unknown, formData: FormData) {
@@ -13,6 +13,8 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 	})
 	// Create a list of the fields we want to fetch from FormData
 	const fields = ["name", "location", "description", "homepage_url"]
+
+	const imageFields = ["avatar"] as const
 
 	try {
 		if (submission.status === "success") {
@@ -35,9 +37,38 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 				updates[field] = value === "__CLEAR__" ? null : value
 			}
 
+			// Iterate through the imageFields
+			for (const field of imageFields) {
+				// Check if the clear field has been filled out
+				const shouldClear = formData.get(`avatar_clear`)
+
+				// If the clear field is true:
+				if (shouldClear) {
+					updates[field] = null // set the relational field in the singleton to empty
+					const imageID = formData.get(`avatar_id`)
+					const deleteImage = imageID // Delete actual file from the cms
+						? await userClient.request(deleteFile(String(imageID)))
+						: null
+					continue
+				}
+
+				// TODO: we need logic here that deletes the old image when it is being replaced with a new image
+
+				// If the clear field is not set:
+				// Get the file
+				const value = formData.get(`directus_users.${field}`)
+
+				// skip unless the value is an actual File and has filesize
+				if (!(value instanceof File) || value.size === 0) continue
+
+				// create a new FormData object to send the file to Directus
+				const uploadData = new FormData()
+				uploadData.append("file", value)
+				const uploaded = await userClient.request(uploadFiles(uploadData))
+				updates[field] = uploaded.id
+			}
 			// Update CMS and pass the object
 
-			// console.log(updates)
 			const updateProfile = await userClient.request(updateMe(updates))
 			updateTag("user")
 		}
