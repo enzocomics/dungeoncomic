@@ -37,7 +37,7 @@ export default function ProfilePageForm({
 					name: "directus_users",
 					fieldLists: [
 						sections.details.fields,
-						sections.socials.fields
+						// sections.socials.fields
 					]
 				})
 			})
