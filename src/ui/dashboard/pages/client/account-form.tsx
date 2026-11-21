@@ -95,7 +95,7 @@ export default function AccountPageForm({
 								Username
 							</Label>
 							<Input
-								id={fields.username.id}
+								// id={fields.username.id}
 								name={fields.username.name}
 								key={fields.username.key}
 								type="text"
@@ -120,7 +120,7 @@ export default function AccountPageForm({
 								Email
 							</Label>
 							<Input
-								id={fields.email.id}
+								// id={fields.email.id}
 								name={fields.email.name}
 								key={fields.email.key}
 								type="email"
@@ -135,7 +135,7 @@ export default function AccountPageForm({
 								New Password
 							</Label>
 							<Input
-								id={fields.password.id}
+								// id={fields.password.id}
 								name={fields.password.name}
 								key={fields.password.key}
 								type="password"
@@ -157,7 +157,7 @@ export default function AccountPageForm({
 								Confirm New Password
 							</Label>
 							<Input
-								id={fields.passwordConfirm.id}
+								// id={fields.passwordConfirm.id}
 								name={fields.passwordConfirm.name}
 								key={fields.passwordConfirm.key}
 								type="password"

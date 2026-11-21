@@ -203,7 +203,7 @@ export function ListFields({
 					{
 						(singleField.type === "text" || singleField.type === "username") &&
 						<Input
-							id={fieldset && fieldset[name].name}
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
@@ -220,7 +220,7 @@ export function ListFields({
 								"block",
 								"max-w-prose"
 							)}
-							id={fieldset && fieldset[name].name}
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							rows={3}
@@ -234,7 +234,7 @@ export function ListFields({
 					{
 						singleField.type === "password" &&
 						<Input
-							id={fieldset && fieldset[name].name}
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="password"
@@ -248,7 +248,7 @@ export function ListFields({
 					{
 						singleField.type === "email" &&
 						<Input
-							id={fieldset && fieldset[name].name}
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="email"
@@ -263,7 +263,7 @@ export function ListFields({
 					{
 						singleField.type === "url" &&
 						<Input
-							id={fieldset && fieldset[name].name}
+							// id={fieldset && fieldset[name].name}
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
@@ -278,7 +278,7 @@ export function ListFields({
 						singleField.type === "select" &&
 						<>
 							<Select
-								id={fieldset && fieldset[name].name}
+								// id={fieldset && fieldset[name].name}
 								name={fieldset && fieldset[name].name}
 								defaultValue={singleField.value}
 								inputRefs={inputRefs}
