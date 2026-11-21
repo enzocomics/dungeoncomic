@@ -13,6 +13,15 @@
 		@apply px-1.5 py-px rounded font-platform-mono font-semibold text-comic-accent-800 dark:text-comic-accent-300 bg-black/5 dark:bg-black/40;
 	}
 
+	.marked {
+		ul {
+			@apply pl-4 list-disc list-inside;
+		}
+		code {
+			@apply px-1 py-px bg-black/5 dark:bg-white/10 rounded-sm font-platform-mono;
+		}
+	}
+
 	.prose {
 		p,
 		hr,
