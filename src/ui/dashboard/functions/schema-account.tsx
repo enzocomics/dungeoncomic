@@ -20,8 +20,8 @@ export function accountSchema(
 	return (
 		z
 			.object({
-				email: zCheckUniqueEmail(t, intent, options).optional(), // async
-				username: zCheckUniqueUsername(t, intent, options).optional(), // async
+				email: zCheckUniqueEmail(t, intent, options), // async
+				username: zCheckUniqueUsername(t, intent, options), // async
 				password: zCheckPasswordCreation(t).optional(),
 				passwordConfirm: zConfirmPassword(t).optional(),
 			})
