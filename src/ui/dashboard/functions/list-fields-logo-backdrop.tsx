@@ -17,6 +17,7 @@ import { ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/fun
 import clsx from "clsx"
 import { directusURL } from "@/data/env"
 import Icon from "@/styles/icons"
+import { marked } from "marked"
 
 
 export function ListLogoBackdropFields({
@@ -328,13 +329,16 @@ export function ListLogoBackdropFields({
 					/>
 
 					<ErrorMessage>{fieldset?.[logoFieldName].errors}</ErrorMessage>
-					<Description>Logo Recommendations:<br />
-						- Landscape aspect ratio (max 3:1)<br />
-						- Transparency<br />
-						- Solid colour stroke<br />
-						- JPEG | PNG | GIF | WEBP<br />
-						- 1MB max
-					</Description>
+					<Description dangerouslySetInnerHTML={{
+						__html: marked.parse(
+							"Recommendations:\n" +
+							"- Landscape aspect ratio (max 3:1)\n" +
+							"- Transparency\n" +
+							"- Solid colour stroke\n" +
+							"- JPEG | PNG | GIF | WEBP\n" +
+							"- 1MB max"
+						)
+					}} />
 				</Field>
 				{clearLogo &&
 					<>
@@ -382,11 +386,14 @@ export function ListLogoBackdropFields({
 						onChange={(e) => handleBackdropPreview(e)}
 					/>
 					<ErrorMessage>{fieldset?.[backdropFieldName].errors}</ErrorMessage>
-					<Description>Backdrop Recommendations:<br />
-						- 1600x400px (4:1 aspect ratio)<br />
-						- JPEG | PNG | GIF | WEBP<br />
-						- 1MB max
-					</Description>
+					<Description dangerouslySetInnerHTML={{
+						__html: marked.parse(
+							"Backdrop Recommendations:\n" +
+							"- 1600x400px (4:1 aspect ratio)\n" +
+							"- JPEG | PNG | GIF | WEBP\n" +
+							"- 1MB max"
+						)
+					}} />
 				</Field>
 				{clearBackdrop &&
 					<>
