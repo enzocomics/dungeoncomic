@@ -107,8 +107,8 @@ export default function LoginPageUI({
 				<AuthHeaderDescription>
 					<p dangerouslySetInnerHTML={{
 						__html: t.rich("pages.register.rich-acknowledgement", {
-							a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
-							a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
+							a1: (chunks) => `<a class="text-platform-accent-800 dark:text-platform-accent-300 underline" href="/terms">${chunks}</a>`,
+							a2: (chunks) => `<a class="text-platform-accent-800 dark:text-platform-accent-300 underline" href="/privacy">${chunks}</a>`
 						}) as string
 					}}
 					/>
@@ -162,7 +162,6 @@ export default function LoginPageUI({
 					</Field>
 					<PlatformButton
 						type="submit"
-						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6",
@@ -177,8 +176,9 @@ export default function LoginPageUI({
 					isModal={isModal}
 					modal={"reset-password"}
 					className={clsx(
-						"text-primary-800",
-						"dark:text-primary-300",
+						"text-platform-accent-800",
+						"underline",
+						"dark:text-platform-accent-300",
 					)}>
 					{t("pages.login.reset-password-link")} &raquo;
 				</AuthLink>
@@ -188,7 +188,8 @@ export default function LoginPageUI({
 						isModal={isModal}
 						modal={"register"}
 						className={clsx(
-							"text-primary-800 dark:text-primary-300"
+							"text-platform-accent-800 dark:text-platform-accent-300",
+							"underline",
 						)}
 						onClick={() => { }}
 					>Sign Up &raquo;</AuthLink>

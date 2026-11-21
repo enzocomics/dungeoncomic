@@ -128,8 +128,8 @@ export default function RegisterPageUI({
 					<AuthHeaderDescription>
 						<p dangerouslySetInnerHTML={{
 							__html: t.rich("pages.register.rich-acknowledgement", {
-								a1: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/terms">${chunks}</a>`,
-								a2: (chunks) => `<a class="text-primary-800 dark:text-primary-300" href="/privacy">${chunks}</a>`
+								a1: (chunks) => `<a class="text-platform-accent-800 dark:text-platform-accent-300 underline" href="/terms">${chunks}</a>`,
+								a2: (chunks) => `<a class="text-platform-accent-800 dark:text-platform-accent-300 underline" href="/privacy">${chunks}</a>`
 							}) as string
 						}}
 						/>
@@ -209,7 +209,6 @@ export default function RegisterPageUI({
 						</Field>
 						<PlatformButton
 							type="submit"
-							color="primary"
 							className={clsx(
 								"w-full",
 								"mt-6",
@@ -226,7 +225,7 @@ export default function RegisterPageUI({
 						isModal={isModal}
 						modal="login"
 						className={clsx(
-							"text-primary-800 dark:text-primary-300"
+							"text-platform-accent-800 dark:text-platform-accent-300 underline"
 						)}
 					>
 						Log In &raquo;

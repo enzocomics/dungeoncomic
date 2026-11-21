@@ -116,7 +116,6 @@ function RequestResetForm({
 
 					<PlatformButton
 						type="submit"
-						color="primary"
 						className={clsx(
 							"w-full",
 							"mt-6"
@@ -125,7 +124,7 @@ function RequestResetForm({
 				</div>
 			</form>
 			<AuthNav>
-				<AuthLink isModal={isModal} modal="login" className="mx-auto text-primary-800 dark:text-primary-300">&laquo; {n("go-back")}</AuthLink>
+				<AuthLink isModal={isModal} modal="login" className="mx-auto text-platform-accent-800 dark:text-platform-accent-300 underline">&laquo; {n("go-back")}</AuthLink>
 			</AuthNav>
 		</AuthBody >
 	</>
@@ -216,7 +215,7 @@ function ResetPasswordForm({ token }: { token: string }) {
 					</Field>
 					<PlatformButton
 						type="submit"
-						color="primary"
+						color="platform-accent"
 						className={clsx(
 							"w-full",
 							"mt-6",
