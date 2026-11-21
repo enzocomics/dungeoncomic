@@ -3,6 +3,7 @@ import * as Headless from "@headlessui/react"
 import clsx from "clsx"
 import { marked } from "marked"
 import { ComponentPropsWithoutRef, forwardRef } from "react"
+import { Badge } from "../elements/badge"
 
 
 export function Fieldset({
@@ -141,8 +142,13 @@ export const Input = forwardRef(function Input({
 
 export function Label({
 	className,
+	optional,
 	...props
-}: { className?: string } & Omit<Headless.LabelProps, "className">) {
+}: {
+	className?: string,
+	// All labels will display required unless explicitly set to optional
+	optional?: boolean
+} & Omit<Headless.LabelProps, "className">) {
 	return <>
 		<Headless.Label
 			{...props}
@@ -154,7 +160,16 @@ export function Label({
 				"data-disabled:cursor-auto",
 			)}
 		>
-			{props.children}
+			<>
+				{props.children}
+				{!optional &&
+					<Badge className={clsx(
+						"ml-2",
+					)}>
+						Required
+					</Badge>
+				}
+			</>
 		</Headless.Label>
 	</>
 }
@@ -168,6 +183,7 @@ export function Description({
 			as="div"
 			{...props}
 			className={clsx(
+				"marked",
 				className,
 				"font-platform-labels",
 				"font-normal",
