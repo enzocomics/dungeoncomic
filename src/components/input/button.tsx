@@ -120,7 +120,7 @@ export function ComicButton({
 		"text-white",
 		"text-base",
 		"lg:text-lg",
-		"font-comic-labels",
+		"font-platform-labels",
 		"font-semibold",
 		// "border-y-2",
 		// "border-t-white/40",
@@ -183,11 +183,11 @@ export function PlatformButton({
 			"border-y-2",
 			"border-t-white/40",
 			"border-b-black/20",
-			"border-t-primary-300",
+			"border-t-platform-accent-300",
 			// Text
 			"text-white",
 			"text-base",
-			"font-platform-headers",
+			"font-platform-labels",
 			// States
 			props.disabled ? [
 				"cursor-not-allowed",
@@ -196,13 +196,13 @@ export function PlatformButton({
 			] : [
 				"cursor-pointer",
 				// Appearance
-				"bg-primary-500",
+				"bg-platform-accent-500",
 				"visited:bg-neutral-500",
 				// States
 				"hover:duration-0",
-				"hover:bg-primary-700",
+				"hover:bg-platform-accent-700",
 				"active:translate-px",
-				"active:bg-primary-900",
+				"active:bg-platform-accent-900",
 				// Transition
 				"transition-all",
 				"ease-in-out",
@@ -211,7 +211,7 @@ export function PlatformButton({
 				"outline-transparent",
 				"focus:outline-4",
 				"focus:outline-offset-4",
-				"focus:outline-primary-500",
+				"focus:outline-platform-accent-500",
 			]
 		)}
 	>
