@@ -213,6 +213,7 @@ export function ListFields({
 							defaultValue={singleField.value}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
+							lengthChecker={true}
 						/>
 					}
 					{/**----------------------------------- */}
@@ -230,6 +231,7 @@ export function ListFields({
 							defaultValue={singleField.value}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
+							lengthChecker={true}
 						/>
 					}
 					{/**----------------------------------- */}
@@ -244,6 +246,7 @@ export function ListFields({
 							autoComplete="password"
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
+							lengthChecker={true}
 						/>
 					}
 					{/**----------------------------------- */}
@@ -259,6 +262,7 @@ export function ListFields({
 							autoComplete="email"
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
+							lengthChecker={true}
 						/>
 					}
 
@@ -274,6 +278,7 @@ export function ListFields({
 							maxLength={singleField.maxLength || 128}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
+							lengthChecker={true}
 						/>
 					}
 

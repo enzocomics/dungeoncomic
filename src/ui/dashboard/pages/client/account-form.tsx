@@ -103,6 +103,7 @@ export default function AccountPageForm({
 								maxLength={24}
 								required={true}
 								aria-required={true}
+								lengthChecker={true}
 							/>
 							<ErrorMessage>{fields.username.errors}</ErrorMessage>
 							<Description dangerouslySetInnerHTML={{
@@ -128,6 +129,7 @@ export default function AccountPageForm({
 								defaultValue={sections.details.fields.email.value}
 								required={true}
 								aria-required={true}
+								lengthChecker={true}
 							/>
 							<ErrorMessage>{fields.email.errors}</ErrorMessage>
 						</Field>
@@ -141,6 +143,7 @@ export default function AccountPageForm({
 								key={fields.password.key}
 								type="password"
 								maxLength={128}
+								lengthChecker={true}
 							/>
 							<ErrorMessage>{fields.password.errors}</ErrorMessage>
 
@@ -163,6 +166,7 @@ export default function AccountPageForm({
 								key={fields.passwordConfirm.key}
 								type="password"
 								maxLength={128}
+								lengthChecker={true}
 							/>
 							<ErrorMessage>{fields.passwordConfirm.errors}</ErrorMessage>
 						</Field>
