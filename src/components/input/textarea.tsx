@@ -2,7 +2,7 @@
 /**----------------------------------- */
 import clsx from "clsx"
 import * as Headless from "@headlessui/react"
-import { forwardRef, useEffect, useLayoutEffect, useRef } from "react"
+import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from "react"
 
 
 /**----------------------------------- 
@@ -10,10 +10,12 @@ import { forwardRef, useEffect, useLayoutEffect, useRef } from "react"
  */
 export const Textarea = forwardRef(function Textarea({
 	className,
+	checkLengthOff,
 	onChange,
 	...props
 }: {
 	className?: string
+	checkLengthOff?: boolean
 }
 	// & defines a union type: it must satisfy all conditions
 	& Omit<Headless.TextareaProps, "className">, // Omit the classname from the headless component since we are using our own version
@@ -36,8 +38,27 @@ export const Textarea = forwardRef(function Textarea({
 		if (internalRef.current) handleTextarea(internalRef.current)
 	}, [props.value, props.defaultValue])
 
+	const [inputLength, setInputLength] = useState((props.defaultValue as string | undefined)?.length ?? 0)
+
+	const maxLength = props.maxLength || 64
 	// RENDER
-	return (
+	return <>
+
+		{/* Length Checker */}
+		{!checkLengthOff &&
+			<span className={clsx(
+				"absolute",
+				"top-2",
+				"right-0",
+				"ml-auto",
+				"font-comic-labels",
+				"font-normal",
+				"text-xs",
+				"text-current/50"
+			)}>
+				{`${inputLength}/${maxLength}`}{/* TODO: should this be hardcoded? */}
+			</span>
+		}
 		<Headless.Textarea
 			{...props}
 			ref={
@@ -96,5 +117,5 @@ export const Textarea = forwardRef(function Textarea({
 				onChange?.(e)
 			}}
 		/>
-	)
+	</>
 })
