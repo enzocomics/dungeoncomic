@@ -557,7 +557,7 @@ export default function ClientPlatformNav({
 									height={session.avatar.height || "64"}
 									className={
 										clsx(
-											"size-6",
+											"size-7",
 											"rounded-sm",
 											// Transition
 											"transition-all",
