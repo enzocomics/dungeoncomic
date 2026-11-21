@@ -106,11 +106,11 @@ export function Field({
 
 export const Input = forwardRef(function Input({
 	className,
-	checkLengthOff,
+	lengthChecker,
 	...props
 }: {
 	className?: string,
-	checkLengthOff?: boolean
+	lengthChecker?: boolean
 } & Omit<Headless.InputProps, "className">,
 	ref: React.ForwardedRef<HTMLInputElement>) {
 	const [inputLength, setInputLength] = useState((props.defaultValue as string | undefined)?.length ?? 0)
@@ -119,7 +119,7 @@ export const Input = forwardRef(function Input({
 
 	return <>
 		{/* Length Checker */}
-		{!checkLengthOff &&
+		{lengthChecker &&
 			<span className={clsx(
 				"absolute",
 				"top-2",

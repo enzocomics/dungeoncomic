@@ -10,12 +10,12 @@ import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from "react"
  */
 export const Textarea = forwardRef(function Textarea({
 	className,
-	checkLengthOff,
+	lengthChecker,
 	onChange,
 	...props
 }: {
 	className?: string
-	checkLengthOff?: boolean
+	lengthChecker?: boolean
 }
 	// & defines a union type: it must satisfy all conditions
 	& Omit<Headless.TextareaProps, "className">, // Omit the classname from the headless component since we are using our own version
@@ -45,7 +45,7 @@ export const Textarea = forwardRef(function Textarea({
 	return <>
 
 		{/* Length Checker */}
-		{!checkLengthOff &&
+		{lengthChecker &&
 			<span className={clsx(
 				"absolute",
 				"top-2",
