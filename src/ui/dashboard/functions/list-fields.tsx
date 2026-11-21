@@ -193,8 +193,12 @@ export function ListFields({
 					disabled = true
 				}
 			}
-			if (singleField.type === "avatar")
-				return <SingleAvatarField key={index} />
+			if (singleField.type === "image" && singleField.title == "Avatar")
+				return <SingleAvatarField
+					key={index}
+					singleField={singleField}
+					fieldset={fieldset && fieldset[name]}
+				/>
 			else if (singleField.type !== "blank")
 				return <Field key={index} disabled={disableAll || disabled} className={clsx(
 					singleField.width == "full" && [
