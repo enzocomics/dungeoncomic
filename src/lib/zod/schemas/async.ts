@@ -73,7 +73,7 @@ export const zCheckUniqueUsername = (
 	z
 		.string({ error: t("errors.input-blank") })
 		.min(2, { error: t("errors.username-too-short") })
-		.max(20, { error: t("errors.username-too-long") })
+		.max(24, { error: t("errors.username-too-long") })
 		.regex(/^[^-_.]/, { error: t("errors.username-cannot-start-with") })
 		.regex(/[^-_.]$/, { error: t("errors.username-cannot-end-with") })
 		.regex(/^(?!.*[._-]{2})[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$/, {
