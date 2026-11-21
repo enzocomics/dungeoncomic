@@ -34,18 +34,8 @@ const getDetailFields = async () => {
 			optional: true,
 			maxLength: 128
 		},
-		// TODO: Pronouns
-		location: {
-			title: "Location",
-			description: "",
-			type: "text",
-			value: session?.location || "",
-			validate: true,
-			optional: true,
-			maxLength: 64
-		},
 		description: {
-			title: "About me",
+			title: "Bio",
 			description: "",
 			width: "full",
 			type: "textarea",
@@ -53,7 +43,16 @@ const getDetailFields = async () => {
 			validate: true,
 			optional: true,
 			maxLength: 1000
-		}
+		},
+		// location: {
+		// 	title: "Location",
+		// 	description: "",
+		// 	type: "text",
+		// 	value: session?.location || "",
+		// 	validate: true,
+		// 	optional: true,
+		// 	maxLength: 64
+		// },
 	} satisfies Record<string, ListFieldsField>
 }
 
@@ -79,10 +78,10 @@ const getSections = async () => {
 			description: null,
 			fields: await getDetailFields()
 		},
-		socials: {
-			legend: "Socials",
-			description: null,
-			fields: await getSocialFields()
-		}
+		// socials: {
+		// 	legend: "Socials",
+		// 	description: null,
+		// 	fields: await getSocialFields()
+		// }
 	}
 }
