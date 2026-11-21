@@ -445,7 +445,7 @@ export function ClientComicPageFeedback({
 														{`${inputLength}/140`}{/* TODO: should this be hardcoded? */}
 													</span>
 													<Textarea ref={textareaRef}
-														className={clsx("outline-none!",)}
+														className={clsx("outline-none!", "my-0!")}
 														// Something inside headless.ui's RadioGroup thing is causing spacebar input to not be accepted
 														// [Source]](https://github.com/tailwindlabs/headlessui/discussions/1798)
 														onKeyDown={
