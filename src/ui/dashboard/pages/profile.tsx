@@ -29,9 +29,8 @@ const getDetailFields = async () => {
 		avatar: {
 			title: "Avatar",
 			description: "",
-			type: "avatar",
-			object: session?.avatar as ImageCollection || null,
-
+			type: "image",
+			object: session?.avatar as ImageCollection,
 		},
 		name: {
 			title: "Name",
