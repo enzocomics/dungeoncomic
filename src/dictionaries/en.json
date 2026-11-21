@@ -26,7 +26,9 @@
 		"delete-suggestion": "Delete",
 		"submit-suggestion": "Submit suggestion",
 		"reached-latest-update": "You have reached the latest update!",
-		"rich-explain-suggestion-voting": "<p>The creator has provided a list of ideas of how they think the story should continue.</p><p>Cast your vote for the idea you like the most!</p>"
+		"rich-explain-suggestion-voting": "<p>The creator has provided a list of ideas of how they think the story should continue.</p><p>Cast your vote for the idea you like the most!</p>",
+		"user-suggestions-notice-title": "Some ideas may be user-submitted suggestions.",
+		"rich-explain-user-suggestions": "<p>The creator has allowed registered users to submit their ideas for how the story should continue.</p><p>You can vote for one of them, or even submit one yourself!</p>"
 	},
 	"Comments": {
 		"rich-please-login-to-comment": "Please <loginLink>log in</loginLink> to comment.",

@@ -281,6 +281,15 @@ export function ClientComicPageFeedback({
 					p: (chunks) => <p>{chunks}</p>
 				})}
 			</Notice>
+			{/* NOTICE: Reader has reached the latest update */}
+
+			{allowUserSuggestions &&
+				<Notice type="info" title={t("ComicPage.user-suggestions-notice-title")}>
+					{t.rich("ComicPage.rich-explain-user-suggestions", {
+						p: (chunks) => <p>{chunks}</p>
+					})}
+				</Notice>
+			}
 			{/* NOTICE: Reader is not logged in */}
 			{!session &&
 				<Notice type="error" title={t("status-messages.not-logged-in")}>
@@ -292,10 +301,11 @@ export function ClientComicPageFeedback({
 					})}
 				</Notice>
 			}
-		</ComicInputSection>
+		</ComicInputSection >
 
 		{/* SECTION: Plot Suggestions/Feedback */}
-		{(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
+		{
+			(varsExist && varsSubmitted || !varsExist) && page.plot_prompt &&
 			<ComicInputSection>
 				<ComicInputSectionRow>
 					<Fieldset disabled={!session}>
