@@ -60,7 +60,7 @@ export function ClientComicPanels({
 			]
 		*/
 	)
-
+	// console.log(pageVars)
 	// VALIDATION SCHEMA
 	const schema = z.object({
 		userVars: z.object(
@@ -137,6 +137,7 @@ export function ClientComicPanels({
 			)
 		)
 
+
 	const defaultInputStates =
 		Object.fromEntries(
 			// Look through the page variables object
@@ -158,6 +159,7 @@ export function ClientComicPanels({
 			default_value: "Steve",
 		}
 	}	*/
+
 	const [inputStates, setInputStates] = useState(savedInputStates)
 
 	// State of the input fields that lets them "pop in" on reset
@@ -419,7 +421,7 @@ export function ClientComicPanels({
 															name={vField.name}
 															type="text"
 
-															value={inputStates[v.id].value}
+															value={inputStates[v.id].value ?? defaultInputStates[v.id].value}
 															size={inputStates[v.id].value_length || 1}
 															required
 															onChange={(e) => {
