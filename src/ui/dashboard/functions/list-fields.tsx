@@ -203,7 +203,9 @@ export function ListFields({
 				return <Field key={index} disabled={disableAll || disabled} className={clsx(
 					singleField.width == "full" && [
 						"md:col-span-2",
+						// "w-full",
 						"max-w-prose",
+						// "mx-auto"
 					]
 				)}>
 					<Label optional={!!singleField.optional}>

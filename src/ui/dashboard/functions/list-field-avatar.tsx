@@ -47,6 +47,10 @@ export default function SingleAvatarField({
 	return <>
 		<Field className={clsx(
 			// "md:col-span-2",
+			singleField?.width == "full" && [
+				"md:col-span-2",
+				"max-w-prose",
+			]
 		)}>
 			{/* <Label optional={true}>Avatar</Label> */}
 			<div className={clsx(

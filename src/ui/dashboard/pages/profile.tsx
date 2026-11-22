@@ -30,32 +30,30 @@ const getDetailFields = async () => {
 			title: "Avatar",
 			description: "",
 			type: "image",
+			width: "full",
 			object: session?.avatar as ImageCollection,
 		},
 		name: {
 			title: "Name",
 			description: "",
 			type: "text",
+			width: "full",
 			value: session?.name || "",
 			validate: true,
 			optional: true,
 			maxLength: 64
 		},
-		spacer: {
-			title: "",
-			type: "blank"
-		},
 		description: {
 			title: "Bio",
 			description: "",
-			// width: "full",
+			width: "full",
 			type: "textarea",
 			value: session?.description || "",
 			validate: true,
 			optional: true,
 			maxLength: 1000
 		},
-		spacer2: {
+		spacer: {
 			title: "",
 			type: "blank"
 		},
@@ -89,7 +87,7 @@ const getSocialFields = async () => {
 const getSections = async () => {
 	return {
 		details: {
-			legend: "",
+			legend: "Details",
 			description: null,
 			fields: await getDetailFields()
 		},
