@@ -2,6 +2,7 @@
 // DATA
 import { getComic } from "@/lib/directus/get-comics"
 import { getSettings } from "@/lib/directus/get-settings"
+import { getUser } from "@/lib/directus/get-users"
 
 // TYPES & HELPER FUNCTIONS
 type PageAction = "edit" | "preview"
@@ -47,6 +48,11 @@ export type ResolvedRoute =
 	| {
 			type: "platform-content-type-page"
 			postTypeSlug?: ContentTypePage
+	  }
+	| {
+			type: "platform-user-page"
+			postTypeSlug?: string
+			usernameSlug: Awaited<ReturnType<typeof getUser>>["username"]
 	  }
 	| {
 			type: "comic-landing-page"
@@ -336,13 +342,17 @@ export async function resolveRoute(
 				!/^\d+$/.test(postNameSlug) &&
 				!comicPageNumOrName
 			) {
-				return (
-					comic && {
-						type: "comic-landing-page",
-						postTypeSlug: postTypeSlug,
-						comicSlug: comic.slug,
-					}
-				)
+				return comic
+					? {
+							type: "comic-landing-page",
+							postTypeSlug: postTypeSlug,
+							comicSlug: comic.slug,
+						}
+					: {
+							type: "platform-user-page",
+							postTypeSlug: postTypeSlug,
+							usernameSlug: postNameSlug,
+						}
 			}
 
 			/**----------------------------------- */
