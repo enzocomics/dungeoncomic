@@ -23,6 +23,8 @@ import { getComments } from "@/lib/directus/get-comments"
 import { Suspense } from "react"
 import { connection } from "next/server"
 import { cacheTag } from "next/cache"
+import { getUsers } from "@/lib/directus/get-users"
+import UserSinglePage from "@/ui/platform/pages/users-single"
 /**----------------------------------- */
 export default async function MainPage({
 	params
@@ -92,6 +94,21 @@ export async function MainPageContent({
 				return <>
 					<PlatformMainArticle>
 						List users
+					</PlatformMainArticle>
+				</>
+			notFound()
+		}
+		/**----------------------------------- */
+		case "platform-user-page": {
+			const user = await getUsers({
+				username: {
+					_eq: route.usernameSlug,
+				},
+			})
+			if (user.length > 0)
+				return <>
+					<PlatformMainArticle>
+						<UserSinglePage user={user[0]} />
 					</PlatformMainArticle>
 				</>
 			notFound()
