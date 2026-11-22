@@ -54,6 +54,9 @@ export default function ClientPlatformNav({
 	const routingMode = settings.routing_mode
 	const comicPostTypeSlug = settings.comic_type_name_slug
 	const isMultiUserMultiComicSite = !!(routingMode == "multiple-multiple")
+	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
+
+
 
 	let isLandingPage
 	if (routingMode === "single-single") {
@@ -101,8 +104,10 @@ export default function ClientPlatformNav({
 
 	const accountMenuNavigation = session && [
 		{ name: "Dashboard", href: "/dashboard", modal: null },
-		{ name: "Edit profile", href: "/dashboard/profile", modal: null },
-		{ name: "Settings", href: "/dashboard/settings", modal: null },
+		{ name: "Profile", href: "/dashboard/profile", modal: null },
+		{ name: "Account", href: "/dashboard/account", modal: null },
+		userCanUpdateSettings && { name: "Theme", href: "/dashboard/theme", modal: null },
+		userCanUpdateSettings && { name: "Settings", href: "/dashboard/settings", modal: null },
 	]
 
 	const accountMenuAuthNav = !session ? [
@@ -690,8 +695,9 @@ export default function ClientPlatformNav({
 										"font-platform-labels",
 									)
 								}>
-									{accountMenuNavigation?.map((item, index) => (
-										<CloseButton
+									{accountMenuNavigation?.map((item, index) => {
+
+										return item && <CloseButton
 											as={Link}
 											key={index}
 											href={item.href}
@@ -714,7 +720,7 @@ export default function ClientPlatformNav({
 										>
 											{item.name}
 										</CloseButton>
-									))}
+									})}
 									{accountMenuAuthNav?.map((item, index) => (
 										<AuthLink
 											isModal={true}
