@@ -42,8 +42,6 @@ export default function SingleAvatarField({
 		setAvatarPreview(null)
 	}
 
-
-	console.log(avatarPreview)
 	return <>
 		<Field className={clsx(
 			// "md:col-span-2",
