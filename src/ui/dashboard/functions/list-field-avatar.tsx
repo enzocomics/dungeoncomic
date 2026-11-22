@@ -46,7 +46,7 @@ export default function SingleAvatarField({
 	console.log(avatarPreview)
 	return <>
 		<Field className={clsx(
-			"md:col-span-2",
+			// "md:col-span-2",
 		)}>
 			{/* <Label optional={true}>Avatar</Label> */}
 			<div className={clsx(
@@ -60,56 +60,73 @@ export default function SingleAvatarField({
 
 				{(hasAvatar || (!hasAvatar && isAvatarPreviewing)) && avatarPreview !== null ?
 					<div className={clsx(
-						"relative",
-						"w-32",
-						"mx-auto",
-						"sm:mx-0",
+						"grid",
+						"place-content-center",
 					)}>
-						<Image
-							src={avatarPreview}
-							alt={avatarObject?.description || ""}
-							width={avatarObject?.width || "128"}
-							height={avatarObject?.height || "128"}
-							className={clsx(
-								"w-32",
-								"h-32",
-								"rounded",
-								"object-cover"
+						<div className={clsx(
+							"relative",
+							"min-w-32",
+							"aspect-square",
+							"md:min-w-24",
+							"mx-auto",
+							"sm:mx-0",
+							"grid",
+							"",
+						)}>
+							<Image
+								src={avatarPreview}
+								alt={avatarObject?.description || ""}
+								width={avatarObject?.width || "128"}
+								height={avatarObject?.height || "128"}
+								className={clsx(
+									"w-32",
+									"md:w-24",
+									"lg:w-32",
+									"aspect-square",
+									// "h-32",
+									"rounded",
+									"object-cover"
+								)}
+							/>
+							<button type="button" className={clsx(
+								"cursor-pointer",
+								"active:translate-px",
+								"absolute",
+								"-top-2",
+								"-right-2",
+								"drop-shadow-black/50",
+								"drop-shadow-sm",
+								"size-5",
+								"bg-red-500",
+								"flex",
+								"items-center",
+								"justify-center",
+								"rounded-full",
+								"hover:bg-red-700",
+								"hover:duration-0",
+								"transition-all",
+								"duration-300",
+								"ease-in-out",
 							)}
-						/>
-						<button type="button" className={clsx(
-							"cursor-pointer",
-							"active:translate-px",
-							"absolute",
-							"-top-2",
-							"-right-2",
-							"drop-shadow-black/50",
-							"drop-shadow-sm",
-							"size-5",
-							"bg-red-500",
-							"flex",
-							"items-center",
-							"justify-center",
-							"rounded-full",
-							"hover:bg-red-700",
-							"hover:duration-0",
-							"transition-all",
-							"duration-300",
-							"ease-in-out",
-						)}
-							onClick={(e) => handleAvatarDelete()}
-						>
-							<Icon name="xmark" className={clsx(
-								"size-3",
-								"text-white",
-							)} />
-						</button>
+								onClick={(e) => handleAvatarDelete()}
+							>
+								<Icon name="xmark" className={clsx(
+									"size-3",
+									"text-white",
+								)} />
+							</button>
+						</div>
 					</div>
 					:
-					<>
+					<div className={clsx(
+						"grid",
+						"place-content-center",
+					)}>
 						<div className={clsx(
-							"w-32",
-							"h-32",
+							"min-w-32",
+							"aspect-square",
+							"md:min-w-24",
+							"lg:min-w-32",
 							"border-2",
 							"border-neutral-400",
 							"border-dashed",
@@ -133,7 +150,7 @@ export default function SingleAvatarField({
 								</span>
 							</div>
 						</div>
-					</>
+					</div>
 				}
 				<div className={clsx(
 					"grid",
@@ -143,7 +160,7 @@ export default function SingleAvatarField({
 						onClick={() => avatarInputRef.current?.click()}
 						className={clsx(
 							"text-base",
-							"w-64",
+							// "w-64",
 							"justify-center",
 							"mb-3",
 						)}
