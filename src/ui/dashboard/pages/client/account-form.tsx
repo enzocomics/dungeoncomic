@@ -55,7 +55,7 @@ export default function AccountPageForm({
 		},
 		onSubmit() {
 			// router.refresh()
-			console.log(lastResult)
+			// console.log(lastResult)
 		},
 		// shouldValidate: "onBlur",
 		// shouldRevalidate: "onInput"
