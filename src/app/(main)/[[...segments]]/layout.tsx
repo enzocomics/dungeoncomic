@@ -66,7 +66,8 @@ async function LayoutContent({
 		}
 
 		/**----------------------------------- */
-		case "platform-content-type-page": {
+		case "platform-content-type-page":
+		case "platform-user-page": {
 			return <>
 				<PlatformRootLayout header={
 					<PlatformHeaderLogo />
