@@ -113,6 +113,7 @@ export const Textarea = forwardRef(function Textarea({
 				]
 			)}
 			onChange={(e) => {
+				setInputLength(e.target.value.length)
 				handleTextarea(e.target)
 				onChange?.(e)
 			}}
