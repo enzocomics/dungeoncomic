@@ -23,7 +23,6 @@ export const verifySession = cache(async () => {
 					"description",
 					"location",
 					"homepage_url",
-					"description",
 					// Account
 					"id",
 					"email",
