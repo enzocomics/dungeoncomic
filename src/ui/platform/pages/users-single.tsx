@@ -239,7 +239,7 @@ export default async function UserSinglePage({
 								{userComics?.map((c, index) => (
 									<ListPageItem
 										key={index}
-										href="#"
+										href={`/${settings.comic_type_name_slug}/${c.slug}`}
 										accentColor={c.accent_color}
 										banner={c.banner}
 										title={c.title}
