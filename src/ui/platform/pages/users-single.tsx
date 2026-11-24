@@ -1,10 +1,13 @@
 import { directusURL } from "@/data/env"
+import { getComics } from "@/lib/directus/get-comics"
 import type { getSettings } from "@/lib/directus/get-settings"
 import type { getUsers } from "@/lib/directus/get-users"
+import { DirectusUser } from "@/lib/directus/schema"
 import Icon from "@/styles/icons"
 import clsx from "clsx"
 import Image from "next/image"
 import Link from "next/link"
+import { ListPageItem, ListPageItemLogo } from "./comics-list"
 
 export default async function UserSinglePage({
 	settings,
@@ -14,7 +17,16 @@ export default async function UserSinglePage({
 	user: Awaited<ReturnType<typeof getUsers>>[number]
 }) {
 
+	// Fetch this user's comics
+	const userComics = await getComics({
+		user_created: {
+			"id": {
+				"_eq": user.id
+			}
+		}
+	})
 
+	console.log(userComics)
 
 	return <>
 		<section className={clsx(
@@ -76,13 +88,14 @@ export default async function UserSinglePage({
 			{/* Profile Columns */}
 			<div className={clsx(
 				"md:flex",
-				"md:gap-6"
+				"md:gap-6",
 			)}>
 				{/* Profile Sidebar */}
 				<div className={clsx(
 					"flex",
 					"flex-col",
 					"gap-3",
+					"md:min-w-70",
 					"md:w-70",
 				)}>
 					{/* Avatar + Name/Username */}
@@ -112,12 +125,23 @@ export default async function UserSinglePage({
 								"h-16",
 								"md:w-70",
 								"md:h-70",
+								"aspect-square",
 
 								// "h-32",
 								"rounded-full",
 								"object-cover",
-								"bg-black/5"
+								"bg-neutral-400",
+								"dark:bg-neutral-800",
+								"grid",
+								"place-content-center",
 							)}>
+								<Icon name="skull" className={clsx(
+									"size-8",
+									"md:size-14",
+									"p-1",
+									"rounded-sm",
+									"text-white",
+								)} />
 							</div>
 						}
 						<div className={clsx(
@@ -166,8 +190,52 @@ export default async function UserSinglePage({
 				</div>
 
 				{/* Content Column */}
-				<div>
+				<div className={clsx(
+					"mt-6",
+					"md:mt-0",
+					"md:w-full",
+					// "md:grow"
+				)}>
+
 					{/* User's Comic Series List */}
+					{userComics.length > 0 ?
+						<div className={clsx(
+							"border-4",
+							"rounded",
+							"border-neutral-200 dark:border-neutral-800",
+							"px-4",
+							"pt-3",
+							"pb-4",
+						)}>
+							<h2 className={clsx(
+								"font-platform-labels",
+								"font-bold",
+								"mb-3",
+							)}>{settings.comic_type_name_plural} ({userComics.length})</h2>
+							<div
+								className={clsx(
+									"gap-2",
+									"grid",
+									"grid-cols-1",
+									"lg:grid-cols-2",
+									// "lg:grid-cols-3",
+								)}>
+								{userComics?.map((c, index) => (
+									<ListPageItem
+										key={index}
+										href="#"
+										accentColor={c.accent_color}
+										banner={c.banner}
+										title={c.title}
+									>
+										<ListPageItemLogo comic={c} />
+									</ListPageItem>
+								))}
+							</div>
+						</div>
+						:
+						<div></div>
+					}
 				</div>
 			</div>
 		</section >
