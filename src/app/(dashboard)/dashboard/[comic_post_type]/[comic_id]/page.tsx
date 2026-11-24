@@ -1,3 +1,7 @@
+import EditComicPageUI from "@/ui/dashboard/pages/comic-edit"
+
+export const instant = false
+
 export default async function ComicEditPage({
 	params
 }: {
@@ -7,7 +11,9 @@ export default async function ComicEditPage({
 	}>
 }) {
 	const { comic_post_type, comic_id } = await params
-	return <>
-		Hi it's me ur edit single {comic_post_type} series	 page. id: {comic_id}
-	</>
+	return <EditComicPageUI
+		comicId={comic_id}
+	/>
+	// 	Hi it's me ur edit single {comic_post_type} series	 page. id: {comic_id}
+	// </>
 }
