@@ -89,7 +89,12 @@ export default function ProfilePageForm({
 					</FieldGroup2Columns>
 				</FieldsetSection>
 			})}
-
+			<input
+				// Submits the username so we can update the tag
+				type="hidden"
+				name="username"
+				defaultValue={session?.username || ""}
+			/>
 			<ComicButton as="button" type="submit"
 				className={clsx(
 					"sticky",

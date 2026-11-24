@@ -70,7 +70,9 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 			// Update CMS and pass the object
 
 			const updateProfile = await userClient.request(updateMe(updates))
-			updateTag("user")
+
+			const username = formData.get("username")
+			updateTag(`user-${username}`)
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESSFUL
