@@ -153,12 +153,13 @@ export default async function UserSinglePage({
 						{/* Bio */}
 						{user.description &&
 							<div className={clsx(
-
 							)}>
 								{user.description}
 							</div>
 						}
 						{/* Edit Profile Button IF current user */}
+						{/* Location */}
+						{/* Join Date */}
 						{/* Followers/Following Count Here */}
 						{/* Social Links Here */}
 					</div>
