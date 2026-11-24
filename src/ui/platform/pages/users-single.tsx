@@ -10,6 +10,7 @@ import Image from "next/image"
 import { ListPageItem, ListPageItemLogo } from "./comics-list"
 import { ComicButton } from "@/components/input/button"
 import { verifySession } from "@/data/session"
+import Link from "next/link"
 
 export default async function UserSinglePage({
 	settings,
@@ -37,7 +38,7 @@ export default async function UserSinglePage({
 			"px-6",
 			"w-full",
 		)}>
-			{/* <nav className={clsx(
+			<nav className={clsx(
 				"flex",
 				"items-center",
 				// "space-x-2",
@@ -87,7 +88,7 @@ export default async function UserSinglePage({
 					</span>
 				</li>
 
-			</nav> */}
+			</nav>
 
 			{/* Profile Columns */}
 			<div className={clsx(
