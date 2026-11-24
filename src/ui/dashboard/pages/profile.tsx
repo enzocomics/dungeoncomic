@@ -9,6 +9,7 @@ import type { ImageCollection } from "@/lib/directus/schema"
 import { ComicButton } from "@/components/input/button"
 import clsx from "clsx"
 import { getSettings } from "@/lib/directus/get-settings"
+import Icon from "@/styles/icons"
 
 export default async function ProfilePageUI() {
 	const sections = await getSections()
@@ -31,6 +32,10 @@ export default async function ProfilePageUI() {
 						"text-sm!",
 						"h-10",
 					)}>
+					<Icon name="user" className={clsx(
+						"size-4",
+						"mr-2"
+					)} />
 					View Public Profile
 				</ComicButton>
 			}
