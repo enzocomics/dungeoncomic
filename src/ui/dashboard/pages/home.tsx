@@ -10,6 +10,8 @@ import { getSettings } from "@/lib/directus/get-settings"
 import Link from "next/link"
 import { PageTitleH1 } from "@/components/page"
 import { connection } from "next/server"
+import { ComicButton } from "@/components/input/button"
+import Icon from "@/styles/icons"
 /**-----------------------------------
  * Dasboard Page UI
  */
@@ -26,13 +28,29 @@ export default async function DashboardHomePageUI() {
 		}
 	})
 	return <>
-		<PageTitleH1>
-			{settings.comic_type_name_plural} ({comics.length})
+		<PageTitleH1 className={clsx(
+			"flex",
+			"items-center",
+		)}>
+			<span className={clsx(
+				"grow"
+			)}>
+				{settings.comic_type_name_plural} ({comics.length})
+			</span>
+			<ComicButton as="link"
+				href={`/dashboard/${settings.comic_type_name_slug}/create`}
+				className={clsx(
+					"w-auto!",
+					"text-sm!",
+					"h-10",
+				)}>
+				<Icon name="plus" className={clsx(
+					"size-4",
+					"mr-2"
+				)} />
+				Create New {settings.comic_type_name}
+			</ComicButton>
 		</PageTitleH1>
-		<br />
-		<Link href={`/dashboard/${settings.comic_type_name_slug}/create`}> + Create New {settings.comic_type_name}</Link >
-		<br />
-		<br />
 		<div
 			className={clsx(
 				"gap-2",
