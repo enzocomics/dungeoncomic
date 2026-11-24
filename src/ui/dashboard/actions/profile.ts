@@ -73,6 +73,7 @@ export async function saveProfile(prevState: unknown, formData: FormData) {
 
 			const username = formData.get("username")
 			updateTag(`user-${username}`)
+			updateTag(`userpage-${username}`)
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESSFUL

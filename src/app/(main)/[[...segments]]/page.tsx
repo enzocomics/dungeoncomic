@@ -46,6 +46,7 @@ export async function MainPageContent({
 }) {
 	await connection()
 	const { segments = [] } = await params
+	const session = await verifySession()
 	const settings = await getSettings()
 	const route = await resolveRoute(segments, settings.routing_mode)
 
@@ -112,6 +113,7 @@ export async function MainPageContent({
 						<UserSinglePage
 							user={user[0]}
 							settings={settings}
+							session={session}
 						/>
 					</PlatformMainArticle>
 				</>

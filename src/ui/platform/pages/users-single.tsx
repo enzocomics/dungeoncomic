@@ -9,18 +9,21 @@ import Image from "next/image"
 
 import { ListPageItem, ListPageItemLogo } from "./comics-list"
 import { ComicButton } from "@/components/input/button"
-import { verifySession } from "@/data/session"
+import type { verifySession } from "@/data/session"
 import Link from "next/link"
+import { cacheTag } from "next/cache"
 
 export default async function UserSinglePage({
 	settings,
+	session,
 	user
 }: {
 	settings: Awaited<ReturnType<typeof getSettings>>
+	session: Awaited<ReturnType<typeof verifySession>>
 	user: Awaited<ReturnType<typeof getUsers>>[number]
 }) {
-	// Fetch currently logged-in user
-	const session = await verifySession()
+	"use cache"
+	cacheTag(`userpage-${user.username}`)
 
 	// Fetch this user's comics
 	const userComics = await getComics({
@@ -30,8 +33,6 @@ export default async function UserSinglePage({
 			}
 		}
 	})
-
-	console.log(userComics)
 
 	return <>
 		<section className={clsx(
