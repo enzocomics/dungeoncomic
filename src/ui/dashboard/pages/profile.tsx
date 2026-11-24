@@ -51,7 +51,7 @@ const getDetailFields = async () => {
 			value: session?.description || "",
 			validate: true,
 			optional: true,
-			maxLength: 1000
+			maxLength: 160
 		},
 		spacer: {
 			title: "",
