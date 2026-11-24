@@ -2,12 +2,14 @@ import { directusURL } from "@/data/env"
 import { getComics } from "@/lib/directus/get-comics"
 import type { getSettings } from "@/lib/directus/get-settings"
 import type { getUsers } from "@/lib/directus/get-users"
-import { DirectusUser } from "@/lib/directus/schema"
+
 import Icon from "@/styles/icons"
 import clsx from "clsx"
 import Image from "next/image"
-import Link from "next/link"
+
 import { ListPageItem, ListPageItemLogo } from "./comics-list"
+import { ComicButton } from "@/components/input/button"
+import { verifySession } from "@/data/session"
 
 export default async function UserSinglePage({
 	settings,
@@ -16,6 +18,8 @@ export default async function UserSinglePage({
 	settings: Awaited<ReturnType<typeof getSettings>>
 	user: Awaited<ReturnType<typeof getUsers>>[number]
 }) {
+	// Fetch currently logged-in user
+	const session = await verifySession()
 
 	// Fetch this user's comics
 	const userComics = await getComics({
@@ -180,6 +184,17 @@ export default async function UserSinglePage({
 							)}>
 								{user.description}
 							</div>
+						}
+						{(session?.id === user.id /*|| session?.permissions?.directus_users?.update?.access === "full"*/) &&
+							<ComicButton
+								as="link"
+								href="/dashboard/profile"
+								className={clsx(
+									"mt-3"
+								)}
+							>
+								Edit Profile
+							</ComicButton>
 						}
 						{/* Edit Profile Button IF current user */}
 						{/* Location */}
