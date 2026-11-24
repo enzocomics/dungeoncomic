@@ -14,19 +14,25 @@ export default async function UserSinglePage({
 	user: Awaited<ReturnType<typeof getUsers>>[number]
 }) {
 
+
+
 	return <>
 		<section className={clsx(
 			"px-6",
 			"w-full",
 		)}>
-			<nav className={clsx(
+			{/* <nav className={clsx(
 				"flex",
 				"items-center",
 				// "space-x-2",
-				// "font-bold",
 				"text-base-content/50",
+				"pb-6",
+				"list-none",
 				"mb-6",
-				"list-none"
+				"border-b",
+				"border-dashed",
+				"border-base-5/20",
+				"dark:border-base-5",
 			)}>
 				<li>
 					<Link href="/" className={clsx(
@@ -45,13 +51,16 @@ export default async function UserSinglePage({
 						"size-4",
 						"mr-2",
 					)} />
-					<span>
+					<Link
+						href={`/${settings.user_type_name_plural_slug}`}
+					>
 						{settings.user_type_name_plural}
-					</span>
+					</Link>
 				</li>
 				<li className={clsx(
 					"flex",
 					"items-center",
+					"font-bold",
 				)}>
 					<Icon name="chevronRight" className={clsx(
 						"size-4",
@@ -62,7 +71,7 @@ export default async function UserSinglePage({
 					</span>
 				</li>
 
-			</nav>
+			</nav> */}
 
 			{/* Profile Columns */}
 			<div className={clsx(
