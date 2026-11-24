@@ -25,6 +25,7 @@ import { connection } from "next/server"
 import { cacheTag } from "next/cache"
 import { getUsers } from "@/lib/directus/get-users"
 import UserSinglePage from "@/ui/platform/pages/users-single"
+import UsersListPage from "@/ui/platform/pages/users-list"
 /**----------------------------------- */
 export default async function MainPage({
 	params
@@ -93,7 +94,7 @@ export async function MainPageContent({
 			if (route.postTypeSlug === settings.user_type_name_plural_slug)
 				return <>
 					<PlatformMainArticle>
-						List users
+						<UsersListPage />
 					</PlatformMainArticle>
 				</>
 			notFound()

@@ -21,7 +21,9 @@ export default async function ComicsListPage() {
 	const routingMode = settings.routing_mode
 
 	return <>
-		<ListPageTitle />
+		<ListPageTitle>
+			Viewing: <strong>All</strong> {settings.comic_type_name_plural}
+		</ListPageTitle>
 		<ListPageList>
 			{comics?.map((c, index) => (
 				<ListPageItem
@@ -43,7 +45,7 @@ export default async function ComicsListPage() {
 }
 
 export const ListPageTitle = (
-
+	props: ComponentPropsWithoutRef<"div">
 ) => (
 	<div className={clsx(
 		"w-full",
@@ -55,7 +57,7 @@ export const ListPageTitle = (
 		"text-center",
 		"md:text-left",
 	)}>
-		Viewing: <strong>All</strong>
+		{props.children}
 	</div>
 )
 
