@@ -195,6 +195,9 @@ export async function generateMetadata({
 		case "platform-content-type-page": {
 			return {}
 		}
+		case "platform-user-page": {
+			return {}
+		}
 		case "comic-landing-page": {
 			return await comicMetadata(route.comicSlug)
 		}
