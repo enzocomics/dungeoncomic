@@ -6,13 +6,34 @@ import { PageTitleH1 } from "@/components/page"
 import ProfilePageForm from "@/ui/dashboard/pages/client/profile-form"
 import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import type { ImageCollection } from "@/lib/directus/schema"
+import { ComicButton } from "@/components/input/button"
+import clsx from "clsx"
+import { getSettings } from "@/lib/directus/get-settings"
 
 export default async function ProfilePageUI() {
 	const sections = await getSections()
 	const session = await verifySession()
+	const settings = await getSettings()
 	return <>
-		<PageTitleH1>
-			My Profile
+		<PageTitleH1 className={clsx(
+			"flex",
+			"items-center",
+		)}>
+			<span className={clsx(
+				"grow"
+			)}>
+				My Profile</span>
+			{settings.routing_mode === "multiple-multiple" &&
+				<ComicButton as="link"
+					href={`/${settings.user_type_name_slug}/${session?.username}`}
+					className={clsx(
+						"w-auto!",
+						"text-sm!",
+						"h-10",
+					)}>
+					View Public Profile
+				</ComicButton>
+			}
 		</PageTitleH1>
 		<ProfilePageForm
 			sections={sections}
