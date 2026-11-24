@@ -108,7 +108,10 @@ export async function MainPageContent({
 			if (user.length > 0)
 				return <>
 					<PlatformMainArticle>
-						<UserSinglePage user={user[0]} />
+						<UserSinglePage
+							user={user[0]}
+							settings={settings}
+						/>
 					</PlatformMainArticle>
 				</>
 			notFound()
