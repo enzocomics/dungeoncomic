@@ -2,6 +2,7 @@ import { cache } from "react"
 import { publicClient, userClient } from "./clients"
 import {
 	QueryFilter,
+	QuerySort,
 	readFile,
 	readUser,
 	readUsers,
@@ -39,12 +40,16 @@ type UserWithAvatar = {
 }
 
 export const getUsers = cache(
-	async (filter?: QueryFilter<DirectusSchema, DirectusUser>) => {
+	async (
+		filter?: QueryFilter<DirectusSchema, DirectusUser>,
+		sort?: QuerySort<DirectusSchema, DirectusUser>, //TODO:
+	) => {
 		"use cache"
 		// Fetch the users via filter
 		const usersResponse = await publicClient.request(
 			readUsers({
 				filter: filter as Filter,
+				sort: ["username"],
 				fields: [
 					// Profile
 					"name",
