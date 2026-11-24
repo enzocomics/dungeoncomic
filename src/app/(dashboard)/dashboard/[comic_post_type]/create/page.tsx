@@ -1,14 +1,5 @@
-export default async function CreateComicPage({
-	params
-}: {
-	params: Promise<{
-		comic_post_type: string,
-		comic_id: string
-	}>
-}) {
+import CreateComicPageUI from "@/ui/dashboard/pages/comic-create"
 
-	const { comic_post_type, comic_id } = await params
-	return <>
-		Hi it's me ur create new {comic_post_type} page
-	</>
+export default async function CreateComicPage() {
+	return <CreateComicPageUI />
 }
