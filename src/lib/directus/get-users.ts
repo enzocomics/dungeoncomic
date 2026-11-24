@@ -41,7 +41,6 @@ type UserWithAvatar = {
 export const getUsers = cache(
 	async (filter?: QueryFilter<DirectusSchema, DirectusUser>) => {
 		"use cache"
-		cacheTag("users")
 		// Fetch the users via filter
 		const usersResponse = await publicClient.request(
 			readUsers({
@@ -89,6 +88,12 @@ export const getUsers = cache(
 					}),
 				)
 			: []
+
+		//
+		if (usersResponse.length == 1) {
+			const username = usersResponse[0].username
+			cacheTag(`user-${username}`)
+		}
 		// Return the users object array with avatar objects included
 		return usersWithAvatarArray
 	},
