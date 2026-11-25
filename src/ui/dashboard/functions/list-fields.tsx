@@ -220,7 +220,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="text"
-							maxLength={singleField.maxLength}
+							maxLength={singleField.maxLength || 64}
 							defaultValue={singleField.value}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
@@ -238,7 +238,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							rows={3}
-							maxLength={singleField.maxLength}
+							maxLength={singleField.maxLength || 1280}
 							defaultValue={singleField.value}
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
@@ -253,6 +253,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="password"
+							maxLength={singleField.maxLength || 128}
 							defaultValue={singleField.value}
 							autoComplete="password"
 							required={!singleField.optional}
@@ -268,7 +269,7 @@ export function ListFields({
 							name={fieldset && fieldset[name].name}
 							key={fieldset && fieldset[name].key}
 							type="email"
-							maxLength={singleField.maxLength}
+							maxLength={singleField.maxLength || 128}
 							defaultValue={singleField.value}
 							autoComplete="email"
 							required={!singleField.optional}
