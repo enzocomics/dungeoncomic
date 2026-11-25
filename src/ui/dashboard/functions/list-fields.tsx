@@ -124,7 +124,7 @@ export type ListFieldsField = {
  */
 export async function getFieldDescriptions(sections: Record<
 	string,
-	{ fields: Record<string, { description: string }> }
+	{ fields: Record<string, { description: string | null }> }
 >) {
 	const resolvedSections = sections
 	return Object.fromEntries(
@@ -137,7 +137,7 @@ export async function getFieldDescriptions(sections: Record<
 							Object.entries(section.fields).map(async ([fName, field]) => [
 								fName,
 								{
-									description: await marked.parse(field.description)
+									description: field.description ? await marked.parse(field.description) : ""
 								}
 							])
 						)
