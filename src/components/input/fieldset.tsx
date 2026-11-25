@@ -68,6 +68,7 @@ export function FieldGroup2Columns({
 	return <>
 		<div {...props} className={clsx(
 			className,
+			"first:pt-4",
 			"py-8",
 			"gap-y-8",
 			"grid",
