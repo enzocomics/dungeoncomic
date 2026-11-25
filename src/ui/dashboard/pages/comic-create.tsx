@@ -5,14 +5,14 @@ import clsx from "clsx"
 // DATA
 import { fonts } from "@/styles/fonts"
 import { getSettings } from "@/lib/directus/get-settings"
-import { verifySession } from "@/data/session"
+// import { verifySession } from "@/data/session"
 // UI
 import Icon from "@/styles/icons"
 import { colorVariants } from "@/styles/colors"
 import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import DashboardForm from "@/ui/dashboard/components/client/form"
-import CreateComicForm from "./client/comic-create-form"
+// import CreateComicForm from "./client/comic-create-form"
 
 export default async function CreateComicPageUI() {
 	const settings = await getSettings()
@@ -51,25 +51,28 @@ export default async function CreateComicPageUI() {
 }
 
 const getDetailFields = async () => {
-	const session = await verifySession()
+	// const session = await verifySession()
 	return {
 		title: {
 			title: "Title",
 			description: "",
 			type: "text",
 			validate: true,
+			width: "full",
 		},
 		slug: {
 			title: "Slug",
 			description: "",
 			type: "text",
 			validate: true,
+			width: "full",
 		},
 		description: {
 			title: "Description",
 			description: "",
 			type: "textarea",
-			optional: true
+			optional: true,
+			width: "full",
 		},
 		spacer: {
 			title: "",
@@ -104,7 +107,7 @@ const getLookFeelSettings = async () => {
 		value: name
 	})
 	)
-	const session = await verifySession()
+	// const session = await verifySession()
 	return {
 		color_accent: { // TODO: tailwind color dropdown
 			title: "Accent Color",
@@ -197,9 +200,10 @@ const getFontFields = async () => {
 }
 
 const getSections = async () => {
+	const settings = await getSettings()
 	return {
 		details: {
-			legend: "Details",
+			legend: ``,
 			description: null,
 			fields: await getDetailFields()
 		},
