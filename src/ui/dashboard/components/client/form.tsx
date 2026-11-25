@@ -47,7 +47,7 @@ export default function DashboardForm({
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
 				schema: dashboardSchema({
-					name: "",
+					name: collection,
 					fieldLists: fieldLists
 				})
 			})
@@ -92,6 +92,10 @@ export default function DashboardForm({
 					</FieldGroup2Columns>
 				</FieldsetSection>
 			})}
+			<input type="hidden"
+				name="schema"
+				defaultValue={collection}
+			/>
 			<ComicButton as="button" type="submit"
 				className={clsx(
 					"sticky",
