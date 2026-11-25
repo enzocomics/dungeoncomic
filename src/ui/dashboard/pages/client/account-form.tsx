@@ -128,6 +128,7 @@ export default function AccountPageForm({
 								key={fields.email.key}
 								type="email"
 								defaultValue={sections.details.fields.email.value}
+								maxLength={64}
 								required={true}
 								aria-required={true}
 								lengthChecker={true}
