@@ -4,11 +4,11 @@ import { Intent } from "@conform-to/react"
 /**----------------------------------- */
 // VALIDATION SCHEMA
 export const dashboardSchema = ({
-	name,
+	name = "",
 	fieldLists,
 	intent = null
 }: {
-	name: string,
+	name?: string,
 	fieldLists?: Record<string, ListFieldsField>[],
 	intent?: Intent | null
 }) => {
