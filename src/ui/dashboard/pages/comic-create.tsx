@@ -1,20 +1,24 @@
-
+/**----------------------------------- */
+// LIBRARIES
+import Link from "next/link"
+import clsx from "clsx"
 // DATA
 import { fonts } from "@/styles/fonts"
-
-import { PageTitleH1 } from "@/components/page"
 import { getSettings } from "@/lib/directus/get-settings"
-import Icon from "@/styles/icons"
-import clsx from "clsx"
-import Link from "next/link"
-import { ListFieldsField } from "../functions/list-fields"
 import { verifySession } from "@/data/session"
-import CreateComicForm from "./client/comic-create-form"
+// UI
+import Icon from "@/styles/icons"
 import { colorVariants } from "@/styles/colors"
+import { PageTitleH1 } from "@/components/page"
+import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import DashboardForm from "@/ui/dashboard/components/client/form"
+import CreateComicForm from "./client/comic-create-form"
 
 export default async function CreateComicPageUI() {
 	const settings = await getSettings()
 	const sections = await getSections()
+	const fieldDescriptions = await getFieldDescriptions(sections)
+
 	return <>
 		<PageTitleH1>
 			<span className={clsx(
@@ -38,7 +42,9 @@ export default async function CreateComicPageUI() {
 				<span>Create New {settings.comic_type_name}</span>
 			</span>
 		</PageTitleH1>
-		<CreateComicForm
+		<DashboardForm
+			collection="comics"
+			descriptions={fieldDescriptions}
 			sections={sections}
 		/>
 	</>
@@ -67,6 +73,7 @@ const getDetailFields = async () => {
 		},
 		spacer: {
 			title: "",
+			description: "",
 			type: "blank"
 		}
 	} satisfies Record<string, ListFieldsField>
@@ -206,5 +213,5 @@ const getSections = async () => {
 			description: null,
 			fields: await getFontFields()
 		},
-	}
+	} satisfies SettingsSection
 }
