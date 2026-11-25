@@ -81,6 +81,7 @@ const getDetailFields = async () => {
 		}
 	} satisfies Record<string, ListFieldsField>
 }
+
 export const getLogoBackdropFields = async () => {
 	return {
 		logo: {
@@ -100,7 +101,7 @@ export const getLogoBackdropFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getLookFeelSettings = async () => {
+const getLookFeelFields = async () => {
 	// Make an array of name: value pairs of all the tailwind colors so we can use them for the seelct menu options
 	const colors = Object.entries(colorVariants).map(([name]) => ({
 		name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -207,10 +208,16 @@ const getSections = async () => {
 			description: null,
 			fields: await getDetailFields()
 		},
+		logoBackdrop: {
+			legend: "Logo & Banner",
+			description: null,
+			fields: await getLogoBackdropFields(),
+			type: "logoBackdrop"
+		},
 		lookFeel: {
 			legend: "Look & Feel",
 			description: null,
-			fields: await getLookFeelSettings()
+			fields: await getLookFeelFields()
 		},
 		fonts: {
 			legend: "Fonts",
