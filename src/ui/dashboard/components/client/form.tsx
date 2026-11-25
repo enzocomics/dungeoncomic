@@ -15,7 +15,7 @@ import { ComicButton } from "@/components/input/button"
 import { useChangeStatus } from "@/components/status-message"
 import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, FieldGroup, Fieldset, Input, Field, Label, Description } from "@/components/input/fieldset"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
-import { ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import { getFieldDescriptions, ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 
 
 /** ---
@@ -30,7 +30,7 @@ export default function DashboardForm({
 	sections
 }: {
 	collection: string
-	descriptions: any
+	descriptions: Awaited<ReturnType<typeof getFieldDescriptions>>
 	sections: SettingsSection
 }) {
 	// STATUS MESSAGES
