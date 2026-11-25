@@ -5,16 +5,17 @@ import { useActionState, useEffect } from "react"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm } from "@conform-to/react"
+// TYPES
+import type { verifySession } from "@/data/session"
 // FUNCTIONS
 import clsx from "clsx"
-
-import { useChangeStatus } from "@/components/status-message"
-import { ListFields, type SettingsSection } from "@/ui/dashboard/functions/list-fields"
-import { saveProfile } from "@/ui/dashboard/actions/profile"
-import { dashboardSchema } from "@/ui/dashboard/functions/schema"
+// UI
 import { ComicButton } from "@/components/input/button"
 import { FieldGroup2Columns, FieldsetDescription, FieldsetSection, Legend } from "@/components/input/fieldset"
-import type { verifySession } from "@/data/session"
+import { useChangeStatus } from "@/components/status-message"
+import { saveProfile } from "@/ui/dashboard/actions/profile"
+import { ListFields, type SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 
 export default function ProfilePageForm({
 	sections,
