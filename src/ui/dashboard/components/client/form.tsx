@@ -16,6 +16,7 @@ import { useChangeStatus } from "@/components/status-message"
 import { Legend, FieldGroup2Columns, FieldsetSection, FieldsetDescription, FieldGroup, Fieldset, Input, Field, Label, Description } from "@/components/input/fieldset"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 import { getFieldDescriptions, ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import { ListLogoBackdropFields } from "@/ui/dashboard/functions/list-fields-logo-backdrop"
 
 
 /** ---
@@ -74,25 +75,34 @@ export default function DashboardForm({
 		>
 
 			{Object.entries(sections).map(([name, section], index) => {
-				return <FieldsetSection key={index}>
-					{section.legend &&
-						<Legend>{section.legend}</Legend>
-					}
-					{section.description &&
-						<FieldsetDescription
-							dangerouslySetInnerHTML={{
-								__html: section.description
-							}}
-						/>
-					}
-					<FieldGroup2Columns>
-						<ListFields
-							fieldsList={section.fields}
-							fieldset={fieldset}
-							fieldDescriptions={descriptions[name].fields}
-						/>
-					</FieldGroup2Columns>
-				</FieldsetSection>
+				if (section.type == "logoBackdrop")
+					return <ListLogoBackdropFields
+						key={index}
+						logo={section.fields["logo"]}
+						backdrop={section.fields["banner"]}
+						fieldset={fieldset}
+						type="comic"
+					/>
+				else
+					return <FieldsetSection key={index}>
+						{section.legend &&
+							<Legend>{section.legend}</Legend>
+						}
+						{section.description &&
+							<FieldsetDescription
+								dangerouslySetInnerHTML={{
+									__html: section.description
+								}}
+							/>
+						}
+						<FieldGroup2Columns>
+							<ListFields
+								fieldsList={section.fields}
+								fieldset={fieldset}
+								fieldDescriptions={descriptions[name].fields}
+							/>
+						</FieldGroup2Columns>
+					</FieldsetSection>
 			})}
 			<input type="hidden"
 				name="schema"
