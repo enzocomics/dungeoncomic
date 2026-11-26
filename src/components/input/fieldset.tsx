@@ -108,10 +108,14 @@ export function Field({
 export const Input = forwardRef(function Input({
 	className,
 	lengthChecker,
+	prefix,
+	suffix,
 	...props
 }: {
 	className?: string,
 	lengthChecker?: boolean
+	prefix?: string
+	suffix?: string
 } & Omit<Headless.InputProps, "className">,
 	ref: React.ForwardedRef<HTMLInputElement>) {
 	const [inputLength, setInputLength] = useState((props.defaultValue as string | undefined)?.length ?? 0)
@@ -134,38 +138,54 @@ export const Input = forwardRef(function Input({
 				{`${inputLength}/${maxLength}`}{/* TODO: should this be hardcoded? */}
 			</span>
 		}
-		<Headless.Input
-			ref={ref}
-			{...props}
-			className={clsx(
-				className,
-				"mt-3",
-				"mb-3",
-				"py-2",
-				"px-4",
-				"w-full",
-				"border-2",
-				"text-left",
-				"font-platform-mono",
-				"rounded",
-				// Colors
-				"bg-white",
-				"border-neutral-200",
-				"text-neutral-900",
-				"dark:border-white/10",
-				"dark:bg-white/5",
-				"dark:text-white",
-				//
-				"focus:outline-4",
-				"focus:-outline-offset-2",
-				"focus:outline-platform-accent-500",
-				"data-disabled:cursor-not-allowed"
-			)}
+		<div className={clsx(
+			className,
+			"mt-3",
+			"mb-3",
+			"py-2",
+			"px-4",
+			"border-2",
+			"text-left",
+			"font-platform-mono",
+			"rounded",
+			// Colors
+			"bg-white",
+			"border-neutral-200",
+			"text-neutral-900",
+			"dark:border-white/10",
+			"dark:bg-white/5",
+			"dark:text-white",
+			// Focus
+			"focus-within:outline-4",
+			"focus-within:-outline-offset-2",
+			"focus-within:outline-platform-accent-500",
+			"flex",
+		)}>
+			{prefix &&
+				<span className={clsx(
+					"text-current/35"
+				)}>{prefix}</span>
+			}
+			<Headless.Input
+				ref={ref}
+				{...props}
+				className={clsx(
+					"w-full",
+					//
+					"focus:outline-none",
+					"data-disabled:cursor-not-allowed"
+				)}
 
-			onChange={(e) => {
-				setInputLength(e.target.value.length)
-			}}
-		/>
+				onChange={(e) => {
+					setInputLength(e.target.value.length)
+				}}
+			/>
+			{suffix &&
+				<span className={clsx(
+					"text-current/35"
+				)}>{suffix}</span>
+			}
+		</div>
 	</>
 })
 
