@@ -5,5 +5,5 @@ export const instant = false
 
 export default async function CreateComicPage() {
 	await connection()
-	return <EditComicTypeUI />
+	return <EditComicTypeUI action="create" />
 }
