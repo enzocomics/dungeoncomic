@@ -12,6 +12,7 @@ import { colorVariants } from "@/styles/colors"
 import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import DashboardForm from "@/ui/dashboard/components/client/form"
+import { marked } from "marked"
 // import CreateComicForm from "./client/comic-create-form"
 
 export default async function CreateComicPageUI() {
@@ -51,28 +52,54 @@ export default async function CreateComicPageUI() {
 }
 
 const getDetailFields = async () => {
-	// const session = await verifySession()
+	const settings = await getSettings()
+	const comicType = settings.comic_type_name
+	const comicTypeSlug = settings.comic_type_name_slug
+
+	let slugPrefix = ""
+	let slugDescription = ""
+	switch (settings.routing_mode) {
+		case "single-single": {
+			slugPrefix = ""
+			slugDescription = await marked.parse(`Your \`${comicType}\`'s URL-friendly name. ***Must be unique***.`)
+		}
+			break
+		case "single-multiple": {
+			slugPrefix = `${settings.project_url}/`
+			slugDescription = await marked.parse(`Human-readable part of your \`${comicType}\`'s web address. ***Must be unique***.`)
+		}
+			break
+		case "multiple-multiple": {
+			slugPrefix = `${settings.project_url}/${comicTypeSlug}/`
+			slugDescription = await marked.parse(`Human-readable part of your \`${comicType}\`'s web address. ***Must be unique***.`)
+		}
+			break
+	}
+
 	return {
 		title: {
 			title: "Title",
-			description: "",
+			description: await marked.parse(`The name of your \`${comicType}\`.`),
 			type: "text",
 			validate: true,
 			width: "full",
 		},
 		slug: {
-			title: "Slug",
-			description: "",
+			title: "URL Slug",
+			description: slugDescription,
 			type: "text",
 			validate: true,
 			width: "full",
+			prefix: slugPrefix,
+			maxLength: 32
 		},
 		description: {
 			title: "Description",
-			description: "",
+			description: await marked.parse(`A quick blurb that briefly introduces your \`${comicType}\` to potential readers.`),
 			type: "textarea",
 			optional: true,
 			width: "full",
+			maxLength: 640
 		},
 		spacer: {
 			title: "",
