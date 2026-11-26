@@ -14,6 +14,7 @@ import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-p
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 import { Suspense } from "react"
+import ComicSettingsLayout from "@/ui/comic/layout-settings"
 
 export const instant = false
 
@@ -108,6 +109,27 @@ async function LayoutContent({
 			notFound()
 		}
 		case "comic-named-page":
+			{
+				// TODO:
+				let comic = await getComic({ slug: route.comicSlug })
+				if (comic)
+					return <>
+						<ComicRootLayout header={
+							<ClientComicPageHeaderTitle comic={comic} />
+						}
+							slug={comic.slug}
+						>
+							<PlatformMainArticle>
+								{route.pageSlug === "settings" &&
+									<ComicSettingsLayout>
+										{children}
+									</ComicSettingsLayout>
+								}
+							</PlatformMainArticle>
+						</ComicRootLayout>
+					</>
+				notFound()
+			}
 		case "comic-single-page-action":
 			{
 				// TODO:
