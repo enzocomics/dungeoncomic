@@ -23,7 +23,7 @@ export type CollectionDataAction = "create" | "update"
 export type CollectionData = {
 	name: string,
 	action: CollectionDataAction,
-	comicID?: number
+	itemID?: number
 }
 
 /** ---
@@ -67,6 +67,11 @@ export default function DashboardForm({
 	useEffect(() => {
 		if (lastResult?.status === "success") {
 			setStatus("success", "Your settings have been saved")
+		}
+		if (lastResult?.status === "error") {
+			// TODO: More meaningful error message
+			const errorMessage = lastResult.error?.[""]?.[0]
+			setStatus("error", errorMessage)
 		}
 	}, [lastResult])
 
@@ -118,6 +123,10 @@ export default function DashboardForm({
 			<input type="hidden"
 				name="action"
 				defaultValue={collection.action}
+			/>
+			<input type="hidden"
+				name="itemID"
+				defaultValue={collection.itemID}
 			/>
 			<ComicButton as="button" type="submit"
 				className={clsx(
