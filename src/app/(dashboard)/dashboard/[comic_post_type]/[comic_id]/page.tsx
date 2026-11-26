@@ -1,4 +1,4 @@
-import EditComicTypeUI from "@/ui/dashboard/pages/comic-create"
+import EditComicTypeUI from "@/ui/dashboard/pages/comic-edit"
 
 export const instant = false
 
