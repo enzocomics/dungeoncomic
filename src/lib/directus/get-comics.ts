@@ -67,16 +67,33 @@ export const getComics = async (
 /** ------------------------------------------------ **
  * GET COMIC
  */
-export const getComic = async ({ slug }: { slug?: string }) => {
+export const getComic = async ({
+	slug,
+	id,
+}: {
+	slug?: string
+	id?: number
+}) => {
 	"use cache"
 	cacheTag("comic")
+
+	let filter
+
+	if (slug) {
+		filter = {
+			slug: { _eq: slug },
+		}
+	} else if (id) {
+		filter = {
+			id: { _eq: id },
+		}
+	} else {
+		filter = undefined
+	}
+
 	const request = await publicClient.request(
 		readItems("comics", {
-			filter: slug
-				? {
-						slug: { _eq: slug },
-					}
-				: undefined,
+			filter: filter,
 			limit: 1,
 			fields: [
 				// Details
