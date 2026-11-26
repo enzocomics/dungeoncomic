@@ -18,6 +18,10 @@ import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 import { getFieldDescriptions, ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { ListLogoBackdropFields } from "@/ui/dashboard/functions/list-fields-logo-backdrop"
 
+export type CollectionData = {
+	name: string,
+	action: "create" | "update"
+}
 
 /** ---
  * Builds Dashboard Forms UI
@@ -30,7 +34,7 @@ export default function DashboardForm({
 	descriptions,
 	sections
 }: {
-	collection: string
+	collection: CollectionData
 	descriptions: Awaited<ReturnType<typeof getFieldDescriptions>>
 	sections: SettingsSection
 }) {
@@ -48,14 +52,14 @@ export default function DashboardForm({
 		onValidate({ formData }) {
 			return parseWithZod(formData, {
 				schema: dashboardSchema({
-					name: collection,
+					name: collection.name,
 					fieldLists: fieldLists
 				})
 			})
 		}
 	})
 
-	const fieldset = fields[collection].getFieldset()
+	const fieldset = fields[collection.name].getFieldset()
 
 	useEffect(() => {
 		if (lastResult?.status === "success") {
@@ -106,7 +110,11 @@ export default function DashboardForm({
 			})}
 			<input type="hidden"
 				name="schema"
-				defaultValue={collection}
+				defaultValue={collection.name}
+			/>
+			<input type="hidden"
+				name="action"
+				defaultValue={collection.action}
 			/>
 			<ComicButton as="button" type="submit"
 				className={clsx(
