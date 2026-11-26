@@ -147,7 +147,7 @@ export const getComic = async ({
 		}),
 	)
 
-	cacheTag(`comics-${request?.[0].id}`)
+	cacheTag(`comics-${request?.[0]?.id}`)
 	return request?.[0]
 }
 
