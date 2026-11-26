@@ -15,7 +15,7 @@ import DashboardForm from "@/ui/dashboard/components/client/form"
 import { marked } from "marked"
 // import CreateComicForm from "./client/comic-create-form"
 
-export default async function CreateComicPageUI() {
+export default async function EditComicTypeUI() {
 	const settings = await getSettings()
 	const sections = await getSections()
 	const fieldDescriptions = await getFieldDescriptions(sections)
