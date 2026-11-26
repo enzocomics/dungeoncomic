@@ -43,6 +43,8 @@ type FieldProperties = {
 	text: {
 		validate?: boolean
 		maxLength?: number
+		prefix?: string
+		suffix?: string
 	},
 	textarea: {
 		validate?: boolean
@@ -225,6 +227,8 @@ export function ListFields({
 							required={!singleField.optional}
 							aria-required={!singleField.optional}
 							lengthChecker={true}
+							prefix={singleField.type == "text" ? singleField.prefix : undefined}
+							suffix={singleField.type == "text" ? singleField.suffix : undefined}
 						/>
 					}
 					{/**----------------------------------- */}
