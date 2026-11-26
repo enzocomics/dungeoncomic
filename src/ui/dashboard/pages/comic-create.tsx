@@ -44,7 +44,10 @@ export default async function CreateComicPageUI() {
 			</span>
 		</PageTitleH1>
 		<DashboardForm
-			collection="comics"
+			collection={{
+				name: "comics",
+				action: "create"
+			}}
 			descriptions={fieldDescriptions}
 			sections={sections}
 		/>
