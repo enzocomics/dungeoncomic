@@ -27,6 +27,8 @@ export default async function DashboardHomePageUI() {
 			}
 		}
 	})
+
+
 	return <>
 		<PageTitleH1 className={clsx(
 			"flex",
@@ -60,10 +62,25 @@ export default async function DashboardHomePageUI() {
 				"lg:grid-cols-3",
 			)}>
 			{
-				comics?.map((c, index) => (
-					<ListPageItem
+				comics?.map((c, index) => {
+					let href
+					switch (settings.routing_mode) {
+						case "multiple-multiple": {
+							href = `/${settings.comic_type_name_slug}/${c.slug}/settings`
+						}
+							break
+						case "single-multiple": {
+							href = `/${c.slug}/settings`
+						}
+							break
+						default: {
+							href = `/dashboard/${settings.comic_type_name_slug}/${c.id}/`
+						}
+					}
+
+					return <ListPageItem
 						key={index}
-						href={`/dashboard/${settings.comic_type_name_slug}/${c.id}/`}
+						href={href}
 						accentColor={c.accent_color}
 						banner={c.banner}
 						title={c.title}
@@ -74,7 +91,7 @@ export default async function DashboardHomePageUI() {
 						{/* <ListPageItemTitle title={c.title} /> */}
 						{/* </ListPageItemDetails> */}
 					</ListPageItem>
-				))
+				})
 			}
 		</div>
 	</>
