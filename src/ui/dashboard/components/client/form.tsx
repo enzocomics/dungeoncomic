@@ -24,6 +24,10 @@ export type CollectionData = {
 	name: string,
 	action: CollectionDataAction,
 	itemID?: number
+	messages?: {
+		submissionSuccess?: string,
+		submitButton?: string
+	},
 }
 
 /** ---
@@ -66,7 +70,9 @@ export default function DashboardForm({
 
 	useEffect(() => {
 		if (lastResult?.status === "success") {
-			setStatus("success", "Your settings have been saved")
+			setStatus("success",
+				collection.messages?.submissionSuccess || "Your form has been submitted"
+			)
 		}
 		if (lastResult?.status === "error") {
 			// TODO: More meaningful error message
@@ -133,7 +139,7 @@ export default function DashboardForm({
 					"sticky",
 					"bottom-4",
 				)}
-			>Save</ComicButton>
+			>{collection.messages?.submitButton || "Save"}</ComicButton>
 		</form >
 	</>
 }
