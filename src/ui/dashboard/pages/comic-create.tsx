@@ -11,14 +11,28 @@ import Icon from "@/styles/icons"
 import { colorVariants } from "@/styles/colors"
 import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
-import DashboardForm from "@/ui/dashboard/components/client/form"
+import DashboardForm, { type CollectionDataAction } from "@/ui/dashboard/components/client/form"
 import { marked } from "marked"
+import { getComic, getComics } from "@/lib/directus/get-comics"
 // import CreateComicForm from "./client/comic-create-form"
 
-export default async function EditComicTypeUI() {
+export default async function EditComicTypeUI({
+	action,
+	comicID
+}: {
+	action: CollectionDataAction
+	comicID?: number
+}) {
 	const settings = await getSettings()
-	const sections = await getSections()
+	const sections = await getSections(comicID)
 	const fieldDescriptions = await getFieldDescriptions(sections)
+
+	// Retrieve comic if an ID was provided
+	const [comic] = comicID ? await getComics({
+		id: {
+			_eq: comicID
+		}
+	}) : [null]
 
 	return <>
 		<PageTitleH1>
@@ -40,13 +54,19 @@ export default async function EditComicTypeUI() {
 					"mr-2",
 					"text-base-content/50",
 				)} />
-				<span>Create New {settings.comic_type_name}</span>
+				{action == "create" &&
+					<span>Create New {settings.comic_type_name}</span>
+				}
+				{action == "update" &&
+					<span>Edit: {comic?.title}</span>
+				}
 			</span>
 		</PageTitleH1>
 		<DashboardForm
 			collection={{
 				name: "comics",
-				action: "create"
+				action: action,
+				itemID: comicID
 			}}
 			descriptions={fieldDescriptions}
 			sections={sections}
@@ -54,10 +74,11 @@ export default async function EditComicTypeUI() {
 	</>
 }
 
-const getDetailFields = async () => {
+const getDetailFields = async (comicID?: number) => {
 	const settings = await getSettings()
 	const comicType = settings.comic_type_name
 	const comicTypeSlug = settings.comic_type_name_slug
+	const comic = comicID ? await getComic({ id: comicID }) : null
 
 	let slugPrefix = ""
 	let slugDescription = ""
@@ -86,6 +107,7 @@ const getDetailFields = async () => {
 			type: "text",
 			validate: true,
 			width: "full",
+			value: comic?.title || ""
 		},
 		slug: {
 			title: "URL Slug",
@@ -94,7 +116,8 @@ const getDetailFields = async () => {
 			validate: true,
 			width: "full",
 			prefix: slugPrefix,
-			maxLength: 32
+			maxLength: 32,
+			value: comic?.slug || ""
 		},
 		description: {
 			title: "Description",
@@ -102,7 +125,8 @@ const getDetailFields = async () => {
 			type: "textarea",
 			optional: true,
 			width: "full",
-			maxLength: 640
+			maxLength: 640,
+			value: comic?.description || ""
 		},
 		spacer: {
 			title: "",
@@ -112,54 +136,58 @@ const getDetailFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-export const getLogoBackdropFields = async () => {
+export const getLogoBackdropFields = async (comicID?: number) => {
+	const comic = comicID ? await getComic({ id: comicID }) : null
 	return {
 		logo: {
 			title: "Logo",
 			description: "",
 			type: "image",
 			validate: true,
-			object: null
+			object: comic?.logo || null
 		},
 		banner: {
 			title: "Banner",
 			description: "",
 			type: "image",
 			validate: true,
-			object: null
+			object: comic?.banner || null
 		},
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getLookFeelFields = async () => {
+const getLookFeelFields = async (comicID?: number) => {
 	// Make an array of name: value pairs of all the tailwind colors so we can use them for the seelct menu options
 	const colors = Object.entries(colorVariants).map(([name]) => ({
 		name: name.charAt(0).toUpperCase() + name.slice(1),
 		value: name
 	})
 	)
+
+	const comic = comicID ? await getComic({ id: comicID }) : null
 	// const session = await verifySession()
 	return {
-		color_accent: { // TODO: tailwind color dropdown
+		accent_color: {
 			title: "Accent Color",
 			description: "",
 			type: "selectColor",
 			options: colors,
-			value: "red",
+			value: comic?.accent_color || "red",
 			optional: true
 		},
 
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getFontFields = async () => {
+const getFontFields = async (comicID?: number) => {
 	const settings = await getSettings()
+	const comic = comicID ? await getComic({ id: comicID }) : null
 	return {
 		font_headers: {
 			title: "Headers Font",
 			description: "Page titles will appear in this font. If your website does not have an logo image uploaded, your website title will also appear in this font.",
 			type: "selectFont",
-			value: settings.font_headers,
+			value: comic?.font_headers || settings.font_headers,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.headers) // only filter headers fonts
@@ -170,14 +198,14 @@ const getFontFields = async () => {
 						}
 					)),
 			width: "half",
-			optional: true
+			optional: true,
 		},
 
 		font_labels: {
 			title: "Labels Font",
 			description: "Input labels, input descriptions, and buttons will appear in this font.",
 			type: "selectFont",
-			value: settings.font_labels,
+			value: comic?.font_labels || settings.font_labels,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.labels) // only filter labels fonts
@@ -195,7 +223,7 @@ const getFontFields = async () => {
 			title: "Text Font",
 			description: "Story text, image captions, and body copy will appear in this font",
 			type: "selectFont",
-			value: settings.font_copy,
+			value: comic?.font_copy || settings.font_copy,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.copy) // only filter copy fonts
@@ -213,7 +241,7 @@ const getFontFields = async () => {
 			title: "Mono Font",
 			description: "Input fields and story variables will appear in this font.",
 			type: "selectFont",
-			value: settings.font_mono,
+			value: comic?.font_mono || settings.font_mono,
 			options:
 				Object.values(fonts)
 					.filter((f) => f.mono) // only filter mono fonts
@@ -230,29 +258,29 @@ const getFontFields = async () => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getSections = async () => {
+const getSections = async (comicID?: number) => {
 	const settings = await getSettings()
 	return {
 		details: {
 			legend: ``,
 			description: null,
-			fields: await getDetailFields()
+			fields: await getDetailFields(comicID)
 		},
 		logoBackdrop: {
 			legend: "Logo & Banner",
 			description: null,
-			fields: await getLogoBackdropFields(),
+			fields: await getLogoBackdropFields(comicID),
 			type: "logoBackdrop"
 		},
 		lookFeel: {
 			legend: "Look & Feel",
 			description: null,
-			fields: await getLookFeelFields()
+			fields: await getLookFeelFields(comicID)
 		},
 		fonts: {
 			legend: "Fonts",
 			description: null,
-			fields: await getFontFields()
+			fields: await getFontFields(comicID)
 		},
 	} satisfies SettingsSection
 }
