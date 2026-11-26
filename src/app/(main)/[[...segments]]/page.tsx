@@ -26,6 +26,8 @@ import { cacheTag } from "next/cache"
 import { getUsers } from "@/lib/directus/get-users"
 import UserSinglePage from "@/ui/platform/pages/users-single"
 import UsersListPage from "@/ui/platform/pages/users-list"
+import EditComicTypeUI from "@/ui/dashboard/pages/comic-type-edit"
+import { DashboardSection } from "@/ui/dashboard/components/nav"
 /**----------------------------------- */
 export default async function MainPage({
 	params
@@ -131,10 +133,28 @@ export async function MainPageContent({
 		}
 		/**----------------------------------- */
 		case "comic-named-page": {
-			return <>
-				{/* TODO: */}
-				{route.type}: {route.pageSlug}
-			</>
+			const comic = await getComic({ slug: route.comicSlug })
+
+			if (route.pageSlug === "settings") {
+				if (session && (
+					comic.user_created == session.id ||
+					session.permissions?.comics?.update?.access === "full"
+				))
+					return <>
+						<DashboardSection>
+							<EditComicTypeUI
+								action="update"
+								comicID={comic.id}
+							/>
+						</DashboardSection>
+					</>
+				else
+					notFound()
+			} else
+				return <>
+					{/* TODO: */}
+					{route.type}: {route.pageSlug}
+				</>
 		}
 
 		/**----------------------------------- */
