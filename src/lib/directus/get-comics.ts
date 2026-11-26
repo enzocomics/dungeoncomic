@@ -15,7 +15,6 @@ export const getComics = async (
 	filter?: QueryFilter<DirectusSchema, ComicsCollection>,
 ) => {
 	"use cache"
-	cacheTag("comics")
 	const request = await publicClient.request(
 		readItems("comics", {
 			filter: filter,
@@ -61,6 +60,7 @@ export const getComics = async (
 		}),
 	)
 
+	cacheTag("comics")
 	return request
 }
 
@@ -75,7 +75,6 @@ export const getComic = async ({
 	id?: number
 }) => {
 	"use cache"
-	cacheTag("comic")
 
 	let filter
 
@@ -146,6 +145,8 @@ export const getComic = async ({
 			],
 		}),
 	)
+
+	cacheTag(`comics-${request?.[0].id}`)
 	return request?.[0]
 }
 
