@@ -133,6 +133,7 @@ export const getComic = async ({
 				"landing_page_content",
 				"start_button_text",
 				// Meta
+				"user_created",
 				"date_created",
 				"date_updated",
 				"id",
