@@ -7,7 +7,13 @@ import { parseWithZod } from "@conform-to/zod/v4"
 import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 // DATA
 import { userClient } from "@/lib/directus/clients"
-import { createItem, deleteFile, updateMe, uploadFiles } from "@directus/sdk"
+import {
+	createItem,
+	deleteFile,
+	updateItem,
+	updateMe,
+	uploadFiles,
+} from "@directus/sdk"
 
 /** ---
  * Handles & submits Dashboard Forms
@@ -19,15 +25,17 @@ export async function saveDashboardForm(
 	prevState: unknown,
 	formData: FormData,
 ) {
-	// Get the name of the schema
+	// COLLECTION DATA VARS
 	const schema = formData.get("schema") as string
 	const action = formData.get("action") as string
+	const itemID = formData.get("itemID") as string
 
 	// VALIDATION
 	const submission = parseWithZod(formData, {
 		schema: dashboardSchema({ name: schema }),
 	})
 
+	// SEND TO THE CMS
 	try {
 		if (submission.status === "success") {
 			// Make an iterable array of the collection fields
@@ -48,9 +56,8 @@ export async function saveDashboardForm(
 				// Remove the schema prefix, which just leaves the field name
 				.map(([key]) => key.slice(`${schema}.`.length))
 			// Final shape: ["field1", "field2"]
-			// Make an iterable array of the collection fields
 
-			// Do the same thing but pull out the image fields
+			// Make another iterable array for just the image fields
 			const imageFields = [...formData.entries()]
 				.filter(
 					([key, value]) =>
@@ -115,9 +122,13 @@ export async function saveDashboardForm(
 			//
 			switch (schema) {
 				case "comics": {
-					action === "create" &&
-						(await userClient.request(createItem(schema, updates)))
-
+					if (action === "create") {
+						await userClient.request(createItem(schema, updates))
+					}
+					if (action === "update") {
+						await userClient.request(updateItem(schema, itemID, updates))
+						updateTag(`${schema}-${itemID}`)
+					}
 					updateTag(schema)
 				}
 			}
