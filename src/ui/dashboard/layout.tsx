@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { getSettings } from "@/lib/directus/get-settings"
 import { DashboardNav, DashboardSection } from "@/ui/dashboard/components/nav"
 import { ClientDashboardNavTab } from "./components/client/nav-tab"
+import clsx from "clsx"
 
 export default async function DashboardRootLayoutUI({
 	children
@@ -16,14 +17,16 @@ export default async function DashboardRootLayoutUI({
 	return <>
 		<DashboardNav>
 			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
-			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
-			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/account" icon="user">Account</ClientDashboardNavTab>
 			{userCanUpdateSettings &&
 				<>
 					<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/theme" icon="gear">Theme</ClientDashboardNavTab>
 					<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/settings" icon="gear">Settings</ClientDashboardNavTab>
 				</>
 			}
+			<ClientDashboardNavTab className={clsx(
+				"ml-auto"
+			)} postTypeSlug={settings.comic_type_name_slug} href="/dashboard/profile" icon="skull">Profile</ClientDashboardNavTab>
+			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/account" icon="user">Account</ClientDashboardNavTab>
 		</DashboardNav>
 		<DashboardSection>
 			{children}
