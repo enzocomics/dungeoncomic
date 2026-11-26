@@ -14,7 +14,6 @@ import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/das
 import DashboardForm, { type CollectionDataAction } from "@/ui/dashboard/components/client/form"
 import { marked } from "marked"
 import { getComic, getComics } from "@/lib/directus/get-comics"
-// import CreateComicForm from "./client/comic-create-form"
 
 export default async function EditComicTypeUI({
 	action,
@@ -27,6 +26,8 @@ export default async function EditComicTypeUI({
 	const sections = await getSections(comicID)
 	const fieldDescriptions = await getFieldDescriptions(sections)
 
+	const comicType = settings.comic_type_name
+
 	// Retrieve comic if an ID was provided
 	const [comic] = comicID ? await getComics({
 		id: {
@@ -35,7 +36,10 @@ export default async function EditComicTypeUI({
 	}) : [null]
 
 	return <>
-		<PageTitleH1>
+		<PageTitleH1 className={clsx(
+			"flex",
+			"items-center",
+		)}>
 			<span className={clsx(
 				"flex",
 				"items-center",
@@ -55,7 +59,7 @@ export default async function EditComicTypeUI({
 					"text-base-content/50",
 				)} />
 				{action == "create" &&
-					<span>Create New {settings.comic_type_name}</span>
+					<span>Create New {comicType}</span>
 				}
 				{action == "update" &&
 					<span>Edit: {comic?.title}</span>
@@ -66,7 +70,15 @@ export default async function EditComicTypeUI({
 			collection={{
 				name: "comics",
 				action: action,
-				itemID: comicID
+				itemID: comicID,
+				messages: {
+					submissionSuccess: action === "create"
+						? `${comicType} has been created.`
+						: `${comicType} has been updated.`,
+					submitButton: action === "create"
+						? `Submit New ${comicType}`
+						: `Save Changes`
+				}
 			}}
 			descriptions={fieldDescriptions}
 			sections={sections}
