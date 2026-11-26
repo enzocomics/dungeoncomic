@@ -66,11 +66,11 @@ export default async function DashboardHomePageUI() {
 					let href
 					switch (settings.routing_mode) {
 						case "multiple-multiple": {
-							href = `/${settings.comic_type_name_slug}/${c.slug}/settings`
+							href = `/${settings.comic_type_name_slug}/${c.slug}/edit`
 						}
 							break
 						case "single-multiple": {
-							href = `/${c.slug}/settings`
+							href = `/${c.slug}/edit`
 						}
 							break
 						default: {

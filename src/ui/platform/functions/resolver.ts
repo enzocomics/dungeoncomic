@@ -12,10 +12,10 @@ function isPageAction(value: unknown) {
 }
 
 // #TODO: in the future this should dynamically fetch any pages created by the user (i.e. archive, about, cast, etc)
-type ComicNamedPage = "archive" | "settings"
+type ComicNamedPage = "archive" | "edit"
 
 function isComicNamedPage(value: unknown) {
-	return value === "archive" || value === "settings"
+	return value === "archive" || value === "edit"
 }
 
 type ContentTypePage =

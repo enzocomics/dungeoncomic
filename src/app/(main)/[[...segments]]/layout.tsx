@@ -120,7 +120,7 @@ async function LayoutContent({
 							slug={comic.slug}
 						>
 							<PlatformMainArticle>
-								{route.pageSlug === "settings" &&
+								{route.pageSlug === "edit" &&
 									<ComicSettingsLayout>
 										{children}
 									</ComicSettingsLayout>
