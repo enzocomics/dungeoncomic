@@ -15,7 +15,7 @@ import { verifySession } from "@/data/session"
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import { AuthModalSchema, useGlobalContext } from "@/ui/platform/context"
-import { SetStateAction } from "react"
+import { ComponentPropsWithoutRef, SetStateAction } from "react"
 import { AuthLink } from "@/components/auth"
 import { getComic } from "@/lib/directus/get-comics"
 import { useTranslations } from "next-intl"
@@ -74,25 +74,26 @@ export default function ClientPlatformNav({
 	const usersListTitle = settings.user_type_name_plural
 	const usersListSlug = settings.user_type_name_plural_slug
 
-	let comicNavigation: {
+	type NavigationMenu = {
 		name: string,
-		href: string,
-		current: boolean,
-		icon: keyof typeof icons
-	}[] = [
-			{
-				name: "Homepage", // TODO: DICTIONARY
-				href: "/",
-				current: !!(pathname == "/"),
-				icon: "house",
-			},
-			{
-				name: `${comicsListTitle}`,
-				href: `/${comicsListSlug}`,
-				current: !!(pathname == `/${comicsListSlug}`),
-				icon: "rectangleList"
-			},
-		]
+		href?: string,
+		current?: boolean,
+		icon?: keyof typeof icons
+	} | false
+	let comicNavigation: NavigationMenu[] = [
+		{
+			name: "Homepage", // TODO: DICTIONARY
+			href: "/",
+			current: !!(pathname == "/"),
+			icon: "house",
+		},
+		{
+			name: `${comicsListTitle}`,
+			href: `/${comicsListSlug}`,
+			current: !!(pathname == `/${comicsListSlug}`),
+			icon: "rectangleList"
+		},
+	]
 
 	/// Add user list to multiple/multiple routing mode menu only
 	isMultiUserMultiComicSite && comicNavigation.push({
@@ -102,12 +103,48 @@ export default function ClientPlatformNav({
 		icon: "user"
 	})
 
+	const dashboardNavigation: NavigationMenu[] = [
+		{ name: "spacer" },
+		{
+			name: `Dashboard`,
+			href: `/dashboard`,
+			current: !!(pathname == `/dashboard`),
+			icon: "dungeon"
+		},
+		// {
+		// 	name: `Profile`,
+		// 	href: `/dashboard/profile`,
+		// 	current: !!(pathname == `/dashboard/profile`),
+		// 	icon: "skull"
+		// },
+		// {
+		// 	name: `Account`,
+		// 	href: `/dashboard/account`,
+		// 	current: !!(pathname == `/dashboard/account`),
+		// 	icon: "user"
+		// },
+		{
+			name: `Theme`,
+			href: `/dashboard/theme`,
+			current: !!(pathname == `/dashboard/theme`),
+			icon: "gear"
+		},
+		{
+			name: `Settings`,
+			href: `/dashboard/settings`,
+			current: !!(pathname == `/dashboard/settings`),
+			icon: "gear"
+		},
+	]
+
 	const accountMenuNavigation = session && [
-		{ name: "Dashboard", href: "/dashboard", modal: null },
-		{ name: "Profile", href: "/dashboard/profile", modal: null },
-		{ name: "Account", href: "/dashboard/account", modal: null },
-		userCanUpdateSettings && { name: "Theme", href: "/dashboard/theme", modal: null },
-		userCanUpdateSettings && { name: "Settings", href: "/dashboard/settings", modal: null },
+		{ name: "View Profile", href: `/${settings.user_type_name_slug}/${session.username}` },
+		{ name: "spacer", href: "", modal: null },
+		// { name: "Dashboard", href: `/dashboard`, modal: null },
+		{ name: "Edit Profile", href: "/dashboard/profile", modal: null },
+		{ name: "Account Settings", href: "/dashboard/account", modal: null },
+		// userCanUpdateSettings && { name: "Theme", href: "/dashboard/theme", modal: null },
+		// userCanUpdateSettings && { name: "Settings", href: "/dashboard/settings", modal: null },
 	]
 
 	const accountMenuAuthNav = !session ? [
@@ -449,44 +486,105 @@ export default function ClientPlatformNav({
 									"font-platform-labels",
 								)}>
 								{/* COMIC MENU */}
-								{comicNavigation.map((item) => (
-									<CloseButton
-										as={Link}
-										key={item.name}
-										href={item.href}
-										aria-current={item.current ? 'page' : undefined}
-										className={clsx(
-											"flex",
-											"items-center",
-											"px-5",
-											"py-2",
-											"text-sm",
-											"hover:bg-platform-accent-500",
-											"dark:hover:bg-platform-accent-700",
-											"hover:text-white",
-											"hover:duration-0",
-											// Transition
-											"transition-all",
-											"ease-in-out",
-											"duration-300",
-											item.current ? [
-												"text-white",
-												"bg-platform-accent-400",
-												"dark:bg-platform-accent-600/50",
-												"hover:bg-platform-accent-700",
-											] : [
-												"hover:bg-platform-accent-100",
-												"dark:hover:bg-white/5",
-											],
-										)}
-									>
+								{comicNavigation.map((item, index) => {
+									return item && <ComicNavCloseButton
+										key={index}
+										item={item}
+										href={item.href || "/"}
+									/>
+								}
+									// if (item.name === "spacer")
+									// 	return <div key={index} className={clsx(
+									// 		"h-2",
+									// 		"my-1",
+									// 		"bg-neutral-500/25"
+									// 	)} />
+									// else
+									/*
+								return <CloseButton
+									as={Link}
+									key={index}
+									href={item.href || ""}
+									aria-current={item.current ? 'page' : undefined}
+									className={clsx(
+										"flex",
+										"items-center",
+										"px-5",
+										"py-2",
+										"text-sm",
+										"hover:bg-platform-accent-500",
+										"dark:hover:bg-platform-accent-700",
+										"hover:text-white",
+										"hover:duration-0",
+										// Transition
+										"transition-all",
+										"ease-in-out",
+										"duration-300",
+										item.current ? [
+											"text-white",
+											"bg-platform-accent-400",
+											"dark:bg-platform-accent-600/50",
+											"hover:bg-platform-accent-700",
+										] : [
+											"hover:bg-platform-accent-100",
+											"dark:hover:bg-white/5",
+										],
+									)}
+								>
+									{item.icon &&
 										<Icon name={item.icon} className={clsx(
 											"size-5",
 											"mr-4",
 										)} />
-										{item.name}
-									</CloseButton>
-								))}
+									}
+									{item.name}
+								</CloseButton>*/
+								)}
+
+								{session &&
+									<div className={clsx(
+									)}>
+										{dashboardNavigation.map((item, index) => {
+											if (item && item.name === "spacer")
+												return <div key={index} className={clsx(
+													"border-t",
+													"my-1",
+													"border-dashed",
+													"border-neutral-500/20"
+												)} />
+											else
+												return item && <ComicNavCloseButton
+													key={index}
+													item={item}
+													href={item.href || "/"}
+													className={clsx(
+														// if this item is NOT the dashboard link
+														item.href !== "/dashboard" ? [
+															// if we are NOT in the dashboard section
+															pathname.startsWith("/dashboard") ? [
+																"md:hidden",
+															] : [
+																"hidden",
+															]
+														] : [
+															// if it IS the dashboard link
+															pathname.startsWith("/dashboard") && [
+																// but we're not on the dashboard home
+																pathname !== "/dashboard" && [
+																	// show the current item on medium browse
+																	"md:text-white",
+																	"md:bg-platform-accent-400",
+																	"md:dark:bg-platform-accent-600/50",
+																	"md:hover:bg-platform-accent-700",
+																]
+															]
+														],
+														//
+													)}
+												/>
+										})}
+									</div>
+								}
 							</div>
 						</PopoverPanel>
 					}
@@ -696,30 +794,37 @@ export default function ClientPlatformNav({
 									)
 								}>
 									{accountMenuNavigation?.map((item, index) => {
-
-										return item && <CloseButton
-											as={Link}
-											key={index}
-											href={item.href}
-											className={
-												clsx(
-													"block",
-													"px-4",
-													"py-2",
-													"text-sm",
-													"hover:bg-platform-accent-500",
-													"dark:hover:bg-platform-accent-700",
-													"hover:text-white",
-													"hover:duration-0",
-													// Transition
-													"transition-all",
-													"ease-in-out",
-													"duration-300",
-												)
-											}
-										>
-											{item.name}
-										</CloseButton>
+										if (item && item.name == "spacer")
+											return <div key={index} className={clsx(
+												"border-t",
+												"my-1",
+												"border-dashed",
+												"border-neutral-500/20"
+											)} />
+										else
+											return <CloseButton
+												as={Link}
+												key={index}
+												href={item.href}
+												className={
+													clsx(
+														"block",
+														"px-4",
+														"py-2",
+														"text-sm",
+														"hover:bg-platform-accent-500",
+														"dark:hover:bg-platform-accent-700",
+														"hover:text-white",
+														"hover:duration-0",
+														// Transition
+														"transition-all",
+														"ease-in-out",
+														"duration-300",
+													)
+												}
+											>
+												{item.name}
+											</CloseButton>
 									})}
 									{accountMenuAuthNav?.map((item, index) => (
 										<AuthLink
@@ -935,4 +1040,50 @@ export default function ClientPlatformNav({
 			</nav >
 		</header>
 	)
+}
+
+const ComicNavCloseButton = ({
+	item,
+	...props
+}: {
+	item: any
+} & ComponentPropsWithoutRef<typeof Link>) => {
+	return <CloseButton
+		as={Link}
+		href={item.href || ""}
+		aria-current={item.current ? 'page' : undefined}
+		className={clsx(
+			props.className,
+			"flex",
+			"items-center",
+			"px-5",
+			"py-2",
+			"text-sm",
+			"hover:bg-platform-accent-500",
+			"dark:hover:bg-platform-accent-700",
+			"hover:text-white",
+			"hover:duration-0",
+			// Transition
+			"transition-all",
+			"ease-in-out",
+			"duration-300",
+			item.current ? [
+				"text-white",
+				"bg-platform-accent-400",
+				"dark:bg-platform-accent-600/50",
+				"hover:bg-platform-accent-700",
+			] : [
+				"hover:bg-platform-accent-100",
+				"dark:hover:bg-white/5",
+			],
+		)}
+	>
+		{item.icon &&
+			<Icon name={item.icon} className={clsx(
+				"size-5",
+				"mr-4",
+			)} />
+		}
+		{item.name}
+	</CloseButton>
 }
