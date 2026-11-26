@@ -18,9 +18,12 @@ import { dashboardSchema } from "@/ui/dashboard/functions/schema"
 import { getFieldDescriptions, ListFields, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import { ListLogoBackdropFields } from "@/ui/dashboard/functions/list-fields-logo-backdrop"
 
+export type CollectionDataAction = "create" | "update"
+
 export type CollectionData = {
 	name: string,
-	action: "create" | "update"
+	action: CollectionDataAction,
+	comicID?: number
 }
 
 /** ---
