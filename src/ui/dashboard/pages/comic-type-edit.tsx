@@ -47,18 +47,26 @@ export default async function EditComicTypeUI({
 			)}>
 				{/* {action == "create" && */}
 				<>
-					<Link href="/dashboard" className={clsx(
+					{/* <Link href="/dashboard" className={clsx(
 						"flex",
 						"items-center",
-						"text-base-content/50",
+						"text-white",
+						"bg-platform-accent-500",
+						"px-3",
+						"py-2",
+						"rounded",
+						"h-full",
 					)}
-						title="Return to Dashboard"
 					>
-						<Icon name="gaugeHigh" className={clsx("size-5")} />
-						<span className="sr-only">Dashboard Home</span>
-					</Link>
-					<Icon name="chevronRight" className={clsx(
-						"size-4",
+						<Icon name="gaugeHigh" className={clsx("size-4")} />
+						<span className={clsx(
+							"sr-only"
+							// "text-xs",
+							// "ml-1",
+						)}>Dashboard</span>
+					</Link> */}
+					<Icon name="penToSquare" className={clsx(
+						"size-5",
 						"mr-2",
 						"text-base-content/50",
 					)} />
