@@ -22,7 +22,7 @@ export type CollectionDataAction = "create" | "update"
 
 export type CollectionData = {
 	name: string,
-	action: CollectionDataAction,
+	action?: CollectionDataAction,
 	itemID?: number
 	messages?: {
 		submissionSuccess?: string,
