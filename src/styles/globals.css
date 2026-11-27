@@ -15,7 +15,10 @@
 
 	.marked {
 		ul {
-			@apply pl-4 list-disc;
+			@apply py-1 pl-4 list-disc;
+			li {
+				@apply py-0.5;
+			}
 		}
 		code {
 			@apply px-1 py-px bg-black/5 dark:bg-white/10 rounded-sm font-platform-mono;
