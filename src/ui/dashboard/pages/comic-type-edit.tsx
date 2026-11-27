@@ -82,7 +82,8 @@ export default async function EditComicTypeUI({
 					submitButton: action === "create"
 						? `Submit New ${comicType}`
 						: `Save Changes`
-				}
+				},
+				redirect: "/dashboard?status=create-comic-success"
 			}}
 			descriptions={fieldDescriptions}
 			sections={sections}
