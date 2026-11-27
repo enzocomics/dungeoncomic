@@ -1,5 +1,5 @@
 import { verifySession } from "@/data/session"
-import EditComicTypeUI from "@/ui/dashboard/pages/comic-type-edit"
+import EditComicTypeUI from "@/ui/dashboard/pages/comic-create-edit"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
 
