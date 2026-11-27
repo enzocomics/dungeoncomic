@@ -10,7 +10,7 @@ import { colorVariants } from "@/styles/colors"
 import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
 import DashboardForm from "@/ui/dashboard/components/client/form"
-import { getComicFontFields, getComicLogoBackdropFields, getComicLookFeelFields } from "@/ui/comic/pages/create-edit"
+import { getComicFontFields, getComicLogoBackdropFields, getComicLookFeelFields } from "@/ui/comic/edit/pages/create-edit"
 
 /**----------------------------------- */
 export default async function ThemePageUI() {
