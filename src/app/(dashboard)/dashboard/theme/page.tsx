@@ -11,7 +11,7 @@ export default async function Page() {
 	const session = await verifySession()
 	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
 	if (userCanUpdateSettings)
-		return <ThemePageUI settings={settings} />
+		return <ThemePageUI />
 	else
 		notFound()
 }
