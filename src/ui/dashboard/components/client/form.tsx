@@ -28,6 +28,7 @@ export type CollectionData = {
 		submissionSuccess?: string,
 		submitButton?: string
 	},
+	redirect?: string
 }
 
 /** ---
@@ -133,6 +134,10 @@ export default function DashboardForm({
 			<input type="hidden"
 				name="itemID"
 				defaultValue={collection.itemID}
+			/>
+			<input type="hidden"
+				name="redirect"
+				defaultValue={collection.redirect}
 			/>
 			<ComicButton as="button" type="submit"
 				className={clsx(
