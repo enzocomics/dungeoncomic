@@ -66,7 +66,7 @@ export default function AccountPageForm({
 
 	useEffect(() => {
 		if (lastResult?.status == "success" && !messageSeen) {
-			setStatus("success", "Your account has been updated")
+			setStatus("success", "Your account has been updated.")
 			setMessageSeen(true)
 		}
 	}, [lastResult])

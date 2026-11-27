@@ -29,7 +29,11 @@ export default async function ThemePageUI() {
 					? "comics"
 					: "settings",
 				action: "update",
-				itemID: isSingleSingle ? frontpageComicID : undefined
+				itemID: isSingleSingle ? frontpageComicID : undefined,
+				messages: {
+					submissionSuccess: `Theme has been updated.`,
+					submitButton: `Save Changes`
+				},
 			}}
 			sections={sections}
 			descriptions={fieldDescriptions}
