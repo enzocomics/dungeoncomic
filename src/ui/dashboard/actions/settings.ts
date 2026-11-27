@@ -1,8 +1,19 @@
 "use server"
 import { parseWithZod } from "@conform-to/zod/v4"
 import { dashboardSchema } from "../functions/schema"
-import { userClient } from "@/lib/directus/clients"
-import { deleteFile, updateSingleton, uploadFiles } from "@directus/sdk"
+import { adminClient, userClient } from "@/lib/directus/clients"
+import {
+	createPermission,
+	deleteFile,
+	deletePermission,
+	readItems,
+	readPermissions,
+	readPolicies,
+	readPolicy,
+	readRoles,
+	updateSingleton,
+	uploadFiles,
+} from "@directus/sdk"
 import { updateTag } from "next/cache"
 
 export async function saveSettings(prevState: unknown, formData: FormData) {
@@ -101,7 +112,80 @@ export async function saveSettings(prevState: unknown, formData: FormData) {
 			const updateSettings = await userClient.request(
 				updateSingleton("settings", updates),
 			)
+
+			// ALLOW USERS TO CREATE COMICS ON MULTIPLE-MULTIPLE ROUTING MODE
+			// - Retrieve reader policy ID
+			// - Create new permission with `collection: "comics"`, `action: "create"`, and `policy: ${readerPolicyID}`
+			// When it is deselected:
+			// - Retrieve reader policy ID
+			// - Delete permission with `collection: "comics"`, `action: "create"`, and `policy: ${readerPolicyID}`
+			if (updateSettings.routing_mode === "multiple-multiple") {
+				const [readerPolicy] = await adminClient.request(
+					readPolicies({
+						limit: 1,
+						filter: { name: { _eq: "Reader" } },
+					}),
+				)
+				// console.log("reader policy:", readerPolicy)
+
+				const permissions = await adminClient.request(
+					readPermissions({
+						filter: {
+							policy: { _eq: readerPolicy.id },
+							collection: { _eq: "comics" },
+						},
+					}),
+				)
+				// console.log("permissions: ", permissions)
+
+				const makeUsersCreators = await adminClient.request(
+					createPermission({
+						collection: "comics",
+						action: "create",
+						policy: readerPolicy.id,
+						permissions: null,
+						validation: null,
+						presets: null,
+						fields: ["*"],
+					}),
+				)
+
+				// console.log("response: ", makeUsersCreators)
+			}
+			// REMOVE PERMISSIONS ON DESELECT
+			else {
+				// Find the reader policy, we need its ID
+				const [readerPolicy] = await adminClient.request(
+					readPolicies({
+						limit: 1,
+						filter: { name: { _eq: "Reader" } },
+					}),
+				)
+
+				// Find the permission associated with create comics, and get its id
+				const [permission] = await adminClient.request(
+					readPermissions({
+						filter: {
+							policy: { _eq: readerPolicy.id },
+							collection: { _eq: "comics" },
+							action: { _eq: "create" },
+						},
+					}),
+				)
+				// console.log("permission: ", permission)
+
+				// Using the ID we just found, delete it
+				const response = await adminClient.request(
+					deletePermission(permission.id),
+				)
+				// console.log(response)
+			}
+
 			updateTag("settings")
+
+			/* 
+				TODO: Routing mode update should grant/remove the `user` role permissions to create/edit comics etc
+			*/
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
