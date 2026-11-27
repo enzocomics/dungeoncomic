@@ -98,7 +98,7 @@ export async function saveDashboardForm(
 				// If the clear field is true:
 				if (shouldClear) {
 					updates[field] = null // set the relational field in the singleton to empty
-					const imageID = formData.get(`${schema}.${field}_id`)
+					const imageID = formData.get(`${field}_id`)
 					const deleteImage = imageID // Delete actual file from the cms
 						? await userClient.request(deleteFile(String(imageID)))
 						: null
