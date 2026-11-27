@@ -10,7 +10,7 @@ export const Select = function Select({
 }: {
 	className?: string
 	inputRefs?: React.RefObject<
-		Record<string, HTMLSelectElement | null>
+		Record<string, HTMLSelectElement | HTMLInputElement | null>
 	>
 
 } & Omit<Headless.SelectProps, "className">) {
