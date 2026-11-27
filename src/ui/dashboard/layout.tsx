@@ -16,7 +16,7 @@ export default async function DashboardRootLayoutUI({
 	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
 	return <>
 		<DashboardNav>
-			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard" icon="dungeon">Dashboard</ClientDashboardNavTab>
+			<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard" icon="gaugeHigh">Dashboard</ClientDashboardNavTab>
 			{userCanUpdateSettings &&
 				<>
 					<ClientDashboardNavTab postTypeSlug={settings.comic_type_name_slug} href="/dashboard/theme" icon="gear">Theme</ClientDashboardNavTab>
