@@ -1,39 +1,38 @@
 /**----------------------------------- */
 // LIBRARIES
-// FUNCTIONS
-import clsx from "clsx"
 // DATA
 import { fonts } from "@/styles/fonts"
 import { getSettings } from "@/lib/directus/get-settings"
-// UI
-import { ComicButton } from "@/components/input/button"
-import { Field, Fieldset, Legend, Input, Label, Description, FieldGroup, FieldGroup2Columns, FieldsetSection, FieldsetDescription } from "@/components/input/fieldset"
-import { saveSettings } from "@/ui/dashboard/actions/settings"
-import { getFieldDescriptions, ListFields, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
-import { PageTitleH1 } from "@/components/page"
-import ThemePageForm from "./client/theme-form"
+import type { ImageCollection } from "@/lib/directus/schema"
+// STYLES
 import { colorVariants } from "@/styles/colors"
-import { ImageCollection } from "@/lib/directus/schema"
-
-
+// UI
+import { PageTitleH1 } from "@/components/page"
+import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import DashboardForm from "@/ui/dashboard/components/client/form"
+import { getComicFontFields, getComicLogoBackdropFields, getComicLookFeelFields } from "@/ui/dashboard/pages/comic-type-edit"
 
 /**----------------------------------- */
-export default async function ThemePageUI({
-	settings
-}: {
-	settings: Awaited<ReturnType<typeof getSettings>>
-}) {
-	// const settings = await getSettings()
+export default async function ThemePageUI() {
+	const settings = await getSettings()
 	const sections = await getSections()
+	const isSingleSingle = !!(settings.routing_mode === "single-single")
+	const frontpageComicID = settings.frontpage_comic?.id || 1
 	const fieldDescriptions = await getFieldDescriptions(sections)
 	return <>
 		<PageTitleH1>
 			Theme
 		</PageTitleH1>
-		<ThemePageForm
+		<DashboardForm
+			collection={{
+				name: isSingleSingle
+					? "comics"
+					: "settings",
+				action: "update",
+				itemID: isSingleSingle ? frontpageComicID : undefined
+			}}
 			sections={sections}
 			descriptions={fieldDescriptions}
-			settings={settings}
 		/>
 	</>
 }
@@ -67,7 +66,7 @@ const getLookFeelSettings = async () => {
 	})
 	)
 	return {
-		color_accent: { // TODO: tailwind color dropdown
+		color_accent: {
 			title: "Website Accent Color",
 			description: "",
 			type: "selectColor",
@@ -154,23 +153,33 @@ const getFontFields = async () => {
 }
 
 const getSections = async () => {
-	return {
+	const settings = await getSettings()
+	const frontpageComicID = settings.frontpage_comic?.id
+	const ifSingleSingle = !!(settings.routing_mode === "single-single")
 
+	// In `single-single` routing mode, we replace the platform's theme field inputs with the frontpage comic's theme field inputs
+	return {
 		logoBackdrop: {
 			legend: "Logo & Backdrop",
 			description: null,
-			fields: await getLogoBackdropSettings(),
+			fields: ifSingleSingle
+				? await getComicLogoBackdropFields(frontpageComicID)
+				: await getLogoBackdropSettings(),
 			type: "logoBackdrop"
 		},
 		lookFeel: {
 			legend: "Look & Feel",
 			description: null,
-			fields: await getLookFeelSettings()
+			fields: ifSingleSingle
+				? await getComicLookFeelFields(frontpageComicID)
+				: await getLookFeelSettings()
 		},
 		fonts: {
 			legend: "Fonts",
 			description: null,
-			fields: await getFontFields()
+			fields: ifSingleSingle
+				? await getComicFontFields(frontpageComicID)
+				: await getFontFields()
 		},
 	} satisfies SettingsSection
 }
