@@ -5,6 +5,7 @@ import { DashboardNav, DashboardSection } from "@/ui/dashboard/components/nav"
 import { ClientComicSettingsNavTab, ClientDashboardNavTab } from "@/ui/dashboard/components/client/nav-tab"
 import type { getComic } from "@/lib/directus/get-comics"
 import getComicPath from "@/ui/comic/functions/get-comic-path"
+import clsx from "clsx"
 
 
 export default async function ComicSettingsLayout({
@@ -17,16 +18,29 @@ export default async function ComicSettingsLayout({
 
 	return <>
 		<DashboardNav>
-			<ClientComicSettingsNavTab href={`${comicPath}/edit`}>
+			<ClientComicSettingsNavTab
+				icon="gaugeHigh"
+				// iconOnly={true}
+				href={`/dashboard`}
+				title="Return to Dashboard"
+				className={clsx(
+					"bg-override-accent-500",
+					"text-white",
+					"hover:bg-override-accent-700!",
+				)}
+			><span className={clsx(
+				// "sr-only"
+			)}>Dashboard</span></ClientComicSettingsNavTab>
+			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/edit`}>
 				Edit
 			</ClientComicSettingsNavTab>
-			<ClientComicSettingsNavTab href={`${comicPath}/pages`}>
+			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/pages`}>
 				Pages
 			</ClientComicSettingsNavTab>
-			<ClientComicSettingsNavTab href={`${comicPath}/options`}>
+			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/options`}>
 				Options
 			</ClientComicSettingsNavTab>
-			<ClientComicSettingsNavTab href={`${comicPath}/content`}>
+			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/content`}>
 				Content
 			</ClientComicSettingsNavTab>
 		</DashboardNav>
