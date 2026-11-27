@@ -40,45 +40,23 @@ export default async function EditComicTypeUI({
 			"flex",
 			"items-center",
 		)}>
-			<span className={clsx(
-				"flex",
-				"items-center",
-				"space-x-2",
-			)}>
-				{/* {action == "create" && */}
-				<>
-					{/* <Link href="/dashboard" className={clsx(
-						"flex",
-						"items-center",
-						"text-white",
-						"bg-platform-accent-500",
-						"px-3",
-						"py-2",
-						"rounded",
-						"h-full",
-					)}
-					>
-						<Icon name="gaugeHigh" className={clsx("size-4")} />
-						<span className={clsx(
-							"sr-only"
-							// "text-xs",
-							// "ml-1",
-						)}>Dashboard</span>
-					</Link> */}
-					<Icon name="penToSquare" className={clsx(
-						"size-5",
-						"mr-2",
-						"text-base-content/50",
-					)} />
-				</>
-				{/* } */}
-				{action == "create" &&
-					<span>Create New {comicType}</span>
-				}
-				{action == "update" &&
-					<span>Edit: {comic?.title}</span>
-				}
-			</span>
+
+			<Icon name="penToSquare" className={clsx(
+				"size-5",
+				"mr-2",
+				"text-base-content/50",
+				"inline",
+
+			)} />
+
+			{/* } */}
+			{action == "create" &&
+				<span>Create New {comicType}</span>
+			}
+			{action == "update" &&
+				<span>Edit: {comic?.title}</span>
+			}
+
 		</PageTitleH1>
 		<DashboardForm
 			collection={{
