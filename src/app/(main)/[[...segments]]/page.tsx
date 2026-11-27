@@ -26,7 +26,7 @@ import { cacheTag } from "next/cache"
 import { getUsers } from "@/lib/directus/get-users"
 import UserSinglePage from "@/ui/platform/pages/users-single"
 import UsersListPage from "@/ui/platform/pages/users-list"
-import EditComicTypeUI from "@/ui/dashboard/pages/comic-create-edit"
+import EditComicTypeUI from "@/ui/comic/pages/comic-create-edit"
 
 /**----------------------------------- */
 export default async function MainPage({
