@@ -100,7 +100,7 @@ export default function DashboardForm({
 						logo={section.fields["logo"] || section.fields["project_logo"]}
 						backdrop={section.fields["banner"] || section.fields["project_banner"]}
 						fieldset={fieldset}
-						type="comic"
+						type={collection.name}
 					/>
 				else
 					return <FieldsetSection key={index}>

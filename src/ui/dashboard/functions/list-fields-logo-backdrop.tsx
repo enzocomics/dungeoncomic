@@ -28,7 +28,7 @@ export function ListLogoBackdropFields({
 }: {
 	logo: ListFieldsField
 	backdrop: ListFieldsField
-	type: "settings" | "comic"
+	type: "settings" | "comic" | string
 	fieldset?: Required<{
 		[x: string]: FieldMetadata<unknown, Record<
 			string, Record<string, unknown>
