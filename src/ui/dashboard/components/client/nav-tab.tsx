@@ -6,13 +6,48 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ComponentPropsWithoutRef } from "react"
 import { DashboardNavTabLink } from "../nav-tab"
+import type { getComic } from "@/lib/directus/get-comics"
+import getComicPath from "@/ui/comic/functions/get-comic-path"
 
 export const ClientComicSettingsNavTab = ({
+	comicPath,
+	icon,
+	iconOnly = false,
+	iconRight = false,
 	...props
-}: {} & ComponentPropsWithoutRef<typeof Link>) => {
+}: {
+	comicPath?: Awaited<ReturnType<typeof getComicPath>>
+	icon?: keyof typeof icons
+	iconOnly?: boolean
+	iconRight?: boolean
+} & ComponentPropsWithoutRef<typeof Link>) => {
+
+	const pathname = usePathname()
+	const isCurrent = pathname == props?.href
+
+	// This does not take into account subpages
+
 	return <>
-		<DashboardNavTabLink {...props} >
-			{props.children}
+		<DashboardNavTabLink
+			data-current={isCurrent ? true : undefined}
+			{...props} >
+			{icon && !iconRight &&
+				<Icon name={icon} className={clsx(
+					"size-4",
+					"h-6",
+				)} />
+			}
+			<span className={clsx(
+				icon && !iconOnly && !iconRight && "ml-1.5",
+				icon && !iconOnly && iconRight && "mr-1.5",
+			)}>
+				{props.children}
+			</span>
+			{icon && iconRight &&
+				<Icon name={icon} className={clsx(
+					"size-4",
+				)} />
+			}
 		</DashboardNavTabLink>
 	</>
 }
