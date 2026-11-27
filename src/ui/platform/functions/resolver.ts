@@ -129,6 +129,18 @@ export async function resolveRoute(
 			}
 
 			/**----------------------------------- */
+			// If the level 1 route is NOT a number, and the plural users type
+			// - `dungeoncomic.com/users`
+			if (
+				!/^\d+$/.test(comicPageNumOrName) &&
+				comicPageNumOrName === settings.user_type_name_plural_slug
+			)
+				return {
+					type: "platform-content-type-page",
+					postTypeSlug: comicPageNumOrName,
+				}
+
+			/**----------------------------------- */
 			// If the level 1 route is NOT a number, and is a valid named page
 			// - `dungeoncomic.com/archive`
 			if (
