@@ -72,6 +72,13 @@ export default function SettingsPageForm({
 
 	// Show/Hide additional UI depending on the routing mode selection
 	useEffect(() => {
+		const comicTypeSingleSlugInput = inputRefs.current["settings.comic_type_name_slug"]
+		const comicTypeSingleSlugField = comicTypeSingleSlugInput?.parentElement?.parentElement
+		const comicTypePluralSlugInput = inputRefs.current["settings.comic_type_name_plural_slug"]
+		const comicTypePluralSlugField = comicTypePluralSlugInput?.parentElement?.parentElement
+
+
+		console.log(comicTypeSingleSlugField)
 		// Grab the select menu refs we need
 		const routingModeSelect = inputRefs.current["settings.routing_mode"]
 		const frontpageSelect = inputRefs.current["settings.frontpage_comic"]
@@ -93,8 +100,27 @@ export default function SettingsPageForm({
 				frontpageSelect?.setAttribute("disabled", "true")
 				frontpageSelect?.setAttribute("aria-disabled", "true")
 				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+
+				comicTypeSingleSlugField?.removeAttribute("data-disabled")
+				comicTypeSingleSlugField?.removeAttribute("disabled")
+				comicTypeSingleSlugField?.setAttribute("aria-disabled", "false")
+				comicTypeSingleSlugField?.setAttribute("data-headlessui-state", "")
+				comicTypeSingleSlugInput?.removeAttribute("data-disabled")
+				comicTypeSingleSlugInput?.removeAttribute("disabled")
+				comicTypeSingleSlugInput?.setAttribute("aria-disabled", "false")
+				comicTypeSingleSlugInput?.setAttribute("data-headlessui-state", "")
+
+				comicTypePluralSlugField?.removeAttribute("data-disabled")
+				comicTypePluralSlugField?.removeAttribute("disabled")
+				comicTypePluralSlugField?.setAttribute("aria-disabled", "false")
+				comicTypePluralSlugField?.setAttribute("data-headlessui-state", "")
+				comicTypePluralSlugInput?.removeAttribute("data-disabled")
+				comicTypePluralSlugInput?.removeAttribute("disabled")
+				comicTypePluralSlugInput?.setAttribute("aria-disabled", "false")
+				comicTypePluralSlugInput?.setAttribute("data-headlessui-state", "")
+
 				setSchemaState([sections.details.fields, sections.comicType.fields, sections.userType.fields])
-				setHideTypes(false)
+				// setHideTypes(false)
 			}
 			else if (routingModeSelect.value === "single-single") {
 				frontpageSelectField?.removeAttribute("data-disabled")
@@ -105,8 +131,28 @@ export default function SettingsPageForm({
 				frontpageSelect?.removeAttribute("disabled")
 				frontpageSelect?.setAttribute("aria-disabled", "false")
 				frontpageSelect?.setAttribute("data-headlessui-state", "")
+
+				comicTypeSingleSlugField?.setAttribute("data-disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("aria-disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("data-headlessui-state", "disabled")
+				comicTypeSingleSlugInput?.setAttribute("data-disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("aria-disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("data-headlessui-state", "disabled")
+
+				comicTypePluralSlugField?.setAttribute("data-disabled", "true")
+				comicTypePluralSlugField?.setAttribute("disabled", "true")
+				comicTypePluralSlugField?.setAttribute("aria-disabled", "true")
+				comicTypePluralSlugField?.setAttribute("data-headlessui-state", "disabled")
+				comicTypePluralSlugInput?.setAttribute("data-disabled", "true")
+				comicTypePluralSlugInput?.setAttribute("disabled", "true")
+				comicTypePluralSlugInput?.setAttribute("aria-disabled", "true")
+				comicTypePluralSlugInput?.setAttribute("data-headlessui-state", "disabled")
+
 				setSchemaState([sections.details.fields])
-				setHideTypes(true)
+
+				// setHideTypes(true)
 			} else {
 				frontpageSelectField?.setAttribute("data-disabled", "true")
 				frontpageSelectField?.setAttribute("disabled", "true")
@@ -116,8 +162,18 @@ export default function SettingsPageForm({
 				frontpageSelect?.setAttribute("disabled", "true")
 				frontpageSelect?.setAttribute("aria-disabled", "true")
 				frontpageSelect?.setAttribute("data-headlessui-state", "disabled")
+
+				comicTypeSingleSlugField?.setAttribute("data-disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("aria-disabled", "true")
+				comicTypeSingleSlugField?.setAttribute("data-headlessui-state", "disabled")
+				comicTypeSingleSlugInput?.setAttribute("data-disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("aria-disabled", "true")
+				comicTypeSingleSlugInput?.setAttribute("data-headlessui-state", "disabled")
+
 				setSchemaState([sections.details.fields])
-				setHideTypes(true)
+				// setHideTypes(true)
 			}
 
 		}
@@ -162,7 +218,7 @@ export default function SettingsPageForm({
 							fieldDescriptions={descriptions[name].fields}
 							collection={settings}
 							inputRefs={inputRefs}
-							disableAll={name !== "details" && hideTypes}
+						// disableAll={name == "comicType" && hideTypes}
 						/>
 					</FieldGroup2Columns>
 				</FieldsetSection>
