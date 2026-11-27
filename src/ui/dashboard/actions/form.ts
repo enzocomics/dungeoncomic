@@ -12,6 +12,7 @@ import {
 	deleteFile,
 	updateItem,
 	updateMe,
+	updateSingleton,
 	uploadFiles,
 } from "@directus/sdk"
 import { redirect } from "next/navigation"
@@ -92,7 +93,7 @@ export async function saveDashboardForm(
 			// Iterate through the imageFields Array
 			for (const field of imageFields) {
 				// Check if the clear field has been filled out
-				const shouldClear = formData.get(`${schema}.${field}_file_clear`)
+				const shouldClear = formData.get(`${field}_file_clear`)
 
 				// If the clear field is true:
 				if (shouldClear) {
@@ -120,19 +121,32 @@ export async function saveDashboardForm(
 				updates[field] = uploaded.id
 			}
 
-			//
+			let response
 			switch (schema) {
 				case "comics": {
 					if (action === "create") {
-						await userClient.request(createItem(schema, updates))
+						response = await userClient.request(createItem(schema, updates))
 					}
 					if (action === "update") {
-						await userClient.request(updateItem(schema, itemID, updates))
+						response = await userClient.request(
+							updateItem(schema, itemID, updates),
+						)
 						updateTag(`${schema}-${itemID}`)
 					}
 					updateTag(schema)
+					updateTag("settings")
+				}
+				case "settings": {
+					if (action === "update") {
+						response = await userClient.request(
+							updateSingleton("settings", updates),
+						)
+						updateTag("settings")
+					}
 				}
 			}
+
+			// console.log(response)
 		}
 	} catch (err: any) {
 		// RETURN ERROR IF UNSUCCESFUL
@@ -147,7 +161,7 @@ export async function saveDashboardForm(
 	if (submission.status === "success") {
 		// Redirect on success if available
 		const redirectUrl = formData.get(`redirect`)
-		redirect(String(redirectUrl))
+		redirectUrl && redirect(String(redirectUrl))
 	}
 
 	return submission.reply()
