@@ -196,7 +196,7 @@ export default function SingleAvatarField({
 		{clearAvatar &&
 			<>
 				<input type="hidden"
-					name="avatar_clear"
+					name="avatar_file_clear"
 					value="true"
 				/>
 				<input type="hidden"
