@@ -14,7 +14,7 @@ import { ClientComicPageHeaderTitle } from "@/ui/comic/components/client/comic-p
 import { PlatformMainArticle } from "@/ui/platform/components/main"
 import { PlatformHeaderLogo } from "@/ui/platform/components/header-logo"
 import { Suspense } from "react"
-import ComicSettingsLayout from "@/ui/comic/layout-edit"
+import ComicSettingsLayout from "@/ui/comic/edit/layout"
 
 export const instant = false
 
