@@ -53,6 +53,7 @@ export default function ClientPlatformNav({
 	const hasBanner = !!(comic?.banner)
 	const routingMode = settings.routing_mode
 	const comicPostTypeSlug = settings.comic_type_name_slug
+	const isSingleUserSingleComicSite = !!(routingMode == "single-single")
 	const isMultiUserMultiComicSite = !!(routingMode == "multiple-multiple")
 	const userCanUpdateSettings = session?.permissions?.settings?.update?.access === "full"
 
@@ -80,6 +81,7 @@ export default function ClientPlatformNav({
 		current?: boolean,
 		icon?: keyof typeof icons
 	} | false
+
 	let comicNavigation: NavigationMenu[] = [
 		{
 			name: "Homepage", // TODO: DICTIONARY
@@ -87,7 +89,7 @@ export default function ClientPlatformNav({
 			current: !!(pathname == "/"),
 			icon: "house",
 		},
-		{
+		!isSingleUserSingleComicSite && {
 			name: `${comicsListTitle}`,
 			href: `/${comicsListSlug}`,
 			current: !!(pathname == `/${comicsListSlug}`),
@@ -96,7 +98,7 @@ export default function ClientPlatformNav({
 	]
 
 	/// Add user list to multiple/multiple routing mode menu only
-	isMultiUserMultiComicSite && comicNavigation.push({
+	comicNavigation.push({
 		name: `${usersListTitle}`,
 		href: `/${usersListSlug}`,
 		current: !!(pathname == `/${usersListSlug}`),
