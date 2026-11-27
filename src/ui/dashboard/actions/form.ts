@@ -14,6 +14,7 @@ import {
 	updateMe,
 	uploadFiles,
 } from "@directus/sdk"
+import { redirect } from "next/navigation"
 
 /** ---
  * Handles & submits Dashboard Forms
@@ -141,6 +142,12 @@ export async function saveDashboardForm(
 		return submission.reply({
 			formErrors: [reason],
 		})
+	}
+
+	if (submission.status === "success") {
+		// Redirect on success if available
+		const redirectUrl = formData.get(`redirect`)
+		redirect(String(redirectUrl))
 	}
 
 	return submission.reply()
