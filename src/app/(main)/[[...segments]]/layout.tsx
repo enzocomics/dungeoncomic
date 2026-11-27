@@ -134,7 +134,7 @@ async function LayoutContent({
 						>
 							<PlatformMainArticle>
 								{route.pageSlug === "edit" &&
-									<ComicSettingsLayout>
+									<ComicSettingsLayout comic={comic}>
 										{children}
 									</ComicSettingsLayout>
 								}
