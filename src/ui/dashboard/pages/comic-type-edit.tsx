@@ -155,7 +155,7 @@ const getDetailFields = async (comicID?: number) => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-export const getLogoBackdropFields = async (comicID?: number) => {
+export const getComicLogoBackdropFields = async (comicID?: number) => {
 	const comic = comicID ? await getComic({ id: comicID }) : null
 	return {
 		logo: {
@@ -175,7 +175,7 @@ export const getLogoBackdropFields = async (comicID?: number) => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getLookFeelFields = async (comicID?: number) => {
+export const getComicLookFeelFields = async (comicID?: number) => {
 	// Make an array of name: value pairs of all the tailwind colors so we can use them for the seelct menu options
 	const colors = Object.entries(colorVariants).map(([name]) => ({
 		name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -198,7 +198,7 @@ const getLookFeelFields = async (comicID?: number) => {
 	} satisfies Record<string, ListFieldsField>
 }
 
-const getFontFields = async (comicID?: number) => {
+export const getComicFontFields = async (comicID?: number) => {
 	const settings = await getSettings()
 	const comic = comicID ? await getComic({ id: comicID }) : null
 	return {
@@ -288,18 +288,18 @@ const getSections = async (comicID?: number) => {
 		logoBackdrop: {
 			legend: "Logo & Banner",
 			description: null,
-			fields: await getLogoBackdropFields(comicID),
+			fields: await getComicLogoBackdropFields(comicID),
 			type: "logoBackdrop"
 		},
 		lookFeel: {
 			legend: "Look & Feel",
 			description: null,
-			fields: await getLookFeelFields(comicID)
+			fields: await getComicLookFeelFields(comicID)
 		},
 		fonts: {
 			legend: "Fonts",
 			description: null,
-			fields: await getFontFields(comicID)
+			fields: await getComicFontFields(comicID)
 		},
 	} satisfies SettingsSection
 }
