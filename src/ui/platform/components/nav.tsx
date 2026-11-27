@@ -123,13 +123,13 @@ export default function ClientPlatformNav({
 		// 	current: !!(pathname == `/dashboard/account`),
 		// 	icon: "user"
 		// },
-		{
+		userCanUpdateSettings && {
 			name: `Theme`,
 			href: `/dashboard/theme`,
 			current: !!(pathname == `/dashboard/theme`),
 			icon: "gear"
 		},
-		{
+		userCanUpdateSettings && {
 			name: `Settings`,
 			href: `/dashboard/settings`,
 			current: !!(pathname == `/dashboard/settings`),
