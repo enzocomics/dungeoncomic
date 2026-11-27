@@ -152,6 +152,23 @@ export async function resolveRoute(
 				}
 
 			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is undefined: comic landing page
+			// - `dungeoncomic.com/d/tutorial`
+			if (
+				!/^\d+$/.test(comicPageNumOrName) &&
+				!/^\d+$/.test(pageAction) &&
+				!invalid
+			) {
+				return {
+					type: "platform-user-page",
+					postTypeSlug: comicPageNumOrName,
+					usernameSlug: pageAction,
+				}
+			}
+
+			/**----------------------------------- */
 			// If the level 1 route is a number + valid pageAction subroute
 			// - `dungeoncomic.com/1/edit`
 			if (/^\d+$/.test(comicPageNumOrName) && isPageAction(pageAction))
@@ -252,6 +269,23 @@ export async function resolveRoute(
 					type: "comic-single-page",
 					comicSlug: comicSlugOrContentType,
 					pageNum: Number(comicPageNumOrName),
+				}
+			}
+
+			/**----------------------------------- */
+			// If level 1 route is defined and not a number,
+			// and level 2 is also defined and not a number,
+			// and level 3 is undefined: comic landing page
+			// - `dungeoncomic.com/d/tutorial`
+			if (
+				!/^\d+$/.test(comicSlugOrContentType) &&
+				!/^\d+$/.test(comicPageNumOrName) &&
+				!pageAction
+			) {
+				return {
+					type: "platform-user-page",
+					postTypeSlug: comicSlugOrContentType,
+					usernameSlug: comicPageNumOrName,
 				}
 			}
 

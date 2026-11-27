@@ -69,7 +69,20 @@ async function LayoutContent({
 		/**----------------------------------- */
 		case "platform-content-type-page":
 		case "platform-user-page": {
-			return <>
+			if (settings.routing_mode === "single-single") {
+				let comic = await getComic({ slug: settings.frontpage_comic?.slug })
+				if (comic)
+					return <>
+						<ComicRootLayout header={
+							<ClientComicPageHeaderTitle comic={comic} />
+						}
+							slug={comic.slug}
+						>
+							{children}
+						</ComicRootLayout>
+					</>
+				notFound()
+			} else return <>
 				<PlatformRootLayout header={
 					<PlatformHeaderLogo />
 				}>
