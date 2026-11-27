@@ -231,6 +231,18 @@
 	--color-platform-accent-900: var(--color-platform-accent-900);
 	--color-platform-accent-950: var(--color-platform-accent-950);
 
+	--color-override-accent-50: var(--color-override-accent-50);
+	--color-override-accent-100: var(--color-override-accent-100);
+	--color-override-accent-200: var(--color-override-accent-200);
+	--color-override-accent-300: var(--color-override-accent-300);
+	--color-override-accent-400: var(--color-override-accent-400);
+	--color-override-accent-500: var(--color-override-accent-500);
+	--color-override-accent-600: var(--color-override-accent-600);
+	--color-override-accent-700: var(--color-override-accent-700);
+	--color-override-accent-800: var(--color-override-accent-800);
+	--color-override-accent-900: var(--color-override-accent-900);
+	--color-override-accent-950: var(--color-override-accent-950);
+
 	--color-comic-accent-50: var(--color-red-50);
 	--color-comic-accent-100: var(--color-red-100);
 	--color-comic-accent-200: var(--color-red-200);
