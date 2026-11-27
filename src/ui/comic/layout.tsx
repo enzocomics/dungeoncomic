@@ -55,7 +55,7 @@ export async function ComicRootLayout({
 	return <>
 		<AuthModal public_registration={public_registration} />
 		{/* <ComicContextProvider key={comic.slug} getComic={comic} getSession={session} getSettings={settings}> */}
-		<ComicMainWrapper comic={comic}>
+		<ComicMainWrapper comic={comic} settings={settings}>
 			<ClientPlatformNav comic={comic} session={session} settings={settings}
 				menu={true
 					// isRoutingModeSingleSingle ? false : true
@@ -79,10 +79,14 @@ export async function ComicRootLayout({
 export const ComicMainWrapper = ({
 	children,
 	comic,
+	settings
 }: {
 	children: React.ReactNode
 	comic: Awaited<ReturnType<typeof getComic>>
+	settings: Awaited<ReturnType<typeof getSettings>>
 }) => {
+	// FETCH PLATFORM APPEARANCE VARS
+	const platformAccentColor = settings.color_accent
 	// FETCH COMIC APPEARANCE VARS
 	const displayFontSlug = headersFonts[comic.display_font.toString()].slug
 	const copyFontSlug = copyFonts[comic.copy_font.toString()].slug
@@ -108,6 +112,20 @@ export const ComicMainWrapper = ({
 					"--color-platform-accent-800": `var(${colorVariants[accentColor]["800"]})`,
 					"--color-platform-accent-900": `var(${colorVariants[accentColor]["900"]})`,
 					"--color-platform-accent-950": `var(${colorVariants[accentColor]["950"]})`,
+					// Overrides
+					// I'm aware THIS one should probably be called "platform-accent"
+					"--color-override-accent-50": `var(${colorVariants[platformAccentColor]["50"]})`,
+					"--color-override-accent-100": `var(${colorVariants[platformAccentColor]["100"]})`,
+					"--color-override-accent-200": `var(${colorVariants[platformAccentColor]["200"]})`,
+					"--color-override-accent-300": `var(${colorVariants[platformAccentColor]["300"]})`,
+					"--color-override-accent-400": `var(${colorVariants[platformAccentColor]["400"]})`,
+					"--color-override-accent-500": `var(${colorVariants[platformAccentColor]["500"]})`,
+					"--color-override-accent-600": `var(${colorVariants[platformAccentColor]["600"]})`,
+					"--color-override-accent-700": `var(${colorVariants[platformAccentColor]["700"]})`,
+					"--color-override-accent-800": `var(${colorVariants[platformAccentColor]["800"]})`,
+					"--color-override-accent-900": `var(${colorVariants[platformAccentColor]["900"]})`,
+					"--color-override-accent-950": `var(${colorVariants[platformAccentColor]["950"]})`,
+
 				} as React.CSSProperties}
 		>
 			{comic.banner &&
