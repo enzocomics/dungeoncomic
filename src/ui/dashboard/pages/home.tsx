@@ -28,6 +28,7 @@ export default async function DashboardHomePageUI() {
 		}
 	})
 
+	const userCanUpdateComics = user?.permissions?.comics?.update?.access === "full"
 
 	return <>
 		<PageTitleH1 className={clsx(
@@ -37,21 +38,23 @@ export default async function DashboardHomePageUI() {
 			<span className={clsx(
 				"grow"
 			)}>
-				{settings.comic_type_name_plural} ({comics.length})
+				My {settings.comic_type_name_plural} ({comics.length})
 			</span>
-			<ComicButton as="link"
-				href={`/dashboard/${settings.comic_type_name_slug}/create`}
-				className={clsx(
-					"w-auto!",
-					"text-sm!",
-					"h-10",
-				)}>
-				<Icon name="plus" className={clsx(
-					"size-4",
-					"mr-2"
-				)} />
-				Create New {settings.comic_type_name}
-			</ComicButton>
+			{userCanUpdateComics &&
+				<ComicButton as="link"
+					href={`/dashboard/${settings.comic_type_name_slug}/create`}
+					className={clsx(
+						"w-auto!",
+						"text-sm!",
+						"h-10",
+					)}>
+					<Icon name="plus" className={clsx(
+						"size-4",
+						"mr-2"
+					)} />
+					Create New {settings.comic_type_name}
+				</ComicButton>
+			}
 		</PageTitleH1>
 		<div
 			className={clsx(

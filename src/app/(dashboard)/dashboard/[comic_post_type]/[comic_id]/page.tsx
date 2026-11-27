@@ -1,4 +1,6 @@
+import { verifySession } from "@/data/session"
 import EditComicTypeUI from "@/ui/dashboard/pages/comic-type-edit"
+import { notFound } from "next/navigation"
 
 export const instant = false
 
@@ -11,10 +13,17 @@ export default async function ComicEditPage({
 	}>
 }) {
 	const { comic_post_type, comic_id } = await params
-	return <EditComicTypeUI
-		action="update"
-		comicID={parseInt(comic_id)}
-	/>
-	// 	Hi it's me ur edit single {comic_post_type} series	 page. id: {comic_id}
-	// </>
+
+	const session = await verifySession()
+	const userCanUpdateComics = session?.permissions?.comics?.update?.access === "full"
+
+	if (userCanUpdateComics)
+		return <EditComicTypeUI
+			action="update"
+			comicID={parseInt(comic_id)}
+		/>
+	else
+		notFound()
+
+
 }
