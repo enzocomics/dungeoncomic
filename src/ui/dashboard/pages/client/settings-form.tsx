@@ -77,8 +77,6 @@ export default function SettingsPageForm({
 		const comicTypePluralSlugInput = inputRefs.current["settings.comic_type_name_plural_slug"]
 		const comicTypePluralSlugField = comicTypePluralSlugInput?.parentElement?.parentElement
 
-
-		console.log(comicTypeSingleSlugField)
 		// Grab the select menu refs we need
 		const routingModeSelect = inputRefs.current["settings.routing_mode"]
 		const frontpageSelect = inputRefs.current["settings.frontpage_comic"]
