@@ -45,23 +45,25 @@ export default async function EditComicTypeUI({
 				"items-center",
 				"space-x-2",
 			)}>
-				{settings.routing_mode === "single-single" &&
-					<>
-						<Link href="/dashboard" className={clsx(
-							"flex",
-							"items-center",
-							"text-base-content/50",
-						)}>
-							<Icon name="house" className={clsx("size-5")} />
-							<span className="sr-only">Dashboard Home</span>
-						</Link>
-						<Icon name="chevronRight" className={clsx(
-							"size-4",
-							"mr-2",
-							"text-base-content/50",
-						)} />
-					</>
-				}
+				{/* {action == "create" && */}
+				<>
+					<Link href="/dashboard" className={clsx(
+						"flex",
+						"items-center",
+						"text-base-content/50",
+					)}
+						title="Return to Dashboard"
+					>
+						<Icon name="gaugeHigh" className={clsx("size-5")} />
+						<span className="sr-only">Dashboard Home</span>
+					</Link>
+					<Icon name="chevronRight" className={clsx(
+						"size-4",
+						"mr-2",
+						"text-base-content/50",
+					)} />
+				</>
+				{/* } */}
 				{action == "create" &&
 					<span>Create New {comicType}</span>
 				}
