@@ -168,7 +168,7 @@ export function ListFields({
 	}>
 	fieldDescriptions?: Record<string, Record<string, string>>
 	inputRefs?: React.RefObject<
-		Record<string, HTMLSelectElement | null>
+		Record<string, HTMLSelectElement | HTMLInputElement | null>
 	>
 
 }) {
@@ -191,7 +191,13 @@ export function ListFields({
 					? singleField.conditions.value
 					: [singleField.conditions.value]
 
-				if (!values.includes(String(conditionSetting))) {
+				// // console.log(singleField.conditions.action)
+
+				if (
+					!values.includes(String(conditionSetting))
+					&&
+					singleField.conditions.action !== "disable"
+				) {
 					disabled = true
 				}
 			}
@@ -229,6 +235,11 @@ export function ListFields({
 							lengthChecker={true}
 							prefix={singleField.type == "text" ? singleField.prefix : undefined}
 							suffix={singleField.type == "text" ? singleField.suffix : undefined}
+
+							ref={(element) => {
+								if (inputRefs)
+									inputRefs.current[fieldset && fieldset[name].name || ""] = element as HTMLInputElement
+							}}
 						/>
 					}
 					{/**----------------------------------- */}
