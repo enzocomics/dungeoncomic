@@ -19,7 +19,7 @@ export default async function ComicSettingsLayout({
 	return <>
 		<DashboardNav>
 			<ClientComicSettingsNavTab
-				icon="gaugeHigh"
+				icon="anglesLeft"
 				// iconOnly={true}
 				href={`/dashboard`}
 				title="Return to Dashboard"
@@ -31,7 +31,11 @@ export default async function ComicSettingsLayout({
 			><span className={clsx(
 				// "sr-only"
 			)}>Dashboard</span></ClientComicSettingsNavTab>
-			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/edit`}>
+			<ClientComicSettingsNavTab
+				icon="penToSquare"
+				comicPath={comicPath}
+				href={`${comicPath}/edit`}
+			>
 				Edit
 			</ClientComicSettingsNavTab>
 			<ClientComicSettingsNavTab comicPath={comicPath} href={`${comicPath}/pages`}>
