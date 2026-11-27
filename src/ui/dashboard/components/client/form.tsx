@@ -97,8 +97,8 @@ export default function DashboardForm({
 				if (section.type == "logoBackdrop")
 					return <ListLogoBackdropFields
 						key={index}
-						logo={section.fields["logo"]}
-						backdrop={section.fields["banner"]}
+						logo={section.fields["logo"] || section.fields["project_logo"]}
+						backdrop={section.fields["banner"] || section.fields["project_banner"]}
 						fieldset={fieldset}
 						type="comic"
 					/>
