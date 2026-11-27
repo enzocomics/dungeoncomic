@@ -43,8 +43,8 @@ export function ListLogoBackdropFields({
 	// const logoFileFieldName = type == "settings" ? "project_logo_file" : "logo"
 	// const backdropFileFieldName = type == "settings" ? "project_banner_file" : "banner"
 
-	const logoClearFieldName = type == "settings" ? "settings.project_logo_file_clear" : "logo_clear"
-	const backdropClearFieldName = type == "settings" ? "settings.project_banner_file_clear" : "banner_clear"
+	const logoClearFieldName = type == "settings" ? "project_logo_file_clear" : "logo_file_clear"
+	const backdropClearFieldName = type == "settings" ? "project_banner_file_clear" : "banner_file_clear"
 
 	const logoIDName = type == "settings" ? "settings.project_logo_id" : "logo_id"
 	const backdropIDName = type == "settings" ? "settings.project_banner_id" : "banner_id"
@@ -340,18 +340,14 @@ export function ListLogoBackdropFields({
 						)
 					}} />
 				</Field>
-				{clearLogo &&
-					<>
-						<input type="hidden"
-							name={logoClearFieldName}
-							value="true"
-						/>
-						<input type="hidden"
-							name={logoIDName}
-							defaultValue={logoObject?.id}
-						/>
-					</>
-				}
+				<input type="hidden"
+					name={logoClearFieldName}
+					value="true"
+				/>
+				<input type="hidden"
+					name={logoIDName}
+					defaultValue={logoObject?.id}
+				/>
 				<Field>
 					<Label className={clsx(
 						"sr-only",
