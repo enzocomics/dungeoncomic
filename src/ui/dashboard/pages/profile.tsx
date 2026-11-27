@@ -1,20 +1,24 @@
 /**----------------------------------- */
-// DATA
-import { verifySession } from "@/data/session"
-// UI
-import { PageTitleH1 } from "@/components/page"
-import ProfilePageForm from "@/ui/dashboard/pages/client/profile-form"
-import { ListFieldsField } from "@/ui/dashboard/functions/list-fields"
-import type { ImageCollection } from "@/lib/directus/schema"
-import { ComicButton } from "@/components/input/button"
+// FUNCTIONS
 import clsx from "clsx"
-import { getSettings } from "@/lib/directus/get-settings"
+// STYLES
 import Icon from "@/styles/icons"
+// DATA
+import type { ImageCollection } from "@/lib/directus/schema"
+import { verifySession } from "@/data/session"
+import { getSettings } from "@/lib/directus/get-settings"
+// UI
+import { ComicButton } from "@/components/input/button"
+import { PageTitleH1 } from "@/components/page"
+import { getFieldDescriptions, ListFieldsField, SettingsSection } from "@/ui/dashboard/functions/list-fields"
+import DashboardForm from "@/ui/dashboard/components/client/form"
 
+/**----------------------------------- */
 export default async function ProfilePageUI() {
 	const sections = await getSections()
 	const session = await verifySession()
 	const settings = await getSettings()
+	const fieldDescriptions = await getFieldDescriptions(sections)
 	return <>
 		<PageTitleH1 className={clsx(
 			"flex",
@@ -40,9 +44,17 @@ export default async function ProfilePageUI() {
 				</ComicButton>
 			}
 		</PageTitleH1>
-		<ProfilePageForm
+		<DashboardForm
+			collection={{
+				name: "directus_users",
+				action: "update",
+				messages: {
+					submissionSuccess: `Profile has been updated.`,
+					submitButton: `Save Changes`
+				},
+			}}
+			descriptions={fieldDescriptions}
 			sections={sections}
-			session={session}
 		/>
 	</>
 }
@@ -81,6 +93,7 @@ const getDetailFields = async () => {
 		},
 		spacer: {
 			title: "",
+			description: "",
 			type: "blank"
 		},
 		// location: {
@@ -122,5 +135,5 @@ const getSections = async () => {
 		// 	description: null,
 		// 	fields: await getSocialFields()
 		// }
-	}
+	} satisfies SettingsSection
 }
