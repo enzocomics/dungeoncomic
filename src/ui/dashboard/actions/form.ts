@@ -137,12 +137,19 @@ export async function saveDashboardForm(
 					updateTag("settings")
 				}
 				case "settings": {
-					if (action === "update") {
-						response = await userClient.request(
-							updateSingleton("settings", updates),
-						)
-						updateTag("settings")
-					}
+					response = await userClient.request(
+						updateSingleton("settings", updates),
+					)
+					updateTag("settings")
+				}
+				case "directus_users": {
+					response = await userClient.request(updateMe(updates))
+					const username = formData.get("username")
+					const newUsername = response.username
+					updateTag(`user-${username}`)
+					updateTag(`userpage-${username}`)
+					updateTag(`user-${newUsername}`)
+					updateTag(`userpage-${newUsername}`)
 				}
 			}
 
