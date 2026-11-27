@@ -30,9 +30,9 @@ export default function SettingsPageForm({
 	sections: SettingsSection
 	settings: Awaited<ReturnType<typeof getSettings>>
 }) {
-
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
+	const [messageSeen, setMessageSeen] = useState(false)
 
 	// VALIDATION
 	const initialSchemaState = settings.routing_mode === "multiple-multiple"
@@ -52,6 +52,7 @@ export default function SettingsPageForm({
 			})
 		},
 		onSubmit() {
+			setMessageSeen(false)
 			// router.refresh()
 		},
 		shouldValidate: "onBlur",
@@ -60,10 +61,12 @@ export default function SettingsPageForm({
 
 	const settingsFieldset = fields.settings.getFieldset()
 
+
 	useEffect(() => {
-		if (lastResult?.status == "success") {
+		if (lastResult?.status == "success" && !messageSeen) {
 			setStatus("success", "Your settings have been saved.")
 			// router.refresh()
+			setMessageSeen(true)
 		}
 	}, [lastResult])
 

@@ -48,6 +48,7 @@ export default function DashboardForm({
 }) {
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
+	const [messageSeen, setMessageSeen] = useState(false)
 
 	// VALIDATION
 	const [lastResult, action] = useActionState(saveDashboardForm, undefined)
@@ -64,16 +65,20 @@ export default function DashboardForm({
 					fieldLists: fieldLists
 				})
 			})
-		}
+		},
+		onSubmit() {
+			setMessageSeen(false)
+		},
 	})
 
 	const fieldset = fields[collection.name].getFieldset()
 
 	useEffect(() => {
-		if (lastResult?.status === "success") {
+		if (lastResult?.status === "success" && !messageSeen) {
 			setStatus("success",
 				collection.messages?.submissionSuccess || "Your form has been submitted"
 			)
+			setMessageSeen(true)
 		}
 		if (lastResult?.status === "error") {
 			// TODO: More meaningful error message

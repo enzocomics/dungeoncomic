@@ -1,7 +1,7 @@
 "use client"
 /**----------------------------------- */
 // LIBRARIES
-import { useActionState, useEffect } from "react"
+import { useActionState, useEffect, useState } from "react"
 // VALIDATION
 import { parseWithZod } from "@conform-to/zod/v4"
 import { useForm, useInputControl } from "@conform-to/react"
@@ -34,6 +34,7 @@ export default function AccountPageForm({
 	const t = useTranslations("auth")
 	// STATUS MESSAGES
 	const setStatus = useChangeStatus("")
+	const [messageSeen, setMessageSeen] = useState(false)
 
 	// VALIDATION
 	const [lastResult, action] = useActionState(saveAccount, undefined)
@@ -54,8 +55,8 @@ export default function AccountPageForm({
 			})
 		},
 		onSubmit() {
+			setMessageSeen(false)
 			// router.refresh()
-			// console.log(lastResult)
 		},
 		// shouldValidate: "onBlur",
 		// shouldRevalidate: "onInput"
@@ -64,8 +65,9 @@ export default function AccountPageForm({
 	// const settingsFieldset = fields.directus_users.getFieldset()
 
 	useEffect(() => {
-		if (lastResult?.status == "success") {
+		if (lastResult?.status == "success" && !messageSeen) {
 			setStatus("success", "Your account has been updated")
+			setMessageSeen(true)
 		}
 	}, [lastResult])
 
