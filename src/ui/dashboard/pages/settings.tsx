@@ -8,6 +8,7 @@ import { PageTitleH1 } from "@/components/page"
 import { getFieldDescriptions, ListFieldsField } from "@/ui/dashboard/functions/list-fields"
 import SettingsPageForm from "@/ui/dashboard/pages/client/settings-form"
 import { getComics } from "@/lib/directus/get-comics"
+import { verifySession } from "@/data/session"
 
 /**----------------------------------- */
 export default async function SettingsPageUI() {
@@ -50,7 +51,24 @@ const getDetailFields = async () => {
 		},
 		routing_mode: {
 			title: "Routing Mode",
-			description: "Choose whether your platform will have a single creator with a single comic, a single creator with multiple comics, or multiple creators with multiple comics.",
+			description: `**Single Creator, Single Comic Mode**:<br />
+- Only the Site Administrator may create comics
+- Site has only one visible comic that is accessed directly from the domain root: \`dungeoncomic.com\`<br /><br />
+
+**Single Creator, Multiple Comics Mode**:<br />
+- Only the Site Administrator may create comics
+- Site has multiple visible comics
+- Each comic is accessed from their respective sub-route segment: \`dungeoncomic.com/comic-title\`
+- Site has a directory page that lists all comics: \`dungeoncomic.com/comics\`
+- Site has a homepage with an editable content block at the domain root: \`dungeoncomic.com\`<br /><br />
+
+**Multiple Creators, Multiple Comics Mode**:<br />
+- All Users may create comics
+- Site has multiple visible comics
+- Each comic is accessed from a customizable \`series-type\` segment followed by their respective sub-route segment: \`dungeoncomic.com/comics/comic-title\`
+- Site has a directory page that lists all comics: \`dungeoncomic.com/comics\`
+- Site has a homepage with an editable content block at the domain root: \`dungeoncomic.com\``,
+			// description: "Choose whether your platform will have a single creator with a single comic, a single creator with multiple comics, or multiple creators with multiple comics.",
 			type: "select",
 			value: settings.routing_mode,
 			options: [
@@ -71,7 +89,7 @@ const getDetailFields = async () => {
 		},
 		frontpage_comic: {
 			title: "Frontpage Comic",
-			description: "(Single creator/single comic only) Choose which comic will live at the root of the domain. If you only have one comic, it will be selected by default. If you have multiple comics, it will default to very first one by creation date -- the other comics will be inaccessible.",
+			description: "*(Single creator/single comic only)* Choose which comic will live at the root of the domain. If you only have one comic, it will be selected by default. If you have multiple comics, it will default to very first one by creation date -- the other comics will be inaccessible.",
 			type: "select",
 			value: settings.frontpage_comic ? String(settings.frontpage_comic.id) : "",
 			options: [
@@ -130,26 +148,37 @@ const getComicTypeFields = async () => {
 		},
 		comic_type_name_slug: {
 			title: "Comic Type Slug - Singular",
-			description: 'The URL-friendly slug for a single series. It appears in the URL before the series title: `dungeoncomic.com/comic/tutorial`',
+			description: '*(Multiple Creator/Multiple comics only)* The URL-friendly slug for a single series. It appears in the URL before the series title: `dungeoncomic.com/comic/tutorial`',
 			type: "text",
 			value: settings.comic_type_name_slug,
 			width: "half",
 			validate: true,
-			maxLength: 32
+			maxLength: 32,
+			conditions: {
+				fieldKey: "routing_mode",
+				value: "multiple-multiple",
+				action: "enable",
+			}
 		},
 		comic_type_name_plural_slug: {
 			title: "Comic Type Slug - Plural",
-			description: "The URL-friendly slug for multiple series, and links to the view all page: `dungeoncomic.com/comics`",
+			description: "*(Multiple Creator/Multiple comics only)*  The URL-friendly slug for multiple series, and links to the view all page: `dungeoncomic.com/comics`",
 			type: "text",
 			value: settings.comic_type_name_plural_slug,
 			width: "half",
 			validate: true,
-			maxLength: 32
+			maxLength: 32,
+			conditions: {
+				fieldKey: "routing_mode",
+				value: "multiple-multiple",
+				action: "enable",
+			}
 		},
 	} satisfies Record<string, ListFieldsField>
 }
 
 const getUserTypeFields = async () => {
+	const session = await verifySession()
 	const settings = await getSettings()
 	return {
 		// Post Types
@@ -173,7 +202,7 @@ const getUserTypeFields = async () => {
 		},
 		user_type_name_slug: {
 			title: "User Type Slug - Singular",
-			description: 'The URL-friendly slug for a single user. It appears in the URL before the series title: `dungeoncomic.com/user/enzo`',
+			description: `The URL-friendly slug for a single user. It appears in the URL before the series title: \`dungeoncomic.com/user/${session?.username}\``,
 			type: "text",
 			value: settings.user_type_name_slug,
 			width: "half",
@@ -199,19 +228,15 @@ const getSections = async () => {
 			description: null,
 			fields: await getDetailFields()
 		},
-		comicType: {
-			legend: "Series Type",
-			description: await marked.parse(`*(Multiple Creators/Multiple Comics Routing Mode only)*
-
-If you're not making comics, or want to name your series type something else, you may change it here.`),
-			fields: await getComicTypeFields()
-		},
 		userType: {
 			legend: "User Type",
-			description: await marked.parse(`*(Multiple Creators/Multiple Comics Routing Mode only)*
-				
-You can change what you call your users here.`),
+			description: await marked.parse(`You can change what you call your users here.`),
 			fields: await getUserTypeFields()
-		}
+		},
+		comicType: {
+			legend: "Series Type",
+			description: await marked.parse(`If you're not making comics, or want to name your series type something else, you may change it here.`),
+			fields: await getComicTypeFields()
+		},
 	}
 }
