@@ -111,7 +111,14 @@ export const getComic = async ({
 				},
 				// Appearance
 				{
-					logo: ["filename_disk", "type", "width", "height", "description"],
+					logo: [
+						"id",
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
 				},
 				{
 					thumbnail: [
@@ -123,7 +130,14 @@ export const getComic = async ({
 					],
 				},
 				{
-					banner: ["filename_disk", "type", "width", "height", "description"],
+					banner: [
+						"id",
+						"filename_disk",
+						"type",
+						"width",
+						"height",
+						"description",
+					],
 				},
 				"accent_color",
 				"display_font",
